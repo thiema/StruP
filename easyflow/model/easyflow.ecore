@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
+    nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
+  <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Logger" instanceClassName="org.apache.log4j.Logger"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="JexlEngine" instanceClassName="org.apache.commons.jexl2.JexlEngine"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stack" instanceClassName="java.util.Stack"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EasyFlowGraph" instanceClassName="easyflow.custom.jgraphx.editor.EasyFlowGraph"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EObject" instanceClassName="org.eclipse.emf.ecore.EObject"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Document" instanceClassName="org.w3c.dom.Document"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Element" instanceClassName="org.w3c.dom.Element"
+      serializable="false"/>
+  <eSubpackages name="core" nsURI="http:///de/thiema/easyflow/core/easyflow.core/1.0.0"
+      nsPrefix="easyflow">
+    <eClassifiers xsi:type="ecore:EClass" name="Workflow">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A Workflow is modelled using a graph representing data processing Tasks and its connections. E.g. the inputs and outputs and its parent and child tasks. The Workflow provides basic methods to generate and manipulate data processing workflows."/>
+      </eAnnotations>
+      <eOperations name="generateGraphFromTemplate">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="readTaskImplementation">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="readProjectMetaData">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="getParentTaskByOutDataPort" eType="#//core/Task">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The tasks that are explicitely set in the parentTasks attribute. It is assumed that&#xA;only one task will match the given DataPort. However only the first is returned."/>
+        </eAnnotations>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="task" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="getParentTasksByOutDataPort">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Returns all tasks with compatible outgoing DataPorts."/>
+        </eAnnotations>
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//core/Task"/>
+        </eGenericType>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="validateParentTaskOutDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="task" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="validateLastTaskOutDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="readMetaData">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="applyTraversalEvents">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="breadth first iteration of graph. compute new graph with &#xA;given traversal event applied."/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="applyTraversalEvent">
+        <eParameters name="task" eType="#//core/Task"/>
+        <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+        <eParameters name="parentToFix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="breadth first iteration of graph and completing/checking the traversal events of each task&#xA;in order to combine splitting and merging events into a single events. Usually each&#xA;merging event complements a splitting event.&#xA;Moreover the parent for each splitting event is set."/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="shallProcessTask" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="evaluate the task's jexl expression to decide if the task's grouping instance&#xA;violates the constains given by jexl. Assume grouping criteria was already applied."/>
+        </eAnnotations>
+        <eParameters name="task" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="evaluateJEXLString">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="iterate over tasks of the graph and call shallProcessTask(Task)."/>
+        </eAnnotations>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstNode" eType="#//Object"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="knownGroupingCriteria"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="knownDataFormats" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="knownTraversalCriteria"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="workflowTemplate" eType="#//core/DefaultWorkflowTemplate"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastTasks" eType="#//Stack"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="metaData" eType="#//Object"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultGroupingCriteria"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="previousTaskName" transient="true">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="genericAttributes" upperBound="-1"
+          eType="#//core/StringToObjectMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolsSchemaDefinition"
+          eType="#//URI"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolsDescription" eType="#//URI"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tools" upperBound="-1"
+          eType="#//core/StringToToolMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="graphUtil" eType="#//graph/jgraphx/Util"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Task">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Task respresents a basic data processing unit. It transforms a number of Inputs into Outputs. The Task itself is independent of a concrete Tool that implements the Task and the processing."/>
+      </eAnnotations>
+      <eOperations name="readTask">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="taskString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="defaultMode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="defaultGroupingCriteria" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="shallProcess" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="metaDataMap">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+            <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+            <eTypeArguments eClassifier="#//Object"/>
+          </eGenericType>
+        </eParameters>
+      </eOperations>
+      <eOperations name="evaluateJexl" eType="#//Object">
+        <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+        <eParameters name="metaDataMap">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+            <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+            <eTypeArguments eClassifier="#//Object"/>
+          </eGenericType>
+        </eParameters>
+      </eOperations>
+      <eOperations name="parseDataFormatField">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="#//core/DataFormat"/>
+        </eGenericType>
+        <eParameters name="dataFormatString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getUniqueString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="isCompatibleWithOutDataPortFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="isCompatibleWithInDataPortFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="getParentTaskByOutDataPort" eType="#//core/Task">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPorts" upperBound="-1"
+          eType="#//core/DataPort"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="outDataPorts" upperBound="-1"
+          eType="#//core/DataPort"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="shallProcessJEXL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="util" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="jexlEngine" eType="#//JexlEngine"
+          changeable="false" transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="traversalEvents" upperBound="-1"
+          eType="#//core/StringToTraversalEventMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parents" upperBound="-1"
+          eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="chunks" upperBound="-1"
+          eType="#//core/StringToChunksMap" containment="true">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="the tasks chunk (value) which corresponds to its traversal criterion (key). &#xA;Only set after traversal event has been applied."/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentTraversalEventDEPRICATED"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="processedTraversalEventsDEPRICATED"
+          upperBound="-1" eType="#//core/StringToTraversalEventMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tools" upperBound="-1"
+          eType="#//core/StringToToolMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="previousTaskStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          defaultValueLiteral=""/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Tool">
+      <eOperations name="readImplementation">
+        <eParameters name="element" eType="#//Element"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Interpreter">
+      <eOperations name="readImplementation">
+        <eParameters name="element" eType="#//Element"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="exe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Command">
+      <eOperations name="readImplementation">
+        <eParameters name="element" eType="#//Element"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="programName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="executable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="options" transient="true">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DataPort">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A DataPort represents the Data that can be transformed by a Task. DataPorts have a Cardinality and a DataFormat and a List of GroupingCriteria that can be used to group the data."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="groupingCriteria" upperBound="-1"
+          eType="#//core/GroupingCriterion"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinality" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dataFormat" eType="#//core/DataFormat"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DataFormat">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IWorkflowTemplate" abstract="true"
+        interface="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The IWorkflowTemplate provides an Interface to read a description of the workflow."/>
+      </eAnnotations>
+      <eOperations name="readTemplate">
+        <eParameters name="mode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="defaultGroupingCriteria" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DefaultWorkflowTemplate" eSuperTypes="#//core/IWorkflowTemplate">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tasks" upperBound="-1"
+          eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="EasyflowTemplate" eSuperTypes="#//core/IWorkflowTemplate #//core/DefaultWorkflowTemplate">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ITaskReader" abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ITaskReader provides an Interface to read the Task description."/>
+      </eAnnotations>
+      <eOperations name="readTask">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="EasyflowTaskReader" eSuperTypes="#//core/ITaskReader">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Reads the Easyflow Task description format."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GalaxyTaskReader" eSuperTypes="#//core/ITaskReader">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IMetaData" abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The IMetaData provides an Interface to read MetaData associated to an Easyflow project."/>
+      </eAnnotations>
+      <eOperations name="readMetaData">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="getInstances" upperBound="-1" eType="#//core/GroupingCriterion">
+        <eParameters name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="parentField" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="instance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DefaultMetaData" eSuperTypes="#//core/IMetaData">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eOperations name="getDefaultRecords">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="#//Object"/>
+        </eGenericType>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="groupings" upperBound="-1"
+          eType="#//core/StringToGroupingMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="groupingInstances" upperBound="-1"
+          eType="#//core/StringToGroupingInstanceListMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="groupingInstancesByGroup"
+          upperBound="-1" eType="#//core/StringToGroupingInstanceListMap" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IProjectMetaData" abstract="true"
+        interface="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The IProjectInterface provides an Interface for reading project specific metadata. In case of resequencing project it might hold information on the reference sequence and its annotation."/>
+      </eAnnotations>
+      <eOperations name="readMetaData">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GroupingCriterion">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The GroupingCriterion represents a Criterion used to group Data. That means &#xA;to decompose the Data in logical groups. E.g. by sample, by group of &#xA;samples, etc."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstances" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Flags whether multiple Instances of the GroupingCriterion can be presented to the data processing task. (E.g. multiple samples can be processed by the task)"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="seperateInputPorts" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="flags whether multiple instances have to be presented as seperate inputs."/>
+        </eAnnotations>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TraversalCriterion" eSuperTypes="#//core/GroupingCriterion">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//core/TraversalOperation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="chunks" upperBound="-1"
+          eType="#//core/StringToChunkMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="chunkSource" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TraversalEvent">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eOperations name="applyMetadata" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="readChunks">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="isGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isParent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="parentTask" eType="#//core/Task"/>
+        <eParameters name="traversalChunkName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mergeTask" upperBound="-1"
+          eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="splitTask" eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parentTask" upperBound="-1"
+          eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="traversalCriterion" eType="#//core/TraversalCriterion"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="metaData" eType="#//EObject"
+          transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="processed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="queued" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="foundMergeTask" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentCells" upperBound="-1"
+          eType="#//mxICell" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TraversalOperation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TraversalChunk">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DefaultRecord">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="genericAttributes" upperBound="-1"
+          eType="#//core/StringToObjectMap" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToTaskMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/Task"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToTraversalEventMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/TraversalEvent"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToGraphCellMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//mxICell"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToTraversalCriterionMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/TraversalCriterion"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToObjectMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//Object"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToChunksMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
+          eType="#//core/TraversalChunk"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToChunkMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/TraversalChunk"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToToolMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/Tool"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToStringMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToGroupingMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/Grouping"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToGroupingFeatureMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/GroupingFeature"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToGroupingInstanceListMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/GroupingInstanceList"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Grouping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The group which makes the grouping. E.g. record, sample."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GroupingInstance">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A concrete instance of a group. E.g. sampleA is an instance of the sample&#xA;grouping."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+          eType="#//core/StringToGroupingFeatureMap" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GroupingFeature">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A feature or attribute a grouping instance can have. E.g. readlength, readtype&#xA;are features of a sample or a maybe a library."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="GroupingInstanceList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All instances that belong to a grouping."/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="instances" upperBound="-1"
+          eType="#//core/GroupingInstance"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
+      nsPrefix="easyflow">
+    <eClassifiers xsi:type="ecore:EClass" name="IProject" abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eOperations name="readProjectJson">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="initProject">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="createPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="autoSetup">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="applyMetaData">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="applyTraversalEvents"/>
+      <eOperations name="clearWorkflows"/>
+      <eOperations name="getActiveWorkflow" eType="#//core/Workflow"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DefaultProject" eSuperTypes="#//ui/IProject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="workflows" upperBound="-1"
+          eType="#//core/Workflow"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="metaData" upperBound="-1"
+          eType="#//core/IMetaData"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="basePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true" defaultValueLiteral=""/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ResequencingProject" eSuperTypes="#//ui/DefaultProject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="refBasedProjectMetaData"
+          upperBound="-1" eType="#//sequencing/RefBasedProjectMetaData"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="sequencing" nsURI="http:///de/thiema/easyflow/sequencing/easyflow.core/1.0.0"
+      nsPrefix="easyflow">
+    <eClassifiers xsi:type="ecore:EClass" name="RefBasedProjectMetaData" eSuperTypes="#//core/IProjectMetaData"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MetaData" eSuperTypes="#//core/IMetaData #//core/DefaultMetaData">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="samples" upperBound="-1"
+          eType="#//sequencing/grouping/StringToSampleMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+          eType="#//sequencing/grouping/StringToRecordMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="readGroups" upperBound="-1"
+          eType="#//sequencing/grouping/StringToReadGroupMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="libraries" upperBound="-1"
+          eType="#//sequencing/grouping/StringToLibraryMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
+          eType="#//sequencing/grouping/StringToGroupMap" containment="true"/>
+    </eClassifiers>
+    <eSubpackages name="grouping" nsURI="http:///de/thiema/easyflow/sequencing/grouping/easyflow.core/1.0.0"
+        nsPrefix="easyflow">
+      <eClassifiers xsi:type="ecore:EClass" name="Sample" eSuperTypes="#//core/GroupingCriterion #//sequencing/grouping/IGroupingCriterion">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+            eType="#//sequencing/grouping/Record"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="libraries" upperBound="-1"
+            eType="#//sequencing/grouping/Library"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
+            eType="#//sequencing/grouping/Group"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="readGroups" upperBound="-1"
+            eType="#//sequencing/grouping/ReadGroup"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ReadGroup" eSuperTypes="#//core/GroupingCriterion #//sequencing/grouping/IGroupingCriterion">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="platform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="platformUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+            eType="#//sequencing/grouping/Record"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="samples" upperBound="-1"
+            eType="#//sequencing/grouping/Sample"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
+            eType="#//sequencing/grouping/Group"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="libraries" upperBound="-1"
+            eType="#//sequencing/grouping/Library"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Library" eSuperTypes="#//core/GroupingCriterion #//sequencing/grouping/IGroupingCriterion">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="outerDistance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="pairedEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="readLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="readType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="samples" upperBound="-1"
+            eType="#//sequencing/grouping/Sample"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
+            eType="#//sequencing/grouping/Group"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="readGroups" upperBound="-1"
+            eType="#//sequencing/grouping/ReadGroup"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+            eType="#//sequencing/grouping/Record"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//core/GroupingCriterion #//sequencing/grouping/IGroupingCriterion">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="samples" upperBound="-1"
+            eType="#//sequencing/grouping/Sample"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+            eType="#//sequencing/grouping/Record"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="libraries" upperBound="-1"
+            eType="#//sequencing/grouping/Library"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="readGroups" upperBound="-1"
+            eType="#//sequencing/grouping/ReadGroup"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Record" eSuperTypes="#//core/GroupingCriterion #//sequencing/grouping/IGroupingCriterion #//core/DefaultRecord">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriList" transient="true">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+            <eTypeArguments eClassifier="#//URI"/>
+          </eGenericType>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="group" eType="#//sequencing/grouping/Group"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="sample" eType="#//sequencing/grouping/Sample"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="library" eType="#//sequencing/grouping/Library"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="readGroup" eType="#//sequencing/grouping/ReadGroup"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="IGroupingCriterion" abstract="true"
+          interface="true">
+        <eOperations name="getLibraryList">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+            <eTypeArguments eClassifier="#//sequencing/grouping/Library"/>
+          </eGenericType>
+        </eOperations>
+        <eOperations name="getSampleList">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+            <eTypeArguments eClassifier="#//sequencing/grouping/Sample"/>
+          </eGenericType>
+        </eOperations>
+        <eOperations name="getReadGroupList">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+            <eTypeArguments eClassifier="#//sequencing/grouping/ReadGroup"/>
+          </eGenericType>
+        </eOperations>
+        <eOperations name="getRecord">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+            <eTypeArguments eClassifier="#//sequencing/grouping/Record"/>
+          </eGenericType>
+        </eOperations>
+        <eOperations name="getGroupList">
+          <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+            <eTypeArguments eClassifier="#//sequencing/grouping/Group"/>
+          </eGenericType>
+        </eOperations>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToSampleMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//sequencing/grouping/Sample"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToReadGroupMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//sequencing/grouping/ReadGroup"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToLibraryMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//sequencing/grouping/Library"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToGroupMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//sequencing/grouping/Group"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToRecordMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//sequencing/grouping/Record"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="dataformat" nsURI="http:///de/thiema/easyflow/sequencing/dataformat/easyflow.core/1.0.0"
+        nsPrefix="easyflow">
+      <eClassifiers xsi:type="ecore:EEnum" name="DataFormat">
+        <eLiterals name="FastQ"/>
+        <eLiterals name="SAM" value="1"/>
+        <eLiterals name="BAM" value="2"/>
+        <eLiterals name="BED" value="3"/>
+        <eLiterals name="TXT" value="4"/>
+        <eLiterals name="CSV" value="5"/>
+        <eLiterals name="FastA" value="6"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="examples" nsURI="http:///de/thiema/easyflow/sequencing/examples/easyflow.core/1.0.0"
+        nsPrefix="easyflow"/>
+  </eSubpackages>
+  <eSubpackages name="graph" nsURI="http:///de/thiema/easyflow/graph/easyflow.core/1.0.0"
+      nsPrefix="easyflow">
+    <eSubpackages name="jgraphx" nsURI="http:///de/thiema/easyflow/graph/jgraphx/easyflow.core/1.0.0"
+        nsPrefix="easyflow">
+      <eClassifiers xsi:type="ecore:EClass" name="Util">
+        <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+          <eParameters name="root" eType="#//mxICell"/>
+        </eOperations>
+        <eOperations name="computeSubgraph" eType="#//mxICell">
+          <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+          <eParameters name="isComplete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eOperations>
+        <eOperations name="applyTraversalEvent">
+          <eParameters name="root" eType="#//mxICell"/>
+          <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+          <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eParameters name="instanceStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eOperations>
+        <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell">
+          <eParameters name="root" eType="#//mxICell"/>
+          <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eParameters name="instanceStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eOperations>
+        <eOperations name="printGraph">
+          <eParameters name="root" eType="#//mxICell"/>
+        </eOperations>
+        <eOperations name="getTraversalEvents" upperBound="-1" eType="#//core/TraversalEvent">
+          <eParameters name="root" eType="#//mxICell"/>
+          <eParameters name="isGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eOperations>
+        <eOperations name="getCells" upperBound="-1" eType="#//mxICell">
+          <eParameters name="tasks" upperBound="-1" eType="#//core/Task"/>
+        </eOperations>
+        <eOperations name="removeSubGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+          <eParameters name="root" eType="#//mxICell"/>
+        </eOperations>
+        <eOperations name="updateTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+          <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+        </eOperations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+            changeable="false" transient="true"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="tasks" upperBound="-1"
+            eType="#//core/StringToTaskMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="cells" upperBound="-1"
+            eType="#//core/StringToGraphCellMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="depricatedTasks" upperBound="-1"
+            eType="#//core/StringToStringMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="mostProcessedTasks"
+            upperBound="-1" eType="#//core/StringToStringMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="metaData" eType="#//core/DefaultMetaData"/>
+      </eClassifiers>
+    </eSubpackages>
+  </eSubpackages>
+</ecore:EPackage>

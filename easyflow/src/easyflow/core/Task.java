@@ -1,0 +1,455 @@
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+package easyflow.core;
+
+import easyflow.sequencing.grouping.Group;
+import java.util.Map;
+
+import org.apache.commons.jexl2.JexlEngine;
+
+import org.apache.log4j.Logger;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+
+import org.eclipse.emf.ecore.EObject;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Task</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * The Task respresents a basic data processing unit. It transforms a number of Inputs into Outputs. The Task itself is independent of a concrete Tool that implements the Task and the processing.
+ * <!-- end-model-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link easyflow.core.Task#getInDataPorts <em>In Data Ports</em>}</li>
+ *   <li>{@link easyflow.core.Task#getOutDataPorts <em>Out Data Ports</em>}</li>
+ *   <li>{@link easyflow.core.Task#getName <em>Name</em>}</li>
+ *   <li>{@link easyflow.core.Task#getShallProcessJEXL <em>Shall Process JEXL</em>}</li>
+ *   <li>{@link easyflow.core.Task#isUtil <em>Util</em>}</li>
+ *   <li>{@link easyflow.core.Task#getJexlEngine <em>Jexl Engine</em>}</li>
+ *   <li>{@link easyflow.core.Task#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.core.Task#getTraversalEvents <em>Traversal Events</em>}</li>
+ *   <li>{@link easyflow.core.Task#getParents <em>Parents</em>}</li>
+ *   <li>{@link easyflow.core.Task#getChunks <em>Chunks</em>}</li>
+ *   <li>{@link easyflow.core.Task#getFullName <em>Full Name</em>}</li>
+ *   <li>{@link easyflow.core.Task#getCurrentTraversalEventDEPRICATED <em>Current Traversal Event DEPRICATED</em>}</li>
+ *   <li>{@link easyflow.core.Task#getProcessedTraversalEventsDEPRICATED <em>Processed Traversal Events DEPRICATED</em>}</li>
+ *   <li>{@link easyflow.core.Task#getTools <em>Tools</em>}</li>
+ *   <li>{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see easyflow.core.CorePackage#getTask()
+ * @model
+ * @generated
+ */
+public interface Task extends EObject {
+	/**
+	 * Returns the value of the '<em><b>In Data Ports</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>In Data Ports</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>In Data Ports</em>' reference list.
+	 * @see easyflow.core.CorePackage#getTask_InDataPorts()
+	 * @model
+	 * @generated
+	 */
+	EList<DataPort> getInDataPorts();
+
+	/**
+	 * Returns the value of the '<em><b>Out Data Ports</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Out Data Ports</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Out Data Ports</em>' reference list.
+	 * @see easyflow.core.CorePackage#getTask_OutDataPorts()
+	 * @model
+	 * @generated
+	 */
+	EList<DataPort> getOutDataPorts();
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see easyflow.core.CorePackage#getTask_Name()
+	 * @model
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Shall Process JEXL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Shall Process JEXL</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Shall Process JEXL</em>' attribute.
+	 * @see #setShallProcessJEXL(String)
+	 * @see easyflow.core.CorePackage#getTask_ShallProcessJEXL()
+	 * @model
+	 * @generated
+	 */
+	String getShallProcessJEXL();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getShallProcessJEXL <em>Shall Process JEXL</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Shall Process JEXL</em>' attribute.
+	 * @see #getShallProcessJEXL()
+	 * @generated
+	 */
+	void setShallProcessJEXL(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Util</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Util</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Util</em>' attribute.
+	 * @see #setUtil(boolean)
+	 * @see easyflow.core.CorePackage#getTask_Util()
+	 * @model
+	 * @generated
+	 */
+	boolean isUtil();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#isUtil <em>Util</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Util</em>' attribute.
+	 * @see #isUtil()
+	 * @generated
+	 */
+	void setUtil(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Jexl Engine</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Jexl Engine</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Jexl Engine</em>' attribute.
+	 * @see easyflow.core.CorePackage#getTask_JexlEngine()
+	 * @model dataType="easyflow.JexlEngine" transient="true" changeable="false"
+	 * @generated
+	 */
+	JexlEngine getJexlEngine();
+
+	/**
+	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Logger</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Logger</em>' attribute.
+	 * @see #setLogger(Logger)
+	 * @see easyflow.core.CorePackage#getTask_Logger()
+	 * @model dataType="easyflow.Logger" transient="true"
+	 * @generated
+	 */
+	Logger getLogger();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getLogger <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Logger</em>' attribute.
+	 * @see #getLogger()
+	 * @generated
+	 */
+	void setLogger(Logger value);
+
+	/**
+	 * Returns the value of the '<em><b>Traversal Events</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.TraversalEvent},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Traversal Events</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Traversal Events</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_TraversalEvents()
+	 * @model mapType="easyflow.core.StringToTraversalEventMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalEvent>"
+	 * @generated
+	 */
+	EMap<String, TraversalEvent> getTraversalEvents();
+
+	/**
+	 * Returns the value of the '<em><b>Parents</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.Task}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parents</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parents</em>' reference list.
+	 * @see easyflow.core.CorePackage#getTask_Parents()
+	 * @model
+	 * @generated
+	 */
+	EList<Task> getParents();
+
+	/**
+	 * Returns the value of the '<em><b>Chunks</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link easyflow.core.TraversalChunk},
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * the tasks chunk (value) which corresponds to its traversal criterion (key). 
+	 * Only set after traversal event has been applied.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Chunks</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Chunks()
+	 * @model mapType="easyflow.core.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalChunk>"
+	 * @generated
+	 */
+	EMap<String, EList<TraversalChunk>> getChunks();
+
+	/**
+	 * Returns the value of the '<em><b>Full Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Full Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Full Name</em>' attribute.
+	 * @see #setFullName(String)
+	 * @see easyflow.core.CorePackage#getTask_FullName()
+	 * @model
+	 * @generated
+	 */
+	String getFullName();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getFullName <em>Full Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Full Name</em>' attribute.
+	 * @see #getFullName()
+	 * @generated
+	 */
+	void setFullName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Current Traversal Event DEPRICATED</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Current Traversal Event DEPRICATED</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Current Traversal Event DEPRICATED</em>' attribute.
+	 * @see #setCurrentTraversalEventDEPRICATED(String)
+	 * @see easyflow.core.CorePackage#getTask_CurrentTraversalEventDEPRICATED()
+	 * @model
+	 * @generated
+	 */
+	String getCurrentTraversalEventDEPRICATED();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getCurrentTraversalEventDEPRICATED <em>Current Traversal Event DEPRICATED</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Current Traversal Event DEPRICATED</em>' attribute.
+	 * @see #getCurrentTraversalEventDEPRICATED()
+	 * @generated
+	 */
+	void setCurrentTraversalEventDEPRICATED(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Processed Traversal Events DEPRICATED</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.TraversalEvent},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processed Traversal Events DEPRICATED</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processed Traversal Events DEPRICATED</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_ProcessedTraversalEventsDEPRICATED()
+	 * @model mapType="easyflow.core.StringToTraversalEventMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalEvent>"
+	 * @generated
+	 */
+	EMap<String, TraversalEvent> getProcessedTraversalEventsDEPRICATED();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model defaultGroupingCriteriaMany="true"
+	 * @generated
+	 */
+	void readTask(String taskString, String defaultMode, EList<String> defaultGroupingCriteria);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean shallProcess(Map<String, Object> metaDataMap);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.Object"
+	 * @generated
+	 */
+	Object evaluateJexl(TraversalEvent traversalEvent, Map<String, Object> metaDataMap);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model many="false"
+	 * @generated
+	 */
+	EList<DataFormat> parseDataFormatField(String dataFormatString);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getUniqueString();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isCompatibleWithOutDataPortFor(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isCompatibleWithInDataPortFor(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	Task getParentTaskByOutDataPort(DataPort dataPort);
+
+	/**
+	 * Returns the value of the '<em><b>Tools</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.Tool},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tools</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tools</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Tools()
+	 * @model mapType="easyflow.core.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.core.Tool>"
+	 * @generated
+	 */
+	EMap<String, Tool> getTools();
+
+	/**
+	 * Returns the value of the '<em><b>Previous Task Str</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Previous Task Str</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Previous Task Str</em>' attribute.
+	 * @see #setPreviousTaskStr(String)
+	 * @see easyflow.core.CorePackage#getTask_PreviousTaskStr()
+	 * @model default=""
+	 * @generated
+	 */
+	String getPreviousTaskStr();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Previous Task Str</em>' attribute.
+	 * @see #getPreviousTaskStr()
+	 * @generated
+	 */
+	void setPreviousTaskStr(String value);
+
+} // Task

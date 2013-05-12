@@ -1,0 +1,121 @@
+	public void readMetaData() {
+		
+		logger.debug(this+" "+"trying to read: "+getFileName());
+        BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(new FileReader(getFileName()));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String sep="\t";
+        String strLine;
+        Map<String, Integer> colNames=new HashMap<String, Integer>();
+        //expecting first line to be header
+        try {
+			strLine = bufferedReader.readLine();
+			String[] colnames=strLine.split(sep);
+			for (int i=0; i<colnames.length; i++) {
+				colNames.put(colnames[i], i);
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        		
+        try {
+			while ((strLine = bufferedReader.readLine()) != null)   {
+				
+				if (!strLine.startsWith("#")) {
+					String[] lina=strLine.split(sep);
+					logger.debug("Sample"+lina[colNames.get("Sample")]);
+					logger.debug("Record"+lina[colNames.get("ID")]);
+					logger.debug("ReadGroup"+lina[colNames.get("ReadGroup")]);
+					logger.debug("Library"+lina[colNames.get("Library")]);
+					logger.debug("Group"+lina[colNames.get("Group")]);
+            		Record record=GroupingFactory.eINSTANCE.createRecord();
+            		record.setId(lina[colNames.get("ID")]);
+            		//record.setMetadata(metadata);
+            		
+            		Object[] uris=lina[colNames.get("InputFiles")].split(",");
+            		for (int j=0; j<uris.length; j++) {
+            			record.getUriList().add((URI)uris[j]);
+            		}
+            		
+            		//System.out.println(record[0]+" "+record[2]);
+            		Group curGroup=GroupingFactory.eINSTANCE.createGroup();
+            		Sample curSample=GroupingFactory.eINSTANCE.createSample();
+            		curSample.getReadGroups().clear();
+
+            		ReadGroup curReadGroup=GroupingFactory.eINSTANCE.createReadGroup();
+
+            		Library curLibrary=GroupingFactory.eINSTANCE.createLibrary();
+
+            		
+            		if (getGroups().containsKey(lina[GroupName])) {
+            			curGroup=metadata.getGroups().get(lina[GroupName]);         			
+            		}
+            		else {
+            			curGroup.setId(lina[GroupName]);
+            			metadata.getGroups().put(lina[GroupName], curGroup);
+            		}
+
+            		/*
+            		 * check existing dataGroupingCriteria for group, 
+            		 * if exists: set current
+            		 * else: add
+            		 */
+            		
+            		if (curGroup.getSamples().containsKey(lina[SampleName])) curSample=curGroup.getSamples().get(lina[SampleName]); 
+            		else curGroup.getSamples().put(lina[SampleName], curSample);
+            		if (curGroup.getReadGroups().containsKey(lina[ID])) curReadGroup=curGroup.getReadGroups().get(lina[ID]);
+            		else curGroup.getReadGroups().put(lina[ID], curReadGroup);
+            		if (curGroup.getLibraries().containsKey(lina[Library])) curLibrary=curGroup.getLibraries().get(lina[Library]);
+            		else curGroup.getLibraries().put(lina[Library], curLibrary);
+            		//if (curGroup.getRecords().containsKey(record[5])) cur=curGroup.getRecords().get(record[5]);
+            		//System.out.println("add record: "+record[2]+" "+rec);
+            		
+            		curGroup.getRecords().put(lina[ID], rec);
+            		curSample.setId(lina[SampleName]);
+            		curSample.getRecords().put(record.getId(), rec);
+        			curReadGroup.setId(lina[ReadGroup]);
+        			curReadGroup.setPlatform(lina[Platform]);
+        			curReadGroup.setPlatformUnit(lina[PlatformUnit]);
+        			curLibrary.setId(lina[Library]);
+        			curLibrary.getRecords().put(record.getId(), rec);
+        			curLibrary.setInsertSize(Integer.parseInt(lina[InsertSize]));
+        			curLibrary.setReadLength(Integer.parseInt(lina[ReadLength]));
+        			//curLibrary.setDescription(Integer.parseInt(lina[Description]));
+        			
+            		if (!curSample.getReadGroups().contains(curReadGroup.getId())) {
+            			curSample.getReadGroups().put(curReadGroup.getId(), curReadGroup);
+            			//System.out.println(curSample.getReadGroups());
+            		}
+            		
+            		if (!curSample.getLibraries().contains(curLibrary.getId())) 
+            			curSample.getLibraries().put(curLibrary.getId(), curLibrary);
+            		
+            		if (!curReadGroup.getSamples().contains(curSample.getId())) 
+            			curReadGroup.getSamples().put(curSample.getId(), curSample);
+            		
+            		if (!curLibrary.getSamples().contains(curSample.getId())) 
+            			curLibrary.getSamples().put(curSample.getId(), curSample);
+            		
+            		//System.out.println("3 "+curSample.getReadGroups()+" "+curSample.getLibraries());
+            		if (!curLibrary.getReadGroups().contains(curReadGroup.getId())) 
+            			curLibrary.getReadGroups().put(curReadGroup.getId(), curReadGroup);
+            		if (!curReadGroup.getLibraries().contains(curLibrary.getId())) 
+            			curReadGroup.getLibraries().put(curLibrary.getId(), curLibrary);
+            		
+            		//System.out.println("3why? "+curSample.getReadGroups()+" "+curSample.getLibraries());
+            		record.setLibrary(curLibrary);
+            		record.setReadgroup(curReadGroup);
+            		record.setSample(curSample);
+
+				}
+			}
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
