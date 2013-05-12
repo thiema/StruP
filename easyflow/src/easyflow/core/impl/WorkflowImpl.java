@@ -1053,6 +1053,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			for (Task mergeTask:traversalEvent.getMergeTask()) {
 				mergeTasks+=mergeTask.getUniqueString()+" ";
 			}
+			
 			mergeTasks+=")";
 
 			logger.debug("applyTraversalEvents(): "
