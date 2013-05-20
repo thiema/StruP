@@ -74,9 +74,9 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getFileName <em>File Name</em>}</li>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getGroupingInstancesByGroup <em>Grouping Instances By Group</em>}</li>
- *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getSamples <em>Samples</em>}</li>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.sequencing.impl.MetaDataImpl#getReadGroups <em>Read Groups</em>}</li>
@@ -129,6 +129,16 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getGroupings() <em>Groupings</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupings()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Grouping> groupings;
+
+	/**
 	 * The cached value of the '{@link #getGroupingInstances() <em>Grouping Instances</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -147,16 +157,6 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 	 * @ordered
 	 */
 	protected EMap<String, GroupingInstanceList> groupingInstancesByGroup;
-
-	/**
-	 * The cached value of the '{@link #getGroupings() <em>Groupings</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroupings()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Grouping> groupings;
 
 	/**
 	 * The cached value of the '{@link #getSamples() <em>Samples</em>}' map.
@@ -580,12 +580,12 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case SequencingPackage.META_DATA__GROUPINGS:
+				return ((InternalEList<?>)getGroupings()).basicRemove(otherEnd, msgs);
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES:
 				return ((InternalEList<?>)getGroupingInstances()).basicRemove(otherEnd, msgs);
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				return ((InternalEList<?>)getGroupingInstancesByGroup()).basicRemove(otherEnd, msgs);
-			case SequencingPackage.META_DATA__GROUPINGS:
-				return ((InternalEList<?>)getGroupings()).basicRemove(otherEnd, msgs);
 			case SequencingPackage.META_DATA__SAMPLES:
 				return ((InternalEList<?>)getSamples()).basicRemove(otherEnd, msgs);
 			case SequencingPackage.META_DATA__RECORDS:
@@ -612,15 +612,15 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 				return getFileName();
 			case SequencingPackage.META_DATA__LOGGER:
 				return getLogger();
+			case SequencingPackage.META_DATA__GROUPINGS:
+				if (coreType) return getGroupings();
+				else return getGroupings().map();
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES:
 				if (coreType) return getGroupingInstances();
 				else return getGroupingInstances().map();
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				if (coreType) return getGroupingInstancesByGroup();
 				else return getGroupingInstancesByGroup().map();
-			case SequencingPackage.META_DATA__GROUPINGS:
-				if (coreType) return getGroupings();
-				else return getGroupings().map();
 			case SequencingPackage.META_DATA__SAMPLES:
 				if (coreType) return getSamples();
 				else return getSamples().map();
@@ -655,14 +655,14 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 			case SequencingPackage.META_DATA__LOGGER:
 				setLogger((Logger)newValue);
 				return;
+			case SequencingPackage.META_DATA__GROUPINGS:
+				((EStructuralFeature.Setting)getGroupings()).set(newValue);
+				return;
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES:
 				((EStructuralFeature.Setting)getGroupingInstances()).set(newValue);
 				return;
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				((EStructuralFeature.Setting)getGroupingInstancesByGroup()).set(newValue);
-				return;
-			case SequencingPackage.META_DATA__GROUPINGS:
-				((EStructuralFeature.Setting)getGroupings()).set(newValue);
 				return;
 			case SequencingPackage.META_DATA__SAMPLES:
 				((EStructuralFeature.Setting)getSamples()).set(newValue);
@@ -697,14 +697,14 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 			case SequencingPackage.META_DATA__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
+			case SequencingPackage.META_DATA__GROUPINGS:
+				getGroupings().clear();
+				return;
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES:
 				getGroupingInstances().clear();
 				return;
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				getGroupingInstancesByGroup().clear();
-				return;
-			case SequencingPackage.META_DATA__GROUPINGS:
-				getGroupings().clear();
 				return;
 			case SequencingPackage.META_DATA__SAMPLES:
 				getSamples().clear();
@@ -737,12 +737,12 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
 			case SequencingPackage.META_DATA__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case SequencingPackage.META_DATA__GROUPINGS:
+				return groupings != null && !groupings.isEmpty();
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES:
 				return groupingInstances != null && !groupingInstances.isEmpty();
 			case SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				return groupingInstancesByGroup != null && !groupingInstancesByGroup.isEmpty();
-			case SequencingPackage.META_DATA__GROUPINGS:
-				return groupings != null && !groupings.isEmpty();
 			case SequencingPackage.META_DATA__SAMPLES:
 				return samples != null && !samples.isEmpty();
 			case SequencingPackage.META_DATA__RECORDS:
@@ -768,9 +768,9 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 			switch (derivedFeatureID) {
 				case SequencingPackage.META_DATA__FILE_NAME: return CorePackage.DEFAULT_META_DATA__FILE_NAME;
 				case SequencingPackage.META_DATA__LOGGER: return CorePackage.DEFAULT_META_DATA__LOGGER;
+				case SequencingPackage.META_DATA__GROUPINGS: return CorePackage.DEFAULT_META_DATA__GROUPINGS;
 				case SequencingPackage.META_DATA__GROUPING_INSTANCES: return CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES;
 				case SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP: return CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP;
-				case SequencingPackage.META_DATA__GROUPINGS: return CorePackage.DEFAULT_META_DATA__GROUPINGS;
 				default: return -1;
 			}
 		}
@@ -788,9 +788,9 @@ public class MetaDataImpl extends EObjectImpl implements MetaData {
 			switch (baseFeatureID) {
 				case CorePackage.DEFAULT_META_DATA__FILE_NAME: return SequencingPackage.META_DATA__FILE_NAME;
 				case CorePackage.DEFAULT_META_DATA__LOGGER: return SequencingPackage.META_DATA__LOGGER;
+				case CorePackage.DEFAULT_META_DATA__GROUPINGS: return SequencingPackage.META_DATA__GROUPINGS;
 				case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES: return SequencingPackage.META_DATA__GROUPING_INSTANCES;
 				case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP: return SequencingPackage.META_DATA__GROUPING_INSTANCES_BY_GROUP;
-				case CorePackage.DEFAULT_META_DATA__GROUPINGS: return SequencingPackage.META_DATA__GROUPINGS;
 				default: return -1;
 			}
 		}

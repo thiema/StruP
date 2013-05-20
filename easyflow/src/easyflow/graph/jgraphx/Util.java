@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getDepricatedTasks <em>Depricated Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getMostProcessedTasks <em>Most Processed Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getMetaData <em>Meta Data</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getDefaultRootCell <em>Default Root Cell</em>}</li>
  * </ul>
  * </p>
  *
@@ -180,12 +181,46 @@ public interface Util extends EObject {
 	void setMetaData(DefaultMetaData value);
 
 	/**
+	 * Returns the value of the '<em><b>Default Root Cell</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Default Root Cell</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Default Root Cell</em>' attribute.
+	 * @see #setDefaultRootCell(mxICell)
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_DefaultRootCell()
+	 * @model dataType="easyflow.mxICell"
+	 * @generated
+	 */
+	mxICell getDefaultRootCell();
+
+	/**
+	 * Sets the value of the '{@link easyflow.graph.jgraphx.Util#getDefaultRootCell <em>Default Root Cell</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Default Root Cell</em>' attribute.
+	 * @see #getDefaultRootCell()
+	 * @generated
+	 */
+	void setDefaultRootCell(mxICell value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model dataType="easyflow.mxICell"
 	 * @generated
 	 */
 	mxICell computeSubgraph(TraversalEvent traversalEvent, boolean isComplete);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	EList<TraversalEvent> getNewTraversalEvents(TraversalEvent traversalEvent, mxICell root);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -234,14 +269,6 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	boolean removeSubGraph(mxICell root);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean updateTraversalEvent(TraversalEvent traversalEvent);
 
 	/**
 	 * <!-- begin-user-doc -->

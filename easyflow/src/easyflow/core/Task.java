@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getProcessedTraversalEventsDEPRICATED <em>Processed Traversal Events DEPRICATED</em>}</li>
  *   <li>{@link easyflow.core.Task#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}</li>
+ *   <li>{@link easyflow.core.Task#isRoot <em>Root</em>}</li>
  * </ul>
  * </p>
  *
@@ -409,6 +410,14 @@ public interface Task extends EObject {
 	Task getParentTaskByOutDataPort(DataPort dataPort);
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.core.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalChunk>"
+	 * @generated
+	 */
+	EMap<String, EList<TraversalChunk>> getNonOveralppingTraversalChunksFor(Task task);
+
+	/**
 	 * Returns the value of the '<em><b>Tools</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link easyflow.core.Tool},
@@ -451,5 +460,31 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void setPreviousTaskStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Root</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Root</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Root</em>' attribute.
+	 * @see #setRoot(boolean)
+	 * @see easyflow.core.CorePackage#getTask_Root()
+	 * @model
+	 * @generated
+	 */
+	boolean isRoot();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#isRoot <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Root</em>' attribute.
+	 * @see #isRoot()
+	 * @generated
+	 */
+	void setRoot(boolean value);
 
 } // Task

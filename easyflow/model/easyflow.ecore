@@ -193,6 +193,9 @@
         </eAnnotations>
         <eParameters name="dataPort" eType="#//core/DataPort"/>
       </eOperations>
+      <eOperations name="getNonOveralppingTraversalChunksFor" upperBound="-1" eType="#//core/StringToChunksMap">
+        <eParameters name="task" eType="#//core/Task"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPorts" upperBound="-1"
           eType="#//core/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="outDataPorts" upperBound="-1"
@@ -223,6 +226,7 @@
           eType="#//core/StringToToolMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="previousTaskStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           defaultValueLiteral=""/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="root" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Tool">
       <eOperations name="readImplementation">
@@ -418,19 +422,21 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="splitTask" eType="#//core/Task"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parentTask" upperBound="-1"
           eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentCells" upperBound="-1"
+          eType="#//mxICell" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="traversalCriterion" eType="#//core/TraversalCriterion"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="metaData" eType="#//EObject"
           transient="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="processed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="processedDEPRICATED"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="queued" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="queuedDEPRECATED" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="foundMergeTask" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="foundMergeTaskDEPRICATED"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentCells" upperBound="-1"
-          eType="#//mxICell" transient="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="TraversalOperation">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -739,6 +745,10 @@
           <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
           <eParameters name="isComplete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
         </eOperations>
+        <eOperations name="getNewTraversalEvents" upperBound="-1" eType="#//core/TraversalEvent">
+          <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+          <eParameters name="root" eType="#//mxICell"/>
+        </eOperations>
         <eOperations name="applyTraversalEvent">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
@@ -763,9 +773,6 @@
         <eOperations name="removeSubGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
-        <eOperations name="updateTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-          <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
-        </eOperations>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
             changeable="false" transient="true"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
@@ -778,6 +785,7 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="mostProcessedTasks"
             upperBound="-1" eType="#//core/StringToStringMap" containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="metaData" eType="#//core/DefaultMetaData"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultRootCell" eType="#//mxICell"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

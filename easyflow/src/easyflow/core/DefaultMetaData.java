@@ -26,9 +26,9 @@ import org.eclipse.emf.common.util.EMap;
  * <ul>
  *   <li>{@link easyflow.core.DefaultMetaData#getFileName <em>File Name</em>}</li>
  *   <li>{@link easyflow.core.DefaultMetaData#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.core.DefaultMetaData#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.core.DefaultMetaData#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.core.DefaultMetaData#getGroupingInstancesByGroup <em>Grouping Instances By Group</em>}</li>
- *   <li>{@link easyflow.core.DefaultMetaData#getGroupings <em>Groupings</em>}</li>
  * </ul>
  * </p>
  *

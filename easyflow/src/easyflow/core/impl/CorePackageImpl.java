@@ -736,6 +736,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTask_Root() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTool() {
 		return toolEClass;
 	}
@@ -980,15 +989,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getDefaultMetaData_GroupingInstances() {
-		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDefaultMetaData_GroupingInstancesByGroup() {
 		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -997,8 +997,17 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultMetaData_Groupings() {
+	public EReference getDefaultMetaData_GroupingInstancesByGroup() {
 		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDefaultMetaData_Groupings() {
+		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1178,7 +1187,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTraversalEvent_TraversalCriterion() {
-		return (EReference)traversalEventEClass.getEStructuralFeatures().get(3);
+		return (EReference)traversalEventEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1187,15 +1196,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTraversalEvent_Logger() {
-		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTraversalEvent_MetaData() {
 		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -1204,7 +1204,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTraversalEvent_Processed() {
+	public EAttribute getTraversalEvent_MetaData() {
 		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -1213,7 +1213,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTraversalEvent_Queued() {
+	public EAttribute getTraversalEvent_ProcessedDEPRICATED() {
 		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -1222,7 +1222,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTraversalEvent_FoundMergeTask() {
+	public EAttribute getTraversalEvent_QueuedDEPRECATED() {
 		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -1231,8 +1231,17 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTraversalEvent_ParentCells() {
+	public EAttribute getTraversalEvent_FoundMergeTaskDEPRICATED() {
 		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTraversalEvent_ParentCells() {
+		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1847,6 +1856,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED);
 		createEReference(taskEClass, TASK__TOOLS);
 		createEAttribute(taskEClass, TASK__PREVIOUS_TASK_STR);
+		createEAttribute(taskEClass, TASK__ROOT);
 
 		toolEClass = createEClass(TOOL);
 		createEAttribute(toolEClass, TOOL__LOGGER);
@@ -1895,9 +1905,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		defaultMetaDataEClass = createEClass(DEFAULT_META_DATA);
 		createEAttribute(defaultMetaDataEClass, DEFAULT_META_DATA__FILE_NAME);
 		createEAttribute(defaultMetaDataEClass, DEFAULT_META_DATA__LOGGER);
+		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPINGS);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_INSTANCES);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP);
-		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPINGS);
 
 		iProjectMetaDataEClass = createEClass(IPROJECT_META_DATA);
 
@@ -1918,13 +1928,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__MERGE_TASK);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__SPLIT_TASK);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__PARENT_TASK);
+		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__PARENT_CELLS);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__TRAVERSAL_CRITERION);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__LOGGER);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__META_DATA);
-		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__PROCESSED);
-		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__QUEUED);
-		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__FOUND_MERGE_TASK);
-		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__PARENT_CELLS);
+		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__PROCESSED_DEPRICATED);
+		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__QUEUED_DEPRECATED);
+		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED);
 
 		traversalOperationEClass = createEClass(TRAVERSAL_OPERATION);
 		createEAttribute(traversalOperationEClass, TRAVERSAL_OPERATION__NAME);
@@ -2123,6 +2133,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_ProcessedTraversalEventsDEPRICATED(), this.getStringToTraversalEventMap(), null, "processedTraversalEventsDEPRICATED", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Tools(), this.getStringToToolMap(), null, "tools", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_PreviousTaskStr(), ecorePackage.getEString(), "previousTaskStr", "", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_Root(), ecorePackage.getEBoolean(), "root", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -2163,6 +2174,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = addEOperation(taskEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, this.getStringToChunksMap(), "getNonOveralppingTraversalChunksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(toolEClass, Tool.class, "Tool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTool_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Tool.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2238,9 +2252,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(defaultMetaDataEClass, DefaultMetaData.class, "DefaultMetaData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDefaultMetaData_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultMetaData_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultMetaData.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultMetaData_Groupings(), this.getStringToGroupingMap(), null, "groupings", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_GroupingInstances(), this.getStringToGroupingInstanceListMap(), null, "groupingInstances", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_GroupingInstancesByGroup(), this.getStringToGroupingInstanceListMap(), null, "groupingInstancesByGroup", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDefaultMetaData_Groupings(), this.getStringToGroupingMap(), null, "groupings", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(defaultMetaDataEClass, null, "getDefaultRecords", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
@@ -2271,13 +2285,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTraversalEvent_MergeTask(), this.getTask(), null, "mergeTask", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_SplitTask(), this.getTask(), null, "splitTask", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_ParentTask(), this.getTask(), null, "parentTask", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalEvent_ParentCells(), theEasyflowPackage.getmxICell(), "parentCells", null, 0, -1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_TraversalCriterion(), this.getTraversalCriterion(), null, "traversalCriterion", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_MetaData(), theEasyflowPackage.getEObject(), "metaData", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTraversalEvent_Processed(), ecorePackage.getEBoolean(), "processed", "false", 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTraversalEvent_Queued(), ecorePackage.getEBoolean(), "queued", "false", 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTraversalEvent_FoundMergeTask(), ecorePackage.getEBoolean(), "foundMergeTask", "false", 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTraversalEvent_ParentCells(), theEasyflowPackage.getmxICell(), "parentCells", null, 0, -1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalEvent_ProcessedDEPRICATED(), ecorePackage.getEBoolean(), "processedDEPRICATED", "false", 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalEvent_QueuedDEPRECATED(), ecorePackage.getEBoolean(), "queuedDEPRECATED", "false", 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalEvent_FoundMergeTaskDEPRICATED(), ecorePackage.getEBoolean(), "foundMergeTaskDEPRICATED", "false", 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(traversalEventEClass, ecorePackage.getEBoolean(), "applyMetadata", 0, 1, IS_UNIQUE, IS_ORDERED);
 

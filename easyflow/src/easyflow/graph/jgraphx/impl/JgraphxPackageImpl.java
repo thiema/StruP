@@ -214,6 +214,15 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getUtil_DefaultRootCell() {
+		return (EAttribute)utilEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public JgraphxFactory getJgraphxFactory() {
 		return (JgraphxFactory)getEFactoryInstance();
 	}
@@ -245,6 +254,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEReference(utilEClass, UTIL__DEPRICATED_TASKS);
 		createEReference(utilEClass, UTIL__MOST_PROCESSED_TASKS);
 		createEReference(utilEClass, UTIL__META_DATA);
+		createEAttribute(utilEClass, UTIL__DEFAULT_ROOT_CELL);
 	}
 
 	/**
@@ -289,6 +299,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		initEReference(getUtil_DepricatedTasks(), theCorePackage.getStringToStringMap(), null, "depricatedTasks", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_MostProcessedTasks(), theCorePackage.getStringToStringMap(), null, "mostProcessedTasks", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_MetaData(), theCorePackage.getDefaultMetaData(), null, "metaData", null, 0, 1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUtil_DefaultRootCell(), theEasyflowPackage.getmxICell(), "defaultRootCell", null, 0, 1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -296,6 +307,10 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		op = addEOperation(utilEClass, theEasyflowPackage.getmxICell(), "computeSubgraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isComplete", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(utilEClass, theCorePackage.getTraversalEvent(), "getNewTraversalEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(utilEClass, null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -320,9 +335,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "removeSubGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "updateTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theCorePackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //JgraphxPackageImpl

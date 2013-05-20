@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EMap;
 import org.w3c.dom.Element;
 
 import com.mxgraph.examples.swing.editor.ShadowBorder;
@@ -68,6 +69,8 @@ public class TestRenderer extends JComponent {
 		Object value = ((mxCell) cell).getValue();
 		Task task=null;
 		if (value instanceof Element) {
+			//logger.debug(//(EMap<String,Task>)
+				//	XMLUtil.container.get("tasks").hashCode());
 			task=XMLUtil.loadTaskFromElement((Element) value);
 			//logger.debug(graph.getLabel(cell)+" "+task);
 			//logger.debug(task.getUniqueString()+" "+task.getChunks().keySet());

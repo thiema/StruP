@@ -237,8 +237,13 @@ public class EasyFlowGraph extends mxGraph
 			{
 				
 				Element elt = (Element) value;
-				
-				if (elt.getFirstChild().getLocalName().equalsIgnoreCase("Task"))
+				//logger.debug("getLabel(): elements first child="+elt.getFirstChild());
+				if (elt.getFirstChild() == null && elt.getLocalName().equalsIgnoreCase("Task"))
+				{
+					
+					return elt.getAttributes().getNamedItem("name").getNodeValue();
+				}
+				else if (! elt.getFirstChild().getLocalName().equalsIgnoreCase("Task"))
 				{
 					String label = elt.getFirstChild().getAttributes().getNamedItem("name").getNodeValue();
 					//logger.debug(label);
@@ -332,8 +337,8 @@ public class EasyFlowGraph extends mxGraph
 		}
 	}
 	final int maxEdges=100;
-	final double defaultWidth=100;
-	final double defaultHight=20;
+	final double defaultWidth=200;
+	final double defaultHight=40;
 	
 	
 	public Object insertVertexEasyFlow(Object parent, String id, Task task) {

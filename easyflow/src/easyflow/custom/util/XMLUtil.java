@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
@@ -247,10 +248,10 @@ public class XMLUtil {
 	public static Element getElement(Task task) {
 		
 		task.setFullName(task.getUniqueString());
+		//logger.debug("XMLUtil(): "+task);
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-		(Resource.Factory.Registry.DEFAULT_EXTENSION, 
-		 new XMIResourceFactoryImpl());
+			(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
 		// Register the package to ensure it is available during loading.
 		resourceSet.getPackageRegistry().put
@@ -260,7 +261,8 @@ public class XMLUtil {
 		
 		resource.getContents().add(task);
 		//EcoreUtil.resolveAll(resource);
-		
+		if (!task.isRoot())
+		{
 		resource.getContents().addAll(task.getTools().values());
 		resource.getContents().addAll(task.getTraversalEvents().values());
 		resource.getContents().addAll(task.getInDataPorts());
@@ -280,7 +282,6 @@ public class XMLUtil {
 			resource.getContents().addAll(dataPort.getGroupingCriteria());
 			resource.getContents().add(dataPort.getDataFormat());
 		}
-		
 		Iterator<TraversalEvent> it1=task.getTraversalEvents().values().iterator();
 		
 		while (it1.hasNext()) {
@@ -298,6 +299,7 @@ public class XMLUtil {
 				}
 			}*/
 		}
+		}
 		//EcoreUtil.resolveAll(resource);
 		
 		//options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
@@ -311,7 +313,6 @@ public class XMLUtil {
 		//options.put("OPTION_ANY_TYPE", new SDOFactoryImpl().getSDOPackage().getEDataObjectAnyType());
 		
 		Document doc=((XMLResource)resource).save(null, getOptions(), null);
-		
 		
 /*		
 		ResourceSet resourceSet1 = new ResourceSetImpl();
@@ -337,7 +338,8 @@ public class XMLUtil {
 		Element el=doc.getDocumentElement();
 		
 		//XMLUtil.printXMLElement(el);
-		/*
+/*		
+		logger.debug("saveXML()");
 		try {
 			//resource.save(System.out, options);
 			((XMLResource)resource).save(System.out, getOptions());
@@ -345,7 +347,8 @@ public class XMLUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
+*/	
+		//logger.debug(el);
 		return el;
 		//return doc;
 	}
@@ -359,8 +362,9 @@ public class XMLUtil {
 	}
 
 
-	public static Task loadTaskFromElement(Element e) {
-		
+	public static Task loadTaskFromElement(Element element) {
+		if (element == null)
+			return null;
 		ResourceSet resourceSet = new ResourceSetImpl();
 		
 		/*
@@ -387,11 +391,20 @@ public class XMLUtil {
 		Map<String, Object> options = new HashMap<String, Object>();
 		
 		try {
-			((XMLResource) resource).load(e, options);
+			((XMLResource) resource).load(element, options);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		/*
+		try {
+			logger.debug("loadXML()");
+			((XMLResource)resource).save(System.out, getOptions());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		*/
 		//for (EObject eobject:resource.getContents()) {
 			//System.out.println(eobject.getClass().getCanonicalName());			
 		//}
@@ -401,8 +414,15 @@ public class XMLUtil {
 		//if (((EMap<String,Task>)container.get("tasks")).get(task.getUniqueString())==null) {
 			//logger.debug(task.getUniqueString()+" "+((EMap<String,Task>)container.get("tasks")).keySet());
 		//}
-		//task=((EMap<String,Task>)container.get("tasks")).get(task.getFullName());
+		
+		//if (((EMap<String,Task>)container.get("tasks")).containsKey(task.getUniqueString()))
+		String tmp = task.getUniqueString();
+
+		
+		//logger.debug(tmp+" "+task.getChunks().keySet()+" in: "+((EMap<String,Task>)container.get("tasks")).keySet());
 		task=((EMap<String,Task>)container.get("tasks")).get(task.getUniqueString());
+		if (task == null) 
+			logger.warn("XMLUtil(): return null for "+tmp);
 		return task;
 	}
 	

@@ -46,6 +46,7 @@ import org.apache.commons.jexl2.JexlContext;
 import org.apache.commons.jexl2.MapContext;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
@@ -85,6 +86,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getProcessedTraversalEventsDEPRICATED <em>Processed Traversal Events DEPRICATED</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreviousTaskStr <em>Previous Task Str</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#isRoot <em>Root</em>}</li>
  * </ul>
  * </p>
  *
@@ -320,6 +322,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected String previousTaskStr = PREVIOUS_TASK_STR_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isRoot() <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRoot()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ROOT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isRoot() <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRoot()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean root = ROOT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -583,6 +605,27 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isRoot() {
+		return root;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRoot(boolean newRoot) {
+		boolean oldRoot = root;
+		root = newRoot;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__ROOT, oldRoot, root));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public void readTask(String wtplLine, String defaultMode, EList<String> defaultGroupingCriteria) {
@@ -722,6 +765,7 @@ public class TaskImpl extends EObjectImpl implements Task {
         	//logger.debug(shallProcessJEXL);
         	
 		}
+        setPreviousTaskStr(getUniqueString());
         logger.trace("readTask(): traversalEvents="+getTraversalEvents().keySet());
 	}
 
@@ -817,7 +861,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public String getUniqueString() {
 		String uniq=getName();
-		for (String key:getChunks().keySet()) {
+		//Iterator<?,?> it = (Iterator<Map.Entry<String,?>>)(Iterator<?>)delegateEList.iterator()
+		Iterator<Entry<String, EList<TraversalChunk>>> it = getChunks().iterator();
+		//for (String key:getChunks().keySet())
+		while (it.hasNext())
+		{
+			String key=it.next().getKey();
+			//logger.debug();
+			
+
 			uniq+="_"+key+":";
 			String[] tmp=new String[getChunks().get(key).size()];
 			//logger.debug(tmp.length+" "+getChunks().get(key));
@@ -897,6 +949,30 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, EList<TraversalChunk>> getNonOveralppingTraversalChunksFor(Task task) {
+		EMap<String, EList<TraversalChunk>> nonOverlappingChunks = new BasicEMap<String, EList<TraversalChunk>>();
+		for (String key : task.getChunks().keySet())
+		{
+			logger.debug("getNonOveralppingTraversalChunksFor(): "+key+" add:"+!getChunks().containsKey(key));
+			if (!getChunks().containsKey(key))
+			{
+				int i=0;
+				String tmp[] = new String[task.getChunks().get(key).size()];
+				for (TraversalChunk traversalChunk : task.getChunks().get(key))
+					tmp[i++]=traversalChunk.getName();
+				nonOverlappingChunks.put(StringUtils.join(tmp, "-"), task.getChunks().get(key));
+				logger.debug(StringUtils.join(tmp, "-"));
+			}
+		}		
+		return nonOverlappingChunks;
+		
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * return the next unprocessed traversal event
@@ -996,6 +1072,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				else return getTools().map();
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				return getPreviousTaskStr();
+			case CorePackage.TASK__ROOT:
+				return isRoot();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1054,6 +1132,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				setPreviousTaskStr((String)newValue);
 				return;
+			case CorePackage.TASK__ROOT:
+				setRoot((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1108,6 +1189,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				setPreviousTaskStr(PREVIOUS_TASK_STR_EDEFAULT);
 				return;
+			case CorePackage.TASK__ROOT:
+				setRoot(ROOT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1150,6 +1234,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return tools != null && !tools.isEmpty();
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				return PREVIOUS_TASK_STR_EDEFAULT == null ? previousTaskStr != null : !PREVIOUS_TASK_STR_EDEFAULT.equals(previousTaskStr);
+			case CorePackage.TASK__ROOT:
+				return root != ROOT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1180,6 +1266,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(currentTraversalEventDEPRICATED);
 		result.append(", previousTaskStr: ");
 		result.append(previousTaskStr);
+		result.append(", root: ");
+		result.append(root);
 		result.append(')');
 		return result.toString();
 	}

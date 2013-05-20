@@ -797,31 +797,46 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public void generateGraphFromTemplate() {
 		
 		((EasyflowTemplateImpl) getWorkflowTemplate()).readTemplate(getMode(), getDefaultGroupingCriteria());
-		Iterator<Task> taskIterator=getWorkflowTemplate().getTasks().iterator();
+		//Iterator<Task> taskIterator=getWorkflowTemplate().getTasks().iterator();
 		
 		// create styles
         setStyleSheet(graph);
         
-		Object parent=graph.getDefaultParent();
+		//Object parent=graph.getDefaultParent();
+		Object parent = null;
 		Map<String,Object> map=new HashMap<String,Object>();
 		
 		graph.getModel().beginUpdate();
         try {
         	for (Task task:getWorkflowTemplate().getTasks()) {
-        		//task.setActive(true);	
         		Object target=getGraph().insertVertexEasyFlow(parent, null, task);
         		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
         		logger.trace("generateGraphFromTemplate(): "
         				+"add to cell map: key="+task.getUniqueString()
         				+" cell="+getGraph().getLabel(target));
         		map.put(task.getName(), target);
+        		getGraphUtil().getTasks().put(task.getUniqueString(), task);
+        		//((mxCell)target).setValue(XMLUtil.getElement(task));
         		
         	}
+
+        	// create the special root task/cell which is the root
+        	// in all subsequent processed graphs
+        	Task rootTask = CoreFactory.eINSTANCE.createTask();
+        	rootTask.setName("_root_");
+        	rootTask.setRoot(true);
+        	getGraphUtil().getTasks().put(rootTask.getUniqueString(), rootTask);
+        	//logger.trace("insert dedicated root cell"+" "+rootTask.getUniqueString());
+        	Object rootTarget=getGraph().insertVertexEasyFlow(parent, null, rootTask);
+        	getGraphUtil().getCells().put(rootTask.getUniqueString(), (mxICell)rootTarget);
+        	setFirstNode(rootTarget);
+        	getGraphUtil().setDefaultRootCell((mxICell) rootTarget);
+        	//logger.debug(getGraph().getLabel(rootTarget));
         	
+
         	
 		//Stack<String> stack=new Stack<String>();
-		while (taskIterator.hasNext()) {
-			Task task=taskIterator.next();
+		for (Task task : getWorkflowTemplate().getTasks()) {
 			
 			//logger.debug(task.getUniqueString());
 			
@@ -831,7 +846,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			//Object target=((EasyFlowGraph)graph).insertVertexEasyFlow(parent, null, task);
 			Object target=getGraphUtil().getCells().get(task.getUniqueString());
 			if (getLastTasks().isEmpty()) {
-				setFirstNode(target);
+				//setFirstNode(target);
+				graph.insertEdgeEasyFlow(parent, null, rootTarget, target);
+				
 			} else {
 				Iterator<DataPort> itDP=task.getInDataPorts().iterator();
 				while (itDP.hasNext()) {
@@ -863,16 +880,15 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 								"adding mxgraph edge:"+
 								//source+"=>"+target+
 								" ("+pTask.getName()+"=>"+task.getName()+":"+dataPort.getDataFormat().getName()+")");
-						graph.insertEdge(parent, null, "", source, target);
+						graph.insertEdgeEasyFlow(parent, null, source, target);
 						//reset the vertex value
 					}
-					((mxCell)target).setValue(XMLUtil.getElement(task));
+					//((mxCell)target).setValue(XMLUtil.getElement(task));
 				}
 			}
 			}
 			//if (!task.getParents().isEmpty())
 				//logger.debug(task.getName()+"->"+task.getParents().get(0)+" ("+task.getParents().size()+")");
-			getGraphUtil().getTasks().put(task.getUniqueString(), task);
 			getLastTasks().add(task);
 		}
         } finally {
@@ -881,7 +897,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         
         XMLUtil.container.put("tasks", getGraphUtil().getTasks());
         
-        mxICell tmpMX=(mxICell)getFirstNode();
+        //mxICell tmpMX=(mxICell)getFirstNode();
         //XMLUtil.printMxCell(tmpMX);
         //XMLUtil.printMxCell((mxICell) getGraphUtil().getCells().values().toArray()[1]);
         Task tmp=XMLUtil.loadTaskFromVertex(getFirstNode());
@@ -1042,55 +1058,68 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	
 	public void applyTraversalEvents() {
 		
-		for (TraversalEvent traversalEvent:getGraphUtil().getTraversalEvents((mxICell) getFirstNode(), true))
+		//mxICell rootCell = (mxICell) getFirstNode();
+		for (TraversalEvent traversalEventTmp : getGraphUtil().getTraversalEvents(
+				(mxICell) getFirstNode(), true))
 		{	
-			String parentTasks="(";
-			for (Task parentTask:traversalEvent.getParentTask()) {
-				parentTasks+=parentTask.getUniqueString()+" ";
-			}
-			parentTasks+=")";
-			String mergeTasks="(";
-			for (Task mergeTask:traversalEvent.getMergeTask()) {
-				mergeTasks+=mergeTask.getUniqueString()+" ";
-			}
-			
-			mergeTasks+=")";
-
-			logger.debug("applyTraversalEvents(): "
-					+traversalEvent.getTraversalCriterion().getId()+" "
-					+traversalEvent.getTraversalCriterion().getMode()
-					+" parentTasks="+parentTasks
-					+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
-					+" mergeTasks="+mergeTasks
-					+" #instances="+((DefaultMetaData)getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances().size()
-					
-					);
-			// update traversalEvents with respect to parent, splitting and merging task
-			// (they might have became outdated due to a previously applied traversal event)
-			getGraphUtil().updateTraversalEvent(traversalEvent);
-			
-			mxICell root = getGraphUtil().computeSubgraph(traversalEvent, true);
-			for (GroupingInstance groupingInstance :
-				((DefaultMetaData) getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances())
+			EList<mxICell> subGraphList = new BasicEList<mxICell>();
+			for (TraversalEvent traversalEvent : getGraphUtil().getNewTraversalEvents(traversalEventTmp, 
+					(mxICell) getFirstNode()))
 			{
-				//String instanceStr = groupingInstance.getName();
-				logger.debug("applyTraversalEvents(): applying metadata "+groupingInstance.getName()+" with features="+
-						groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId());
+				//traversalEvent = getGraphUtil().getNewTraversalEvent(traversalEvent,(mxICell) getFirstNode()));
+				String parentTasks="(";
+				for (Task parentTask : traversalEvent.getParentTask()) {
+					parentTasks+=parentTask.getUniqueString()+" ";
+				}
+				parentTasks+=")";
+				String mergeTasks="(";
+				for (Task mergeTask : traversalEvent.getMergeTask()) {
+					mergeTasks+=mergeTask.getUniqueString()+" ";
+				}
 				
+				mergeTasks+=")";
+	
+				logger.debug("applyTraversalEvents(): "
+						+traversalEvent.getTraversalCriterion().getId()+" "
+						+traversalEvent.getTraversalCriterion().getMode()
+						+" parentTasks="+parentTasks
+						+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
+						+" mergeTasks="+mergeTasks
+						+" #instances="+((DefaultMetaData)getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances().size()
+						
+						);
+				// update traversalEvents with respect to parent, splitting and merging task
+				// (they might have became outdated due to a previously applied traversal event)
+				//getGraphUtil().updateTraversalEvent(traversalEvent);
+				logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
+				mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+				subGraphList.add(subGraphRoot);
+				if (subGraphRoot != null)
+				for (GroupingInstance groupingInstance :
+					((DefaultMetaData) getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances())
+				{
+					//String instanceStr = groupingInstance.getName();
+					logger.debug("applyTraversalEvents(): applying metadata "+groupingInstance.getName()+" with features="+
+							groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId());
+					
+					
+					mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+							traversalEvent.getTraversalCriterion().getId(), 
+							groupingInstance.getName());
+
+					logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
+					//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+							traversalEvent.getTraversalCriterion().getId(),
+							groupingInstance.getName());
+				}
 				
-				mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(root, 
-						traversalEvent.getTraversalCriterion().getId(), 
-						groupingInstance.getName());
-				
-				getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
-						traversalEvent.getTraversalCriterion().getId(),
-						groupingInstance.getName());
 			}
-			// remove deprecated cells (from both: graph and graph/cell map)
-			getGraphUtil().removeSubGraph(root);
+			for (mxICell subGraphRoot : subGraphList)
+				// remove deprecated cells (from both: graph and graph/cell map)
+				getGraphUtil().removeSubGraph(subGraphRoot);
 
-			//logger.debug(getGraph().getVertices(root).size());
-
+			// logger.debug(getGraph().getVertices(root).size());
 		}
 	}
 	

@@ -28,12 +28,17 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.CoreFactory;
+import easyflow.core.DefaultMetaData;
+import easyflow.core.GroupingInstance;
 import easyflow.core.Task;
 import easyflow.core.TraversalEvent;
 import easyflow.core.Workflow;
 import easyflow.custom.util.XMLUtil;
+import easyflow.graph.jgraphx.Util;
 import easyflow.ui.ResequencingProject;
 import easyflow.ui.UiFactory;
+import easyflow.graph.jgraphx.JgraphxFactory;
+import easyflow.core.DefaultMetaData;
 
 
 public class EasyFlowToolBar extends JToolBar
@@ -46,8 +51,31 @@ public class EasyFlowToolBar extends JToolBar
 	
 	private static final ResequencingProject resequencingProject=UiFactory.eINSTANCE.createResequencingProject();
 	private static final Logger logger = Logger.getLogger(EasyFlowToolBar.class);
-	static int counter = 0, iteration = 1;
+	private Util graphUtil = JgraphxFactory.eINSTANCE.createUtil();
+	private final Map<String, Object> objects=new HashMap<String, Object>();
+	private DefaultMetaData metaData;
+	//static int counter = 0, iteration = 1;
 	static String lastParent=null;
+	
+	public enum State {
+		NONE,
+		COMPUTE_SUBGRAPH,
+		COPY_GRAPH, 
+		APPLY_TRAVERSAL_EVENT, 
+		REMOVE_SUBGRAPH;
+		
+	}
+	
+	public enum Event {
+		NONE,
+		NEXT;		
+	}
+	
+	
+	mxICell subGraphRoot;
+	TraversalEvent traversalEvent;
+	
+	
 	/**
 	 * 
 	 */
@@ -58,7 +86,6 @@ public class EasyFlowToolBar extends JToolBar
 				.createEmptyBorder(3, 3, 3, 3), getBorder()));
 		setFloatable(false);
 
-		final Map<String, Object> objects=new HashMap<String, Object>();
 		final Action autoSetupProjectAction = new AutoSetupAction();
 		final Action applyGroupingCritAction = new ApplyGroupingCritAction();
 
@@ -144,9 +171,15 @@ public class EasyFlowToolBar extends JToolBar
 				resequencingProject.setBasePath("/easyflow/sequencing/examples/");
 				resequencingProject.autoSetup();
 				btnApplyTraversalCrit.setEnabled(true);
+				Workflow workflow = resequencingProject.getActiveWorkflow();
+				EasyFlowGraph graph=workflow.getGraph();
+				setGraphUtil(workflow.getGraphUtil());
+				setMetaData((DefaultMetaData) workflow.getMetaData());
 				
-				EasyFlowGraph graph=resequencingProject.getActiveWorkflow().getGraph();
-				
+				objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) workflow.getFirstNode(), true));
+				logger.debug(objects.get("traversalEvents"));
+				objects.put("state", State.NONE);
+				objects.put("event", Event.NONE);
 				/*
 				graph.addTraversalEventsToQueue(
 						(mxCell) resequencingProject.getActiveWorkflow().getFirstNode(), "grouping");
@@ -180,24 +213,60 @@ public class EasyFlowToolBar extends JToolBar
 		
 		btnApplyNextTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
+				objects.put("event", Event.NEXT);
 				
-				if (((EList<TraversalEvent>) objects.get("grouping")).size()>counter)
+				if(traversalEvent == null || objects.get("state").equals(State.NONE))
 				{
-				logger.debug(objects.get("grouping"));
-				TraversalEvent traversalEvent=((EList<TraversalEvent>) objects.get("grouping")).get(counter);
-				resequencingProject.getActiveWorkflow().applyTraversalEvent(
-						traversalEvent.getSplitTask(), traversalEvent, null);
-				traversalEvent.setProcessed(true);
-				traversalEvent.setQueued(false);
-				lastParent=traversalEvent.getSplitTask().getUniqueString();
-				
-				counter++;
+					traversalEvent = getNextTraversalEvent();
+					if (objects.get("state").equals(State.NONE))
+						objects.put("state", State.REMOVE_SUBGRAPH);
 				}
-				//if (((EList<TraversalEvent>) objects.get("grouping")).size()==counter) counter=0;
+				if (traversalEvent != null)
+				{
+					
+					if (objects.get("event").equals(Event.NEXT) && 
+						objects.get("state").equals(State.REMOVE_SUBGRAPH))
+					{
+						subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+						objects.put("state", State.COMPUTE_SUBGRAPH);
+					}
+					else if (objects.get("event").equals(Event.NEXT) && 
+						objects.get("state").equals(State.COMPUTE_SUBGRAPH))
+					{
+						for (GroupingInstance groupingInstance :
+							((DefaultMetaData) getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances())
+						{
+							//String instanceStr = groupingInstance.getName();
+							logger.debug("applyTraversalEvents(): applying metadata "+groupingInstance.getName()+" with features="+
+									groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId()
+									+" "+subGraphRoot);
+							
+							logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().hashCode()+" "+getGraphUtil().getTasks().keySet());
+							//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+							
+							mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+									traversalEvent.getTraversalCriterion().getId(), 
+									groupingInstance.getName());
+	
+							logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
+							//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+							getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+									traversalEvent.getTraversalCriterion().getId(),
+									groupingInstance.getName());
+						}
+						objects.put("state", State.APPLY_TRAVERSAL_EVENT);
+						traversalEvent = null;
+					}
+					else if (objects.get("event").equals(Event.NEXT) && 
+						objects.get("state").equals(State.APPLY_TRAVERSAL_EVENT))
+					{
+						// remove deprecated cells (from both: graph and graph/cell map)
+						getGraphUtil().removeSubGraph(subGraphRoot);
+						objects.put("state", State.REMOVE_SUBGRAPH);
+						
+					}
+				}
 			}
-			
-
-
 		});
 		
 		btnApplyTraversalCrit.addActionListener(new ActionListener() {
@@ -261,7 +330,48 @@ public class EasyFlowToolBar extends JToolBar
 		});
 		
 	}
-
+	private Util getGraphUtil()
+	{
+		return graphUtil;
+	}
+	private void setGraphUtil(Util util)
+	{
+		graphUtil = util;
+	}
+	
+	private DefaultMetaData getMetaData()
+	{
+		return metaData;
+	}
+	
+	private void setMetaData(DefaultMetaData newMetaData)
+	{
+		metaData = newMetaData;
+	}
+	
+	private TraversalEvent getNextTraversalEvent()
+	{
+		EList traversalEvents = (EList<TraversalEvent>) objects.get("traversalEvents");
+		EList newTraversalEvents = null;
+		logger.debug(traversalEvents.size());
+		if (objects.containsKey("newTraversalEvents"))
+			newTraversalEvents = (EList<TraversalEvent>) objects.get("newTraversalEvents");
+		
+		if (newTraversalEvents != null && !newTraversalEvents.isEmpty())
+		{
+			TraversalEvent traversalEvent = (TraversalEvent) newTraversalEvents.get(0);
+			newTraversalEvents.remove(0);
+			return traversalEvent;
+		} else if (!traversalEvents.isEmpty())
+		{
+			TraversalEvent traversalEvent = (TraversalEvent) traversalEvents.get(0);
+			traversalEvents.remove(0);
+			objects.put("newTraversalEvents", getGraphUtil().getNewTraversalEvents(traversalEvent, getGraphUtil().getDefaultRootCell()));
+			logger.debug(objects.get("newTraversalEvents"));
+			return getNextTraversalEvent();
+		}
+		return null;
+	}
 	
 	private void setEditorGraph(BasicGraphEditor editor) {
 		mxCodecRegistry.addPackage("easyflow"); 

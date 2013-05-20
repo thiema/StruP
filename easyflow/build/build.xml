@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" default="jar" name="Create Runnable Jar for Project easyflink">
+	
+	<property name="main-class.gui"  value="easyflow.custom.gui.EasyFlowGraphEditor"/>
+	<property name="main-class"  value="easyflow.sequencing.examples.Easyflow"/>
+	<property name="src.dir" value="easyflow/src"/>
+	<property name="jgraph.examples.src.dir" value="easyflow/src"/>
+	<property name="editor.resources.dir" value="${src.dir}"/>
+
+	<property name="lib.dir" value="./lib"/>
+	<property name="build.dir"   value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir"     value="${build.dir}/jar"/>
+
+	<path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+		<fileset dir="/usr/home/heinz/.eclipse/org.eclipse.platform_3.7.0_946975857/plugins/"
+			includes="**/org.eclipse.emf.*.jar"/>
+		<!--fileset dir="/usr/home/heinz/.eclipse/org.eclipse.platform_3.7.0_946975857/plugins/"
+			includes="**/org.eclipse.*.jar"/-->
+	</path>
+
+	<target name="resolve" description="--> retrieve dependencies with ivy">
+	        <ivy:retrieve />
+	</target>
+	
+	<target name="clean">
+	        <delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+	    <javac debug="yes"
+	    	destdir="${classes.dir}" 
+	    	classpathref="classpath"
+	    	srcdir="${src.dir}">
+			<exclude name="old/**"/>
+			
+
+			<!--src path="${editor.pics.dir}"/>
+	    	<src path="${editor.props.dir}"/-->
+
+	    </javac>
+	</target>
+	
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.dir}/easyflow.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Class-Path" value="${src.dir}"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="jar-gui" depends="compile">
+    	<mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/easyflow-gui.jar" basedir="${classes.dir}">
+ 	      	<fileset dir="${editor.resources.dir}"/>
+
+        	<manifest>
+                <attribute name="Main-Class" value="${main-class.gui}"/>
+            	<attribute name="Class-Path" value="${src.dir}"/>                
+            </manifest>
+
+
+
+        </jar>
+    </target>
+	
+	<target name="run" depends="jar-gui">
+		<java fork="true" classname="${main-class}">
+	            <classpath>
+	                <path refid="classpath"/>
+	                <path location="${jar.dir}/easyflow-gui.jar"/>
+	            </classpath>
+	        </java>
+	</target>
+
+</project>

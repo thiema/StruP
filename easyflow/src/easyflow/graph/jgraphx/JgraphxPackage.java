@@ -133,13 +133,22 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__META_DATA = 6;
 
 	/**
+	 * The feature id for the '<em><b>Default Root Cell</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__DEFAULT_ROOT_CELL = 7;
+
+	/**
 	 * The number of structural features of the '<em>Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 7;
+	int UTIL_FEATURE_COUNT = 8;
 
 
 	/**
@@ -230,6 +239,17 @@ public interface JgraphxPackage extends EPackage {
 	EReference getUtil_MetaData();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.graph.jgraphx.Util#getDefaultRootCell <em>Default Root Cell</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Default Root Cell</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getDefaultRootCell()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EAttribute getUtil_DefaultRootCell();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -309,6 +329,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UTIL__META_DATA = eINSTANCE.getUtil_MetaData();
+		/**
+		 * The meta object literal for the '<em><b>Default Root Cell</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UTIL__DEFAULT_ROOT_CELL = eINSTANCE.getUtil_DefaultRootCell();
 
 	}
 

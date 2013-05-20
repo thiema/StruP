@@ -52,9 +52,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getFileName <em>File Name</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getGroupingInstancesByGroup <em>Grouping Instances By Group</em>}</li>
- *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getGroupings <em>Groupings</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,6 +102,16 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getGroupings() <em>Groupings</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupings()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Grouping> groupings;
+
+	/**
 	 * The cached value of the '{@link #getGroupingInstances() <em>Grouping Instances</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,16 +130,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @ordered
 	 */
 	protected EMap<String, GroupingInstanceList> groupingInstancesByGroup;
-
-	/**
-	 * The cached value of the '{@link #getGroupings() <em>Groupings</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroupings()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Grouping> groupings;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -410,12 +410,12 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
+				return ((InternalEList<?>)getGroupings()).basicRemove(otherEnd, msgs);
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				return ((InternalEList<?>)getGroupingInstances()).basicRemove(otherEnd, msgs);
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				return ((InternalEList<?>)getGroupingInstancesByGroup()).basicRemove(otherEnd, msgs);
-			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
-				return ((InternalEList<?>)getGroupings()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -432,15 +432,15 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return getFileName();
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				return getLogger();
+			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
+				if (coreType) return getGroupings();
+				else return getGroupings().map();
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				if (coreType) return getGroupingInstances();
 				else return getGroupingInstances().map();
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				if (coreType) return getGroupingInstancesByGroup();
 				else return getGroupingInstancesByGroup().map();
-			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
-				if (coreType) return getGroupings();
-				else return getGroupings().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -460,14 +460,14 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				setLogger((Logger)newValue);
 				return;
+			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
+				((EStructuralFeature.Setting)getGroupings()).set(newValue);
+				return;
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				((EStructuralFeature.Setting)getGroupingInstances()).set(newValue);
 				return;
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				((EStructuralFeature.Setting)getGroupingInstancesByGroup()).set(newValue);
-				return;
-			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
-				((EStructuralFeature.Setting)getGroupings()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -487,14 +487,14 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
+			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
+				getGroupings().clear();
+				return;
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				getGroupingInstances().clear();
 				return;
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				getGroupingInstancesByGroup().clear();
-				return;
-			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
-				getGroupings().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -512,12 +512,12 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
+				return groupings != null && !groupings.isEmpty();
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				return groupingInstances != null && !groupingInstances.isEmpty();
 			case CorePackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
 				return groupingInstancesByGroup != null && !groupingInstancesByGroup.isEmpty();
-			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
-				return groupings != null && !groupings.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

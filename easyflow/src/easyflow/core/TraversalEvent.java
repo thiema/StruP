@@ -29,13 +29,13 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>{@link easyflow.core.TraversalEvent#getMergeTask <em>Merge Task</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getSplitTask <em>Split Task</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getParentTask <em>Parent Task</em>}</li>
+ *   <li>{@link easyflow.core.TraversalEvent#getParentCells <em>Parent Cells</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getMetaData <em>Meta Data</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#isProcessed <em>Processed</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#isQueued <em>Queued</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#isFoundMergeTask <em>Found Merge Task</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#getParentCells <em>Parent Cells</em>}</li>
+ *   <li>{@link easyflow.core.TraversalEvent#isProcessedDEPRICATED <em>Processed DEPRICATED</em>}</li>
+ *   <li>{@link easyflow.core.TraversalEvent#isQueuedDEPRECATED <em>Queued DEPRECATED</em>}</li>
+ *   <li>{@link easyflow.core.TraversalEvent#isFoundMergeTaskDEPRICATED <em>Found Merge Task DEPRICATED</em>}</li>
  * </ul>
  * </p>
  *
@@ -181,85 +181,85 @@ public interface TraversalEvent extends EObject {
 	void setMetaData(EObject value);
 
 	/**
-	 * Returns the value of the '<em><b>Processed</b></em>' attribute.
+	 * Returns the value of the '<em><b>Processed DEPRICATED</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Processed</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Processed DEPRICATED</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed</em>' attribute.
-	 * @see #setProcessed(boolean)
-	 * @see easyflow.core.CorePackage#getTraversalEvent_Processed()
+	 * @return the value of the '<em>Processed DEPRICATED</em>' attribute.
+	 * @see #setProcessedDEPRICATED(boolean)
+	 * @see easyflow.core.CorePackage#getTraversalEvent_ProcessedDEPRICATED()
 	 * @model default="false"
 	 * @generated
 	 */
-	boolean isProcessed();
+	boolean isProcessedDEPRICATED();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isProcessed <em>Processed</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isProcessedDEPRICATED <em>Processed DEPRICATED</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Processed</em>' attribute.
-	 * @see #isProcessed()
+	 * @param value the new value of the '<em>Processed DEPRICATED</em>' attribute.
+	 * @see #isProcessedDEPRICATED()
 	 * @generated
 	 */
-	void setProcessed(boolean value);
+	void setProcessedDEPRICATED(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Queued</b></em>' attribute.
+	 * Returns the value of the '<em><b>Queued DEPRECATED</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Queued</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Queued DEPRECATED</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Queued</em>' attribute.
-	 * @see #setQueued(boolean)
-	 * @see easyflow.core.CorePackage#getTraversalEvent_Queued()
+	 * @return the value of the '<em>Queued DEPRECATED</em>' attribute.
+	 * @see #setQueuedDEPRECATED(boolean)
+	 * @see easyflow.core.CorePackage#getTraversalEvent_QueuedDEPRECATED()
 	 * @model default="false"
 	 * @generated
 	 */
-	boolean isQueued();
+	boolean isQueuedDEPRECATED();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isQueued <em>Queued</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isQueuedDEPRECATED <em>Queued DEPRECATED</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Queued</em>' attribute.
-	 * @see #isQueued()
+	 * @param value the new value of the '<em>Queued DEPRECATED</em>' attribute.
+	 * @see #isQueuedDEPRECATED()
 	 * @generated
 	 */
-	void setQueued(boolean value);
+	void setQueuedDEPRECATED(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Found Merge Task</b></em>' attribute.
+	 * Returns the value of the '<em><b>Found Merge Task DEPRICATED</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Found Merge Task</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Found Merge Task DEPRICATED</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Found Merge Task</em>' attribute.
-	 * @see #setFoundMergeTask(boolean)
-	 * @see easyflow.core.CorePackage#getTraversalEvent_FoundMergeTask()
+	 * @return the value of the '<em>Found Merge Task DEPRICATED</em>' attribute.
+	 * @see #setFoundMergeTaskDEPRICATED(boolean)
+	 * @see easyflow.core.CorePackage#getTraversalEvent_FoundMergeTaskDEPRICATED()
 	 * @model default="false"
 	 * @generated
 	 */
-	boolean isFoundMergeTask();
+	boolean isFoundMergeTaskDEPRICATED();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isFoundMergeTask <em>Found Merge Task</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isFoundMergeTaskDEPRICATED <em>Found Merge Task DEPRICATED</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Found Merge Task</em>' attribute.
-	 * @see #isFoundMergeTask()
+	 * @param value the new value of the '<em>Found Merge Task DEPRICATED</em>' attribute.
+	 * @see #isFoundMergeTaskDEPRICATED()
 	 * @generated
 	 */
-	void setFoundMergeTask(boolean value);
+	void setFoundMergeTaskDEPRICATED(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Parent Cells</b></em>' attribute list.

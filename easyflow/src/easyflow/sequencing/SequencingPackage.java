@@ -108,13 +108,22 @@ public interface SequencingPackage extends EPackage {
 	int META_DATA__LOGGER = CorePackage.IMETA_DATA_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Groupings</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int META_DATA__GROUPINGS = CorePackage.IMETA_DATA_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Grouping Instances</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int META_DATA__GROUPING_INSTANCES = CorePackage.IMETA_DATA_FEATURE_COUNT + 2;
+	int META_DATA__GROUPING_INSTANCES = CorePackage.IMETA_DATA_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Grouping Instances By Group</b></em>' map.
@@ -123,16 +132,7 @@ public interface SequencingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int META_DATA__GROUPING_INSTANCES_BY_GROUP = CorePackage.IMETA_DATA_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Groupings</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int META_DATA__GROUPINGS = CorePackage.IMETA_DATA_FEATURE_COUNT + 4;
+	int META_DATA__GROUPING_INSTANCES_BY_GROUP = CorePackage.IMETA_DATA_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Samples</b></em>' map.
