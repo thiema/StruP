@@ -498,93 +498,7 @@ public class EasyFlowGraph extends mxGraph
 		traverse(root, true, visitor);
 	}
 	
-	
-	
-	/*
-	
-	
-	
-	
-	
-	public boolean addTraversalEventsToQueue(final mxCell root, final String type) {
-		final EList<TraversalEvent> traversalEvents=new BasicEList<TraversalEvent>();
-		mxICellVisitor visitor=new mxICellVisitor(){
-
-			@Override
-			public boolean visit(Object vertex1, Object edge1) {
-				Task curTask=XMLUtil.loadTaskFromVertex(vertex1);
-				//logger.debug(vertex1);
-				String te=curTask.getNextTraversalEvent(type);
-				
-				if (te!=null) {
-					TraversalEvent traversalEvent=curTask.getTraversalEvents().get(te);
-					//if (!traversalEvent.isProcessed()) {
-						traversalEvents.add(curTask.getTraversalEvents().get(te));
-						
-					//}
-				}
-				
-				return true;
-			}
-		};
-		traverse(root, true, visitor);
-		return !traversalEvents.isEmpty();
-
-	}
-	*/
-	
-	
-	/**
-	 * insert the subgraph given by the parent cell (parent) into the main graph. 
-	 * The position where to insert graph is determined using the tasks 
-	 * previousTaskString field together with cellsMap.
-	 * @param root
-	 */
-	/*
-	public void insertSubGraph(mxCell root) {
-		//Task rootTask=XMLUtil.loadTaskFromVertex(root);
-		//logger.debug(getCells().get(rootTask.getPreviousTaskString()));
-		
-		mxICellVisitor visitor=new mxICellVisitor(){
-
-			@Override
-			public boolean visit(Object vertex1, Object edge1) {
-				Task curTask=XMLUtil.loadTaskFromVertex(vertex1);
-				
-				Task sybTask=getTasks().get(curTask.getPreviousTaskString());
-				mxCell sybCell=getCells().get(curTask.getPreviousTaskString());
-				if (edge1!=null) {
-					mxCell source = (mxCell) ((mxCell)edge1).getTerminal(true);
-					source=(mxCell) vertex1;
-					if (getOutgoingEdges(vertex1).length==0) {
-						//a leaf is reached: connect cell to all outgoing cells of the master
-						for (Object o:getOutgoingEdges(sybCell)) {
-							o=((mxCell)o).getTerminal(false);
-							insertEdgeEasyFlow(null, null, source, o);
-							logger.debug("insertEdge:"+XMLUtil.loadTaskFromVertex(source).getUniqueString()+"=>"+
-									XMLUtil.loadTaskFromVertex(o).getUniqueString());
-						}
-					}
-				} else {
-					//the root cell: connect cell to all incoming cells of the 'master sybling'
-					for (Object o:getIncomingEdges(sybCell)) {
-						o=((mxCell)o).getTerminal(true);
-						insertEdgeEasyFlow(null, null, o, vertex1);
-						//logger.debug("insertEdge:"+XMLUtil.loadTaskFromVertex(o).getUniqueString()+"=>"+
-							//	XMLUtil.loadTaskFromVertex(vertex1).getUniqueString());
-
-					}
-				}
-								
-				//logger.debug(curTask.getUniqueString()+" "+(sybTask!=null?sybTask.getUniqueString():null)+" "+(sybCell!=null?sybCell.getValue():null));
-				return true;
-			}
-		};
-		//traverse_custom1(root, true, visitor, null);
-		traverse(root, true, visitor);
-	}
-	*/
-	
+/*		
 	public void insertRoot(mxCell vertex, Object[] parents, 
 			TraversalEvent traversalEvent, TraversalChunk traversalChunk, boolean fixParent
 			) {
@@ -623,6 +537,8 @@ public class EasyFlowGraph extends mxGraph
 		}
 		//logger.debug("######\n\n");
 	}
+	*/
+	
 	/*
 	public void traverseToResolveNextTraversalEvent(mxCell root) {
 		final Map<String, Object> propMap=new HashMap<String, Object>();
@@ -748,24 +664,46 @@ public class EasyFlowGraph extends mxGraph
 
 */
 	
-	public EList<mxICell> traverse_topologicalOrder(mxICell parent) {
+	public void traverseTopologicalOrder(mxICell root, mxICellVisitor visitor)
+	{
+		EMap<mxICell, mxICell> edgeMap = new BasicEMap<mxICell, mxICell>();
+		traverse_topologicalOrder(traverse_topologicalOrder(root, edgeMap), visitor, edgeMap);
+	}
+	
+	private void traverse_topologicalOrder(EList<mxICell> cells, mxICellVisitor visitor, EMap<mxICell, mxICell> edgeMap)
+	{
+		for (mxICell cell : cells)
+			if (edgeMap == null)
+				visitor.visit(cell, null);
+				//if (!visitor.visit(cell, null))
+					//break;
+			else
+				visitor.visit(cell, edgeMap.get(cell));
+				//if (!visitor.visit(cell, edgeMap.get(cell)))
+					//break;
+	}
+	
+	private EList<mxICell> traverse_topologicalOrder(mxICell parent, EMap<mxICell, mxICell> edgeMap) {
 		EList<mxICell> sortedList=new BasicEList<mxICell>();
 		// clear marker set
 		HashSet<mxICell> visitedSet = new HashSet<mxICell>();
 
-		visit_topologicalOrder(parent, sortedList, visitedSet);
+		visit_topologicalOrder(parent, sortedList, visitedSet, edgeMap, null);
 		Collections.reverse(sortedList);
 		return sortedList;
 	}
 	
 	
-	private void visit_topologicalOrder(mxICell parent, EList<mxICell> sortedList, HashSet<mxICell> visitedSet) {
-		if (!visitedSet.contains(parent)) {
-			visitedSet.add(parent);
-			for (Object edge : getOutgoingEdges(parent)) {
-				visit_topologicalOrder((mxICell) getView().getVisibleTerminal(edge, false), sortedList, visitedSet);
+	private void visit_topologicalOrder(mxICell vertex, EList<mxICell> sortedList, 
+			HashSet<mxICell> visitedSet, EMap<mxICell, mxICell> edgeMap, mxICell edge1) {
+		if (!visitedSet.contains(vertex)) {
+			visitedSet.add(vertex);
+			for (Object edge : getOutgoingEdges(vertex)) {			
+				visit_topologicalOrder((mxICell) getView().getVisibleTerminal(edge, false), 
+						sortedList, visitedSet, edgeMap, (mxICell)edge);
 			}
-			sortedList.add(parent);
+			edgeMap.put(vertex, edge1);
+			sortedList.add(vertex);
 			//logger.debug(XMLUtil.loadTaskFromVertex(parent).getUniqueString());
 		}
 	}

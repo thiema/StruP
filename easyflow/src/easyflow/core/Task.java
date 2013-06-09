@@ -40,12 +40,12 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.core.Task#getParents <em>Parents</em>}</li>
  *   <li>{@link easyflow.core.Task#getChunks <em>Chunks</em>}</li>
- *   <li>{@link easyflow.core.Task#getFullName <em>Full Name</em>}</li>
- *   <li>{@link easyflow.core.Task#getCurrentTraversalEventDEPRICATED <em>Current Traversal Event DEPRICATED</em>}</li>
- *   <li>{@link easyflow.core.Task#getProcessedTraversalEventsDEPRICATED <em>Processed Traversal Events DEPRICATED</em>}</li>
+ *   <li>{@link easyflow.core.Task#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}</li>
  *   <li>{@link easyflow.core.Task#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}</li>
  *   <li>{@link easyflow.core.Task#isRoot <em>Root</em>}</li>
+ *   <li>{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}</li>
+ *   <li>{@link easyflow.core.Task#getFlags <em>Flags</em>}</li>
  * </ul>
  * </p>
  *
@@ -256,73 +256,30 @@ public interface Task extends EObject {
 	EMap<String, EList<TraversalChunk>> getChunks();
 
 	/**
-	 * Returns the value of the '<em><b>Full Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Full Name DEPRECATED</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Full Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Full Name DEPRECATED</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Full Name</em>' attribute.
-	 * @see #setFullName(String)
-	 * @see easyflow.core.CorePackage#getTask_FullName()
+	 * @return the value of the '<em>Full Name DEPRECATED</em>' attribute.
+	 * @see #setFullNameDEPRECATED(String)
+	 * @see easyflow.core.CorePackage#getTask_FullNameDEPRECATED()
 	 * @model
 	 * @generated
 	 */
-	String getFullName();
+	String getFullNameDEPRECATED();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getFullName <em>Full Name</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.core.Task#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Full Name</em>' attribute.
-	 * @see #getFullName()
+	 * @param value the new value of the '<em>Full Name DEPRECATED</em>' attribute.
+	 * @see #getFullNameDEPRECATED()
 	 * @generated
 	 */
-	void setFullName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Current Traversal Event DEPRICATED</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Current Traversal Event DEPRICATED</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Current Traversal Event DEPRICATED</em>' attribute.
-	 * @see #setCurrentTraversalEventDEPRICATED(String)
-	 * @see easyflow.core.CorePackage#getTask_CurrentTraversalEventDEPRICATED()
-	 * @model
-	 * @generated
-	 */
-	String getCurrentTraversalEventDEPRICATED();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getCurrentTraversalEventDEPRICATED <em>Current Traversal Event DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Current Traversal Event DEPRICATED</em>' attribute.
-	 * @see #getCurrentTraversalEventDEPRICATED()
-	 * @generated
-	 */
-	void setCurrentTraversalEventDEPRICATED(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Processed Traversal Events DEPRICATED</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.core.TraversalEvent},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Processed Traversal Events DEPRICATED</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed Traversal Events DEPRICATED</em>' map.
-	 * @see easyflow.core.CorePackage#getTask_ProcessedTraversalEventsDEPRICATED()
-	 * @model mapType="easyflow.core.StringToTraversalEventMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalEvent>"
-	 * @generated
-	 */
-	EMap<String, TraversalEvent> getProcessedTraversalEventsDEPRICATED();
+	void setFullNameDEPRECATED(String value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -486,5 +443,48 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void setRoot(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Grouping Criteria</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping Criteria</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping Criteria</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getTask_GroupingCriteria()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getGroupingCriteria();
+
+	/**
+	 * Returns the value of the '<em><b>Flags</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Flags</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Flags</em>' attribute.
+	 * @see #setFlags(int)
+	 * @see easyflow.core.CorePackage#getTask_Flags()
+	 * @model default="0"
+	 * @generated
+	 */
+	int getFlags();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getFlags <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Flags</em>' attribute.
+	 * @see #getFlags()
+	 * @generated
+	 */
+	void setFlags(int value);
 
 } // Task

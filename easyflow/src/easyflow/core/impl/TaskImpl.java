@@ -81,12 +81,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getParents <em>Parents</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getChunks <em>Chunks</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getFullName <em>Full Name</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getCurrentTraversalEventDEPRICATED <em>Current Traversal Event DEPRICATED</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getProcessedTraversalEventsDEPRICATED <em>Processed Traversal Events DEPRICATED</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreviousTaskStr <em>Previous Task Str</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#isRoot <em>Root</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getGroupingCriteria <em>Grouping Criteria</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getFlags <em>Flags</em>}</li>
  * </ul>
  * </p>
  *
@@ -244,54 +244,24 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, EList<TraversalChunk>> chunks;
 
 	/**
-	 * The default value of the '{@link #getFullName() <em>Full Name</em>}' attribute.
+	 * The default value of the '{@link #getFullNameDEPRECATED() <em>Full Name DEPRECATED</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFullName()
+	 * @see #getFullNameDEPRECATED()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FULL_NAME_EDEFAULT = null;
+	protected static final String FULL_NAME_DEPRECATED_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getFullName() <em>Full Name</em>}' attribute.
+	 * The cached value of the '{@link #getFullNameDEPRECATED() <em>Full Name DEPRECATED</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFullName()
+	 * @see #getFullNameDEPRECATED()
 	 * @generated
 	 * @ordered
 	 */
-	protected String fullName = FULL_NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getCurrentTraversalEventDEPRICATED() <em>Current Traversal Event DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCurrentTraversalEventDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String CURRENT_TRAVERSAL_EVENT_DEPRICATED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getCurrentTraversalEventDEPRICATED() <em>Current Traversal Event DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCurrentTraversalEventDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected String currentTraversalEventDEPRICATED = CURRENT_TRAVERSAL_EVENT_DEPRICATED_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getProcessedTraversalEventsDEPRICATED() <em>Processed Traversal Events DEPRICATED</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProcessedTraversalEventsDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, TraversalEvent> processedTraversalEventsDEPRICATED;
+	protected String fullNameDEPRECATED = FULL_NAME_DEPRECATED_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
@@ -342,6 +312,36 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected boolean root = ROOT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getGroupingCriteria() <em>Grouping Criteria</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupingCriteria()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> groupingCriteria;
+
+	/**
+	 * The default value of the '{@link #getFlags() <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFlags()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int FLAGS_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getFlags() <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFlags()
+	 * @generated
+	 * @ordered
+	 */
+	protected int flags = FLAGS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -520,8 +520,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFullName() {
-		return fullName;
+	public String getFullNameDEPRECATED() {
+		return fullNameDEPRECATED;
 	}
 
 	/**
@@ -529,44 +529,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFullName(String newFullName) {
-		String oldFullName = fullName;
-		fullName = newFullName;
+	public void setFullNameDEPRECATED(String newFullNameDEPRECATED) {
+		String oldFullNameDEPRECATED = fullNameDEPRECATED;
+		fullNameDEPRECATED = newFullNameDEPRECATED;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__FULL_NAME, oldFullName, fullName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getCurrentTraversalEventDEPRICATED() {
-		return currentTraversalEventDEPRICATED;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCurrentTraversalEventDEPRICATED(String newCurrentTraversalEventDEPRICATED) {
-		String oldCurrentTraversalEventDEPRICATED = currentTraversalEventDEPRICATED;
-		currentTraversalEventDEPRICATED = newCurrentTraversalEventDEPRICATED;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED, oldCurrentTraversalEventDEPRICATED, currentTraversalEventDEPRICATED));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EMap<String, TraversalEvent> getProcessedTraversalEventsDEPRICATED() {
-		if (processedTraversalEventsDEPRICATED == null) {
-			processedTraversalEventsDEPRICATED = new EcoreEMap<String,TraversalEvent>(CorePackage.Literals.STRING_TO_TRAVERSAL_EVENT_MAP, StringToTraversalEventMapImpl.class, this, CorePackage.TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED);
-		}
-		return processedTraversalEventsDEPRICATED;
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__FULL_NAME_DEPRECATED, oldFullNameDEPRECATED, fullNameDEPRECATED));
 	}
 
 	/**
@@ -621,6 +588,39 @@ public class TaskImpl extends EObjectImpl implements Task {
 		root = newRoot;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__ROOT, oldRoot, root));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getGroupingCriteria() {
+		if (groupingCriteria == null) {
+			groupingCriteria = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.TASK__GROUPING_CRITERIA);
+		}
+		return groupingCriteria;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getFlags() {
+		return flags;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFlags(int newFlags) {
+		int oldFlags = flags;
+		flags = newFlags;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__FLAGS, oldFlags, flags));
 	}
 
 	/**
@@ -702,6 +702,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalCriterion);
 		        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
 		        	getInDataPorts().get(0).getGroupingCriteria().add(traversalCriterion);
+		        	getGroupingCriteria().add(traversalCriterion.getId());
 		        }
         	}
         }
@@ -872,7 +873,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 			uniq+="_"+key+":";
 			String[] tmp=new String[getChunks().get(key).size()];
-			//logger.debug(tmp.length+" "+getChunks().get(key));
+			//logger.debug("getUniqueString(): "+key+" "+tmp.length+" "+getChunks().get(key));
 			for (int i=0; i<tmp.length; i++) {
 				tmp[i]=getChunks().get(key).get(i).getName();
 				//logger.debug(tmp[i]);
@@ -958,7 +959,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		EMap<String, EList<TraversalChunk>> nonOverlappingChunks = new BasicEMap<String, EList<TraversalChunk>>();
 		for (String key : task.getChunks().keySet())
 		{
-			logger.debug("getNonOveralppingTraversalChunksFor(): "+key+" add:"+!getChunks().containsKey(key));
+			logger.trace("getNonOveralppingTraversalChunksFor(): "+key+" add:"+!getChunks().containsKey(key));
 			if (!getChunks().containsKey(key))
 			{
 				int i=0;
@@ -966,50 +967,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 				for (TraversalChunk traversalChunk : task.getChunks().get(key))
 					tmp[i++]=traversalChunk.getName();
 				nonOverlappingChunks.put(StringUtils.join(tmp, "-"), task.getChunks().get(key));
-				logger.debug(StringUtils.join(tmp, "-"));
+				logger.trace("getNonOveralppingTraversalChunksFor(): "+StringUtils.join(tmp, "-"));
 			}
 		}		
 		return nonOverlappingChunks;
 		
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * return the next unprocessed traversal event
-	 * and maintain the current traversal event
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 
-	public String getNextTraversalEvent(String type) {
-		for (String key:getTraversalEvents().keySet()) {
-			TraversalEvent traversalEvent=getTraversalEvents().get(key);
-			if (!traversalEvent.isProcessed()&&traversalEvent.getType().equals(type)) {
-				traversalEvent.setQueued(true);
-				setCurrentTraversalEvent(key);
-				return key;
-			}
-		}
-		setCurrentTraversalEvent(null);
-		return null;
-	}
-*/
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	
-	public EList<String> getProcessedGroupingCriteria() {
-		EList<String> groupingCrits=new BasicEList<String>();
-		for (String chunk:getChunks().keySet()) {
-			//logger.debug(chunk+" "+getProcessedTraversalEvents().keySet()+" "+getProcessedTraversalEvents().get(chunk));
-			if (getProcessedTraversalEvents().containsKey(chunk)&&getProcessedTraversalEvents().get(chunk).isGrouping()) {
-				//logger.debug("group crit: "+chunk);
-				groupingCrits.add(chunk);
-			}
-		}
-		return groupingCrits;
-	}
- */
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1022,8 +986,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getTraversalEvents()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__CHUNKS:
 				return ((InternalEList<?>)getChunks()).basicRemove(otherEnd, msgs);
-			case CorePackage.TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED:
-				return ((InternalEList<?>)getProcessedTraversalEventsDEPRICATED()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__TOOLS:
 				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 		}
@@ -1060,13 +1022,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CHUNKS:
 				if (coreType) return getChunks();
 				else return getChunks().map();
-			case CorePackage.TASK__FULL_NAME:
-				return getFullName();
-			case CorePackage.TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED:
-				return getCurrentTraversalEventDEPRICATED();
-			case CorePackage.TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED:
-				if (coreType) return getProcessedTraversalEventsDEPRICATED();
-				else return getProcessedTraversalEventsDEPRICATED().map();
+			case CorePackage.TASK__FULL_NAME_DEPRECATED:
+				return getFullNameDEPRECATED();
 			case CorePackage.TASK__TOOLS:
 				if (coreType) return getTools();
 				else return getTools().map();
@@ -1074,6 +1031,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getPreviousTaskStr();
 			case CorePackage.TASK__ROOT:
 				return isRoot();
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				return getGroupingCriteria();
+			case CorePackage.TASK__FLAGS:
+				return getFlags();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1117,14 +1078,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CHUNKS:
 				((EStructuralFeature.Setting)getChunks()).set(newValue);
 				return;
-			case CorePackage.TASK__FULL_NAME:
-				setFullName((String)newValue);
-				return;
-			case CorePackage.TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED:
-				setCurrentTraversalEventDEPRICATED((String)newValue);
-				return;
-			case CorePackage.TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED:
-				((EStructuralFeature.Setting)getProcessedTraversalEventsDEPRICATED()).set(newValue);
+			case CorePackage.TASK__FULL_NAME_DEPRECATED:
+				setFullNameDEPRECATED((String)newValue);
 				return;
 			case CorePackage.TASK__TOOLS:
 				((EStructuralFeature.Setting)getTools()).set(newValue);
@@ -1134,6 +1089,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case CorePackage.TASK__ROOT:
 				setRoot((Boolean)newValue);
+				return;
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				getGroupingCriteria().clear();
+				getGroupingCriteria().addAll((Collection<? extends String>)newValue);
+				return;
+			case CorePackage.TASK__FLAGS:
+				setFlags((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1174,14 +1136,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CHUNKS:
 				getChunks().clear();
 				return;
-			case CorePackage.TASK__FULL_NAME:
-				setFullName(FULL_NAME_EDEFAULT);
-				return;
-			case CorePackage.TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED:
-				setCurrentTraversalEventDEPRICATED(CURRENT_TRAVERSAL_EVENT_DEPRICATED_EDEFAULT);
-				return;
-			case CorePackage.TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED:
-				getProcessedTraversalEventsDEPRICATED().clear();
+			case CorePackage.TASK__FULL_NAME_DEPRECATED:
+				setFullNameDEPRECATED(FULL_NAME_DEPRECATED_EDEFAULT);
 				return;
 			case CorePackage.TASK__TOOLS:
 				getTools().clear();
@@ -1191,6 +1147,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case CorePackage.TASK__ROOT:
 				setRoot(ROOT_EDEFAULT);
+				return;
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				getGroupingCriteria().clear();
+				return;
+			case CorePackage.TASK__FLAGS:
+				setFlags(FLAGS_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1224,18 +1186,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return parents != null && !parents.isEmpty();
 			case CorePackage.TASK__CHUNKS:
 				return chunks != null && !chunks.isEmpty();
-			case CorePackage.TASK__FULL_NAME:
-				return FULL_NAME_EDEFAULT == null ? fullName != null : !FULL_NAME_EDEFAULT.equals(fullName);
-			case CorePackage.TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED:
-				return CURRENT_TRAVERSAL_EVENT_DEPRICATED_EDEFAULT == null ? currentTraversalEventDEPRICATED != null : !CURRENT_TRAVERSAL_EVENT_DEPRICATED_EDEFAULT.equals(currentTraversalEventDEPRICATED);
-			case CorePackage.TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED:
-				return processedTraversalEventsDEPRICATED != null && !processedTraversalEventsDEPRICATED.isEmpty();
+			case CorePackage.TASK__FULL_NAME_DEPRECATED:
+				return FULL_NAME_DEPRECATED_EDEFAULT == null ? fullNameDEPRECATED != null : !FULL_NAME_DEPRECATED_EDEFAULT.equals(fullNameDEPRECATED);
 			case CorePackage.TASK__TOOLS:
 				return tools != null && !tools.isEmpty();
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				return PREVIOUS_TASK_STR_EDEFAULT == null ? previousTaskStr != null : !PREVIOUS_TASK_STR_EDEFAULT.equals(previousTaskStr);
 			case CorePackage.TASK__ROOT:
 				return root != ROOT_EDEFAULT;
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				return groupingCriteria != null && !groupingCriteria.isEmpty();
+			case CorePackage.TASK__FLAGS:
+				return flags != FLAGS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1260,14 +1222,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(jexlEngine);
 		result.append(", logger: ");
 		result.append(logger);
-		result.append(", fullName: ");
-		result.append(fullName);
-		result.append(", currentTraversalEventDEPRICATED: ");
-		result.append(currentTraversalEventDEPRICATED);
+		result.append(", fullNameDEPRECATED: ");
+		result.append(fullNameDEPRECATED);
 		result.append(", previousTaskStr: ");
 		result.append(previousTaskStr);
 		result.append(", root: ");
 		result.append(root);
+		result.append(", groupingCriteria: ");
+		result.append(groupingCriteria);
+		result.append(", flags: ");
+		result.append(flags);
 		result.append(')');
 		return result.toString();
 	}

@@ -142,13 +142,49 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__DEFAULT_ROOT_CELL = 7;
 
 	/**
+	 * The feature id for the '<em><b>Processed Edges Copy Graph</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__PROCESSED_EDGES_COPY_GRAPH = 8;
+
+	/**
+	 * The feature id for the '<em><b>Processed Edges</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__PROCESSED_EDGES = 9;
+
+	/**
+	 * The feature id for the '<em><b>Add Edges</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__ADD_EDGES = 10;
+
+	/**
+	 * The feature id for the '<em><b>Copied Cells</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__COPIED_CELLS = 11;
+
+	/**
 	 * The number of structural features of the '<em>Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 8;
+	int UTIL_FEATURE_COUNT = 12;
 
 
 	/**
@@ -250,6 +286,50 @@ public interface JgraphxPackage extends EPackage {
 	EAttribute getUtil_DefaultRootCell();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph <em>Processed Edges Copy Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Processed Edges Copy Graph</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_ProcessedEdgesCopyGraph();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdges <em>Processed Edges</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Processed Edges</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getProcessedEdges()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_ProcessedEdges();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Add Edges</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getAddEdges()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_AddEdges();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getCopiedCells <em>Copied Cells</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Copied Cells</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getCopiedCells()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_CopiedCells();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -336,6 +416,34 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UTIL__DEFAULT_ROOT_CELL = eINSTANCE.getUtil_DefaultRootCell();
+		/**
+		 * The meta object literal for the '<em><b>Processed Edges Copy Graph</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__PROCESSED_EDGES_COPY_GRAPH = eINSTANCE.getUtil_ProcessedEdgesCopyGraph();
+		/**
+		 * The meta object literal for the '<em><b>Processed Edges</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__PROCESSED_EDGES = eINSTANCE.getUtil_ProcessedEdges();
+		/**
+		 * The meta object literal for the '<em><b>Add Edges</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__ADD_EDGES = eINSTANCE.getUtil_AddEdges();
+		/**
+		 * The meta object literal for the '<em><b>Copied Cells</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__COPIED_CELLS = eINSTANCE.getUtil_CopiedCells();
 
 	}
 

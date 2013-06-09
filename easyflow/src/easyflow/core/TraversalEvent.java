@@ -33,9 +33,6 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>{@link easyflow.core.TraversalEvent#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.TraversalEvent#getMetaData <em>Meta Data</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#isProcessedDEPRICATED <em>Processed DEPRICATED</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#isQueuedDEPRECATED <em>Queued DEPRECATED</em>}</li>
- *   <li>{@link easyflow.core.TraversalEvent#isFoundMergeTaskDEPRICATED <em>Found Merge Task DEPRICATED</em>}</li>
  * </ul>
  * </p>
  *
@@ -179,87 +176,6 @@ public interface TraversalEvent extends EObject {
 	 * @generated
 	 */
 	void setMetaData(EObject value);
-
-	/**
-	 * Returns the value of the '<em><b>Processed DEPRICATED</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Processed DEPRICATED</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed DEPRICATED</em>' attribute.
-	 * @see #setProcessedDEPRICATED(boolean)
-	 * @see easyflow.core.CorePackage#getTraversalEvent_ProcessedDEPRICATED()
-	 * @model default="false"
-	 * @generated
-	 */
-	boolean isProcessedDEPRICATED();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isProcessedDEPRICATED <em>Processed DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Processed DEPRICATED</em>' attribute.
-	 * @see #isProcessedDEPRICATED()
-	 * @generated
-	 */
-	void setProcessedDEPRICATED(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Queued DEPRECATED</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Queued DEPRECATED</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Queued DEPRECATED</em>' attribute.
-	 * @see #setQueuedDEPRECATED(boolean)
-	 * @see easyflow.core.CorePackage#getTraversalEvent_QueuedDEPRECATED()
-	 * @model default="false"
-	 * @generated
-	 */
-	boolean isQueuedDEPRECATED();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isQueuedDEPRECATED <em>Queued DEPRECATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Queued DEPRECATED</em>' attribute.
-	 * @see #isQueuedDEPRECATED()
-	 * @generated
-	 */
-	void setQueuedDEPRECATED(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Found Merge Task DEPRICATED</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Found Merge Task DEPRICATED</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Found Merge Task DEPRICATED</em>' attribute.
-	 * @see #setFoundMergeTaskDEPRICATED(boolean)
-	 * @see easyflow.core.CorePackage#getTraversalEvent_FoundMergeTaskDEPRICATED()
-	 * @model default="false"
-	 * @generated
-	 */
-	boolean isFoundMergeTaskDEPRICATED();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.TraversalEvent#isFoundMergeTaskDEPRICATED <em>Found Merge Task DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Found Merge Task DEPRICATED</em>' attribute.
-	 * @see #isFoundMergeTaskDEPRICATED()
-	 * @generated
-	 */
-	void setFoundMergeTaskDEPRICATED(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Parent Cells</b></em>' attribute list.

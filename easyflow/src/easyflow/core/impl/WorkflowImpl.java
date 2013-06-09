@@ -1035,11 +1035,81 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return (!getParentTasksByOutDataPort(dataPort).isEmpty()) ? true:false;
 	}
 
+	private void printGraph()
+	{
+		
+		mxICellVisitor visitor=new mxICellVisitor() {
+			String lastParent = null;
+			//String path1 = "";
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				String path = "";
+				// set the current task
+				Task task = XMLUtil.loadTaskFromVertex(vertex);
+				path += task.getUniqueString();
+				Task parentTask = null;
+				//Object parent = null;
+				
+				if (edge != null)
+				{
+					parentTask = XMLUtil.loadTaskFromVertex(getGraph().getView().getVisibleTerminal(edge, true));
+					//logger.debug(lastParent+" "+parentTask.getUniqueString());
+					if (lastParent != null && !parentTask.getUniqueString().equals(lastParent))
+					{
+						System.out.println("");
+						
+					}
+					lastParent = task.getUniqueString();
+				}
+				else
+					lastParent = null;
+				//path += "("+(parentTask == null ? null : parentTask.getUniqueString())+")";
+				
+				if (getGraph().getOutgoingEdges(vertex).length > 0)
+					path +="=>";
+				System.out.print(path);
+				return true;
+			}
+		};
+		System.out.println("======start=======");
+		System.out.println("traverse");
+		getGraph().traverse(getFirstNode(), true, visitor);
+		System.out.println("\ntraverse all paths");
+		getGraph().traverseAllPaths(getFirstNode(), true, visitor, null);
+		System.out.println("\ntraverse topological order");
+		getGraph().traverseTopologicalOrder((mxICell) getFirstNode(), visitor);
+		System.out.println("\n=======end========");
+	}
+	
 	private void printAllCells(Object root) {
 		logger.debug("Totalsize: "+getGraph().getVertices(root).size());
 		for (Object o:getGraph().getVertices(root))
 			logger.debug("label "+getGraph().getLabel(o)+" ");
 	}
+	
+	private String traversalEventToString(TraversalEvent traversalEvent) {
+		String parentTasks="(";
+		for (Task parentTask : traversalEvent.getParentTask()) {
+			parentTasks+=parentTask.getUniqueString()+" ";
+		}
+		parentTasks+=")";
+		String mergeTasks="(";
+		for (Task mergeTask : traversalEvent.getMergeTask()) {
+			mergeTasks+=mergeTask.getUniqueString()+" ";
+		}
+		
+		mergeTasks+=")";
+
+		return "applyTraversalEvents(): "
+				+traversalEvent.getTraversalCriterion().getId()+" "
+				+traversalEvent.getTraversalCriterion().getMode()
+				+" parentTasks="+parentTasks
+				+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
+				+" mergeTasks="+mergeTasks
+				+" #instances="+((DefaultMetaData)getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances().size()
+				;
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * iterate over graph and do for each defined/resolved traversal event:
@@ -1062,41 +1132,28 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		for (TraversalEvent traversalEventTmp : getGraphUtil().getTraversalEvents(
 				(mxICell) getFirstNode(), true))
 		{	
+			printGraph();
+			logger.debug(traversalEventToString(traversalEventTmp));
+///*
 			EList<mxICell> subGraphList = new BasicEList<mxICell>();
-			for (TraversalEvent traversalEvent : getGraphUtil().getNewTraversalEvents(traversalEventTmp, 
+			for (TraversalEvent traversalEvent : getGraphUtil().getNewTraversalEvents(
+					traversalEventTmp, 
 					(mxICell) getFirstNode()))
 			{
+				logger.debug(traversalEventToString(traversalEvent));
 				//traversalEvent = getGraphUtil().getNewTraversalEvent(traversalEvent,(mxICell) getFirstNode()));
-				String parentTasks="(";
-				for (Task parentTask : traversalEvent.getParentTask()) {
-					parentTasks+=parentTask.getUniqueString()+" ";
-				}
-				parentTasks+=")";
-				String mergeTasks="(";
-				for (Task mergeTask : traversalEvent.getMergeTask()) {
-					mergeTasks+=mergeTask.getUniqueString()+" ";
-				}
 				
-				mergeTasks+=")";
-	
-				logger.debug("applyTraversalEvents(): "
-						+traversalEvent.getTraversalCriterion().getId()+" "
-						+traversalEvent.getTraversalCriterion().getMode()
-						+" parentTasks="+parentTasks
-						+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
-						+" mergeTasks="+mergeTasks
-						+" #instances="+((DefaultMetaData)getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances().size()
-						
-						);
 				// update traversalEvents with respect to parent, splitting and merging task
 				// (they might have became outdated due to a previously applied traversal event)
 				//getGraphUtil().updateTraversalEvent(traversalEvent);
-				logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
+				//logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
 				mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
 				subGraphList.add(subGraphRoot);
 				if (subGraphRoot != null)
-				for (GroupingInstance groupingInstance :
-					((DefaultMetaData) getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances())
+				{
+				EList<GroupingInstance> groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
+				if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
+					for (GroupingInstance groupingInstance : groupingInstances)
 				{
 					//String instanceStr = groupingInstance.getName();
 					logger.debug("applyTraversalEvents(): applying metadata "+groupingInstance.getName()+" with features="+
@@ -1105,21 +1162,39 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					
 					mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
 							traversalEvent.getTraversalCriterion().getId(), 
-							groupingInstance.getName());
+							groupingInstance);
 
-					logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
-					//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+					//logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
+					
 					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 							traversalEvent.getTraversalCriterion().getId(),
 							groupingInstance.getName());
+					logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+				}
+				else
+				{
+					logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
+					mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+							traversalEvent.getTraversalCriterion().getId(), 
+							groupingInstances);
+					logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
+					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+							traversalEvent.getTraversalCriterion().getId(),
+							"");
+					logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
+
+				}	
 				}
 				
 			}
 			for (mxICell subGraphRoot : subGraphList)
 				// remove deprecated cells (from both: graph and graph/cell map)
-				getGraphUtil().removeSubGraph(subGraphRoot);
+				getGraphUtil().removeSubGraph(subGraphRoot, traversalEventTmp.getTraversalCriterion().getId());
 
 			// logger.debug(getGraph().getVertices(root).size());
+			getGraphUtil().resetFlags();
+
+ //*/
 		}
 	}
 	

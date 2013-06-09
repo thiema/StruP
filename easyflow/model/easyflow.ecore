@@ -217,16 +217,16 @@
           <details key="documentation" value="the tasks chunk (value) which corresponds to its traversal criterion (key). &#xA;Only set after traversal event has been applied."/>
         </eAnnotations>
       </eStructuralFeatures>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentTraversalEventDEPRICATED"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="processedTraversalEventsDEPRICATED"
-          upperBound="-1" eType="#//core/StringToTraversalEventMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullNameDEPRECATED" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="tools" upperBound="-1"
           eType="#//core/StringToToolMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="previousTaskStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           defaultValueLiteral=""/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="root" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupingCriteria" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="flags" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          defaultValueLiteral="0"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Tool">
       <eOperations name="readImplementation">
@@ -429,14 +429,6 @@
           transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="metaData" eType="#//EObject"
           transient="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="processedDEPRICATED"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="queuedDEPRECATED" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="foundMergeTaskDEPRICATED"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          defaultValueLiteral="false"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="TraversalOperation">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -758,7 +750,12 @@
         <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-          <eParameters name="instanceStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eParameters name="groupingInstance" eType="#//core/GroupingInstance"/>
+        </eOperations>
+        <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell">
+          <eParameters name="root" eType="#//mxICell"/>
+          <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eParameters name="groupingInstances" upperBound="-1" eType="#//core/GroupingInstance"/>
         </eOperations>
         <eOperations name="printGraph">
           <eParameters name="root" eType="#//mxICell"/>
@@ -772,7 +769,12 @@
         </eOperations>
         <eOperations name="removeSubGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
+          <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         </eOperations>
+        <eOperations name="getGroupingInstances" upperBound="-1" eType="#//core/GroupingInstance">
+          <eParameters name="traversalEvent" eType="#//core/TraversalEvent"/>
+        </eOperations>
+        <eOperations name="resetFlags"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
             changeable="false" transient="true"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
@@ -786,6 +788,14 @@
             upperBound="-1" eType="#//core/StringToStringMap" containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="metaData" eType="#//core/DefaultMetaData"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultRootCell" eType="#//mxICell"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="processedEdgesCopyGraph"
+            upperBound="-1" eType="#//core/StringToStringMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="processedEdges" upperBound="-1"
+            eType="#//core/StringToStringMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="addEdges" upperBound="-1"
+            eType="#//core/StringToStringMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="copiedCells" upperBound="-1"
+            eType="#//core/StringToGraphCellMap" containment="true"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

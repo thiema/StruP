@@ -57,9 +57,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.TraversalEventImpl#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.core.impl.TraversalEventImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.TraversalEventImpl#getMetaData <em>Meta Data</em>}</li>
- *   <li>{@link easyflow.core.impl.TraversalEventImpl#isProcessedDEPRICATED <em>Processed DEPRICATED</em>}</li>
- *   <li>{@link easyflow.core.impl.TraversalEventImpl#isQueuedDEPRECATED <em>Queued DEPRECATED</em>}</li>
- *   <li>{@link easyflow.core.impl.TraversalEventImpl#isFoundMergeTaskDEPRICATED <em>Found Merge Task DEPRICATED</em>}</li>
  * </ul>
  * </p>
  *
@@ -155,66 +152,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 	 * @ordered
 	 */
 	protected EObject metaData = META_DATA_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isProcessedDEPRICATED() <em>Processed DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isProcessedDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean PROCESSED_DEPRICATED_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isProcessedDEPRICATED() <em>Processed DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isProcessedDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean processedDEPRICATED = PROCESSED_DEPRICATED_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isQueuedDEPRECATED() <em>Queued DEPRECATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isQueuedDEPRECATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean QUEUED_DEPRECATED_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isQueuedDEPRECATED() <em>Queued DEPRECATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isQueuedDEPRECATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean queuedDEPRECATED = QUEUED_DEPRECATED_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isFoundMergeTaskDEPRICATED() <em>Found Merge Task DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isFoundMergeTaskDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean FOUND_MERGE_TASK_DEPRICATED_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isFoundMergeTaskDEPRICATED() <em>Found Merge Task DEPRICATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isFoundMergeTaskDEPRICATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean foundMergeTaskDEPRICATED = FOUND_MERGE_TASK_DEPRICATED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -383,69 +320,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isProcessedDEPRICATED() {
-		return processedDEPRICATED;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProcessedDEPRICATED(boolean newProcessedDEPRICATED) {
-		boolean oldProcessedDEPRICATED = processedDEPRICATED;
-		processedDEPRICATED = newProcessedDEPRICATED;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TRAVERSAL_EVENT__PROCESSED_DEPRICATED, oldProcessedDEPRICATED, processedDEPRICATED));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isQueuedDEPRECATED() {
-		return queuedDEPRECATED;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setQueuedDEPRECATED(boolean newQueuedDEPRECATED) {
-		boolean oldQueuedDEPRECATED = queuedDEPRECATED;
-		queuedDEPRECATED = newQueuedDEPRECATED;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TRAVERSAL_EVENT__QUEUED_DEPRECATED, oldQueuedDEPRECATED, queuedDEPRECATED));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isFoundMergeTaskDEPRICATED() {
-		return foundMergeTaskDEPRICATED;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFoundMergeTaskDEPRICATED(boolean newFoundMergeTaskDEPRICATED) {
-		boolean oldFoundMergeTaskDEPRICATED = foundMergeTaskDEPRICATED;
-		foundMergeTaskDEPRICATED = newFoundMergeTaskDEPRICATED;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED, oldFoundMergeTaskDEPRICATED, foundMergeTaskDEPRICATED));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<mxICell> getParentCells() {
 		if (parentCells == null) {
 			parentCells = new EDataTypeUniqueEList<mxICell>(mxICell.class, this, CorePackage.TRAVERSAL_EVENT__PARENT_CELLS);
@@ -559,12 +433,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 				return getLogger();
 			case CorePackage.TRAVERSAL_EVENT__META_DATA:
 				return getMetaData();
-			case CorePackage.TRAVERSAL_EVENT__PROCESSED_DEPRICATED:
-				return isProcessedDEPRICATED();
-			case CorePackage.TRAVERSAL_EVENT__QUEUED_DEPRECATED:
-				return isQueuedDEPRECATED();
-			case CorePackage.TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED:
-				return isFoundMergeTaskDEPRICATED();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -602,15 +470,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 			case CorePackage.TRAVERSAL_EVENT__META_DATA:
 				setMetaData((EObject)newValue);
 				return;
-			case CorePackage.TRAVERSAL_EVENT__PROCESSED_DEPRICATED:
-				setProcessedDEPRICATED((Boolean)newValue);
-				return;
-			case CorePackage.TRAVERSAL_EVENT__QUEUED_DEPRECATED:
-				setQueuedDEPRECATED((Boolean)newValue);
-				return;
-			case CorePackage.TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED:
-				setFoundMergeTaskDEPRICATED((Boolean)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -644,15 +503,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 			case CorePackage.TRAVERSAL_EVENT__META_DATA:
 				setMetaData(META_DATA_EDEFAULT);
 				return;
-			case CorePackage.TRAVERSAL_EVENT__PROCESSED_DEPRICATED:
-				setProcessedDEPRICATED(PROCESSED_DEPRICATED_EDEFAULT);
-				return;
-			case CorePackage.TRAVERSAL_EVENT__QUEUED_DEPRECATED:
-				setQueuedDEPRECATED(QUEUED_DEPRECATED_EDEFAULT);
-				return;
-			case CorePackage.TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED:
-				setFoundMergeTaskDEPRICATED(FOUND_MERGE_TASK_DEPRICATED_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -679,12 +529,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.TRAVERSAL_EVENT__META_DATA:
 				return META_DATA_EDEFAULT == null ? metaData != null : !META_DATA_EDEFAULT.equals(metaData);
-			case CorePackage.TRAVERSAL_EVENT__PROCESSED_DEPRICATED:
-				return processedDEPRICATED != PROCESSED_DEPRICATED_EDEFAULT;
-			case CorePackage.TRAVERSAL_EVENT__QUEUED_DEPRECATED:
-				return queuedDEPRECATED != QUEUED_DEPRECATED_EDEFAULT;
-			case CorePackage.TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED:
-				return foundMergeTaskDEPRICATED != FOUND_MERGE_TASK_DEPRICATED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -705,12 +549,6 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 		result.append(logger);
 		result.append(", metaData: ");
 		result.append(metaData);
-		result.append(", processedDEPRICATED: ");
-		result.append(processedDEPRICATED);
-		result.append(", queuedDEPRECATED: ");
-		result.append(queuedDEPRECATED);
-		result.append(", foundMergeTaskDEPRICATED: ");
-		result.append(foundMergeTaskDEPRICATED);
 		result.append(')');
 		return result.toString();
 	}

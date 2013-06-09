@@ -247,7 +247,7 @@ public class XMLUtil {
 	
 	public static Element getElement(Task task) {
 		
-		task.setFullName(task.getUniqueString());
+		//task.setFullName(task.getUniqueString());
 		//logger.debug("XMLUtil(): "+task);
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put

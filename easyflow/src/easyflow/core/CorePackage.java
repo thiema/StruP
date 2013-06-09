@@ -332,31 +332,13 @@ public interface CorePackage extends EPackage {
 	int TASK__CHUNKS = 9;
 
 	/**
-	 * The feature id for the '<em><b>Full Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Full Name DEPRECATED</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__FULL_NAME = 10;
-
-	/**
-	 * The feature id for the '<em><b>Current Traversal Event DEPRICATED</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED = 11;
-
-	/**
-	 * The feature id for the '<em><b>Processed Traversal Events DEPRICATED</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED = 12;
+	int TASK__FULL_NAME_DEPRECATED = 10;
 
 	/**
 	 * The feature id for the '<em><b>Tools</b></em>' map.
@@ -365,7 +347,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__TOOLS = 13;
+	int TASK__TOOLS = 11;
 
 	/**
 	 * The feature id for the '<em><b>Previous Task Str</b></em>' attribute.
@@ -374,7 +356,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PREVIOUS_TASK_STR = 14;
+	int TASK__PREVIOUS_TASK_STR = 12;
 
 	/**
 	 * The feature id for the '<em><b>Root</b></em>' attribute.
@@ -383,7 +365,25 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__ROOT = 15;
+	int TASK__ROOT = 13;
+
+	/**
+	 * The feature id for the '<em><b>Grouping Criteria</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__GROUPING_CRITERIA = 14;
+
+	/**
+	 * The feature id for the '<em><b>Flags</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__FLAGS = 15;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -1169,40 +1169,13 @@ public interface CorePackage extends EPackage {
 	int TRAVERSAL_EVENT__META_DATA = 6;
 
 	/**
-	 * The feature id for the '<em><b>Processed DEPRICATED</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT__PROCESSED_DEPRICATED = 7;
-
-	/**
-	 * The feature id for the '<em><b>Queued DEPRECATED</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT__QUEUED_DEPRECATED = 8;
-
-	/**
-	 * The feature id for the '<em><b>Found Merge Task DEPRICATED</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED = 9;
-
-	/**
 	 * The number of structural features of the '<em>Traversal Event</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_FEATURE_COUNT = 10;
+	int TRAVERSAL_EVENT_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TraversalOperationImpl <em>Traversal Operation</em>}' class.
@@ -2206,37 +2179,15 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Chunks();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getFullName <em>Full Name</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Full Name</em>'.
-	 * @see easyflow.core.Task#getFullName()
+	 * @return the meta object for the attribute '<em>Full Name DEPRECATED</em>'.
+	 * @see easyflow.core.Task#getFullNameDEPRECATED()
 	 * @see #getTask()
 	 * @generated
 	 */
-	EAttribute getTask_FullName();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getCurrentTraversalEventDEPRICATED <em>Current Traversal Event DEPRICATED</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Current Traversal Event DEPRICATED</em>'.
-	 * @see easyflow.core.Task#getCurrentTraversalEventDEPRICATED()
-	 * @see #getTask()
-	 * @generated
-	 */
-	EAttribute getTask_CurrentTraversalEventDEPRICATED();
-
-	/**
-	 * Returns the meta object for the map '{@link easyflow.core.Task#getProcessedTraversalEventsDEPRICATED <em>Processed Traversal Events DEPRICATED</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Processed Traversal Events DEPRICATED</em>'.
-	 * @see easyflow.core.Task#getProcessedTraversalEventsDEPRICATED()
-	 * @see #getTask()
-	 * @generated
-	 */
-	EReference getTask_ProcessedTraversalEventsDEPRICATED();
+	EAttribute getTask_FullNameDEPRECATED();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.core.Task#getTools <em>Tools</em>}'.
@@ -2270,6 +2221,28 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTask_Root();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Grouping Criteria</em>'.
+	 * @see easyflow.core.Task#getGroupingCriteria()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_GroupingCriteria();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getFlags <em>Flags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Flags</em>'.
+	 * @see easyflow.core.Task#getFlags()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_Flags();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Tool <em>Tool</em>}'.
@@ -2828,39 +2801,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTraversalEvent_MetaData();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.TraversalEvent#isProcessedDEPRICATED <em>Processed DEPRICATED</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Processed DEPRICATED</em>'.
-	 * @see easyflow.core.TraversalEvent#isProcessedDEPRICATED()
-	 * @see #getTraversalEvent()
-	 * @generated
-	 */
-	EAttribute getTraversalEvent_ProcessedDEPRICATED();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.TraversalEvent#isQueuedDEPRECATED <em>Queued DEPRECATED</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Queued DEPRECATED</em>'.
-	 * @see easyflow.core.TraversalEvent#isQueuedDEPRECATED()
-	 * @see #getTraversalEvent()
-	 * @generated
-	 */
-	EAttribute getTraversalEvent_QueuedDEPRECATED();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.TraversalEvent#isFoundMergeTaskDEPRICATED <em>Found Merge Task DEPRICATED</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Found Merge Task DEPRICATED</em>'.
-	 * @see easyflow.core.TraversalEvent#isFoundMergeTaskDEPRICATED()
-	 * @see #getTraversalEvent()
-	 * @generated
-	 */
-	EAttribute getTraversalEvent_FoundMergeTaskDEPRICATED();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link easyflow.core.TraversalEvent#getParentCells <em>Parent Cells</em>}'.
@@ -3805,28 +3745,12 @@ public interface CorePackage extends EPackage {
 		EReference TASK__CHUNKS = eINSTANCE.getTask_Chunks();
 
 		/**
-		 * The meta object literal for the '<em><b>Full Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Full Name DEPRECATED</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TASK__FULL_NAME = eINSTANCE.getTask_FullName();
-
-		/**
-		 * The meta object literal for the '<em><b>Current Traversal Event DEPRICATED</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TASK__CURRENT_TRAVERSAL_EVENT_DEPRICATED = eINSTANCE.getTask_CurrentTraversalEventDEPRICATED();
-
-		/**
-		 * The meta object literal for the '<em><b>Processed Traversal Events DEPRICATED</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK__PROCESSED_TRAVERSAL_EVENTS_DEPRICATED = eINSTANCE.getTask_ProcessedTraversalEventsDEPRICATED();
+		EAttribute TASK__FULL_NAME_DEPRECATED = eINSTANCE.getTask_FullNameDEPRECATED();
 
 		/**
 		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
@@ -3851,6 +3775,22 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK__ROOT = eINSTANCE.getTask_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping Criteria</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__GROUPING_CRITERIA = eINSTANCE.getTask_GroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Flags</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__FLAGS = eINSTANCE.getTask_Flags();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ToolImpl <em>Tool</em>}' class.
@@ -4299,30 +4239,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRAVERSAL_EVENT__META_DATA = eINSTANCE.getTraversalEvent_MetaData();
-
-		/**
-		 * The meta object literal for the '<em><b>Processed DEPRICATED</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRAVERSAL_EVENT__PROCESSED_DEPRICATED = eINSTANCE.getTraversalEvent_ProcessedDEPRICATED();
-
-		/**
-		 * The meta object literal for the '<em><b>Queued DEPRECATED</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRAVERSAL_EVENT__QUEUED_DEPRECATED = eINSTANCE.getTraversalEvent_QueuedDEPRECATED();
-
-		/**
-		 * The meta object literal for the '<em><b>Found Merge Task DEPRICATED</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRAVERSAL_EVENT__FOUND_MERGE_TASK_DEPRICATED = eINSTANCE.getTraversalEvent_FoundMergeTaskDEPRICATED();
 
 		/**
 		 * The meta object literal for the '<em><b>Parent Cells</b></em>' attribute list feature.

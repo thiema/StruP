@@ -246,7 +246,7 @@ public class EasyFlowToolBar extends JToolBar
 							
 							mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
 									traversalEvent.getTraversalCriterion().getId(), 
-									groupingInstance.getName());
+									groupingInstance);
 	
 							logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
 							//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
@@ -261,7 +261,7 @@ public class EasyFlowToolBar extends JToolBar
 						objects.get("state").equals(State.APPLY_TRAVERSAL_EVENT))
 					{
 						// remove deprecated cells (from both: graph and graph/cell map)
-						getGraphUtil().removeSubGraph(subGraphRoot);
+						getGraphUtil().removeSubGraph(subGraphRoot, traversalEvent.getTraversalCriterion().getId());
 						objects.put("state", State.REMOVE_SUBGRAPH);
 						
 					}
@@ -359,14 +359,17 @@ public class EasyFlowToolBar extends JToolBar
 		
 		if (newTraversalEvents != null && !newTraversalEvents.isEmpty())
 		{
-			TraversalEvent traversalEvent = (TraversalEvent) newTraversalEvents.get(0);
-			newTraversalEvents.remove(0);
-			return traversalEvent;
-		} else if (!traversalEvents.isEmpty())
+			logger.debug(newTraversalEvents.size());
+			//TraversalEvent traversalEvent = (TraversalEvent) newTraversalEvents.get(0);
+			return (TraversalEvent) newTraversalEvents.remove(0);
+		} 
+		else if (!traversalEvents.isEmpty())
 		{
-			TraversalEvent traversalEvent = (TraversalEvent) traversalEvents.get(0);
-			traversalEvents.remove(0);
-			objects.put("newTraversalEvents", getGraphUtil().getNewTraversalEvents(traversalEvent, getGraphUtil().getDefaultRootCell()));
+			TraversalEvent traversalEvent = (TraversalEvent) traversalEvents.remove(0);;
+			
+			objects.put("newTraversalEvents", 
+					getGraphUtil().getNewTraversalEvents(
+							traversalEvent, getGraphUtil().getDefaultRootCell()));
 			logger.debug(objects.get("newTraversalEvents"));
 			return getNextTraversalEvent();
 		}

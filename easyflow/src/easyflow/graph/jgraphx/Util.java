@@ -9,6 +9,7 @@ package easyflow.graph.jgraphx;
 import com.mxgraph.model.mxICell;
 
 import easyflow.core.DefaultMetaData;
+import easyflow.core.GroupingInstance;
 import easyflow.core.Task;
 import easyflow.core.TraversalChunk;
 import easyflow.core.TraversalEvent;
@@ -37,6 +38,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getMostProcessedTasks <em>Most Processed Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getMetaData <em>Meta Data</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getDefaultRootCell <em>Default Root Cell</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph <em>Processed Edges Copy Graph</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdges <em>Processed Edges</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getCopiedCells <em>Copied Cells</em>}</li>
  * </ul>
  * </p>
  *
@@ -207,6 +212,74 @@ public interface Util extends EObject {
 	void setDefaultRootCell(mxICell value);
 
 	/**
+	 * Returns the value of the '<em><b>Processed Edges Copy Graph</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processed Edges Copy Graph</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processed Edges Copy Graph</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdgesCopyGraph()
+	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getProcessedEdgesCopyGraph();
+
+	/**
+	 * Returns the value of the '<em><b>Processed Edges</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processed Edges</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processed Edges</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdges()
+	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getProcessedEdges();
+
+	/**
+	 * Returns the value of the '<em><b>Add Edges</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Add Edges</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Add Edges</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_AddEdges()
+	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getAddEdges();
+
+	/**
+	 * Returns the value of the '<em><b>Copied Cells</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link com.mxgraph.model.mxICell},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Copied Cells</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Copied Cells</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_CopiedCells()
+	 * @model mapType="easyflow.core.StringToGraphCellMap<org.eclipse.emf.ecore.EString, easyflow.mxICell>"
+	 * @generated
+	 */
+	EMap<String, mxICell> getCopiedCells();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model dataType="easyflow.mxICell"
@@ -233,6 +306,22 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.mxICell" rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	mxICell applyTraversalEventCopyGraph(mxICell root, String groupingStr, GroupingInstance groupingInstance);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.mxICell" rootDataType="easyflow.mxICell" groupingInstancesMany="true"
+	 * @generated
+	 */
+	mxICell applyTraversalEventCopyGraph(mxICell root, String groupingStr, EList<GroupingInstance> groupingInstances);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
@@ -249,14 +338,6 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.mxICell" rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	mxICell applyTraversalEventCopyGraph(mxICell root, String groupingStr, String instanceStr);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model dataType="easyflow.mxICell" tasksMany="true"
 	 * @generated
 	 */
@@ -268,7 +349,23 @@ public interface Util extends EObject {
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean removeSubGraph(mxICell root);
+	boolean removeSubGraph(mxICell root, String groupingStr);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void resetFlags();
 
 	/**
 	 * <!-- begin-user-doc -->
