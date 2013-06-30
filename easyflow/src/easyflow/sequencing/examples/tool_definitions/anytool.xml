@@ -1,0 +1,55 @@
+<tools>
+	<tool id="id_TA1" name="TA" version="1.0">
+		<description>
+			The any dummy tool
+		</description>
+		<interpreter exe="python"></interpreter>
+		<command interpreter="python">
+			any.py $input $output
+		</command>
+		<input>
+			<data format="bam" name="input_bam" label="${tool.name} on ${on_string} (BAM)" />
+		</input>
+		<output>
+    		<data format="bam" name="output_bam" label="${tool.name} on ${on_string} (BAM)" />
+    		<data format="txt" name="output_log" label="${tool.name} on ${on_string} (log)" />
+  		</output>
+		<param name="param1" type="integer" value="-1" label="the label" help="help info"/>
+		<param name="param2" type="select" label="Type of BAQ calculation to apply in the engine" help="help info">
+          <option value="OFF" selected="True">OFF</option>
+          <option value="CALCULATE_AS_NECESSARY">CALCULATE_AS_NECESSARY</option>
+          <option value="RECALCULATE">RECALCULATE</option>
+        </param>
+		<param name="option1" type="integer" value="-1" label="the label" help="help info" optional="true"/>
+    	<help>
+    	The help page for any tool.
+    	</help>
+	</tool>
+
+	<tool id="id_TA3" name="TA" version="1.0">
+		<description>
+			The any dummy tool
+		</description>
+		<interpreter exe="python"></interpreter>
+		<command interpreter="python">
+			any.py $input $output
+		</command>
+		<input>
+			<data format="bam" name="input_bam" label="${tool.name} on ${on_string} (BAM)" />
+		</input>
+		<output>
+    		<data format="bam" name="output_bam" label="${tool.name} on ${on_string} (BAM)" />
+    		<data format="txt" name="output_log" label="${tool.name} on ${on_string} (log)" />
+  		</output>
+		<param name="param1" type="integer" value="-1" label="the label" help="help info"/>
+		<param name="param2" type="select" label="Type of BAQ calculation to apply in the engine" help="help info">
+          <option value="OFF" selected="True">OFF</option>
+          <option value="CALCULATE_AS_NECESSARY">CALCULATE_AS_NECESSARY</option>
+          <option value="RECALCULATE">RECALCULATE</option>
+        </param>
+		<param name="option1" type="integer" value="-1" label="the label" help="help info" optional="true"/>
+    	<help>
+    	The help page for any tool.
+    	</help>
+	</tool>
+</tools>

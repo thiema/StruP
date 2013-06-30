@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///de/thiema/easyflow/easyflow.core/1.0.0"
+            class="easyflow.EasyflowPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///de/thiema/easyflow/core/easyflow.core/1.0.0"
+            class="easyflow.core.CorePackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
+            class="easyflow.ui.UiPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///de/thiema/easyflow/sequencing/easyflow.core/1.0.0"
+            class="easyflow.sequencing.SequencingPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///de/thiema/easyflow/sequencing/grouping/easyflow.core/1.0.0"
+            class="easyflow.sequencing.grouping.GroupingPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http:///de/thiema/easyflow/sequencing/dataformat/easyflow.core/1.0.0"
+            class="easyflow.sequencing.dataformat.DataformatPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+</plugin>
