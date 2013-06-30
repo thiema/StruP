@@ -8,6 +8,7 @@ package easyflow.sequencing;
 
 import easyflow.core.CorePackage;
 
+import easyflow.ui.UiPackage;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -190,6 +191,89 @@ public interface SequencingPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.sequencing.impl.ResequencingProjectImpl <em>Resequencing Project</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.sequencing.impl.ResequencingProjectImpl
+	 * @see easyflow.sequencing.impl.SequencingPackageImpl#getResequencingProject()
+	 * @generated
+	 */
+	int RESEQUENCING_PROJECT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Workflows</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__WORKFLOWS = UiPackage.DEFAULT_PROJECT__WORKFLOWS;
+
+	/**
+	 * The feature id for the '<em><b>Meta Data</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__META_DATA = UiPackage.DEFAULT_PROJECT__META_DATA;
+
+	/**
+	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__FILE_NAME = UiPackage.DEFAULT_PROJECT__FILE_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Base Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__BASE_PATH = UiPackage.DEFAULT_PROJECT__BASE_PATH;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__LOGGER = UiPackage.DEFAULT_PROJECT__LOGGER;
+
+	/**
+	 * The feature id for the '<em><b>Graph Util</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__GRAPH_UTIL = UiPackage.DEFAULT_PROJECT__GRAPH_UTIL;
+
+	/**
+	 * The feature id for the '<em><b>Ref Based Project Meta Data</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT__REF_BASED_PROJECT_META_DATA = UiPackage.DEFAULT_PROJECT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Resequencing Project</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESEQUENCING_PROJECT_FEATURE_COUNT = UiPackage.DEFAULT_PROJECT_FEATURE_COUNT + 1;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.sequencing.RefBasedProjectMetaData <em>Ref Based Project Meta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -263,6 +347,27 @@ public interface SequencingPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getMetaData_Groups();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.sequencing.ResequencingProject <em>Resequencing Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Resequencing Project</em>'.
+	 * @see easyflow.sequencing.ResequencingProject
+	 * @generated
+	 */
+	EClass getResequencingProject();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.sequencing.ResequencingProject#getRefBasedProjectMetaData <em>Ref Based Project Meta Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Ref Based Project Meta Data</em>'.
+	 * @see easyflow.sequencing.ResequencingProject#getRefBasedProjectMetaData()
+	 * @see #getResequencingProject()
+	 * @generated
+	 */
+	EReference getResequencingProject_RefBasedProjectMetaData();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -345,6 +450,24 @@ public interface SequencingPackage extends EPackage {
 		 * @generated
 		 */
 		EReference META_DATA__GROUPS = eINSTANCE.getMetaData_Groups();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.sequencing.impl.ResequencingProjectImpl <em>Resequencing Project</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.sequencing.impl.ResequencingProjectImpl
+		 * @see easyflow.sequencing.impl.SequencingPackageImpl#getResequencingProject()
+		 * @generated
+		 */
+		EClass RESEQUENCING_PROJECT = eINSTANCE.getResequencingProject();
+
+		/**
+		 * The meta object literal for the '<em><b>Ref Based Project Meta Data</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESEQUENCING_PROJECT__REF_BASED_PROJECT_META_DATA = eINSTANCE.getResequencingProject_RefBasedProjectMetaData();
 
 	}
 

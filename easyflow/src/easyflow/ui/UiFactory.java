@@ -35,15 +35,6 @@ public interface UiFactory extends EFactory {
 	DefaultProject createDefaultProject();
 
 	/**
-	 * Returns a new object of class '<em>Resequencing Project</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Resequencing Project</em>'.
-	 * @generated
-	 */
-	ResequencingProject createResequencingProject();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -30,7 +30,6 @@ import easyflow.sequencing.impl.SequencingPackageImpl;
 
 import easyflow.ui.DefaultProject;
 import easyflow.ui.IProject;
-import easyflow.ui.ResequencingProject;
 import easyflow.ui.UiFactory;
 import easyflow.ui.UiPackage;
 
@@ -62,13 +61,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	private EClass defaultProjectEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass resequencingProjectEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -210,26 +202,17 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDefaultProject_GraphUtil() {
+		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getDefaultProject_BasePath() {
 		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getResequencingProject() {
-		return resequencingProjectEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getResequencingProject_RefBasedProjectMetaData() {
-		return (EReference)resequencingProjectEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -268,9 +251,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__FILE_NAME);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__BASE_PATH);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__LOGGER);
-
-		resequencingProjectEClass = createEClass(RESEQUENCING_PROJECT);
-		createEReference(resequencingProjectEClass, RESEQUENCING_PROJECT__REF_BASED_PROJECT_META_DATA);
+		createEReference(defaultProjectEClass, DEFAULT_PROJECT__GRAPH_UTIL);
 	}
 
 	/**
@@ -299,7 +280,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		// Obtain other dependent packages
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
-		SequencingPackage theSequencingPackage = (SequencingPackage)EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI);
+		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -307,7 +288,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		// Add supertypes to classes
 		defaultProjectEClass.getESuperTypes().add(this.getIProject());
-		resequencingProjectEClass.getESuperTypes().add(this.getDefaultProject());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(iProjectEClass, IProject.class, "IProject", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -315,9 +295,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEOperation(iProjectEClass, null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, null, "initProject", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		EOperation op = addEOperation(iProjectEClass, ecorePackage.getEString(), "createPath", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "fileName", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, null, "autoSetup", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -335,9 +312,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEAttribute(getDefaultProject_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_BasePath(), ecorePackage.getEString(), "basePath", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_Logger(), theEasyflowPackage.getLogger(), "logger", "", 0, 1, DefaultProject.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(resequencingProjectEClass, ResequencingProject.class, "ResequencingProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getResequencingProject_RefBasedProjectMetaData(), theSequencingPackage.getRefBasedProjectMetaData(), null, "refBasedProjectMetaData", null, 0, -1, ResequencingProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultProject_GraphUtil(), theJgraphxPackage.getUtil(), null, "graphUtil", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //UiPackageImpl

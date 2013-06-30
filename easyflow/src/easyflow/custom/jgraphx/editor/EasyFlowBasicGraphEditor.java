@@ -37,7 +37,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 	 */
 	public EasyFlowBasicGraphEditor(String appTitle, mxGraphComponent component)
 	{
-		super();
+		super(appTitle, component);
 		
 		// Stores and updates the frame title
 		this.appTitle = appTitle;
@@ -115,7 +115,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
 		upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
-		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
+		//upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 		
 		

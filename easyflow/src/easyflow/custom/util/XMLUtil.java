@@ -420,7 +420,8 @@ public class XMLUtil {
 
 		
 		//logger.debug(tmp+" "+task.getChunks().keySet()+" in: "+((EMap<String,Task>)container.get("tasks")).keySet());
-		task=((EMap<String,Task>)container.get("tasks")).get(task.getUniqueString());
+		if (container.get("tasks") != null)
+			task=((EMap<String,Task>)container.get("tasks")).get(task.getUniqueString());
 		if (task == null) 
 			logger.warn("XMLUtil(): return null for "+tmp);
 		return task;

@@ -95,6 +95,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.STRING_TO_GROUPING_MAP: return (EObject)createStringToGroupingMap();
 			case CorePackage.STRING_TO_GROUPING_FEATURE_MAP: return (EObject)createStringToGroupingFeatureMap();
 			case CorePackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: return (EObject)createStringToGroupingInstanceListMap();
+			case CorePackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
 			case CorePackage.GROUPING: return createGrouping();
 			case CorePackage.GROUPING_INSTANCE: return createGroupingInstance();
 			case CorePackage.GROUPING_FEATURE: return createGroupingFeature();
@@ -412,6 +413,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public Map.Entry<String, GroupingInstanceList> createStringToGroupingInstanceListMap() {
 		StringToGroupingInstanceListMapImpl stringToGroupingInstanceListMap = new StringToGroupingInstanceListMapImpl();
 		return stringToGroupingInstanceListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, EList<String>> createStringToStringListMap() {
+		StringToStringListMapImpl stringToStringListMap = new StringToStringListMapImpl();
+		return stringToStringListMap;
 	}
 
 	/**

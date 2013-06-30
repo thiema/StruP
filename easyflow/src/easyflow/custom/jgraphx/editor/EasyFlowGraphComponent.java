@@ -36,7 +36,7 @@ public class EasyFlowGraphComponent extends mxGraphComponent {
 		{
 			//return new Component[] { new JTableRenderer(state.getCell(), this) };
 			//return new Component[] { new EasyFlowTaskSimpleRenderer(state.getCell(), this) };
-			return new Component[] {new TestRenderer(state.getCell(), this)};
+			return new Component[] {new TestRenderer2(state.getCell(), this)};
 			//return new Component[] {new TestCellFoldingRenderer(state.getCell(), this)};
 		}
 

@@ -178,13 +178,40 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__COPIED_CELLS = 11;
 
 	/**
+	 * The feature id for the '<em><b>Current Sub Graphs</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__CURRENT_SUB_GRAPHS = 12;
+
+	/**
+	 * The feature id for the '<em><b>Traversal Events</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__TRAVERSAL_EVENTS = 13;
+
+	/**
+	 * The feature id for the '<em><b>New Traversal Events</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__NEW_TRAVERSAL_EVENTS = 14;
+
+	/**
 	 * The number of structural features of the '<em>Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 12;
+	int UTIL_FEATURE_COUNT = 15;
 
 
 	/**
@@ -330,6 +357,39 @@ public interface JgraphxPackage extends EPackage {
 	EReference getUtil_CopiedCells();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.graph.jgraphx.Util#getCurrentSubGraphs <em>Current Sub Graphs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Current Sub Graphs</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getCurrentSubGraphs()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EAttribute getUtil_CurrentSubGraphs();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.graph.jgraphx.Util#getTraversalEvents <em>Traversal Events</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Traversal Events</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getTraversalEvents()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_TraversalEvents();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.graph.jgraphx.Util#getNewTraversalEvents <em>New Traversal Events</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>New Traversal Events</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getNewTraversalEvents()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_NewTraversalEvents();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -444,6 +504,27 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UTIL__COPIED_CELLS = eINSTANCE.getUtil_CopiedCells();
+		/**
+		 * The meta object literal for the '<em><b>Current Sub Graphs</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UTIL__CURRENT_SUB_GRAPHS = eINSTANCE.getUtil_CurrentSubGraphs();
+		/**
+		 * The meta object literal for the '<em><b>Traversal Events</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__TRAVERSAL_EVENTS = eINSTANCE.getUtil_TraversalEvents();
+		/**
+		 * The meta object literal for the '<em><b>New Traversal Events</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__NEW_TRAVERSAL_EVENTS = eINSTANCE.getUtil_NewTraversalEvents();
 
 	}
 

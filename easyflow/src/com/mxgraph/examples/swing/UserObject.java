@@ -1,5 +1,5 @@
 /**
- * $Id: UserObject.java,v 1.4 2012-01-18 08:32:10 gaudenz Exp $
+ * $Id: UserObject.java,v 1.1 2012/11/15 13:26:47 gaudenz Exp $
  * Copyright (c) 2007-2012, JGraph Ltd
  */
 package com.mxgraph.examples.swing;
@@ -148,7 +148,6 @@ public class UserObject extends JFrame
 			Object v2 = graph.insertVertex(parent, null, person2, 240, 150, 80,
 					30);
 			graph.insertEdge(parent, null, relation, v1, v2);
-			
 		}
 		finally
 		{

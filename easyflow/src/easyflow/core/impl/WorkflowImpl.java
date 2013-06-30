@@ -15,6 +15,7 @@ import com.mxgraph.shape.mxDefaultTextShape;
 import com.mxgraph.shape.mxIShape;
 
 import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import com.mxgraph.view.mxStylesheet;
@@ -51,16 +52,26 @@ import easyflow.sequencing.MetaData;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
 
 import java.util.Collection;
 import java.util.HashMap;
 
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -78,6 +89,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
@@ -746,10 +758,145 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__GRAPH_UTIL, oldGraphUtil, graphUtil));
 	}
 
-	private static void setStyleSheet(mxGraph graph) {
+		
+	private URI createURI(String basePath, String fileName)
+	{
+		return URI.createURI(fileName == null ?
+								basePath :
+								basePath + fileName);
+	}
+	
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * - read the general tools implementation xml and xsd
+	 * - iterate over graph and read each tasks implementing tool by calling
+	 * readImplementation() of class Tool.
+	 * Tool definition is expected to be in xml.
+	 * - 1. check if definition is available in general tools.xml
+	 * - 2. check if <toolName>.xml exists (this definition has precedence )
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void readToolDefinitions(String basePath) {
+		
+		logger.debug("tool def="+getToolsDescription().toFileString()+
+				" tool schema="+getToolsSchemaDefinition().toFileString());
+		for (Tool tool : readToolDefinition(getToolsDescription(), getToolsSchemaDefinition()))
+		{
+			getTools().put(tool.getId()+"_default", tool);
+		}		
+		//File file = new File(createURI(basePath, "tool_definitions").toFileString());
+		String fileName = getClass().getResource(basePath+"tool_definitions").toString();
+		logger.debug("check dir="+fileName +" for tool definitions files...");
+		File[] peers = new File(fileName).listFiles();
+		
+		if (peers != null)
+		for (File file1 : peers)
+		{
+			for (Tool tool : readToolDefinition(createURI(basePath, file1.getName()), 
+								getToolsSchemaDefinition()))
+				getTools().put(tool.getId(), tool);
+		}
 
-        
-        mxStylesheet stylesheet = graph.getStylesheet();
+		
+		for (Task task:getWorkflowTemplate().getTasks()) {
+			logger.debug(task.getUniqueString()+": "+task.getToolNames().keySet());
+			
+			EList<Tool> help = new BasicEList<Tool>();
+			help.addAll(getTools().values());
+			task.readTools(help);
+			
+			logger.debug(task.getUniqueString()+": "+task.getTools().keySet());
+			/* assume path of tool definition files based on the task-name
+			logger.debug("check tool definition for task"+task.getUniqueString()+
+					" URI="+createURI(basePath, task.getUniqueString())+
+					" tools="+task.getTools().keySet());
+			for (String toolName:task.getTools().keySet())
+			{
+				tools = readToolDefinition(createURI(basePath, toolName), 
+						getToolsSchemaDefinition());
+				
+				//if (task.getTools().containsKey(toolName))
+			}
+			*/
+		}
+		logger.debug("known tools: "+getTools().keySet());
+	}
+
+	
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<Tool> readToolDefinition(URI xmlSource, URI xsdSource) {
+		InputStream isXML=getClass().getResourceAsStream(xmlSource.toFileString());
+		InputStream isXSD=getClass().getResourceAsStream(xsdSource.toFileString());
+		Source schemaFile=new StreamSource(isXSD);
+		Source xmlFile = new StreamSource(isXML);
+		SchemaFactory schemaFactory = SchemaFactory
+			    .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema;
+		EList<Tool> tools = new BasicEList<Tool>();
+		try {
+			schema = schemaFactory.newSchema(schemaFile);
+			Validator validator = schema.newValidator();
+			validator.validate(xmlFile);
+			logger.debug(xmlFile.getSystemId() + " is valid");
+			
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder;
+			dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(getClass().getResourceAsStream(getToolsDescription().toFileString()));
+			for (int i=0; i<doc.getDocumentElement().getChildNodes().getLength(); i++) {
+				Node node=doc.getDocumentElement().getChildNodes().item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					logger.debug(node.getNodeName()+" "+node.getNodeValue()
+							+" "+node.getNodeType()+" "+(Element) node
+							+" "+((Element) node).getChildNodes().item(1)
+							+" "+((Element) node).getAttributes().item(0)
+							+" "+(Element) node);
+
+					Tool tool=CoreFactory.eINSTANCE.createTool();
+					tool.readImplementation((Element) node);
+					tools.add(tool);
+				}
+			}
+			
+			
+		} catch (SAXException e) {
+			System.out.println(xmlFile.getSystemId() + " is NOT valid");
+			System.out.println("Reason: " + e.getLocalizedMessage());
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} catch (MalformedURLException e) {
+			logger.info("malformed resource string: "+xmlSource.toFileString());
+			e.printStackTrace();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.info("no resource found: "+xmlSource.toFileString());
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}		
+		return tools;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void readWorkfowTemplate() {
+		((EasyflowTemplateImpl) getWorkflowTemplate()).readTemplate(getMode(), 
+				getDefaultGroupingCriteria());
+	}
+
+	
+	private static void setStyleSheet(mxStylesheet stylesheet) {
 
         // base style
         Hashtable<String, Object> baseStyle = new Hashtable<String, Object>();
@@ -796,17 +943,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public void generateGraphFromTemplate() {
 		
-		((EasyflowTemplateImpl) getWorkflowTemplate()).readTemplate(getMode(), getDefaultGroupingCriteria());
 		//Iterator<Task> taskIterator=getWorkflowTemplate().getTasks().iterator();
 		
-		// create styles
-        setStyleSheet(graph);
-        
+		
+		setStyleSheet(getGraph().getStylesheet());
 		//Object parent=graph.getDefaultParent();
 		Object parent = null;
 		Map<String,Object> map=new HashMap<String,Object>();
 		
-		graph.getModel().beginUpdate();
+		getGraph().getModel().beginUpdate();
+		// create styles
+        
         try {
         	for (Task task:getWorkflowTemplate().getTasks()) {
         		Object target=getGraph().insertVertexEasyFlow(parent, null, task);
@@ -892,7 +1039,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			getLastTasks().add(task);
 		}
         } finally {
-            graph.getModel().endUpdate();
+        	getGraph().getModel().endUpdate();
         }
         
         XMLUtil.container.put("tasks", getGraphUtil().getTasks());
@@ -904,64 +1051,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * - read the general tools implementation xml and xsd
-	 * - iterate over graph and read each tasks implementing tool by calling
-	 * readImplementation() of class Tool.
-	 * Tool definition is expected to be in xml.
-	 * - 1. check if definition is available in general tools.xml
-	 * - 2. check if <toolName>.xml exists (this definition has precedence )
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public void readTaskImplementation() {
-		
-		InputStream isXML=getClass().getResourceAsStream(getToolsDescription().toFileString());
-		InputStream isXSD=getClass().getResourceAsStream(getToolsSchemaDefinition().toFileString());
-		Source schemaFile=new StreamSource(isXSD);
-		Source xmlFile = new StreamSource(isXML);
-		SchemaFactory schemaFactory = SchemaFactory
-			    .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema;
-		try {
-			schema = schemaFactory.newSchema(schemaFile);
-			Validator validator = schema.newValidator();
-			validator.validate(xmlFile);
-			System.out.println(xmlFile.getSystemId() + " is valid");
-			
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder;
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(getClass().getResourceAsStream(getToolsDescription().toFileString()));
-			for (int i=0; i<doc.getDocumentElement().getChildNodes().getLength(); i++) {
-				Node node=doc.getDocumentElement().getChildNodes().item(i);
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-					logger.debug(node.getNodeName()+" "+node.getNodeValue()
-							+" "+node.getNodeType()+" "+(Element) node
-							+" "+((Element) node).getChildNodes().item(1)
-							+" "+((Element) node).getAttributes().item(0)
-							+" "+(Element) node
-							);
-					logger.debug(Element.class);
-					Tool tool=CoreFactory.eINSTANCE.createTool();
-					tool.readImplementation((Element) node);
-				}
-			}
-			
-			
-		} catch (SAXException e) {
-			System.out.println(xmlFile.getSystemId() + " is NOT valid");
-			System.out.println("Reason: " + e.getLocalizedMessage());
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1087,28 +1176,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			logger.debug("label "+getGraph().getLabel(o)+" ");
 	}
 	
-	private String traversalEventToString(TraversalEvent traversalEvent) {
-		String parentTasks="(";
-		for (Task parentTask : traversalEvent.getParentTask()) {
-			parentTasks+=parentTask.getUniqueString()+" ";
-		}
-		parentTasks+=")";
-		String mergeTasks="(";
-		for (Task mergeTask : traversalEvent.getMergeTask()) {
-			mergeTasks+=mergeTask.getUniqueString()+" ";
-		}
-		
-		mergeTasks+=")";
-
-		return "applyTraversalEvents(): "
-				+traversalEvent.getTraversalCriterion().getId()+" "
-				+traversalEvent.getTraversalCriterion().getMode()
-				+" parentTasks="+parentTasks
-				+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
-				+" mergeTasks="+mergeTasks
-				+" #instances="+((DefaultMetaData)getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances().size()
-				;
-	}
+	
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -1124,36 +1192,36 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	
-	
 	public void applyTraversalEvents() {
+		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
+		while (traversalEvent != null)
+		{
+			logger.debug(getGraphUtil().traversalEventToString(traversalEvent)
+					+" "+traversalEvent.getTraversalCriterion().getId().isEmpty());
+			applyTraversalEvent(traversalEvent);
+			//getGraphUtil().layoutGraph();
+			traversalEvent = getGraphUtil().getNextTraversalEvent();
+			//getGraphUtil().layoutGraph();
+			//if(i++>2)
+				//break;
+		}
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void applyTraversalEvent(TraversalEvent traversalEvent) {
 		
-		//mxICell rootCell = (mxICell) getFirstNode();
-		for (TraversalEvent traversalEventTmp : getGraphUtil().getTraversalEvents(
-				(mxICell) getFirstNode(), true))
-		{	
-			printGraph();
-			logger.debug(traversalEventToString(traversalEventTmp));
-///*
-			EList<mxICell> subGraphList = new BasicEList<mxICell>();
-			for (TraversalEvent traversalEvent : getGraphUtil().getNewTraversalEvents(
-					traversalEventTmp, 
-					(mxICell) getFirstNode()))
+		mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+		getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
+		if (subGraphRoot != null)
+		{
+			EList<GroupingInstance> groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
+			if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
 			{
-				logger.debug(traversalEventToString(traversalEvent));
-				//traversalEvent = getGraphUtil().getNewTraversalEvent(traversalEvent,(mxICell) getFirstNode()));
-				
-				// update traversalEvents with respect to parent, splitting and merging task
-				// (they might have became outdated due to a previously applied traversal event)
-				//getGraphUtil().updateTraversalEvent(traversalEvent);
-				//logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
-				mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
-				subGraphList.add(subGraphRoot);
-				if (subGraphRoot != null)
-				{
-				EList<GroupingInstance> groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
-				if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
-					for (GroupingInstance groupingInstance : groupingInstances)
+				for (GroupingInstance groupingInstance : groupingInstances)
 				{
 					//String instanceStr = groupingInstance.getName();
 					logger.debug("applyTraversalEvents(): applying metadata "+groupingInstance.getName()+" with features="+
@@ -1163,7 +1231,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
 							traversalEvent.getTraversalCriterion().getId(), 
 							groupingInstance);
-
+		
 					//logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
 					
 					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
@@ -1171,43 +1239,36 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 							groupingInstance.getName());
 					logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
 				}
-				else
-				{
-					logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
-					mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
-							traversalEvent.getTraversalCriterion().getId(), 
-							groupingInstances);
-					logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
-					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
-							traversalEvent.getTraversalCriterion().getId(),
-							"");
-					logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
-
-				}	
-				}
-				
 			}
-			for (mxICell subGraphRoot : subGraphList)
-				// remove deprecated cells (from both: graph and graph/cell map)
-				getGraphUtil().removeSubGraph(subGraphRoot, traversalEventTmp.getTraversalCriterion().getId());
-
-			// logger.debug(getGraph().getVertices(root).size());
-			getGraphUtil().resetFlags();
-
- //*/
+			else
+			{
+				logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
+				mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+						traversalEvent.getTraversalCriterion().getId(), 
+						groupingInstances);
+				logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
+				getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+						traversalEvent.getTraversalCriterion().getId(),
+						"");
+				logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
+	
+			}
+			
 		}
-	}
-	
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public void applyTraversalEvent(Task task, TraversalEvent traversalEvent, String parentToFix) {
-		
-		
-	}
+		if (getGraphUtil().getNewTraversalEvents().isEmpty())
+		{
+			getGraphUtil().fixOffTargetCells((mxICell) getFirstNode(), traversalEvent.getTraversalCriterion().getId());
+			// clearup and reset
+			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
+				getGraphUtil().removeSubGraph(
+						subGraphRoot1, 
+						traversalEvent.getTraversalCriterion().getId());
+			getGraphUtil().resetFlags();
+			getGraphUtil().getCurrentSubGraphs().clear();
+		}
+
+	}	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

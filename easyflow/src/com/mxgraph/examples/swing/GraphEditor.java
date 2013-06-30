@@ -1,5 +1,5 @@
 /**
- * $Id: GraphEditor.java,v 1.11 2012-01-13 12:51:15 david Exp $
+ * $Id: GraphEditor.java,v 1.2 2012/11/20 09:08:09 gaudenz Exp $
  * Copyright (c) 2006-2012, JGraph Ltd */
 package com.mxgraph.examples.swing;
 
@@ -9,7 +9,6 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
@@ -38,7 +37,6 @@ import com.mxgraph.view.mxGraph;
 
 public class GraphEditor extends BasicGraphEditor
 {
-
 	/**
 	 * 
 	 */
@@ -433,8 +431,8 @@ public class GraphEditor extends BasicGraphEditor
 	}
 
 	/**
-	* 
-	*/
+	 * 
+	 */
 	public static class CustomGraphComponent extends mxGraphComponent
 	{
 
@@ -665,7 +663,7 @@ public class GraphEditor extends BasicGraphEditor
 
 		mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
-		
+
 		GraphEditor editor = new GraphEditor();
 		editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
 	}

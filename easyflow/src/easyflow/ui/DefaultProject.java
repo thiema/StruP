@@ -9,6 +9,8 @@ package easyflow.ui;
 import easyflow.core.IMetaData;
 import easyflow.core.Workflow;
 
+import easyflow.graph.jgraphx.Util;
+import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 
@@ -29,6 +31,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link easyflow.ui.DefaultProject#getFileName <em>File Name</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,6 +113,32 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	Logger getLogger();
+
+	/**
+	 * Returns the value of the '<em><b>Graph Util</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Graph Util</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Graph Util</em>' reference.
+	 * @see #setGraphUtil(Util)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_GraphUtil()
+	 * @model
+	 * @generated
+	 */
+	Util getGraphUtil();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Graph Util</em>' reference.
+	 * @see #getGraphUtil()
+	 * @generated
+	 */
+	void setGraphUtil(Util value);
 
 	/**
 	 * Returns the value of the '<em><b>Base Path</b></em>' attribute.

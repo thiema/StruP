@@ -61,7 +61,6 @@ public class UiFactoryImpl extends EFactoryImpl implements UiFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case UiPackage.DEFAULT_PROJECT: return createDefaultProject();
-			case UiPackage.RESEQUENCING_PROJECT: return createResequencingProject();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -75,16 +74,6 @@ public class UiFactoryImpl extends EFactoryImpl implements UiFactory {
 	public DefaultProject createDefaultProject() {
 		DefaultProjectImpl defaultProject = new DefaultProjectImpl();
 		return defaultProject;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ResequencingProject createResequencingProject() {
-		ResequencingProjectImpl resequencingProject = new ResequencingProjectImpl();
-		return resequencingProject;
 	}
 
 	/**

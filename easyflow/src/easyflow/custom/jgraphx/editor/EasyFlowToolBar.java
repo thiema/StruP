@@ -17,6 +17,11 @@ import javax.swing.SwingConstants;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.io.mxCodecRegistry;
@@ -24,10 +29,12 @@ import com.mxgraph.io.mxObjectCodec;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
+import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.CoreFactory;
+import easyflow.core.CorePackage;
 import easyflow.core.DefaultMetaData;
 import easyflow.core.GroupingInstance;
 import easyflow.core.Task;
@@ -35,8 +42,8 @@ import easyflow.core.TraversalEvent;
 import easyflow.core.Workflow;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.Util;
-import easyflow.ui.ResequencingProject;
-import easyflow.ui.UiFactory;
+import easyflow.sequencing.SequencingFactory;
+import easyflow.sequencing.ResequencingProject;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.core.DefaultMetaData;
 
@@ -49,11 +56,12 @@ public class EasyFlowToolBar extends JToolBar
 	 */
 	private static final long serialVersionUID = -4592403145874164000L;
 	
-	private static final ResequencingProject resequencingProject=UiFactory.eINSTANCE.createResequencingProject();
+	private static final ResequencingProject resequencingProject=SequencingFactory.eINSTANCE.createResequencingProject();
 	private static final Logger logger = Logger.getLogger(EasyFlowToolBar.class);
 	private Util graphUtil = JgraphxFactory.eINSTANCE.createUtil();
 	private final Map<String, Object> objects=new HashMap<String, Object>();
 	private DefaultMetaData metaData;
+
 	//static int counter = 0, iteration = 1;
 	static String lastParent=null;
 	
@@ -79,9 +87,13 @@ public class EasyFlowToolBar extends JToolBar
 	/**
 	 * 
 	 */
-	public EasyFlowToolBar(final BasicGraphEditor editor, int orientation)
+	//public EasyFlowToolBar(final BasicGraphEditor editor, int orientation)
+	public EasyFlowToolBar(final SchemaEditor editor, int orientation)
 	{
 		super(orientation);
+		
+		register();
+		
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory
 				.createEmptyBorder(3, 3, 3, 3), getBorder()));
 		setFloatable(false);
@@ -127,6 +139,14 @@ public class EasyFlowToolBar extends JToolBar
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				logger.debug(editor.getGraphComponent().getGraph().hashCode());
+				//if (getGraphUtil().getGraph() == null)
+					getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+				//EasyFlowGraph graph=workflow.getGraph();
+				//setGraphUtil(workflow.getGraphUtil());
+				logger.debug(getGraphUtil().getGraph().hashCode());
+				logger.debug(editor.getGraphComponent().getGraph().hashCode());
+				getGraphUtil().testSomething();
 				editor.getGraphComponent().refresh();
 				
 			}
@@ -138,10 +158,36 @@ public class EasyFlowToolBar extends JToolBar
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				EasyFlowGraphUtil graph = (EasyFlowGraphUtil) editor.getGraphComponent().getGraph();
+				Object parent = graph.getDefaultParent();
+				graph.getModel().beginUpdate();
+				try
+				{
+					Task t1 = CoreFactory.eINSTANCE.createTask();
+					t1.setName("task1");
+					Task t2 = CoreFactory.eINSTANCE.createTask();
+					t2.setName("task2");
+					//mxCell v1 = (mxCell) graph.insertVertex(parent, null, XMLUtil.getElement(t1),20, 20, 80, 20);
+					mxCell v1 = (mxCell) graph.insertVertexEasyFlow(parent, null, t1);
+
+					v1.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
+					//mxCell v2 = (mxCell) graph.insertVertex(parent, null, XMLUtil.getElement(t2),280, 20, 80, 20);
+					mxCell v2 = (mxCell) graph.insertVertexEasyFlow(parent, null, t2);
+					v2.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
+				}
+				finally
+				{
+					graph.getModel().endUpdate();
+				}
 				// TODO Auto-generated method stub
 				
-				editor.getGraphComponent().getGraph().selectAll();
-				editor.getGraphComponent().getGraph().removeCells();
+				/*mxGraph graph = editor.getGraphComponent().getGraph();
+				Object[] cells = graph.getAllEdges(
+						new Object[]{resequencingProject.getActiveWorkflow().getFirstNode()});
+				graph.removeCells(cells, true);*/
+				//editor.getGraphComponent().getGraph().selectAll();
+				//editor.getGraphComponent().getGraph().removeCells();
 
 			}
 		});
@@ -154,30 +200,54 @@ public class EasyFlowToolBar extends JToolBar
 		btnAutoSetup.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+				resequencingProject.setGraphUtil(getGraphUtil());
+				logger.debug(getGraphUtil().getGraph().hashCode());
 				resequencingProject.setBasePath("/easyflow/sequencing/examples/");
-
+				logger.debug(getGraphUtil().getGraph().hashCode());
 				resequencingProject.autoSetup();
+				Workflow workflow = resequencingProject.getActiveWorkflow();
+				logger.debug(getGraphUtil().getGraph().hashCode());
+				//
+				logger.debug(getGraphUtil().getGraph().hashCode());
 				resequencingProject.applyTraversalEvents();
-				editor.getGraphComponent().validate();
-				setEditorGraph(editor);
+				//setGraphUtil(workflow.getGraphUtil());
+				//getGraphUtil().layoutGraph();
+				//editor.getGraphComponent().validate();
+				//setEditorGraph(editor);
 				
 			}
 		});
-		final Action applyNextTraversalCrit =new ApplyNextTraversalCriterion();
-		final JButton btnApplyNextTraversalCrit =add(applyNextTraversalCrit);
+		final Action applyNextTraversalCrit     = new ApplyNextTraversalCriterion();
+		final JButton btnApplyNextTraversalCrit = add(applyNextTraversalCrit);
 		
 		btnInitW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
+
+				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+				
+				resequencingProject.setGraphUtil(getGraphUtil());
+				
+				//if (getGraphUtil().getGraph() == null)
+					//getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+				//EasyFlowGraph graph=workflow.getGraph();
 				resequencingProject.setBasePath("/easyflow/sequencing/examples/");
 				resequencingProject.autoSetup();
+				logger.debug(resequencingProject.getActiveWorkflow().getFirstNode().hashCode());
+				logger.debug(getGraphUtil().getDefaultRootCell().hashCode());
 				btnApplyTraversalCrit.setEnabled(true);
-				Workflow workflow = resequencingProject.getActiveWorkflow();
-				EasyFlowGraph graph=workflow.getGraph();
-				setGraphUtil(workflow.getGraphUtil());
-				setMetaData((DefaultMetaData) workflow.getMetaData());
+				getGraphUtil().layoutGraph();
+				//Workflow workflow = resequencingProject.getActiveWorkflow();
+				//setGraphUtil(workflow.getGraphUtil());
+				//setMetaData((DefaultMetaData) workflow.getMetaData());
 				
-				objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) workflow.getFirstNode(), true));
+				//editor.getGraphComponent().validate();
+
+				//setEditorGraph(editor);
+				logger.debug(getGraphUtil().getDefaultRootCell().hashCode()+" "+resequencingProject.getActiveWorkflow().getFirstNode().hashCode());
+				objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
 				logger.debug(objects.get("traversalEvents"));
+				logger.debug("btnInitW "+editor.getGraphComponent().getGraph().getClass().getName()+" "+editor.getGraphComponent().getGraph());
 				objects.put("state", State.NONE);
 				objects.put("event", Event.NONE);
 				/*
@@ -213,6 +283,14 @@ public class EasyFlowToolBar extends JToolBar
 		
 		btnApplyNextTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
+				
+				traversalEvent = getGraphUtil().getNextTraversalEvent();
+				if (traversalEvent != null)
+					resequencingProject.getActiveWorkflow().applyTraversalEvent(traversalEvent);
+				
+				if (false)
+				{
+				
 				objects.put("event", Event.NEXT);
 				
 				if(traversalEvent == null || objects.get("state").equals(State.NONE))
@@ -260,11 +338,20 @@ public class EasyFlowToolBar extends JToolBar
 					else if (objects.get("event").equals(Event.NEXT) && 
 						objects.get("state").equals(State.APPLY_TRAVERSAL_EVENT))
 					{
-						// remove deprecated cells (from both: graph and graph/cell map)
-						getGraphUtil().removeSubGraph(subGraphRoot, traversalEvent.getTraversalCriterion().getId());
+						if (getGraphUtil().getNewTraversalEvents().isEmpty())
+						{
+						// clearup and reset
+						for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
+							getGraphUtil().removeSubGraph(
+									subGraphRoot1, 
+									traversalEvent.getTraversalCriterion().getId());
+						getGraphUtil().resetFlags();
+						getGraphUtil().getCurrentSubGraphs().clear();
+						}
 						objects.put("state", State.REMOVE_SUBGRAPH);
 						
 					}
+				}
 				}
 			}
 		});
@@ -278,9 +365,7 @@ public class EasyFlowToolBar extends JToolBar
 		btnDrawGraph.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setEditorGraph(editor);
-				
-				editor.getGraphComponent().validate();
+				getGraphUtil().layoutGraph();
 				/*
 				mxCodecRegistry.addPackage("easyflow.impl"); 
 				mxCodecRegistry.register(new mxObjectCodec(new easyflow.impl.TaskImpl()));
@@ -351,55 +436,10 @@ public class EasyFlowToolBar extends JToolBar
 	
 	private TraversalEvent getNextTraversalEvent()
 	{
-		EList traversalEvents = (EList<TraversalEvent>) objects.get("traversalEvents");
-		EList newTraversalEvents = null;
-		logger.debug(traversalEvents.size());
-		if (objects.containsKey("newTraversalEvents"))
-			newTraversalEvents = (EList<TraversalEvent>) objects.get("newTraversalEvents");
 		
-		if (newTraversalEvents != null && !newTraversalEvents.isEmpty())
-		{
-			logger.debug(newTraversalEvents.size());
-			//TraversalEvent traversalEvent = (TraversalEvent) newTraversalEvents.get(0);
-			return (TraversalEvent) newTraversalEvents.remove(0);
-		} 
-		else if (!traversalEvents.isEmpty())
-		{
-			TraversalEvent traversalEvent = (TraversalEvent) traversalEvents.remove(0);;
-			
-			objects.put("newTraversalEvents", 
-					getGraphUtil().getNewTraversalEvents(
-							traversalEvent, getGraphUtil().getDefaultRootCell()));
-			logger.debug(objects.get("newTraversalEvents"));
-			return getNextTraversalEvent();
-		}
-		return null;
+		return getGraphUtil().getNextTraversalEvent();
 	}
-	
-	private void setEditorGraph(BasicGraphEditor editor) {
-		mxCodecRegistry.addPackage("easyflow"); 
-		mxCodecRegistry.register(new mxObjectCodec(CoreFactory.eINSTANCE.createTask()));
 		
-		editor.getGraphComponent().setGraph(resequencingProject.
-				getWorkflows().get(0).getGraph());
-		
-		final mxGraph graph=editor.getGraphComponent().getGraph();
-		graph.getModel().beginUpdate();
-        try {
-        	//Hierarchical Layout
-        	mxHierarchicalLayout layout = new mxHierarchicalLayout(graph);
-        	layout.setIntraCellSpacing(10);
-        	//layout.setOrientation(SwingConstants.NORTH);
-        	layout.setFineTuning(true);
-        	layout.execute(graph.getDefaultParent());
-         } finally {
-                 graph.getModel().endUpdate();
-         }
-
-		//mxHierarchicalLayout layout=new mxHierarchicalLayout(graph);
-		//layout.execute(graph.getDefaultParent());
-	}
-	
 	private class DrawGraphAction extends AbstractAction {
 
 		public DrawGraphAction() {
@@ -510,4 +550,35 @@ public class EasyFlowToolBar extends JToolBar
 		}
 		
 	}
+	private ResourceSet resourceSet;
+
+	/**
+	  * Create the resource manager.
+	  */
+	 private void register() {
+	  
+	  resourceSet = createResourceSet();
+
+	  // register factories
+	  Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new XMLResourceFactoryImpl());
+
+	  // register packages
+	  CorePackage.eINSTANCE.eClass();
+	  //ChangePackage.eINSTANCE.eClass(); // only if using EMF change feature
+	 }
+
+	 /**
+	  * Create the resource set.
+	  */
+	 private ResourceSet createResourceSet() {
+	  ResourceSet rs = new ResourceSetImpl();
+	  // Register the default resource factory -- only needed for stand-alone
+	  rs.getResourceFactoryRegistry()
+	    .getExtensionToFactoryMap()
+	    .put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+	      new XMIResourceFactoryImpl());
+	  //rs.setURIConverter(new URIConverter()); 
+
+	  return rs;
+	 }
 }

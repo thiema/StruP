@@ -20,6 +20,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -248,20 +250,12 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 
 		Map<String, String> aliases = new HashMap<String, String>();
 		aliases.put("ID", "Record");
-		/*
-		 * set rel base path for testing
-		 */
-		final String basePath="src/easyflow/sequencing/examples/input/";
 		
 		logger.debug("readMetaData(): "+"trying to read: "+getFileName());
-        BufferedReader bufferedReader = null;
-		try {
-			bufferedReader = new BufferedReader(new FileReader(getFileName()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String sep="\t";
+        Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        
+        String sep="\t";
         String strLine;
         Map<String, Integer> colNames=new HashMap<String, Integer>();
         String[] colnames={};

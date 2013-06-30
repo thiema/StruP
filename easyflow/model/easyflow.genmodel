@@ -39,7 +39,13 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//core/Workflow/graphUtil"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/generateGraphFromTemplate"/>
-        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readTaskImplementation"/>
+        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readToolDefinitions">
+          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/readToolDefinitions/basePath"/>
+        </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readToolDefinition">
+          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/readToolDefinition/xmlSource"/>
+          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/readToolDefinition/xsdSource"/>
+        </genOperations>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readProjectMetaData"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/getParentTaskByOutDataPort">
           <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/getParentTaskByOutDataPort/dataPort"/>
@@ -58,15 +64,14 @@
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readMetaData"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/applyTraversalEvents"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/applyTraversalEvent">
-          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/applyTraversalEvent/task"/>
           <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/applyTraversalEvent/traversalEvent"/>
-          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/applyTraversalEvent/parentToFix"/>
         </genOperations>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/resolveTraversalEvents"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/shallProcessTask">
           <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/shallProcessTask/task"/>
         </genOperations>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/evaluateJEXLString"/>
+        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readWorkfowTemplate"/>
       </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/Task">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
@@ -82,12 +87,12 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//core/Task/parents"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Task/chunks"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Task/fullName"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Task/currentTraversalEventDEPRICATED"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Task/processedTraversalEventsDEPRICATED"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Task/toolNames"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Task/tools"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Task/previousTaskStr"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Task/root"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Task/flags"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Task/groupingCriteria"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Task/readTask">
           <genParameters ecoreParameter="easyflow.ecore#//core/Task/readTask/taskString"/>
           <genParameters ecoreParameter="easyflow.ecore#//core/Task/readTask/defaultMode"/>
@@ -116,6 +121,10 @@
         <genOperations ecoreOperation="easyflow.ecore#//core/Task/getNonOveralppingTraversalChunksFor">
           <genParameters ecoreParameter="easyflow.ecore#//core/Task/getNonOveralppingTraversalChunksFor/task"/>
         </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//core/Task/readTools">
+          <genParameters ecoreParameter="easyflow.ecore#//core/Task/readTools/tools"/>
+        </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//core/Task/getPreferredTool"/>
       </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/Tool">
         <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Tool/logger"/>
@@ -220,9 +229,6 @@
             ecoreFeature="ecore:EReference easyflow.ecore#//core/TraversalEvent/traversalCriterion"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/TraversalEvent/logger"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/TraversalEvent/metaData"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/TraversalEvent/processedDEPRICATED"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/TraversalEvent/queuedDEPRECATED"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/TraversalEvent/foundMergeTaskDEPRICATED"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/TraversalEvent/applyMetadata"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/TraversalEvent/readChunks"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/TraversalEvent/isGrouping"/>
@@ -301,6 +307,10 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//core/StringToGroupingInstanceListMap/value"/>
       </genClasses>
+      <genClasses ecoreClass="easyflow.ecore#//core/StringToStringListMap">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToStringListMap/key"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToStringListMap/value"/>
+      </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/Grouping">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Grouping/name"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Grouping/description"/>
@@ -322,9 +332,6 @@
       <genClasses image="false" ecoreClass="easyflow.ecore#//ui/IProject">
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/readProjectJson"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/initProject"/>
-        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/createPath">
-          <genParameters ecoreParameter="easyflow.ecore#//ui/IProject/createPath/fileName"/>
-        </genOperations>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/autoSetup"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/applyMetaData"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/applyTraversalEvents"/>
@@ -339,10 +346,8 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/fileName"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/basePath"/>
         <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/logger"/>
-      </genClasses>
-      <genClasses ecoreClass="easyflow.ecore#//ui/ResequencingProject">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference easyflow.ecore#//ui/ResequencingProject/refBasedProjectMetaData"/>
+            ecoreFeature="ecore:EReference easyflow.ecore#//ui/DefaultProject/graphUtil"/>
       </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="Sequencing" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//sequencing">
@@ -353,6 +358,10 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/readGroups"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/libraries"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/groups"/>
+      </genClasses>
+      <genClasses ecoreClass="easyflow.ecore#//sequencing/ResequencingProject">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/ResequencingProject/refBasedProjectMetaData"/>
       </genClasses>
       <nestedGenPackages prefix="Grouping" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//sequencing/grouping">
         <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/Sample">
@@ -470,6 +479,15 @@
           <genFeatures notify="false" createChild="false" propertySortChoices="true"
               ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/metaData"/>
           <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//graph/jgraphx/Util/defaultRootCell"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/processedEdgesCopyGraph"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/processedEdges"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/addEdges"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/copiedCells"/>
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//graph/jgraphx/Util/currentSubGraphs"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/traversalEvents"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference easyflow.ecore#//graph/jgraphx/Util/newTraversalEvents"/>
           <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/resolveTraversalEvents">
             <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/resolveTraversalEvents/root"/>
           </genOperations>
@@ -490,10 +508,12 @@
           <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph">
             <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph/root"/>
             <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph/groupingStr"/>
-            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph/instanceStr"/>
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph/groupingInstance"/>
           </genOperations>
-          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/printGraph">
-            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/printGraph/root"/>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph.1">
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph.1/root"/>
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph.1/groupingStr"/>
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/applyTraversalEventCopyGraph.1/groupingInstances"/>
           </genOperations>
           <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/getTraversalEvents">
             <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/getTraversalEvents/root"/>
@@ -504,6 +524,21 @@
           </genOperations>
           <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/removeSubGraph">
             <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/removeSubGraph/root"/>
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/removeSubGraph/groupingStr"/>
+          </genOperations>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/getGroupingInstances">
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/getGroupingInstances/traversalEvent"/>
+          </genOperations>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/resetFlags"/>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/getNextTraversalEvent"/>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/traversalEventToString">
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/traversalEventToString/traversalEvent"/>
+          </genOperations>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/testSomething"/>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/layoutGraph"/>
+          <genOperations ecoreOperation="easyflow.ecore#//graph/jgraphx/Util/fixOffTargetCells">
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/fixOffTargetCells/root"/>
+            <genParameters ecoreParameter="easyflow.ecore#//graph/jgraphx/Util/fixOffTargetCells/groupingStr"/>
           </genOperations>
         </genClasses>
       </nestedGenPackages>

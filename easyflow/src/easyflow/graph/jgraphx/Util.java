@@ -42,6 +42,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdges <em>Processed Edges</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getCopiedCells <em>Copied Cells</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getCurrentSubGraphs <em>Current Sub Graphs</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getTraversalEvents <em>Traversal Events</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getNewTraversalEvents <em>New Traversal Events</em>}</li>
  * </ul>
  * </p>
  *
@@ -280,6 +283,54 @@ public interface Util extends EObject {
 	EMap<String, mxICell> getCopiedCells();
 
 	/**
+	 * Returns the value of the '<em><b>Current Sub Graphs</b></em>' attribute list.
+	 * The list contents are of type {@link com.mxgraph.model.mxICell}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Current Sub Graphs</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Current Sub Graphs</em>' attribute list.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_CurrentSubGraphs()
+	 * @model dataType="easyflow.mxICell"
+	 * @generated
+	 */
+	EList<mxICell> getCurrentSubGraphs();
+
+	/**
+	 * Returns the value of the '<em><b>Traversal Events</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.TraversalEvent}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Traversal Events</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Traversal Events</em>' reference list.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_TraversalEvents()
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalEvent> getTraversalEvents();
+
+	/**
+	 * Returns the value of the '<em><b>New Traversal Events</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.TraversalEvent}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>New Traversal Events</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>New Traversal Events</em>' reference list.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_NewTraversalEvents()
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalEvent> getNewTraversalEvents();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model dataType="easyflow.mxICell"
@@ -330,14 +381,6 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	void printGraph(mxICell root);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model dataType="easyflow.mxICell" tasksMany="true"
 	 * @generated
 	 */
@@ -366,6 +409,46 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	void resetFlags();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	TraversalEvent getNextTraversalEvent();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	String traversalEventToString(TraversalEvent traversalEvent);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void testSomething();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void layoutGraph();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	void fixOffTargetCells(mxICell root, String groupingStr);
 
 	/**
 	 * <!-- begin-user-doc -->

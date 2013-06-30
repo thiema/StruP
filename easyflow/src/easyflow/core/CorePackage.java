@@ -332,13 +332,13 @@ public interface CorePackage extends EPackage {
 	int TASK__CHUNKS = 9;
 
 	/**
-	 * The feature id for the '<em><b>Full Name DEPRECATED</b></em>' attribute.
+	 * The feature id for the '<em><b>Tool Names</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__FULL_NAME_DEPRECATED = 10;
+	int TASK__TOOL_NAMES = 10;
 
 	/**
 	 * The feature id for the '<em><b>Tools</b></em>' map.
@@ -368,22 +368,22 @@ public interface CorePackage extends EPackage {
 	int TASK__ROOT = 13;
 
 	/**
-	 * The feature id for the '<em><b>Grouping Criteria</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK__GROUPING_CRITERIA = 14;
-
-	/**
 	 * The feature id for the '<em><b>Flags</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__FLAGS = 15;
+	int TASK__FLAGS = 14;
+
+	/**
+	 * The feature id for the '<em><b>Grouping Criteria</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__GROUPING_CRITERIA = 15;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -1656,7 +1656,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGrouping()
 	 * @generated
 	 */
-	int GROUPING = 34;
+	int GROUPING = 35;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GroupingInstanceImpl <em>Grouping Instance</em>}' class.
@@ -1666,7 +1666,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGroupingInstance()
 	 * @generated
 	 */
-	int GROUPING_INSTANCE = 35;
+	int GROUPING_INSTANCE = 36;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.
@@ -1676,7 +1676,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGroupingFeature()
 	 * @generated
 	 */
-	int GROUPING_FEATURE = 36;
+	int GROUPING_FEATURE = 37;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.StringToGroupingFeatureMapImpl <em>String To Grouping Feature Map</em>}' class.
@@ -1751,6 +1751,43 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_GROUPING_INSTANCE_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.StringToStringListMapImpl <em>String To String List Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.StringToStringListMapImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getStringToStringListMap()
+	 * @generated
+	 */
+	int STRING_TO_STRING_LIST_MAP = 34;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To String List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1841,7 +1878,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGroupingInstanceList()
 	 * @generated
 	 */
-	int GROUPING_INSTANCE_LIST = 37;
+	int GROUPING_INSTANCE_LIST = 38;
 
 	/**
 	 * The feature id for the '<em><b>Instances</b></em>' reference list.
@@ -2179,15 +2216,15 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Chunks();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getToolNames <em>Tool Names</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Full Name DEPRECATED</em>'.
-	 * @see easyflow.core.Task#getFullNameDEPRECATED()
+	 * @return the meta object for the map '<em>Tool Names</em>'.
+	 * @see easyflow.core.Task#getToolNames()
 	 * @see #getTask()
 	 * @generated
 	 */
-	EAttribute getTask_FullNameDEPRECATED();
+	EReference getTask_ToolNames();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.core.Task#getTools <em>Tools</em>}'.
@@ -2223,15 +2260,15 @@ public interface CorePackage extends EPackage {
 	EAttribute getTask_Root();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Grouping Criteria</em>'.
+	 * @return the meta object for the map '<em>Grouping Criteria</em>'.
 	 * @see easyflow.core.Task#getGroupingCriteria()
 	 * @see #getTask()
 	 * @generated
 	 */
-	EAttribute getTask_GroupingCriteria();
+	EReference getTask_GroupingCriteria();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getFlags <em>Flags</em>}'.
@@ -3369,6 +3406,40 @@ public interface CorePackage extends EPackage {
 	EReference getStringToGroupingInstanceListMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To String List Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="org.eclipse.emf.ecore.EString" valueMany="true"
+	 * @generated
+	 */
+	EClass getStringToStringListMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringListMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringListMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToStringListMap()
+	 * @generated
+	 */
+	EAttribute getStringToStringListMap_Value();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.GroupingInstanceList <em>Grouping Instance List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3745,12 +3816,12 @@ public interface CorePackage extends EPackage {
 		EReference TASK__CHUNKS = eINSTANCE.getTask_Chunks();
 
 		/**
-		 * The meta object literal for the '<em><b>Full Name DEPRECATED</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Tool Names</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TASK__FULL_NAME_DEPRECATED = eINSTANCE.getTask_FullNameDEPRECATED();
+		EReference TASK__TOOL_NAMES = eINSTANCE.getTask_ToolNames();
 
 		/**
 		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
@@ -3777,12 +3848,12 @@ public interface CorePackage extends EPackage {
 		EAttribute TASK__ROOT = eINSTANCE.getTask_Root();
 
 		/**
-		 * The meta object literal for the '<em><b>Grouping Criteria</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Grouping Criteria</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TASK__GROUPING_CRITERIA = eINSTANCE.getTask_GroupingCriteria();
+		EReference TASK__GROUPING_CRITERIA = eINSTANCE.getTask_GroupingCriteria();
 
 		/**
 		 * The meta object literal for the '<em><b>Flags</b></em>' attribute feature.
@@ -4681,6 +4752,32 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE = eINSTANCE.getStringToGroupingInstanceListMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.StringToStringListMapImpl <em>String To String List Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.StringToStringListMapImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getStringToStringListMap()
+		 * @generated
+		 */
+		EClass STRING_TO_STRING_LIST_MAP = eINSTANCE.getStringToStringListMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_LIST_MAP__KEY = eINSTANCE.getStringToStringListMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_STRING_LIST_MAP__VALUE = eINSTANCE.getStringToStringListMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.GroupingInstanceListImpl <em>Grouping Instance List</em>}' class.

@@ -12,6 +12,8 @@ import easyflow.core.IProjectMetaData;
 
 import easyflow.sequencing.*;
 
+import easyflow.ui.DefaultProject;
+import easyflow.ui.IProject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -89,6 +91,14 @@ public class SequencingSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case SequencingPackage.RESEQUENCING_PROJECT: {
+				ResequencingProject resequencingProject = (ResequencingProject)theEObject;
+				T result = caseResequencingProject(resequencingProject);
+				if (result == null) result = caseDefaultProject(resequencingProject);
+				if (result == null) result = caseIProject(resequencingProject);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -120,6 +130,21 @@ public class SequencingSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseMetaData(MetaData object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Resequencing Project</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Resequencing Project</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResequencingProject(ResequencingProject object) {
 		return null;
 	}
 
@@ -165,6 +190,36 @@ public class SequencingSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDefaultMetaData(DefaultMetaData object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IProject</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IProject</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIProject(IProject object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Default Project</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Default Project</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDefaultProject(DefaultProject object) {
 		return null;
 	}
 

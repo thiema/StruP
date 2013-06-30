@@ -6,6 +6,9 @@ package easyflow.custom.jgraphx;
 import java.awt.Color;
 import java.awt.Point;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -17,18 +20,25 @@ import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.examples.swing.editor.EditorPalette;
 import com.mxgraph.io.mxCodec;
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.util.mxUtils;
+import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 
 import easyflow.custom.jgraphx.editor.EasyFlowBasicGraphEditor;
+import easyflow.custom.jgraphx.editor.EasyFlowCustomGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowGraphComponent;
+import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.jgraphx.editor.SchemaGraphComponent;
 
 public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 {
@@ -49,9 +59,13 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 	//GraphEditor.class.getResource("/com/mxgraph/examples/swing/images/connector.gif");
 
 	public EasyFlowGraphEditor()
-	{
-		//this("mxGraph Editor", new CustomGraphComponent(new CustomGraph()));
-		this("EasyFlow Workbench", new EasyFlowGraphComponent(new EasyFlowGraph()));
+		{
+		super("mxGraph for JFC/Swing", new SchemaGraphComponent(new EasyFlowCustomGraph()));
+		// from the examples
+		//this("mxGraph Editor", new CustomGraphComponent(new EasyFlowCustomGraph()));
+		//this("mxGraph Editor", new CustomGraphComponent(new EasyFlowGraph()));
+		// 
+		//this("EasyFlow Workbench", new EasyFlowGraphComponent(new EasyFlowGraph()));
 	}
 
 	/**
@@ -76,7 +90,19 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 						new ImageIcon(
 								EasyFlowGraphEditor.class
 										.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
-						"rounded=1", 160, 120, "");	}
+						//"rounded=1",
+						"icon;image=/com/mxgraph/examples/swing/images/wrench.png",
+						160, 120, "Task");
+		shapesPalette
+		.addTemplate(
+				"Label",
+				new ImageIcon(
+						GraphEditor.class
+								.getResource("/com/mxgraph/examples/swing/images/rounded.png")),
+				"label;image=/com/mxgraph/examples/swing/images/gear.png",
+				130, 50, "Label");
+		
+	}
 
 	/**
 	* 
@@ -119,7 +145,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		 * Overrides drop behaviour to set the cell style if the target
 		 * is not a valid drop target and the cells are of the same
 		 * type (eg. both vertices or both edges). 
-		 */
+		 
 		public Object[] importCells(Object[] cells, double dx, double dy,
 				Object target, Point location)
 		{
@@ -146,11 +172,11 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 
 			return super.importCells(cells, dx, dy, target, location);
 		}
+		*/
 
 	}
 
 	
-
 	/**
 	 * 
 	 * @param args

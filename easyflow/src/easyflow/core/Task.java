@@ -40,12 +40,12 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.core.Task#getParents <em>Parents</em>}</li>
  *   <li>{@link easyflow.core.Task#getChunks <em>Chunks</em>}</li>
- *   <li>{@link easyflow.core.Task#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}</li>
+ *   <li>{@link easyflow.core.Task#getToolNames <em>Tool Names</em>}</li>
  *   <li>{@link easyflow.core.Task#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}</li>
  *   <li>{@link easyflow.core.Task#isRoot <em>Root</em>}</li>
- *   <li>{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.Task#getFlags <em>Flags</em>}</li>
+ *   <li>{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  * </ul>
  * </p>
  *
@@ -256,30 +256,21 @@ public interface Task extends EObject {
 	EMap<String, EList<TraversalChunk>> getChunks();
 
 	/**
-	 * Returns the value of the '<em><b>Full Name DEPRECATED</b></em>' attribute.
+	 * Returns the value of the '<em><b>Tool Names</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Full Name DEPRECATED</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Tool Names</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Full Name DEPRECATED</em>' attribute.
-	 * @see #setFullNameDEPRECATED(String)
-	 * @see easyflow.core.CorePackage#getTask_FullNameDEPRECATED()
-	 * @model
+	 * @return the value of the '<em>Tool Names</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_ToolNames()
+	 * @model mapType="easyflow.core.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	String getFullNameDEPRECATED();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Full Name DEPRECATED</em>' attribute.
-	 * @see #getFullNameDEPRECATED()
-	 * @generated
-	 */
-	void setFullNameDEPRECATED(String value);
+	EMap<String, EList<String>> getToolNames();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -375,6 +366,22 @@ public interface Task extends EObject {
 	EMap<String, EList<TraversalChunk>> getNonOveralppingTraversalChunksFor(Task task);
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model toolsMany="true"
+	 * @generated
+	 */
+	void readTools(EList<Tool> tools);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Tool getPreferredTool();
+
+	/**
 	 * Returns the value of the '<em><b>Tools</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link easyflow.core.Tool},
@@ -445,20 +452,21 @@ public interface Task extends EObject {
 	void setRoot(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Grouping Criteria</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Grouping Criteria</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Grouping Criteria</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Grouping Criteria</em>' attribute list.
+	 * @return the value of the '<em>Grouping Criteria</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_GroupingCriteria()
-	 * @model
+	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EList<String> getGroupingCriteria();
+	EMap<String, String> getGroupingCriteria();
 
 	/**
 	 * Returns the value of the '<em><b>Flags</b></em>' attribute.

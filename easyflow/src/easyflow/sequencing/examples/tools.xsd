@@ -9,6 +9,27 @@
 				<xs:element name="description" type="xs:string"/>
 	            <xs:element name="interpreter"/>
 	            <xs:element name="command"/>
+	            <xs:element maxOccurs="unbounded" minOccurs="0" name="input">
+	            	<xs:complexType>
+	            		<xs:sequence>
+	            			<xs:element maxOccurs="unbounded" minOccurs="0" name="data"/>
+	            		</xs:sequence>
+	            		<xs:attribute name="name" type="xs:string"/>
+	            		<xs:attribute name="format" type="xs:string"/>
+	            		<xs:attribute name="label" type="xs:string"/>
+					</xs:complexType>            
+	            </xs:element>
+	            <xs:element maxOccurs="unbounded" minOccurs="0" name="output">
+	            	<xs:complexType>
+	            		<xs:sequence>
+	            			<xs:element maxOccurs="unbounded" minOccurs="0" name="data"/>
+	            		</xs:sequence>
+	            		<xs:attribute name="name" type="xs:string"/>
+	            		<xs:attribute name="format" type="xs:string"/>
+	            		<xs:attribute name="label" type="xs:string"/>
+					</xs:complexType>            
+	            </xs:element>
+
 	            <xs:element maxOccurs="unbounded" minOccurs="0" name="param">
 	            	<xs:complexType>
 	            		<xs:sequence>
@@ -22,10 +43,13 @@
 	            		<xs:attribute name="optional" type="xs:boolean"/>
 	            	</xs:complexType>
 	            </xs:element>
+	            <xs:element name="help" type="xs:string">
+	            </xs:element>
 			</xs:sequence>            
 			<xs:attribute name="id" type="xs:string"/>
 			<xs:attribute name="name" type="xs:string"/>
 			<xs:attribute name="version" type="xs:string"/>
+			
 		</xs:complexType>
 	</xs:element>
 	</xs:sequence>

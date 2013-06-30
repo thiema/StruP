@@ -152,12 +152,6 @@ public class BasicGraphEditor extends JPanel
 		}
 	};
 
-	/*
-	 * empty constructor for derived class
-	 */
-	public BasicGraphEditor() {
-		
-	}
 	/**
 	 * 
 	 */

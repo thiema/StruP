@@ -253,15 +253,15 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		
 		//logger.debug(element.getAttribute("id")+" "+element.getAttribute("name"));
 		setName(element.getAttribute("name"));
-		setName(element.getAttribute("id"));
-		setName(element.getAttribute("version"));
+		setId(element.getAttribute("id"));
+		setVersion(element.getAttribute("version"));
 		NodeList nodes = element.getChildNodes();
 		
 		for(int i=0; i<nodes.getLength(); i++){
 			Node node = nodes.item(i);
 
 			if(node instanceof Element){
-			    System.out.println(node
+			    /*System.out.println(node
 			    		+" "+node.getNodeName()
 			    		+" "+node.getNodeValue()
 			    		+" "+node.getChildNodes().getLength()
@@ -269,6 +269,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			    		+" "+node.getAttributes().getNamedItem("id")
 			    		+" "+node.getAttributes().getNamedItem("version")
 			    		);
+			    		*/
 			 }
 			
 		}

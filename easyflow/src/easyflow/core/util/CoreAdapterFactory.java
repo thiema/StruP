@@ -213,6 +213,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createStringToGroupingInstanceListMapAdapter();
 			}
 			@Override
+			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
+				return createStringToStringListMapAdapter();
+			}
+			@Override
 			public Adapter caseGrouping(Grouping object) {
 				return createGroupingAdapter();
 			}
@@ -735,6 +739,20 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToGroupingInstanceListMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To String List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToStringListMapAdapter() {
 		return null;
 	}
 

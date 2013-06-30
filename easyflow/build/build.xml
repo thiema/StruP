@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns:ivy="antlib:org.apache.ivy.ant" default="jar" name="Create Runnable Jar for Project easyflink">
 	
-	<property name="main-class.gui"  value="easyflow.custom.gui.EasyFlowGraphEditor"/>
+	<property name="main-class.gui"  value="easyflow.custom.jgraphx.editor.SchemaEditor"/>
 	<property name="main-class"  value="easyflow.sequencing.examples.Easyflow"/>
-	<property name="src.dir" value="easyflow/src"/>
-	<property name="jgraph.examples.src.dir" value="easyflow/src"/>
+	<property name="src.dir" value="./../src"/>
+	<property name="jgraph.examples.src.dir" value="./../src"/>
 	<property name="editor.resources.dir" value="${src.dir}"/>
+	<property name="emf.plugins" value="/usr/home/heinz/.eclipse/org.eclipse.platform_3.7.0_946975857/plugins/"/>
 
-	<property name="lib.dir" value="./lib"/>
+	<property name="lib.dir" value="./../lib"/>
+	
 	<property name="build.dir"   value="build"/>
 	<property name="classes.dir" value="${build.dir}/classes"/>
 	<property name="jar.dir"     value="${build.dir}/jar"/>
 
 	<path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
-		<fileset dir="/usr/home/heinz/.eclipse/org.eclipse.platform_3.7.0_946975857/plugins/"
-			includes="**/org.eclipse.emf.*.jar"/>
-		<!--fileset dir="/usr/home/heinz/.eclipse/org.eclipse.platform_3.7.0_946975857/plugins/"
-			includes="**/org.eclipse.*.jar"/-->
+		<fileset dir="${emf.plugins}"
+			includes="**/org.eclipse.emf.common_*.jar"/>
+		<fileset dir="${emf.plugins}"
+			includes="**/org.eclipse.emf.ecore_*.jar"/>
+		<fileset dir="${emf.plugins}"
+			includes="**/org.eclipse.emf.ecore.xmi_*.jar"/>
 	</path>
 
 	<target name="resolve" description="--> retrieve dependencies with ivy">
@@ -33,7 +37,9 @@
 	    <javac debug="yes"
 	    	destdir="${classes.dir}" 
 	    	classpathref="classpath"
-	    	srcdir="${src.dir}">
+	    	srcdir="${src.dir}"
+	    	target="1.6"
+	    >
 			<exclude name="old/**"/>
 			
 
@@ -42,12 +48,46 @@
 
 	    </javac>
 	</target>
+
+
+<!-- <echo message='Create build directory, and its subdirectories.'/>
+  <mkdir dir="${build.dir}/lib"/>
+ -->	
+
+<!-- Collect all items from the current CLASSPATH setting into a destination 
+directory, flattening the directory structure. -->
+<copy todir="${build.dir}/jar" flatten="true">
+  <path>
+    <path refid="classpath"/>
+    <!-- pathelement path="${java.class.path}"/-->
+  </path>
+</copy>
+
+<!-- copy resources -->
+<copy todir="${build.dir}/classes">
+    <fileset dir="${src.dir}"
+    includes="**/*.xml,**/*.xsd,**/*.json,**/*.tsv,**/*.csv,**/*.workflow"
+    />
+</copy>
+
+<!--
+flatten pathes 
+<pathconvert property="manifest.classpath" pathsep=" ">
+  <path refid="classpath"/>
+  <mapper>
+    <chainedmapper>
+       <flattenmapper/>
+       <globmapper from="*.jar" to="lib/*.jar"/>
+    </chainedmapper>
+  </mapper>
+</pathconvert>
+-->
 	
     <target name="jar" depends="compile">
         <jar destfile="${jar.dir}/easyflow.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
-                <attribute name="Class-Path" value="${src.dir}"/>
+                <!-- attribute name="Class-Path" value="../jar"/-->
             </manifest>
         </jar>
     </target>
@@ -58,7 +98,7 @@
 
         	<manifest>
                 <attribute name="Main-Class" value="${main-class.gui}"/>
-            	<attribute name="Class-Path" value="${src.dir}"/>                
+            	<!-- attribute name="Class-Path" value="lib"/-->                
             </manifest>
 
 
@@ -69,10 +109,13 @@
 	<target name="run" depends="jar-gui">
 		<java fork="true" classname="${main-class}">
 	            <classpath>
-	                <path refid="classpath"/>
+	                <!-- path refid="classpath"/-->
+	                <pathelement path="${jar.dir}"> </pathelement>
 	                <path location="${jar.dir}/easyflow-gui.jar"/>
 	            </classpath>
 	        </java>
 	</target>
-
+<echo>Java Version via Ant: ${ant.java.version}</echo>
+    <echo>Java Version System Prop: ${java.version}</echo> 
+    <echo> classpath: build/${build.dir}/jar</echo>
 </project>

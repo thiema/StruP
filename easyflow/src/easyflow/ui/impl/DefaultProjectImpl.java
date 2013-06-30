@@ -22,6 +22,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -29,10 +30,13 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import com.mxgraph.model.mxCell;
 
 import easyflow.core.CoreFactory;
+import easyflow.core.CorePackage;
 import easyflow.core.DefaultMetaData;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IMetaData;
 import easyflow.core.Workflow;
+import easyflow.graph.jgraphx.Util;
+import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.sequencing.MetaData;
 import easyflow.sequencing.SequencingFactory;
@@ -51,6 +55,7 @@ import easyflow.ui.UiPackage;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getFileName <em>File Name</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getBasePath <em>Base Path</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getGraphUtil <em>Graph Util</em>}</li>
  * </ul>
  * </p>
  *
@@ -139,6 +144,16 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getGraphUtil() <em>Graph Util</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGraphUtil()
+	 * @generated
+	 * @ordered
+	 */
+	protected Util graphUtil;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -216,6 +231,44 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Util getGraphUtil() {
+		if (graphUtil != null && graphUtil.eIsProxy()) {
+			InternalEObject oldGraphUtil = (InternalEObject)graphUtil;
+			graphUtil = (Util)eResolveProxy(oldGraphUtil);
+			if (graphUtil != oldGraphUtil) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__GRAPH_UTIL, oldGraphUtil, graphUtil));
+			}
+		}
+		return graphUtil;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Util basicGetGraphUtil() {
+		return graphUtil;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGraphUtil(Util newGraphUtil) {
+		Util oldGraphUtil = graphUtil;
+		graphUtil = newGraphUtil;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__GRAPH_UTIL, oldGraphUtil, graphUtil));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getBasePath() {
 		return basePath;
 	}
@@ -240,17 +293,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		JSONObject jsonObject=null;
 		try {
-			InputStream is=null;
-			logger.debug(getFileName());
-			is = new FileInputStream(getFileName());
-			//logger.debug(IOUtils.toString(is)+" "+is+" "+getFileName());
-			
-			//jsonObject = (JSONObject) JSONSerializer.toJSON("{\"hello\": \"world\"}");
-			//jsonObject = (JSONObject) JSONSerializer.toJSON(IOUtils.toString(is));
-			jsonObject = JSONObject.fromObject(IOUtils.toString(is));
-		} catch (FileNotFoundException e) {
+			InputStream is = getClass().getResourceAsStream(getFileName());
+			jsonObject = JSONObject.fromObject(IOUtils.toString(is)); 
+		//} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -261,8 +308,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getFileName());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
-		workflow.setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
-		workflow.getGraphUtil().setGraph(workflow.getGraph());
+		//workflow.setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
+		//workflow.getGraphUtil().setGraph(workflow.getGraph());
 		//DefaultWorkflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createDefaultWorkflowTemplate();
 		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
 		workflowTemplate.setFileName(createPath(projectCfg.getString("workflowTemplateFile")));
@@ -273,7 +320,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		metaData.setFileName(createPath(projectCfg.getString("metadataFile")));
 
 		workflow.setMetaData(metaData);
-		workflow.getGraphUtil().setMetaData(metaData);
+		//workflow.getGraphUtil().setMetaData(metaData);
 		JSONObject workflowCfg=jsonObject.getJSONObject("workflow");
 		workflow.setMode(workflowCfg.getString("mode"));
 		//JSONArray tmp=workflowCfg.getJSONArray("defaultGroupingCriteria");
@@ -286,8 +333,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		for (Object key:projectCfg.keySet()) {
 			workflow.getGenericAttributes().put((String) key, projectCfg.get(key));	
 		}
-		workflow.setToolsSchemaDefinition(URI.createURI(getBasePath()+(String) workflow.getGenericAttributes().get("toolsSchemaDefinitionFile")));
-		workflow.setToolsDescription(URI.createURI(getBasePath()+(String) workflow.getGenericAttributes().get("toolsDescriptionFile")));
+		workflow.setToolsSchemaDefinition(URI.createURI(createPath((String) workflow.getGenericAttributes().get("toolsSchemaDefinitionFile"))));
+		workflow.setToolsDescription(URI.createURI(createPath((String) workflow.getGenericAttributes().get("toolsDescriptionFile"))));
 
 		getWorkflows().add(workflow);
 
@@ -303,36 +350,13 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
-	 */
-	public void initProject() {
-
-		//removing all cells from mxGraph object
-		getActiveWorkflow().getGraph().selectAll();
-		Object[] cells=getActiveWorkflow().getGraph().removeCells();
-		logger.debug(cells.length);
-		//logger.debug(getActiveWorkflow().getTasks().size());
-		//getWorkflows().get(0).getGraph().removeSelectionCells(cells);
-		
-		//read the workflow template and set processing mode
-		
-		getActiveWorkflow().generateGraphFromTemplate();
-		
-		
-		//XMLUtil.testMxGraphXML(getWorkflows().get(0).getGraph(), getWorkflows().get(0).getFirstNode());
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+	 */	 
 	public String createPath(String fileName) {
 		
-		logger.debug(getBasePath()+" "+fileName+" "+DefaultProject.class.toString());
-		//logger.debug(new ResourceWrapper("same.txt", "/com/littletutorials/res"));
-		//return (getBasePath()+fileName);
-		//logger.debug(getBasePath()+fileName+" "+DefaultProject.class.getResource(getBasePath()+fileName));
-		return DefaultProject.class.getResource(getBasePath()+fileName).getFile();
+		String path = getBasePath()+fileName; 
+		logger.debug(path);
+		return path;
+
 	}
 
 	/**
@@ -342,7 +366,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public void applyMetaData() {
 		getActiveWorkflow().readMetaData();
-		//getWorkflows().get(0)
 	}
 
 	/**
@@ -351,22 +374,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public void applyTraversalEvents() {
-		//getActiveWorkflow().getGraph().printGraph((mxCell) getActiveWorkflow().getFirstNode());
 		getActiveWorkflow().applyTraversalEvents();
-/*
-		while (getActiveWorkflow().getGraph().addTraversalEventsToQueue(
-				(mxCell) getActiveWorkflow().getFirstNode(), "grouping")) {
-
-			getActiveWorkflow().applyTraversalEvents();
-			//getWorkflows().get(0).applyTraversalEvents("no_grouping", null);
-		}
-		getActiveWorkflow().getGraph().printGraph((mxCell) getActiveWorkflow().getFirstNode());
-		while (getActiveWorkflow().getGraph().addTraversalEventsToQueue(
-				(mxCell) getActiveWorkflow().getFirstNode(), "traversal")) {
-			getActiveWorkflow().applyTraversalEvents();
-			//getWorkflows().get(0).applyTraversalEvents("no_grouping", null);
-		}
-	*/	
 	}
 
 	/**
@@ -384,7 +392,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public Workflow getActiveWorkflow() {
-		return getWorkflows().get(0);
+		return getWorkflows().isEmpty() ? null : getWorkflows().get(0);
 	}
 
 	/**
@@ -392,17 +400,37 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	public void initProject() {
+
+		if (getGraphUtil() == null)
+			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
+		getActiveWorkflow().setGraphUtil(getGraphUtil());
+		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
+		getActiveWorkflow().readWorkfowTemplate();
+		getActiveWorkflow().readToolDefinitions(getBasePath());
+		getActiveWorkflow().generateGraphFromTemplate();
+		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public void autoSetup() {
+		
 		//remove workflows
+		setBasePath("/easyflow/sequencing/examples/");
 		clearWorkflows();
-		setFileName(createPath("main.json"));
-		logger.debug(createPath("main.json"));
+		if (getFileName() == null)
+			setFileName("main.json");
+		setFileName(createPath(getFileName()));
 		readProjectJson();
 		initProject();
 		applyMetaData();
 		getActiveWorkflow().resolveTraversalEvents();
 		//applyTraversalEvents();
-		getActiveWorkflow().readTaskImplementation();
+		
 
 	}
 
@@ -425,6 +453,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return getBasePath();
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return getLogger();
+			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
+				if (resolve) return getGraphUtil();
+				return basicGetGraphUtil();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -452,6 +483,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__BASE_PATH:
 				setBasePath((String)newValue);
 				return;
+			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
+				setGraphUtil((Util)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -476,6 +510,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__BASE_PATH:
 				setBasePath(BASE_PATH_EDEFAULT);
 				return;
+			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
+				setGraphUtil((Util)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -498,6 +535,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return BASE_PATH_EDEFAULT == null ? basePath != null : !BASE_PATH_EDEFAULT.equals(basePath);
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
+				return graphUtil != null;
 		}
 		return super.eIsSet(featureID);
 	}

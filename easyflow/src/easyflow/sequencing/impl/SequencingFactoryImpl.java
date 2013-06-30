@@ -62,6 +62,7 @@ public class SequencingFactoryImpl extends EFactoryImpl implements SequencingFac
 		switch (eClass.getClassifierID()) {
 			case SequencingPackage.REF_BASED_PROJECT_META_DATA: return createRefBasedProjectMetaData();
 			case SequencingPackage.META_DATA: return createMetaData();
+			case SequencingPackage.RESEQUENCING_PROJECT: return createResequencingProject();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -85,6 +86,16 @@ public class SequencingFactoryImpl extends EFactoryImpl implements SequencingFac
 	public MetaData createMetaData() {
 		MetaDataImpl metaData = new MetaDataImpl();
 		return metaData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ResequencingProject createResequencingProject() {
+		ResequencingProjectImpl resequencingProject = new ResequencingProjectImpl();
+		return resequencingProject;
 	}
 
 	/**

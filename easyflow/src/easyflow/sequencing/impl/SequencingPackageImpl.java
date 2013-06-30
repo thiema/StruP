@@ -18,6 +18,7 @@ import easyflow.impl.EasyflowPackageImpl;
 
 import easyflow.sequencing.MetaData;
 import easyflow.sequencing.RefBasedProjectMetaData;
+import easyflow.sequencing.ResequencingProject;
 import easyflow.sequencing.SequencingFactory;
 import easyflow.sequencing.SequencingPackage;
 
@@ -59,6 +60,13 @@ public class SequencingPackageImpl extends EPackageImpl implements SequencingPac
 	 * @generated
 	 */
 	private EClass metaDataEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass resequencingProjectEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -209,6 +217,24 @@ public class SequencingPackageImpl extends EPackageImpl implements SequencingPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getResequencingProject() {
+		return resequencingProjectEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResequencingProject_RefBasedProjectMetaData() {
+		return (EReference)resequencingProjectEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public SequencingFactory getSequencingFactory() {
 		return (SequencingFactory)getEFactoryInstance();
 	}
@@ -240,6 +266,9 @@ public class SequencingPackageImpl extends EPackageImpl implements SequencingPac
 		createEReference(metaDataEClass, META_DATA__READ_GROUPS);
 		createEReference(metaDataEClass, META_DATA__LIBRARIES);
 		createEReference(metaDataEClass, META_DATA__GROUPS);
+
+		resequencingProjectEClass = createEClass(RESEQUENCING_PROJECT);
+		createEReference(resequencingProjectEClass, RESEQUENCING_PROJECT__REF_BASED_PROJECT_META_DATA);
 	}
 
 	/**
@@ -269,6 +298,7 @@ public class SequencingPackageImpl extends EPackageImpl implements SequencingPac
 		GroupingPackage theGroupingPackage = (GroupingPackage)EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI);
 		DataformatPackage theDataformatPackage = (DataformatPackage)EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI);
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theGroupingPackage);
@@ -282,6 +312,7 @@ public class SequencingPackageImpl extends EPackageImpl implements SequencingPac
 		refBasedProjectMetaDataEClass.getESuperTypes().add(theCorePackage.getIProjectMetaData());
 		metaDataEClass.getESuperTypes().add(theCorePackage.getIMetaData());
 		metaDataEClass.getESuperTypes().add(theCorePackage.getDefaultMetaData());
+		resequencingProjectEClass.getESuperTypes().add(theUiPackage.getDefaultProject());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(refBasedProjectMetaDataEClass, RefBasedProjectMetaData.class, "RefBasedProjectMetaData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -292,6 +323,9 @@ public class SequencingPackageImpl extends EPackageImpl implements SequencingPac
 		initEReference(getMetaData_ReadGroups(), theGroupingPackage.getStringToReadGroupMap(), null, "readGroups", null, 0, -1, MetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMetaData_Libraries(), theGroupingPackage.getStringToLibraryMap(), null, "libraries", null, 0, -1, MetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMetaData_Groups(), theGroupingPackage.getStringToGroupMap(), null, "groups", null, 0, -1, MetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(resequencingProjectEClass, ResequencingProject.class, "ResequencingProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getResequencingProject_RefBasedProjectMetaData(), this.getRefBasedProjectMetaData(), null, "refBasedProjectMetaData", null, 0, -1, ResequencingProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //SequencingPackageImpl

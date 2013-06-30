@@ -462,7 +462,15 @@ public interface Workflow extends EObject {
 	 * @model
 	 * @generated
 	 */
-	void readTaskImplementation();
+	void readToolDefinitions(String basePath);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model xmlSourceDataType="easyflow.URI" xsdSourceDataType="easyflow.URI"
+	 * @generated
+	 */
+	EList<Tool> readToolDefinition(URI xmlSource, URI xsdSource);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -549,7 +557,7 @@ public interface Workflow extends EObject {
 	 * @model
 	 * @generated
 	 */
-	void applyTraversalEvent(Task task, TraversalEvent traversalEvent, String parentToFix);
+	void applyTraversalEvent(TraversalEvent traversalEvent);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -587,5 +595,13 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	void evaluateJEXLString();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void readWorkfowTemplate();
 
 } // Workflow

@@ -286,6 +286,12 @@ public class CoreSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CorePackage.STRING_TO_STRING_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<String>> stringToStringListMap = (Map.Entry<String, EList<String>>)theEObject;
+				T result = caseStringToStringListMap(stringToStringListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case CorePackage.GROUPING: {
 				Grouping grouping = (Grouping)theEObject;
 				T result = caseGrouping(grouping);
@@ -836,6 +842,21 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToGroupingInstanceListMap(Map.Entry<String, GroupingInstanceList> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To String List Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To String List Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
 		return null;
 	}
 

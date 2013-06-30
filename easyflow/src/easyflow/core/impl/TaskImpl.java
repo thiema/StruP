@@ -81,12 +81,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getParents <em>Parents</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getChunks <em>Chunks</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getFullNameDEPRECATED <em>Full Name DEPRECATED</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getToolNames <em>Tool Names</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreviousTaskStr <em>Previous Task Str</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#isRoot <em>Root</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getFlags <em>Flags</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  * </ul>
  * </p>
  *
@@ -244,24 +244,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, EList<TraversalChunk>> chunks;
 
 	/**
-	 * The default value of the '{@link #getFullNameDEPRECATED() <em>Full Name DEPRECATED</em>}' attribute.
+	 * The cached value of the '{@link #getToolNames() <em>Tool Names</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFullNameDEPRECATED()
+	 * @see #getToolNames()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FULL_NAME_DEPRECATED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getFullNameDEPRECATED() <em>Full Name DEPRECATED</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFullNameDEPRECATED()
-	 * @generated
-	 * @ordered
-	 */
-	protected String fullNameDEPRECATED = FULL_NAME_DEPRECATED_EDEFAULT;
+	protected EMap<String, EList<String>> toolNames;
 
 	/**
 	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
@@ -314,16 +304,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected boolean root = ROOT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getGroupingCriteria() <em>Grouping Criteria</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroupingCriteria()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> groupingCriteria;
-
-	/**
 	 * The default value of the '{@link #getFlags() <em>Flags</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -342,6 +322,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected int flags = FLAGS_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getGroupingCriteria() <em>Grouping Criteria</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupingCriteria()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> groupingCriteria;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -520,20 +510,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFullNameDEPRECATED() {
-		return fullNameDEPRECATED;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFullNameDEPRECATED(String newFullNameDEPRECATED) {
-		String oldFullNameDEPRECATED = fullNameDEPRECATED;
-		fullNameDEPRECATED = newFullNameDEPRECATED;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__FULL_NAME_DEPRECATED, oldFullNameDEPRECATED, fullNameDEPRECATED));
+	public EMap<String, EList<String>> getToolNames() {
+		if (toolNames == null) {
+			toolNames = new EcoreEMap<String,EList<String>>(CorePackage.Literals.STRING_TO_STRING_LIST_MAP, StringToStringListMapImpl.class, this, CorePackage.TASK__TOOL_NAMES);
+		}
+		return toolNames;
 	}
 
 	/**
@@ -595,9 +576,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getGroupingCriteria() {
+	public EMap<String, String> getGroupingCriteria() {
 		if (groupingCriteria == null) {
-			groupingCriteria = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.TASK__GROUPING_CRITERIA);
+			groupingCriteria = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.TASK__GROUPING_CRITERIA);
 		}
 		return groupingCriteria;
 	}
@@ -648,7 +629,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 */
         String[] tmp=wtplArray[2].split(",");
         for (int i=0; i<tmp.length; i++) {
-        	getTools().put(tmp[i], CoreFactory.eINSTANCE.createTool());
+        	getToolNames().put(tmp[i], new BasicEList<String>());
         }
 
         
@@ -702,7 +683,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalCriterion);
 		        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
 		        	getInDataPorts().get(0).getGroupingCriteria().add(traversalCriterion);
-		        	getGroupingCriteria().add(traversalCriterion.getId());
+		        	getGroupingCriteria().put(traversalCriterion.getId(), traversalCriterion.getMode());
 		        }
         	}
         }
@@ -977,6 +958,35 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void readTools(EList<Tool> tools) {
+		for (Tool tool : tools)
+		{
+			if (getToolNames().containsKey(tool.getName()))
+			{
+				logger.debug("found tool with name:"+tool.getName());
+				if (getTools().containsKey(tool.getId()))
+					logger.warn("override tool:"+tool.getId());
+				getTools().put(tool.getId(), tool);
+			}
+		}	
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Tool getPreferredTool() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -986,8 +996,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getTraversalEvents()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__CHUNKS:
 				return ((InternalEList<?>)getChunks()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__TOOL_NAMES:
+				return ((InternalEList<?>)getToolNames()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__TOOLS:
 				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				return ((InternalEList<?>)getGroupingCriteria()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1022,8 +1036,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CHUNKS:
 				if (coreType) return getChunks();
 				else return getChunks().map();
-			case CorePackage.TASK__FULL_NAME_DEPRECATED:
-				return getFullNameDEPRECATED();
+			case CorePackage.TASK__TOOL_NAMES:
+				if (coreType) return getToolNames();
+				else return getToolNames().map();
 			case CorePackage.TASK__TOOLS:
 				if (coreType) return getTools();
 				else return getTools().map();
@@ -1031,10 +1046,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getPreviousTaskStr();
 			case CorePackage.TASK__ROOT:
 				return isRoot();
-			case CorePackage.TASK__GROUPING_CRITERIA:
-				return getGroupingCriteria();
 			case CorePackage.TASK__FLAGS:
 				return getFlags();
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				if (coreType) return getGroupingCriteria();
+				else return getGroupingCriteria().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1078,8 +1094,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CHUNKS:
 				((EStructuralFeature.Setting)getChunks()).set(newValue);
 				return;
-			case CorePackage.TASK__FULL_NAME_DEPRECATED:
-				setFullNameDEPRECATED((String)newValue);
+			case CorePackage.TASK__TOOL_NAMES:
+				((EStructuralFeature.Setting)getToolNames()).set(newValue);
 				return;
 			case CorePackage.TASK__TOOLS:
 				((EStructuralFeature.Setting)getTools()).set(newValue);
@@ -1090,12 +1106,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__ROOT:
 				setRoot((Boolean)newValue);
 				return;
-			case CorePackage.TASK__GROUPING_CRITERIA:
-				getGroupingCriteria().clear();
-				getGroupingCriteria().addAll((Collection<? extends String>)newValue);
-				return;
 			case CorePackage.TASK__FLAGS:
 				setFlags((Integer)newValue);
+				return;
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				((EStructuralFeature.Setting)getGroupingCriteria()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1136,8 +1151,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CHUNKS:
 				getChunks().clear();
 				return;
-			case CorePackage.TASK__FULL_NAME_DEPRECATED:
-				setFullNameDEPRECATED(FULL_NAME_DEPRECATED_EDEFAULT);
+			case CorePackage.TASK__TOOL_NAMES:
+				getToolNames().clear();
 				return;
 			case CorePackage.TASK__TOOLS:
 				getTools().clear();
@@ -1148,11 +1163,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__ROOT:
 				setRoot(ROOT_EDEFAULT);
 				return;
-			case CorePackage.TASK__GROUPING_CRITERIA:
-				getGroupingCriteria().clear();
-				return;
 			case CorePackage.TASK__FLAGS:
 				setFlags(FLAGS_EDEFAULT);
+				return;
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				getGroupingCriteria().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -1186,18 +1201,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return parents != null && !parents.isEmpty();
 			case CorePackage.TASK__CHUNKS:
 				return chunks != null && !chunks.isEmpty();
-			case CorePackage.TASK__FULL_NAME_DEPRECATED:
-				return FULL_NAME_DEPRECATED_EDEFAULT == null ? fullNameDEPRECATED != null : !FULL_NAME_DEPRECATED_EDEFAULT.equals(fullNameDEPRECATED);
+			case CorePackage.TASK__TOOL_NAMES:
+				return toolNames != null && !toolNames.isEmpty();
 			case CorePackage.TASK__TOOLS:
 				return tools != null && !tools.isEmpty();
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				return PREVIOUS_TASK_STR_EDEFAULT == null ? previousTaskStr != null : !PREVIOUS_TASK_STR_EDEFAULT.equals(previousTaskStr);
 			case CorePackage.TASK__ROOT:
 				return root != ROOT_EDEFAULT;
-			case CorePackage.TASK__GROUPING_CRITERIA:
-				return groupingCriteria != null && !groupingCriteria.isEmpty();
 			case CorePackage.TASK__FLAGS:
 				return flags != FLAGS_EDEFAULT;
+			case CorePackage.TASK__GROUPING_CRITERIA:
+				return groupingCriteria != null && !groupingCriteria.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1222,14 +1237,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(jexlEngine);
 		result.append(", logger: ");
 		result.append(logger);
-		result.append(", fullNameDEPRECATED: ");
-		result.append(fullNameDEPRECATED);
 		result.append(", previousTaskStr: ");
 		result.append(previousTaskStr);
 		result.append(", root: ");
 		result.append(root);
-		result.append(", groupingCriteria: ");
-		result.append(groupingCriteria);
 		result.append(", flags: ");
 		result.append(flags);
 		result.append(')');

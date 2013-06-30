@@ -12,6 +12,8 @@ import easyflow.core.IProjectMetaData;
 
 import easyflow.sequencing.*;
 
+import easyflow.ui.DefaultProject;
+import easyflow.ui.IProject;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -84,6 +86,10 @@ public class SequencingAdapterFactory extends AdapterFactoryImpl {
 				return createMetaDataAdapter();
 			}
 			@Override
+			public Adapter caseResequencingProject(ResequencingProject object) {
+				return createResequencingProjectAdapter();
+			}
+			@Override
 			public Adapter caseIProjectMetaData(IProjectMetaData object) {
 				return createIProjectMetaDataAdapter();
 			}
@@ -94,6 +100,14 @@ public class SequencingAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseDefaultMetaData(DefaultMetaData object) {
 				return createDefaultMetaDataAdapter();
+			}
+			@Override
+			public Adapter caseIProject(IProject object) {
+				return createIProjectAdapter();
+			}
+			@Override
+			public Adapter caseDefaultProject(DefaultProject object) {
+				return createDefaultProjectAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -144,6 +158,20 @@ public class SequencingAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.sequencing.ResequencingProject <em>Resequencing Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.sequencing.ResequencingProject
+	 * @generated
+	 */
+	public Adapter createResequencingProjectAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link easyflow.core.IProjectMetaData <em>IProject Meta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -182,6 +210,34 @@ public class SequencingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDefaultMetaDataAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.ui.IProject <em>IProject</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.ui.IProject
+	 * @generated
+	 */
+	public Adapter createIProjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.ui.DefaultProject <em>Default Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.ui.DefaultProject
+	 * @generated
+	 */
+	public Adapter createDefaultProjectAdapter() {
 		return null;
 	}
 

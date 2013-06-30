@@ -55,17 +55,6 @@ public interface IProject extends EObject {
 	 * @model
 	 * @generated
 	 */
-	String createPath(String fileName);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
 	void autoSetup();
 
 	/**

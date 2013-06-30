@@ -10,6 +10,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +21,12 @@ import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
+import easyflow.custom.util.XMLUtil;
 
 import java.util.Collection;
+
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -27,6 +34,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 /**
  * <!-- begin-user-doc -->
@@ -173,13 +182,9 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 */
 	private void checkParents(Map<String,Task> tmpMap) {
 		
-        BufferedReader bufferedReader = null;
-		try {
-			bufferedReader = new BufferedReader(new FileReader(getFileName()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
+        BufferedReader bufferedReader = new BufferedReader(reader);
+
         String strLine;
         try {
         	
@@ -221,13 +226,9 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	public void readTemplate(String mode, EList<String> defaultGroupingCriteria) {
 
 		Map<String,Task> tmpMap=new HashMap<String,Task>();
-        BufferedReader bufferedReader = null;
-		try {
-			bufferedReader = new BufferedReader(new FileReader(getFileName()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        logger.debug(getFileName());
+        Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
+        BufferedReader bufferedReader = new BufferedReader(reader);
         String strLine;
         try {
         	
