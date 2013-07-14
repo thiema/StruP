@@ -18,9 +18,6 @@ import easyflow.core.TraversalCriterion;
 import easyflow.core.TraversalEvent;
 import easyflow.core.Workflow;
 
-import easyflow.sequencing.MetaData;
-import easyflow.sequencing.grouping.Record;
-
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;

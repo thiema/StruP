@@ -8,6 +8,7 @@ package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
 import easyflow.core.Tool;
+import javax.xml.validation.Schema;
 import easyflow.core.Workflow;
 
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -255,25 +257,18 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		setName(element.getAttribute("name"));
 		setId(element.getAttribute("id"));
 		setVersion(element.getAttribute("version"));
-		NodeList nodes = element.getChildNodes();
-		
-		for(int i=0; i<nodes.getLength(); i++){
-			Node node = nodes.item(i);
+	}
 
-			if(node instanceof Element){
-			    /*System.out.println(node
-			    		+" "+node.getNodeName()
-			    		+" "+node.getNodeValue()
-			    		+" "+node.getChildNodes().getLength()
-			    		+" "+node.getAttributes().getNamedItem("name")
-			    		+" "+node.getAttributes().getNamedItem("id")
-			    		+" "+node.getAttributes().getNamedItem("version")
-			    		);
-			    		*/
-			 }
-			
-		}
-		logger.debug(element);	}
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void readImplementation(Document document, Schema schema) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * <!-- begin-user-doc -->

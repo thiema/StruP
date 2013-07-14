@@ -14,12 +14,14 @@ import easyflow.*;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.net.URI;
 import java.util.Stack;
 
+import javax.xml.validation.Schema;
+import net.sf.json.JSONObject;
 import org.apache.commons.jexl2.JexlEngine;
-
-import org.eclipse.emf.common.util.URI;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -28,6 +30,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -102,6 +106,18 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createEasyFlowGraphFromString(eDataType, initialValue);
 			case EasyflowPackage.EOBJECT:
 				return createEObjectFromString(eDataType, initialValue);
+			case EasyflowPackage.DOCUMENT:
+				return createDocumentFromString(eDataType, initialValue);
+			case EasyflowPackage.ELEMENT:
+				return createElementFromString(eDataType, initialValue);
+			case EasyflowPackage.SCHEMA:
+				return createSchemaFromString(eDataType, initialValue);
+			case EasyflowPackage.JSON_OBJECT:
+				return createJSONObjectFromString(eDataType, initialValue);
+			case EasyflowPackage.BUFFERED_READER:
+				return createBufferedReaderFromString(eDataType, initialValue);
+			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
+				return createFileNotFoundExceptionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -131,6 +147,18 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertEasyFlowGraphToString(eDataType, instanceValue);
 			case EasyflowPackage.EOBJECT:
 				return convertEObjectToString(eDataType, instanceValue);
+			case EasyflowPackage.DOCUMENT:
+				return convertDocumentToString(eDataType, instanceValue);
+			case EasyflowPackage.ELEMENT:
+				return convertElementToString(eDataType, instanceValue);
+			case EasyflowPackage.SCHEMA:
+				return convertSchemaToString(eDataType, instanceValue);
+			case EasyflowPackage.JSON_OBJECT:
+				return convertJSONObjectToString(eDataType, instanceValue);
+			case EasyflowPackage.BUFFERED_READER:
+				return convertBufferedReaderToString(eDataType, instanceValue);
+			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
+				return convertFileNotFoundExceptionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -277,6 +305,114 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertEObjectToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Document createDocumentFromString(EDataType eDataType, String initialValue) {
+		return (Document)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertDocumentToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Element createElementFromString(EDataType eDataType, String initialValue) {
+		return (Element)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertElementToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Schema createSchemaFromString(EDataType eDataType, String initialValue) {
+		return (Schema)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertSchemaToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public JSONObject createJSONObjectFromString(EDataType eDataType, String initialValue) {
+		return (JSONObject)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertJSONObjectToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BufferedReader createBufferedReaderFromString(EDataType eDataType, String initialValue) {
+		return (BufferedReader)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertBufferedReaderToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FileNotFoundException createFileNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (FileNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertFileNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

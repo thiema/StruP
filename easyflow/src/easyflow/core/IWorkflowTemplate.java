@@ -7,7 +7,6 @@
 package easyflow.core;
 
 import org.eclipse.emf.common.util.EList;
-import java.io.FileNotFoundException;
 
 import org.eclipse.emf.ecore.EObject;
 

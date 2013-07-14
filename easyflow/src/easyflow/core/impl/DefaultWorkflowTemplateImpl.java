@@ -9,7 +9,6 @@ package easyflow.core.impl;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.Task;
-import easyflow.sequencing.MetaData;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -36,7 +35,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getTasks <em>Tasks</em>}</li>
- *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
@@ -55,23 +54,24 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	protected EList<Task> tasks;
 
 	/**
-	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * The default value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFileName()
+	 * @see #getReader()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FILE_NAME_EDEFAULT = null;
+	protected static final BufferedReader READER_EDEFAULT = null;
+
 	/**
-	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * The cached value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFileName()
+	 * @see #getReader()
 	 * @generated
 	 * @ordered
 	 */
-	protected String fileName = FILE_NAME_EDEFAULT;
+	protected BufferedReader reader = READER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -129,8 +129,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFileName() {
-		return fileName;
+	public BufferedReader getReader() {
+		return reader;
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFileName(String newFileName) {
-		String oldFileName = fileName;
-		fileName = newFileName;
+	public void setReader(BufferedReader newReader) {
+		BufferedReader oldReader = reader;
+		reader = newReader;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME, oldFileName, fileName));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER, oldReader, reader));
 	}
 
 	/**
@@ -173,12 +173,7 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	 */
 	public void readTemplate(String mode, EList<String> defaultGroupingCriteria) {
         BufferedReader bufferedReader = null;
-		try {
-			bufferedReader = new BufferedReader(new FileReader(getFileName()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		bufferedReader = new BufferedReader(getReader());
         String strLine;        
         try {
 			while ((strLine = bufferedReader.readLine()) != null)   {
@@ -206,8 +201,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 		switch (featureID) {
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS:
 				return getTasks();
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
-				return getFileName();
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
+				return getReader();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return getLogger();
 		}
@@ -227,8 +222,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 				getTasks().clear();
 				getTasks().addAll((Collection<? extends Task>)newValue);
 				return;
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
-				setFileName((String)newValue);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
+				setReader((BufferedReader)newValue);
 				return;
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
@@ -248,8 +243,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS:
 				getTasks().clear();
 				return;
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
-				setFileName(FILE_NAME_EDEFAULT);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
+				setReader(READER_EDEFAULT);
 				return;
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
@@ -268,8 +263,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 		switch (featureID) {
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS:
 				return tasks != null && !tasks.isEmpty();
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
-				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
+				return READER_EDEFAULT == null ? reader != null : !READER_EDEFAULT.equals(reader);
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
@@ -286,8 +281,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fileName: ");
-		result.append(fileName);
+		result.append(" (reader: ");
+		result.append(reader);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(')');

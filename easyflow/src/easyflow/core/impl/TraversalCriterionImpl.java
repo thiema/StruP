@@ -12,7 +12,6 @@ import easyflow.core.TraversalChunks;
 import easyflow.core.TraversalCriterion;
 
 import easyflow.core.TraversalOperation;
-import easyflow.sequencing.MetaData;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;

@@ -121,7 +121,7 @@ public interface EasyflowPackage extends EPackage {
 	 * The meta object id for the '<em>URI</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.common.util.URI
+	 * @see java.net.URI
 	 * @see easyflow.impl.EasyflowPackageImpl#getURI()
 	 * @generated
 	 */
@@ -166,6 +166,50 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	int ELEMENT = 10;
+
+
+	/**
+	 * The meta object id for the '<em>Schema</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see javax.xml.validation.Schema
+	 * @see easyflow.impl.EasyflowPackageImpl#getSchema()
+	 * @generated
+	 */
+	int SCHEMA = 11;
+
+
+	/**
+	 * The meta object id for the '<em>JSON Object</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see net.sf.json.JSONObject
+	 * @see easyflow.impl.EasyflowPackageImpl#getJSONObject()
+	 * @generated
+	 */
+	int JSON_OBJECT = 12;
+
+
+	/**
+	 * The meta object id for the '<em>Buffered Reader</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.io.BufferedReader
+	 * @see easyflow.impl.EasyflowPackageImpl#getBufferedReader()
+	 * @generated
+	 */
+	int BUFFERED_READER = 13;
+
+
+	/**
+	 * The meta object id for the '<em>File Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.io.FileNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
+	 * @generated
+	 */
+	int FILE_NOT_FOUND_EXCEPTION = 14;
 
 
 	/**
@@ -235,12 +279,12 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getStack();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
+	 * Returns the meta object for data type '{@link java.net.URI <em>URI</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>URI</em>'.
-	 * @see org.eclipse.emf.common.util.URI
-	 * @model instanceClass="org.eclipse.emf.common.util.URI"
+	 * @see java.net.URI
+	 * @model instanceClass="java.net.URI"
 	 * @generated
 	 */
 	EDataType getURI();
@@ -273,7 +317,7 @@ public interface EasyflowPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Document</em>'.
 	 * @see org.w3c.dom.Document
-	 * @model instanceClass="org.w3c.dom.Document" serializeable="false"
+	 * @model instanceClass="org.w3c.dom.Document"
 	 * @generated
 	 */
 	EDataType getDocument();
@@ -284,10 +328,54 @@ public interface EasyflowPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Element</em>'.
 	 * @see org.w3c.dom.Element
-	 * @model instanceClass="org.w3c.dom.Element" serializeable="false"
+	 * @model instanceClass="org.w3c.dom.Element"
 	 * @generated
 	 */
 	EDataType getElement();
+
+	/**
+	 * Returns the meta object for data type '{@link javax.xml.validation.Schema <em>Schema</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Schema</em>'.
+	 * @see javax.xml.validation.Schema
+	 * @model instanceClass="javax.xml.validation.Schema"
+	 * @generated
+	 */
+	EDataType getSchema();
+
+	/**
+	 * Returns the meta object for data type '{@link net.sf.json.JSONObject <em>JSON Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>JSON Object</em>'.
+	 * @see net.sf.json.JSONObject
+	 * @model instanceClass="net.sf.json.JSONObject"
+	 * @generated
+	 */
+	EDataType getJSONObject();
+
+	/**
+	 * Returns the meta object for data type '{@link java.io.BufferedReader <em>Buffered Reader</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Buffered Reader</em>'.
+	 * @see java.io.BufferedReader
+	 * @model instanceClass="java.io.BufferedReader"
+	 * @generated
+	 */
+	EDataType getBufferedReader();
+
+	/**
+	 * Returns the meta object for data type '{@link java.io.FileNotFoundException <em>File Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>File Not Found Exception</em>'.
+	 * @see java.io.FileNotFoundException
+	 * @model instanceClass="java.io.FileNotFoundException"
+	 * @generated
+	 */
+	EDataType getFileNotFoundException();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -375,7 +463,7 @@ public interface EasyflowPackage extends EPackage {
 		 * The meta object literal for the '<em>URI</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.common.util.URI
+		 * @see java.net.URI
 		 * @see easyflow.impl.EasyflowPackageImpl#getURI()
 		 * @generated
 		 */
@@ -420,6 +508,46 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType ELEMENT = eINSTANCE.getElement();
+
+		/**
+		 * The meta object literal for the '<em>Schema</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see javax.xml.validation.Schema
+		 * @see easyflow.impl.EasyflowPackageImpl#getSchema()
+		 * @generated
+		 */
+		EDataType SCHEMA = eINSTANCE.getSchema();
+
+		/**
+		 * The meta object literal for the '<em>JSON Object</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see net.sf.json.JSONObject
+		 * @see easyflow.impl.EasyflowPackageImpl#getJSONObject()
+		 * @generated
+		 */
+		EDataType JSON_OBJECT = eINSTANCE.getJSONObject();
+
+		/**
+		 * The meta object literal for the '<em>Buffered Reader</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.io.BufferedReader
+		 * @see easyflow.impl.EasyflowPackageImpl#getBufferedReader()
+		 * @generated
+		 */
+		EDataType BUFFERED_READER = eINSTANCE.getBufferedReader();
+
+		/**
+		 * The meta object literal for the '<em>File Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.io.FileNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
+		 * @generated
+		 */
+		EDataType FILE_NOT_FOUND_EXCEPTION = eINSTANCE.getFileNotFoundException();
 
 	}
 

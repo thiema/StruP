@@ -12,23 +12,13 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.example.ExamplePackage;
+import easyflow.example.impl.ExamplePackageImpl;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.Util;
 
 import easyflow.impl.EasyflowPackageImpl;
-
-import easyflow.sequencing.SequencingPackage;
-
-import easyflow.sequencing.dataformat.DataformatPackage;
-
-import easyflow.sequencing.dataformat.impl.DataformatPackageImpl;
-
-import easyflow.sequencing.grouping.GroupingPackage;
-
-import easyflow.sequencing.grouping.impl.GroupingPackageImpl;
-
-import easyflow.sequencing.impl.SequencingPackageImpl;
 
 import easyflow.ui.UiPackage;
 
@@ -38,8 +28,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -106,27 +96,21 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
-		SequencingPackageImpl theSequencingPackage = (SequencingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI) instanceof SequencingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI) : SequencingPackage.eINSTANCE);
-		GroupingPackageImpl theGroupingPackage = (GroupingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI) instanceof GroupingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI) : GroupingPackage.eINSTANCE);
-		DataformatPackageImpl theDataformatPackage = (DataformatPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI) instanceof DataformatPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI) : DataformatPackage.eINSTANCE);
+		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theJgraphxPackage.createPackageContents();
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
-		theSequencingPackage.createPackageContents();
-		theGroupingPackage.createPackageContents();
-		theDataformatPackage.createPackageContents();
+		theExamplePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theJgraphxPackage.initializePackageContents();
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
-		theSequencingPackage.initializePackageContents();
-		theGroupingPackage.initializePackageContents();
-		theDataformatPackage.initializePackageContents();
+		theExamplePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theJgraphxPackage.freeze();

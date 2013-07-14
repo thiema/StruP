@@ -1,5 +1,0 @@
-Record	ReadGroup	Sample	Group	Library	InputFiles
-ID1	RG1	S1	G1	L1	file1
-ID2	RG2	S1	G1	L1	file2_1,file2_2
-ID3	RG1	S2	G1	L2	file3
-#ID4	RG2	S2	G1	L3	file4

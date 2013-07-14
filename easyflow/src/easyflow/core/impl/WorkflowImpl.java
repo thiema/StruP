@@ -45,9 +45,8 @@ import easyflow.core.Workflow;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.graph.jgraphx.Util;
+import java.net.URI;
 import easyflow.custom.util.XMLUtil;
-import easyflow.sequencing.MetaData;
-
 
 
 import java.awt.Graphics2D;
@@ -93,7 +92,6 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.EObject;
@@ -134,8 +132,6 @@ import org.xml.sax.SAXException;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGenericAttributes <em>Generic Attributes</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getToolsSchemaDefinition <em>Tools Schema Definition</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getToolsDescription <em>Tools Description</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGraphUtil <em>Graph Util</em>}</li>
  * </ul>
@@ -344,46 +340,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected EMap<String, Object> genericAttributes;
-
-	/**
-	 * The default value of the '{@link #getToolsSchemaDefinition() <em>Tools Schema Definition</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getToolsSchemaDefinition()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final URI TOOLS_SCHEMA_DEFINITION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getToolsSchemaDefinition() <em>Tools Schema Definition</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getToolsSchemaDefinition()
-	 * @generated
-	 * @ordered
-	 */
-	protected URI toolsSchemaDefinition = TOOLS_SCHEMA_DEFINITION_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getToolsDescription() <em>Tools Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getToolsDescription()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final URI TOOLS_DESCRIPTION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getToolsDescription() <em>Tools Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getToolsDescription()
-	 * @generated
-	 * @ordered
-	 */
-	protected URI toolsDescription = TOOLS_DESCRIPTION_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
@@ -671,48 +627,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public URI getToolsSchemaDefinition() {
-		return toolsSchemaDefinition;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setToolsSchemaDefinition(URI newToolsSchemaDefinition) {
-		URI oldToolsSchemaDefinition = toolsSchemaDefinition;
-		toolsSchemaDefinition = newToolsSchemaDefinition;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__TOOLS_SCHEMA_DEFINITION, oldToolsSchemaDefinition, toolsSchemaDefinition));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public URI getToolsDescription() {
-		return toolsDescription;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setToolsDescription(URI newToolsDescription) {
-		URI oldToolsDescription = toolsDescription;
-		toolsDescription = newToolsDescription;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__TOOLS_DESCRIPTION, oldToolsDescription, toolsDescription));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EMap<String, Tool> getTools() {
 		if (tools == null) {
 			tools = new EcoreEMap<String,Tool>(CorePackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.WORKFLOW__TOOLS);
@@ -759,12 +673,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	}
 
 		
-	private URI createURI(String basePath, String fileName)
-	{
-		return URI.createURI(fileName == null ?
-								basePath :
-								basePath + fileName);
-	}
+	
 	
 	
 	/**
@@ -777,11 +686,11 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * - 2. check if <toolName>.xml exists (this definition has precedence )
 	 * <!-- end-user-doc -->
 	 * @generated not
-	 */
+	 
 	public void readToolDefinitions(String basePath) {
 		
-		logger.debug("tool def="+getToolsDescription().toFileString()+
-				" tool schema="+getToolsSchemaDefinition().toFileString());
+		logger.debug("tool def="+getToolsDescription().toString()+
+				" tool schema="+getToolsSchemaDefinition().toString());
 		for (Tool tool : readToolDefinition(getToolsDescription(), getToolsSchemaDefinition()))
 		{
 			getTools().put(tool.getId()+"_default", tool);
@@ -794,9 +703,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		if (peers != null)
 		for (File file1 : peers)
 		{
-			for (Tool tool : readToolDefinition(createURI(basePath, file1.getName()), 
-								getToolsSchemaDefinition()))
-				getTools().put(tool.getId(), tool);
+			try {
+				for (Tool tool : readToolDefinition(createURI(basePath, file1.getName()), 
+									getToolsSchemaDefinition()))
+					getTools().put(tool.getId(), tool);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		
@@ -808,62 +722,32 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			task.readTools(help);
 			
 			logger.debug(task.getUniqueString()+": "+task.getTools().keySet());
-			/* assume path of tool definition files based on the task-name
-			logger.debug("check tool definition for task"+task.getUniqueString()+
-					" URI="+createURI(basePath, task.getUniqueString())+
-					" tools="+task.getTools().keySet());
-			for (String toolName:task.getTools().keySet())
-			{
-				tools = readToolDefinition(createURI(basePath, toolName), 
-						getToolsSchemaDefinition());
-				
-				//if (task.getTools().containsKey(toolName))
-			}
-			*/
+			// assume path of tool definition files based on the task-name
+			//logger.debug("check tool definition for task"+task.getUniqueString()+
+				//	" URI="+createURI(basePath, task.getUniqueString())+
+				//	" tools="+task.getTools().keySet());
+			//for (String toolName:task.getTools().keySet())
+				//tools = readToolDefinition(createURI(basePath, toolName), 
+					//	getToolsSchemaDefinition());				
+			
 		}
 		logger.debug("known tools: "+getTools().keySet());
 	}
 
 	
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
 	public EList<Tool> readToolDefinition(URI xmlSource, URI xsdSource) {
-		InputStream isXML=getClass().getResourceAsStream(xmlSource.toFileString());
-		InputStream isXSD=getClass().getResourceAsStream(xsdSource.toFileString());
-		Source schemaFile=new StreamSource(isXSD);
+		InputStream isXML=getClass().getResourceAsStream(xmlSource.toString());
 		Source xmlFile = new StreamSource(isXML);
-		SchemaFactory schemaFactory = SchemaFactory
-			    .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema;
 		EList<Tool> tools = new BasicEList<Tool>();
 		try {
-			schema = schemaFactory.newSchema(schemaFile);
-			Validator validator = schema.newValidator();
-			validator.validate(xmlFile);
 			logger.debug(xmlFile.getSystemId() + " is valid");
 			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder;
 			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(getClass().getResourceAsStream(getToolsDescription().toFileString()));
-			for (int i=0; i<doc.getDocumentElement().getChildNodes().getLength(); i++) {
-				Node node=doc.getDocumentElement().getChildNodes().item(i);
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-					logger.debug(node.getNodeName()+" "+node.getNodeValue()
-							+" "+node.getNodeType()+" "+(Element) node
-							+" "+((Element) node).getChildNodes().item(1)
-							+" "+((Element) node).getAttributes().item(0)
-							+" "+(Element) node);
-
-					Tool tool=CoreFactory.eINSTANCE.createTool();
-					tool.readImplementation((Element) node);
-					tools.add(tool);
-				}
-			}
+			Document doc = dBuilder.parse(getClass().getResourceAsStream(getToolsDescription().toString()));
+			
 			
 			
 		} catch (SAXException e) {
@@ -872,19 +756,19 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		} catch (MalformedURLException e) {
-			logger.info("malformed resource string: "+xmlSource.toFileString());
+			logger.info("malformed resource string: "+xmlSource.toString());
 			e.printStackTrace();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.info("no resource found: "+xmlSource.toFileString());
+			logger.info("no resource found: "+xmlSource.toString());
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}		
 		return tools;
 	}
-
+	*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1380,10 +1264,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				if (coreType) return getGenericAttributes();
 				else return getGenericAttributes().map();
-			case CorePackage.WORKFLOW__TOOLS_SCHEMA_DEFINITION:
-				return getToolsSchemaDefinition();
-			case CorePackage.WORKFLOW__TOOLS_DESCRIPTION:
-				return getToolsDescription();
 			case CorePackage.WORKFLOW__TOOLS:
 				if (coreType) return getTools();
 				else return getTools().map();
@@ -1442,12 +1322,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				((EStructuralFeature.Setting)getGenericAttributes()).set(newValue);
 				return;
-			case CorePackage.WORKFLOW__TOOLS_SCHEMA_DEFINITION:
-				setToolsSchemaDefinition((URI)newValue);
-				return;
-			case CorePackage.WORKFLOW__TOOLS_DESCRIPTION:
-				setToolsDescription((URI)newValue);
-				return;
 			case CorePackage.WORKFLOW__TOOLS:
 				((EStructuralFeature.Setting)getTools()).set(newValue);
 				return;
@@ -1502,12 +1376,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				getGenericAttributes().clear();
 				return;
-			case CorePackage.WORKFLOW__TOOLS_SCHEMA_DEFINITION:
-				setToolsSchemaDefinition(TOOLS_SCHEMA_DEFINITION_EDEFAULT);
-				return;
-			case CorePackage.WORKFLOW__TOOLS_DESCRIPTION:
-				setToolsDescription(TOOLS_DESCRIPTION_EDEFAULT);
-				return;
 			case CorePackage.WORKFLOW__TOOLS:
 				getTools().clear();
 				return;
@@ -1552,10 +1420,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return previousTaskName != null;
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return genericAttributes != null && !genericAttributes.isEmpty();
-			case CorePackage.WORKFLOW__TOOLS_SCHEMA_DEFINITION:
-				return TOOLS_SCHEMA_DEFINITION_EDEFAULT == null ? toolsSchemaDefinition != null : !TOOLS_SCHEMA_DEFINITION_EDEFAULT.equals(toolsSchemaDefinition);
-			case CorePackage.WORKFLOW__TOOLS_DESCRIPTION:
-				return TOOLS_DESCRIPTION_EDEFAULT == null ? toolsDescription != null : !TOOLS_DESCRIPTION_EDEFAULT.equals(toolsDescription);
 			case CorePackage.WORKFLOW__TOOLS:
 				return tools != null && !tools.isEmpty();
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
@@ -1596,10 +1460,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		result.append(defaultGroupingCriteria);
 		result.append(", previousTaskName: ");
 		result.append(previousTaskName);
-		result.append(", toolsSchemaDefinition: ");
-		result.append(toolsSchemaDefinition);
-		result.append(", toolsDescription: ");
-		result.append(toolsDescription);
 		result.append(')');
 		return result.toString();
 	}

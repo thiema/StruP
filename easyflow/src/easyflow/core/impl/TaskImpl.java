@@ -21,9 +21,6 @@ import easyflow.core.TraversalOperation;
 
 import easyflow.core.Tool;
 import easyflow.core.TraversalChunk;
-import easyflow.sequencing.grouping.Group;
-import easyflow.sequencing.grouping.GroupingPackage;
-import easyflow.sequencing.grouping.impl.StringToGroupMapImpl;
 import easyflow.core.TraversalEvent;
 import easyflow.ui.UiFactory;
 import easyflow.ui.impl.DefaultProjectImpl;

@@ -7,7 +7,6 @@
 package easyflow.impl;
 
 import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxCell;
 
 import com.mxgraph.view.mxGraph;
 
@@ -18,28 +17,24 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
-import easyflow.graph.jgraphx.JgraphxPackage;
-import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
-import easyflow.sequencing.SequencingPackage;
+import easyflow.example.ExamplePackage;
+import easyflow.example.impl.ExamplePackageImpl;
+import easyflow.graph.jgraphx.JgraphxPackage;
 
-import easyflow.sequencing.dataformat.DataformatPackage;
-
-import easyflow.sequencing.dataformat.impl.DataformatPackageImpl;
-
-import easyflow.sequencing.grouping.GroupingPackage;
-
-import easyflow.sequencing.grouping.impl.GroupingPackageImpl;
-
-import easyflow.sequencing.impl.SequencingPackageImpl;
+import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 
 import easyflow.ui.UiPackage;
 
 import easyflow.ui.impl.UiPackageImpl;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.util.Stack;
 
+import javax.xml.validation.Schema;
+import net.sf.json.JSONObject;
 import org.apache.commons.jexl2.JexlEngine;
 
 import org.apache.log4j.Logger;
@@ -138,6 +133,34 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	private EDataType elementEDataType = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType schemaEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType jsonObjectEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType bufferedReaderEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType fileNotFoundExceptionEDataType = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -186,28 +209,22 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Obtain or create and register interdependencies
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
-		SequencingPackageImpl theSequencingPackage = (SequencingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI) instanceof SequencingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI) : SequencingPackage.eINSTANCE);
-		GroupingPackageImpl theGroupingPackage = (GroupingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI) instanceof GroupingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI) : GroupingPackage.eINSTANCE);
-		DataformatPackageImpl theDataformatPackage = (DataformatPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI) instanceof DataformatPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI) : DataformatPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
+		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
-		theSequencingPackage.createPackageContents();
-		theGroupingPackage.createPackageContents();
-		theDataformatPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
+		theExamplePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
-		theSequencingPackage.initializePackageContents();
-		theGroupingPackage.initializePackageContents();
-		theDataformatPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
+		theExamplePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theEasyflowPackage.freeze();
@@ -322,6 +339,42 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getSchema() {
+		return schemaEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getJSONObject() {
+		return jsonObjectEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getBufferedReader() {
+		return bufferedReaderEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getFileNotFoundException() {
+		return fileNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -356,6 +409,10 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		eObjectEDataType = createEDataType(EOBJECT);
 		documentEDataType = createEDataType(DOCUMENT);
 		elementEDataType = createEDataType(ELEMENT);
+		schemaEDataType = createEDataType(SCHEMA);
+		jsonObjectEDataType = createEDataType(JSON_OBJECT);
+		bufferedReaderEDataType = createEDataType(BUFFERED_READER);
+		fileNotFoundExceptionEDataType = createEDataType(FILE_NOT_FOUND_EXCEPTION);
 	}
 
 	/**
@@ -384,14 +441,14 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Obtain other dependent packages
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
-		SequencingPackage theSequencingPackage = (SequencingPackage)EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
+		ExamplePackage theExamplePackage = (ExamplePackage)EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theCorePackage);
 		getESubpackages().add(theUiPackage);
-		getESubpackages().add(theSequencingPackage);
 		getESubpackages().add(theJgraphxPackage);
+		getESubpackages().add(theExamplePackage);
 
 		// Initialize data types
 		initEDataType(mxGraphEDataType, mxGraph.class, "mxGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
@@ -400,11 +457,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(jexlEngineEDataType, JexlEngine.class, "JexlEngine", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(stackEDataType, Stack.class, "Stack", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(uriEDataType, java.net.URI.class, "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(easyFlowGraphEDataType, EasyFlowGraph.class, "EasyFlowGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(eObjectEDataType, EObject.class, "EObject", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(documentEDataType, Document.class, "Document", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(elementEDataType, Element.class, "Element", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(documentEDataType, Document.class, "Document", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(elementEDataType, Element.class, "Element", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(schemaEDataType, Schema.class, "Schema", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(jsonObjectEDataType, JSONObject.class, "JSONObject", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(bufferedReaderEDataType, BufferedReader.class, "BufferedReader", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(fileNotFoundExceptionEDataType, FileNotFoundException.class, "FileNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

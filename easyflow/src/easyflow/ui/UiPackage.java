@@ -107,13 +107,13 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__META_DATA = IPROJECT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Config File Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__FILE_NAME = IPROJECT_FEATURE_COUNT + 2;
+	int DEFAULT_PROJECT__CONFIG_FILE_NAME = IPROJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Base Path</b></em>' attribute.
@@ -143,13 +143,59 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__GRAPH_UTIL = IPROJECT_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>From Jar</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__FROM_JAR = IPROJECT_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Examples</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__EXAMPLES = IPROJECT_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Tool Definitions</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Schemata</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__SCHEMATA = IPROJECT_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Json Object</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__JSON_OBJECT = IPROJECT_FEATURE_COUNT + 10;
+
+	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 6;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 11;
+
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.ui.IProject <em>IProject</em>}'.
@@ -194,15 +240,26 @@ public interface UiPackage extends EPackage {
 	EReference getDefaultProject_MetaData();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getFileName <em>File Name</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getConfigFileName <em>Config File Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>File Name</em>'.
-	 * @see easyflow.ui.DefaultProject#getFileName()
+	 * @return the meta object for the attribute '<em>Config File Name</em>'.
+	 * @see easyflow.ui.DefaultProject#getConfigFileName()
 	 * @see #getDefaultProject()
 	 * @generated
 	 */
-	EAttribute getDefaultProject_FileName();
+	EAttribute getDefaultProject_ConfigFileName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Base Path</em>'.
+	 * @see easyflow.ui.DefaultProject#getBasePath()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EAttribute getDefaultProject_BasePath();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}'.
@@ -227,15 +284,59 @@ public interface UiPackage extends EPackage {
 	EReference getDefaultProject_GraphUtil();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Base Path</em>'.
-	 * @see easyflow.ui.DefaultProject#getBasePath()
+	 * @return the meta object for the attribute '<em>From Jar</em>'.
+	 * @see easyflow.ui.DefaultProject#isFromJar()
 	 * @see #getDefaultProject()
 	 * @generated
 	 */
-	EAttribute getDefaultProject_BasePath();
+	EAttribute getDefaultProject_FromJar();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.ui.DefaultProject#getExamples <em>Examples</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Examples</em>'.
+	 * @see easyflow.ui.DefaultProject#getExamples()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EReference getDefaultProject_Examples();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Tool Definitions</em>'.
+	 * @see easyflow.ui.DefaultProject#getToolDefinitions()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EAttribute getDefaultProject_ToolDefinitions();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.ui.DefaultProject#getSchemata <em>Schemata</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Schemata</em>'.
+	 * @see easyflow.ui.DefaultProject#getSchemata()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EReference getDefaultProject_Schemata();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Json Object</em>'.
+	 * @see easyflow.ui.DefaultProject#getJsonObject()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EAttribute getDefaultProject_JsonObject();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -296,12 +397,20 @@ public interface UiPackage extends EPackage {
 		EReference DEFAULT_PROJECT__META_DATA = eINSTANCE.getDefaultProject_MetaData();
 
 		/**
-		 * The meta object literal for the '<em><b>File Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Config File Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DEFAULT_PROJECT__FILE_NAME = eINSTANCE.getDefaultProject_FileName();
+		EAttribute DEFAULT_PROJECT__CONFIG_FILE_NAME = eINSTANCE.getDefaultProject_ConfigFileName();
+
+		/**
+		 * The meta object literal for the '<em><b>Base Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_PROJECT__BASE_PATH = eINSTANCE.getDefaultProject_BasePath();
 
 		/**
 		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
@@ -320,12 +429,44 @@ public interface UiPackage extends EPackage {
 		EReference DEFAULT_PROJECT__GRAPH_UTIL = eINSTANCE.getDefaultProject_GraphUtil();
 
 		/**
-		 * The meta object literal for the '<em><b>Base Path</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>From Jar</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DEFAULT_PROJECT__BASE_PATH = eINSTANCE.getDefaultProject_BasePath();
+		EAttribute DEFAULT_PROJECT__FROM_JAR = eINSTANCE.getDefaultProject_FromJar();
+
+		/**
+		 * The meta object literal for the '<em><b>Examples</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_PROJECT__EXAMPLES = eINSTANCE.getDefaultProject_Examples();
+
+		/**
+		 * The meta object literal for the '<em><b>Tool Definitions</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_PROJECT__TOOL_DEFINITIONS = eINSTANCE.getDefaultProject_ToolDefinitions();
+
+		/**
+		 * The meta object literal for the '<em><b>Schemata</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_PROJECT__SCHEMATA = eINSTANCE.getDefaultProject_Schemata();
+
+		/**
+		 * The meta object literal for the '<em><b>Json Object</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_PROJECT__JSON_OBJECT = eINSTANCE.getDefaultProject_JsonObject();
 
 	}
 

@@ -11,7 +11,9 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import easyflow.core.*;
 
+import java.net.URI;
 import java.util.Map;
+import javax.xml.validation.Schema;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -96,6 +98,8 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.STRING_TO_GROUPING_FEATURE_MAP: return (EObject)createStringToGroupingFeatureMap();
 			case CorePackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: return (EObject)createStringToGroupingInstanceListMap();
 			case CorePackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
+			case CorePackage.STRING_TO_URI_MAP: return (EObject)createStringToURIMap();
+			case CorePackage.STRING_TO_SCHEMA_MAP: return (EObject)createStringToSchemaMap();
 			case CorePackage.GROUPING: return createGrouping();
 			case CorePackage.GROUPING_INSTANCE: return createGroupingInstance();
 			case CorePackage.GROUPING_FEATURE: return createGroupingFeature();
@@ -423,6 +427,26 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public Map.Entry<String, EList<String>> createStringToStringListMap() {
 		StringToStringListMapImpl stringToStringListMap = new StringToStringListMapImpl();
 		return stringToStringListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, URI> createStringToURIMap() {
+		StringToURIMapImpl stringToURIMap = new StringToURIMapImpl();
+		return stringToURIMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, Schema> createStringToSchemaMap() {
+		StringToSchemaMapImpl stringToSchemaMap = new StringToSchemaMapImpl();
+		return stringToSchemaMap;
 	}
 
 	/**

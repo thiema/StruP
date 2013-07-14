@@ -9,10 +9,17 @@ package easyflow.ui;
 import easyflow.core.IMetaData;
 import easyflow.core.Workflow;
 
+import easyflow.example.Examples;
 import easyflow.graph.jgraphx.Util;
-import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+
+import java.util.Map;
+import javax.xml.validation.Schema;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+import org.w3c.dom.Document;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,10 +35,15 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link easyflow.ui.DefaultProject#getWorkflows <em>Workflows</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getMetaData <em>Meta Data</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getConfigFileName <em>Config File Name</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getExamples <em>Examples</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getSchemata <em>Schemata</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,30 +85,56 @@ public interface DefaultProject extends IProject {
 	EList<IMetaData> getMetaData();
 
 	/**
-	 * Returns the value of the '<em><b>File Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Config File Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>File Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Config File Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>File Name</em>' attribute.
-	 * @see #setFileName(String)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_FileName()
+	 * @return the value of the '<em>Config File Name</em>' attribute.
+	 * @see #setConfigFileName(String)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ConfigFileName()
 	 * @model
 	 * @generated
 	 */
-	String getFileName();
+	String getConfigFileName();
 
 	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getFileName <em>File Name</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getConfigFileName <em>Config File Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>File Name</em>' attribute.
-	 * @see #getFileName()
+	 * @param value the new value of the '<em>Config File Name</em>' attribute.
+	 * @see #getConfigFileName()
 	 * @generated
 	 */
-	void setFileName(String value);
+	void setConfigFileName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Base Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Base Path</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Base Path</em>' attribute.
+	 * @see #setBasePath(String)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_BasePath()
+	 * @model
+	 * @generated
+	 */
+	String getBasePath();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Base Path</em>' attribute.
+	 * @see #getBasePath()
+	 * @generated
+	 */
+	void setBasePath(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
@@ -141,29 +179,114 @@ public interface DefaultProject extends IProject {
 	void setGraphUtil(Util value);
 
 	/**
-	 * Returns the value of the '<em><b>Base Path</b></em>' attribute.
+	 * Returns the value of the '<em><b>From Jar</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base Path</em>' attribute isn't clear,
+	 * If the meaning of the '<em>From Jar</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base Path</em>' attribute.
-	 * @see #setBasePath(String)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_BasePath()
+	 * @return the value of the '<em>From Jar</em>' attribute.
+	 * @see #setFromJar(boolean)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_FromJar()
 	 * @model
 	 * @generated
 	 */
-	String getBasePath();
+	boolean isFromJar();
 
 	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Path</em>' attribute.
-	 * @see #getBasePath()
+	 * @param value the new value of the '<em>From Jar</em>' attribute.
+	 * @see #isFromJar()
 	 * @generated
 	 */
-	void setBasePath(String value);
+	void setFromJar(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Examples</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Examples</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Examples</em>' reference.
+	 * @see #setExamples(Examples)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_Examples()
+	 * @model
+	 * @generated
+	 */
+	Examples getExamples();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getExamples <em>Examples</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Examples</em>' reference.
+	 * @see #getExamples()
+	 * @generated
+	 */
+	void setExamples(Examples value);
+
+	/**
+	 * Returns the value of the '<em><b>Tool Definitions</b></em>' attribute list.
+	 * The list contents are of type {@link org.w3c.dom.Document}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tool Definitions</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tool Definitions</em>' attribute list.
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ToolDefinitions()
+	 * @model dataType="easyflow.Document"
+	 * @generated
+	 */
+	EList<Document> getToolDefinitions();
+
+	/**
+	 * Returns the value of the '<em><b>Schemata</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link javax.xml.validation.Schema},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Schemata</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Schemata</em>' map.
+	 * @see easyflow.ui.UiPackage#getDefaultProject_Schemata()
+	 * @model mapType="easyflow.core.StringToSchemaMap<org.eclipse.emf.ecore.EString, easyflow.Schema>"
+	 * @generated
+	 */
+	EMap<String, Schema> getSchemata();
+
+	/**
+	 * Returns the value of the '<em><b>Json Object</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Json Object</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Json Object</em>' attribute.
+	 * @see #setJsonObject(JSONObject)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_JsonObject()
+	 * @model dataType="easyflow.JSONObject"
+	 * @generated
+	 */
+	JSONObject getJsonObject();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Json Object</em>' attribute.
+	 * @see #getJsonObject()
+	 * @generated
+	 */
+	void setJsonObject(JSONObject value);
 
 } // DefaultProject

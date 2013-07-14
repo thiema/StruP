@@ -6,7 +6,6 @@
  */
 package easyflow.core;
 
-import easyflow.sequencing.grouping.Group;
 import java.util.Map;
 
 import org.apache.commons.jexl2.JexlEngine;

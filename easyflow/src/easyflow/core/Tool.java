@@ -6,10 +6,12 @@
  */
 package easyflow.core;
 
+import javax.xml.validation.Schema;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -159,5 +161,13 @@ public interface Tool extends EObject {
 	 * @generated
 	 */
 	void readImplementation(Element element);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model documentDataType="easyflow.Document" schemaDataType="easyflow.Schema"
+	 * @generated
+	 */
+	void readImplementation(Document document, Schema schema);
 
 } // Tool

@@ -39,7 +39,6 @@ import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.Util;
 
 import java.util.Collection;
-import easyflow.sequencing.MetaData;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

@@ -6,11 +6,10 @@
  */
 package easyflow.core;
 
-import com.mxgraph.model.mxICell;
-
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.graph.jgraphx.Util;
+import java.net.URI;
 import java.util.Map;
 import java.util.Stack;
 
@@ -19,7 +18,6 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -47,8 +45,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getToolsSchemaDefinition <em>Tools Schema Definition</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getToolsDescription <em>Tools Description</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
  * </ul>
@@ -348,58 +344,6 @@ public interface Workflow extends EObject {
 	EMap<String, Object> getGenericAttributes();
 
 	/**
-	 * Returns the value of the '<em><b>Tools Schema Definition</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tools Schema Definition</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tools Schema Definition</em>' attribute.
-	 * @see #setToolsSchemaDefinition(URI)
-	 * @see easyflow.core.CorePackage#getWorkflow_ToolsSchemaDefinition()
-	 * @model dataType="easyflow.URI"
-	 * @generated
-	 */
-	URI getToolsSchemaDefinition();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Workflow#getToolsSchemaDefinition <em>Tools Schema Definition</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Tools Schema Definition</em>' attribute.
-	 * @see #getToolsSchemaDefinition()
-	 * @generated
-	 */
-	void setToolsSchemaDefinition(URI value);
-
-	/**
-	 * Returns the value of the '<em><b>Tools Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tools Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tools Description</em>' attribute.
-	 * @see #setToolsDescription(URI)
-	 * @see easyflow.core.CorePackage#getWorkflow_ToolsDescription()
-	 * @model dataType="easyflow.URI"
-	 * @generated
-	 */
-	URI getToolsDescription();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Workflow#getToolsDescription <em>Tools Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Tools Description</em>' attribute.
-	 * @see #getToolsDescription()
-	 * @generated
-	 */
-	void setToolsDescription(URI value);
-
-	/**
 	 * Returns the value of the '<em><b>Tools</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link easyflow.core.Tool},
@@ -452,25 +396,6 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	void generateGraphFromTemplate();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	void readToolDefinitions(String basePath);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model xmlSourceDataType="easyflow.URI" xsdSourceDataType="easyflow.URI"
-	 * @generated
-	 */
-	EList<Tool> readToolDefinition(URI xmlSource, URI xsdSource);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -11,7 +11,9 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import easyflow.core.*;
 
+import java.net.URI;
 import java.util.Map;
+import javax.xml.validation.Schema;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -215,6 +217,14 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
 				return createStringToStringListMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToURIMap(Map.Entry<String, URI> object) {
+				return createStringToURIMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToSchemaMap(Map.Entry<String, Schema> object) {
+				return createStringToSchemaMapAdapter();
 			}
 			@Override
 			public Adapter caseGrouping(Grouping object) {
@@ -753,6 +763,34 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToStringListMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To URI Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToURIMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Schema Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToSchemaMapAdapter() {
 		return null;
 	}
 

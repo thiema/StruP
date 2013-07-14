@@ -7,12 +7,12 @@
 package easyflow.core;
 
 import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxCell;
-import easyflow.sequencing.MetaData;
+
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +46,7 @@ public interface TraversalEvent extends EObject {
 	 * The list contents are of type {@link easyflow.core.Task}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Merge Task</em>' reference isn't clear,
+	 * If the meaning of the '<em>Merge Task</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
@@ -88,7 +88,7 @@ public interface TraversalEvent extends EObject {
 	 * The list contents are of type {@link easyflow.core.Task}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Parent Task</em>' reference isn't clear,
+	 * If the meaning of the '<em>Parent Task</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
@@ -98,6 +98,22 @@ public interface TraversalEvent extends EObject {
 	 * @generated
 	 */
 	EList<Task> getParentTask();
+
+	/**
+	 * Returns the value of the '<em><b>Parent Cells</b></em>' attribute list.
+	 * The list contents are of type {@link com.mxgraph.model.mxICell}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent Cells</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent Cells</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getTraversalEvent_ParentCells()
+	 * @model dataType="easyflow.mxICell" transient="true"
+	 * @generated
+	 */
+	EList<mxICell> getParentCells();
 
 	/**
 	 * Returns the value of the '<em><b>Traversal Criterion</b></em>' reference.
@@ -176,22 +192,6 @@ public interface TraversalEvent extends EObject {
 	 * @generated
 	 */
 	void setMetaData(EObject value);
-
-	/**
-	 * Returns the value of the '<em><b>Parent Cells</b></em>' attribute list.
-	 * The list contents are of type {@link com.mxgraph.model.mxICell}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Parent Cells</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parent Cells</em>' attribute list.
-	 * @see easyflow.core.CorePackage#getTraversalEvent_ParentCells()
-	 * @model dataType="easyflow.mxICell" transient="true"
-	 * @generated
-	 */
-	EList<mxICell> getParentCells();
 
 	/**
 	 * <!-- begin-user-doc -->

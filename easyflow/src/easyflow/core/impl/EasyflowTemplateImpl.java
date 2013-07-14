@@ -46,7 +46,7 @@ import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getTasks <em>Tasks</em>}</li>
- *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
@@ -64,24 +64,23 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 */
 	protected EList<Task> tasks;
 	/**
-	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * The default value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFileName()
+	 * @see #getReader()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FILE_NAME_EDEFAULT = null;
+	protected static final BufferedReader READER_EDEFAULT = null;
 	/**
-	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * The cached value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFileName()
+	 * @see #getReader()
 	 * @generated
 	 * @ordered
 	 */
-	protected String fileName = FILE_NAME_EDEFAULT;
-
+	protected BufferedReader reader = READER_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -137,8 +136,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFileName() {
-		return fileName;
+	public BufferedReader getReader() {
+		return reader;
 	}
 
 	/**
@@ -146,11 +145,11 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFileName(String newFileName) {
-		String oldFileName = fileName;
-		fileName = newFileName;
+	public void setReader(BufferedReader newReader) {
+		BufferedReader oldReader = reader;
+		reader = newReader;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__FILE_NAME, oldFileName, fileName));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__READER, oldReader, reader));
 	}
 
 	/**
@@ -182,8 +181,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 */
 	private void checkParents(Map<String,Task> tmpMap) {
 		
-        Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
-        BufferedReader bufferedReader = new BufferedReader(reader);
+        BufferedReader bufferedReader = new BufferedReader(getReader());
 
         String strLine;
         try {
@@ -226,9 +224,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	public void readTemplate(String mode, EList<String> defaultGroupingCriteria) {
 
 		Map<String,Task> tmpMap=new HashMap<String,Task>();
-        logger.debug(getFileName());
-        Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
-        BufferedReader bufferedReader = new BufferedReader(reader);
+        // Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
+        BufferedReader bufferedReader = new BufferedReader(getReader());
         String strLine;
         try {
         	
@@ -271,8 +268,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		switch (featureID) {
 			case CorePackage.EASYFLOW_TEMPLATE__TASKS:
 				return getTasks();
-			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
-				return getFileName();
+			case CorePackage.EASYFLOW_TEMPLATE__READER:
+				return getReader();
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				return getLogger();
 		}
@@ -292,8 +289,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 				getTasks().clear();
 				getTasks().addAll((Collection<? extends Task>)newValue);
 				return;
-			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
-				setFileName((String)newValue);
+			case CorePackage.EASYFLOW_TEMPLATE__READER:
+				setReader((BufferedReader)newValue);
 				return;
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
@@ -313,8 +310,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			case CorePackage.EASYFLOW_TEMPLATE__TASKS:
 				getTasks().clear();
 				return;
-			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
-				setFileName(FILE_NAME_EDEFAULT);
+			case CorePackage.EASYFLOW_TEMPLATE__READER:
+				setReader(READER_EDEFAULT);
 				return;
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
@@ -333,8 +330,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		switch (featureID) {
 			case CorePackage.EASYFLOW_TEMPLATE__TASKS:
 				return tasks != null && !tasks.isEmpty();
-			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
-				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
+			case CorePackage.EASYFLOW_TEMPLATE__READER:
+				return READER_EDEFAULT == null ? reader != null : !READER_EDEFAULT.equals(reader);
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
@@ -351,7 +348,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		if (baseClass == DefaultWorkflowTemplate.class) {
 			switch (derivedFeatureID) {
 				case CorePackage.EASYFLOW_TEMPLATE__TASKS: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS;
-				case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME;
+				case CorePackage.EASYFLOW_TEMPLATE__READER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER;
 				case CorePackage.EASYFLOW_TEMPLATE__LOGGER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER;
 				default: return -1;
 			}
@@ -369,7 +366,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		if (baseClass == DefaultWorkflowTemplate.class) {
 			switch (baseFeatureID) {
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS: return CorePackage.EASYFLOW_TEMPLATE__TASKS;
-				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME: return CorePackage.EASYFLOW_TEMPLATE__FILE_NAME;
+				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER: return CorePackage.EASYFLOW_TEMPLATE__READER;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER: return CorePackage.EASYFLOW_TEMPLATE__LOGGER;
 				default: return -1;
 			}
@@ -387,8 +384,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fileName: ");
-		result.append(fileName);
+		result.append(" (reader: ");
+		result.append(reader);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(')');

@@ -187,31 +187,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__GENERIC_ATTRIBUTES = 12;
 
 	/**
-	 * The feature id for the '<em><b>Tools Schema Definition</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__TOOLS_SCHEMA_DEFINITION = 13;
-
-	/**
-	 * The feature id for the '<em><b>Tools Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__TOOLS_DESCRIPTION = 14;
-
-	/**
 	 * The feature id for the '<em><b>Tools</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__TOOLS = 15;
+	int WORKFLOW__TOOLS = 13;
 
 	/**
 	 * The feature id for the '<em><b>Graph Util</b></em>' reference.
@@ -220,7 +202,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__GRAPH_UTIL = 16;
+	int WORKFLOW__GRAPH_UTIL = 14;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -229,7 +211,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 17;
+	int WORKFLOW_FEATURE_COUNT = 15;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -753,13 +735,13 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_WORKFLOW_TEMPLATE__TASKS = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Reader</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 1;
+	int DEFAULT_WORKFLOW_TEMPLATE__READER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -789,13 +771,13 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TEMPLATE__TASKS = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Reader</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE__FILE_NAME = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 1;
+	int EASYFLOW_TEMPLATE__READER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -1656,7 +1638,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGrouping()
 	 * @generated
 	 */
-	int GROUPING = 35;
+	int GROUPING = 37;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GroupingInstanceImpl <em>Grouping Instance</em>}' class.
@@ -1666,7 +1648,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGroupingInstance()
 	 * @generated
 	 */
-	int GROUPING_INSTANCE = 36;
+	int GROUPING_INSTANCE = 38;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.
@@ -1676,7 +1658,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGroupingFeature()
 	 * @generated
 	 */
-	int GROUPING_FEATURE = 37;
+	int GROUPING_FEATURE = 39;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.StringToGroupingFeatureMapImpl <em>String To Grouping Feature Map</em>}' class.
@@ -1790,6 +1772,80 @@ public interface CorePackage extends EPackage {
 	int STRING_TO_STRING_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link easyflow.core.impl.StringToURIMapImpl <em>String To URI Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.StringToURIMapImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getStringToURIMap()
+	 * @generated
+	 */
+	int STRING_TO_URI_MAP = 35;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_URI_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_URI_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To URI Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_URI_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.StringToSchemaMapImpl <em>String To Schema Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.StringToSchemaMapImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getStringToSchemaMap()
+	 * @generated
+	 */
+	int STRING_TO_SCHEMA_MAP = 36;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_SCHEMA_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_SCHEMA_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Schema Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_SCHEMA_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1878,7 +1934,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGroupingInstanceList()
 	 * @generated
 	 */
-	int GROUPING_INSTANCE_LIST = 38;
+	int GROUPING_INSTANCE_LIST = 40;
 
 	/**
 	 * The feature id for the '<em><b>Instances</b></em>' reference list.
@@ -2050,28 +2106,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_GenericAttributes();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Workflow#getToolsSchemaDefinition <em>Tools Schema Definition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Tools Schema Definition</em>'.
-	 * @see easyflow.core.Workflow#getToolsSchemaDefinition()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EAttribute getWorkflow_ToolsSchemaDefinition();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Workflow#getToolsDescription <em>Tools Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Tools Description</em>'.
-	 * @see easyflow.core.Workflow#getToolsDescription()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EAttribute getWorkflow_ToolsDescription();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getTools <em>Tools</em>}'.
@@ -2442,15 +2476,15 @@ public interface CorePackage extends EPackage {
 	EReference getDefaultWorkflowTemplate_Tasks();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getFileName <em>File Name</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getReader <em>Reader</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>File Name</em>'.
-	 * @see easyflow.core.DefaultWorkflowTemplate#getFileName()
+	 * @return the meta object for the attribute '<em>Reader</em>'.
+	 * @see easyflow.core.DefaultWorkflowTemplate#getReader()
 	 * @see #getDefaultWorkflowTemplate()
 	 * @generated
 	 */
-	EAttribute getDefaultWorkflowTemplate_FileName();
+	EAttribute getDefaultWorkflowTemplate_Reader();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getLogger <em>Logger</em>}'.
@@ -3440,6 +3474,74 @@ public interface CorePackage extends EPackage {
 	EAttribute getStringToStringListMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To URI Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To URI Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="easyflow.URI"
+	 * @generated
+	 */
+	EClass getStringToURIMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToURIMap()
+	 * @generated
+	 */
+	EAttribute getStringToURIMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToURIMap()
+	 * @generated
+	 */
+	EAttribute getStringToURIMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Schema Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Schema Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="easyflow.Schema"
+	 * @generated
+	 */
+	EClass getStringToSchemaMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToSchemaMap()
+	 * @generated
+	 */
+	EAttribute getStringToSchemaMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToSchemaMap()
+	 * @generated
+	 */
+	EAttribute getStringToSchemaMap_Value();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.GroupingInstanceList <em>Grouping Instance List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3692,22 +3794,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__GENERIC_ATTRIBUTES = eINSTANCE.getWorkflow_GenericAttributes();
-
-		/**
-		 * The meta object literal for the '<em><b>Tools Schema Definition</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute WORKFLOW__TOOLS_SCHEMA_DEFINITION = eINSTANCE.getWorkflow_ToolsSchemaDefinition();
-
-		/**
-		 * The meta object literal for the '<em><b>Tools Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute WORKFLOW__TOOLS_DESCRIPTION = eINSTANCE.getWorkflow_ToolsDescription();
 
 		/**
 		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
@@ -3994,12 +4080,12 @@ public interface CorePackage extends EPackage {
 		EReference DEFAULT_WORKFLOW_TEMPLATE__TASKS = eINSTANCE.getDefaultWorkflowTemplate_Tasks();
 
 		/**
-		 * The meta object literal for the '<em><b>File Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Reader</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME = eINSTANCE.getDefaultWorkflowTemplate_FileName();
+		EAttribute DEFAULT_WORKFLOW_TEMPLATE__READER = eINSTANCE.getDefaultWorkflowTemplate_Reader();
 
 		/**
 		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
@@ -4778,6 +4864,58 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute STRING_TO_STRING_LIST_MAP__VALUE = eINSTANCE.getStringToStringListMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.StringToURIMapImpl <em>String To URI Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.StringToURIMapImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getStringToURIMap()
+		 * @generated
+		 */
+		EClass STRING_TO_URI_MAP = eINSTANCE.getStringToURIMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_URI_MAP__KEY = eINSTANCE.getStringToURIMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_URI_MAP__VALUE = eINSTANCE.getStringToURIMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.StringToSchemaMapImpl <em>String To Schema Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.StringToSchemaMapImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getStringToSchemaMap()
+		 * @generated
+		 */
+		EClass STRING_TO_SCHEMA_MAP = eINSTANCE.getStringToSchemaMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_SCHEMA_MAP__KEY = eINSTANCE.getStringToSchemaMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_SCHEMA_MAP__VALUE = eINSTANCE.getStringToSchemaMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.GroupingInstanceListImpl <em>Grouping Instance List</em>}' class.

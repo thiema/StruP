@@ -11,7 +11,9 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import easyflow.core.*;
 
+import java.net.URI;
 import java.util.Map;
+import javax.xml.validation.Schema;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -289,6 +291,18 @@ public class CoreSwitch<T> extends Switch<T> {
 			case CorePackage.STRING_TO_STRING_LIST_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, EList<String>> stringToStringListMap = (Map.Entry<String, EList<String>>)theEObject;
 				T result = caseStringToStringListMap(stringToStringListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CorePackage.STRING_TO_URI_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, URI> stringToURIMap = (Map.Entry<String, URI>)theEObject;
+				T result = caseStringToURIMap(stringToURIMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CorePackage.STRING_TO_SCHEMA_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Schema> stringToSchemaMap = (Map.Entry<String, Schema>)theEObject;
+				T result = caseStringToSchemaMap(stringToSchemaMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -857,6 +871,36 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To URI Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To URI Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToURIMap(Map.Entry<String, URI> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Schema Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Schema Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToSchemaMap(Map.Entry<String, Schema> object) {
 		return null;
 	}
 

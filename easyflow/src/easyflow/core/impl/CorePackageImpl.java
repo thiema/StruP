@@ -41,21 +41,11 @@ import easyflow.core.TraversalEvent;
 import easyflow.core.TraversalOperation;
 import easyflow.core.Workflow;
 
+import easyflow.example.ExamplePackage;
+import easyflow.example.impl.ExamplePackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 import easyflow.impl.EasyflowPackageImpl;
-
-import easyflow.sequencing.SequencingPackage;
-
-import easyflow.sequencing.dataformat.DataformatPackage;
-
-import easyflow.sequencing.dataformat.impl.DataformatPackageImpl;
-
-import easyflow.sequencing.grouping.GroupingPackage;
-
-import easyflow.sequencing.grouping.impl.GroupingPackageImpl;
-
-import easyflow.sequencing.impl.SequencingPackageImpl;
 
 import easyflow.ui.UiPackage;
 
@@ -335,6 +325,20 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToURIMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToSchemaMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass groupingInstanceListEClass = null;
 
 	/**
@@ -400,28 +404,22 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		// Obtain or create and register interdependencies
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
-		SequencingPackageImpl theSequencingPackage = (SequencingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI) instanceof SequencingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SequencingPackage.eNS_URI) : SequencingPackage.eINSTANCE);
-		GroupingPackageImpl theGroupingPackage = (GroupingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI) instanceof GroupingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GroupingPackage.eNS_URI) : GroupingPackage.eINSTANCE);
-		DataformatPackageImpl theDataformatPackage = (DataformatPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI) instanceof DataformatPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataformatPackage.eNS_URI) : DataformatPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
+		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theCorePackage.createPackageContents();
 		theEasyflowPackage.createPackageContents();
 		theUiPackage.createPackageContents();
-		theSequencingPackage.createPackageContents();
-		theGroupingPackage.createPackageContents();
-		theDataformatPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
+		theExamplePackage.createPackageContents();
 
 		// Initialize created meta-data
 		theCorePackage.initializePackageContents();
 		theEasyflowPackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
-		theSequencingPackage.initializePackageContents();
-		theGroupingPackage.initializePackageContents();
-		theDataformatPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
+		theExamplePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theCorePackage.freeze();
@@ -563,26 +561,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getWorkflow_ToolsSchemaDefinition() {
-		return (EAttribute)workflowEClass.getEStructuralFeatures().get(13);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getWorkflow_ToolsDescription() {
-		return (EAttribute)workflowEClass.getEStructuralFeatures().get(14);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getWorkflow_Tools() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(15);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -591,7 +571,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getWorkflow_GraphUtil() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(16);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -887,7 +867,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDefaultWorkflowTemplate_FileName() {
+	public EAttribute getDefaultWorkflowTemplate_Reader() {
 		return (EAttribute)defaultWorkflowTemplateEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1706,6 +1686,60 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToURIMap() {
+		return stringToURIMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToURIMap_Key() {
+		return (EAttribute)stringToURIMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToURIMap_Value() {
+		return (EAttribute)stringToURIMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToSchemaMap() {
+		return stringToSchemaMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToSchemaMap_Key() {
+		return (EAttribute)stringToSchemaMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToSchemaMap_Value() {
+		return (EAttribute)stringToSchemaMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGroupingInstanceList() {
 		return groupingInstanceListEClass;
 	}
@@ -1842,8 +1876,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(workflowEClass, WORKFLOW__DEFAULT_GROUPING_CRITERIA);
 		createEAttribute(workflowEClass, WORKFLOW__PREVIOUS_TASK_NAME);
 		createEReference(workflowEClass, WORKFLOW__GENERIC_ATTRIBUTES);
-		createEAttribute(workflowEClass, WORKFLOW__TOOLS_SCHEMA_DEFINITION);
-		createEAttribute(workflowEClass, WORKFLOW__TOOLS_DESCRIPTION);
 		createEReference(workflowEClass, WORKFLOW__TOOLS);
 		createEReference(workflowEClass, WORKFLOW__GRAPH_UTIL);
 
@@ -1894,7 +1926,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		defaultWorkflowTemplateEClass = createEClass(DEFAULT_WORKFLOW_TEMPLATE);
 		createEReference(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__TASKS);
-		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME);
+		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__READER);
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__LOGGER);
 
 		easyflowTemplateEClass = createEClass(EASYFLOW_TEMPLATE);
@@ -2004,6 +2036,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__KEY);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__VALUE);
 
+		stringToURIMapEClass = createEClass(STRING_TO_URI_MAP);
+		createEAttribute(stringToURIMapEClass, STRING_TO_URI_MAP__KEY);
+		createEAttribute(stringToURIMapEClass, STRING_TO_URI_MAP__VALUE);
+
+		stringToSchemaMapEClass = createEClass(STRING_TO_SCHEMA_MAP);
+		createEAttribute(stringToSchemaMapEClass, STRING_TO_SCHEMA_MAP__KEY);
+		createEAttribute(stringToSchemaMapEClass, STRING_TO_SCHEMA_MAP__VALUE);
+
 		groupingEClass = createEClass(GROUPING);
 		createEAttribute(groupingEClass, GROUPING__NAME);
 		createEAttribute(groupingEClass, GROUPING__DESCRIPTION);
@@ -2080,23 +2120,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		g1.getETypeArguments().add(g2);
 		initEAttribute(getWorkflow_PreviousTaskName(), g1, "previousTaskName", null, 0, 1, Workflow.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_GenericAttributes(), this.getStringToObjectMap(), null, "genericAttributes", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWorkflow_ToolsSchemaDefinition(), theEasyflowPackage.getURI(), "toolsSchemaDefinition", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWorkflow_ToolsDescription(), theEasyflowPackage.getURI(), "toolsDescription", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_Tools(), this.getStringToToolMap(), null, "tools", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_GraphUtil(), theJgraphxPackage.getUtil(), null, "graphUtil", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(workflowEClass, null, "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(workflowEClass, null, "readToolDefinitions", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "basePath", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(workflowEClass, this.getTool(), "readToolDefinition", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getURI(), "xmlSource", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getURI(), "xsdSource", 0, 1, IS_UNIQUE, IS_ORDERED);
-
 		addEOperation(workflowEClass, null, "readProjectMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(workflowEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -2206,6 +2237,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		op = addEOperation(toolEClass, null, "readImplementation", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getElement(), "element", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(toolEClass, null, "readImplementation", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getDocument(), "document", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getSchema(), "schema", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(interpreterEClass, Interpreter.class, "Interpreter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInterpreter_Exe(), ecorePackage.getEString(), "exe", null, 0, 1, Interpreter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterpreter_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Interpreter.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2243,7 +2278,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		initEClass(defaultWorkflowTemplateEClass, DefaultWorkflowTemplate.class, "DefaultWorkflowTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultWorkflowTemplate_Tasks(), this.getTask(), null, "tasks", null, 0, -1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultWorkflowTemplate_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultWorkflowTemplate_Reader(), theEasyflowPackage.getBufferedReader(), "reader", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultWorkflowTemplate_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultWorkflowTemplate.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(easyflowTemplateEClass, EasyflowTemplate.class, "EasyflowTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2383,6 +2418,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(stringToStringListMapEClass, Map.Entry.class, "StringToStringListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStringToStringListMap_Value(), ecorePackage.getEString(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToURIMapEClass, Map.Entry.class, "StringToURIMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToURIMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToURIMap_Value(), theEasyflowPackage.getURI(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToSchemaMapEClass, Map.Entry.class, "StringToSchemaMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToSchemaMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToSchemaMap_Value(), theEasyflowPackage.getSchema(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(groupingEClass, Grouping.class, "Grouping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGrouping_Name(), ecorePackage.getEString(), "name", null, 0, 1, Grouping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

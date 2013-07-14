@@ -6,10 +6,7 @@
  */
 package easyflow.core;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-import easyflow.sequencing.MetaData;
-
 
 /**
  * <!-- begin-user-doc -->
@@ -66,7 +63,7 @@ public interface TraversalCriterion extends GroupingCriterion {
 	 * and the value is of type {@link easyflow.core.TraversalChunk},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Chunks</em>' reference isn't clear,
+	 * If the meaning of the '<em>Chunks</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

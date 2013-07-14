@@ -15,7 +15,6 @@ import easyflow.core.TraversalChunk;
 import easyflow.core.TraversalEvent;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
-import easyflow.sequencing.MetaData;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 
