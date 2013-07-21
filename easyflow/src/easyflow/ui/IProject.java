@@ -32,6 +32,25 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean validate();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean init();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
@@ -39,28 +58,6 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	void readProjectJson(URI source) throws FileNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	void initProject();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	String createPath(String fileName);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -127,18 +124,18 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.FileNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	void readConfiguration() throws FileNotFoundException;
+	boolean readConfiguration() throws FileNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Document" sourceXMLDataType="easyflow.URI"
+	 * @model dataType="easyflow.Schema" documentDataType="easyflow.Document"
 	 * @generated
 	 */
-	Document getSchemaFor(URI sourceXML);
+	Schema getSchemaFor(Document document);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -147,5 +144,13 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	Schema getDefaultSchema();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void setConfigAndBasePath(String path);
 
 } // IProject

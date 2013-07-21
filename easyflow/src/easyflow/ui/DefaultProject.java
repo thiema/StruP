@@ -7,11 +7,13 @@
 package easyflow.ui;
 
 import easyflow.core.IMetaData;
+import easyflow.core.Tool;
 import easyflow.core.Workflow;
 
 import easyflow.example.Examples;
 import easyflow.graph.jgraphx.Util;
 
+import java.net.URI;
 import java.util.Map;
 import javax.xml.validation.Schema;
 import net.sf.json.JSONObject;
@@ -27,7 +29,9 @@ import org.w3c.dom.Document;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * 
+ * basePath: the path to the project files. If JSON config file (configSource) is not set, 
+ * it is assumed to be basePath+defaultConfigSource.
+ * configSource: the URI of the JSON config file.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -35,15 +39,16 @@ import org.w3c.dom.Document;
  * <ul>
  *   <li>{@link easyflow.ui.DefaultProject#getWorkflows <em>Workflows</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getMetaData <em>Meta Data</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getConfigFileName <em>Config File Name</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getConfigSource <em>Config Source</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getBaseURI <em>Base URI</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getExamples <em>Examples</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getSchemata <em>Schemata</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getTools <em>Tools</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  * </ul>
  * </p>
  *
@@ -85,56 +90,56 @@ public interface DefaultProject extends IProject {
 	EList<IMetaData> getMetaData();
 
 	/**
-	 * Returns the value of the '<em><b>Config File Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Config Source</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Config File Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Config Source</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Config File Name</em>' attribute.
-	 * @see #setConfigFileName(String)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_ConfigFileName()
-	 * @model
+	 * @return the value of the '<em>Config Source</em>' attribute.
+	 * @see #setConfigSource(URI)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ConfigSource()
+	 * @model dataType="easyflow.URI"
 	 * @generated
 	 */
-	String getConfigFileName();
+	URI getConfigSource();
 
 	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getConfigFileName <em>Config File Name</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getConfigSource <em>Config Source</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Config File Name</em>' attribute.
-	 * @see #getConfigFileName()
+	 * @param value the new value of the '<em>Config Source</em>' attribute.
+	 * @see #getConfigSource()
 	 * @generated
 	 */
-	void setConfigFileName(String value);
+	void setConfigSource(URI value);
 
 	/**
-	 * Returns the value of the '<em><b>Base Path</b></em>' attribute.
+	 * Returns the value of the '<em><b>Base URI</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base Path</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Base URI</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Base Path</em>' attribute.
-	 * @see #setBasePath(String)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_BasePath()
-	 * @model
+	 * @return the value of the '<em>Base URI</em>' attribute.
+	 * @see #setBaseURI(URI)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_BaseURI()
+	 * @model dataType="easyflow.URI"
 	 * @generated
 	 */
-	String getBasePath();
+	URI getBaseURI();
 
 	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getBasePath <em>Base Path</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getBaseURI <em>Base URI</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Base Path</em>' attribute.
-	 * @see #getBasePath()
+	 * @param value the new value of the '<em>Base URI</em>' attribute.
+	 * @see #getBaseURI()
 	 * @generated
 	 */
-	void setBasePath(String value);
+	void setBaseURI(URI value);
 
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
@@ -180,6 +185,7 @@ public interface DefaultProject extends IProject {
 
 	/**
 	 * Returns the value of the '<em><b>From Jar</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>From Jar</em>' attribute isn't clear,
@@ -189,7 +195,7 @@ public interface DefaultProject extends IProject {
 	 * @return the value of the '<em>From Jar</em>' attribute.
 	 * @see #setFromJar(boolean)
 	 * @see easyflow.ui.UiPackage#getDefaultProject_FromJar()
-	 * @model
+	 * @model default="true"
 	 * @generated
 	 */
 	boolean isFromJar();
@@ -203,32 +209,6 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	void setFromJar(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Examples</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Examples</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Examples</em>' reference.
-	 * @see #setExamples(Examples)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_Examples()
-	 * @model
-	 * @generated
-	 */
-	Examples getExamples();
-
-	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getExamples <em>Examples</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Examples</em>' reference.
-	 * @see #getExamples()
-	 * @generated
-	 */
-	void setExamples(Examples value);
 
 	/**
 	 * Returns the value of the '<em><b>Tool Definitions</b></em>' attribute list.
@@ -288,5 +268,38 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	void setJsonObject(JSONObject value);
+
+	/**
+	 * Returns the value of the '<em><b>Tools</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.Tool},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tools</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tools</em>' map.
+	 * @see easyflow.ui.UiPackage#getDefaultProject_Tools()
+	 * @model mapType="easyflow.core.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.core.Tool>"
+	 * @generated
+	 */
+	EMap<String, Tool> getTools();
+
+	/**
+	 * Returns the value of the '<em><b>Default Config Source String</b></em>' attribute.
+	 * The default value is <code>"main.json"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Default Config Source String</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Default Config Source String</em>' attribute.
+	 * @see easyflow.ui.UiPackage#getDefaultProject_DefaultConfigSourceString()
+	 * @model default="main.json" changeable="false"
+	 * @generated
+	 */
+	String getDefaultConfigSourceString();
 
 } // DefaultProject

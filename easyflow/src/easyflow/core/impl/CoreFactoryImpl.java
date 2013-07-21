@@ -11,6 +11,7 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import easyflow.core.*;
 
+import easyflow.ui.DefaultProject;
 import java.net.URI;
 import java.util.Map;
 import javax.xml.validation.Schema;
@@ -104,6 +105,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.GROUPING_INSTANCE: return createGroupingInstance();
 			case CorePackage.GROUPING_FEATURE: return createGroupingFeature();
 			case CorePackage.GROUPING_INSTANCE_LIST: return createGroupingInstanceList();
+			case CorePackage.STRING_TO_PROJECT_MAP: return (EObject)createStringToProjectMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -457,6 +459,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public GroupingInstanceList createGroupingInstanceList() {
 		GroupingInstanceListImpl groupingInstanceList = new GroupingInstanceListImpl();
 		return groupingInstanceList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, DefaultProject> createStringToProjectMap() {
+		StringToProjectMapImpl stringToProjectMap = new StringToProjectMapImpl();
+		return stringToProjectMap;
 	}
 
 	/**

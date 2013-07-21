@@ -73,10 +73,12 @@ import easyflow.core.IMetaData;
 import easyflow.core.Tool;
 import easyflow.core.Workflow;
 import easyflow.core.impl.StringToSchemaMapImpl;
+import easyflow.core.impl.StringToToolMapImpl;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 import easyflow.graph.jgraphx.Util;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.util.URIUtil;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
@@ -90,15 +92,16 @@ import easyflow.ui.UiPackage;
  * <ul>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getWorkflows <em>Workflows</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getMetaData <em>Meta Data</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigFileName <em>Config File Name</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getBasePath <em>Base Path</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigSource <em>Config Source</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getBaseURI <em>Base URI</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#isFromJar <em>From Jar</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getExamples <em>Examples</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getSchemata <em>Schemata</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getJsonObject <em>Json Object</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getTools <em>Tools</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  * </ul>
  * </p>
  *
@@ -126,44 +129,44 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	protected EList<IMetaData> metaData;
 
 	/**
-	 * The default value of the '{@link #getConfigFileName() <em>Config File Name</em>}' attribute.
+	 * The default value of the '{@link #getConfigSource() <em>Config Source</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getConfigFileName()
+	 * @see #getConfigSource()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String CONFIG_FILE_NAME_EDEFAULT = null;
+	protected static final URI CONFIG_SOURCE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getConfigFileName() <em>Config File Name</em>}' attribute.
+	 * The cached value of the '{@link #getConfigSource() <em>Config Source</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getConfigFileName()
+	 * @see #getConfigSource()
 	 * @generated
 	 * @ordered
 	 */
-	protected String configFileName = CONFIG_FILE_NAME_EDEFAULT;
+	protected URI configSource = CONFIG_SOURCE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getBasePath() <em>Base Path</em>}' attribute.
+	 * The default value of the '{@link #getBaseURI() <em>Base URI</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBasePath()
+	 * @see #getBaseURI()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String BASE_PATH_EDEFAULT = null;
+	protected static final URI BASE_URI_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getBasePath() <em>Base Path</em>}' attribute.
+	 * The cached value of the '{@link #getBaseURI() <em>Base URI</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBasePath()
+	 * @see #getBaseURI()
 	 * @generated
 	 * @ordered
 	 */
-	protected String basePath = BASE_PATH_EDEFAULT;
+	protected URI baseURI = BASE_URI_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -204,7 +207,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean FROM_JAR_EDEFAULT = false;
+	protected static final boolean FROM_JAR_EDEFAULT = true;
 
 	/**
 	 * The cached value of the '{@link #isFromJar() <em>From Jar</em>}' attribute.
@@ -215,16 +218,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected boolean fromJar = FROM_JAR_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getExamples() <em>Examples</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getExamples()
-	 * @generated
-	 * @ordered
-	 */
-	protected Examples examples;
 
 	/**
 	 * The cached value of the '{@link #getToolDefinitions() <em>Tool Definitions</em>}' attribute list.
@@ -265,6 +258,36 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected JSONObject jsonObject = JSON_OBJECT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTools()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Tool> tools;
+
+	/**
+	 * The default value of the '{@link #getDefaultConfigSourceString() <em>Default Config Source String</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDefaultConfigSourceString()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT = "main.json";
+
+	/**
+	 * The cached value of the '{@link #getDefaultConfigSourceString() <em>Default Config Source String</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDefaultConfigSourceString()
+	 * @generated
+	 * @ordered
+	 */
+	protected String defaultConfigSourceString = DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -314,8 +337,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getConfigFileName() {
-		return configFileName;
+	public URI getConfigSource() {
+		return configSource;
 	}
 
 	/**
@@ -323,11 +346,32 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setConfigFileName(String newConfigFileName) {
-		String oldConfigFileName = configFileName;
-		configFileName = newConfigFileName;
+	public void setConfigSource(URI newConfigSource) {
+		URI oldConfigSource = configSource;
+		configSource = newConfigSource;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__CONFIG_FILE_NAME, oldConfigFileName, configFileName));
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__CONFIG_SOURCE, oldConfigSource, configSource));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public URI getBaseURI() {
+		return baseURI;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBaseURI(URI newBaseURI) {
+		URI oldBaseURI = baseURI;
+		baseURI = newBaseURI;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__BASE_URI, oldBaseURI, baseURI));
 	}
 
 	/**
@@ -403,44 +447,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Examples getExamples() {
-		if (examples != null && examples.eIsProxy()) {
-			InternalEObject oldExamples = (InternalEObject)examples;
-			examples = (Examples)eResolveProxy(oldExamples);
-			if (examples != oldExamples) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__EXAMPLES, oldExamples, examples));
-			}
-		}
-		return examples;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Examples basicGetExamples() {
-		return examples;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setExamples(Examples newExamples) {
-		Examples oldExamples = examples;
-		examples = newExamples;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__EXAMPLES, oldExamples, examples));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<Document> getToolDefinitions() {
 		if (toolDefinitions == null) {
 			toolDefinitions = new EDataTypeUniqueEList<Document>(Document.class, this, UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS);
@@ -486,8 +492,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getBasePath() {
-		return basePath;
+	public EMap<String, Tool> getTools() {
+		if (tools == null) {
+			tools = new EcoreEMap<String,Tool>(CorePackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, UiPackage.DEFAULT_PROJECT__TOOLS);
+		}
+		return tools;
 	}
 
 	/**
@@ -495,11 +504,22 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setBasePath(String newBasePath) {
-		String oldBasePath = basePath;
-		basePath = newBasePath;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__BASE_PATH, oldBasePath, basePath));
+	public String getDefaultConfigSourceString() {
+		return defaultConfigSourceString;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean validate() {
+		boolean rc = true;
+		if (getConfigSource() == null)
+			rc = false;
+		logger.debug("config="+getConfigSource()+" base="+getBaseURI());
+		
+		return rc;
 	}
 
 	/**
@@ -510,9 +530,21 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	public void readProjectJson(URI source) {
 		
 		//JSONObject jsonObject=null;
+		if (source == null)
+			source = getConfigSource();
 		try {
-			InputStream is = getClass().getResourceAsStream(source.toString());
-			setJsonObject(JSONObject.fromObject(IOUtils.toString(is))); 
+			logger.debug(source);
+			String schema = source.getScheme();
+			InputStream is = null;
+			if (isFromJar())
+				is = URIUtil.getInputStream(source, true);
+				//is = getClass().getResourceAsStream(source.toString());
+			else if (schema == null)
+				is = URIUtil.getInputStream(source, false);
+			else if (schema.equals("http") || schema.equals("https"))
+				is = source.toURL().openStream();
+			if (is != null)
+				setJsonObject(JSONObject.fromObject(IOUtils.toString(is)));
 		//} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
@@ -521,19 +553,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			e.printStackTrace();
 		}
 		
-
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */	 
-	public String createPath(String fileName) {
-		
-		String path = getBasePath()+fileName; 
-		logger.debug(path);
-		return path;
 
 	}
 
@@ -604,17 +623,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 
 	}
 
-	private InputStream getInputStream(URI uri) throws FileNotFoundException
-	{
-		InputStream inputStream;
-		if (isFromJar())
-			inputStream = getClass().getResourceAsStream(uri.toString());
-		else
-			inputStream = new FileInputStream(new File(uri.toString()));
-		
-		return inputStream;
-		
-	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -626,12 +634,12 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		DocumentBuilder dBuilder;
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(getInputStream(xmlSource));
+			Document doc = dBuilder.parse(URIUtil.getInputStream(xmlSource, isFromJar()));
 			Schema schema = getSchemaFor(doc);
 			if (schema != null)
 			{
 				Validator validator = schema.newValidator();
-				validator.validate(new StreamSource(getInputStream(xmlSource)));
+				validator.validate(new StreamSource(URIUtil.getInputStream(xmlSource, isFromJar())));
 			}
 			// TODO: handle schema not found/unvalidated xml source
 			
@@ -662,32 +670,49 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @throws FileNotFoundException 
 	 * @generated not
 	 */
-	public void readConfiguration() throws FileNotFoundException {
+	public boolean readConfiguration() {
+		boolean rc = true;
 		// general (project) config
 		JSONObject projectCfg=jsonObject.getJSONObject("project");
 		//logger.debug(jsonObject.entrySet());
-		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigFileName());
+		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
 		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
 		
-		InputStreamReader isReader; 
-		if (isFromJar())
-		{			
-			isReader = new InputStreamReader(getClass().getResourceAsStream(
-					createPath(projectCfg.getString("workflowTemplateFile"))));
+		InputStreamReader isReader;
+		try {
+			isReader = URIUtil.getInputStreamReader(URIUtil.addToURI(
+					getBaseURI(), projectCfg.getString("workflowTemplateFile"))
+					, isFromJar());
+			workflowTemplate.setReader(new BufferedReader(isReader));
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			rc = false;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			rc = false;
 		}
-		else
-		{
-			isReader = new FileReader(createPath(projectCfg.getString("workflowTemplateFile")));
-		}
-		workflowTemplate.setReader(new BufferedReader(isReader));
+		
 		workflow.setWorkflowTemplate(workflowTemplate);
 		logger.debug(workflow.getWorkflowTemplate()+" "+workflow.getLastTasks().size());
 
 		DefaultMetaData metaData=CoreFactory.eINSTANCE.createDefaultMetaData();		
-		metaData.setFileName(createPath(projectCfg.getString("metadataFile")));
-
+		//metaData.setFileName(URIUtil.createPath(getBasePath(), projectCfg.getString("metadataFile")));
+		try {
+			isReader = URIUtil.getInputStreamReader(
+					URIUtil.addToURI(getBaseURI(), projectCfg.getString("metadataFile"))
+					, isFromJar());
+			metaData.setReader(new BufferedReader(isReader));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		workflow.setMetaData(metaData);
 
 		
@@ -708,16 +733,23 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		// tool config (dir, tools, schemata)
 		JSONObject toolCfg = jsonObject.getJSONObject("tool");
 		JSONArray schemata = toolCfg.getJSONArray("schemata");
-		String toolDefPath = basePath;
+		// String toolDefPath = basePath;
+		URI toolDefPath = getBaseURI();
 		if (toolCfg.has("dir"))
 		{
-			toolDefPath = new File(basePath+"/"+toolCfg.getString("dir")).getPath();
+			//toolDefPath = new File(basePath+"/"+toolCfg.getString("dir")).getPath();
+			try {
+				toolDefPath = URIUtil.addToURI(toolDefPath, toolCfg.getString("dir"));
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		for (int i=0; i<schemata.size(); i++)
 		{
 			try {
 				
-				URI source = createURI(toolDefPath, schemata.getString(i));
+				URI source = URIUtil.addToURI(toolDefPath, schemata.getString(i));
 				Schema schema = readSchema(source);
 				if (schema != null)
 					getSchemata().put(source.toString(), schema);
@@ -731,11 +763,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			
 		}
 		JSONArray toolsArray = toolCfg.getJSONArray("tools");
-		EList<Tool> tools = new BasicEList<Tool>();
+		//EList<Tool> tools = new BasicEList<Tool>();
 		for (int i=0; i<toolsArray.size(); i++)
 			try {
 				
-				Document doc = readToolDefinition(createURI(toolDefPath, toolsArray.getString(i)));
+				Document doc = readToolDefinition(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)));
 				
 				for (int j=0; j<doc.getDocumentElement().getChildNodes().getLength(); j++) {
 					Node node=doc.getDocumentElement().getChildNodes().item(j);
@@ -743,12 +775,15 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 						Tool tool=CoreFactory.eINSTANCE.createTool();
 						tool.readImplementation((Element) node);
 						//getActiveWorkflow().getTools().put(tool.getId(), tool);
-						tools.add(tool);
+						getTools().put(tool.getId(), tool);
 					}
 				}
 				
 
 			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -763,17 +798,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		}*/
 		
 		// read examples
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Document getSchemaFor(URI sourceXML) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return rc;
 	}
 
 	/**
@@ -808,6 +833,27 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void setConfigAndBasePath(String path) {
+		try {
+			String baseName = URIUtil.getBasename(path);
+			if (baseName != null)
+				setBaseURI(URIUtil.createURI(baseName, null));
+			String fileName = URIUtil.getFilename(path);  
+			if (fileName == null)
+				setConfigSource(URIUtil.addToURI(getBaseURI(), DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT));
+			else
+				setConfigSource(URIUtil.createURI(path, null));
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -815,6 +861,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		switch (featureID) {
 			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
 				return ((InternalEList<?>)getSchemata()).basicRemove(otherEnd, msgs);
+			case UiPackage.DEFAULT_PROJECT__TOOLS:
+				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -824,17 +872,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void initProject() {
+	public boolean init() {
 
-		setFromJar(true);
-		try {
-			readConfiguration();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setExamples(ExampleFactory.eINSTANCE.createExamples());
-		getExamples().setLocator("/easyflow/custom/examples");
+		
+		boolean rc = readConfiguration();
 		
 		if (getGraphUtil() == null)
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
@@ -845,6 +886,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		getActiveWorkflow().generateGraphFromTemplate();
 		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
 		
+		return rc;
 		
 	}
 	
@@ -855,30 +897,19 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public void autoSetup() {
 		
-		setBasePath("/easyflow/custom/examples/sequencing/");
+		
 		
 		clearWorkflows();
-		if (getConfigFileName() == null || getConfigFileName().equals(""))
-			setConfigFileName("main.json");
-		try {
-			readProjectJson(createURI(basePath, getConfigFileName()));
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		readProjectJson(getConfigSource());
 		
-		initProject();
-		applyMetaData();
-		getActiveWorkflow().resolveTraversalEvents();
+		if (init())
+		{
+			applyMetaData();
+			getActiveWorkflow().resolveTraversalEvents();
+		}
 	}
 
-	private URI createURI(String basePath, String fileName) throws URISyntaxException
-	{
-		logger.debug("crate uri: "+basePath+" "+fileName);
-		return new URI(fileName == null ?
-								basePath :
-								new File(basePath +"/" +fileName).getPath());
-	}
+	
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -892,10 +923,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return getWorkflows();
 			case UiPackage.DEFAULT_PROJECT__META_DATA:
 				return getMetaData();
-			case UiPackage.DEFAULT_PROJECT__CONFIG_FILE_NAME:
-				return getConfigFileName();
-			case UiPackage.DEFAULT_PROJECT__BASE_PATH:
-				return getBasePath();
+			case UiPackage.DEFAULT_PROJECT__CONFIG_SOURCE:
+				return getConfigSource();
+			case UiPackage.DEFAULT_PROJECT__BASE_URI:
+				return getBaseURI();
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return getLogger();
 			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
@@ -903,9 +934,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return basicGetGraphUtil();
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return isFromJar();
-			case UiPackage.DEFAULT_PROJECT__EXAMPLES:
-				if (resolve) return getExamples();
-				return basicGetExamples();
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				return getToolDefinitions();
 			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
@@ -913,6 +941,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				else return getSchemata().map();
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				return getJsonObject();
+			case UiPackage.DEFAULT_PROJECT__TOOLS:
+				if (coreType) return getTools();
+				else return getTools().map();
+			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
+				return getDefaultConfigSourceString();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -934,20 +967,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				getMetaData().clear();
 				getMetaData().addAll((Collection<? extends IMetaData>)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__CONFIG_FILE_NAME:
-				setConfigFileName((String)newValue);
+			case UiPackage.DEFAULT_PROJECT__CONFIG_SOURCE:
+				setConfigSource((URI)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__BASE_PATH:
-				setBasePath((String)newValue);
+			case UiPackage.DEFAULT_PROJECT__BASE_URI:
+				setBaseURI((URI)newValue);
 				return;
 			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
 				setGraphUtil((Util)newValue);
 				return;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar((Boolean)newValue);
-				return;
-			case UiPackage.DEFAULT_PROJECT__EXAMPLES:
-				setExamples((Examples)newValue);
 				return;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				getToolDefinitions().clear();
@@ -958,6 +988,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return;
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				setJsonObject((JSONObject)newValue);
+				return;
+			case UiPackage.DEFAULT_PROJECT__TOOLS:
+				((EStructuralFeature.Setting)getTools()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -977,20 +1010,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__META_DATA:
 				getMetaData().clear();
 				return;
-			case UiPackage.DEFAULT_PROJECT__CONFIG_FILE_NAME:
-				setConfigFileName(CONFIG_FILE_NAME_EDEFAULT);
+			case UiPackage.DEFAULT_PROJECT__CONFIG_SOURCE:
+				setConfigSource(CONFIG_SOURCE_EDEFAULT);
 				return;
-			case UiPackage.DEFAULT_PROJECT__BASE_PATH:
-				setBasePath(BASE_PATH_EDEFAULT);
+			case UiPackage.DEFAULT_PROJECT__BASE_URI:
+				setBaseURI(BASE_URI_EDEFAULT);
 				return;
 			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
 				setGraphUtil((Util)null);
 				return;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar(FROM_JAR_EDEFAULT);
-				return;
-			case UiPackage.DEFAULT_PROJECT__EXAMPLES:
-				setExamples((Examples)null);
 				return;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				getToolDefinitions().clear();
@@ -1000,6 +1030,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return;
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				setJsonObject(JSON_OBJECT_EDEFAULT);
+				return;
+			case UiPackage.DEFAULT_PROJECT__TOOLS:
+				getTools().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -1017,24 +1050,26 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return workflows != null && !workflows.isEmpty();
 			case UiPackage.DEFAULT_PROJECT__META_DATA:
 				return metaData != null && !metaData.isEmpty();
-			case UiPackage.DEFAULT_PROJECT__CONFIG_FILE_NAME:
-				return CONFIG_FILE_NAME_EDEFAULT == null ? configFileName != null : !CONFIG_FILE_NAME_EDEFAULT.equals(configFileName);
-			case UiPackage.DEFAULT_PROJECT__BASE_PATH:
-				return BASE_PATH_EDEFAULT == null ? basePath != null : !BASE_PATH_EDEFAULT.equals(basePath);
+			case UiPackage.DEFAULT_PROJECT__CONFIG_SOURCE:
+				return CONFIG_SOURCE_EDEFAULT == null ? configSource != null : !CONFIG_SOURCE_EDEFAULT.equals(configSource);
+			case UiPackage.DEFAULT_PROJECT__BASE_URI:
+				return BASE_URI_EDEFAULT == null ? baseURI != null : !BASE_URI_EDEFAULT.equals(baseURI);
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
 				return graphUtil != null;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return fromJar != FROM_JAR_EDEFAULT;
-			case UiPackage.DEFAULT_PROJECT__EXAMPLES:
-				return examples != null;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				return toolDefinitions != null && !toolDefinitions.isEmpty();
 			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
 				return schemata != null && !schemata.isEmpty();
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				return JSON_OBJECT_EDEFAULT == null ? jsonObject != null : !JSON_OBJECT_EDEFAULT.equals(jsonObject);
+			case UiPackage.DEFAULT_PROJECT__TOOLS:
+				return tools != null && !tools.isEmpty();
+			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
+				return DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT == null ? defaultConfigSourceString != null : !DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT.equals(defaultConfigSourceString);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1049,10 +1084,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (configFileName: ");
-		result.append(configFileName);
-		result.append(", basePath: ");
-		result.append(basePath);
+		result.append(" (configSource: ");
+		result.append(configSource);
+		result.append(", baseURI: ");
+		result.append(baseURI);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(", fromJar: ");
@@ -1061,6 +1096,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		result.append(toolDefinitions);
 		result.append(", jsonObject: ");
 		result.append(jsonObject);
+		result.append(", DefaultConfigSourceString: ");
+		result.append(defaultConfigSourceString);
 		result.append(')');
 		return result.toString();
 	}

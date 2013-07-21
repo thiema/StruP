@@ -45,7 +45,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
  * </ul>
  * </p>
@@ -344,23 +343,6 @@ public interface Workflow extends EObject {
 	EMap<String, Object> getGenericAttributes();
 
 	/**
-	 * Returns the value of the '<em><b>Tools</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.core.Tool},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tools</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tools</em>' map.
-	 * @see easyflow.core.CorePackage#getWorkflow_Tools()
-	 * @model mapType="easyflow.core.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.core.Tool>"
-	 * @generated
-	 */
-	EMap<String, Tool> getTools();
-
-	/**
 	 * Returns the value of the '<em><b>Graph Util</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -396,17 +378,6 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	void generateGraphFromTemplate();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	void readProjectMetaData();
 
 	/**
 	 * <!-- begin-user-doc -->

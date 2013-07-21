@@ -6,6 +6,7 @@
  */
 package easyflow.core;
 
+import java.io.BufferedReader;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -24,7 +25,7 @@ import org.eclipse.emf.common.util.EMap;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link easyflow.core.DefaultMetaData#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.core.DefaultMetaData#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.DefaultMetaData#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.DefaultMetaData#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.core.DefaultMetaData#getGroupingInstances <em>Grouping Instances</em>}</li>
@@ -38,30 +39,30 @@ import org.eclipse.emf.common.util.EMap;
  */
 public interface DefaultMetaData extends IMetaData {
 	/**
-	 * Returns the value of the '<em><b>File Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Reader</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>File Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Reader</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>File Name</em>' attribute.
-	 * @see #setFileName(String)
-	 * @see easyflow.core.CorePackage#getDefaultMetaData_FileName()
-	 * @model
+	 * @return the value of the '<em>Reader</em>' attribute.
+	 * @see #setReader(BufferedReader)
+	 * @see easyflow.core.CorePackage#getDefaultMetaData_Reader()
+	 * @model dataType="easyflow.BufferedReader"
 	 * @generated
 	 */
-	String getFileName();
+	BufferedReader getReader();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.DefaultMetaData#getFileName <em>File Name</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.core.DefaultMetaData#getReader <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>File Name</em>' attribute.
-	 * @see #getFileName()
+	 * @param value the new value of the '<em>Reader</em>' attribute.
+	 * @see #getReader()
 	 * @generated
 	 */
-	void setFileName(String value);
+	void setReader(BufferedReader value);
 
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.

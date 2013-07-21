@@ -30,11 +30,6 @@
           <details key="documentation" value=""/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="readProjectMetaData">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value=""/>
-        </eAnnotations>
-      </eOperations>
       <eOperations name="getParentTaskByOutDataPort" eType="#//core/Task">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The tasks that are explicitely set in the parentTasks attribute. It is assumed that&#xA;only one task will match the given DataPort. However only the first is returned."/>
@@ -118,8 +113,6 @@
       </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EReference" name="genericAttributes" upperBound="-1"
           eType="#//core/StringToObjectMap" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="tools" upperBound="-1"
-          eType="#//core/StringToToolMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="graphUtil" eType="#//graph/jgraphx/Util"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Task">
@@ -353,7 +346,7 @@
           <eTypeArguments eClassifier="#//Object"/>
         </eGenericType>
       </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="reader" eType="#//BufferedReader"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="groupings" upperBound="-1"
@@ -544,6 +537,10 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="instances" upperBound="-1"
           eType="#//core/GroupingInstance"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StringToProjectMap" instanceClassName="java.util.Map$Entry">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//ui/DefaultProject"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
       nsPrefix="easyflow">
@@ -551,22 +548,11 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value=""/>
       </eAnnotations>
-      <eOperations name="readProjectJson" eExceptions="#//FileNotFoundException">
+      <eOperations name="validate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="init" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value=""/>
         </eAnnotations>
-        <eParameters name="source" eType="#//URI"/>
-      </eOperations>
-      <eOperations name="initProject">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value=""/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="createPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value=""/>
-        </eAnnotations>
-        <eParameters name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
       <eOperations name="autoSetup">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -581,38 +567,52 @@
       <eOperations name="applyTraversalEvents"/>
       <eOperations name="clearWorkflows"/>
       <eOperations name="getActiveWorkflow" eType="#//core/Workflow"/>
+      <eOperations name="readProjectJson" eExceptions="#//FileNotFoundException">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+        <eParameters name="source" eType="#//URI"/>
+      </eOperations>
       <eOperations name="readSchema" eType="#//Schema" eExceptions="#//FileNotFoundException">
         <eParameters name="xsdSource" eType="#//URI"/>
       </eOperations>
       <eOperations name="readToolDefinition" eType="#//Document" eExceptions="#//FileNotFoundException">
         <eParameters name="xmlSource" eType="#//URI"/>
       </eOperations>
-      <eOperations name="readConfiguration" eExceptions="#//FileNotFoundException"/>
-      <eOperations name="getSchemaFor" eType="#//Document">
-        <eParameters name="sourceXML" eType="#//URI"/>
+      <eOperations name="readConfiguration" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getSchemaFor" eType="#//Schema">
+        <eParameters name="document" eType="#//Document"/>
       </eOperations>
       <eOperations name="getDefaultSchema" eType="#//Schema"/>
+      <eOperations name="setConfigAndBasePath">
+        <eParameters name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DefaultProject" eSuperTypes="#//ui/IProject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value=""/>
+        <details key="documentation" value="basePath: the path to the project files. If JSON config file (configSource) is not set, &#xA;it is assumed to be basePath+defaultConfigSource.&#xA;configSource: the URI of the JSON config file."/>
       </eAnnotations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="workflows" upperBound="-1"
           eType="#//core/Workflow"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="metaData" upperBound="-1"
           eType="#//core/IMetaData"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="configFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="basePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="configSource" eType="#//URI"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseURI" eType="#//URI"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true" defaultValueLiteral=""/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="graphUtil" eType="#//graph/jgraphx/Util"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromJar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="examples" eType="#//example/Examples"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fromJar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolDefinitions" upperBound="-1"
           eType="#//Document"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="schemata" upperBound="-1"
           eType="#//core/StringToSchemaMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="jsonObject" eType="#//JSONObject"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tools" upperBound="-1"
+          eType="#//core/StringToToolMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="DefaultConfigSourceString"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          changeable="false" defaultValueLiteral="main.json"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="graph" nsURI="http:///de/thiema/easyflow/graph/easyflow.core/1.0.0"
@@ -705,15 +705,13 @@
   <eSubpackages name="example" nsURI="http:///de/thiema/easyflow/example/easyflow.core/1.0.0"
       nsPrefix="easyflow">
     <eClassifiers xsi:type="ecore:EClass" name="Examples">
-      <eOperations name="getExamples" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eOperations name="getConfigByName" eType="#//URI">
-        <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="exampleMap" upperBound="-1"
-          eType="#//core/StringToURIMap" containment="true"/>
+      <eOperations name="readExamples" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="readRepository"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="locator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="examples" upperBound="-1"
+          eType="#//core/StringToProjectMap" containment="true"/>
     </eClassifiers>
   </eSubpackages>
 </ecore:EPackage>

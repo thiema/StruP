@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 
@@ -45,6 +48,7 @@ import easyflow.core.DefaultMetaData;
 import easyflow.core.Task;
 import easyflow.core.TraversalEvent;
 import easyflow.core.Workflow;
+import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.Util;
 import easyflow.ui.DefaultProject;
@@ -63,8 +67,10 @@ public class EasyFlowToolBar extends JToolBar
 	 */
 	private static final long serialVersionUID = -4592403145874164000L;
 	
-	private static final DefaultProject defaultProject = UiFactory.eINSTANCE.createDefaultProject();
+	private static final String         repository     = "/easyflow/custom/examples";
+	private static       DefaultProject defaultProject = null;
 	private static final Logger         logger         = Logger.getLogger(EasyFlowToolBar.class);
+	private static       Examples       examples       = null;
 	private              Util           graphUtil      = JgraphxFactory.eINSTANCE.createUtil();
 	private final   Map<String, Object> objects        = new HashMap<String, Object>();
 	private         DefaultMetaData     metaData;
@@ -121,7 +127,7 @@ public class EasyFlowToolBar extends JToolBar
 		final JButton btnCalcAll               = add(calcAllProjectAction);
 		final JButton btnGenAbstractWorkflow   = add(genAbstractWorkflowAction);
 		final JButton btnApplyTraversalCrit    = add(applyTraversalCritAction);
-		//final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
+	  //final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
 		final JButton btnDeleteGraph           = add(deleteGraphAction);
 		final JButton btnCheckTools            = add(checkToolsAction);
 		final JButton btnValidate              = add(validateGraphComponent);
@@ -134,28 +140,26 @@ public class EasyFlowToolBar extends JToolBar
 		
 		btnConfigureProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ConfigureProjectDialog(editor, defaultProject);
+				new ConfigureProjectDialog(editor);
 			}
 		});
 		
 		btnCalcAll.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				logger.debug(getDefaultProject().hashCode());
 				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
-				defaultProject.setGraphUtil(getGraphUtil());
-				defaultProject.setBasePath((String) objects.get("basePath"));
-				defaultProject.autoSetup();
-				Workflow workflow = defaultProject.getActiveWorkflow();
-				defaultProject.applyTraversalEvents();
+				getDefaultProject().setGraphUtil(getGraphUtil());
+				getDefaultProject().autoSetup();
+				Workflow workflow = getDefaultProject().getActiveWorkflow();
+				getDefaultProject().applyTraversalEvents();
 			}
 		});
 		btnGenAbstractWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
-				defaultProject.setGraphUtil(getGraphUtil());
-				//defaultProject.setBasePath("/easyflow/sequencing/examples/");
-				defaultProject.setBasePath((String) objects.get("basePath"));
-				defaultProject.autoSetup();
+				getDefaultProject().setGraphUtil(getGraphUtil());
+				getDefaultProject().autoSetup();
 				btnCheckTools.setEnabled(true);
 				btnApplyTraversalCrit.setEnabled(true);
 				getGraphUtil().layoutGraph();
@@ -172,7 +176,7 @@ public class EasyFlowToolBar extends JToolBar
 		});
 		btnApplyTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				defaultProject.applyTraversalEvents();
+				getDefaultProject().applyTraversalEvents();
 			}
 		});		
 
@@ -236,10 +240,23 @@ public class EasyFlowToolBar extends JToolBar
 				
 				traversalEvent = getGraphUtil().getNextTraversalEvent();
 				if (traversalEvent != null)
-					defaultProject.getActiveWorkflow().applyTraversalEvent(traversalEvent);
+					getDefaultProject().getActiveWorkflow().applyTraversalEvent(traversalEvent);
 			}
 		});
 		
+	}
+	
+	private DefaultProject getDefaultProject() {return defaultProject;}
+	private void setDefaultProject(DefaultProject newDefaultProject) {defaultProject = newDefaultProject;}
+	private Examples getExamples()
+	{
+		if (examples == null)
+		{
+			examples = ExampleFactory.eINSTANCE.createExamples();
+			examples.setLocator(repository);
+			examples.readRepository();
+		}
+		return examples;
 	}
 	
 	private Util getGraphUtil()
@@ -367,38 +384,42 @@ public class EasyFlowToolBar extends JToolBar
 	private class ConfigureProjectDialog extends JWindow implements ActionListener {
 		
 		JFileChooser fc               = new JFileChooser();
-		JButton      selectFileButton = new JButton("Select File");
+		JButton      selectFileButton = new JButton("Select Path");
+		JButton      validateButton   = new JButton("Validate");
 		JButton      closeButton      = new JButton("Close");
-		JTextField   selectedFileText = new JTextField();
+		JTextField   uriTextField     = new JTextField("https://bitbucket.org/thiema/easyflow/downloads/main.json");
+		JTextField   selectedFileText = new JTextField("/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples/sequencing");
 		JPanel       panel            = new JPanel(new GridLayout(0, 1));
-		JPanel       sfPanel          = new JPanel(new GridLayout(0, 2));
+		JPanel       sfPanel          = new JPanel(new GridLayout(0, 3));
 		JDialog      dialog           = new JDialog();// nicht modal
+		DefaultProject curProject     = null;
+		DefaultProject userProject    = UiFactory.eINSTANCE.createDefaultProject();
+		
 		final ButtonGroup group       = new ButtonGroup();
 		/**/
 		
-		public ConfigureProjectDialog(SchemaEditor editor, final DefaultProject defaultProject)
+		public ConfigureProjectDialog(SchemaEditor editor)
 		{
 			super();
-			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	        //fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-	        
+			//fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+	        fc.setToolTipText("Either select the main configuration file in the json format or the directory where the file main.json is located.");
 	        selectFileButton.addActionListener(this);
+	        validateButton.addActionListener(this);
 	        closeButton.addActionListener(this);
 	        sfPanel.add(selectFileButton);
+	        sfPanel.add(validateButton);
 	        sfPanel.add(closeButton);
 	        panel.add(sfPanel);
+	        uriTextField.setEnabled(false);
+	        userProject.setFromJar(false);    
+	        
 			// add the radio buttons to select predefined configs
-	        logger.debug(defaultProject.getExamples().getExamples());
-			for (final String exampleName : defaultProject.getExamples().getExamples())
+	        
+			for (final String exampleName : getExamples().getExamples().keySet())
 			{
 				//popup.add(newContentPane);
 				JRadioButton radioButton = new JRadioButton(exampleName);
-				radioButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						logger.debug("set filename to");
-						defaultProject.setConfigFileName("");
-					}
-				});
 				radioButton.setActionCommand(exampleName);
 				radioButton.addActionListener(new ActionListener() {
 					
@@ -406,7 +427,8 @@ public class EasyFlowToolBar extends JToolBar
 					public void actionPerformed(ActionEvent e) {
 						selectFileButton.setEnabled(false);
 						selectedFileText.setEnabled(false);
-						selectedFileText.setText(defaultProject.getExamples().getConfigByName(exampleName).toString());
+						uriTextField.setEnabled(false);
+						//selectedFileText.setText(getExamples().getExamples().get(exampleName).getConfigSource().toString());
 					}
 				});
 				//radioButton.setSelected(true);
@@ -421,18 +443,34 @@ public class EasyFlowToolBar extends JToolBar
 				public void actionPerformed(ActionEvent e) {
 					selectFileButton.setEnabled(true);
 					selectedFileText.setEnabled(true);
-					defaultProject.setFromJar(false);
+					uriTextField.setEnabled(false);
 				}
 			});
 
-			radioButton.setActionCommand("userInput");
+			radioButton.setActionCommand("userInputFile");
 			radioButton.setSelected(true);
 			radioButton.addActionListener(this);
+			
+			JRadioButton uriRadioButton = new JRadioButton("uri");
+			uriRadioButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					uriTextField.setEnabled(true);
+				}
+			});
+			uriRadioButton.setActionCommand("userInputURI");
+			uriRadioButton.setSelected(true);
+			uriRadioButton.addActionListener(this);
+
 			//Group the radio buttons.
 			group.add(radioButton);
+			group.add(uriRadioButton);
 			panel.add(radioButton);
+			panel.add(uriRadioButton);
 			
 			panel.add(selectedFileText);
+			panel.add(uriTextField);
 			dialog.setBounds(editor.getGraphComponent().getX(), 
 	        		editor.getGraphComponent().getY(), 300, 150);
 			dialog.add(panel);
@@ -450,6 +488,7 @@ public class EasyFlowToolBar extends JToolBar
                     //This is where a real application would open the file.
                     logger.debug("Opening: " + file.getName() + ".");
                     selectedFileText.setText(file.getName());
+                   	userProject.setConfigAndBasePath(file.getPath());
                 } else {
                 	logger.debug("Open command cancelled by user.");
                 }
@@ -457,13 +496,55 @@ public class EasyFlowToolBar extends JToolBar
             else if (e.getSource() == closeButton)
             {
             	logger.debug("close action");
+            	if (setProject() && getDefaultProject().validate())
+            	{
+            		logger.debug("valid project found, set default. "+getDefaultProject().hashCode());
+            		//setDefaultProject(curProject);
+            	}
+            	
             	//dialog.dispose();
             	dialog.setVisible(false);
+            }
+            else if (e.getSource() == validateButton)
+            {
+            	setProject();
+            	logger.debug(curProject.getBaseURI()+" "+curProject.getConfigSource());
+            	if (curProject != null && curProject.validate())
+            		JOptionPane.showMessageDialog(this, "Project settings are valid !");
+            	else
+            		JOptionPane.showMessageDialog(this, "Unvalid project settings found !",
+            				"Inane error", JOptionPane.ERROR_MESSAGE);
             }
             else
             	logger.debug("no action defined.");
             
             
+		}
+		private boolean setProject() {
+			boolean rc = true;
+			if (group.getSelection().getActionCommand().equals("userInputFile"))
+        	{
+        		curProject = userProject;
+        		curProject.setConfigAndBasePath(selectedFileText.getText());
+        	}
+        	else if (group.getSelection().getActionCommand().equals("userInputURI"))
+        	{
+        		curProject = userProject;
+        		try {
+					curProject.setConfigSource(
+							URIUtil.createURI(uriTextField.getText(), null));
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        	}
+        	else if (getExamples().getExamples().containsKey(group.getSelection().getActionCommand()))
+        		curProject = getExamples().getExamples().get(group.getSelection().getActionCommand());
+        	else
+        		rc = false;
+			if (rc)
+				setDefaultProject(curProject);
+			return rc;
 		}
 	}
 

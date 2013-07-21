@@ -132,7 +132,6 @@ import org.xml.sax.SAXException;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGenericAttributes <em>Generic Attributes</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGraphUtil <em>Graph Util</em>}</li>
  * </ul>
  * </p>
@@ -340,16 +339,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected EMap<String, Object> genericAttributes;
-
-	/**
-	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTools()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Tool> tools;
 
 	/**
 	 * The cached value of the '{@link #getGraphUtil() <em>Graph Util</em>}' reference.
@@ -620,18 +609,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			genericAttributes = new EcoreEMap<String,Object>(CorePackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.WORKFLOW__GENERIC_ATTRIBUTES);
 		}
 		return genericAttributes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EMap<String, Tool> getTools() {
-		if (tools == null) {
-			tools = new EcoreEMap<String,Tool>(CorePackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.WORKFLOW__TOOLS);
-		}
-		return tools;
 	}
 
 	/**
@@ -948,19 +925,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		 * 
 		 * currently assume easyflow.core.DefaultMetaData
 		 */
-		logger.trace("readMetaData(): filename="+((DefaultMetaData) getMetaData()).getFileName());
 		((DefaultMetaData) getMetaData()).readMetaData();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void readProjectMetaData() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1222,8 +1187,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		switch (featureID) {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return ((InternalEList<?>)getGenericAttributes()).basicRemove(otherEnd, msgs);
-			case CorePackage.WORKFLOW__TOOLS:
-				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1264,9 +1227,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				if (coreType) return getGenericAttributes();
 				else return getGenericAttributes().map();
-			case CorePackage.WORKFLOW__TOOLS:
-				if (coreType) return getTools();
-				else return getTools().map();
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				if (resolve) return getGraphUtil();
 				return basicGetGraphUtil();
@@ -1322,9 +1282,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				((EStructuralFeature.Setting)getGenericAttributes()).set(newValue);
 				return;
-			case CorePackage.WORKFLOW__TOOLS:
-				((EStructuralFeature.Setting)getTools()).set(newValue);
-				return;
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				setGraphUtil((Util)newValue);
 				return;
@@ -1376,9 +1333,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				getGenericAttributes().clear();
 				return;
-			case CorePackage.WORKFLOW__TOOLS:
-				getTools().clear();
-				return;
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				setGraphUtil((Util)null);
 				return;
@@ -1420,8 +1374,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return previousTaskName != null;
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return genericAttributes != null && !genericAttributes.isEmpty();
-			case CorePackage.WORKFLOW__TOOLS:
-				return tools != null && !tools.isEmpty();
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				return graphUtil != null;
 		}

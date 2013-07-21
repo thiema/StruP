@@ -59,7 +59,7 @@ public class XMLUtil {
 	
 	//final static String SCHEMA_LOCATION="/usr/home/heinz/workspace/easyflow/easyflow/model/easyflow.core.xsd";
 	public final static Map<String, Object> container=new HashMap<String, Object>();
-	protected static final Logger logger = Logger.getLogger(EasyFlowGraph.class);
+	protected static final Logger logger = Logger.getLogger(XMLUtil.class);
 	
 	public static Object[] parseElementToArray(Element el) {
 		Object[] data=new Object[5];

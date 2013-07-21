@@ -2,6 +2,7 @@ git add -u
 git commit
 git push -u origin --all
 
+#push master branch -> head
 
 #building
 ant -f build/build.xml jar

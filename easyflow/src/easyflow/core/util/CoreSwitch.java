@@ -11,6 +11,7 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import easyflow.core.*;
 
+import easyflow.ui.DefaultProject;
 import java.net.URI;
 import java.util.Map;
 import javax.xml.validation.Schema;
@@ -327,6 +328,12 @@ public class CoreSwitch<T> extends Switch<T> {
 			case CorePackage.GROUPING_INSTANCE_LIST: {
 				GroupingInstanceList groupingInstanceList = (GroupingInstanceList)theEObject;
 				T result = caseGroupingInstanceList(groupingInstanceList);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CorePackage.STRING_TO_PROJECT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DefaultProject> stringToProjectMap = (Map.Entry<String, DefaultProject>)theEObject;
+				T result = caseStringToProjectMap(stringToProjectMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -916,6 +923,21 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGroupingInstanceList(GroupingInstanceList object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Project Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Project Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToProjectMap(Map.Entry<String, DefaultProject> object) {
 		return null;
 	}
 

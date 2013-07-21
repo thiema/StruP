@@ -172,7 +172,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDefaultProject_ConfigFileName() {
+	public EAttribute getDefaultProject_ConfigSource() {
 		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -181,7 +181,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDefaultProject_BasePath() {
+	public EAttribute getDefaultProject_BaseURI() {
 		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -217,17 +217,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultProject_Examples() {
-		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getDefaultProject_ToolDefinitions() {
-		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(8);
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -236,7 +227,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getDefaultProject_Schemata() {
-		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(9);
+		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -245,7 +236,25 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EAttribute getDefaultProject_JsonObject() {
-		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(10);
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDefaultProject_Tools() {
+		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDefaultProject_DefaultConfigSourceString() {
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -281,15 +290,16 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		defaultProjectEClass = createEClass(DEFAULT_PROJECT);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__WORKFLOWS);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__META_DATA);
-		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_FILE_NAME);
-		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__BASE_PATH);
+		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_SOURCE);
+		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__BASE_URI);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__LOGGER);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__GRAPH_UTIL);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__FROM_JAR);
-		createEReference(defaultProjectEClass, DEFAULT_PROJECT__EXAMPLES);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__TOOL_DEFINITIONS);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__SCHEMATA);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__JSON_OBJECT);
+		createEReference(defaultProjectEClass, DEFAULT_PROJECT__TOOLS);
+		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING);
 	}
 
 	/**
@@ -316,10 +326,9 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
-		ExamplePackage theExamplePackage = (ExamplePackage)EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -331,14 +340,9 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(iProjectEClass, IProject.class, "IProject", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		EOperation op = addEOperation(iProjectEClass, null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getURI(), "source", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getFileNotFoundException());
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, null, "initProject", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(iProjectEClass, ecorePackage.getEString(), "createPath", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "fileName", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, null, "autoSetup", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -350,6 +354,10 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		addEOperation(iProjectEClass, theCorePackage.getWorkflow(), "getActiveWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		EOperation op = addEOperation(iProjectEClass, null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getURI(), "source", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getFileNotFoundException());
+
 		op = addEOperation(iProjectEClass, theEasyflowPackage.getSchema(), "readSchema", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "xsdSource", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
@@ -358,26 +366,29 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEParameter(op, theEasyflowPackage.getURI(), "xmlSource", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
 
-		op = addEOperation(iProjectEClass, null, "readConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getFileNotFoundException());
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "readConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, theEasyflowPackage.getDocument(), "getSchemaFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getURI(), "sourceXML", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iProjectEClass, theEasyflowPackage.getSchema(), "getSchemaFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getDocument(), "document", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, theEasyflowPackage.getSchema(), "getDefaultSchema", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, null, "setConfigAndBasePath", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultProjectEClass, DefaultProject.class, "DefaultProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultProject_Workflows(), theCorePackage.getWorkflow(), null, "workflows", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_MetaData(), theCorePackage.getIMetaData(), null, "metaData", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultProject_ConfigFileName(), ecorePackage.getEString(), "configFileName", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultProject_BasePath(), ecorePackage.getEString(), "basePath", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_ConfigSource(), theEasyflowPackage.getURI(), "configSource", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_BaseURI(), theEasyflowPackage.getURI(), "baseURI", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_Logger(), theEasyflowPackage.getLogger(), "logger", "", 0, 1, DefaultProject.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_GraphUtil(), theJgraphxPackage.getUtil(), null, "graphUtil", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultProject_FromJar(), ecorePackage.getEBoolean(), "fromJar", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDefaultProject_Examples(), theExamplePackage.getExamples(), null, "examples", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_FromJar(), ecorePackage.getEBoolean(), "fromJar", "true", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_ToolDefinitions(), theEasyflowPackage.getDocument(), "toolDefinitions", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_Schemata(), theCorePackage.getStringToSchemaMap(), null, "schemata", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_JsonObject(), theEasyflowPackage.getJSONObject(), "jsonObject", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultProject_Tools(), theCorePackage.getStringToToolMap(), null, "tools", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_DefaultConfigSourceString(), ecorePackage.getEString(), "DefaultConfigSourceString", "main.json", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //UiPackageImpl

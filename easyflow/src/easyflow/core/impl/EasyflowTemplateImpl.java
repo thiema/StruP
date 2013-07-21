@@ -228,8 +228,6 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
         BufferedReader bufferedReader = new BufferedReader(getReader());
         String strLine;
         try {
-        	
-        	
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					

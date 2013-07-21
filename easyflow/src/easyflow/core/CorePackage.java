@@ -187,22 +187,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__GENERIC_ATTRIBUTES = 12;
 
 	/**
-	 * The feature id for the '<em><b>Tools</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__TOOLS = 13;
-
-	/**
 	 * The feature id for the '<em><b>Graph Util</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__GRAPH_UTIL = 14;
+	int WORKFLOW__GRAPH_UTIL = 13;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -211,7 +202,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 15;
+	int WORKFLOW_FEATURE_COUNT = 14;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -852,13 +843,13 @@ public interface CorePackage extends EPackage {
 	int IMETA_DATA_FEATURE_COUNT = 0;
 
 	/**
-	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Reader</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_META_DATA__FILE_NAME = IMETA_DATA_FEATURE_COUNT + 0;
+	int DEFAULT_META_DATA__READER = IMETA_DATA_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -1955,6 +1946,43 @@ public interface CorePackage extends EPackage {
 	int GROUPING_INSTANCE_LIST_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link easyflow.core.impl.StringToProjectMapImpl <em>String To Project Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.StringToProjectMapImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getStringToProjectMap()
+	 * @generated
+	 */
+	int STRING_TO_PROJECT_MAP = 41;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PROJECT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PROJECT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Project Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PROJECT_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.Workflow <em>Workflow</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2106,17 +2134,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_GenericAttributes();
-
-	/**
-	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getTools <em>Tools</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Tools</em>'.
-	 * @see easyflow.core.Workflow#getTools()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EReference getWorkflow_Tools();
 
 	/**
 	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}'.
@@ -2580,15 +2597,15 @@ public interface CorePackage extends EPackage {
 	EClass getDefaultMetaData();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultMetaData#getFileName <em>File Name</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultMetaData#getReader <em>Reader</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>File Name</em>'.
-	 * @see easyflow.core.DefaultMetaData#getFileName()
+	 * @return the meta object for the attribute '<em>Reader</em>'.
+	 * @see easyflow.core.DefaultMetaData#getReader()
 	 * @see #getDefaultMetaData()
 	 * @generated
 	 */
-	EAttribute getDefaultMetaData_FileName();
+	EAttribute getDefaultMetaData_Reader();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultMetaData#getLogger <em>Logger</em>}'.
@@ -3563,6 +3580,40 @@ public interface CorePackage extends EPackage {
 	EReference getGroupingInstanceList_Instances();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Project Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Project Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.ui.DefaultProject"
+	 * @generated
+	 */
+	EClass getStringToProjectMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToProjectMap()
+	 * @generated
+	 */
+	EAttribute getStringToProjectMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToProjectMap()
+	 * @generated
+	 */
+	EReference getStringToProjectMap_Value();
+
+	/**
 	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3794,14 +3845,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__GENERIC_ATTRIBUTES = eINSTANCE.getWorkflow_GenericAttributes();
-
-		/**
-		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WORKFLOW__TOOLS = eINSTANCE.getWorkflow_Tools();
 
 		/**
 		 * The meta object literal for the '<em><b>Graph Util</b></em>' reference feature.
@@ -4172,12 +4215,12 @@ public interface CorePackage extends EPackage {
 		EClass DEFAULT_META_DATA = eINSTANCE.getDefaultMetaData();
 
 		/**
-		 * The meta object literal for the '<em><b>File Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Reader</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DEFAULT_META_DATA__FILE_NAME = eINSTANCE.getDefaultMetaData_FileName();
+		EAttribute DEFAULT_META_DATA__READER = eINSTANCE.getDefaultMetaData_Reader();
 
 		/**
 		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
@@ -4934,6 +4977,32 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference GROUPING_INSTANCE_LIST__INSTANCES = eINSTANCE.getGroupingInstanceList_Instances();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.StringToProjectMapImpl <em>String To Project Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.StringToProjectMapImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getStringToProjectMap()
+		 * @generated
+		 */
+		EClass STRING_TO_PROJECT_MAP = eINSTANCE.getStringToProjectMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_PROJECT_MAP__KEY = eINSTANCE.getStringToProjectMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_PROJECT_MAP__VALUE = eINSTANCE.getStringToProjectMap_Value();
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.

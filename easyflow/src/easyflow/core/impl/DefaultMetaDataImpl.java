@@ -52,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultMetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
@@ -64,24 +64,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData {
 	/**
-	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * The default value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFileName()
+	 * @see #getReader()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FILE_NAME_EDEFAULT = null;
+	protected static final BufferedReader READER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * The cached value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFileName()
+	 * @see #getReader()
 	 * @generated
 	 * @ordered
 	 */
-	protected String fileName = FILE_NAME_EDEFAULT;
+	protected BufferedReader reader = READER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -157,8 +157,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getFileName() {
-		return fileName;
+	public BufferedReader getReader() {
+		return reader;
 	}
 
 	/**
@@ -166,11 +166,11 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFileName(String newFileName) {
-		String oldFileName = fileName;
-		fileName = newFileName;
+	public void setReader(BufferedReader newReader) {
+		BufferedReader oldReader = reader;
+		reader = newReader;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_META_DATA__FILE_NAME, oldFileName, fileName));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_META_DATA__READER, oldReader, reader));
 	}
 
 	/**
@@ -251,9 +251,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		Map<String, String> aliases = new HashMap<String, String>();
 		aliases.put("ID", "Record");
 		
-		logger.debug("readMetaData(): "+"trying to read: "+getFileName());
-        Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
-        BufferedReader bufferedReader = new BufferedReader(reader);
+		
+        //Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
+        BufferedReader bufferedReader = getReader();
         
         String sep="\t";
         String strLine;
@@ -422,8 +422,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CorePackage.DEFAULT_META_DATA__FILE_NAME:
-				return getFileName();
+			case CorePackage.DEFAULT_META_DATA__READER:
+				return getReader();
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				return getLogger();
 			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
@@ -448,8 +448,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CorePackage.DEFAULT_META_DATA__FILE_NAME:
-				setFileName((String)newValue);
+			case CorePackage.DEFAULT_META_DATA__READER:
+				setReader((BufferedReader)newValue);
 				return;
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				setLogger((Logger)newValue);
@@ -475,8 +475,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CorePackage.DEFAULT_META_DATA__FILE_NAME:
-				setFileName(FILE_NAME_EDEFAULT);
+			case CorePackage.DEFAULT_META_DATA__READER:
+				setReader(READER_EDEFAULT);
 				return;
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
@@ -502,8 +502,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CorePackage.DEFAULT_META_DATA__FILE_NAME:
-				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
+			case CorePackage.DEFAULT_META_DATA__READER:
+				return READER_EDEFAULT == null ? reader != null : !READER_EDEFAULT.equals(reader);
 			case CorePackage.DEFAULT_META_DATA__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.DEFAULT_META_DATA__GROUPINGS:
@@ -526,8 +526,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fileName: ");
-		result.append(fileName);
+		result.append(" (reader: ");
+		result.append(reader);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(')');
