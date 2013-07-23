@@ -17,6 +17,10 @@
     <genDataTypes ecoreDataType="easyflow.ecore#//EObject"/>
     <genDataTypes ecoreDataType="easyflow.ecore#//Document"/>
     <genDataTypes ecoreDataType="easyflow.ecore#//Element"/>
+    <genDataTypes ecoreDataType="easyflow.ecore#//Schema"/>
+    <genDataTypes ecoreDataType="easyflow.ecore#//JSONObject"/>
+    <genDataTypes ecoreDataType="easyflow.ecore#//BufferedReader"/>
+    <genDataTypes ecoreDataType="easyflow.ecore#//FileNotFoundException"/>
     <nestedGenPackages prefix="Core" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//core">
       <genClasses ecoreClass="easyflow.ecore#//core/Workflow">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Workflow/graph"/>
@@ -33,20 +37,9 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Workflow/defaultGroupingCriteria"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Workflow/previousTaskName"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Workflow/genericAttributes"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Workflow/toolsSchemaDefinition"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Workflow/toolsDescription"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/Workflow/tools"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//core/Workflow/graphUtil"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/generateGraphFromTemplate"/>
-        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readToolDefinitions">
-          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/readToolDefinitions/basePath"/>
-        </genOperations>
-        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readToolDefinition">
-          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/readToolDefinition/xmlSource"/>
-          <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/readToolDefinition/xsdSource"/>
-        </genOperations>
-        <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/readProjectMetaData"/>
         <genOperations ecoreOperation="easyflow.ecore#//core/Workflow/getParentTaskByOutDataPort">
           <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/getParentTaskByOutDataPort/dataPort"/>
           <genParameters ecoreParameter="easyflow.ecore#//core/Workflow/getParentTaskByOutDataPort/task"/>
@@ -135,6 +128,10 @@
         <genOperations ecoreOperation="easyflow.ecore#//core/Tool/readImplementation">
           <genParameters ecoreParameter="easyflow.ecore#//core/Tool/readImplementation/element"/>
         </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//core/Tool/readImplementation.1">
+          <genParameters ecoreParameter="easyflow.ecore#//core/Tool/readImplementation.1/document"/>
+          <genParameters ecoreParameter="easyflow.ecore#//core/Tool/readImplementation.1/schema"/>
+        </genOperations>
       </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/Interpreter">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Interpreter/exe"/>
@@ -171,7 +168,7 @@
       <genClasses ecoreClass="easyflow.ecore#//core/DefaultWorkflowTemplate">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//core/DefaultWorkflowTemplate/tasks"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/DefaultWorkflowTemplate/fileName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/DefaultWorkflowTemplate/reader"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/DefaultWorkflowTemplate/logger"/>
       </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/EasyflowTemplate"/>
@@ -193,7 +190,7 @@
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/DefaultMetaData">
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/DefaultMetaData/fileName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/DefaultMetaData/reader"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/DefaultMetaData/logger"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/DefaultMetaData/groupings"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//core/DefaultMetaData/groupingInstances"/>
@@ -311,6 +308,14 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToStringListMap/key"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToStringListMap/value"/>
       </genClasses>
+      <genClasses ecoreClass="easyflow.ecore#//core/StringToURIMap">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToURIMap/key"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToURIMap/value"/>
+      </genClasses>
+      <genClasses ecoreClass="easyflow.ecore#//core/StringToSchemaMap">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToSchemaMap/key"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToSchemaMap/value"/>
+      </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//core/Grouping">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Grouping/name"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/Grouping/description"/>
@@ -327,145 +332,56 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//core/GroupingInstanceList/instances"/>
       </genClasses>
+      <genClasses ecoreClass="easyflow.ecore#//core/StringToProjectMap">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//core/StringToProjectMap/key"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference easyflow.ecore#//core/StringToProjectMap/value"/>
+      </genClasses>
     </nestedGenPackages>
     <nestedGenPackages prefix="Ui" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//ui">
       <genClasses image="false" ecoreClass="easyflow.ecore#//ui/IProject">
-        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/readProjectJson"/>
-        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/initProject"/>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/validate"/>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/init"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/autoSetup"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/applyMetaData"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/applyTraversalEvents"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/clearWorkflows"/>
         <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/getActiveWorkflow"/>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/readProjectJson">
+          <genParameters ecoreParameter="easyflow.ecore#//ui/IProject/readProjectJson/source"/>
+        </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/readSchema">
+          <genParameters ecoreParameter="easyflow.ecore#//ui/IProject/readSchema/xsdSource"/>
+        </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/readToolDefinition">
+          <genParameters ecoreParameter="easyflow.ecore#//ui/IProject/readToolDefinition/xmlSource"/>
+        </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/readConfiguration"/>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/getSchemaFor">
+          <genParameters ecoreParameter="easyflow.ecore#//ui/IProject/getSchemaFor/document"/>
+        </genOperations>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/getDefaultSchema"/>
+        <genOperations ecoreOperation="easyflow.ecore#//ui/IProject/setConfigAndBasePath">
+          <genParameters ecoreParameter="easyflow.ecore#//ui/IProject/setConfigAndBasePath/path"/>
+        </genOperations>
       </genClasses>
       <genClasses ecoreClass="easyflow.ecore#//ui/DefaultProject">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//ui/DefaultProject/workflows"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//ui/DefaultProject/metaData"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/fileName"/>
-        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/basePath"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/configSource"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/baseURI"/>
         <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/logger"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference easyflow.ecore#//ui/DefaultProject/graphUtil"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/fromJar"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/toolDefinitions"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//ui/DefaultProject/schemata"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/jsonObject"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//ui/DefaultProject/tools"/>
+        <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//ui/DefaultProject/DefaultConfigSourceString"/>
       </genClasses>
-    </nestedGenPackages>
-    <nestedGenPackages prefix="Sequencing" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//sequencing">
-      <genClasses ecoreClass="easyflow.ecore#//sequencing/RefBasedProjectMetaData"/>
-      <genClasses ecoreClass="easyflow.ecore#//sequencing/MetaData">
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/samples"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/records"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/readGroups"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/libraries"/>
-        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/MetaData/groups"/>
-      </genClasses>
-      <genClasses ecoreClass="easyflow.ecore#//sequencing/ResequencingProject">
-        <genFeatures notify="false" createChild="false" propertySortChoices="true"
-            ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/ResequencingProject/refBasedProjectMetaData"/>
-      </genClasses>
-      <nestedGenPackages prefix="Grouping" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//sequencing/grouping">
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/Sample">
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Sample/records"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Sample/libraries"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Sample/groups"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Sample/readGroups"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/ReadGroup">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/ReadGroup/platform"/>
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/ReadGroup/platformUnit"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/ReadGroup/records"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/ReadGroup/samples"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/ReadGroup/groups"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/ReadGroup/libraries"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/Library">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/Library/outerDistance"/>
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/Library/pairedEnd"/>
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/Library/readLength"/>
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/Library/readType"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Library/samples"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Library/groups"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Library/readGroups"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Library/records"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/Group">
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Group/samples"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Group/records"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Group/libraries"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Group/readGroups"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/Record">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/Record/uriList"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Record/group"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Record/sample"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Record/library"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/Record/readGroup"/>
-        </genClasses>
-        <genClasses image="false" ecoreClass="easyflow.ecore#//sequencing/grouping/IGroupingCriterion">
-          <genOperations ecoreOperation="easyflow.ecore#//sequencing/grouping/IGroupingCriterion/getLibraryList"/>
-          <genOperations ecoreOperation="easyflow.ecore#//sequencing/grouping/IGroupingCriterion/getSampleList"/>
-          <genOperations ecoreOperation="easyflow.ecore#//sequencing/grouping/IGroupingCriterion/getReadGroupList"/>
-          <genOperations ecoreOperation="easyflow.ecore#//sequencing/grouping/IGroupingCriterion/getRecord"/>
-          <genOperations ecoreOperation="easyflow.ecore#//sequencing/grouping/IGroupingCriterion/getGroupList"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/StringToSampleMap">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/StringToSampleMap/key"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/StringToSampleMap/value"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/StringToReadGroupMap">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/StringToReadGroupMap/key"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/StringToReadGroupMap/value"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/StringToLibraryMap">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/StringToLibraryMap/key"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/StringToLibraryMap/value"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/StringToGroupMap">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/StringToGroupMap/key"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/StringToGroupMap/value"/>
-        </genClasses>
-        <genClasses ecoreClass="easyflow.ecore#//sequencing/grouping/StringToRecordMap">
-          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//sequencing/grouping/StringToRecordMap/key"/>
-          <genFeatures notify="false" createChild="false" propertySortChoices="true"
-              ecoreFeature="ecore:EReference easyflow.ecore#//sequencing/grouping/StringToRecordMap/value"/>
-        </genClasses>
-      </nestedGenPackages>
-      <nestedGenPackages prefix="Dataformat" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//sequencing/dataformat">
-        <genEnums typeSafeEnumCompatible="false" ecoreEnum="easyflow.ecore#//sequencing/dataformat/DataFormat">
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/FastQ"/>
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/SAM"/>
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/BAM"/>
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/BED"/>
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/TXT"/>
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/CSV"/>
-          <genEnumLiterals ecoreEnumLiteral="easyflow.ecore#//sequencing/dataformat/DataFormat/FastA"/>
-        </genEnums>
-      </nestedGenPackages>
-      <nestedGenPackages prefix="Examples" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//sequencing/examples"/>
     </nestedGenPackages>
     <nestedGenPackages prefix="Graph" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//graph">
       <nestedGenPackages prefix="Jgraphx" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//graph/jgraphx">
@@ -542,6 +458,15 @@
           </genOperations>
         </genClasses>
       </nestedGenPackages>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Example" disposableProviderFactory="true" ecorePackage="easyflow.ecore#//example">
+      <genClasses ecoreClass="easyflow.ecore#//example/Examples">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//example/Examples/locator"/>
+        <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute easyflow.ecore#//example/Examples/logger"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference easyflow.ecore#//example/Examples/examples"/>
+        <genOperations ecoreOperation="easyflow.ecore#//example/Examples/readExamples"/>
+        <genOperations ecoreOperation="easyflow.ecore#//example/Examples/readRepository"/>
+      </genClasses>
     </nestedGenPackages>
   </genPackages>
 </genmodel:GenModel>
