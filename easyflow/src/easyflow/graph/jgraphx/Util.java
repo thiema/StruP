@@ -8,17 +8,20 @@ package easyflow.graph.jgraphx;
 
 import com.mxgraph.model.mxICell;
 
-import easyflow.core.DefaultMetaData;
-import easyflow.core.GroupingInstance;
 import easyflow.core.Task;
-import easyflow.core.TraversalChunk;
-import easyflow.core.TraversalEvent;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
-import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.EList;
 
+import easyflow.metadata.DefaultMetaData;
+import easyflow.metadata.GroupingInstance;
+
+import easyflow.traversal.TraversalEvent;
+
+import org.apache.log4j.Logger;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -105,7 +108,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tasks</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_Tasks()
-	 * @model mapType="easyflow.core.StringToTaskMap<org.eclipse.emf.ecore.EString, easyflow.core.Task>"
+	 * @model mapType="easyflow.util.maps.StringToTaskMap<org.eclipse.emf.ecore.EString, easyflow.core.Task>"
 	 * @generated
 	 */
 	EMap<String, Task> getTasks();
@@ -122,7 +125,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Cells</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_Cells()
-	 * @model mapType="easyflow.core.StringToGraphCellMap<org.eclipse.emf.ecore.EString, easyflow.mxICell>"
+	 * @model mapType="easyflow.util.maps.StringToGraphCellMap<org.eclipse.emf.ecore.EString, easyflow.mxICell>"
 	 * @generated
 	 */
 	EMap<String, mxICell> getCells();
@@ -139,7 +142,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Depricated Tasks</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_DepricatedTasks()
-	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<String, String> getDepricatedTasks();
@@ -150,13 +153,13 @@ public interface Util extends EObject {
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Most Processed Tasks</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Most Processed Tasks</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Most Processed Tasks</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_MostProcessedTasks()
-	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<String, String> getMostProcessedTasks();
@@ -225,7 +228,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Processed Edges Copy Graph</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdgesCopyGraph()
-	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<String, String> getProcessedEdgesCopyGraph();
@@ -242,7 +245,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Processed Edges</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdges()
-	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<String, String> getProcessedEdges();
@@ -259,7 +262,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Add Edges</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_AddEdges()
-	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<String, String> getAddEdges();
@@ -276,7 +279,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Copied Cells</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_CopiedCells()
-	 * @model mapType="easyflow.core.StringToGraphCellMap<org.eclipse.emf.ecore.EString, easyflow.mxICell>"
+	 * @model mapType="easyflow.util.maps.StringToGraphCellMap<org.eclipse.emf.ecore.EString, easyflow.mxICell>"
 	 * @generated
 	 */
 	EMap<String, mxICell> getCopiedCells();
@@ -299,7 +302,7 @@ public interface Util extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Traversal Events</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.TraversalEvent}.
+	 * The list contents are of type {@link easyflow.traversal.TraversalEvent}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Traversal Events</em>' reference list isn't clear,
@@ -315,7 +318,7 @@ public interface Util extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>New Traversal Events</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.TraversalEvent}.
+	 * The list contents are of type {@link easyflow.traversal.TraversalEvent}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>New Traversal Events</em>' reference list isn't clear,
@@ -328,6 +331,14 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	EList<TraversalEvent> getNewTraversalEvents();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean resolveTraversalEvents(mxICell root);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -375,7 +386,7 @@ public interface Util extends EObject {
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean resolveTraversalEvents(mxICell root);
+	EList<TraversalEvent> getTraversalEvents(mxICell root, boolean isGrouping);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -448,13 +459,5 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	void fixOffTargetCells(mxICell root, String groupingStr);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	EList<TraversalEvent> getTraversalEvents(mxICell root, boolean isGrouping);
 
 } // Util

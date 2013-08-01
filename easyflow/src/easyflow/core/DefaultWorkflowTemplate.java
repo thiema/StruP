@@ -7,7 +7,9 @@
 package easyflow.core;
 
 import java.io.BufferedReader;
+
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.util.EList;
 
 /**

@@ -8,7 +8,6 @@ package easyflow.core;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Galaxy Task Reader</b></em>'.
@@ -30,7 +29,6 @@ import org.apache.log4j.Logger;
  * @generated
  */
 public interface GalaxyTaskReader extends ITaskReader {
-
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -56,4 +54,5 @@ public interface GalaxyTaskReader extends ITaskReader {
 	 * @generated
 	 */
 	void setLogger(Logger value);
+
 } // GalaxyTaskReader

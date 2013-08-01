@@ -21,14 +21,28 @@ import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.example.ExamplePackage;
 import easyflow.example.impl.ExamplePackageImpl;
+import easyflow.execution.ExecutionPackage;
+import easyflow.execution.impl.ExecutionPackageImpl;
+import easyflow.execution.pegasus.PegasusPackage;
+import easyflow.execution.pegasus.impl.PegasusPackageImpl;
+import easyflow.execution.shell.ShellPackage;
+import easyflow.execution.shell.impl.ShellPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 
+import easyflow.metadata.MetadataPackage;
+import easyflow.metadata.impl.MetadataPackageImpl;
+import easyflow.tool.ToolPackage;
+import easyflow.tool.impl.ToolPackageImpl;
+import easyflow.traversal.TraversalPackage;
+import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
 
 import easyflow.ui.impl.UiPackageImpl;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.MapsPackageImpl;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.util.Stack;
@@ -211,6 +225,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
+		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
+		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
+		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
+		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
+		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theEasyflowPackage.createPackageContents();
@@ -218,6 +239,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theUiPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
+		theExecutionPackage.createPackageContents();
+		thePegasusPackage.createPackageContents();
+		theShellPackage.createPackageContents();
+		theToolPackage.createPackageContents();
+		theMetadataPackage.createPackageContents();
+		theTraversalPackage.createPackageContents();
+		theMapsPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theEasyflowPackage.initializePackageContents();
@@ -225,6 +253,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theUiPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
+		theExecutionPackage.initializePackageContents();
+		thePegasusPackage.initializePackageContents();
+		theShellPackage.initializePackageContents();
+		theToolPackage.initializePackageContents();
+		theMetadataPackage.initializePackageContents();
+		theTraversalPackage.initializePackageContents();
+		theMapsPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theEasyflowPackage.freeze();
@@ -443,12 +478,22 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
 		ExamplePackage theExamplePackage = (ExamplePackage)EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI);
+		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
+		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
+		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
+		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
+		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theCorePackage);
 		getESubpackages().add(theUiPackage);
 		getESubpackages().add(theJgraphxPackage);
 		getESubpackages().add(theExamplePackage);
+		getESubpackages().add(theExecutionPackage);
+		getESubpackages().add(theToolPackage);
+		getESubpackages().add(theMetadataPackage);
+		getESubpackages().add(theTraversalPackage);
+		getESubpackages().add(theMapsPackage);
 
 		// Initialize data types
 		initEDataType(mxGraphEDataType, mxGraph.class, "mxGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

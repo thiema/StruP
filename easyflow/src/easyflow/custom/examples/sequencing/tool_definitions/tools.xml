@@ -1,11 +1,9 @@
-<?xml version="1.0"?>
-
-<tools 
-xmlns="http://www.easyflow.de"
+<?xml version="1.0" encoding="UTF-8"?>
+<tools:tools xmlns:tools="urn:de.thiema.easyflow/tools"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.easyflow.de tool.xsd">
+xsi:schemaLocation="urn:de.thiema.easyflow/tools Easyflow_multiple.xsd">
 
-	<tool id="id_TA1" name="TA" version="1.0">
+	<tools:tool xmlns="urn:de.thiema.easyflow/types" id="id_TA1" name="TA" version="1.0">
 		<description>
 			The any dummy tool
 		</description>
@@ -30,8 +28,8 @@ xsi:schemaLocation="http://www.easyflow.de tool.xsd">
     	<help>
     	The help page for any tool.
     	</help>
-	</tool>
-	<tool id="id_TA2" name="TA" version="2.0">
+	</tools:tool>
+	<tools:tool xmlns="urn:de.thiema.easyflow/types" id="id_TA2" name="TA" version="2.0">
 		<description>
 			The any dummy tool
 		</description>
@@ -56,6 +54,6 @@ xsi:schemaLocation="http://www.easyflow.de tool.xsd">
     	<help>
     	The help page for any tool.
     	</help>
-	</tool>
+	</tools:tool>
 
-</tools>
+</tools:tools>

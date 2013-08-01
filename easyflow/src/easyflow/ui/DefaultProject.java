@@ -6,22 +6,23 @@
  */
 package easyflow.ui;
 
-import easyflow.core.IMetaData;
-import easyflow.core.Tool;
 import easyflow.core.Workflow;
 
-import easyflow.example.Examples;
 import easyflow.graph.jgraphx.Util;
 
+import easyflow.metadata.IMetaData;
+
+import easyflow.tool.Tool;
+import easyflow.tool.ToolDefinitions;
+
 import java.net.URI;
-import java.util.Map;
-import javax.xml.validation.Schema;
+
 import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-import org.w3c.dom.Document;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,11 +45,10 @@ import org.w3c.dom.Document;
  *   <li>{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getSchemata <em>Schemata</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,7 +75,7 @@ public interface DefaultProject extends IProject {
 
 	/**
 	 * Returns the value of the '<em><b>Meta Data</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.IMetaData}.
+	 * The list contents are of type {@link easyflow.metadata.IMetaData}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Meta Data</em>' reference list isn't clear,
@@ -211,39 +211,6 @@ public interface DefaultProject extends IProject {
 	void setFromJar(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Tool Definitions</b></em>' attribute list.
-	 * The list contents are of type {@link org.w3c.dom.Document}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tool Definitions</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tool Definitions</em>' attribute list.
-	 * @see easyflow.ui.UiPackage#getDefaultProject_ToolDefinitions()
-	 * @model dataType="easyflow.Document"
-	 * @generated
-	 */
-	EList<Document> getToolDefinitions();
-
-	/**
-	 * Returns the value of the '<em><b>Schemata</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link javax.xml.validation.Schema},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Schemata</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Schemata</em>' map.
-	 * @see easyflow.ui.UiPackage#getDefaultProject_Schemata()
-	 * @model mapType="easyflow.core.StringToSchemaMap<org.eclipse.emf.ecore.EString, easyflow.Schema>"
-	 * @generated
-	 */
-	EMap<String, Schema> getSchemata();
-
-	/**
 	 * Returns the value of the '<em><b>Json Object</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -272,7 +239,7 @@ public interface DefaultProject extends IProject {
 	/**
 	 * Returns the value of the '<em><b>Tools</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.core.Tool},
+	 * and the value is of type {@link easyflow.tool.Tool},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Tools</em>' map isn't clear,
@@ -281,7 +248,7 @@ public interface DefaultProject extends IProject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tools</em>' map.
 	 * @see easyflow.ui.UiPackage#getDefaultProject_Tools()
-	 * @model mapType="easyflow.core.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.core.Tool>"
+	 * @model mapType="easyflow.util.maps.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.tool.Tool>"
 	 * @generated
 	 */
 	EMap<String, Tool> getTools();
@@ -301,5 +268,31 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	String getDefaultConfigSourceString();
+
+	/**
+	 * Returns the value of the '<em><b>Tool Definitions</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tool Definitions</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tool Definitions</em>' reference.
+	 * @see #setToolDefinitions(ToolDefinitions)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ToolDefinitions()
+	 * @model
+	 * @generated
+	 */
+	ToolDefinitions getToolDefinitions();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Tool Definitions</em>' reference.
+	 * @see #getToolDefinitions()
+	 * @generated
+	 */
+	void setToolDefinitions(ToolDefinitions value);
 
 } // DefaultProject

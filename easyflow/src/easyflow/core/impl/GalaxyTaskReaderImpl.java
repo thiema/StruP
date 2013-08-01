@@ -10,7 +10,9 @@ import easyflow.core.CorePackage;
 import easyflow.core.GalaxyTaskReader;
 
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -39,6 +41,7 @@ public class GalaxyTaskReaderImpl extends EObjectImpl implements GalaxyTaskReade
 	 * @ordered
 	 */
 	protected static final Logger LOGGER_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->

@@ -6,31 +6,33 @@
  */
 package easyflow.core.impl;
 
-import easyflow.core.CoreFactory;
-import easyflow.core.CorePackage;
-import easyflow.core.DataFormat;
-import easyflow.core.DataPort;
-import easyflow.core.StringToToolMap;
-import easyflow.core.SplittingEvent;
-import easyflow.core.GroupingCriterion;
-import easyflow.core.Task;
-import easyflow.core.Tool_old;
-import easyflow.core.TraversalChunks;
-import easyflow.core.TraversalCriterion;
-import easyflow.core.TraversalOperation;
 
-import easyflow.core.Tool;
-import easyflow.core.TraversalChunk;
-import easyflow.core.TraversalEvent;
-import easyflow.ui.UiFactory;
-import easyflow.ui.impl.DefaultProjectImpl;
+import easyflow.core.CorePackage;
+import easyflow.core.Task;
+
+import easyflow.tool.DataFormat;
+import easyflow.tool.DataPort;
+import easyflow.tool.Tool;
+import easyflow.tool.ToolFactory;
+
+import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalCriterion;
+import easyflow.traversal.TraversalEvent;
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToChunksMapImpl;
+import easyflow.util.maps.impl.StringToStringListMapImpl;
+import easyflow.util.maps.impl.StringToStringMapImpl;
+import easyflow.util.maps.impl.StringToToolMapImpl;
+import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
+import easyflow.traversal.TraversalFactory;
+import easyflow.traversal.TraversalOperation;
 
 import java.lang.Object;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
-import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.Map;
 
@@ -49,14 +51,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -473,7 +473,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public EMap<String, TraversalEvent> getTraversalEvents() {
 		if (traversalEvents == null) {
-			traversalEvents = new EcoreEMap<String,TraversalEvent>(CorePackage.Literals.STRING_TO_TRAVERSAL_EVENT_MAP, StringToTraversalEventMapImpl.class, this, CorePackage.TASK__TRAVERSAL_EVENTS);
+			traversalEvents = new EcoreEMap<String,TraversalEvent>(MapsPackage.Literals.STRING_TO_TRAVERSAL_EVENT_MAP, StringToTraversalEventMapImpl.class, this, CorePackage.TASK__TRAVERSAL_EVENTS);
 		}
 		return traversalEvents;
 	}
@@ -497,7 +497,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public EMap<String, EList<TraversalChunk>> getChunks() {
 		if (chunks == null) {
-			chunks = new EcoreEMap<String,EList<TraversalChunk>>(CorePackage.Literals.STRING_TO_CHUNKS_MAP, StringToChunksMapImpl.class, this, CorePackage.TASK__CHUNKS);
+			chunks = new EcoreEMap<String,EList<TraversalChunk>>(MapsPackage.Literals.STRING_TO_CHUNKS_MAP, StringToChunksMapImpl.class, this, CorePackage.TASK__CHUNKS);
 		}
 		return chunks;
 	}
@@ -509,10 +509,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public EMap<String, EList<String>> getToolNames() {
 		if (toolNames == null) {
-			toolNames = new EcoreEMap<String,EList<String>>(CorePackage.Literals.STRING_TO_STRING_LIST_MAP, StringToStringListMapImpl.class, this, CorePackage.TASK__TOOL_NAMES);
+			toolNames = new EcoreEMap<String,EList<String>>(MapsPackage.Literals.STRING_TO_STRING_LIST_MAP, StringToStringListMapImpl.class, this, CorePackage.TASK__TOOL_NAMES);
 		}
 		return toolNames;
 	}
+
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -521,7 +522,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public EMap<String, Tool> getTools() {
 		if (tools == null) {
-			tools = new EcoreEMap<String,Tool>(CorePackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.TASK__TOOLS);
+			tools = new EcoreEMap<String,Tool>(MapsPackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.TASK__TOOLS);
 		}
 		return tools;
 	}
@@ -573,18 +574,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, String> getGroupingCriteria() {
-		if (groupingCriteria == null) {
-			groupingCriteria = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.TASK__GROUPING_CRITERIA);
-		}
-		return groupingCriteria;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public int getFlags() {
 		return flags;
 	}
@@ -599,6 +588,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 		flags = newFlags;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__FLAGS, oldFlags, flags));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getGroupingCriteria() {
+		if (groupingCriteria == null) {
+			groupingCriteria = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.TASK__GROUPING_CRITERIA);
+		}
+		return groupingCriteria;
 	}
 
 	/**
@@ -636,13 +637,13 @@ public class TaskImpl extends EObjectImpl implements Task {
          */
         Iterator<DataFormat> it=parseDataFormatField(wtplArray[3]).iterator();
         while (it.hasNext()) {
-        	DataPort dataPort=new CoreFactoryImpl().eINSTANCE.createDataPort();
+        	DataPort dataPort=ToolFactory.eINSTANCE.createDataPort();
         	dataPort.setDataFormat(it.next());
             getInDataPorts().add(dataPort);
         }
         it=parseDataFormatField(wtplArray[4]).iterator();
         while (it.hasNext()) {
-        	DataPort dataPort=new CoreFactoryImpl().eINSTANCE.createDataPort();
+        	DataPort dataPort=ToolFactory.eINSTANCE.createDataPort();
         	dataPort.setDataFormat(it.next());
             getOutDataPorts().add(dataPort);
         }        
@@ -660,17 +661,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 		        
 		        for (int i=0;i<tmp.length;i++) {
 		        	
-		        	TraversalCriterion traversalCriterion=CoreFactory.eINSTANCE.createTraversalCriterion();
+		        	TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
 		        	String[] group=tmp[i].split(":");
 		        	if (group.length>1)	traversalCriterion.setMode(group[1]);
 		        	else traversalCriterion.setMode(defaultMode); 
 		        	//GroupingCriterion groupingCriterion=CoreFactory.eINSTANCE.createGroupingCriterion();
-		        	TraversalEvent traversalEvent=CoreFactory.eINSTANCE.createTraversalEvent();
+		        	TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
 		        	//TraversalChunk traversalChunk=CoreFactory.eINSTANCE.createTraversalChunk();
 		        	traversalCriterion.setId(group[0]);
 		        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion);
 		        	//traversalEvent.setSplitTask(this);
-		        	TraversalOperation traversalOperation=CoreFactory.eINSTANCE.createTraversalOperation();
+		        	TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
 		        	//traversalOperation.setName();
 		        	traversalOperation.setType("grouping");
 		        	traversalCriterion.setOperation(traversalOperation);
@@ -700,21 +701,21 @@ public class TaskImpl extends EObjectImpl implements Task {
 					//logger.debug(tmp1.length);
 					if (!tmp1[0].equals("")) {
 						
-						TraversalCriterion traversalCriterion=CoreFactory.eINSTANCE.createTraversalCriterion();
+						TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
 						traversalCriterion.setId(tmp1[0]);
 						traversalCriterion.setMode("batch");
-						TraversalOperation traversalOperation=CoreFactory.eINSTANCE.createTraversalOperation();
+						TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
 						traversalOperation.setName(tmp1[1]);
 						traversalOperation.setType("traversal");
 						//if (traversalOperation.getName().equals("merge")) {	
 						//} else {
-						TraversalEvent traversalEvent=CoreFactory.eINSTANCE.createTraversalEvent();
+						TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
 						if (tmp1.length>2) {
 							String[] tmp2=tmp1[2].split(";");
 							if (tmp2.length==1) traversalCriterion.setChunkSource(tmp1[2]);
 							else {
 								for (String tmp3:tmp2) {
-									TraversalChunk traversalChunk=CoreFactory.eINSTANCE.createTraversalChunk();
+									TraversalChunk traversalChunk=TraversalFactory.eINSTANCE.createTraversalChunk();
 									traversalChunk.setName(tmp3);
 									traversalCriterion.getChunks().put(tmp3, traversalChunk);
 								}
@@ -825,7 +826,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		EList<DataFormat> list=new BasicEList<DataFormat>();
 		for (int i=0;i<tmp.length;i++) {
 			//System.out.println(tmp[i]);
-			DataFormat dataFormat=CoreFactory.eINSTANCE.createDataFormat();
+			DataFormat dataFormat=ToolFactory.eINSTANCE.createDataFormat();
 			dataFormat.setName(tmp[i]);
 			list.add(dataFormat);
 		}

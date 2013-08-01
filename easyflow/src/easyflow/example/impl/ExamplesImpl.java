@@ -7,15 +7,16 @@
 package easyflow.example.impl;
 
 import easyflow.core.CorePackage;
-import easyflow.core.impl.StringToProjectMapImpl;
-import easyflow.core.impl.StringToObjectMapImpl;
-import easyflow.core.impl.StringToURIMapImpl;
 import easyflow.custom.jgraphx.editor.EasyFlowToolBar;
 import easyflow.custom.util.URIUtil;
 import easyflow.example.ExamplePackage;
 import easyflow.example.Examples;
 
 import easyflow.ui.DefaultProject;
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToObjectMapImpl;
+import easyflow.util.maps.impl.StringToProjectMapImpl;
+import easyflow.util.maps.impl.StringToURIMapImpl;
 import easyflow.ui.UiFactory;
 
 import java.io.BufferedReader;
@@ -170,7 +171,7 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 	 */
 	public EMap<String, DefaultProject> getExamples() {
 		if (examples == null) {
-			examples = new EcoreEMap<String,DefaultProject>(CorePackage.Literals.STRING_TO_PROJECT_MAP, StringToProjectMapImpl.class, this, ExamplePackage.EXAMPLES__EXAMPLES);
+			examples = new EcoreEMap<String,DefaultProject>(MapsPackage.Literals.STRING_TO_PROJECT_MAP, StringToProjectMapImpl.class, this, ExamplePackage.EXAMPLES__EXAMPLES);
 		}
 		return examples;
 	}

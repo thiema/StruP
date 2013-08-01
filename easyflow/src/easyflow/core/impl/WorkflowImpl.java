@@ -1,86 +1,49 @@
-/**
- * <copyright>
- * </copyright>
- *
- * $Id$
- */
 package easyflow.core.impl;
 
 import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.shape.mxBasicShape;
 import com.mxgraph.shape.mxDefaultTextShape;
 import com.mxgraph.shape.mxIShape;
 
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import com.mxgraph.view.mxStylesheet;
 import com.mxgraph.view.mxCellState;
 
-
-
-import easyflow.core.Command;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DataPort;
-import easyflow.core.DefaultMetaData;
 import easyflow.core.DefaultRecord;
-import easyflow.core.GroupingInstance;
-import easyflow.core.TraversalChunk;
 
 
 import easyflow.core.DefaultWorkflowTemplate;
 
-
-import easyflow.core.StringToToolMap;
 import easyflow.core.Task;
 
-import easyflow.core.Tool;
-import easyflow.core.TraversalEvent;
 import easyflow.core.Workflow;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.graph.jgraphx.Util;
-import java.net.URI;
-import easyflow.custom.util.XMLUtil;
+import easyflow.metadata.DefaultMetaData;
+import easyflow.metadata.GroupingInstance;
+import easyflow.tool.DataPort;
+import easyflow.traversal.TraversalEvent;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToObjectMapImpl;
+import easyflow.custom.util.XMLUtil;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
 
 import java.util.Collection;
 import java.util.HashMap;
-
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
+import java.util.Stack;
+
 
 import org.apache.log4j.Logger;
 
@@ -88,7 +51,6 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
@@ -101,15 +63,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -599,6 +555,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__PREVIOUS_TASK_NAME, oldPreviousTaskName, previousTaskName));
 	}
 
+	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -606,7 +564,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public EMap<String, Object> getGenericAttributes() {
 		if (genericAttributes == null) {
-			genericAttributes = new EcoreEMap<String,Object>(CorePackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.WORKFLOW__GENERIC_ATTRIBUTES);
+			genericAttributes = new EcoreEMap<String,Object>(MapsPackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.WORKFLOW__GENERIC_ATTRIBUTES);
 		}
 		return genericAttributes;
 	}

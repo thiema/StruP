@@ -18,19 +18,14 @@ import com.mxgraph.model.mxICell;
 
 import easyflow.EasyflowFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DefaultMetaData;
+
 
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.CoreFactory;
-import easyflow.core.GroupingInstance;
+
 import easyflow.core.Task;
-import easyflow.core.TraversalChunk;
-import easyflow.core.TraversalEvent;
-import easyflow.core.impl.StringToGraphCellMapImpl;
-import easyflow.core.impl.StringToStringMapImpl;
-import easyflow.core.impl.StringToTaskMapImpl;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.core.Workflow;
 import easyflow.custom.util.XMLUtil;
@@ -38,6 +33,15 @@ import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.Util;
 
+import easyflow.metadata.DefaultMetaData;
+import easyflow.metadata.GroupingInstance;
+import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalEvent;
+import easyflow.traversal.TraversalFactory;
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToGraphCellMapImpl;
+import easyflow.util.maps.impl.StringToStringMapImpl;
+import easyflow.util.maps.impl.StringToTaskMapImpl;
 import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
@@ -313,7 +317,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, Task> getTasks() {
 		if (tasks == null) {
-			tasks = new EcoreEMap<String,Task>(CorePackage.Literals.STRING_TO_TASK_MAP, StringToTaskMapImpl.class, this, JgraphxPackage.UTIL__TASKS);
+			tasks = new EcoreEMap<String,Task>(MapsPackage.Literals.STRING_TO_TASK_MAP, StringToTaskMapImpl.class, this, JgraphxPackage.UTIL__TASKS);
 		}
 		return tasks;
 	}
@@ -325,7 +329,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, mxICell> getCells() {
 		if (cells == null) {
-			cells = new EcoreEMap<String,mxICell>(CorePackage.Literals.STRING_TO_GRAPH_CELL_MAP, StringToGraphCellMapImpl.class, this, JgraphxPackage.UTIL__CELLS);
+			cells = new EcoreEMap<String,mxICell>(MapsPackage.Literals.STRING_TO_GRAPH_CELL_MAP, StringToGraphCellMapImpl.class, this, JgraphxPackage.UTIL__CELLS);
 		}
 		return cells;
 	}
@@ -337,7 +341,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, String> getDepricatedTasks() {
 		if (depricatedTasks == null) {
-			depricatedTasks = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__DEPRICATED_TASKS);
+			depricatedTasks = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__DEPRICATED_TASKS);
 		}
 		return depricatedTasks;
 	}
@@ -349,7 +353,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, String> getMostProcessedTasks() {
 		if (mostProcessedTasks == null) {
-			mostProcessedTasks = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__MOST_PROCESSED_TASKS);
+			mostProcessedTasks = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__MOST_PROCESSED_TASKS);
 		}
 		return mostProcessedTasks;
 	}
@@ -420,7 +424,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, String> getProcessedEdgesCopyGraph() {
 		if (processedEdgesCopyGraph == null) {
-			processedEdgesCopyGraph = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__PROCESSED_EDGES_COPY_GRAPH);
+			processedEdgesCopyGraph = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__PROCESSED_EDGES_COPY_GRAPH);
 		}
 		return processedEdgesCopyGraph;
 	}
@@ -432,7 +436,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, String> getProcessedEdges() {
 		if (processedEdges == null) {
-			processedEdges = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__PROCESSED_EDGES);
+			processedEdges = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__PROCESSED_EDGES);
 		}
 		return processedEdges;
 	}
@@ -444,7 +448,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, String> getAddEdges() {
 		if (addEdges == null) {
-			addEdges = new EcoreEMap<String,String>(CorePackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__ADD_EDGES);
+			addEdges = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, JgraphxPackage.UTIL__ADD_EDGES);
 		}
 		return addEdges;
 	}
@@ -456,7 +460,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public EMap<String, mxICell> getCopiedCells() {
 		if (copiedCells == null) {
-			copiedCells = new EcoreEMap<String,mxICell>(CorePackage.Literals.STRING_TO_GRAPH_CELL_MAP, StringToGraphCellMapImpl.class, this, JgraphxPackage.UTIL__COPIED_CELLS);
+			copiedCells = new EcoreEMap<String,mxICell>(MapsPackage.Literals.STRING_TO_GRAPH_CELL_MAP, StringToGraphCellMapImpl.class, this, JgraphxPackage.UTIL__COPIED_CELLS);
 		}
 		return copiedCells;
 	}
@@ -1003,7 +1007,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		for (TraversalChunk tc:traversalChunks)
 			if (groupingInstance.getName().equals(tc.getName()))
 				return false;
-		TraversalChunk traversalChunk = CoreFactory.eINSTANCE.createTraversalChunk();
+		TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
 		traversalChunk.setName(groupingInstance.getName());
 		traversalChunks.add(traversalChunk);
 		return true;
@@ -1681,7 +1685,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		if (getTraversalEvents().isEmpty())
 		{
 			getTraversalEvents().addAll(getTraversalEvents(getDefaultRootCell(), true));
-			getTraversalEvents().add(CoreFactory.eINSTANCE.createTraversalEvent());
+			getTraversalEvents().add(TraversalFactory.eINSTANCE.createTraversalEvent());
 		}
 		if (getNewTraversalEvents().isEmpty() &&
 			!getTraversalEvents().isEmpty())

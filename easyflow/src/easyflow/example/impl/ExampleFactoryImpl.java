@@ -31,7 +31,7 @@ public class ExampleFactoryImpl extends EFactoryImpl implements ExampleFactory {
 	 */
 	public static ExampleFactory init() {
 		try {
-			ExampleFactory theExampleFactory = (ExampleFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/example/easyflow.core/1.0.0"); 
+			ExampleFactory theExampleFactory = (ExampleFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/example/1.0.0"); 
 			if (theExampleFactory != null) {
 				return theExampleFactory;
 			}

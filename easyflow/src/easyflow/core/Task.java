@@ -6,6 +6,13 @@
  */
 package easyflow.core;
 
+import easyflow.tool.DataFormat;
+import easyflow.tool.DataPort;
+import easyflow.tool.Tool;
+
+import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalEvent;
+
 import java.util.Map;
 
 import org.apache.commons.jexl2.JexlEngine;
@@ -55,7 +62,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Task extends EObject {
 	/**
 	 * Returns the value of the '<em><b>In Data Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.tool.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>In Data Ports</em>' reference list isn't clear,
@@ -71,7 +78,7 @@ public interface Task extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Out Data Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.tool.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Out Data Ports</em>' reference list isn't clear,
@@ -207,16 +214,16 @@ public interface Task extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Traversal Events</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.core.TraversalEvent},
+	 * and the value is of type {@link easyflow.traversal.TraversalEvent},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Traversal Events</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Traversal Events</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Traversal Events</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_TraversalEvents()
-	 * @model mapType="easyflow.core.StringToTraversalEventMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalEvent>"
+	 * @model mapType="easyflow.util.maps.StringToTraversalEventMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalEvent>"
 	 * @generated
 	 */
 	EMap<String, TraversalEvent> getTraversalEvents();
@@ -240,7 +247,7 @@ public interface Task extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Chunks</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type list of {@link easyflow.core.TraversalChunk},
+	 * and the value is of type list of {@link easyflow.traversal.TraversalChunk},
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -249,7 +256,7 @@ public interface Task extends EObject {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Chunks</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_Chunks()
-	 * @model mapType="easyflow.core.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalChunk>"
+	 * @model mapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
 	 * @generated
 	 */
 	EMap<String, EList<TraversalChunk>> getChunks();
@@ -266,10 +273,124 @@ public interface Task extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tool Names</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_ToolNames()
-	 * @model mapType="easyflow.core.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<String, EList<String>> getToolNames();
+
+	/**
+	 * Returns the value of the '<em><b>Tools</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.Tool},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tools</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tools</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Tools()
+	 * @model mapType="easyflow.util.maps.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.tool.Tool>"
+	 * @generated
+	 */
+	EMap<String, Tool> getTools();
+
+	/**
+	 * Returns the value of the '<em><b>Previous Task Str</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Previous Task Str</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Previous Task Str</em>' attribute.
+	 * @see #setPreviousTaskStr(String)
+	 * @see easyflow.core.CorePackage#getTask_PreviousTaskStr()
+	 * @model default=""
+	 * @generated
+	 */
+	String getPreviousTaskStr();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Previous Task Str</em>' attribute.
+	 * @see #getPreviousTaskStr()
+	 * @generated
+	 */
+	void setPreviousTaskStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Root</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Root</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Root</em>' attribute.
+	 * @see #setRoot(boolean)
+	 * @see easyflow.core.CorePackage#getTask_Root()
+	 * @model
+	 * @generated
+	 */
+	boolean isRoot();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#isRoot <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Root</em>' attribute.
+	 * @see #isRoot()
+	 * @generated
+	 */
+	void setRoot(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Flags</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Flags</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Flags</em>' attribute.
+	 * @see #setFlags(int)
+	 * @see easyflow.core.CorePackage#getTask_Flags()
+	 * @model default="0"
+	 * @generated
+	 */
+	int getFlags();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getFlags <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Flags</em>' attribute.
+	 * @see #getFlags()
+	 * @generated
+	 */
+	void setFlags(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Grouping Criteria</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping Criteria</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping Criteria</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_GroupingCriteria()
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getGroupingCriteria();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -359,7 +480,7 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.core.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.core.TraversalChunk>"
+	 * @model mapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
 	 * @generated
 	 */
 	EMap<String, EList<TraversalChunk>> getNonOveralppingTraversalChunksFor(Task task);
@@ -379,119 +500,5 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	Tool getPreferredTool();
-
-	/**
-	 * Returns the value of the '<em><b>Tools</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.core.Tool},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tools</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tools</em>' map.
-	 * @see easyflow.core.CorePackage#getTask_Tools()
-	 * @model mapType="easyflow.core.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.core.Tool>"
-	 * @generated
-	 */
-	EMap<String, Tool> getTools();
-
-	/**
-	 * Returns the value of the '<em><b>Previous Task Str</b></em>' attribute.
-	 * The default value is <code>""</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Previous Task Str</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Previous Task Str</em>' attribute.
-	 * @see #setPreviousTaskStr(String)
-	 * @see easyflow.core.CorePackage#getTask_PreviousTaskStr()
-	 * @model default=""
-	 * @generated
-	 */
-	String getPreviousTaskStr();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Previous Task Str</em>' attribute.
-	 * @see #getPreviousTaskStr()
-	 * @generated
-	 */
-	void setPreviousTaskStr(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Root</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Root</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Root</em>' attribute.
-	 * @see #setRoot(boolean)
-	 * @see easyflow.core.CorePackage#getTask_Root()
-	 * @model
-	 * @generated
-	 */
-	boolean isRoot();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Task#isRoot <em>Root</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Root</em>' attribute.
-	 * @see #isRoot()
-	 * @generated
-	 */
-	void setRoot(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Grouping Criteria</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link java.lang.String},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Grouping Criteria</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Grouping Criteria</em>' map.
-	 * @see easyflow.core.CorePackage#getTask_GroupingCriteria()
-	 * @model mapType="easyflow.core.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
-	 * @generated
-	 */
-	EMap<String, String> getGroupingCriteria();
-
-	/**
-	 * Returns the value of the '<em><b>Flags</b></em>' attribute.
-	 * The default value is <code>"0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Flags</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Flags</em>' attribute.
-	 * @see #setFlags(int)
-	 * @see easyflow.core.CorePackage#getTask_Flags()
-	 * @model default="0"
-	 * @generated
-	 */
-	int getFlags();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getFlags <em>Flags</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Flags</em>' attribute.
-	 * @see #getFlags()
-	 * @generated
-	 */
-	void setFlags(int value);
 
 } // Task

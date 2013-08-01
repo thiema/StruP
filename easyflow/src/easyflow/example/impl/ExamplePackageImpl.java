@@ -16,16 +16,30 @@ import easyflow.example.ExampleFactory;
 import easyflow.example.ExamplePackage;
 import easyflow.example.Examples;
 
+import easyflow.execution.ExecutionPackage;
+import easyflow.execution.impl.ExecutionPackageImpl;
+import easyflow.execution.pegasus.PegasusPackage;
+import easyflow.execution.pegasus.impl.PegasusPackageImpl;
+import easyflow.execution.shell.ShellPackage;
+import easyflow.execution.shell.impl.ShellPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 
 import easyflow.impl.EasyflowPackageImpl;
 
+import easyflow.metadata.MetadataPackage;
+import easyflow.metadata.impl.MetadataPackageImpl;
+import easyflow.tool.ToolPackage;
+import easyflow.tool.impl.ToolPackageImpl;
+import easyflow.traversal.TraversalPackage;
+import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
 
 import easyflow.ui.impl.UiPackageImpl;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.MapsPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
@@ -99,6 +113,13 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
+		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
+		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
+		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
+		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
+		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theExamplePackage.createPackageContents();
@@ -106,6 +127,13 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
+		theExecutionPackage.createPackageContents();
+		thePegasusPackage.createPackageContents();
+		theShellPackage.createPackageContents();
+		theToolPackage.createPackageContents();
+		theMetadataPackage.createPackageContents();
+		theTraversalPackage.createPackageContents();
+		theMapsPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theExamplePackage.initializePackageContents();
@@ -113,6 +141,13 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
+		theExecutionPackage.initializePackageContents();
+		thePegasusPackage.initializePackageContents();
+		theShellPackage.initializePackageContents();
+		theToolPackage.initializePackageContents();
+		theMetadataPackage.initializePackageContents();
+		theTraversalPackage.initializePackageContents();
+		theMapsPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theExamplePackage.freeze();
@@ -218,7 +253,7 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 
 		// Obtain other dependent packages
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -230,7 +265,7 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		initEClass(examplesEClass, Examples.class, "Examples", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExamples_Locator(), ecorePackage.getEString(), "locator", null, 0, 1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExamples_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Examples.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getExamples_Examples(), theCorePackage.getStringToProjectMap(), null, "examples", null, 0, -1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getExamples_Examples(), theMapsPackage.getStringToProjectMap(), null, "examples", null, 0, -1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(examplesEClass, ecorePackage.getEString(), "readExamples", 0, -1, IS_UNIQUE, IS_ORDERED);
 

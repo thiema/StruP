@@ -67,21 +67,30 @@ import com.mxgraph.model.mxCell;
 
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DefaultMetaData;
+
 import easyflow.core.EasyflowTemplate;
-import easyflow.core.IMetaData;
-import easyflow.core.Tool;
 import easyflow.core.Workflow;
-import easyflow.core.impl.StringToSchemaMapImpl;
-import easyflow.core.impl.StringToToolMapImpl;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 import easyflow.graph.jgraphx.Util;
+import easyflow.metadata.DefaultMetaData;
+import easyflow.metadata.IMetaData;
+import easyflow.metadata.MetadataFactory;
+import easyflow.tool.Tool;
+import easyflow.tool.ToolDefinitions;
+import easyflow.tool.Definitions;
+import easyflow.tool.Schemata;
+import easyflow.tool.ToolFactory;
+import easyflow.tool.ToolPackage;
+import easyflow.tool.ToolSchemata;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.util.URIUtil;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToSchemaMapImpl;
+import easyflow.util.maps.impl.StringToToolMapImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -97,11 +106,10 @@ import easyflow.ui.UiPackage;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#isFromJar <em>From Jar</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getSchemata <em>Schemata</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getJsonObject <em>Json Object</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -220,26 +228,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	protected boolean fromJar = FROM_JAR_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getToolDefinitions() <em>Tool Definitions</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getToolDefinitions()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Document> toolDefinitions;
-
-	/**
-	 * The cached value of the '{@link #getSchemata() <em>Schemata</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSchemata()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Schema> schemata;
-
-	/**
 	 * The default value of the '{@link #getJsonObject() <em>Json Object</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -288,6 +276,16 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected String defaultConfigSourceString = DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getToolDefinitions() <em>Tool Definitions</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getToolDefinitions()
+	 * @generated
+	 * @ordered
+	 */
+	protected ToolDefinitions toolDefinitions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -447,9 +445,14 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Document> getToolDefinitions() {
-		if (toolDefinitions == null) {
-			toolDefinitions = new EDataTypeUniqueEList<Document>(Document.class, this, UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS);
+	public ToolDefinitions getToolDefinitions() {
+		if (toolDefinitions != null && toolDefinitions.eIsProxy()) {
+			InternalEObject oldToolDefinitions = (InternalEObject)toolDefinitions;
+			toolDefinitions = (ToolDefinitions)eResolveProxy(oldToolDefinitions);
+			if (toolDefinitions != oldToolDefinitions) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS, oldToolDefinitions, toolDefinitions));
+			}
 		}
 		return toolDefinitions;
 	}
@@ -459,11 +462,20 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Schema> getSchemata() {
-		if (schemata == null) {
-			schemata = new EcoreEMap<String,Schema>(CorePackage.Literals.STRING_TO_SCHEMA_MAP, StringToSchemaMapImpl.class, this, UiPackage.DEFAULT_PROJECT__SCHEMATA);
-		}
-		return schemata;
+	public ToolDefinitions basicGetToolDefinitions() {
+		return toolDefinitions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setToolDefinitions(ToolDefinitions newToolDefinitions) {
+		ToolDefinitions oldToolDefinitions = toolDefinitions;
+		toolDefinitions = newToolDefinitions;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS, oldToolDefinitions, toolDefinitions));
 	}
 
 	/**
@@ -494,7 +506,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public EMap<String, Tool> getTools() {
 		if (tools == null) {
-			tools = new EcoreEMap<String,Tool>(CorePackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, UiPackage.DEFAULT_PROJECT__TOOLS);
+			tools = new EcoreEMap<String,Tool>(MapsPackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, UiPackage.DEFAULT_PROJECT__TOOLS);
 		}
 		return tools;
 	}
@@ -592,77 +604,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		return getWorkflows().isEmpty() ? null : getWorkflows().get(0);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return 
-	 * @throws FileNotFoundException 
-	 * @generated not
-	 */
-	public Schema readSchema(URI xsdSource) throws FileNotFoundException {
-		InputStream xsdStream;
-		if (isFromJar())
-			xsdStream = getClass().getResourceAsStream(xsdSource.toString());
-		else
-			xsdStream = new FileInputStream(new File(xsdSource.toString()));
-
-		Source schemaFile = new StreamSource(xsdStream);
-
-		SchemaFactory schemaFactory = SchemaFactory
-			    .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-		try {
-			return schemaFactory.newSchema(schemaFile); 
-			
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-
-
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public Document readToolDefinition(URI xmlSource) throws FileNotFoundException {
-		
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder;
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(URIUtil.getInputStream(xmlSource, isFromJar()));
-			Schema schema = getSchemaFor(doc);
-			if (schema != null)
-			{
-				Validator validator = schema.newValidator();
-				validator.validate(new StreamSource(URIUtil.getInputStream(xmlSource, isFromJar())));
-			}
-			// TODO: handle schema not found/unvalidated xml source
-			
-			return doc;
-				
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		//Source xmlFile = new StreamSource(xmlStream);
-		return null;
-		
-		
-
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -699,7 +640,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		workflow.setWorkflowTemplate(workflowTemplate);
 		logger.debug(workflow.getWorkflowTemplate()+" "+workflow.getLastTasks().size());
 
-		DefaultMetaData metaData=CoreFactory.eINSTANCE.createDefaultMetaData();		
+		DefaultMetaData metaData=MetadataFactory.eINSTANCE.createDefaultMetaData();		
 		//metaData.setFileName(URIUtil.createPath(getBasePath(), projectCfg.getString("metadataFile")));
 		try {
 			isReader = URIUtil.getInputStreamReader(
@@ -745,14 +686,40 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				e.printStackTrace();
 			}
 		}
+		ToolSchemata toolSchemata = ToolFactory.eINSTANCE.createToolSchemata();
+		ToolDefinitions toolDefintions = ToolFactory.eINSTANCE.createToolDefinitions();
+		
+		/*
+		//read all schemata at once
+		EList<URI> schemaURIs = new BasicEList<URI>();
+		
 		for (int i=0; i<schemata.size(); i++)
 		{
 			try {
-				
+				schemaURIs.add(URIUtil.addToURI(toolDefPath, schemata.getString(i)));
+				Schema schema = toolSchemata.readSchemata(schemaURIs, isFromJar());
+				toolSchemata.getSchemata().put("all", schema);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		*/
+		
+		
+		// read schemata one by one
+		for (int i=0; i<schemata.size(); i++)
+		{
+			try {
 				URI source = URIUtil.addToURI(toolDefPath, schemata.getString(i));
-				Schema schema = readSchema(source);
-				if (schema != null)
-					getSchemata().put(source.toString(), schema);
+				//logger.debug(source.toString());
+				Schema schema = toolSchemata.readSchema(source, isFromJar());
+				
+				//if (schema != null)
+					//toolSchemata.getSchemata().put(source.toString(), schema);
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -762,17 +729,19 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			}
 			
 		}
+		
+		toolDefintions.setToolSchemata(toolSchemata);
 		JSONArray toolsArray = toolCfg.getJSONArray("tools");
 		//EList<Tool> tools = new BasicEList<Tool>();
 		for (int i=0; i<toolsArray.size(); i++)
 			try {
-				
-				Document doc = readToolDefinition(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)));
+				logger.debug(toolsArray.getString(i));
+				Document doc = toolDefintions.readToolDefinition(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)), isFromJar());
 				
 				for (int j=0; j<doc.getDocumentElement().getChildNodes().getLength(); j++) {
 					Node node=doc.getDocumentElement().getChildNodes().item(j);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						Tool tool=CoreFactory.eINSTANCE.createTool();
+						Tool tool=ToolFactory.eINSTANCE.createTool();
 						tool.readImplementation((Element) node);
 						//getActiveWorkflow().getTools().put(tool.getId(), tool);
 						getTools().put(tool.getId(), tool);
@@ -806,35 +775,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Schema getSchemaFor(Document document) {
-		
-		if (!document.getDocumentElement().hasAttribute("xsi:schemaLocation"))
-		{
-			logger.warn("no schema location attribute found.");
-			return null;
-		}
-		Attr attr = document.getDocumentElement().getAttributeNode("xsi:schemaLocation");
-		
-		String[] tmp = StringUtils.split(attr.getValue(), " ");
-		String key = tmp.length == 1 ? tmp[0] : tmp[1];
-		return getSchemata().containsKey(key) ? getSchemata().get(key) : null;
-
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public Schema getDefaultSchema() {
-		return getSchemata().isEmpty() ? null : getSchemata().get(0).getValue();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
 	public void setConfigAndBasePath(String path) {
 		try {
 			String baseName = URIUtil.getBasename(path);
@@ -849,22 +789,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
-				return ((InternalEList<?>)getSchemata()).basicRemove(otherEnd, msgs);
-			case UiPackage.DEFAULT_PROJECT__TOOLS:
-				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -897,7 +821,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public void autoSetup() {
 		
-		
+		Tool tool = ToolFactory.eINSTANCE.createTool();
+		tool.writeModelToXML();
 		
 		clearWorkflows();
 		readProjectJson(getConfigSource());
@@ -910,6 +835,19 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	}
 
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case UiPackage.DEFAULT_PROJECT__TOOLS:
+				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -934,11 +872,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return basicGetGraphUtil();
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return isFromJar();
-			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
-				return getToolDefinitions();
-			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
-				if (coreType) return getSchemata();
-				else return getSchemata().map();
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				return getJsonObject();
 			case UiPackage.DEFAULT_PROJECT__TOOLS:
@@ -946,6 +879,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				else return getTools().map();
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
 				return getDefaultConfigSourceString();
+			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
+				if (resolve) return getToolDefinitions();
+				return basicGetToolDefinitions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -979,18 +915,14 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar((Boolean)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
-				getToolDefinitions().clear();
-				getToolDefinitions().addAll((Collection<? extends Document>)newValue);
-				return;
-			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
-				((EStructuralFeature.Setting)getSchemata()).set(newValue);
-				return;
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				setJsonObject((JSONObject)newValue);
 				return;
 			case UiPackage.DEFAULT_PROJECT__TOOLS:
 				((EStructuralFeature.Setting)getTools()).set(newValue);
+				return;
+			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
+				setToolDefinitions((ToolDefinitions)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1022,17 +954,14 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar(FROM_JAR_EDEFAULT);
 				return;
-			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
-				getToolDefinitions().clear();
-				return;
-			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
-				getSchemata().clear();
-				return;
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				setJsonObject(JSON_OBJECT_EDEFAULT);
 				return;
 			case UiPackage.DEFAULT_PROJECT__TOOLS:
 				getTools().clear();
+				return;
+			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
+				setToolDefinitions((ToolDefinitions)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1060,16 +989,14 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return graphUtil != null;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return fromJar != FROM_JAR_EDEFAULT;
-			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
-				return toolDefinitions != null && !toolDefinitions.isEmpty();
-			case UiPackage.DEFAULT_PROJECT__SCHEMATA:
-				return schemata != null && !schemata.isEmpty();
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				return JSON_OBJECT_EDEFAULT == null ? jsonObject != null : !JSON_OBJECT_EDEFAULT.equals(jsonObject);
 			case UiPackage.DEFAULT_PROJECT__TOOLS:
 				return tools != null && !tools.isEmpty();
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
 				return DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT == null ? defaultConfigSourceString != null : !DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT.equals(defaultConfigSourceString);
+			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
+				return toolDefinitions != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1092,8 +1019,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		result.append(logger);
 		result.append(", fromJar: ");
 		result.append(fromJar);
-		result.append(", toolDefinitions: ");
-		result.append(toolDefinitions);
 		result.append(", jsonObject: ");
 		result.append(jsonObject);
 		result.append(", DefaultConfigSourceString: ");

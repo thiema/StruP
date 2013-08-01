@@ -27,8 +27,6 @@ import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.model.mxCell;
 
-import easyflow.core.DataPort;
-import easyflow.core.GroupingCriterion;
 import easyflow.core.Task;
 import easyflow.custom.util.XMLUtil;
 

@@ -9,6 +9,10 @@ package easyflow.core.impl;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultRecord;
 
+import easyflow.util.maps.MapsPackage;
+
+import easyflow.util.maps.impl.StringToObjectMapImpl;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EMap;
@@ -72,7 +76,7 @@ public class DefaultRecordImpl extends EObjectImpl implements DefaultRecord {
 	 */
 	public EMap<String, Object> getGenericAttributes() {
 		if (genericAttributes == null) {
-			genericAttributes = new EcoreEMap<String,Object>(CorePackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.DEFAULT_RECORD__GENERIC_ATTRIBUTES);
+			genericAttributes = new EcoreEMap<String,Object>(MapsPackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.DEFAULT_RECORD__GENERIC_ATTRIBUTES);
 		}
 		return genericAttributes;
 	}

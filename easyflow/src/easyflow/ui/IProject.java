@@ -108,42 +108,10 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Schema" exceptions="easyflow.FileNotFoundException" xsdSourceDataType="easyflow.URI"
-	 * @generated
-	 */
-	Schema readSchema(URI xsdSource) throws FileNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Document" exceptions="easyflow.FileNotFoundException" xmlSourceDataType="easyflow.URI"
-	 * @generated
-	 */
-	Document readToolDefinition(URI xmlSource) throws FileNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
 	boolean readConfiguration() throws FileNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Schema" documentDataType="easyflow.Document"
-	 * @generated
-	 */
-	Schema getSchemaFor(Document document);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" dataType="easyflow.Schema"
-	 * @generated
-	 */
-	Schema getDefaultSchema();
 
 	/**
 	 * <!-- begin-user-doc -->

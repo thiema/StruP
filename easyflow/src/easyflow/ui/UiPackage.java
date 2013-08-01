@@ -152,31 +152,13 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__FROM_JAR = IPROJECT_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Tool Definitions</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 7;
-
-	/**
-	 * The feature id for the '<em><b>Schemata</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_PROJECT__SCHEMATA = IPROJECT_FEATURE_COUNT + 8;
-
-	/**
 	 * The feature id for the '<em><b>Json Object</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__JSON_OBJECT = IPROJECT_FEATURE_COUNT + 9;
+	int DEFAULT_PROJECT__JSON_OBJECT = IPROJECT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Tools</b></em>' map.
@@ -185,7 +167,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__TOOLS = IPROJECT_FEATURE_COUNT + 10;
+	int DEFAULT_PROJECT__TOOLS = IPROJECT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Default Config Source String</b></em>' attribute.
@@ -194,7 +176,16 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = IPROJECT_FEATURE_COUNT + 11;
+	int DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = IPROJECT_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Tool Definitions</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
@@ -203,7 +194,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 12;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 11;
 
 
 	/**
@@ -304,28 +295,6 @@ public interface UiPackage extends EPackage {
 	EAttribute getDefaultProject_FromJar();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Tool Definitions</em>'.
-	 * @see easyflow.ui.DefaultProject#getToolDefinitions()
-	 * @see #getDefaultProject()
-	 * @generated
-	 */
-	EAttribute getDefaultProject_ToolDefinitions();
-
-	/**
-	 * Returns the meta object for the map '{@link easyflow.ui.DefaultProject#getSchemata <em>Schemata</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Schemata</em>'.
-	 * @see easyflow.ui.DefaultProject#getSchemata()
-	 * @see #getDefaultProject()
-	 * @generated
-	 */
-	EReference getDefaultProject_Schemata();
-
-	/**
 	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -357,6 +326,17 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDefaultProject_DefaultConfigSourceString();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Tool Definitions</em>'.
+	 * @see easyflow.ui.DefaultProject#getToolDefinitions()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EReference getDefaultProject_ToolDefinitions();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -457,22 +437,6 @@ public interface UiPackage extends EPackage {
 		EAttribute DEFAULT_PROJECT__FROM_JAR = eINSTANCE.getDefaultProject_FromJar();
 
 		/**
-		 * The meta object literal for the '<em><b>Tool Definitions</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DEFAULT_PROJECT__TOOL_DEFINITIONS = eINSTANCE.getDefaultProject_ToolDefinitions();
-
-		/**
-		 * The meta object literal for the '<em><b>Schemata</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DEFAULT_PROJECT__SCHEMATA = eINSTANCE.getDefaultProject_Schemata();
-
-		/**
 		 * The meta object literal for the '<em><b>Json Object</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -495,6 +459,14 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = eINSTANCE.getDefaultProject_DefaultConfigSourceString();
+
+		/**
+		 * The meta object literal for the '<em><b>Tool Definitions</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_PROJECT__TOOL_DEFINITIONS = eINSTANCE.getDefaultProject_ToolDefinitions();
 
 	}
 

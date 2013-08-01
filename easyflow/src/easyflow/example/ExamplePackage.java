@@ -41,7 +41,7 @@ public interface ExamplePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http:///de/thiema/easyflow/example/easyflow.core/1.0.0";
+	String eNS_URI = "http:///de/thiema/easyflow/example/1.0.0";
 
 	/**
 	 * The package namespace name.

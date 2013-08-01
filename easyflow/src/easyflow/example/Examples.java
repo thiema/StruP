@@ -84,7 +84,7 @@ public interface Examples extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Examples</em>' map.
 	 * @see easyflow.example.ExamplePackage#getExamples_Examples()
-	 * @model mapType="easyflow.core.StringToProjectMap<org.eclipse.emf.ecore.EString, easyflow.ui.DefaultProject>"
+	 * @model mapType="easyflow.util.maps.StringToProjectMap<org.eclipse.emf.ecore.EString, easyflow.ui.DefaultProject>"
 	 * @generated
 	 */
 	EMap<String, DefaultProject> getExamples();

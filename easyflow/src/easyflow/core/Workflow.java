@@ -9,7 +9,11 @@ package easyflow.core;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.graph.jgraphx.Util;
-import java.net.URI;
+
+import easyflow.tool.DataPort;
+
+import easyflow.traversal.TraversalEvent;
+
 import java.util.Map;
 import java.util.Stack;
 
@@ -337,7 +341,7 @@ public interface Workflow extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Generic Attributes</em>' map.
 	 * @see easyflow.core.CorePackage#getWorkflow_GenericAttributes()
-	 * @model mapType="easyflow.core.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @model mapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
 	 * @generated
 	 */
 	EMap<String, Object> getGenericAttributes();

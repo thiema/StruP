@@ -14,10 +14,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -78,10 +81,10 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLogger()
-	 * @generated not
+	 * @generated
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(DefaultWorkflowTemplate.class);;
+	protected static final Logger LOGGER_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -165,32 +168,32 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER, oldLogger, logger));
 	}
-
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated not
+     */
 	public void readTemplate(String mode, EList<String> defaultGroupingCriteria) {
-        BufferedReader bufferedReader = null;
-		bufferedReader = new BufferedReader(getReader());
+        BufferedReader bufferedReader = getReader();
         String strLine;        
         try {
-			while ((strLine = bufferedReader.readLine()) != null)   {
-				if (!strLine.startsWith("#")) {
-					Task task=CoreFactoryImpl.eINSTANCE.createTask();
-					task.readTask(strLine, mode, defaultGroupingCriteria);
+                        while ((strLine = bufferedReader.readLine()) != null)   {
+                                if (!strLine.startsWith("#")) {
+                                        Task task=CoreFactoryImpl.eINSTANCE.createTask();
+                                        task.readTask(strLine, mode, defaultGroupingCriteria);
 
-					getTasks().add(task);
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+                                        getTasks().add(task);
+                                }
+                        }
+                } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                }
 
-	}
+        }
 
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

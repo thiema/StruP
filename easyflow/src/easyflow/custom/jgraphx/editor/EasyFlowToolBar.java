@@ -43,18 +43,19 @@ import com.mxgraph.util.mxRectangle;
 
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DefaultMetaData;
 
 import easyflow.core.Task;
-import easyflow.core.TraversalEvent;
+
 import easyflow.core.Workflow;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.Util;
+import easyflow.traversal.TraversalEvent;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiFactory;
 import easyflow.graph.jgraphx.JgraphxFactory;
-import easyflow.core.DefaultMetaData;
+import easyflow.metadata.DefaultMetaData;
+
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 
@@ -137,6 +138,9 @@ public class EasyFlowToolBar extends JToolBar
 		//btnGenAbstractW.setEnabled(false);
 		//btnApplyGroupingCrit.setEnabled(false);
 		btnApplyTraversalCrit.setEnabled(false);
+		
+		// init with a defaultproject
+		setDefaultProject(getExamples().getExamples().get("sequencing"));
 		
 		btnConfigureProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

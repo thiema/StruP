@@ -39,7 +39,7 @@ public interface DefaultRecord extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Generic Attributes</em>' map.
 	 * @see easyflow.core.CorePackage#getDefaultRecord_GenericAttributes()
-	 * @model mapType="easyflow.core.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @model mapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
 	 * @generated
 	 */
 	EMap<String, Object> getGenericAttributes();

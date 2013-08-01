@@ -10,7 +10,9 @@ import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTaskReader;
 
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -39,6 +41,7 @@ public class EasyflowTaskReaderImpl extends EObjectImpl implements EasyflowTaskR
 	 * @ordered
 	 */
 	protected static final Logger LOGGER_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -92,9 +95,12 @@ public class EasyflowTaskReaderImpl extends EObjectImpl implements EasyflowTaskR
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public void readTask() {
-
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
