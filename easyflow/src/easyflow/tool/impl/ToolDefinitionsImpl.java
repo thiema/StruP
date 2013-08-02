@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /**
  * <!-- begin-user-doc -->
