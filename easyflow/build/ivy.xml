@@ -18,6 +18,8 @@ throws error: dependency org="net.sourceforge.argo" name="argo" rev="2.25"/-->
         </dependency>
 <!--dependency org="net.sf.ezmorph" name="ezmorph" rev="1.0.6"/-->
 <!--dependency org="com.google.code.gson" name="gson" rev="2.2.2"/-->
+<dependency org="net.sf.saxon" name="saxon" rev="8.7"/>
     </dependencies>
+    
 
 </ivy-module>

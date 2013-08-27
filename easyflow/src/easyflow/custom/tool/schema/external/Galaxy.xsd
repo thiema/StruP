@@ -111,12 +111,12 @@
 
   <xs:group name="InputElement">
     <xs:choice>
-    <!-- fixed according to depth of coverage -->
-    <xs:element name="expand" type="Expand" />
-      <xs:element name="param" type="Param" />
-      <xs:element name="repeat" type="Repeat" />
-      <xs:element name="conditional" type="Conditional" />
-      <xs:element name="display" type="xs:string" /> <!-- undocumented -->
+    	<!-- fixed according to depth of coverage -->
+    	<xs:element name="expand" type="Expand" />
+      	<xs:element name="param" type="Param" />
+      	<xs:element name="repeat" type="Repeat" />
+      	<xs:element name="conditional" type="Conditional" />
+      	<xs:element name="display" type="xs:string" /> <!-- undocumented -->
     </xs:choice>
   </xs:group>
 

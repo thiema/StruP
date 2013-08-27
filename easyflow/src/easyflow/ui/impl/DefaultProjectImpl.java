@@ -715,7 +715,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		{
 			try {
 				URI source = URIUtil.addToURI(toolDefPath, schemata.getString(i));
-				//logger.debug(source.toString());
+				logger.debug(source.toString());
 				Schema schema = toolSchemata.readSchema(source, isFromJar());
 				
 				//if (schema != null)

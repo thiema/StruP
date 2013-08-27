@@ -1,61 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xs:schema 
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	targetNamespace="urn:de.thiema.easyflow/types" 
-	xmlns="urn:de.thiema.easyflow/types" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:de.thiema.easyflow/types" xmlns="urn:de.thiema.easyflow/types"
 	elementFormDefault="qualified">
-<xs:element name="tool" type="Tool" />
+	<xs:element name="tool" type="Tool" />
 	<xs:complexType name="Tool">
 		<xs:sequence>
+			<xs:element name="source" type="xs:string" minOccurs="0"/>
 			<xs:element name="description" type="xs:string" />
-	        <xs:element name="interpreter" type="Interpreter" />
-	        <xs:element name="command" type="Command" />
-	        <xs:element maxOccurs="unbounded" minOccurs="0" name="input" type="DataPort" />
-	        <xs:element maxOccurs="unbounded" minOccurs="0" name="output" type="DataPort" />
-	        <xs:element maxOccurs="unbounded" minOccurs="0" name="param" type="Param" />
-	        <xs:element name="help" type="xs:string" />
+			<xs:element name="interpreter" type="Interpreter" />
+			<xs:element name="command" type="Command" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="param"
+				type="Param" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data"
+				type="DataPort" />
+			<xs:element name="help" type="xs:string" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:string" />
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="version" type="xs:string" />
-			
 	</xs:complexType>
-	
+
 	<xs:complexType name="Interpreter">
 		<xs:attribute name="exe" type="xs:string" />
 	</xs:complexType>
-	 
+
 	<xs:complexType name="Command" mixed="true">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-			
 				<xs:attribute name="interpreter" type="xs:string" />
 			</xs:extension>
 		</xs:simpleContent>
-		
 	</xs:complexType>
-	
+
 	<xs:complexType name="DataPort">
 		<xs:sequence>
-	    	<xs:element maxOccurs="unbounded" minOccurs="0" name="data" />
-	    </xs:sequence>
-	    <xs:attribute name="name" type="xs:string" />
-	    <xs:attribute name="format" type="xs:string" />
-	    <xs:attribute name="label" type="xs:string" />
-	</xs:complexType>            
-	            
-	<xs:complexType name="Param">
-	    <xs:sequence>
-	    	<xs:element maxOccurs="unbounded" minOccurs="0" name="option" />
-	    </xs:sequence>
-	    <xs:attribute name="name" type="xs:string" />
-	    <xs:attribute name="type" type="xs:string" />
-	    <xs:attribute name="value" type="xs:string" />
-	    <xs:attribute name="label" type="xs:string" />
-	    <xs:attribute name="help" type="xs:string" />
-	    <xs:attribute name="optional" type="xs:boolean" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="data" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="format" type="xs:string" />
+		<xs:attribute name="label" type="xs:string" />
 	</xs:complexType>
-	            
+
+
+	<xs:complexType name="Param">
+		<xs:sequence>
+			<xs:element name="option" type="Option" maxOccurs="unbounded" minOccurs="0" />
+			<xs:element name="name" type="ParamName" maxOccurs="unbounded" minOccurs="0" />
+			<xs:element name="dependency" type="Dependency" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="key" type="xs:string" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="value" type="xs:string" />
+		<xs:attribute name="label" type="xs:string" />
+		<xs:attribute name="help" type="xs:string" />
+		<xs:attribute name="optional" type="xs:boolean" />
+		<xs:attribute name="multiple" type="xs:boolean" />
+		<xs:attribute name="multipleValue" type="xs:boolean" />		
+	</xs:complexType>
 	
-	
+	<xs:complexType name="Option">
+		<xs:attribute name="value"/>
+	</xs:complexType>
+	<xs:complexType name="ParamName">
+		<xs:attribute name="value"/>
+	</xs:complexType>
+	<xs:complexType name="Dependency">
+		<xs:attribute name="key"/>
+		<xs:attribute name="name"/>
+		<xs:attribute name="uri"/>
+	</xs:complexType>
+
 </xs:schema>
