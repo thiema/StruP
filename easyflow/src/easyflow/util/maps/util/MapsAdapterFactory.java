@@ -14,6 +14,7 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
@@ -163,6 +164,14 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToParameterMap(Map.Entry<String, Parameter> object) {
 				return createStringToParameterMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDocumentPropertiesMap(Map.Entry<String, DocumentProperties> object) {
+				return createStringToDocumentPropertiesMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToPackageMap(Map.Entry<String, easyflow.tool.Package> object) {
+				return createStringToPackageMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -419,6 +428,34 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToParameterMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Document Properties Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToDocumentPropertiesMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Package Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToPackageMapAdapter() {
 		return null;
 	}
 

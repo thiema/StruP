@@ -12,6 +12,7 @@ import easyflow.graph.jgraphx.Util;
 
 import easyflow.tool.DataPort;
 
+import easyflow.tool.Tool;
 import easyflow.traversal.TraversalEvent;
 
 import java.util.Map;
@@ -50,6 +51,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -373,15 +376,58 @@ public interface Workflow extends EObject {
 	void setGraphUtil(Util value);
 
 	/**
+	 * Returns the value of the '<em><b>Catalog</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Catalog</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Catalog</em>' reference.
+	 * @see #setCatalog(Catalog)
+	 * @see easyflow.core.CorePackage#getWorkflow_Catalog()
+	 * @model
+	 * @generated
+	 */
+	Catalog getCatalog();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Catalog</em>' reference.
+	 * @see #getCatalog()
+	 * @generated
+	 */
+	void setCatalog(Catalog value);
+
+	/**
+	 * Returns the value of the '<em><b>Processing Config</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processing Config</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processing Config</em>' map.
+	 * @see easyflow.core.CorePackage#getWorkflow_ProcessingConfig()
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getProcessingConfig();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
-	 * @model
+	 * @model toolsMapType="easyflow.util.maps.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.tool.Tool>"
 	 * @generated
 	 */
-	void generateGraphFromTemplate();
+	boolean generateGraphFromTemplate(EMap<String, Tool> tools);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -502,6 +548,30 @@ public interface Workflow extends EObject {
 	 * @model
 	 * @generated
 	 */
-	void readWorkfowTemplate();
+	boolean readWorkfowTemplate();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<Task> getParentTasksFor(Task task);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean generateWorklowForExecutionSystem();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveToolDependencies();
 
 } // Workflow

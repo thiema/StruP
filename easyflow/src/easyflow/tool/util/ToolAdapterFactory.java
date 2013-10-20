@@ -7,12 +7,16 @@
 package easyflow.tool.util;
 
 import easyflow.tool.Command;
+import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
 import easyflow.tool.DataPort;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.DocumentProperties;
 import easyflow.tool.IToolElement;
 import easyflow.tool.Interpreter;
+import easyflow.tool.Key;
 import easyflow.tool.Parameter;
+import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
@@ -91,16 +95,16 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createToolDefinitionsAdapter();
 			}
 			@Override
-			public Adapter caseTool(Tool object) {
-				return createToolAdapter();
-			}
-			@Override
 			public Adapter caseIToolElement(IToolElement object) {
 				return createIToolElementAdapter();
 			}
 			@Override
 			public Adapter caseDefaultToolElement(DefaultToolElement object) {
 				return createDefaultToolElementAdapter();
+			}
+			@Override
+			public Adapter caseTool(Tool object) {
+				return createToolAdapter();
 			}
 			@Override
 			public Adapter caseInterpreter(Interpreter object) {
@@ -119,12 +123,28 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createPackageAdapter();
 			}
 			@Override
+			public Adapter caseData(Data object) {
+				return createDataAdapter();
+			}
+			@Override
 			public Adapter caseDataPort(DataPort object) {
 				return createDataPortAdapter();
 			}
 			@Override
 			public Adapter caseDataFormat(DataFormat object) {
 				return createDataFormatAdapter();
+			}
+			@Override
+			public Adapter caseKey(Key object) {
+				return createKeyAdapter();
+			}
+			@Override
+			public Adapter caseRequirement(Requirement object) {
+				return createRequirementAdapter();
+			}
+			@Override
+			public Adapter caseDocumentProperties(DocumentProperties object) {
+				return createDocumentPropertiesAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -273,6 +293,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.Data <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.Data
+	 * @generated
+	 */
+	public Adapter createDataAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link easyflow.tool.DataPort <em>Data Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -297,6 +331,48 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDataFormatAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.Key <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.Key
+	 * @generated
+	 */
+	public Adapter createKeyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.Requirement <em>Requirement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.Requirement
+	 * @generated
+	 */
+	public Adapter createRequirementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.DocumentProperties <em>Document Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.DocumentProperties
+	 * @generated
+	 */
+	public Adapter createDocumentPropertiesAdapter() {
 		return null;
 	}
 

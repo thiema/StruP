@@ -399,6 +399,53 @@ public interface TraversalPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.traversal.impl.DataPortsImpl <em>Data Ports</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.traversal.impl.DataPortsImpl
+	 * @see easyflow.traversal.impl.TraversalPackageImpl#getDataPorts()
+	 * @generated
+	 */
+	int DATA_PORTS = 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORTS__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Data Ports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORTS__DATA_PORTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Last Tasks</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORTS__LAST_TASKS = 2;
+
+	/**
+	 * The number of structural features of the '<em>Data Ports</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORTS_FEATURE_COUNT = 3;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.traversal.GroupingCriterion <em>Grouping Criterion</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -680,6 +727,49 @@ public interface TraversalPackage extends EPackage {
 	EAttribute getTraversalChunk_Logger();
 
 	/**
+	 * Returns the meta object for class '{@link easyflow.traversal.DataPorts <em>Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data Ports</em>'.
+	 * @see easyflow.traversal.DataPorts
+	 * @generated
+	 */
+	EClass getDataPorts();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.traversal.DataPorts#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.traversal.DataPorts#getName()
+	 * @see #getDataPorts()
+	 * @generated
+	 */
+	EAttribute getDataPorts_Name();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.traversal.DataPorts#getDataPorts <em>Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Data Ports</em>'.
+	 * @see easyflow.traversal.DataPorts#getDataPorts()
+	 * @see #getDataPorts()
+	 * @generated
+	 */
+	EReference getDataPorts_DataPorts();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.traversal.DataPorts#getLastTasks <em>Last Tasks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Last Tasks</em>'.
+	 * @see easyflow.traversal.DataPorts#getLastTasks()
+	 * @see #getDataPorts()
+	 * @generated
+	 */
+	EReference getDataPorts_LastTasks();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -918,6 +1008,40 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRAVERSAL_CHUNK__LOGGER = eINSTANCE.getTraversalChunk_Logger();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.traversal.impl.DataPortsImpl <em>Data Ports</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.traversal.impl.DataPortsImpl
+		 * @see easyflow.traversal.impl.TraversalPackageImpl#getDataPorts()
+		 * @generated
+		 */
+		EClass DATA_PORTS = eINSTANCE.getDataPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORTS__NAME = eINSTANCE.getDataPorts_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Ports</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_PORTS__DATA_PORTS = eINSTANCE.getDataPorts_DataPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Tasks</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_PORTS__LAST_TASKS = eINSTANCE.getDataPorts_LastTasks();
 
 	}
 

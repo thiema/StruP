@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.example.Examples#getLocator <em>Locator</em>}</li>
  *   <li>{@link easyflow.example.Examples#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.example.Examples#getExamples <em>Examples</em>}</li>
+ *   <li>{@link easyflow.example.Examples#isFromJar <em>From Jar</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Examples extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Locator</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Locator</em>' attribute isn't clear,
@@ -46,7 +48,7 @@ public interface Examples extends EObject {
 	 * @return the value of the '<em>Locator</em>' attribute.
 	 * @see #setLocator(String)
 	 * @see easyflow.example.ExamplePackage#getExamples_Locator()
-	 * @model
+	 * @model default="true"
 	 * @generated
 	 */
 	String getLocator();
@@ -88,6 +90,32 @@ public interface Examples extends EObject {
 	 * @generated
 	 */
 	EMap<String, DefaultProject> getExamples();
+
+	/**
+	 * Returns the value of the '<em><b>From Jar</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>From Jar</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>From Jar</em>' attribute.
+	 * @see #setFromJar(boolean)
+	 * @see easyflow.example.ExamplePackage#getExamples_FromJar()
+	 * @model
+	 * @generated
+	 */
+	boolean isFromJar();
+
+	/**
+	 * Sets the value of the '{@link easyflow.example.Examples#isFromJar <em>From Jar</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>From Jar</em>' attribute.
+	 * @see #isFromJar()
+	 * @generated
+	 */
+	void setFromJar(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

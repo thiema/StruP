@@ -62,14 +62,6 @@ public class EasyFlowGraphUtil extends mxGraph
 		removeCells(getChildCells(cell, true, true));
 		return removeCells(new Object[]{cell});
 	}
-
-	
-	public Object[] getShortestPath(Object source, Object target) {
-        return mxGraphAnalysis.getInstance().
-        		getShortestPath(this, source, target,  
-        				new mxConstantCostFunction(1),
-        				maxEdges, true);
-	}
 	
 	/*
 	 * get all vertices
@@ -88,6 +80,24 @@ public class EasyFlowGraphUtil extends mxGraph
 		return cells;
 	}
 	
+	/*
+	 * get all vertices
+	 */
+	public EList<Object> getVertices(final Object source, final boolean includeRoot) {
+		final EList<Object> cells=new BasicEList<Object>();
+		//if (source==null) source=getDefaultParent();
+		traverse(source, true, new mxICellVisitor() {
+			
+			@Override
+			public boolean visit(Object arg0, Object arg1) {
+				if (source!=arg0 || !includeRoot)
+					cells.add(arg0);
+				return true;
+			}
+		});
+		return cells;
+	}
+
 	
 	public void traverseAllPaths(Object vertex, boolean directed,
 			mxICellVisitor visitor, Object edge) {
@@ -276,12 +286,13 @@ public class EasyFlowGraphUtil extends mxGraph
 	
 	
 	public Object[] getShortestPath(mxICell source, mxICell target) {
-		return mxGraphAnalysis.getInstance().
-				getShortestPath(
-						this, source, target, 
-						new mxConstantCostFunction(1),
-						maxEdges, true);
+		return getShortestPath((Object)source, (Object)target);
 	}
 
-
+	public Object[] getShortestPath(Object source, Object target) {
+        return mxGraphAnalysis.getInstance().
+        		getShortestPath(this, source, target,  
+        				new mxConstantCostFunction(1),
+        				maxEdges, true);
+	}
 }

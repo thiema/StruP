@@ -6,12 +6,20 @@
  */
 package easyflow.tool;
 
+import java.net.URI;
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Tool</b></em>'.
  * <!-- end-user-doc -->
+ *
+ * <!-- begin-model-doc -->
+ * Tool represents the tool which is used to implement an processing step.
+ * The tools behaviour is mainly implemented by its command reference.
+ * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
@@ -22,6 +30,8 @@ import org.apache.log4j.Logger;
  *   <li>{@link easyflow.tool.Tool#getInterpreter <em>Interpreter</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getPackage <em>Package</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getRequirements <em>Requirements</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}</li>
  * </ul>
  * </p>
  *
@@ -174,6 +184,39 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setPackage(easyflow.tool.Package value);
+
+	/**
+	 * Returns the value of the '<em><b>Requirements</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.tool.Requirement}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Requirements</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Requirements</em>' reference list.
+	 * @see easyflow.tool.ToolPackage#getTool_Requirements()
+	 * @model
+	 * @generated
+	 */
+	EList<Requirement> getRequirements();
+
+	/**
+	 * Returns the value of the '<em><b>Executables</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.net.URI},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Executables</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Executables</em>' map.
+	 * @see easyflow.tool.ToolPackage#getTool_Executables()
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @generated
+	 */
+	EMap<String, URI> getExecutables();
 
 	/**
 	 * <!-- begin-user-doc -->

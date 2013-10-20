@@ -98,6 +98,15 @@ public interface ToolFactory extends EFactory {
 	Package createPackage();
 
 	/**
+	 * Returns a new object of class '<em>Data</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data</em>'.
+	 * @generated
+	 */
+	Data createData();
+
+	/**
 	 * Returns a new object of class '<em>Data Port</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -114,6 +123,33 @@ public interface ToolFactory extends EFactory {
 	 * @generated
 	 */
 	DataFormat createDataFormat();
+
+	/**
+	 * Returns a new object of class '<em>Key</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Key</em>'.
+	 * @generated
+	 */
+	Key createKey();
+
+	/**
+	 * Returns a new object of class '<em>Requirement</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Requirement</em>'.
+	 * @generated
+	 */
+	Requirement createRequirement();
+
+	/**
+	 * Returns a new object of class '<em>Document Properties</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Document Properties</em>'.
+	 * @generated
+	 */
+	DocumentProperties createDocumentProperties();
 
 	/**
 	 * Returns the package supported by this factory.

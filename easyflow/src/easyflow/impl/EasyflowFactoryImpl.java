@@ -10,8 +10,11 @@ import com.mxgraph.model.mxICell;
 
 import com.mxgraph.view.mxGraph;
 
+import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.*;
 
+import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import java.io.BufferedReader;
@@ -118,6 +121,12 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createBufferedReaderFromString(eDataType, initialValue);
 			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
 				return createFileNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.GROUPING_INSTANCE_NOT_FOUND_EXCEPTION:
+				return createGroupingInstanceNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION:
+				return createTaskToCellMapKeyNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.MX_ICELL_VISITOR:
+				return createmxICellVisitorFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -159,6 +168,12 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertBufferedReaderToString(eDataType, instanceValue);
 			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
 				return convertFileNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.GROUPING_INSTANCE_NOT_FOUND_EXCEPTION:
+				return convertGroupingInstanceNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION:
+				return convertTaskToCellMapKeyNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.MX_ICELL_VISITOR:
+				return convertmxICellVisitorToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -413,6 +428,60 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertFileNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GroupingInstanceNotFoundException createGroupingInstanceNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (GroupingInstanceNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertGroupingInstanceNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskToCellMapKeyNotFoundException createTaskToCellMapKeyNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (TaskToCellMapKeyNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertTaskToCellMapKeyNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public mxICellVisitor createmxICellVisitorFromString(EDataType eDataType, String initialValue) {
+		return (mxICellVisitor)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertmxICellVisitorToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

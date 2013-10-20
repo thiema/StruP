@@ -690,6 +690,82 @@ public interface MapsPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl <em>String To Document Properties Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDocumentPropertiesMap()
+	 * @generated
+	 */
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP = 17;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Document Properties Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP_FEATURE_COUNT = 2;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToPackageMapImpl <em>String To Package Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToPackageMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToPackageMap()
+	 * @generated
+	 */
+	int STRING_TO_PACKAGE_MAP = 18;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PACKAGE_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PACKAGE_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Package Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PACKAGE_MAP_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1268,6 +1344,74 @@ public interface MapsPackage extends EPackage {
 	EReference getStringToParameterMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Document Properties Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Document Properties Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.DocumentProperties"
+	 * @generated
+	 */
+	EClass getStringToDocumentPropertiesMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDocumentPropertiesMap()
+	 * @generated
+	 */
+	EAttribute getStringToDocumentPropertiesMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDocumentPropertiesMap()
+	 * @generated
+	 */
+	EReference getStringToDocumentPropertiesMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Package Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Package Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.Package"
+	 * @generated
+	 */
+	EClass getStringToPackageMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToPackageMap()
+	 * @generated
+	 */
+	EAttribute getStringToPackageMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToPackageMap()
+	 * @generated
+	 */
+	EReference getStringToPackageMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1730,6 +1874,58 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_PARAMETER_MAP__VALUE = eINSTANCE.getStringToParameterMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl <em>String To Document Properties Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDocumentPropertiesMap()
+		 * @generated
+		 */
+		EClass STRING_TO_DOCUMENT_PROPERTIES_MAP = eINSTANCE.getStringToDocumentPropertiesMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY = eINSTANCE.getStringToDocumentPropertiesMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE = eINSTANCE.getStringToDocumentPropertiesMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToPackageMapImpl <em>String To Package Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToPackageMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToPackageMap()
+		 * @generated
+		 */
+		EClass STRING_TO_PACKAGE_MAP = eINSTANCE.getStringToPackageMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_PACKAGE_MAP__KEY = eINSTANCE.getStringToPackageMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_PACKAGE_MAP__VALUE = eINSTANCE.getStringToPackageMap_Value();
 
 	}
 

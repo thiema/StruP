@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:de.thiema.easyflow/types" xmlns="urn:de.thiema.easyflow/types"
+	elementFormDefault="qualified">
+	
+	<xs:element name="easyflow" type="Easyflow" />
+	<xs:element name="tool" type="Tool" />
+	
+	<xs:complexType name="Easyflow">
+		<xs:sequence>
+			<xs:element name="package" type="Package" maxOccurs="unbounded"/>
+			<xs:element name="tool" type="Tool" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Package">
+		<xs:sequence>
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:element name="command" type="Command" minOccurs="0"/>
+			<xs:group ref="InputElement" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="version" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="Tool">
+		<xs:sequence>
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:element name="requirements" type="Requirements" minOccurs="0"/>
+			<xs:element name="macros" type="Macros" minOccurs="0" />
+			<xs:element name="interpreter" type="Interpreter" minOccurs="0"/>
+			<xs:element name="command" type="Command" minOccurs="0"/>
+			<xs:group ref="InputElement" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- xs:element name="param" type="Param" maxOccurs="unbounded" minOccurs="0" /-->
+			<xs:element name="data"	type="Data" maxOccurs="unbounded" minOccurs="0"/>
+
+			<xs:element name="source" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="help" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="version" type="xs:string"/>
+		<xs:attribute name="package" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="Macros">
+		<xs:sequence>
+			<xs:element name="import" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Requirements">
+		<xs:sequence>
+			<xs:element name="requirement" type="Requirement"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Requirement">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" type="RequirementType" use="required" />
+				<xs:attribute name="version" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="Interpreter">
+		<xs:attribute name="exe" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Command" mixed="true">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="interpreter" type="xs:string" />
+				<xs:attribute name="exe" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="Data">
+		<xs:sequence>
+      		<xs:element name="change_format" type="ChangeFormat" minOccurs="0" />
+      		<xs:element name="filter" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      		<xs:element name="actions" type="Actions" minOccurs="0" />
+    	</xs:sequence>
+	
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="format" type="xs:string" />
+		<xs:attribute name="label" type="xs:string" />
+	</xs:complexType>
+
+
+	<xs:complexType name="Param">
+		<xs:sequence>
+			<xs:element name="key" type="ParamKey" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="option" type="ParamOption" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="name" type="ParamName" maxOccurs="unbounded" minOccurs="0" />
+			<xs:element name="dependency" type="Dependency" maxOccurs="unbounded" minOccurs="0" />
+			<xs:element name="options" type="Options" minOccurs="0" maxOccurs="1" />
+			<xs:element name="validator" type="Validator" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="sanitizer" type="Sanitizer" minOccurs="0" maxOccurs="1" />
+			
+		</xs:sequence>
+		
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="format" type="xs:string" />
+		<xs:attribute name="output" type="xs:boolean" />
+		<xs:attribute name="named" type="xs:boolean" />
+		<xs:attribute name="min_occur" type="xs:int" />
+		<xs:attribute name="max_occur" type="xs:int" />
+		<xs:attribute name="prefix" type="xs:string"/>
+		<xs:attribute name="separator" type="xs:string" />
+		<xs:attribute name="positional" type="xs:boolean"/>
+		<xs:attribute name="type" type="ParamType" use="required"/>
+		<xs:attribute name="label" type="xs:string" />
+		<xs:attribute name="help" type="xs:string" />
+		<xs:attribute name="optional" type="xs:boolean" />
+		<xs:attribute name="defaultValue" type="xs:string" />
+		<xs:attribute name="multiple" type="xs:boolean" />
+		<xs:attribute name="multipleValue" type="xs:boolean" />
+	</xs:complexType>
+	
+	<xs:simpleType name="ParamType">
+	    <xs:restriction base="xs:string">
+	      <xs:enumeration value="text" />
+	      <xs:enumeration value="integer" />
+	      <xs:enumeration value="float" />
+	      <xs:enumeration value="boolean" />
+	      <xs:enumeration value="genomebuild" />
+	      <xs:enumeration value="select" />
+	      <xs:enumeration value="data_column" />
+	      <xs:enumeration value="hidden" />
+	      <xs:enumeration value="baseurl" />
+	      <xs:enumeration value="file" />
+	      <xs:enumeration value="data" />
+	      <xs:enumeration value="drill_down" />
+	      <xs:enumeration value="processing_mode" />
+	    </xs:restriction>
+  </xs:simpleType>
+	
+	<xs:complexType name="ParamKey">
+	 <xs:simpleContent>
+      <xs:extension base="xs:string">
+		<xs:attribute name="type" type="ParamKeyType"/>
+		<xs:attribute name="prefix" type="xs:string"/>
+		<xs:attribute name="separator" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:simpleType name="ParamKeyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="short" />
+			<xs:enumeration value="long" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="ParamOption">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="value" type="xs:string" />
+				<xs:attribute name="selected" type="PermissiveBoolean"
+					default="false" />
+				<xs:attribute name="help" type="xs:string"/>
+				<xs:attribute name="condition" type="xs:string"></xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="ParamName">
+		<xs:attribute name="value"/>
+	</xs:complexType>
+	
+	<xs:complexType name="Dependency">
+		<xs:attribute name="key"/>
+		<xs:attribute name="name"/>
+		<xs:attribute name="uri"/>
+	</xs:complexType>
+
+
+<!-- more or less 1:1 from Galaxy -->
+
+  <xs:group name="InputElement">
+    <xs:choice>
+    	<!-- fixed according to depth of coverage -->
+    	<xs:element name="expand" type="Expand" />
+      	<xs:element name="param" type="Param" />
+      	<xs:element name="conditional" type="Conditional" />
+      	<xs:element name="display" type="xs:string" /> <!-- undocumented -->
+    </xs:choice>
+  </xs:group>
+
+<xs:complexType name="Expand">
+<xs:sequence>
+<xs:element name="param" type="Param" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+<xs:attribute name="macro" type="xs:string"/>
+</xs:complexType>
+
+  <xs:complexType name="InputType" abstract="true">
+    <xs:sequence />
+    <xs:attribute name="name" type="xs:string" use="required" />
+  </xs:complexType>
+  
+
+  <xs:complexType name="Conditional">
+    <xs:complexContent>
+      <xs:extension base="InputType">
+        <xs:sequence>
+          <xs:group ref="InputElement" />
+          <xs:element name="when" type="ConditionalWhen" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ConditionalWhen">
+    <xs:sequence>
+      <xs:group ref="InputElement" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="value" type="xs:string" use="required" />
+  </xs:complexType>
+  
+  <xs:complexType name="Repeat">
+    <xs:complexContent>
+      <xs:extension base="InputType">
+        <xs:sequence>
+          <xs:group ref="InputElement" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="title" type="xs:string" />
+        <xs:attribute name="min" type="xs:integer" />
+        <xs:attribute name="max" type="xs:integer" />
+        <xs:attribute name="help" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+<xs:complexType name="Options">
+    <xs:sequence>
+      <xs:group ref="OptionsElement" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="from_dataset" type="xs:string" />
+    <xs:attribute name="from_file" type="xs:string" />
+    <xs:attribute name="from_data_table" type="xs:string" />
+    <xs:attribute name="from_parameter" type="xs:string" />
+    <xs:attribute name="options_filter_attribute" type="xs:string" /> <!-- undocumented -->
+    <xs:attribute name="transform_lines" type="xs:string" /> <!-- undocumented -->
+    <xs:attribute name="startswith" type="xs:string" /> <!-- undocumented -->
+  </xs:complexType>
+
+  <xs:group name="OptionsElement">
+    <xs:choice>
+      <xs:element name="filter" type="Filter" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="column" type="Column" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="validator" type="Validator" minOccurs="0" maxOccurs="1" />
+      <xs:element name="file" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="Column">
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="index" type="xs:decimal" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Validator">
+    <xs:attribute name="type" type="ValidatorType" use="required" />
+    <xs:attribute name="message" type="xs:string" />
+    <xs:attribute name="filename" type="xs:string" />
+    <xs:attribute name="metadata_name" type="xs:string" />
+    <xs:attribute name="metadata_column" type="xs:string" />
+    <xs:attribute name="line_startswith" type="xs:string" />
+    <xs:attribute name="min" type="xs:decimal" />
+    <xs:attribute name="max" type="xs:decimal" />
+    <xs:attribute name="split" type="xs:string" />
+    <xs:attribute name="table_name" />
+  </xs:complexType>
+  
+   <xs:complexType name="Filter">
+    <xs:attribute name="type" type="FilterType" use="required" />
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="column" type="xs:integer" use="required" />
+    <xs:attribute name="ref" type="xs:string" />
+    <xs:attribute name="key" type="xs:string" />
+    <xs:attribute name="separator" type="xs:string" />
+    <xs:attribute name="compare" type="CompareType" /><!-- undocumented -->
+    <xs:attribute name="keep" type="PermissiveBoolean" /><!-- undocumented -->
+    <xs:attribute name="value" type="xs:string" /><!-- undocumented -->
+    <xs:attribute name="ref_attribute" type="xs:string" /><!-- undocumented -->
+  </xs:complexType>
+
+<xs:complexType name="Actions">
+    <xs:sequence>
+      <xs:group ref="ActionsElement" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:group name="ActionsElement">
+    <xs:choice>
+      <xs:element name="action" type="Action" />
+      <xs:element name="conditional" type="ActionsConditional" />
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="Action">
+    <xs:sequence>
+      <xs:element name="option" type="ActionsOption" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="type" type="ActionType"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="default" type="xs:string"/>
+  </xs:complexType>
+
+ <xs:complexType name="ActionsOption">
+    <xs:sequence>
+      <xs:element name="filter" type="Filter" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="type" type="ActionsOptionType"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="column" type="xs:integer"/>
+    <xs:attribute name="offset" type="xs:integer"/>
+    <xs:attribute name="param_attribute" type="xs:string"/><!-- undocumented -->
+  </xs:complexType>
+
+  <xs:complexType name="ActionsConditional">
+    <xs:complexContent>
+      <xs:extension base="InputType">
+<xs:sequence>
+<xs:element name="when" type="ActionsConditionalWhen" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ActionsConditionalWhen">
+    <xs:sequence>
+      <xs:element name="action" type="Action" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="value" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="ConfigFiles">
+    <xs:sequence>
+      <xs:element name="configfile" minOccurs="0" maxOccurs="unbounded" type="ConfigFile" />
+    </xs:sequence>
+  </xs:complexType>
+  
+    <xs:complexType name="ConfigFile">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" />
+        <!-- This attribute doesn't appear in Galaxy version of XML, but it would
+be nice to specify certain files as literal script files where the
+templating is not applied. Galaxy is certralized so simple scripts are
+just placed in the data directory, the TINT version is decentralized so
+such scripts must be attached to the job.
+-->
+        <xs:attribute name="type" type="ConfigFileType" default="template" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+   <xs:complexType name="Stdio">
+    <xs:sequence>
+      <xs:element name="regex" minOccurs="0" maxOccurs="unbounded" type="Regex" />
+      <xs:element name="exit_code" minOccurs="0" maxOccurs="unbounded" type="ExitCode" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ExitCode">
+    <xs:attribute name="range" type="RangeType"/>
+    <xs:attribute name="level" type="LevelType"/>
+    <xs:attribute name="description" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="Regex">
+    <xs:attribute name="source" type="SourceType"/>
+    <xs:attribute name="match" type="xs:string"/>
+    <xs:attribute name="level" type="LevelType"/>
+    <xs:attribute name="description" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:simpleType name="ConfigFileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="template" />
+      <xs:enumeration value="literal" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="ChangeFormat">
+    <xs:sequence>
+      <xs:element name="when" type="WhenData" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+ 
+   <xs:complexType name="WhenData">
+    <xs:sequence />
+    <xs:attribute name="input" type="xs:string" use="required" />
+    <xs:attribute name="value" type="xs:string" use="required" />
+    <xs:attribute name="format" type="xs:string" use="required" />
+  </xs:complexType>
+  
+  <xs:simpleType name="RequirementType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="python-module" />
+			<xs:enumeration value="binary" />
+			<xs:enumeration value="package" />
+		</xs:restriction>
+	</xs:simpleType>
+  
+  <xs:complexType name="Sanitizer">
+		<xs:sequence>
+			<xs:element name="valid" type="Valid" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="sanitize" type="PermissiveBoolean" />
+		<xs:attribute name="invalid_char" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:complexType name="Valid">
+		<xs:sequence>
+			<xs:group ref="ValidElement" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="initial" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="ValidElementType" abstract="true">
+		<xs:attribute name="preset" type="xs:string" />
+		<xs:attribute name="value" type="xs:string" />
+	</xs:complexType>
+	<xs:group name="ValidElement">
+		<xs:choice>
+			<xs:element name="add" type="Add" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="remove" type="Remove" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:choice>
+	</xs:group>
+	
+	<xs:complexType name="Add">
+		<xs:complexContent>
+			<xs:extension base="ValidElementType" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Remove">
+		<xs:complexContent>
+			<xs:extension base="ValidElementType" />
+		</xs:complexContent>
+	</xs:complexType>
+	
+ <xs:simpleType name="ValidatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="expression" />
+      <xs:enumeration value="regex" />
+      <xs:enumeration value="in_range" />
+      <xs:enumeration value="length" />
+      <xs:enumeration value="metadata" />
+      <xs:enumeration value="unspecified_build" />
+      <xs:enumeration value="no_options" />
+      <xs:enumeration value="empty_field" />
+      <xs:enumeration value="dataset_metadata_in_file" />
+      <xs:enumeration value="dataset_ok_validator" />
+      <xs:enumeration value="dataset_metadata_in_data_table" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="FilterType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="data_meta" />
+      <xs:enumeration value="param_value" />
+      <xs:enumeration value="static_value" />
+      <xs:enumeration value="unique_value" />
+      <xs:enumeration value="multiple_splitter" />
+      <xs:enumeration value="add_value" />
+      <xs:enumeration value="sort_by" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ActionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="format" />
+      <xs:enumeration value="metadata" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ActionsOptionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="from_data_table" />
+      <xs:enumeration value="from_param" />
+      <xs:enumeration value="from_file" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CompareType"> <!-- undocumented -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="startswith" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LevelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="fatal" />
+      <xs:enumeration value="warning" />
+      <xs:enumeration value="log" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RangeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\d)*:?(\d)*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SourceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="stdout" />
+      <xs:enumeration value="stderr" />
+      <xs:enumeration value="both" />
+    </xs:restriction>
+  </xs:simpleType>
+
+ <xs:simpleType name="PermissiveBoolean">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
+      <xs:enumeration value="True"/>
+      <xs:enumeration value="False"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

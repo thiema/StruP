@@ -6,23 +6,38 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.custom.ui.GlobalConfig;
+import easyflow.tool.Data;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.Key;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToParameterMapImpl;
 import java.util.Collection;
+import java.util.Iterator;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.w3c.dom.Element;
 
 /**
@@ -34,13 +49,26 @@ import org.w3c.dom.Element;
  * <ul>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getType <em>Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isOptional <em>Optional</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isRepeatable <em>Repeatable</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isRepeatableValues <em>Repeatable Values</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isMultiple <em>Multiple</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isMultipleValue <em>Multiple Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValueType <em>Value Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getSeparator <em>Separator</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getDelimiter <em>Delimiter</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getValueDelimiter <em>Value Delimiter</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getKeys <em>Keys</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isNamed <em>Named</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getHelp <em>Help</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMinOcc <em>Min Occ</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMaxOcc <em>Max Occ</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isAdvanced <em>Advanced</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getFormat <em>Format</em>}</li>
  * </ul>
  * </p>
  *
@@ -88,6 +116,56 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Logger LOGGER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Object> value;
+
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -108,54 +186,44 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected boolean optional = OPTIONAL_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isRepeatable() <em>Repeatable</em>}' attribute.
+	 * The default value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isRepeatable()
+	 * @see #isMultiple()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean REPEATABLE_EDEFAULT = false;
+	protected static final boolean MULTIPLE_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isRepeatable() <em>Repeatable</em>}' attribute.
+	 * The cached value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isRepeatable()
+	 * @see #isMultiple()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean repeatable = REPEATABLE_EDEFAULT;
+	protected boolean multiple = MULTIPLE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isRepeatableValues() <em>Repeatable Values</em>}' attribute.
+	 * The default value of the '{@link #isMultipleValue() <em>Multiple Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isRepeatableValues()
+	 * @see #isMultipleValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean REPEATABLE_VALUES_EDEFAULT = false;
+	protected static final boolean MULTIPLE_VALUE_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isRepeatableValues() <em>Repeatable Values</em>}' attribute.
+	 * The cached value of the '{@link #isMultipleValue() <em>Multiple Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isRepeatableValues()
+	 * @see #isMultipleValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean repeatableValues = REPEATABLE_VALUES_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getValues() <em>Values</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValues()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Object> values;
+	protected boolean multipleValue = MULTIPLE_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getValueType() <em>Value Type</em>}' attribute.
@@ -198,24 +266,214 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected String defaultValue = DEFAULT_VALUE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getSeparator() <em>Separator</em>}' attribute.
+	 * The default value of the '{@link #getDelimiter() <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSeparator()
+	 * @see #getDelimiter()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SEPARATOR_EDEFAULT = null;
+	protected static final String DELIMITER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getSeparator() <em>Separator</em>}' attribute.
+	 * The cached value of the '{@link #getDelimiter() <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSeparator()
+	 * @see #getDelimiter()
 	 * @generated
 	 * @ordered
 	 */
-	protected String separator = SEPARATOR_EDEFAULT;
+	protected String delimiter = DELIMITER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getValueDelimiter() <em>Value Delimiter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValueDelimiter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VALUE_DELIMITER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getValueDelimiter() <em>Value Delimiter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValueDelimiter()
+	 * @generated
+	 * @ordered
+	 */
+	protected String valueDelimiter = VALUE_DELIMITER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PREFIX_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected String prefix = PREFIX_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getKeys() <em>Keys</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getKeys()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Key> keys;
+
+	/**
+	 * The default value of the '{@link #isNamed() <em>Named</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isNamed()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean NAMED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isNamed() <em>Named</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isNamed()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean named = NAMED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LABEL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected String label = LABEL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getHelp() <em>Help</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHelp()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String HELP_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getHelp() <em>Help</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHelp()
+	 * @generated
+	 * @ordered
+	 */
+	protected String help = HELP_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMinOcc() <em>Min Occ</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMinOcc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int MIN_OCC_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getMinOcc() <em>Min Occ</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMinOcc()
+	 * @generated
+	 * @ordered
+	 */
+	protected int minOcc = MIN_OCC_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMaxOcc() <em>Max Occ</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMaxOcc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int MAX_OCC_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getMaxOcc() <em>Max Occ</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMaxOcc()
+	 * @generated
+	 * @ordered
+	 */
+	protected int maxOcc = MAX_OCC_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isAdvanced() <em>Advanced</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAdvanced()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ADVANCED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isAdvanced() <em>Advanced</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAdvanced()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean advanced = ADVANCED_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getValues() <em>Values</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getValues()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Parameter> values;
+
+	/**
+	 * The cached value of the '{@link #getFormat() <em>Format</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFormat()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> format;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -283,6 +541,27 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isOptional() {
 		return optional;
 	}
@@ -304,8 +583,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isRepeatable() {
-		return repeatable;
+	public boolean isMultiple() {
+		return multiple;
 	}
 
 	/**
@@ -313,11 +592,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRepeatable(boolean newRepeatable) {
-		boolean oldRepeatable = repeatable;
-		repeatable = newRepeatable;
+	public void setMultiple(boolean newMultiple) {
+		boolean oldMultiple = multiple;
+		multiple = newMultiple;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__REPEATABLE, oldRepeatable, repeatable));
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE, oldMultiple, multiple));
 	}
 
 	/**
@@ -325,8 +604,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isRepeatableValues() {
-		return repeatableValues;
+	public boolean isMultipleValue() {
+		return multipleValue;
 	}
 
 	/**
@@ -334,11 +613,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRepeatableValues(boolean newRepeatableValues) {
-		boolean oldRepeatableValues = repeatableValues;
-		repeatableValues = newRepeatableValues;
+	public void setMultipleValue(boolean newMultipleValue) {
+		boolean oldMultipleValue = multipleValue;
+		multipleValue = newMultipleValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__REPEATABLE_VALUES, oldRepeatableValues, repeatableValues));
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_VALUE, oldMultipleValue, multipleValue));
 	}
 
 	/**
@@ -346,11 +625,93 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Object> getValues() {
+	public EMap<String, Parameter> getValues() {
 		if (values == null) {
-			values = new EDataTypeUniqueEList<Object>(Object.class, this, ToolPackage.PARAMETER__VALUES);
+			values = new EcoreEMap<String,Parameter>(MapsPackage.Literals.STRING_TO_PARAMETER_MAP, StringToParameterMapImpl.class, this, ToolPackage.PARAMETER__VALUES);
 		}
 		return values;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getFormat() {
+		if (format == null) {
+			format = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__FORMAT);
+		}
+		return format;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String generateCommandString(EMap<String, Object> constaints) {
+		return getArgKey()+getArgDelimiter()+getArgValue();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getArgKey() {
+		if (isNamed() && !getKeys().isEmpty())
+			return getKeys().get(0).getPrefix()+getKeys().get(0).getValue();
+		else
+			return "";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getArgValue() {
+		Iterator<Object> it = getValue().iterator();
+		String values[] = new String[getValue().size()];
+		int i=0;
+		while (it.hasNext())
+		{
+			Object v=it.next();
+			logger.debug(v.getClass().getCanonicalName());
+			if (v.getClass().getCanonicalName().endsWith("java.lang.String"))
+				values[i++]=(String) v;
+		}
+		if (i==0 && getDefaultValue() != null && !getDefaultValue().equals("") 
+				&& GlobalConfig.getToolConfig().containsKey("write_default_value_to_command_line")
+				&& GlobalConfig.getToolConfig().get("write_default_value_to_command_line").equals("1"))
+			return getDefaultValue();
+		return StringUtils.join(values, getValueDelimiter());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getArgDelimiter() {
+		if (isNamed() && !getKeys().isEmpty())
+			return getKeys().get(0).getSeparator();
+		else
+			return "";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getArgValueDelimiter() {
+		if (getValueDelimiter()!=null && !getValueDelimiter().equals(""))
+			return getValueDelimiter();
+		else if (GlobalConfig.getToolConfig().containsKey("default_value_delimiter"))
+			return GlobalConfig.getToolConfig().get("default_value_delimiter");
+		else
+			return ",";
 	}
 
 	/**
@@ -400,8 +761,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getSeparator() {
-		return separator;
+	public String getDelimiter() {
+		return delimiter;
 	}
 
 	/**
@@ -409,11 +770,212 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSeparator(String newSeparator) {
-		String oldSeparator = separator;
-		separator = newSeparator;
+	public void setDelimiter(String newDelimiter) {
+		String oldDelimiter = delimiter;
+		delimiter = newDelimiter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__SEPARATOR, oldSeparator, separator));
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__DELIMITER, oldDelimiter, delimiter));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getValueDelimiter() {
+		return valueDelimiter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setValueDelimiter(String newValueDelimiter) {
+		String oldValueDelimiter = valueDelimiter;
+		valueDelimiter = newValueDelimiter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__VALUE_DELIMITER, oldValueDelimiter, valueDelimiter));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getPrefix() {
+		return prefix;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPrefix(String newPrefix) {
+		String oldPrefix = prefix;
+		prefix = newPrefix;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__PREFIX, oldPrefix, prefix));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Logger getLogger() {
+		return logger;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Object> getValue() {
+		if (value == null) {
+			value = new EDataTypeUniqueEList<Object>(Object.class, this, ToolPackage.PARAMETER__VALUE);
+		}
+		return value;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Key> getKeys() {
+		if (keys == null) {
+			keys = new EObjectResolvingEList<Key>(Key.class, this, ToolPackage.PARAMETER__KEYS);
+		}
+		return keys;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isNamed() {
+		return named;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNamed(boolean newNamed) {
+		boolean oldNamed = named;
+		named = newNamed;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__NAMED, oldNamed, named));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLabel(String newLabel) {
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__LABEL, oldLabel, label));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getHelp() {
+		return help;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHelp(String newHelp) {
+		String oldHelp = help;
+		help = newHelp;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__HELP, oldHelp, help));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getMinOcc() {
+		return minOcc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMinOcc(int newMinOcc) {
+		int oldMinOcc = minOcc;
+		minOcc = newMinOcc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MIN_OCC, oldMinOcc, minOcc));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getMaxOcc() {
+		return maxOcc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMaxOcc(int newMaxOcc) {
+		int oldMaxOcc = maxOcc;
+		maxOcc = newMaxOcc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MAX_OCC, oldMaxOcc, maxOcc));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isAdvanced() {
+		return advanced;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAdvanced(boolean newAdvanced) {
+		boolean oldAdvanced = advanced;
+		advanced = newAdvanced;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__ADVANCED, oldAdvanced, advanced));
 	}
 
 	/**
@@ -433,26 +995,67 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ToolPackage.PARAMETER__VALUES:
+				return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ToolPackage.PARAMETER__NAME:
 				return getName();
 			case ToolPackage.PARAMETER__DESCRIPTION:
 				return getDescription();
+			case ToolPackage.PARAMETER__LOGGER:
+				return getLogger();
+			case ToolPackage.PARAMETER__VALUE:
+				return getValue();
+			case ToolPackage.PARAMETER__TYPE:
+				return getType();
 			case ToolPackage.PARAMETER__OPTIONAL:
 				return isOptional();
-			case ToolPackage.PARAMETER__REPEATABLE:
-				return isRepeatable();
-			case ToolPackage.PARAMETER__REPEATABLE_VALUES:
-				return isRepeatableValues();
-			case ToolPackage.PARAMETER__VALUES:
-				return getValues();
+			case ToolPackage.PARAMETER__MULTIPLE:
+				return isMultiple();
+			case ToolPackage.PARAMETER__MULTIPLE_VALUE:
+				return isMultipleValue();
 			case ToolPackage.PARAMETER__VALUE_TYPE:
 				return getValueType();
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				return getDefaultValue();
-			case ToolPackage.PARAMETER__SEPARATOR:
-				return getSeparator();
+			case ToolPackage.PARAMETER__DELIMITER:
+				return getDelimiter();
+			case ToolPackage.PARAMETER__VALUE_DELIMITER:
+				return getValueDelimiter();
+			case ToolPackage.PARAMETER__PREFIX:
+				return getPrefix();
+			case ToolPackage.PARAMETER__KEYS:
+				return getKeys();
+			case ToolPackage.PARAMETER__NAMED:
+				return isNamed();
+			case ToolPackage.PARAMETER__LABEL:
+				return getLabel();
+			case ToolPackage.PARAMETER__HELP:
+				return getHelp();
+			case ToolPackage.PARAMETER__MIN_OCC:
+				return getMinOcc();
+			case ToolPackage.PARAMETER__MAX_OCC:
+				return getMaxOcc();
+			case ToolPackage.PARAMETER__ADVANCED:
+				return isAdvanced();
+			case ToolPackage.PARAMETER__VALUES:
+				if (coreType) return getValues();
+				else return getValues().map();
+			case ToolPackage.PARAMETER__FORMAT:
+				return getFormat();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -472,18 +1075,21 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
+			case ToolPackage.PARAMETER__VALUE:
+				getValue().clear();
+				getValue().addAll((Collection<? extends Object>)newValue);
+				return;
+			case ToolPackage.PARAMETER__TYPE:
+				setType((String)newValue);
+				return;
 			case ToolPackage.PARAMETER__OPTIONAL:
 				setOptional((Boolean)newValue);
 				return;
-			case ToolPackage.PARAMETER__REPEATABLE:
-				setRepeatable((Boolean)newValue);
+			case ToolPackage.PARAMETER__MULTIPLE:
+				setMultiple((Boolean)newValue);
 				return;
-			case ToolPackage.PARAMETER__REPEATABLE_VALUES:
-				setRepeatableValues((Boolean)newValue);
-				return;
-			case ToolPackage.PARAMETER__VALUES:
-				getValues().clear();
-				getValues().addAll((Collection<? extends Object>)newValue);
+			case ToolPackage.PARAMETER__MULTIPLE_VALUE:
+				setMultipleValue((Boolean)newValue);
 				return;
 			case ToolPackage.PARAMETER__VALUE_TYPE:
 				setValueType((String)newValue);
@@ -491,8 +1097,43 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				setDefaultValue((String)newValue);
 				return;
-			case ToolPackage.PARAMETER__SEPARATOR:
-				setSeparator((String)newValue);
+			case ToolPackage.PARAMETER__DELIMITER:
+				setDelimiter((String)newValue);
+				return;
+			case ToolPackage.PARAMETER__VALUE_DELIMITER:
+				setValueDelimiter((String)newValue);
+				return;
+			case ToolPackage.PARAMETER__PREFIX:
+				setPrefix((String)newValue);
+				return;
+			case ToolPackage.PARAMETER__KEYS:
+				getKeys().clear();
+				getKeys().addAll((Collection<? extends Key>)newValue);
+				return;
+			case ToolPackage.PARAMETER__NAMED:
+				setNamed((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__LABEL:
+				setLabel((String)newValue);
+				return;
+			case ToolPackage.PARAMETER__HELP:
+				setHelp((String)newValue);
+				return;
+			case ToolPackage.PARAMETER__MIN_OCC:
+				setMinOcc((Integer)newValue);
+				return;
+			case ToolPackage.PARAMETER__MAX_OCC:
+				setMaxOcc((Integer)newValue);
+				return;
+			case ToolPackage.PARAMETER__ADVANCED:
+				setAdvanced((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__VALUES:
+				((EStructuralFeature.Setting)getValues()).set(newValue);
+				return;
+			case ToolPackage.PARAMETER__FORMAT:
+				getFormat().clear();
+				getFormat().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -512,17 +1153,20 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__VALUE:
+				getValue().clear();
+				return;
+			case ToolPackage.PARAMETER__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
 			case ToolPackage.PARAMETER__OPTIONAL:
 				setOptional(OPTIONAL_EDEFAULT);
 				return;
-			case ToolPackage.PARAMETER__REPEATABLE:
-				setRepeatable(REPEATABLE_EDEFAULT);
+			case ToolPackage.PARAMETER__MULTIPLE:
+				setMultiple(MULTIPLE_EDEFAULT);
 				return;
-			case ToolPackage.PARAMETER__REPEATABLE_VALUES:
-				setRepeatableValues(REPEATABLE_VALUES_EDEFAULT);
-				return;
-			case ToolPackage.PARAMETER__VALUES:
-				getValues().clear();
+			case ToolPackage.PARAMETER__MULTIPLE_VALUE:
+				setMultipleValue(MULTIPLE_VALUE_EDEFAULT);
 				return;
 			case ToolPackage.PARAMETER__VALUE_TYPE:
 				setValueType(VALUE_TYPE_EDEFAULT);
@@ -530,8 +1174,41 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				setDefaultValue(DEFAULT_VALUE_EDEFAULT);
 				return;
-			case ToolPackage.PARAMETER__SEPARATOR:
-				setSeparator(SEPARATOR_EDEFAULT);
+			case ToolPackage.PARAMETER__DELIMITER:
+				setDelimiter(DELIMITER_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__VALUE_DELIMITER:
+				setValueDelimiter(VALUE_DELIMITER_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__PREFIX:
+				setPrefix(PREFIX_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__KEYS:
+				getKeys().clear();
+				return;
+			case ToolPackage.PARAMETER__NAMED:
+				setNamed(NAMED_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__HELP:
+				setHelp(HELP_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__MIN_OCC:
+				setMinOcc(MIN_OCC_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__MAX_OCC:
+				setMaxOcc(MAX_OCC_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__ADVANCED:
+				setAdvanced(ADVANCED_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__VALUES:
+				getValues().clear();
+				return;
+			case ToolPackage.PARAMETER__FORMAT:
+				getFormat().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -549,20 +1226,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ToolPackage.PARAMETER__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case ToolPackage.PARAMETER__LOGGER:
+				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case ToolPackage.PARAMETER__VALUE:
+				return value != null && !value.isEmpty();
+			case ToolPackage.PARAMETER__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case ToolPackage.PARAMETER__OPTIONAL:
 				return optional != OPTIONAL_EDEFAULT;
-			case ToolPackage.PARAMETER__REPEATABLE:
-				return repeatable != REPEATABLE_EDEFAULT;
-			case ToolPackage.PARAMETER__REPEATABLE_VALUES:
-				return repeatableValues != REPEATABLE_VALUES_EDEFAULT;
-			case ToolPackage.PARAMETER__VALUES:
-				return values != null && !values.isEmpty();
+			case ToolPackage.PARAMETER__MULTIPLE:
+				return multiple != MULTIPLE_EDEFAULT;
+			case ToolPackage.PARAMETER__MULTIPLE_VALUE:
+				return multipleValue != MULTIPLE_VALUE_EDEFAULT;
 			case ToolPackage.PARAMETER__VALUE_TYPE:
 				return VALUE_TYPE_EDEFAULT == null ? valueType != null : !VALUE_TYPE_EDEFAULT.equals(valueType);
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
-			case ToolPackage.PARAMETER__SEPARATOR:
-				return SEPARATOR_EDEFAULT == null ? separator != null : !SEPARATOR_EDEFAULT.equals(separator);
+			case ToolPackage.PARAMETER__DELIMITER:
+				return DELIMITER_EDEFAULT == null ? delimiter != null : !DELIMITER_EDEFAULT.equals(delimiter);
+			case ToolPackage.PARAMETER__VALUE_DELIMITER:
+				return VALUE_DELIMITER_EDEFAULT == null ? valueDelimiter != null : !VALUE_DELIMITER_EDEFAULT.equals(valueDelimiter);
+			case ToolPackage.PARAMETER__PREFIX:
+				return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
+			case ToolPackage.PARAMETER__KEYS:
+				return keys != null && !keys.isEmpty();
+			case ToolPackage.PARAMETER__NAMED:
+				return named != NAMED_EDEFAULT;
+			case ToolPackage.PARAMETER__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case ToolPackage.PARAMETER__HELP:
+				return HELP_EDEFAULT == null ? help != null : !HELP_EDEFAULT.equals(help);
+			case ToolPackage.PARAMETER__MIN_OCC:
+				return minOcc != MIN_OCC_EDEFAULT;
+			case ToolPackage.PARAMETER__MAX_OCC:
+				return maxOcc != MAX_OCC_EDEFAULT;
+			case ToolPackage.PARAMETER__ADVANCED:
+				return advanced != ADVANCED_EDEFAULT;
+			case ToolPackage.PARAMETER__VALUES:
+				return values != null && !values.isEmpty();
+			case ToolPackage.PARAMETER__FORMAT:
+				return format != null && !format.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -615,20 +1318,42 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(name);
 		result.append(", description: ");
 		result.append(description);
+		result.append(", logger: ");
+		result.append(logger);
+		result.append(", value: ");
+		result.append(value);
+		result.append(", type: ");
+		result.append(type);
 		result.append(", optional: ");
 		result.append(optional);
-		result.append(", repeatable: ");
-		result.append(repeatable);
-		result.append(", repeatableValues: ");
-		result.append(repeatableValues);
-		result.append(", values: ");
-		result.append(values);
+		result.append(", multiple: ");
+		result.append(multiple);
+		result.append(", multipleValue: ");
+		result.append(multipleValue);
 		result.append(", valueType: ");
 		result.append(valueType);
 		result.append(", defaultValue: ");
 		result.append(defaultValue);
-		result.append(", separator: ");
-		result.append(separator);
+		result.append(", delimiter: ");
+		result.append(delimiter);
+		result.append(", valueDelimiter: ");
+		result.append(valueDelimiter);
+		result.append(", prefix: ");
+		result.append(prefix);
+		result.append(", named: ");
+		result.append(named);
+		result.append(", label: ");
+		result.append(label);
+		result.append(", help: ");
+		result.append(help);
+		result.append(", minOcc: ");
+		result.append(minOcc);
+		result.append(", maxOcc: ");
+		result.append(maxOcc);
+		result.append(", advanced: ");
+		result.append(advanced);
+		result.append(", format: ");
+		result.append(format);
 		result.append(')');
 		return result.toString();
 	}

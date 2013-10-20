@@ -202,10 +202,9 @@ public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
 	 * @generated not
 	 */
 	public Schema readSchema(URI xsdSource, boolean isFromJar) throws FileNotFoundException {
+		
 		InputStream inputStream = URIUtil.getInputStream(xsdSource, isFromJar);
-
 		Source schemaSource = new StreamSource(inputStream);
-
 		Document doc = XMLUtil.readXML(xsdSource, isFromJar);
 		String targetNamespace = null;
 		if (doc.getDocumentElement().hasAttribute("targetNamespace"))
@@ -219,7 +218,7 @@ public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
 			{
 				getSchemata().put(targetNamespace, schema);
 				getSchemataURI().put(targetNamespace, xsdSource);
-				logger.debug("add "+targetNamespace+" to known schemata.");
+				logger.debug("add "+targetNamespace+" to known schemata. Use target namespace.");
 			}
 			else
 			{
@@ -276,8 +275,7 @@ public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
 			logger.warn("no schema location attribute found.");
 			return null;
 		}
-		Attr attr = document.getDocumentElement().getAttributeNode(
-				"xsi:schemaLocation");
+		Attr attr = document.getDocumentElement().getAttributeNode("xsi:schemaLocation");
 
 		String[] tmp = StringUtils.split(attr.getValue(), " ");
 		if (getSchemata().containsKey(tmp[0]))

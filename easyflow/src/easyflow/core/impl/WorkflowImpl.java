@@ -1,5 +1,6 @@
 package easyflow.core.impl;
 
+import easyflow.core.Catalog;
 import com.mxgraph.canvas.mxGraphics2DCanvas;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.shape.mxBasicShape;
@@ -11,6 +12,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
 import com.mxgraph.view.mxStylesheet;
 import com.mxgraph.view.mxCellState;
 
+import easyflow.EasyflowFactory;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultRecord;
@@ -22,35 +24,49 @@ import easyflow.core.Task;
 
 import easyflow.core.Workflow;
 
+import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
+import easyflow.metadata.IMetaData;
 import easyflow.tool.DataPort;
+import easyflow.tool.Tool;
+import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
 
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
+import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.custom.util.XMLUtil;
+import easyflow.execution.makeflow.Makeflow;
+import easyflow.execution.makeflow.MakeflowFactory;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import java.util.Stack;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.groovy.util.StringUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
@@ -89,6 +105,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGenericAttributes <em>Generic Attributes</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGraphUtil <em>Graph Util</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getCatalog <em>Catalog</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessingConfig <em>Processing Config</em>}</li>
  * </ul>
  * </p>
  *
@@ -305,6 +323,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected Util graphUtil;
+
+	/**
+	 * The cached value of the '{@link #getCatalog() <em>Catalog</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCatalog()
+	 * @generated
+	 * @ordered
+	 */
+	protected Catalog catalog;
+
+	/**
+	 * The cached value of the '{@link #getProcessingConfig() <em>Processing Config</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProcessingConfig()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> processingConfig;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -607,10 +645,57 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__GRAPH_UTIL, oldGraphUtil, graphUtil));
 	}
 
-		
-	
-	
-	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Catalog getCatalog() {
+		if (catalog != null && catalog.eIsProxy()) {
+			InternalEObject oldCatalog = (InternalEObject)catalog;
+			catalog = (Catalog)eResolveProxy(oldCatalog);
+			if (catalog != oldCatalog) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__CATALOG, oldCatalog, catalog));
+			}
+		}
+		return catalog;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Catalog basicGetCatalog() {
+		return catalog;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCatalog(Catalog newCatalog) {
+		Catalog oldCatalog = catalog;
+		catalog = newCatalog;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__CATALOG, oldCatalog, catalog));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getProcessingConfig() {
+		if (processingConfig == null) {
+			processingConfig = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.WORKFLOW__PROCESSING_CONFIG);
+		}
+		return processingConfig;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * - read the general tools implementation xml and xsd
@@ -709,12 +794,11 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void readWorkfowTemplate() {
-		((EasyflowTemplateImpl) getWorkflowTemplate()).readTemplate(getMode(), 
+	public boolean readWorkfowTemplate() {
+		return ((EasyflowTemplateImpl) getWorkflowTemplate()).readTemplate(getMode(), 
 				getDefaultGroupingCriteria());
 	}
 
-	
 	private static void setStyleSheet(mxStylesheet stylesheet) {
 
         // base style
@@ -750,21 +834,16 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         };
         
         mxGraphics2DCanvas.putShape("default", shape);
-        
-
     }
 
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void generateGraphFromTemplate() {
+	public boolean generateGraphFromTemplate(EMap<String, Tool> tools) {
 		
 		//Iterator<Task> taskIterator=getWorkflowTemplate().getTasks().iterator();
-		
-		
 		setStyleSheet(getGraph().getStylesheet());
 		//Object parent=graph.getDefaultParent();
 		Object parent = null;
@@ -774,7 +853,41 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		// create styles
         
         try {
+        	logger.debug("got definition for tools: "+(tools!=null?tools.keySet():null));
         	for (Task task:getWorkflowTemplate().getTasks()) {
+        		// try to find tool definition/implementation
+        		logger.debug(task.getToolNames().keySet());
+        		if (tools!=null)
+        			for (String toolName:task.getToolNames().keySet())
+        			{
+        				logger.debug("trying to find tool implementation definition for "+toolName);
+        				// if tool name is separated by ":" -> assume package:tool and parse both entities
+        				String tmp[] = toolName.split(":");
+        				String packageName=null;
+        				if (tmp.length==2)
+        				{
+        					packageName=tmp[0];
+        					toolName=tmp[1];
+        				}
+        				if (tools.containsKey(toolName))
+        				{
+        					Tool tool=tools.get(toolName);
+        					logger.debug("add tool="+toolName);
+        					if (packageName!=null)
+        						if (tool.getPackage() != null && !tool.getPackage().getName().equals(packageName))
+        							logger.warn("package name ("+packageName
+        									+") from workflow template for task "+task.getName()
+        									+" differs from tool defintion ( "+tool.getPackage().getName()+") !");
+        						else if(tool.getPackage()==null)
+        						{
+        							easyflow.tool.Package pkg = ToolFactory.eINSTANCE.createPackage();
+        							pkg.setName(toolName);
+        							tool.setPackage(pkg);
+        						}
+        					task.getTools().put(toolName, tool);
+        				}
+        			}
+        		
         		Object target=getGraph().insertVertexEasyFlow(parent, null, task);
         		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
         		logger.trace("generateGraphFromTemplate(): "
@@ -784,10 +897,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         		getGraphUtil().getTasks().put(task.getUniqueString(), task);
         		//((mxCell)target).setValue(XMLUtil.getElement(task));
         		
+        		
         	}
 
         	// create the special root task/cell which is the root
-        	// in all subsequent processed graphs
+        	// in all subsequent processed graphs, the root should link any
+        	// task from the workflow template that has no incoming task
         	Task rootTask = CoreFactory.eINSTANCE.createTask();
         	rootTask.setName("_root_");
         	rootTask.setRoot(true);
@@ -800,74 +915,72 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	//logger.debug(getGraph().getLabel(rootTarget));
         	
 
-        	
-		//Stack<String> stack=new Stack<String>();
-		for (Task task : getWorkflowTemplate().getTasks()) {
-			
-			//logger.debug(task.getUniqueString());
-			
+        logger.debug(getWorkflowTemplate().getTasks());
+        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
+		while (it.hasNext()) {
+			Task task=it.next();
+			logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
 			if (!task.isUtil()) {
-			//Object target=graph.insertVertex(parent, null, 
-				//	XMLUtil.getElement(task), 400, 100, 100, 30, "ROUNDED;VERTEX_STYLE");
-			//Object target=((EasyFlowGraph)graph).insertVertexEasyFlow(parent, null, task);
-			Object target=getGraphUtil().getCells().get(task.getUniqueString());
-			if (getLastTasks().isEmpty()) {
-				//setFirstNode(target);
-				graph.insertEdgeEasyFlow(parent, null, rootTarget, target);
+				Object target=getGraphUtil().getCells().get(task.getUniqueString());
+				//logger.debug("determine parents for "+task.getUniqueString());
+				if (getLastTasks().isEmpty()) {
+					//setFirstNode(target);
+					graph.insertEdgeEasyFlow(parent, null, rootTarget, target);
 				
-			} else {
-				Iterator<DataPort> itDP=task.getInDataPorts().iterator();
-				while (itDP.hasNext()) {
-					DataPort dataPort=itDP.next();
-					EList<Task> parentTaskList=new BasicEList<Task>();
+				} else {
 					
-					if (validateLastTaskOutDataPort(dataPort)){
-					
-						parentTaskList.addAll(getParentTasksByOutDataPort(dataPort));
-					}
-					if (validateParentTaskOutDataPort(dataPort, task)) {
-						if (! parentTaskList.contains(getParentTaskByOutDataPort(dataPort, task)))
-							parentTaskList.add(getParentTaskByOutDataPort(dataPort, task));
-					}
-					
-					//}
-					if (parentTaskList.isEmpty()) {
-						//parentTask=getTasks().get("Root");
-						logger.warn("No parent found."+" known parent:"+task.getParents());
-					} else {
-						logger.trace("generateGraphFromTemplate(): parentTaskList="+parentTaskList);
-					}
+					EList<Task> parentTaskList=getParentTasksFor(task);
+					//if (parentTaskList.isEmpty())
+						//parentTaskList.add(getLastTasks().peek());					
 					for (Task pTask:parentTaskList) {
 						
 						Object source=map.get(pTask.getName());
-						//if (!task.getParents().contains(pTask.getName()))
-							//task.getParentsString().add(pTask.getName());
-						logger.trace("generateGraphFromTemplate(): "+
-								"adding mxgraph edge:"+
-								//source+"=>"+target+
-								" ("+pTask.getName()+"=>"+task.getName()+":"+dataPort.getDataFormat().getName()+")");
+						//logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 						graph.insertEdgeEasyFlow(parent, null, source, target);
-						//reset the vertex value
 					}
-					//((mxCell)target).setValue(XMLUtil.getElement(task));
+					/*
+					Iterator<DataPort> itDP=task.getInDataPorts().iterator();
+					while (itDP.hasNext()) {
+						DataPort dataPort=itDP.next();
+						
+						EList<Task> parentTaskList=new BasicEList<Task>();
+						
+						if (validateLastTaskOutDataPort(dataPort))
+							parentTaskList.addAll(getParentTasksByOutDataPort(dataPort));
+						logger.debug(parentTaskList.size());
+						if (validateParentTaskOutDataPort(dataPort, task))
+							if (! parentTaskList.contains(getParentTaskByOutDataPort(dataPort, task)))
+								parentTaskList.add(getParentTaskByOutDataPort(dataPort, task));
+								
+						logger.debug(parentTaskList.size());
+						if (parentTaskList.isEmpty()) {
+							logger.warn("No parent found. Known parent:"+task.getParents());
+						} else {
+							logger.trace("generateGraphFromTemplate(): parentTaskList="+parentTaskList);
+						}
+						for (Task pTask:parentTaskList) {
+							
+							Object source=map.get(pTask.getName());
+							//if (!task.getParents().contains(pTask.getName()))
+								//task.getParentsString().add(pTask.getName());
+							logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("
+								+pTask.getName()+"=>"+task.getName()+":"+dataPort.getDataFormat().getName()+")");
+							graph.insertEdgeEasyFlow(parent, null, source, target);
+						}
+					}*/
 				}
+				getLastTasks().add(task);
+				//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 			}
-			}
-			//if (!task.getParents().isEmpty())
-				//logger.debug(task.getName()+"->"+task.getParents().get(0)+" ("+task.getParents().size()+")");
-			getLastTasks().add(task);
 		}
         } finally {
         	getGraph().getModel().endUpdate();
         }
         
-        XMLUtil.container.put("tasks", getGraphUtil().getTasks());
-        
-        //mxICell tmpMX=(mxICell)getFirstNode();
-        //XMLUtil.printMxCell(tmpMX);
-        //XMLUtil.printMxCell((mxICell) getGraphUtil().getCells().values().toArray()[1]);
+        XMLUtil.container.put("tasks", getGraphUtil().getTasks());        
         Task tmp=XMLUtil.loadTaskFromVertex(getFirstNode());
         logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
+        return true;
 	}
 
 
@@ -881,9 +994,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		 * would be best to generically pick an implementation for metadata 
 		 * possible solution could be achieved using java.util.ServiceLoader
 		 * 
-		 * currently assume easyflow.core.DefaultMetaData
+		 * currently assume easyflow.core.IMetaData
 		 */
-		((DefaultMetaData) getMetaData()).readMetaData();
+		((IMetaData) getMetaData()).readMetaData();
 	}
 
 	/**
@@ -906,11 +1019,121 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		logger.trace("getParentTasksByOutDataPort(): last tasks size="+getLastTasks().size());
 		while (it.hasNext()) {
 			Task lastTask=it.next();
-			if (lastTask.isCompatibleWithInDataPortFor(dataPort)) tasks.add(lastTask);
+			if (lastTask.isCompatibleWithInDataPortFor(dataPort)) 
+				tasks.add(lastTask);
 		}
-		
 		//logger.warn("No parent found for DataPort "+dataPort.getDataFormat().getName());
 		return tasks;
+	}
+	
+	public EList<Task> getParentTasksFor(Task task) {
+		
+		EList<Task> tasks=new BasicEList<Task>();
+		
+		// data structure to track not yet resolved data ports
+		EList<DataPort> unresolvedDataPorts = new BasicEList<DataPort>();
+		
+		for (DataPort dataPort:task.getInDataPorts())
+			unresolvedDataPorts.add(dataPort);
+		
+		logger.trace("parents so far="+task.getParents().keySet());
+		for (Task parent:task.getParents().values())
+		{
+			boolean found=false;
+			//if (parent.getOutDataPorts()!=null)
+			for (DataPort outDataPort:parent.getOutDataPorts())
+			{
+				unresolvedDataPorts.remove(outDataPort);
+				found=true;
+			}
+			if (found)
+				tasks.add(parent);
+		}
+
+		// find possible tasks compatible with the unresolved ports
+		// the tasks are to be ranked:
+		// providing more ports gets higher rank
+		EMap<String, EList<Task>> lastTasksByDataPort=new BasicEMap<String, EList<Task>>();
+		Map<String,Integer> rankMap = new HashMap<String,Integer>();
+		for (EList<DataPort> dataPorts:enumeratePowerSet(task.getInDataPorts()))
+		{
+			EList<Task> lastTasksForDataPort=getLastTasksForDataPort(dataPorts, getLastTasks(), tasks);
+			String joinedName=joinDataPortNamesToString(dataPorts);
+			if (!lastTasksForDataPort.isEmpty())
+			{
+				lastTasksByDataPort.put(joinedName, lastTasksForDataPort);
+				rankMap.put(joinedName, dataPorts.size());
+			}
+		}
+		
+		// resolve incoming data ports for task beginning with highest rank
+		// i.e. prefer constellations where more ports can be resolved by less
+		// incoming tasks
+		Map<String,Integer> sortedRankMap = easyflow.custom.util.Util.sortByValue(rankMap);
+    	if (!unresolvedDataPorts.isEmpty())
+			for (Map.Entry<String, Integer> entry : sortedRankMap.entrySet()) {
+				
+				EList<Task> curTasks=lastTasksByDataPort.get(entry.getKey());
+				logger.trace("process lastTasks="
+						+ tasks2String(curTasks)
+						+ " with rank=" + entry.getValue());
+				curTasks=removeParentsFromLastTasks(curTasks);
+				logger.trace("lastTasks after distant parents removed="
+						+ tasks2String(curTasks));
+
+				ListIterator<Task> it = curTasks.listIterator(curTasks.size());
+				while (it.hasPrevious()) {
+					if (unresolvedDataPorts.isEmpty())
+						break;
+
+					Task curTask = it.previous();
+					EList<DataPort> resolvedDataPorts = task
+							.getOverlappingDataPorts(unresolvedDataPorts,
+									curTask.getOutDataPorts());
+					if (!resolvedDataPorts.isEmpty())
+						tasks.add(curTask);
+				}
+			}
+      logger.debug(tasks.size()+" parents ("+tasks2String(tasks)+") found.");
+/*
+		if (!unresolvedDataPorts.isEmpty())
+		{
+			EMap<String,Integer> rankMap = new BasicEMap<String,Integer>();
+			//logger.debug(unresolvedDataPorts);
+			//logger.debug(getLastTasks());
+			ListIterator<Task> it=getLastTasks().listIterator(getLastTasks().size());
+			while (it.hasPrevious())
+			{
+				
+				Task tmp=it.previous();
+				logger.debug("test last task="+tmp.getUniqueString());
+				EList<DataPort> unresolvedOutDataPorts=
+						task.getOverlappingDataPorts(unresolvedDataPorts, tmp.getOutDataPorts());
+				int i=unresolvedOutDataPorts.size();
+				if (i>0)
+				{
+					logger.debug("would insert task"+tmp.getUniqueString()+" "+getWorkflowTemplate().getTasks().size());
+					insertTaskIntoParentTaskList(tmp, tasks2, i, rankMap);
+				}
+			}
+		}
+		
+		
+		for (String taskName:isDistantParentMap.keySet())
+			logger.debug("Task="+taskName+" is distant="+isDistantParentMap.get(taskName));
+		tasks.addAll(tasks2);
+*/
+		return tasks;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean generateWorklowForExecutionSystem() {
+		Makeflow makeflow = MakeflowFactory.eINSTANCE.createMakeflow();
+		return getGraphUtil().generateWorklowForExecutionSystem((mxICell) getFirstNode(), makeflow);
 	}
 
 	/**
@@ -918,8 +1141,122 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	public boolean resolveToolDependencies() {
+		return getGraphUtil().computeToolDeps((mxICell) getFirstNode(), getCatalog());
+	}
+
+	private String tasks2String(EList<Task> tasks)
+	{
+		String tmp[]=new String[tasks.size()];
+		
+		for (int i=0; i<tmp.length; i++)
+			tmp[i]=tasks.get(i).getUniqueString();
+		return StringUtils.join(tmp, " ");
+	}
+	private void insertTaskIntoParentTaskList(Task task, 
+			EList<Task> tasks, 
+			int rank, EMap<String,Integer> rankMap)
+	{
+		Iterator<Task> it = tasks.iterator();
+		int i = 0;
+		while(it.hasNext())
+		{
+			Task tmp = it.next();
+			if (rank > rankMap.get(tmp.getName()))
+				break;
+			i++;
+		}
+		tasks.add(i, task);
+		rankMap.put(task.getName(), i);
+	}
+
+	private String joinDataPortNamesToString(EList<DataPort> dataPorts)
+	{
+		String names[]=new String[dataPorts.size()];
+		
+		Iterator<DataPort> it = dataPorts.iterator();
+		int i=0;
+		while (it.hasNext())
+			names[i++]=it.next().getDataFormat().getName();
+		return StringUtils.join(names, "_");
+		
+	}
+	
+	private EList<Task> getLastTasksForDataPort(EList<DataPort> dataPorts, Stack<Task> lastTasks,
+			EList<Task> resolvedTasks)
+	{
+		EList<Task> tasks=new BasicEList<Task>();
+		Iterator<Task> it = lastTasks.iterator();
+		while (it.hasNext())
+		{
+			Task lastTask = it.next();
+			EList<DataPort> overlappingDataPorts=lastTask.getOverlappingDataPorts(dataPorts, lastTask.getOutDataPorts());
+			if (overlappingDataPorts.size() == dataPorts.size())
+				if (resolvedTasks!=null && !resolvedTasks.contains(lastTask))
+					tasks.add(lastTask);
+		}
+		return tasks;
+	}
+	
+	private EList<EList<DataPort>> enumeratePowerSet(EList<DataPort> dataPorts)
+	{
+		EList<EList<DataPort>> powerSet=new BasicEList<EList<DataPort>>();
+		int N=dataPorts.size();
+		int allMasks = (1 << N);
+		
+		for (int i = 1; i < allMasks; i++)
+		{
+			EList<DataPort> subSet=new BasicEList<DataPort>();
+		    for (int j = 0; j < N; j++)
+		        if ((i & (1 << j)) > 0) //The j-th element is used
+		        {
+		           //System.out.print((j + 1) + ": "+dataPorts.get(j).getDataFormat().getName()+"; ");
+		           subSet.add(dataPorts.get(j));
+		        }
+		    powerSet.add(subSet);
+		    //System.out.println();
+		}
+		return powerSet;
+	}
+	
+	private EList<Task> removeParentsFromLastTasks(EList<Task> tasks) {
+		// remove those tasks that can be exchanged by a closer task.
+		// (i.e. a task that is a parent of another one, providing the same
+		// port)
+		//EMap<String, Boolean> isDistantParentMap = new BasicEMap<String, Boolean>();
+		EList<Task> newTasks=new BasicEList<Task>();
+		for (Task possibleParent : tasks) {
+			//logger.debug("test " + possibleParent.getUniqueString());
+			boolean childFound=false;
+			for (Task possibleChild : tasks)
+				if (possibleChild != possibleParent)
+					try {
+						childFound=getGraphUtil().isChildOf(possibleChild, possibleParent);
+//						isDistantParentMap.put(
+	//							possibleParent.getName(),
+		//						getGraphUtil().isChildOf(possibleParent,possibleChild));
+					} catch (TaskToCellMapKeyNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			if (!childFound)
+			{
+				logger.debug("add "+possibleParent.getUniqueString());
+				newTasks.add(possibleParent);
+			}
+		
+		}
+		return newTasks;
+		
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public boolean validateParentTaskOutDataPort(DataPort dataPort, Task task) {
-		return (task.getParentTaskByOutDataPort(dataPort)!=null) ? true:false;
+		return task.getParentTaskByOutDataPort(dataPort)!=null;
 	}
 
 	/**
@@ -928,7 +1265,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean validateLastTaskOutDataPort(DataPort dataPort) {
-		return (!getParentTasksByOutDataPort(dataPort).isEmpty()) ? true:false;
+		return !getParentTasksByOutDataPort(dataPort).isEmpty();
 	}
 
 	private void printGraph()
@@ -1006,11 +1343,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			logger.debug(getGraphUtil().traversalEventToString(traversalEvent)
 					+" "+traversalEvent.getTraversalCriterion().getId().isEmpty());
 			applyTraversalEvent(traversalEvent);
-			//getGraphUtil().layoutGraph();
 			traversalEvent = getGraphUtil().getNextTraversalEvent();
-			//getGraphUtil().layoutGraph();
-			//if(i++>2)
-				//break;
 		}
 	}
 	
@@ -1025,7 +1358,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
 		if (subGraphRoot != null)
 		{
-			EList<GroupingInstance> groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
+			EList<GroupingInstance> groupingInstances;
+			try {
+				groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
 			if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
 			{
 				for (GroupingInstance groupingInstance : groupingInstances)
@@ -1060,6 +1395,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
 	
 			}
+			} catch (GroupingInstanceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		if (getGraphUtil().getNewTraversalEvents().isEmpty())
@@ -1083,14 +1422,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean resolveTraversalEvents() {
 		
-		//EList<TraversalEvent> traversalEvents=new BasicEList<TraversalEvent>();
-		//mxCell lastCell=null;
-		
-		return getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode());
-			
-		//getGraph().traverse_iterativeBreadthFirstSearch((mxICell)getFirstNode());
-			
+		return getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode());			
 	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1145,6 +1479,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		switch (featureID) {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return ((InternalEList<?>)getGenericAttributes()).basicRemove(otherEnd, msgs);
+			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
+				return ((InternalEList<?>)getProcessingConfig()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1188,6 +1524,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				if (resolve) return getGraphUtil();
 				return basicGetGraphUtil();
+			case CorePackage.WORKFLOW__CATALOG:
+				if (resolve) return getCatalog();
+				return basicGetCatalog();
+			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
+				if (coreType) return getProcessingConfig();
+				else return getProcessingConfig().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1243,6 +1585,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				setGraphUtil((Util)newValue);
 				return;
+			case CorePackage.WORKFLOW__CATALOG:
+				setCatalog((Catalog)newValue);
+				return;
+			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
+				((EStructuralFeature.Setting)getProcessingConfig()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1294,6 +1642,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				setGraphUtil((Util)null);
 				return;
+			case CorePackage.WORKFLOW__CATALOG:
+				setCatalog((Catalog)null);
+				return;
+			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
+				getProcessingConfig().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1334,6 +1688,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return genericAttributes != null && !genericAttributes.isEmpty();
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
 				return graphUtil != null;
+			case CorePackage.WORKFLOW__CATALOG:
+				return catalog != null;
+			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
+				return processingConfig != null && !processingConfig.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

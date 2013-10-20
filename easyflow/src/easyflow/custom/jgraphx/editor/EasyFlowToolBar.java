@@ -68,7 +68,9 @@ public class EasyFlowToolBar extends JToolBar
 	 */
 	private static final long serialVersionUID = -4592403145874164000L;
 	
-	private static final String         repository     = "/easyflow/custom/examples";
+	private static final boolean		isFromJar	   = false;
+	private static final String         repositoryJar  = "/easyflow/custom/examples";
+	private static final String         repositoryFS   = "/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples";
 	private static       DefaultProject defaultProject = null;
 	private static final Logger         logger         = Logger.getLogger(EasyFlowToolBar.class);
 	private static       Examples       examples       = null;
@@ -153,15 +155,18 @@ public class EasyFlowToolBar extends JToolBar
 			public void actionPerformed(ActionEvent e) {
 				logger.debug(getDefaultProject().hashCode());
 				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+				getDefaultProject().setFromJar(isFromJar);
 				getDefaultProject().setGraphUtil(getGraphUtil());
 				getDefaultProject().autoSetup();
-				Workflow workflow = getDefaultProject().getActiveWorkflow();
+				//Workflow workflow = getDefaultProject().getActiveWorkflow();
 				getDefaultProject().applyTraversalEvents();
+				getGraphUtil().layoutGraph();
 			}
 		});
 		btnGenAbstractWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+				getDefaultProject().setFromJar(isFromJar);
 				getDefaultProject().setGraphUtil(getGraphUtil());
 				getDefaultProject().autoSetup();
 				btnCheckTools.setEnabled(true);
@@ -209,7 +214,7 @@ public class EasyFlowToolBar extends JToolBar
 				graph.getModel().beginUpdate();
 				try
 				{
-					Task t1 = CoreFactory.eINSTANCE.createTask();
+					/*Task t1 = CoreFactory.eINSTANCE.createTask();
 					t1.setName("task1");
 					Task t2 = CoreFactory.eINSTANCE.createTask();
 					t2.setName("task2");
@@ -220,19 +225,21 @@ public class EasyFlowToolBar extends JToolBar
 					//mxCell v2 = (mxCell) graph.insertVertex(parent, null, XMLUtil.getElement(t2),280, 20, 80, 20);
 					mxCell v2 = (mxCell) graph.insertVertexEasyFlow(parent, null, t2);
 					v2.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
+					*/
+					//mxGraph graph = editor.getGraphComponent().getGraph();
+					Object[] cells = graph.getAllEdges(
+							new Object[]{defaultProject.getActiveWorkflow().getFirstNode()});
+					graph.removeCells(cells, true);
+					//editor.getGraphComponent().getGraph().selectAll();
+					//editor.getGraphComponent().getGraph().removeCells();
+
+				
 				}
 				finally
 				{
 					graph.getModel().endUpdate();
 				}
-				// TODO Auto-generated method stub
 				
-				/*mxGraph graph = editor.getGraphComponent().getGraph();
-				Object[] cells = graph.getAllEdges(
-						new Object[]{resequencingProject.getActiveWorkflow().getFirstNode()});
-				graph.removeCells(cells, true);*/
-				//editor.getGraphComponent().getGraph().selectAll();
-				//editor.getGraphComponent().getGraph().removeCells();
 
 			}
 		});
@@ -257,7 +264,11 @@ public class EasyFlowToolBar extends JToolBar
 		if (examples == null)
 		{
 			examples = ExampleFactory.eINSTANCE.createExamples();
-			examples.setLocator(repository);
+			if (isFromJar)
+				examples.setLocator(repositoryJar);
+			else
+				examples.setLocator(repositoryFS);
+				
 			examples.readRepository();
 		}
 		return examples;

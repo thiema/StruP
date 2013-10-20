@@ -15,6 +15,7 @@ import easyflow.tool.DataPort;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 
+import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
@@ -22,8 +23,11 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
 import easyflow.util.maps.impl.StringToStringListMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
+import easyflow.util.maps.impl.StringToURIMapImpl;
+import java.net.URI;
 import easyflow.traversal.TraversalFactory;
 import easyflow.traversal.TraversalOperation;
 
@@ -84,6 +88,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#isRoot <em>Root</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getFlags <em>Flags</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getGroupingCriteria <em>Grouping Criteria</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getInputs <em>Inputs</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getOutputs <em>Outputs</em>}</li>
  * </ul>
  * </p>
  *
@@ -221,14 +227,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, TraversalEvent> traversalEvents;
 
 	/**
-	 * The cached value of the '{@link #getParents() <em>Parents</em>}' reference list.
+	 * The cached value of the '{@link #getParents() <em>Parents</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getParents()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Task> parents;
+	protected EMap<String, Task> parents;
 
 	/**
 	 * The cached value of the '{@link #getChunks() <em>Chunks</em>}' map.
@@ -329,6 +335,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EMap<String, String> groupingCriteria;
+
+	/**
+	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInputs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, URI> inputs;
+
+	/**
+	 * The cached value of the '{@link #getOutputs() <em>Outputs</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, URI> outputs;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -483,9 +509,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Task> getParents() {
+	public EMap<String, Task> getParents() {
 		if (parents == null) {
-			parents = new EObjectResolvingEList<Task>(Task.class, this, CorePackage.TASK__PARENTS);
+			parents = new EcoreEMap<String,Task>(MapsPackage.Literals.STRING_TO_TASK_MAP, StringToTaskMapImpl.class, this, CorePackage.TASK__PARENTS);
 		}
 		return parents;
 	}
@@ -605,6 +631,30 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, URI> getInputs() {
+		if (inputs == null) {
+			inputs = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, CorePackage.TASK__INPUTS);
+		}
+		return inputs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, URI> getOutputs() {
+		if (outputs == null) {
+			outputs = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, CorePackage.TASK__OUTPUTS);
+		}
+		return outputs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public void readTask(String wtplLine, String defaultMode, EList<String> defaultGroupingCriteria) {
@@ -662,6 +712,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		        for (int i=0;i<tmp.length;i++) {
 		        	
 		        	TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
+		        	//GroupingCriterion traversalCriterion=TraversalFactory.eINSTANCE.createGroupingCriterion();
 		        	String[] group=tmp[i].split(":");
 		        	if (group.length>1)	traversalCriterion.setMode(group[1]);
 		        	else traversalCriterion.setMode(defaultMode); 
@@ -911,7 +962,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public Task getParentTaskByOutDataPort(DataPort dataPort) {
-		Iterator<Task> it=getParents().iterator();
+		Iterator<Task> it=getParents().values().iterator();
 		EList<Task> tasks=new BasicEList<Task>();
 		while (it.hasNext()) {
 			Task parentTask=it.next();
@@ -921,9 +972,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 			if (parentTask.isCompatibleWithInDataPortFor(dataPort))
 				tasks.add(parentTask);
 		}
-		if (tasks.size()>1) logger.debug("getParentTaskByOutDataPort(): "+"More than one compatible parents found with DataPort="+
+		if (tasks.size()>1) 
+			logger.debug("getParentTaskByOutDataPort(): "+"More than one compatible parents found with DataPort="+
 				dataPort.getDataFormat().getName()+". Return only first.");
-		else if (tasks.isEmpty()) logger.debug("getParentTaskByOutDataPort(): "+"No compatible parent with DataPort="+
+		else if (tasks.isEmpty()) 
+			logger.debug("getParentTaskByOutDataPort(): "+"No compatible parent with DataPort="+
 				dataPort.getDataFormat().getName()+" found. Returning null.");
 		return (tasks.size()>0) ? tasks.get(0):null;
 	}
@@ -974,14 +1027,88 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public Tool getPreferredTool() {
+		if (getTools().isEmpty())
+			return null;
+		else
+			return getTools().get(0).getValue();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<DataPort> getOverlappingDataPorts(EList<DataPort> dataPorts1,
+			EList<DataPort> dataPorts2) {
+		EList<DataPort> dataPorts=new BasicEList<DataPort>();
+		for (DataPort dataPort1:dataPorts1)
+			for (DataPort dataPort2:dataPorts2)
+				if (dataPort2.getDataFormat().getName().equals(
+						dataPort1.getDataFormat().getName()))
+					dataPorts.add(dataPort1);
+		return dataPorts;
+					
+	}
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean resolveToolDependencies() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, String> createCommandLineMap() {
+		EMap<String, String> map = new BasicEMap<String, String>();
+		if (getPreferredTool().getExecutables().containsKey("interpreter"))
+			map.put("interpreter", getPreferredTool().getExecutables().get("interpreter").getPath());
+		if (getPreferredTool().getExecutables().containsKey("executable"))
+			map.put("executable", getPreferredTool().getExecutables().get("executable").getPath());
+		//set submodule
+		//set positional args
+		//if (getPreferredTool().getCommand().get)
+		if (getPreferredTool().getCommand().getParameters() != null)
+			map.put("optional_args", getPreferredTool().getCommand().generateCommandString(null));
+		if (getInputs() != null)
+			map.put("input", list2String(getInputs()));
+		if (getOutputs() != null)
+			map.put("output", list2String(getOutputs()));
+		return map;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTool(Tool tool) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	private String list2String(EMap<String, URI> map)
+	{
+		Iterator<Entry<String, URI>> it = map.iterator();
+		String array[] = new String[getOutputs().size()];
+		int i=0;
+		while (it.hasNext())
+			array[i++]=it.next().getValue().getPath();
+		return StringUtils.join(array, " ");
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -992,6 +1119,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		switch (featureID) {
 			case CorePackage.TASK__TRAVERSAL_EVENTS:
 				return ((InternalEList<?>)getTraversalEvents()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__PARENTS:
+				return ((InternalEList<?>)getParents()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__CHUNKS:
 				return ((InternalEList<?>)getChunks()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__TOOL_NAMES:
@@ -1000,6 +1129,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__GROUPING_CRITERIA:
 				return ((InternalEList<?>)getGroupingCriteria()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__INPUTS:
+				return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__OUTPUTS:
+				return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1030,7 +1163,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				if (coreType) return getTraversalEvents();
 				else return getTraversalEvents().map();
 			case CorePackage.TASK__PARENTS:
-				return getParents();
+				if (coreType) return getParents();
+				else return getParents().map();
 			case CorePackage.TASK__CHUNKS:
 				if (coreType) return getChunks();
 				else return getChunks().map();
@@ -1049,6 +1183,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__GROUPING_CRITERIA:
 				if (coreType) return getGroupingCriteria();
 				else return getGroupingCriteria().map();
+			case CorePackage.TASK__INPUTS:
+				if (coreType) return getInputs();
+				else return getInputs().map();
+			case CorePackage.TASK__OUTPUTS:
+				if (coreType) return getOutputs();
+				else return getOutputs().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1086,8 +1226,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				((EStructuralFeature.Setting)getTraversalEvents()).set(newValue);
 				return;
 			case CorePackage.TASK__PARENTS:
-				getParents().clear();
-				getParents().addAll((Collection<? extends Task>)newValue);
+				((EStructuralFeature.Setting)getParents()).set(newValue);
 				return;
 			case CorePackage.TASK__CHUNKS:
 				((EStructuralFeature.Setting)getChunks()).set(newValue);
@@ -1109,6 +1248,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case CorePackage.TASK__GROUPING_CRITERIA:
 				((EStructuralFeature.Setting)getGroupingCriteria()).set(newValue);
+				return;
+			case CorePackage.TASK__INPUTS:
+				((EStructuralFeature.Setting)getInputs()).set(newValue);
+				return;
+			case CorePackage.TASK__OUTPUTS:
+				((EStructuralFeature.Setting)getOutputs()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1167,6 +1312,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__GROUPING_CRITERIA:
 				getGroupingCriteria().clear();
 				return;
+			case CorePackage.TASK__INPUTS:
+				getInputs().clear();
+				return;
+			case CorePackage.TASK__OUTPUTS:
+				getOutputs().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1211,6 +1362,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return flags != FLAGS_EDEFAULT;
 			case CorePackage.TASK__GROUPING_CRITERIA:
 				return groupingCriteria != null && !groupingCriteria.isEmpty();
+			case CorePackage.TASK__INPUTS:
+				return inputs != null && !inputs.isEmpty();
+			case CorePackage.TASK__OUTPUTS:
+				return outputs != null && !outputs.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -6,7 +6,9 @@
  */
 package easyflow.tool;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,13 +18,26 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link easyflow.tool.Parameter#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getValue <em>Value</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getType <em>Type</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isOptional <em>Optional</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#isRepeatable <em>Repeatable</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#isRepeatableValues <em>Repeatable Values</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isMultiple <em>Multiple</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isMultipleValue <em>Multiple Value</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getValueType <em>Value Type</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getDefaultValue <em>Default Value</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getSeparator <em>Separator</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getDelimiter <em>Delimiter</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getValueDelimiter <em>Value Delimiter</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getKeys <em>Keys</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isNamed <em>Named</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getLabel <em>Label</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getHelp <em>Help</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getMinOcc <em>Min Occ</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getMaxOcc <em>Max Occ</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getFormat <em>Format</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,6 +46,32 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Parameter extends IToolElement, DefaultToolElement {
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_Type()
+	 * @model
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(String value);
+
 	/**
 	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -58,72 +99,129 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setOptional(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Repeatable</b></em>' attribute.
+	 * Returns the value of the '<em><b>Multiple</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Repeatable</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Multiple</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Repeatable</em>' attribute.
-	 * @see #setRepeatable(boolean)
-	 * @see easyflow.tool.ToolPackage#getParameter_Repeatable()
+	 * @return the value of the '<em>Multiple</em>' attribute.
+	 * @see #setMultiple(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Multiple()
 	 * @model
 	 * @generated
 	 */
-	boolean isRepeatable();
+	boolean isMultiple();
 
 	/**
-	 * Sets the value of the '{@link easyflow.tool.Parameter#isRepeatable <em>Repeatable</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isMultiple <em>Multiple</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Repeatable</em>' attribute.
-	 * @see #isRepeatable()
+	 * @param value the new value of the '<em>Multiple</em>' attribute.
+	 * @see #isMultiple()
 	 * @generated
 	 */
-	void setRepeatable(boolean value);
+	void setMultiple(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Repeatable Values</b></em>' attribute.
+	 * Returns the value of the '<em><b>Multiple Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Repeatable Values</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Multiple Value</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Repeatable Values</em>' attribute.
-	 * @see #setRepeatableValues(boolean)
-	 * @see easyflow.tool.ToolPackage#getParameter_RepeatableValues()
+	 * @return the value of the '<em>Multiple Value</em>' attribute.
+	 * @see #setMultipleValue(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_MultipleValue()
 	 * @model
 	 * @generated
 	 */
-	boolean isRepeatableValues();
+	boolean isMultipleValue();
 
 	/**
-	 * Sets the value of the '{@link easyflow.tool.Parameter#isRepeatableValues <em>Repeatable Values</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isMultipleValue <em>Multiple Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Repeatable Values</em>' attribute.
-	 * @see #isRepeatableValues()
+	 * @param value the new value of the '<em>Multiple Value</em>' attribute.
+	 * @see #isMultipleValue()
 	 * @generated
 	 */
-	void setRepeatableValues(boolean value);
+	void setMultipleValue(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Values</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.Object}.
+	 * Returns the value of the '<em><b>Values</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.Parameter},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Values</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Values</em>' attribute list.
+	 * @return the value of the '<em>Values</em>' map.
 	 * @see easyflow.tool.ToolPackage#getParameter_Values()
-	 * @model dataType="easyflow.Object"
+	 * @model mapType="easyflow.util.maps.StringToParameterMap<org.eclipse.emf.ecore.EString, easyflow.tool.Parameter>"
 	 * @generated
 	 */
-	EList<Object> getValues();
+	EMap<String, Parameter> getValues();
+
+	/**
+	 * Returns the value of the '<em><b>Format</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Format</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Format</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Format()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getFormat();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model constaintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @generated
+	 */
+	String generateCommandString(EMap<String, Object> constaints);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getArgKey();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getArgValue();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getArgDelimiter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getArgValueDelimiter();
 
 	/**
 	 * Returns the value of the '<em><b>Value Type</b></em>' attribute.
@@ -178,29 +276,284 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setDefaultValue(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Separator</b></em>' attribute.
+	 * Returns the value of the '<em><b>Delimiter</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Separator</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Delimiter</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Separator</em>' attribute.
-	 * @see #setSeparator(String)
-	 * @see easyflow.tool.ToolPackage#getParameter_Separator()
+	 * @return the value of the '<em>Delimiter</em>' attribute.
+	 * @see #setDelimiter(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_Delimiter()
 	 * @model
 	 * @generated
 	 */
-	String getSeparator();
+	String getDelimiter();
 
 	/**
-	 * Sets the value of the '{@link easyflow.tool.Parameter#getSeparator <em>Separator</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getDelimiter <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Separator</em>' attribute.
-	 * @see #getSeparator()
+	 * @param value the new value of the '<em>Delimiter</em>' attribute.
+	 * @see #getDelimiter()
 	 * @generated
 	 */
-	void setSeparator(String value);
+	void setDelimiter(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Value Delimiter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Value Delimiter</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Value Delimiter</em>' attribute.
+	 * @see #setValueDelimiter(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_ValueDelimiter()
+	 * @model
+	 * @generated
+	 */
+	String getValueDelimiter();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getValueDelimiter <em>Value Delimiter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Value Delimiter</em>' attribute.
+	 * @see #getValueDelimiter()
+	 * @generated
+	 */
+	void setValueDelimiter(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Prefix</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Prefix</em>' attribute.
+	 * @see #setPrefix(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_Prefix()
+	 * @model
+	 * @generated
+	 */
+	String getPrefix();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getPrefix <em>Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Prefix</em>' attribute.
+	 * @see #getPrefix()
+	 * @generated
+	 */
+	void setPrefix(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Logger</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Logger</em>' attribute.
+	 * @see easyflow.tool.ToolPackage#getParameter_Logger()
+	 * @model dataType="easyflow.Logger" transient="true" changeable="false"
+	 * @generated
+	 */
+	Logger getLogger();
+
+	/**
+	 * Returns the value of the '<em><b>Value</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Object}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The actual argument value. If it is a string its used as is. If it is an Iteratable the 
+	 * individual values are enumerated and joined to a string with delimiter.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Value</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Value()
+	 * @model dataType="easyflow.Object"
+	 * @generated
+	 */
+	EList<Object> getValue();
+
+	/**
+	 * Returns the value of the '<em><b>Keys</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.tool.Key}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Keys</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Keys</em>' reference list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Keys()
+	 * @model
+	 * @generated
+	 */
+	EList<Key> getKeys();
+
+	/**
+	 * Returns the value of the '<em><b>Named</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Named</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Named</em>' attribute.
+	 * @see #setNamed(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Named()
+	 * @model
+	 * @generated
+	 */
+	boolean isNamed();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isNamed <em>Named</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Named</em>' attribute.
+	 * @see #isNamed()
+	 * @generated
+	 */
+	void setNamed(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_Label()
+	 * @model
+	 * @generated
+	 */
+	String getLabel();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
+	void setLabel(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Help</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Help</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Help</em>' attribute.
+	 * @see #setHelp(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_Help()
+	 * @model
+	 * @generated
+	 */
+	String getHelp();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getHelp <em>Help</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Help</em>' attribute.
+	 * @see #getHelp()
+	 * @generated
+	 */
+	void setHelp(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Min Occ</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Min Occ</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Min Occ</em>' attribute.
+	 * @see #setMinOcc(int)
+	 * @see easyflow.tool.ToolPackage#getParameter_MinOcc()
+	 * @model
+	 * @generated
+	 */
+	int getMinOcc();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getMinOcc <em>Min Occ</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Min Occ</em>' attribute.
+	 * @see #getMinOcc()
+	 * @generated
+	 */
+	void setMinOcc(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Max Occ</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Max Occ</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Max Occ</em>' attribute.
+	 * @see #setMaxOcc(int)
+	 * @see easyflow.tool.ToolPackage#getParameter_MaxOcc()
+	 * @model
+	 * @generated
+	 */
+	int getMaxOcc();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getMaxOcc <em>Max Occ</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Max Occ</em>' attribute.
+	 * @see #getMaxOcc()
+	 * @generated
+	 */
+	void setMaxOcc(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Advanced</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Advanced</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Advanced</em>' attribute.
+	 * @see #setAdvanced(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Advanced()
+	 * @model
+	 * @generated
+	 */
+	boolean isAdvanced();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Advanced</em>' attribute.
+	 * @see #isAdvanced()
+	 * @generated
+	 */
+	void setAdvanced(boolean value);
 
 } // Parameter

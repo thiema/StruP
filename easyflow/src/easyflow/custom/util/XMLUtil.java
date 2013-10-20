@@ -56,6 +56,8 @@ import easyflow.core.Task;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.tool.DataPort;
+import easyflow.tool.Parameter;
+import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
 
@@ -287,6 +289,7 @@ public class XMLUtil {
 			DataPort dataPort = it.next();
 			resource.getContents().addAll(dataPort.getGroupingCriteria());
 			resource.getContents().add(dataPort.getDataFormat());
+			
 		}
 		it=task.getOutDataPorts().iterator();
 		while (it.hasNext()) {
@@ -299,18 +302,48 @@ public class XMLUtil {
 		while (it1.hasNext()) {
 			TraversalEvent traversalEvent=it1.next();
 			//traversalEvent.setMetaData(null);
-			resource.getContents().add(traversalEvent.getTraversalCriterion());
-			if (traversalEvent.getTraversalCriterion().getOperation()!=null)
-				resource.getContents().add(traversalEvent.getTraversalCriterion().getOperation());
-			if (traversalEvent.getTraversalCriterion().getChunks()!=null)
-				resource.getContents().addAll(traversalEvent.getTraversalCriterion().getChunks().values());
-			/*if (traversalEvent.getMetaData()!=null) {
-				resource.getContents().add(traversalEvent.getMetaData());
-				for (EReference eReference:traversalEvent.getMetaData().eClass().getEReferences()) {
-					resource.getContents().addAll((Collection<? extends EObject>) ((EMap<String, Object>)eReference).values());
+			if (traversalEvent.getTraversalCriterion()!=null)
+			{
+				resource.getContents().add(traversalEvent.getTraversalCriterion());
+				if (traversalEvent.getTraversalCriterion().getOperation()!=null)
+				{
+					resource.getContents().add(traversalEvent.getTraversalCriterion().getOperation());
+					//logger.debug(traversalEvent.getTraversalCriterion().getOperation());
 				}
-			}*/
+				if (traversalEvent.getTraversalCriterion().getChunks()!=null)
+					resource.getContents().addAll(traversalEvent.getTraversalCriterion().getChunks().values());
+				/*if (traversalEvent.getMetaData()!=null) {
+					resource.getContents().add(traversalEvent.getMetaData());
+					for (EReference eReference:traversalEvent.getMetaData().eClass().getEReferences()) {
+						resource.getContents().addAll((Collection<? extends EObject>) ((EMap<String, Object>)eReference).values());
+					}
+				}*/
+			}
 		}
+		Iterator<Tool> it2=task.getTools().values().iterator();
+		while (it2.hasNext())
+		{
+			Tool tool = it2.next();
+			if (tool.getCommand() != null)
+			{
+				if (tool.getCommand().getParameters() != null)
+				{
+					resource.getContents().addAll(tool.getCommand().getParameters().values());
+					for (Parameter param:tool.getCommand().getParameters().values())
+					{
+						if (param.getKeys()!=null)
+							resource.getContents().addAll(param.getKeys());
+					}
+				}
+				
+			}
+			if (tool.getRequirements()!=null)
+				resource.getContents().addAll(tool.getRequirements());
+			if (tool.getPackage() != null)
+				resource.getContents().add(tool.getPackage());
+			
+		}
+			
 		}
 		//EcoreUtil.resolveAll(resource);
 		
@@ -467,7 +500,6 @@ public class XMLUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return null;
 		
 	}

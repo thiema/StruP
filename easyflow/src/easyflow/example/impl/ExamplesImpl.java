@@ -59,6 +59,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.example.impl.ExamplesImpl#getLocator <em>Locator</em>}</li>
  *   <li>{@link easyflow.example.impl.ExamplesImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.example.impl.ExamplesImpl#getExamples <em>Examples</em>}</li>
+ *   <li>{@link easyflow.example.impl.ExamplesImpl#isFromJar <em>From Jar</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,7 +74,7 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String LOCATOR_EDEFAULT = null;
+	protected static final String LOCATOR_EDEFAULT = "true";
 
 	/**
 	 * The cached value of the '{@link #getLocator() <em>Locator</em>}' attribute.
@@ -114,6 +115,26 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 	 * @ordered
 	 */
 	protected EMap<String, DefaultProject> examples;
+
+	/**
+	 * The default value of the '{@link #isFromJar() <em>From Jar</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isFromJar()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean FROM_JAR_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isFromJar() <em>From Jar</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isFromJar()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean fromJar = FROM_JAR_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -179,6 +200,27 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isFromJar() {
+		return fromJar;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFromJar(boolean newFromJar) {
+		boolean oldFromJar = fromJar;
+		fromJar = newFromJar;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.EXAMPLES__FROM_JAR, oldFromJar, fromJar));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public void readRepository()
@@ -187,7 +229,7 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 
 		try {
 			uri = URIUtil.createURI(getLocator(), "examples.tsv");
-			InputStreamReader isReader= URIUtil.getInputStreamReader(uri, true);
+			InputStreamReader isReader= URIUtil.getInputStreamReader(uri, isFromJar());
 			BufferedReader bufferedReader = new BufferedReader(isReader);
 			String strLine;
 			while ((strLine = bufferedReader.readLine()) != null)   {
@@ -318,6 +360,8 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 			case ExamplePackage.EXAMPLES__EXAMPLES:
 				if (coreType) return getExamples();
 				else return getExamples().map();
+			case ExamplePackage.EXAMPLES__FROM_JAR:
+				return isFromJar();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -335,6 +379,9 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 				return;
 			case ExamplePackage.EXAMPLES__EXAMPLES:
 				((EStructuralFeature.Setting)getExamples()).set(newValue);
+				return;
+			case ExamplePackage.EXAMPLES__FROM_JAR:
+				setFromJar((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -354,6 +401,9 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 			case ExamplePackage.EXAMPLES__EXAMPLES:
 				getExamples().clear();
 				return;
+			case ExamplePackage.EXAMPLES__FROM_JAR:
+				setFromJar(FROM_JAR_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -372,6 +422,8 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case ExamplePackage.EXAMPLES__EXAMPLES:
 				return examples != null && !examples.isEmpty();
+			case ExamplePackage.EXAMPLES__FROM_JAR:
+				return fromJar != FROM_JAR_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -390,6 +442,8 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 		result.append(locator);
 		result.append(", logger: ");
 		result.append(logger);
+		result.append(", fromJar: ");
+		result.append(fromJar);
 		result.append(')');
 		return result.toString();
 	}

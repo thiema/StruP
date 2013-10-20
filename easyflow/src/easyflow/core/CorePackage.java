@@ -196,13 +196,31 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__GRAPH_UTIL = 13;
 
 	/**
+	 * The feature id for the '<em><b>Catalog</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__CATALOG = 14;
+
+	/**
+	 * The feature id for the '<em><b>Processing Config</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__PROCESSING_CONFIG = 15;
+
+	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 14;
+	int WORKFLOW_FEATURE_COUNT = 16;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -287,7 +305,7 @@ public interface CorePackage extends EPackage {
 	int TASK__TRAVERSAL_EVENTS = 7;
 
 	/**
-	 * The feature id for the '<em><b>Parents</b></em>' reference list.
+	 * The feature id for the '<em><b>Parents</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -359,13 +377,31 @@ public interface CorePackage extends EPackage {
 	int TASK__GROUPING_CRITERIA = 15;
 
 	/**
+	 * The feature id for the '<em><b>Inputs</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__INPUTS = 16;
+
+	/**
+	 * The feature id for the '<em><b>Outputs</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__OUTPUTS = 17;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 16;
+	int TASK_FEATURE_COUNT = 18;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -583,6 +619,35 @@ public interface CorePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.CatalogImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getCatalog()
+	 * @generated
+	 */
+	int CATALOG = 9;
+
+	/**
+	 * The feature id for the '<em><b>Entries</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATALOG__ENTRIES = 0;
+
+	/**
+	 * The number of structural features of the '<em>Catalog</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATALOG_FEATURE_COUNT = 1;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.Workflow <em>Workflow</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -747,6 +812,28 @@ public interface CorePackage extends EPackage {
 	EReference getWorkflow_GraphUtil();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Catalog</em>'.
+	 * @see easyflow.core.Workflow#getCatalog()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_Catalog();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Processing Config</em>'.
+	 * @see easyflow.core.Workflow#getProcessingConfig()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_ProcessingConfig();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -845,10 +932,10 @@ public interface CorePackage extends EPackage {
 	EReference getTask_TraversalEvents();
 
 	/**
-	 * Returns the meta object for the reference list '{@link easyflow.core.Task#getParents <em>Parents</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getParents <em>Parents</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Parents</em>'.
+	 * @return the meta object for the map '<em>Parents</em>'.
 	 * @see easyflow.core.Task#getParents()
 	 * @see #getTask()
 	 * @generated
@@ -931,6 +1018,28 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTask_GroupingCriteria();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getInputs <em>Inputs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Inputs</em>'.
+	 * @see easyflow.core.Task#getInputs()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_Inputs();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getOutputs <em>Outputs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Outputs</em>'.
+	 * @see easyflow.core.Task#getOutputs()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_Outputs();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
@@ -1067,6 +1176,27 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDefaultRecord_GenericAttributes();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.Catalog <em>Catalog</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Catalog</em>'.
+	 * @see easyflow.core.Catalog
+	 * @generated
+	 */
+	EClass getCatalog();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Catalog#getEntries <em>Entries</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Entries</em>'.
+	 * @see easyflow.core.Catalog#getEntries()
+	 * @see #getCatalog()
+	 * @generated
+	 */
+	EReference getCatalog_Entries();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1213,6 +1343,22 @@ public interface CorePackage extends EPackage {
 		EReference WORKFLOW__GRAPH_UTIL = eINSTANCE.getWorkflow_GraphUtil();
 
 		/**
+		 * The meta object literal for the '<em><b>Catalog</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__CATALOG = eINSTANCE.getWorkflow_Catalog();
+
+		/**
+		 * The meta object literal for the '<em><b>Processing Config</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__PROCESSING_CONFIG = eINSTANCE.getWorkflow_ProcessingConfig();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1287,7 +1433,7 @@ public interface CorePackage extends EPackage {
 		EReference TASK__TRAVERSAL_EVENTS = eINSTANCE.getTask_TraversalEvents();
 
 		/**
-		 * The meta object literal for the '<em><b>Parents</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Parents</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1349,6 +1495,22 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK__GROUPING_CRITERIA = eINSTANCE.getTask_GroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Inputs</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__INPUTS = eINSTANCE.getTask_Inputs();
+
+		/**
+		 * The meta object literal for the '<em><b>Outputs</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__OUTPUTS = eINSTANCE.getTask_Outputs();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -1467,6 +1629,24 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEFAULT_RECORD__GENERIC_ATTRIBUTES = eINSTANCE.getDefaultRecord_GenericAttributes();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.CatalogImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getCatalog()
+		 * @generated
+		 */
+		EClass CATALOG = eINSTANCE.getCatalog();
+
+		/**
+		 * The meta object literal for the '<em><b>Entries</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CATALOG__ENTRIES = eINSTANCE.getCatalog_Entries();
 
 	}
 

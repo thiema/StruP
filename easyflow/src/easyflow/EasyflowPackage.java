@@ -213,6 +213,36 @@ public interface EasyflowPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '<em>Grouping Instance Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.GroupingInstanceNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingInstanceNotFoundException()
+	 * @generated
+	 */
+	int GROUPING_INSTANCE_NOT_FOUND_EXCEPTION = 15;
+
+	/**
+	 * The meta object id for the '<em>Task To Cell Map Key Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.TaskToCellMapKeyNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getTaskToCellMapKeyNotFoundException()
+	 * @generated
+	 */
+	int TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION = 16;
+
+	/**
+	 * The meta object id for the '<em>mx ICell Visitor</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.mxgraph.view.mxGraph.mxICellVisitor
+	 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
+	 * @generated
+	 */
+	int MX_ICELL_VISITOR = 17;
+
+	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph <em>mx Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -376,6 +406,39 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getFileNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.GroupingInstanceNotFoundException <em>Grouping Instance Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Grouping Instance Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.GroupingInstanceNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.GroupingInstanceNotFoundException"
+	 * @generated
+	 */
+	EDataType getGroupingInstanceNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.TaskToCellMapKeyNotFoundException <em>Task To Cell Map Key Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Task To Cell Map Key Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.TaskToCellMapKeyNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.TaskToCellMapKeyNotFoundException"
+	 * @generated
+	 */
+	EDataType getTaskToCellMapKeyNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph.mxICellVisitor <em>mx ICell Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>mx ICell Visitor</em>'.
+	 * @see com.mxgraph.view.mxGraph.mxICellVisitor
+	 * @model instanceClass="com.mxgraph.view.mxGraph.mxICellVisitor"
+	 * @generated
+	 */
+	EDataType getmxICellVisitor();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -548,6 +611,36 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType FILE_NOT_FOUND_EXCEPTION = eINSTANCE.getFileNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Grouping Instance Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.GroupingInstanceNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getGroupingInstanceNotFoundException()
+		 * @generated
+		 */
+		EDataType GROUPING_INSTANCE_NOT_FOUND_EXCEPTION = eINSTANCE.getGroupingInstanceNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Task To Cell Map Key Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.TaskToCellMapKeyNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getTaskToCellMapKeyNotFoundException()
+		 * @generated
+		 */
+		EDataType TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION = eINSTANCE.getTaskToCellMapKeyNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>mx ICell Visitor</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.mxgraph.view.mxGraph.mxICellVisitor
+		 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
+		 * @generated
+		 */
+		EDataType MX_ICELL_VISITOR = eINSTANCE.getmxICellVisitor();
 
 	}
 

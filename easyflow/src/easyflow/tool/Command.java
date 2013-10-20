@@ -6,8 +6,12 @@
  */
 package easyflow.tool;
 
+import easyflow.traversal.TraversalChunk;
+import java.net.URI;
+import java.util.Map;
 import org.apache.log4j.Logger;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
 /**
@@ -86,5 +90,68 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EMap<String, Parameter> getParameters();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model constaintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @generated
+	 */
+	String generateCommandString(EMap<String, Object> constaints);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Generates the input/output files (e.g. the file name), that correspond to the 
+	 * inputs/output ports, as provided the parent tasks and are consumed by the childs.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolvePorts();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Finds the static input files (e.g. the file name), that are not dependant on the previous task.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveStaticPorts();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Returns the concrete input ports (e.g. file names) and with respect to the given 
+	 * chunks. The returned keys correspond to the name of data format.
+	 * <!-- end-model-doc -->
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
+	 * @generated
+	 */
+	Map.Entry<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
+	 * @generated
+	 */
+	Map.Entry<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Returns the concrete input ports (e.g. file names). The keys correspond to the
+	 * name of data format.
+	 * <!-- end-model-doc -->
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
+	 * @generated
+	 */
+	Map.Entry<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks);
 
 } // Command

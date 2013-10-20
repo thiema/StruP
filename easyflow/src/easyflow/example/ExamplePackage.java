@@ -97,13 +97,22 @@ public interface ExamplePackage extends EPackage {
 	int EXAMPLES__EXAMPLES = 2;
 
 	/**
+	 * The feature id for the '<em><b>From Jar</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLES__FROM_JAR = 3;
+
+	/**
 	 * The number of structural features of the '<em>Examples</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXAMPLES_FEATURE_COUNT = 3;
+	int EXAMPLES_FEATURE_COUNT = 4;
 
 
 	/**
@@ -148,6 +157,17 @@ public interface ExamplePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getExamples_Examples();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.example.Examples#isFromJar <em>From Jar</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>From Jar</em>'.
+	 * @see easyflow.example.Examples#isFromJar()
+	 * @see #getExamples()
+	 * @generated
+	 */
+	EAttribute getExamples_FromJar();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -204,6 +224,14 @@ public interface ExamplePackage extends EPackage {
 		 * @generated
 		 */
 		EReference EXAMPLES__EXAMPLES = eINSTANCE.getExamples_Examples();
+
+		/**
+		 * The meta object literal for the '<em><b>From Jar</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXAMPLES__FROM_JAR = eINSTANCE.getExamples_FromJar();
 
 	}
 

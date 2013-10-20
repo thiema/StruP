@@ -10,9 +10,11 @@ import java.io.FileNotFoundException;
 
 import java.net.URI;
 
+import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 import org.w3c.dom.Document;
@@ -28,6 +30,7 @@ import org.w3c.dom.Document;
  *   <li>{@link easyflow.tool.ToolDefinitions#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.tool.ToolDefinitions#getToolSchemata <em>Tool Schemata</em>}</li>
  *   <li>{@link easyflow.tool.ToolDefinitions#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.tool.ToolDefinitions#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -94,11 +97,28 @@ public interface ToolDefinitions extends EObject {
 	Logger getLogger();
 
 	/**
+	 * Returns the value of the '<em><b>Properties</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.DocumentProperties},
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Properties</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Document" exceptions="easyflow.FileNotFoundException" xmlSourceDataType="easyflow.URI"
+	 * @return the value of the '<em>Properties</em>' map.
+	 * @see easyflow.tool.ToolPackage#getToolDefinitions_Properties()
+	 * @model mapType="easyflow.util.maps.StringToDocumentPropertiesMap<org.eclipse.emf.ecore.EString, easyflow.tool.DocumentProperties>"
 	 * @generated
 	 */
-	Document readToolDefinition(URI xmlSource, boolean isFromJar) throws FileNotFoundException;
+	EMap<String, DocumentProperties> getProperties();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.FileNotFoundException" xmlSourceDataType="easyflow.URI"
+	 * @generated
+	 */
+	boolean validateToolDefinition(URI xmlSource, boolean isFromJar) throws FileNotFoundException;
 
 } // ToolDefinitions

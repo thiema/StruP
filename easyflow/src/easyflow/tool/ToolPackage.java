@@ -22,6 +22,9 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * Package provides classes to encapsulate tool properties.
+ * <!-- end-model-doc -->
  * @see easyflow.tool.ToolFactory
  * @model kind="package"
  * @generated
@@ -143,13 +146,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL_DEFINITIONS__LOGGER = 2;
 
 	/**
+	 * The feature id for the '<em><b>Properties</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_DEFINITIONS__PROPERTIES = 3;
+
+	/**
 	 * The number of structural features of the '<em>Definitions</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_DEFINITIONS_FEATURE_COUNT = 3;
+	int TOOL_DEFINITIONS_FEATURE_COUNT = 4;
 
 
 	/**
@@ -160,7 +172,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getIToolElement()
 	 * @generated
 	 */
-	int ITOOL_ELEMENT = 3;
+	int ITOOL_ELEMENT = 2;
 
 	/**
 	 * The number of structural features of the '<em>ITool Element</em>' class.
@@ -179,7 +191,44 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getTool()
 	 * @generated
 	 */
-	int TOOL = 2;
+	int TOOL = 4;
+
+	/**
+	 * The meta object id for the '{@link easyflow.tool.impl.DefaultToolElementImpl <em>Default Tool Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.tool.impl.DefaultToolElementImpl
+	 * @see easyflow.tool.impl.ToolPackageImpl#getDefaultToolElement()
+	 * @generated
+	 */
+	int DEFAULT_TOOL_ELEMENT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_TOOL_ELEMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_TOOL_ELEMENT__DESCRIPTION = 1;
+
+	/**
+	 * The number of structural features of the '<em>Default Tool Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_TOOL_ELEMENT_FEATURE_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -254,50 +303,31 @@ public interface ToolPackage extends EPackage {
 	int TOOL__PACKAGE = ITOOL_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__REQUIREMENTS = ITOOL_ELEMENT_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Executables</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__EXECUTABLES = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 8;
-
-	/**
-	 * The meta object id for the '{@link easyflow.tool.impl.DefaultToolElementImpl <em>Default Tool Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.tool.impl.DefaultToolElementImpl
-	 * @see easyflow.tool.impl.ToolPackageImpl#getDefaultToolElement()
-	 * @generated
-	 */
-	int DEFAULT_TOOL_ELEMENT = 4;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_TOOL_ELEMENT__NAME = 0;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_TOOL_ELEMENT__DESCRIPTION = 1;
-
-	/**
-	 * The number of structural features of the '<em>Default Tool Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_TOOL_ELEMENT_FEATURE_COUNT = 2;
+	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InterpreterImpl <em>Interpreter</em>}' class.
@@ -447,40 +477,58 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__DESCRIPTION = ITOOL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__LOGGER = ITOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The feature id for the '<em><b>Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__OPTIONAL = ITOOL_ELEMENT_FEATURE_COUNT + 2;
+	int PARAMETER__OPTIONAL = ITOOL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Repeatable</b></em>' attribute.
+	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__REPEATABLE = ITOOL_ELEMENT_FEATURE_COUNT + 3;
+	int PARAMETER__MULTIPLE = ITOOL_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Repeatable Values</b></em>' attribute.
+	 * The feature id for the '<em><b>Multiple Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__REPEATABLE_VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Values</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER__VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 5;
+	int PARAMETER__MULTIPLE_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Value Type</b></em>' attribute.
@@ -489,7 +537,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__VALUE_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 6;
+	int PARAMETER__VALUE_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
@@ -498,16 +546,115 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__DEFAULT_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 7;
+	int PARAMETER__DEFAULT_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
-	 * The feature id for the '<em><b>Separator</b></em>' attribute.
+	 * The feature id for the '<em><b>Delimiter</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__SEPARATOR = ITOOL_ELEMENT_FEATURE_COUNT + 8;
+	int PARAMETER__DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Value Delimiter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__VALUE_DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 11;
+
+	/**
+	 * The feature id for the '<em><b>Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__PREFIX = ITOOL_ELEMENT_FEATURE_COUNT + 12;
+
+	/**
+	 * The feature id for the '<em><b>Keys</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__KEYS = ITOOL_ELEMENT_FEATURE_COUNT + 13;
+
+	/**
+	 * The feature id for the '<em><b>Named</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__NAMED = ITOOL_ELEMENT_FEATURE_COUNT + 14;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__LABEL = ITOOL_ELEMENT_FEATURE_COUNT + 15;
+
+	/**
+	 * The feature id for the '<em><b>Help</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__HELP = ITOOL_ELEMENT_FEATURE_COUNT + 16;
+
+	/**
+	 * The feature id for the '<em><b>Min Occ</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__MIN_OCC = ITOOL_ELEMENT_FEATURE_COUNT + 17;
+
+	/**
+	 * The feature id for the '<em><b>Max Occ</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__MAX_OCC = ITOOL_ELEMENT_FEATURE_COUNT + 18;
+
+	/**
+	 * The feature id for the '<em><b>Advanced</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__ADVANCED = ITOOL_ELEMENT_FEATURE_COUNT + 19;
+
+	/**
+	 * The feature id for the '<em><b>Values</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 20;
+
+	/**
+	 * The feature id for the '<em><b>Format</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__FORMAT = ITOOL_ELEMENT_FEATURE_COUNT + 21;
 
 	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
@@ -516,7 +663,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 22;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -547,13 +694,104 @@ public interface ToolPackage extends EPackage {
 	int PACKAGE__DESCRIPTION = ITOOL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__PARAMETERS = ITOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__ID = ITOOL_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__VERSION = ITOOL_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Package</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 2;
+	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link easyflow.tool.impl.DataImpl <em>Data</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.tool.impl.DataImpl
+	 * @see easyflow.tool.impl.ToolPackageImpl#getData()
+	 * @generated
+	 */
+	int DATA = 9;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__NAME = DEFAULT_TOOL_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__LABEL = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__PORT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Output</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__OUTPUT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.DataPortImpl <em>Data Port</em>}' class.
@@ -563,7 +801,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getDataPort()
 	 * @generated
 	 */
-	int DATA_PORT = 9;
+	int DATA_PORT = 10;
 
 	/**
 	 * The feature id for the '<em><b>Grouping Criteria</b></em>' reference list.
@@ -609,7 +847,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getDataFormat()
 	 * @generated
 	 */
-	int DATA_FORMAT = 10;
+	int DATA_FORMAT = 11;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -618,7 +856,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_FORMAT__NAME = 0;
+	int DATA_FORMAT__NAME = DEFAULT_TOOL_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_FORMAT__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
 
 	/**
 	 * The number of structural features of the '<em>Data Format</em>' class.
@@ -627,7 +874,184 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_FORMAT_FEATURE_COUNT = 1;
+	int DATA_FORMAT_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.tool.impl.KeyImpl <em>Key</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.tool.impl.KeyImpl
+	 * @see easyflow.tool.impl.ToolPackageImpl#getKey()
+	 * @generated
+	 */
+	int KEY = 12;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__NAME = DEFAULT_TOOL_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__VALUE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Separator</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__SEPARATOR = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__PREFIX = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__TYPE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Key</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 4;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.tool.impl.RequirementImpl <em>Requirement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.tool.impl.RequirementImpl
+	 * @see easyflow.tool.impl.ToolPackageImpl#getRequirement()
+	 * @generated
+	 */
+	int REQUIREMENT = 13;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT__NAME = DEFAULT_TOOL_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT__TYPE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT__VERSION = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT__VALUE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Requirement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.tool.impl.DocumentPropertiesImpl <em>Document Properties</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.tool.impl.DocumentPropertiesImpl
+	 * @see easyflow.tool.impl.ToolPackageImpl#getDocumentProperties()
+	 * @generated
+	 */
+	int DOCUMENT_PROPERTIES = 14;
+
+	/**
+	 * The feature id for the '<em><b>Source URI</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_PROPERTIES__SOURCE_URI = 0;
+
+	/**
+	 * The feature id for the '<em><b>From Jar</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_PROPERTIES__FROM_JAR = 1;
+
+	/**
+	 * The number of structural features of the '<em>Document Properties</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_PROPERTIES_FEATURE_COUNT = 2;
 
 
 	/**
@@ -717,6 +1141,17 @@ public interface ToolPackage extends EPackage {
 	EAttribute getToolDefinitions_Logger();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.tool.ToolDefinitions#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Properties</em>'.
+	 * @see easyflow.tool.ToolDefinitions#getProperties()
+	 * @see #getToolDefinitions()
+	 * @generated
+	 */
+	EReference getToolDefinitions_Properties();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Tool <em>Tool</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -791,6 +1226,28 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTool_Package();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.tool.Tool#getRequirements <em>Requirements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Requirements</em>'.
+	 * @see easyflow.tool.Tool#getRequirements()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EReference getTool_Requirements();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Executables</em>'.
+	 * @see easyflow.tool.Tool#getExecutables()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EReference getTool_Executables();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.IToolElement <em>ITool Element</em>}'.
@@ -920,6 +1377,17 @@ public interface ToolPackage extends EPackage {
 	EClass getParameter();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see easyflow.tool.Parameter#getType()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Type();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isOptional <em>Optional</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -931,37 +1399,48 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_Optional();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isRepeatable <em>Repeatable</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isMultiple <em>Multiple</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Repeatable</em>'.
-	 * @see easyflow.tool.Parameter#isRepeatable()
+	 * @return the meta object for the attribute '<em>Multiple</em>'.
+	 * @see easyflow.tool.Parameter#isMultiple()
 	 * @see #getParameter()
 	 * @generated
 	 */
-	EAttribute getParameter_Repeatable();
+	EAttribute getParameter_Multiple();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isRepeatableValues <em>Repeatable Values</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isMultipleValue <em>Multiple Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Repeatable Values</em>'.
-	 * @see easyflow.tool.Parameter#isRepeatableValues()
+	 * @return the meta object for the attribute '<em>Multiple Value</em>'.
+	 * @see easyflow.tool.Parameter#isMultipleValue()
 	 * @see #getParameter()
 	 * @generated
 	 */
-	EAttribute getParameter_RepeatableValues();
+	EAttribute getParameter_MultipleValue();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getValues <em>Values</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.tool.Parameter#getValues <em>Values</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Values</em>'.
+	 * @return the meta object for the map '<em>Values</em>'.
 	 * @see easyflow.tool.Parameter#getValues()
 	 * @see #getParameter()
 	 * @generated
 	 */
-	EAttribute getParameter_Values();
+	EReference getParameter_Values();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getFormat <em>Format</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Format</em>'.
+	 * @see easyflow.tool.Parameter#getFormat()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Format();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getValueType <em>Value Type</em>}'.
@@ -986,15 +1465,136 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_DefaultValue();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getSeparator <em>Separator</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getDelimiter <em>Delimiter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Separator</em>'.
-	 * @see easyflow.tool.Parameter#getSeparator()
+	 * @return the meta object for the attribute '<em>Delimiter</em>'.
+	 * @see easyflow.tool.Parameter#getDelimiter()
 	 * @see #getParameter()
 	 * @generated
 	 */
-	EAttribute getParameter_Separator();
+	EAttribute getParameter_Delimiter();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getValueDelimiter <em>Value Delimiter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value Delimiter</em>'.
+	 * @see easyflow.tool.Parameter#getValueDelimiter()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_ValueDelimiter();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getPrefix <em>Prefix</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Prefix</em>'.
+	 * @see easyflow.tool.Parameter#getPrefix()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Prefix();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getLogger <em>Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.tool.Parameter#getLogger()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Logger();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Value</em>'.
+	 * @see easyflow.tool.Parameter#getValue()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Value();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.tool.Parameter#getKeys <em>Keys</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Keys</em>'.
+	 * @see easyflow.tool.Parameter#getKeys()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EReference getParameter_Keys();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isNamed <em>Named</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Named</em>'.
+	 * @see easyflow.tool.Parameter#isNamed()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Named();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see easyflow.tool.Parameter#getLabel()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Label();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getHelp <em>Help</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Help</em>'.
+	 * @see easyflow.tool.Parameter#getHelp()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Help();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getMinOcc <em>Min Occ</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Min Occ</em>'.
+	 * @see easyflow.tool.Parameter#getMinOcc()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_MinOcc();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getMaxOcc <em>Max Occ</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Max Occ</em>'.
+	 * @see easyflow.tool.Parameter#getMaxOcc()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_MaxOcc();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Advanced</em>'.
+	 * @see easyflow.tool.Parameter#isAdvanced()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Advanced();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Package <em>Package</em>}'.
@@ -1005,6 +1605,82 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getPackage();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.tool.Package#getParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Parameters</em>'.
+	 * @see easyflow.tool.Package#getParameters()
+	 * @see #getPackage()
+	 * @generated
+	 */
+	EReference getPackage_Parameters();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Package#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see easyflow.tool.Package#getId()
+	 * @see #getPackage()
+	 * @generated
+	 */
+	EAttribute getPackage_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Package#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Version</em>'.
+	 * @see easyflow.tool.Package#getVersion()
+	 * @see #getPackage()
+	 * @generated
+	 */
+	EAttribute getPackage_Version();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.tool.Data <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data</em>'.
+	 * @see easyflow.tool.Data
+	 * @generated
+	 */
+	EClass getData();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Data#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see easyflow.tool.Data#getLabel()
+	 * @see #getData()
+	 * @generated
+	 */
+	EAttribute getData_Label();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.tool.Data#getPort <em>Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Port</em>'.
+	 * @see easyflow.tool.Data#getPort()
+	 * @see #getData()
+	 * @generated
+	 */
+	EReference getData_Port();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Data#isOutput <em>Output</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Output</em>'.
+	 * @see easyflow.tool.Data#isOutput()
+	 * @see #getData()
+	 * @generated
+	 */
+	EAttribute getData_Output();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.DataPort <em>Data Port</em>}'.
@@ -1060,15 +1736,133 @@ public interface ToolPackage extends EPackage {
 	EClass getDataFormat();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.DataFormat#getName <em>Name</em>}'.
+	 * Returns the meta object for class '{@link easyflow.tool.Key <em>Key</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see easyflow.tool.DataFormat#getName()
-	 * @see #getDataFormat()
+	 * @return the meta object for class '<em>Key</em>'.
+	 * @see easyflow.tool.Key
 	 * @generated
 	 */
-	EAttribute getDataFormat_Name();
+	EClass getKey();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Key#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see easyflow.tool.Key#getValue()
+	 * @see #getKey()
+	 * @generated
+	 */
+	EAttribute getKey_Value();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Key#getSeparator <em>Separator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Separator</em>'.
+	 * @see easyflow.tool.Key#getSeparator()
+	 * @see #getKey()
+	 * @generated
+	 */
+	EAttribute getKey_Separator();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Key#getPrefix <em>Prefix</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Prefix</em>'.
+	 * @see easyflow.tool.Key#getPrefix()
+	 * @see #getKey()
+	 * @generated
+	 */
+	EAttribute getKey_Prefix();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Key#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see easyflow.tool.Key#getType()
+	 * @see #getKey()
+	 * @generated
+	 */
+	EAttribute getKey_Type();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.tool.Requirement <em>Requirement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Requirement</em>'.
+	 * @see easyflow.tool.Requirement
+	 * @generated
+	 */
+	EClass getRequirement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Requirement#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see easyflow.tool.Requirement#getType()
+	 * @see #getRequirement()
+	 * @generated
+	 */
+	EAttribute getRequirement_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Requirement#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Version</em>'.
+	 * @see easyflow.tool.Requirement#getVersion()
+	 * @see #getRequirement()
+	 * @generated
+	 */
+	EAttribute getRequirement_Version();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Requirement#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see easyflow.tool.Requirement#getValue()
+	 * @see #getRequirement()
+	 * @generated
+	 */
+	EAttribute getRequirement_Value();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.tool.DocumentProperties <em>Document Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Document Properties</em>'.
+	 * @see easyflow.tool.DocumentProperties
+	 * @generated
+	 */
+	EClass getDocumentProperties();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.DocumentProperties#getSourceURI <em>Source URI</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Source URI</em>'.
+	 * @see easyflow.tool.DocumentProperties#getSourceURI()
+	 * @see #getDocumentProperties()
+	 * @generated
+	 */
+	EAttribute getDocumentProperties_SourceURI();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.DocumentProperties#isFromJar <em>From Jar</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>From Jar</em>'.
+	 * @see easyflow.tool.DocumentProperties#isFromJar()
+	 * @see #getDocumentProperties()
+	 * @generated
+	 */
+	EAttribute getDocumentProperties_FromJar();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1161,6 +1955,14 @@ public interface ToolPackage extends EPackage {
 		EAttribute TOOL_DEFINITIONS__LOGGER = eINSTANCE.getToolDefinitions_Logger();
 
 		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_DEFINITIONS__PROPERTIES = eINSTANCE.getToolDefinitions_Properties();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ToolImpl <em>Tool</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1217,6 +2019,22 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOOL__PACKAGE = eINSTANCE.getTool_Package();
+
+		/**
+		 * The meta object literal for the '<em><b>Requirements</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL__REQUIREMENTS = eINSTANCE.getTool_Requirements();
+
+		/**
+		 * The meta object literal for the '<em><b>Executables</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL__EXECUTABLES = eINSTANCE.getTool_Executables();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.IToolElement <em>ITool Element</em>}' class.
@@ -1325,6 +2143,14 @@ public interface ToolPackage extends EPackage {
 		EClass PARAMETER = eINSTANCE.getParameter();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__TYPE = eINSTANCE.getParameter_Type();
+
+		/**
 		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1333,28 +2159,36 @@ public interface ToolPackage extends EPackage {
 		EAttribute PARAMETER__OPTIONAL = eINSTANCE.getParameter_Optional();
 
 		/**
-		 * The meta object literal for the '<em><b>Repeatable</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Multiple</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__REPEATABLE = eINSTANCE.getParameter_Repeatable();
+		EAttribute PARAMETER__MULTIPLE = eINSTANCE.getParameter_Multiple();
 
 		/**
-		 * The meta object literal for the '<em><b>Repeatable Values</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Multiple Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__REPEATABLE_VALUES = eINSTANCE.getParameter_RepeatableValues();
+		EAttribute PARAMETER__MULTIPLE_VALUE = eINSTANCE.getParameter_MultipleValue();
 
 		/**
-		 * The meta object literal for the '<em><b>Values</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Values</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__VALUES = eINSTANCE.getParameter_Values();
+		EReference PARAMETER__VALUES = eINSTANCE.getParameter_Values();
+
+		/**
+		 * The meta object literal for the '<em><b>Format</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__FORMAT = eINSTANCE.getParameter_Format();
 
 		/**
 		 * The meta object literal for the '<em><b>Value Type</b></em>' attribute feature.
@@ -1373,12 +2207,100 @@ public interface ToolPackage extends EPackage {
 		EAttribute PARAMETER__DEFAULT_VALUE = eINSTANCE.getParameter_DefaultValue();
 
 		/**
-		 * The meta object literal for the '<em><b>Separator</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Delimiter</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__SEPARATOR = eINSTANCE.getParameter_Separator();
+		EAttribute PARAMETER__DELIMITER = eINSTANCE.getParameter_Delimiter();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Delimiter</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__VALUE_DELIMITER = eINSTANCE.getParameter_ValueDelimiter();
+
+		/**
+		 * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__PREFIX = eINSTANCE.getParameter_Prefix();
+
+		/**
+		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__LOGGER = eINSTANCE.getParameter_Logger();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__VALUE = eINSTANCE.getParameter_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Keys</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARAMETER__KEYS = eINSTANCE.getParameter_Keys();
+
+		/**
+		 * The meta object literal for the '<em><b>Named</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__NAMED = eINSTANCE.getParameter_Named();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__LABEL = eINSTANCE.getParameter_Label();
+
+		/**
+		 * The meta object literal for the '<em><b>Help</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__HELP = eINSTANCE.getParameter_Help();
+
+		/**
+		 * The meta object literal for the '<em><b>Min Occ</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__MIN_OCC = eINSTANCE.getParameter_MinOcc();
+
+		/**
+		 * The meta object literal for the '<em><b>Max Occ</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__MAX_OCC = eINSTANCE.getParameter_MaxOcc();
+
+		/**
+		 * The meta object literal for the '<em><b>Advanced</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__ADVANCED = eINSTANCE.getParameter_Advanced();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -1389,6 +2311,64 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PACKAGE = eINSTANCE.getPackage();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PACKAGE__PARAMETERS = eINSTANCE.getPackage_Parameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PACKAGE__ID = eINSTANCE.getPackage_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PACKAGE__VERSION = eINSTANCE.getPackage_Version();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.tool.impl.DataImpl <em>Data</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.tool.impl.DataImpl
+		 * @see easyflow.tool.impl.ToolPackageImpl#getData()
+		 * @generated
+		 */
+		EClass DATA = eINSTANCE.getData();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA__LABEL = eINSTANCE.getData_Label();
+
+		/**
+		 * The meta object literal for the '<em><b>Port</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA__PORT = eINSTANCE.getData_Port();
+
+		/**
+		 * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA__OUTPUT = eINSTANCE.getData_Output();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.DataPortImpl <em>Data Port</em>}' class.
@@ -1435,12 +2415,106 @@ public interface ToolPackage extends EPackage {
 		EClass DATA_FORMAT = eINSTANCE.getDataFormat();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '{@link easyflow.tool.impl.KeyImpl <em>Key</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.tool.impl.KeyImpl
+		 * @see easyflow.tool.impl.ToolPackageImpl#getKey()
+		 * @generated
+		 */
+		EClass KEY = eINSTANCE.getKey();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DATA_FORMAT__NAME = eINSTANCE.getDataFormat_Name();
+		EAttribute KEY__VALUE = eINSTANCE.getKey_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Separator</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute KEY__SEPARATOR = eINSTANCE.getKey_Separator();
+
+		/**
+		 * The meta object literal for the '<em><b>Prefix</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute KEY__PREFIX = eINSTANCE.getKey_Prefix();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute KEY__TYPE = eINSTANCE.getKey_Type();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.tool.impl.RequirementImpl <em>Requirement</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.tool.impl.RequirementImpl
+		 * @see easyflow.tool.impl.ToolPackageImpl#getRequirement()
+		 * @generated
+		 */
+		EClass REQUIREMENT = eINSTANCE.getRequirement();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REQUIREMENT__TYPE = eINSTANCE.getRequirement_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REQUIREMENT__VERSION = eINSTANCE.getRequirement_Version();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REQUIREMENT__VALUE = eINSTANCE.getRequirement_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.tool.impl.DocumentPropertiesImpl <em>Document Properties</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.tool.impl.DocumentPropertiesImpl
+		 * @see easyflow.tool.impl.ToolPackageImpl#getDocumentProperties()
+		 * @generated
+		 */
+		EClass DOCUMENT_PROPERTIES = eINSTANCE.getDocumentProperties();
+
+		/**
+		 * The meta object literal for the '<em><b>Source URI</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOCUMENT_PROPERTIES__SOURCE_URI = eINSTANCE.getDocumentProperties_SourceURI();
+
+		/**
+		 * The meta object literal for the '<em><b>From Jar</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOCUMENT_PROPERTIES__FROM_JAR = eINSTANCE.getDocumentProperties_FromJar();
 
 	}
 

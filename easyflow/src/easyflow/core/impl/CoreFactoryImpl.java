@@ -67,6 +67,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.EASYFLOW_TASK_READER: return createEasyflowTaskReader();
 			case CorePackage.GALAXY_TASK_READER: return createGalaxyTaskReader();
 			case CorePackage.DEFAULT_RECORD: return createDefaultRecord();
+			case CorePackage.CATALOG: return createCatalog();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -140,6 +141,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public DefaultRecord createDefaultRecord() {
 		DefaultRecordImpl defaultRecord = new DefaultRecordImpl();
 		return defaultRecord;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Catalog createCatalog() {
+		CatalogImpl catalog = new CatalogImpl();
+		return catalog;
 	}
 
 	/**

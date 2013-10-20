@@ -9,19 +9,30 @@ package easyflow.tool.impl;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
+import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToURIMapImpl;
+import java.net.URI;
+import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.w3c.dom.Element;
 
 /**
@@ -39,6 +50,8 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getInterpreter <em>Interpreter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getPackage <em>Package</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getRequirements <em>Requirements</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getExecutables <em>Executables</em>}</li>
  * </ul>
  * </p>
  *
@@ -165,6 +178,25 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 */
 	protected easyflow.tool.Package package_;
 
+	/**
+	 * The cached value of the '{@link #getRequirements() <em>Requirements</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRequirements()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Requirement> requirements;
+
+	/**
+	 * The cached value of the '{@link #getExecutables() <em>Executables</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExecutables()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, URI> executables;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -399,6 +431,30 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Requirement> getRequirements() {
+		if (requirements == null) {
+			requirements = new EObjectResolvingEList<Requirement>(Requirement.class, this, ToolPackage.TOOL__REQUIREMENTS);
+		}
+		return requirements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, URI> getExecutables() {
+		if (executables == null) {
+			executables = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, ToolPackage.TOOL__EXECUTABLES);
+		}
+		return executables;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public void writeModelToXML() {
@@ -427,6 +483,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		switch (featureID) {
 			case ToolPackage.TOOL__COMMAND:
 				return basicSetCommand(null, msgs);
+			case ToolPackage.TOOL__EXECUTABLES:
+				return ((InternalEList<?>)getExecutables()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -457,6 +515,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__PACKAGE:
 				if (resolve) return getPackage();
 				return basicGetPackage();
+			case ToolPackage.TOOL__REQUIREMENTS:
+				return getRequirements();
+			case ToolPackage.TOOL__EXECUTABLES:
+				if (coreType) return getExecutables();
+				else return getExecutables().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -466,6 +529,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -489,6 +553,13 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return;
 			case ToolPackage.TOOL__PACKAGE:
 				setPackage((easyflow.tool.Package)newValue);
+				return;
+			case ToolPackage.TOOL__REQUIREMENTS:
+				getRequirements().clear();
+				getRequirements().addAll((Collection<? extends Requirement>)newValue);
+				return;
+			case ToolPackage.TOOL__EXECUTABLES:
+				((EStructuralFeature.Setting)getExecutables()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -523,6 +594,12 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__PACKAGE:
 				setPackage((easyflow.tool.Package)null);
 				return;
+			case ToolPackage.TOOL__REQUIREMENTS:
+				getRequirements().clear();
+				return;
+			case ToolPackage.TOOL__EXECUTABLES:
+				getExecutables().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -551,6 +628,10 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return command != null;
 			case ToolPackage.TOOL__PACKAGE:
 				return package_ != null;
+			case ToolPackage.TOOL__REQUIREMENTS:
+				return requirements != null && !requirements.isEmpty();
+			case ToolPackage.TOOL__EXECUTABLES:
+				return executables != null && !executables.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

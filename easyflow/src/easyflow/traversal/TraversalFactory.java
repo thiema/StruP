@@ -71,6 +71,15 @@ public interface TraversalFactory extends EFactory {
 	TraversalChunk createTraversalChunk();
 
 	/**
+	 * Returns a new object of class '<em>Data Ports</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data Ports</em>'.
+	 * @generated
+	 */
+	DataPorts createDataPorts();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
