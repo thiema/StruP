@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="gatk2_haplotype_caller"
+      name="Haplotype Caller"
+      version="0.0.7">
+  <description>Call SNPs and indels simultaneously via local de-novo assembly of haplotypes in an active region</description>
+  <requirements>
+      <requirement type="package" version="2.3">gatk</requirement>
+      <requirement type="package" version="0.1.18">samtools</requirement>
+  </requirements>
+  
+  
+    <param name="input_recal" type="data" format="gatk_report"
+          help="-BQSR,--BQSR &amp;lt;recal_file&amp;gt;"
+          label="Covariates table recalibration file"
+          optional="true">
+      <key type="short">BQSR</key>
+      <key type="long">BQSR</key>
+   </param>
+    <param name="input_bam" type="data" format="bam"
+          help="-I,--input_file &amp;lt;input_file&amp;gt;"
+          label="BAM file">
+      <key type="short">I</key>
+      <key type="long">input_file</key>
+   </param>
+   <param name="ref_file" type="data" format="fasta"
+          help="-R,--reference_sequence &amp;lt;reference_sequence&amp;gt;"
+          label="Using reference file">
+      <key type="short">R</key>
+      <key type="long">reference_sequence</key>
+   </param>
+    
+    <conditional name="gatk_param_type">
+      <param name="gatk_param_type_selector" type="select"
+             label="Basic or Advanced GATK options"/>
+      <when value="basic">
+        
+      </when>
+      <when value="advanced">
+        <param name="pedigree_file" type="data" format="txt"
+                help="-ped,--pedigree &amp;lt;pedigree&amp;gt;"
+                label="Pedigree files for samples"
+                multiple="true"/>
+        <param name="pedigree_string" type="text"
+                help="-pedString,--pedigreeString &amp;lt;pedigreeString&amp;gt;"
+                label="Pedigree string for samples"
+                multiple="true"/>
+        <param name="pedigree_validation_type" type="select"
+                help="-pedValidationType,--pedigreeValidationType &amp;lt;pedigreeValidationType&amp;gt;"
+                label="How strict should we be in validating the pedigree information">
+            <key type="short">pedValidationType</key>
+            <key type="long">pedigreeValidationType</key>
+         </param>
+        <conditional name="read_filter_type">
+              <param name="read_filter_type_selector" type="select" label="Read Filter Type"/>
+              <when value="BadCigar">
+                  
+              </when>
+              <when value="BadMate">
+                  
+              </when>
+              <when value="DuplicateRead">
+                  
+              </when>
+              <when value="FailsVendorQualityCheck">
+                  
+              </when>
+              <when value="MalformedRead">
+                  <param name="filter_mismatching_base_and_quals" type="boolean"
+                      help="filter out the mismatch reads instead of quitting with an error"
+                      label="filter out the reads with mismatching number of bases and base qualities"
+                      defaultValue="true">
+                  <key type="long">filter_mismatching_base_and_quals</key>
+                  <key>filter</key>
+               </param>
+              </when>
+              <when value="MappingQuality">
+                  <param name="min_mapping_quality_score" type="integer"
+                      label="Minimum read mapping quality required to consider a read for calling"/>
+              </when>
+              <when value="MappingQualityUnavailable">
+                  
+              </when>
+              <when value="MappingQualityZero">
+                  
+              </when>
+              <when value="MateSameStrand">
+                  
+              </when>
+              <when value="MaxInsertSize">
+                  <param name="maxInsertSize" type="integer"
+                      label="Discard reads with insert size greater than the specified value"/>
+              </when>
+              <when value="MaxReadLength">
+                  <param name="maxReadLength" type="integer" label="Max Read Length"/>
+              </when>
+              <when value="MissingReadGroup">
+                  
+              </when>
+              <when value="NoOriginalQualityScores">
+                  
+              </when>
+              <when value="NotPrimaryAlignment">
+                  
+              </when>
+              <when value="Platform454">
+                  
+              </when>
+              <when value="Platform">
+                  <param name="PLFilterName" type="text"
+                      label="Discard reads with RG:PL attribute containing this string"/>
+              </when>
+              <when value="PlatformUnit">
+                  
+              </when>
+              <when value="ReadGroupBlackList">
+                  
+              </when>
+              <when value="ReadName">
+                  <param name="readName" type="text"
+                      label="Filter out all reads except those with this read name"/>
+              </when>
+              <when value="ReadStrand">
+                  <param name="filterPositive" type="boolean"
+                      label="Discard reads on the forward strand"
+                      defaultValue="true">
+                  <key type="long">filterPositive</key>
+               </param>
+              </when>
+              <when value="ReassignMappingQuality">
+                  <param name="default_mapping_quality" type="integer"
+                      label="Default read mapping quality to assign to all reads"/>
+              </when>
+              <when value="Sample">
+                  <param name="sample_to_keep" type="text"
+                      label="The name of the sample(s) to keep, filtering out all others"/>
+              </when>
+              <when value="SingleReadGroup">
+                  <param name="read_group_to_keep" type="integer"
+                      label="The name of the read group to keep, filtering out all others"/>
+              </when>
+              <when value="UnmappedRead">
+                  
+              </when>
+            </conditional>
+        <param name="input_intervals" type="data"
+                format="bed,gatk_interval,picard_interval_list,vcf"
+                help="-L,--intervals &amp;lt;intervals&amp;gt;"
+                label="Genomic intervals"
+                multiple="true"/>
+        <param name="input_exclude_intervals" type="data"
+                format="bed,gatk_interval,picard_interval_list,vcf"
+                help="-XL,--excludeIntervals &amp;lt;excludeIntervals&amp;gt;"
+                label="Genomic intervals"
+                multiple="true"/>
+        
+        <param name="interval_set_rule" type="select"
+                help="-isr,--interval_set_rule &amp;lt;interval_set_rule&amp;gt;"
+                label="Interval set rule">
+            <key type="short">isr</key>
+            <key type="long">interval_set_rule</key>
+         </param>
+        
+        <conditional name="downsampling_type">
+            <param name="downsampling_type_selector" type="select"
+                   help="-dt,--downsampling_type &amp;lt;downsampling_type&amp;gt;"
+                   label="Type of reads downsampling to employ at a given locus">
+               <key type="short">dt</key>
+               <key type="long">downsampling_type</key>
+            </param>
+            <when value="NONE">
+              
+          </when>
+            <when value="ALL_READS">
+              <conditional name="downsample_to_type">
+                  <param name="downsample_to_type_selector" type="select" label="Downsample method"/>
+                  <when value="downsample_to_fraction">
+                      <param name="downsample_to_value" type="float"
+                            help="-dfrac,--downsample_to_fraction &amp;lt;downsample_to_fraction&amp;gt;"
+                            label="Fraction [0.0-1.0] of reads to downsample to">
+                        <key type="short">dfrac</key>
+                        <key type="long">downsample_to_fraction</key>
+                     </param>
+                  </when>
+                  <when value="downsample_to_coverage">
+                      <param name="downsample_to_value" type="integer"
+                            help="-dcov,--downsample_to_coverage &amp;lt;downsample_to_coverage&amp;gt;"
+                            label="Coverage to downsample to at any given locus">
+                        <key type="short">dcov</key>
+                        <key type="long">downsample_to_coverage</key>
+                     </param>
+                  </when>
+              </conditional>
+            </when>
+            <when value="BY_SAMPLE">
+              <conditional name="downsample_to_type">
+                  <param name="downsample_to_type_selector" type="select" label="Downsample method"/>
+                  <when value="downsample_to_fraction">
+                      <param name="downsample_to_value" type="float"
+                            help="-dfrac,--downsample_to_fraction &amp;lt;downsample_to_fraction&amp;gt;"
+                            label="Fraction [0.0-1.0] of reads to downsample to">
+                        <key type="short">dfrac</key>
+                        <key type="long">downsample_to_fraction</key>
+                     </param>
+                  </when>
+                  <when value="downsample_to_coverage">
+                      <param name="downsample_to_value" type="integer"
+                            help="-dcov,--downsample_to_coverage &amp;lt;downsample_to_coverage&amp;gt;"
+                            label="Coverage to downsample to at any given locus">
+                        <key type="short">dcov</key>
+                        <key type="long">downsample_to_coverage</key>
+                     </param>
+                  </when>
+              </conditional>
+            </when>
+        </conditional>
+        <param name="baq" type="select" help="-baq,--baq &amp;lt;baq&amp;gt;"
+                label="Type of BAQ calculation to apply in the engine">
+            <key type="short">baq</key>
+            <key type="long">baq</key>
+         </param>
+        <param name="baq_gap_open_penalty" type="float"
+                help="Default value is 40. 30 is perhaps better for whole genome call sets. -baqGOP,--baqGapOpenPenalty &amp;lt;baqGapOpenPenalty&amp;gt;"
+                label="BAQ gap open penalty (Phred Scaled)">
+            <key>Default</key>
+         </param>
+        <param name="use_original_qualities" type="boolean" help="-OQ,--useOriginalQualities"
+                label="Use the original base quality scores from the OQ tag"
+                defaultValue="true">
+            <key type="long">useOriginalQualities</key>
+            <key type="short">OQ</key>
+         </param>
+        <param name="default_base_qualities" type="integer"
+                help="-DBQ,--defaultBaseQualities &amp;lt;defaultBaseQualities&amp;gt;"
+                label="Value to be used for all base quality scores, when some are missing">
+            <key type="short">DBQ</key>
+            <key type="long">defaultBaseQualities</key>
+         </param>
+        <param name="validation_strictness" type="select"
+                help="-S,--validation_strictness &amp;lt;validation_strictness&amp;gt;"
+                label="How strict should we be with validation">
+            <key type="short">S</key>
+            <key type="long">validation_strictness</key>
+         </param>
+        <param name="interval_merging" type="select"
+                help="-im,--interval_merging &amp;lt;interval_merging&amp;gt;"
+                label="Interval merging rule">
+            <key type="short">im</key>
+            <key type="long">interval_merging</key>
+         </param>
+        
+        <conditional name="read_group_black_list_type">
+            <param name="read_group_black_list_type_selector" type="select"
+                   label="Type of reads read group black list"/>
+            <when value="file">
+              <param name="read_group_black_list" type="data" format="txt"
+                      label="Read group black list file"/>
+            </when>
+            <when value="text">
+              <param name="read_group_black_list" type="text"
+                      label="Read group black list tag:string"/>
+            </when>
+          </conditional>
+        
+        <param name="non_deterministic_random_seed" type="boolean"
+                help="-ndrs,--nonDeterministicRandomSeed"
+                label="Makes the GATK behave non deterministically, that is, the random numbers generated will be different in every run"
+                defaultValue="true">
+            <key type="long">nonDeterministicRandomSeed</key>
+            <key type="short">ndrs</key>
+         </param>
+        <param name="fix_misencoded_quality_scores" type="boolean"
+                help="-fixMisencodedQuals / --fix_misencoded_quality_scores"
+                label="Fix mis-encoded base quality scores. Q0 == ASCII 33 according to the SAM specification, whereas Illumina encoding starts at Q64. The idea here is simple: we just iterate over all reads and subtract 31 from every quality score."
+                defaultValue="true">
+            <key type="long">fix_misencoded_quality_scores</key>
+            <key type="short">fixMisencodedQuals</key>
+         </param>
+        
+      </when>
+    </conditional>
+
+    <conditional name="analysis_param_type">
+      <param name="analysis_param_type_selector" type="select"
+             label="Basic or Advanced Analysis options"/>
+      <when value="basic">
+        
+      </when>
+      <when value="advanced">
+
+        <param name="activeRegionIn" type="data"
+                format="bed,gatk_interval,picard_interval_list,vcf"
+                help="--activeRegionIn / -AR  Use this interval list file as the active regions to process"
+                label="activeRegionIn"
+                optional="true">
+            <key type="long">activeRegionIn</key>
+         </param>
+        <param name="activeRegionOut" type="boolean"
+                help="--activeRegionOut / -ARO  Output the active region to an interval list file"
+                label="activeRegionOut"
+                defaultValue="true">
+            <key type="long">activeRegionOut</key>
+         </param>
+
+        <param name="annotation" type="select" help="-A,--annotation &amp;lt;annotation&amp;gt;"
+                label="Annotation Types">
+            <key type="short">A</key>
+            <key type="long">annotation</key>
+         </param>
+        <param name="additional_annotation_name" type="text"
+                help="-A,--annotation &amp;lt;annotation&amp;gt;"
+                label="Annotation name"
+                multiple="true"/>
+
+        <param name="group" type="select" help="-G,--group &amp;lt;group&amp;gt;"
+                label="Annotation Interfaces/Groups">
+            <key type="short">G</key>
+            <key type="long">group</key>
+         </param>
+    
+        <param name="exclude_annotations" type="select"
+                help="-XA,--excludeAnnotation &amp;lt;excludeAnnotation&amp;gt;"
+                label="Annotations to exclude">
+            <key type="short">XA</key>
+            <key type="long">excludeAnnotation</key>
+         </param>
+
+        <param name="comp" type="data" format="vcf" help="--comp / -comp  comparison VCF file"
+                label="comp"
+                optional="true">
+            <key type="long">comp</key>
+         </param>
+        <param name="contamination_fraction_to_filter" type="float"
+                help="--contamination_fraction_to_filter / -contamination  Fraction of contamination in sequencing data (for all samples) to aggressively remove"
+                label="contamination_fraction_to_filter"
+                optional="true">
+            <key type="long">contamination_fraction_to_filter</key>
+         </param>
+        <param name="dbsnp" type="data" format="vcf" help="--dbsnp / -D  dbSNP file"
+                label="dbsnp"
+                optional="true">
+            <key type="long">dbsnp</key>
+         </param>
+        <param name="debug" type="boolean"
+                help="--debug / -debug  If specified, print out very verbose debug information about each triggering active region"
+                label="debug"
+                defaultValue="true">
+            <key type="short">debug</key>
+            <key type="long">debug</key>
+         </param>
+        <param name="downsampleRegion" type="integer"
+                help="--downsampleRegion / -dr  coverage, per-sample, to downsample each active region to"
+                label="downsampleRegion"
+                optional="true">
+            <key type="long">downsampleRegion</key>
+         </param>
+
+        <conditional name="genotyping_mode_type">
+            <param name="genotyping_mode" type="select"
+                   help="-gt_mode,--genotyping_mode &amp;lt;genotyping_mode&amp;gt;"
+                   label="How to determine the alternate allele to use for genotyping">
+               <key type="short">gt_mode</key>
+               <key type="long">genotyping_mode</key>
+            </param>
+            <when value="DISCOVERY">
+            
+          </when>
+            <when value="GENOTYPE_GIVEN_ALLELES">
+               <param name="input_alleles_rod" type="data" format="vcf"
+                      help="-alleles,--alleles &amp;lt;alleles&amp;gt;"
+                      label="Alleles ROD file">
+                  <key type="short">alleles</key>
+                  <key type="long">alleles</key>
+               </param>
+            </when>
+        </conditional>
+
+
+        <param name="graphOutput" type="boolean"
+                help="--graphOutput / -graph  File to which debug assembly graph information should be written"
+                label="graphOutput"
+                defaultValue="true">
+            <key type="long">graphOutput</key>
+         </param>
+        <param name="heterozygosity" type="float"
+                help="--heterozygosity / -hets  Heterozygosity value used to compute prior likelihoods for any locus"
+                label="heterozygosity"
+                optional="true">
+            <key type="long">heterozygosity</key>
+         </param>
+        <param name="minPruning" type="integer"
+                help="--minPruning / -minPruning  The minimum allowed pruning factor in assembly graph. Paths with &gt;= X supporting kmers are pruned from the graph"
+                label="minPruning"
+                optional="true">
+            <key type="long">minPruning</key>
+         </param>
+        <param name="output_mode" type="select"
+                help="--output_mode / -out_mode  Specifies which type of calls we should output"
+                label="output_mode"
+                optional="true">
+            <key type="long">output_mode</key>
+         </param>
+        <param name="pair_hmm_implementation" type="select"
+                help="--pair_hmm_implementation / -pairHMM  The PairHMM implementation to use for genotype likelihood calculations"
+                label="pair_hmm_implementation"
+                optional="true">
+            <key type="long">pair_hmm_implementation</key>
+         </param>
+        <param name="standard_min_confidence_threshold_for_calling" type="float"
+                help="--standard_min_confidence_threshold_for_calling / -stand_call_conf  The minimum phred-scaled confidence threshold at which variants should be called"
+                label="standard_min_confidence_threshold_for_calling"
+                optional="true">
+            <key type="long">standard_min_confidence_threshold_for_calling</key>
+         </param>
+        <param name="standard_min_confidence_threshold_for_emitting" type="float"
+                help="--standard_min_confidence_threshold_for_emitting / -stand_emit_conf  The minimum phred-scaled confidence threshold at which variants should be emitted (and filtered with LowQual if less than the calling threshold)"
+                label="standard_min_confidence_threshold_for_emitting"
+                optional="true">
+            <key type="long">standard_min_confidence_threshold_for_emitting</key>
+         </param>
+        <param name="useAllelesTrigger" type="boolean"
+                help="--useAllelesTrigger / -allelesTrigger  If specified, use additional trigger on variants found in an external alleles file"
+                label="useAllelesTrigger"
+                defaultValue="true">
+            <key type="short">allelesTrigger</key>
+            <key type="long">useAllelesTrigger</key>
+         </param>
+        <param name="fullHaplotype" type="boolean"
+                help="--fullHaplotype / -fullHaplotype  If specified, output the full haplotype sequence instead of converting to individual variants w.r.t. the reference"
+                label="fullHaplotype"
+                defaultValue="true">
+            <key type="short">fullHaplotype</key>
+            <key type="long">fullHaplotype</key>
+         </param>
+        <param name="gcpHMM" type="integer"
+                help="--gcpHMM / -gcpHMM  Flat gap continuation penalty for use in the Pair HMM"
+                label="gcpHMM"
+                optional="true">
+            <key type="long">gcpHMM</key>
+         </param>
+        <param name="genotypeFullActiveRegion" type="boolean"
+                help="--genotypeFullActiveRegion / -genotypeFullActiveRegion  If specified, alternate alleles are considered to be the full active region for the purposes of genotyping"
+                label="genotypeFullActiveRegion"
+                defaultValue="true">
+            <key type="short">genotypeFullActiveRegion</key>
+            <key type="long">genotypeFullActiveRegion</key>
+         </param>
+        <param name="max_alternate_alleles" type="integer"
+                help="--max_alternate_alleles / -maxAltAlleles  Maximum number of alternate alleles to genotype"
+                label="max_alternate_alleles"
+                optional="true">
+            <key type="long">max_alternate_alleles</key>
+         </param>
+        <param name="p_nonref_model" type="select"
+                help="--p_nonref_model / -pnrm  Non-reference probability calculation model to employ"
+                label="p_nonref_model"
+                optional="true">
+            <key type="long">p_nonref_model</key>
+         </param>
+
+      </when>
+    </conditional>
+  
+  
+    <param name="output_vcf" type="data" format="vcf"
+          label="${tool.name} on ${on_string} (VCF)"
+          output="true"/>
+    <param name="graph_out" type="data" format="vcf"
+          label="${tool.name} on ${on_string} graph"
+          output="true"/>
+    <param name="active_region_out" type="data" format="vcf"
+          label="${tool.name} on ${on_string} activeRegion"
+          output="true"/>
+    <param name="output_log" type="data" format="txt"
+          label="${tool.name} on ${on_string} (log)"
+          output="true"/>
+  
+    <data name="output_vcf" format="vcf" label="${tool.name} on ${on_string} (VCF)"/>
+    <data name="graph_out" format="vcf" label="${tool.name} on ${on_string} graph">
+      <filter>analysis_param_type['analysis_param_type_selector'] == "advanced" and analysis_param_type['graphOutput'] == True</filter>
+    </data>
+    <data name="active_region_out" format="vcf"
+         label="${tool.name} on ${on_string} activeRegion">
+      <filter>analysis_param_type['analysis_param_type_selector'] == "advanced" and analysis_param_type['activeRegionOut'] == True</filter>
+    </data>
+    <data name="output_log" format="txt" label="${tool.name} on ${on_string} (log)"/>
+  
+  
+  
+</tool>

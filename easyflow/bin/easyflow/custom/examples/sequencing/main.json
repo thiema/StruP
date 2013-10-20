@@ -1,0 +1,44 @@
+{
+	
+  "project" : {
+	"workflowTemplateFile" : "abstract_multiple_traversal_event.workflow",
+	"workflowTemplateFile1" : "abstract1.workflow",
+	"workflowTemplateFile3" : "reseq_simple.workflow",
+	"workflowTemplateFile_reseq" : "reseq_full.workflow",
+    "metadataFile" : "metadata_abstract.tsv", 
+    "metadataFile2" : "metadata_sequencing.tsv",	
+
+    "refFile" : "ref.fa",
+
+    "isContrast" : "true",
+    "useIntervalList" : "true",
+    "splitByContig" : "true",
+
+    "_target_enum" : ["sge", "local", "aws", "pegasus"],
+    "target" : "sge",
+    "useThreads" : "true",
+    "numThreads" : 10,
+    "queue" : "bioinf.q"
+  },
+
+  "contrast": {
+    "_rule_enum" : ["crossProduct", "groupWise", "sampleWise"],
+    "rule" : "crossProduct"
+  },
+
+  "workflow": {
+    "input" : "FASTQ",
+    "workflows" : ["w1", "w2"], 
+    "w1" : ["MapReads", "AddReadGroup"],
+    "w2" : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
+    "defaultGroupingCriteria" : ["Record"],
+    "mode" : "batch"
+  },
+  
+  "tool" : {
+  	"dir" : "tool_definitions",
+  	"tools" : ["tool.xml", "anytool.xml", "tools.xml", "depth_of_coverage.xml"],
+  	"schemata" : ["../../../tool/schema/Easyflow.xsd", "../../../tool/schema/Easyflow_multiple.xsd", "../../../tool/schema/external/Galaxy.xsd"]
+  }
+
+}

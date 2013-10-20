@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="bedtools_mergebedgraph"
+      name="Merge multiple BedGraph files"
+      version="0.1.0">
+	  <description/>
+	
+	  <requirements>
+        <requirement type="binary">unionBedGraphs</requirement>
+    </requirements>
+    
+	
+	
+	
+		
+		
+		<param name="input1" type="data" format="bedgraph" label="First BedGraph file"/>
+		
+		<conditional name="name1">
+			   <param name="choice" type="select" label="Sample name"/>
+			   <when value="tag">
+			</when>
+			   <when value="custom">
+				     <param name="custom_name" type="text" label="Custom sample name"/>
+			   </when>
+		</conditional>
+
+		
+		<param name="input2" type="data" format="bedgraph" label="Second BedGraph file"/>
+		
+		<conditional name="name2">
+			   <param name="choice" type="select" label="Sample name"/>
+			   <when value="tag">
+			</when>
+			   <when value="custom">
+				     <param name="custom_name" type="text" label="Custom sample name"/>
+			   </when>
+		</conditional>
+
+		
+		<param name="input" type="data" format="bedgraph" label="BedGraph file"
+          multiple="true"/>
+   <conditional name="name">
+				  <param name="choice" type="select" label="Sample name"/>
+				  <when value="tag">
+				</when>
+				  <when value="custom">
+					    <param name="custom_name" type="text" label="Custom sample name"/>
+				  </when>
+			</conditional>
+
+		<param name="header" type="boolean"
+          help="The first line will include the name of each sample."
+          label="Print header line"
+          defaultValue="true">
+      <key type="short">header</key>
+      <key>The</key>
+   </param>
+
+		<param name="zero" type="boolean"
+          help="If set, regions without any coverage will also be reported. Requires a valid organism key for all input datasets"
+          label="Report regions with zero coverage">
+      <key>If</key>
+   </param>
+
+		<param name="filler" type="text" help="Can be 0.0, N/A, - or any other value."
+          label="Text to use for no-coverage value">
+      <key>Can</key>
+   </param>
+	
+
+	
+		<param name="output" type="data" format="tabular"
+          label="Merged BedGraphs of ${input1.name}, ${input2.name} and so on."
+          output="true"/>
+	
+		<data name="output" format="tabular"
+         label="Merged BedGraphs of ${input1.name}, ${input2.name} and so on."
+         metadata_source="input1"/>
+	
+	
+</tool>
