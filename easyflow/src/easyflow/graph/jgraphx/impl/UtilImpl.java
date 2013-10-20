@@ -6,17 +6,20 @@
  */
 package easyflow.graph.jgraphx.impl;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 
 import easyflow.EasyflowFactory;
+import easyflow.core.Catalog;
 import easyflow.core.CorePackage;
 
 
@@ -26,7 +29,10 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.core.CoreFactory;
 
 import easyflow.core.Task;
+import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.execution.IExecutionSystem;
 import easyflow.core.Workflow;
 import easyflow.custom.util.XMLUtil;
 
@@ -35,6 +41,8 @@ import easyflow.graph.jgraphx.Util;
 
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
+import easyflow.tool.Tool;
+import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
 import easyflow.traversal.TraversalFactory;
@@ -536,8 +544,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * enumerate all different paths and update the traversal events.
-	 * the traversal events are supposed to be unmerged.
+	 * enumerate all unique paths and update the traversal events.
+	 * the traversal events are supposed to be unmerged. I.e. traversal events of the same type
+	 * might occur along subsequent nodes on a path.
 	 * Main concern is to merge all traversal events, that have a common splitting task. 
 	 * This requires appropriate finding of
 	 * the traversal event, and update the mergeTask reference attribute and finally remove 
@@ -686,6 +695,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						//+" "+traversalEvent
 						);
 		}
+		//logger.debug("#traversalEvents="+getTraversalEvents().size()+" #"+getTraversalEvents(getDefaultRootCell(), true).size()+" root"+getDefaultRootCell());
 		return true;
 	}
 
@@ -1619,19 +1629,22 @@ public class UtilImpl extends EObjectImpl implements Util {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws GroupingInstanceNotFoundException 
 	 * @generated not
 	 */
-	public EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) {
+	public EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingInstanceNotFoundException {
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		if (traversalEvent.isGrouping())
 			if (traversalEvent.getType().equals("grouping"))
 				//if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
-					for (GroupingInstance groupingInstance :
+				if (!getMetaData().getGroupingInstances().containsKey(traversalEvent.getTraversalCriterion().getId()))
+					throw new GroupingInstanceNotFoundException();
+				for (GroupingInstance groupingInstance :
 						getMetaData().getGroupingInstances().
-						get(traversalEvent.getTraversalCriterion().getId()).getInstances())
-					{
-						groupingInstances.add(groupingInstance);
-					}
+					get(traversalEvent.getTraversalCriterion().getId()).getInstances())
+				{
+					groupingInstances.add(groupingInstance);
+				}
 			//else if (traversalEvent.getType().equals("traversal"))
 				
 		return groupingInstances;
@@ -1664,14 +1677,23 @@ public class UtilImpl extends EObjectImpl implements Util {
 		}
 		
 		mergeTasks+=")";
-
+		DefaultMetaData m=(DefaultMetaData)getMetaData();
+		String key=traversalEvent.getTraversalCriterion().getId();
+		logger.debug("applyTraversalEvents(): "
+				+traversalEvent.getTraversalCriterion().getId()+" "
+				+traversalEvent.getTraversalCriterion().getMode()
+				+" parentTasks="+parentTasks
+				+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
+				+" mergeTasks="+mergeTasks
+				+m.getGroupingInstances().keySet());
 		return "applyTraversalEvents(): "
 				+traversalEvent.getTraversalCriterion().getId()+" "
 				+traversalEvent.getTraversalCriterion().getMode()
 				+" parentTasks="+parentTasks
 				+" splittingTask="+traversalEvent.getSplitTask().getUniqueString()
 				+" mergeTasks="+mergeTasks
-				+" #instances="+((DefaultMetaData)getMetaData()).getGroupingInstances().get(traversalEvent.getTraversalCriterion().getId()).getInstances().size()
+				+" #instances="+(m.getGroupingInstances().containsKey(key)?
+								m.getGroupingInstances().get(key).getInstances().size():null)
 				;
 	}
 	
@@ -1738,7 +1760,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 				//for (String key: task.getTraversalEvents().keySet())
 				{
 					String key = it.next();
-					TraversalEvent traversalEvent = task.getTraversalEvents().get(key); 
+					TraversalEvent traversalEvent = task.getTraversalEvents().get(key);
+					logger.debug(task.getName()+" "+key+" "+traversalEvent.isGrouping());
 					if (traversalEvent.isGrouping() && isGrouping ||
 							!traversalEvent.isGrouping() && !isGrouping)
 					{
@@ -1752,6 +1775,104 @@ public class UtilImpl extends EObjectImpl implements Util {
 		//getGraph().traverse(root, true, visitor);
 		getGraph().traverseTopologicalOrder(root, visitor);
 		return traversalEvents;
+	}
+
+	public String getTaskNameForCell(Object cell)
+	{
+		for (String name:getCells().keySet())
+			if (getCells().get(name).equals(cell))
+				return name;
+		return null;
+	}
+	
+	public boolean isChildOf(Task child, Task parent) throws TaskToCellMapKeyNotFoundException
+	{
+		Object childCell=getCells().get(child.getUniqueString());
+		Object parentCell=getCells().get(parent.getUniqueString());
+		logger.trace("test child="+child.getUniqueString()+" vs. parent="+parent.getUniqueString());
+		for (Object cell:getGraph().getVertices(parentCell, false))
+		{
+			logger.debug("child="+getTaskNameForCell(cell)+" vs="+getTaskNameForCell(childCell)
+					+" isChild="+(cell==childCell)+" "+cell.hashCode()+" "+childCell.hashCode());
+			if (cell == childCell )
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean generateWorklowForExecutionSystem(mxICell root, IExecutionSystem executionSystem) {
+
+		getGraph().traverseTopologicalOrder(root, executionSystem.getJgraphxVisitor());
+		return true;
+	}
+	
+	public boolean computeToolDepsForRoot(mxICell root)
+	{
+		Tool tool = ToolFactory.eINSTANCE.createTool();
+		tool.setId("default");
+		for (Object o:getGraph().getOutgoingEdges(root))
+		{
+			Task child = XMLUtil.loadTaskFromVertex(getGraph().getView().getVisibleTerminal(o, false));
+			for (Tool childTool:child.getTools().values())
+			{
+				
+				
+			}
+			
+		}
+		return true;
+	}
+	
+	// set the tools ToolDependency, InputFiles, OutputFiles attributes
+	// resolve the outputs and use them when resolving the inputs of the 
+	// corresponding child tasks
+	public boolean computeToolDeps(mxICell root, Catalog catalog)
+	{
+		mxICellVisitor visitor=new mxICellVisitor()
+		{
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				Task task=XMLUtil.loadTaskFromVertex(vertex);
+				if (task.getTools().isEmpty())
+				{
+					logger.debug("no tool found for task="+task.getUniqueString()+". nothing to do.");
+					
+				}
+				else
+				{
+					for (Object o:getGraph().getOutgoingEdges(vertex))
+					{
+						Task child = XMLUtil.loadTaskFromVertex(getGraph().getView().getVisibleTerminal(o, false));
+						task.getChunks().keySet();
+						// set the static input dependencies, e.g. genomic reference
+						for (Tool childTool:child.getTools().values())
+						{
+							childTool.getCommand().getInputs(task.getChunks());
+							
+						}
+					}
+					for (Entry<String, URI> e:task.getInputs().entrySet())
+					{
+						logger.debug(task.getUniqueString()+" "+e.getKey()+" "+e.getValue().toString());
+					}
+					logger.debug(task.getUniqueString()+" "+task.getTools().keySet().toString());
+					for (Tool tool:task.getTools().values())
+					{
+						logger.debug("tool id="+tool.getId());
+						
+					}
+				}
+				return true;
+			}
+		};
+		getGraph().traverseTopologicalOrder(root, visitor);
+		computeToolDepsForRoot(root);
+		return true;
 	}
 
 	/**

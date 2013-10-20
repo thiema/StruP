@@ -20,6 +20,8 @@ import easyflow.execution.ExecutionPackage;
 
 import easyflow.execution.impl.ExecutionPackageImpl;
 
+import easyflow.execution.makeflow.MakeflowPackage;
+import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
 import easyflow.execution.pegasus.PegasusPackage;
 
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
@@ -42,6 +44,7 @@ import easyflow.tool.ToolPackage;
 
 import easyflow.tool.impl.ToolPackageImpl;
 
+import easyflow.traversal.DataPorts;
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
@@ -109,6 +112,13 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	private EClass traversalChunkEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dataPortsEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -163,6 +173,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
 		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
 		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		MakeflowPackageImpl theMakeflowPackage = (MakeflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) instanceof MakeflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) : MakeflowPackage.eINSTANCE);
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
@@ -177,6 +188,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		theExecutionPackage.createPackageContents();
 		thePegasusPackage.createPackageContents();
 		theShellPackage.createPackageContents();
+		theMakeflowPackage.createPackageContents();
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
@@ -191,6 +203,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		theExecutionPackage.initializePackageContents();
 		thePegasusPackage.initializePackageContents();
 		theShellPackage.initializePackageContents();
+		theMakeflowPackage.initializePackageContents();
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
@@ -443,6 +456,42 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDataPorts() {
+		return dataPortsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataPorts_Name() {
+		return (EAttribute)dataPortsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataPorts_DataPorts() {
+		return (EReference)dataPortsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataPorts_LastTasks() {
+		return (EReference)dataPortsEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TraversalFactory getTraversalFactory() {
 		return (TraversalFactory)getEFactoryInstance();
 	}
@@ -496,6 +545,11 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		traversalChunkEClass = createEClass(TRAVERSAL_CHUNK);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__NAME);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__LOGGER);
+
+		dataPortsEClass = createEClass(DATA_PORTS);
+		createEAttribute(dataPortsEClass, DATA_PORTS__NAME);
+		createEReference(dataPortsEClass, DATA_PORTS__DATA_PORTS);
+		createEReference(dataPortsEClass, DATA_PORTS__LAST_TASKS);
 	}
 
 	/**
@@ -525,6 +579,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -576,6 +631,11 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEClass(traversalChunkEClass, TraversalChunk.class, "TraversalChunk", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTraversalChunk_Name(), ecorePackage.getEString(), "name", null, 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalChunk_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalChunk.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(dataPortsEClass, DataPorts.class, "DataPorts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDataPorts_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataPorts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataPorts_DataPorts(), theToolPackage.getDataPort(), null, "dataPorts", null, 0, -1, DataPorts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataPorts_LastTasks(), theCorePackage.getTask(), null, "lastTasks", null, 0, -1, DataPorts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //TraversalPackageImpl

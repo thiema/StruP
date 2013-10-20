@@ -6,21 +6,30 @@
  */
 package easyflow.tool.impl;
 
+import java.util.Iterator;
+
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
+import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 
 import easyflow.util.maps.impl.StringToParameterMapImpl;
 
 
+import easyflow.util.maps.impl.StringToURIMapImpl;
+import java.net.URI;
+import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 
@@ -244,6 +253,79 @@ public class CommandImpl extends EObjectImpl implements Command {
 			parameters = new EcoreEMap<String,Parameter>(MapsPackage.Literals.STRING_TO_PARAMETER_MAP, StringToParameterMapImpl.class, this, ToolPackage.COMMAND__PARAMETERS);
 		}
 		return parameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String generateCommandString(EMap<String, Object> constaints) {
+		Iterator<Parameter> it = getParameters().values().iterator();
+		EList<String> tmp = new BasicEList<String>();
+		while (it.hasNext()) {
+			Parameter parameter = it.next();
+			//paramString+="name="+parameter.getName();
+			//paramString+=" cmd="+parameter.generateCommandString(null);
+			tmp.add(parameter.generateCommandString(constaints));
+		}
+		String commandString=StringUtils.join(tmp.toArray(), " ");
+		return commandString;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean resolvePorts() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean resolveStaticPorts() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**

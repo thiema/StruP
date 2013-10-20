@@ -7,11 +7,15 @@
 package easyflow.tool.impl;
 
 import easyflow.tool.Command;
+import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
 import easyflow.tool.DataPort;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.DocumentProperties;
 import easyflow.tool.Interpreter;
+import easyflow.tool.Key;
 import easyflow.tool.Parameter;
+import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
@@ -73,14 +77,18 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 		switch (eClass.getClassifierID()) {
 			case ToolPackage.TOOL_SCHEMATA: return createToolSchemata();
 			case ToolPackage.TOOL_DEFINITIONS: return createToolDefinitions();
-			case ToolPackage.TOOL: return createTool();
 			case ToolPackage.DEFAULT_TOOL_ELEMENT: return createDefaultToolElement();
+			case ToolPackage.TOOL: return createTool();
 			case ToolPackage.INTERPRETER: return createInterpreter();
 			case ToolPackage.COMMAND: return createCommand();
 			case ToolPackage.PARAMETER: return createParameter();
 			case ToolPackage.PACKAGE: return createPackage();
+			case ToolPackage.DATA: return createData();
 			case ToolPackage.DATA_PORT: return createDataPort();
 			case ToolPackage.DATA_FORMAT: return createDataFormat();
+			case ToolPackage.KEY: return createKey();
+			case ToolPackage.REQUIREMENT: return createRequirement();
+			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -171,6 +179,16 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Data createData() {
+		DataImpl data = new DataImpl();
+		return data;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DataPort createDataPort() {
 		DataPortImpl dataPort = new DataPortImpl();
 		return dataPort;
@@ -184,6 +202,36 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public DataFormat createDataFormat() {
 		DataFormatImpl dataFormat = new DataFormatImpl();
 		return dataFormat;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Key createKey() {
+		KeyImpl key = new KeyImpl();
+		return key;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Requirement createRequirement() {
+		RequirementImpl requirement = new RequirementImpl();
+		return requirement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DocumentProperties createDocumentProperties() {
+		DocumentPropertiesImpl documentProperties = new DocumentPropertiesImpl();
+		return documentProperties;
 	}
 
 	/**

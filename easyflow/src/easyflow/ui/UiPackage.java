@@ -188,13 +188,22 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 10;
 
 	/**
+	 * The feature id for the '<em><b>Packages</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__PACKAGES = IPROJECT_FEATURE_COUNT + 11;
+
+	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 11;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 12;
 
 
 	/**
@@ -339,6 +348,17 @@ public interface UiPackage extends EPackage {
 	EReference getDefaultProject_ToolDefinitions();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.ui.DefaultProject#getPackages <em>Packages</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Packages</em>'.
+	 * @see easyflow.ui.DefaultProject#getPackages()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EReference getDefaultProject_Packages();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -467,6 +487,14 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEFAULT_PROJECT__TOOL_DEFINITIONS = eINSTANCE.getDefaultProject_ToolDefinitions();
+
+		/**
+		 * The meta object literal for the '<em><b>Packages</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_PROJECT__PACKAGES = eINSTANCE.getDefaultProject_Packages();
 
 	}
 

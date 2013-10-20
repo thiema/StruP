@@ -14,6 +14,7 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
@@ -102,6 +103,8 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_SCHEMA_MAP: return (EObject)createStringToSchemaMap();
 			case MapsPackage.STRING_TO_PROJECT_MAP: return (EObject)createStringToProjectMap();
 			case MapsPackage.STRING_TO_PARAMETER_MAP: return (EObject)createStringToParameterMap();
+			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: return (EObject)createStringToDocumentPropertiesMap();
+			case MapsPackage.STRING_TO_PACKAGE_MAP: return (EObject)createStringToPackageMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -275,6 +278,26 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, Parameter> createStringToParameterMap() {
 		StringToParameterMapImpl stringToParameterMap = new StringToParameterMapImpl();
 		return stringToParameterMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, DocumentProperties> createStringToDocumentPropertiesMap() {
+		StringToDocumentPropertiesMapImpl stringToDocumentPropertiesMap = new StringToDocumentPropertiesMapImpl();
+		return stringToDocumentPropertiesMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, easyflow.tool.Package> createStringToPackageMap() {
+		StringToPackageMapImpl stringToPackageMap = new StringToPackageMapImpl();
+		return stringToPackageMap;
 	}
 
 	/**

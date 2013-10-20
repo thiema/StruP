@@ -8,7 +8,7 @@
 	<property name="editor.resources.dir" value="${src.dir}"/>
 	<!--property name="emf.plugins" value="/usr/home/heinz/.eclipse/org.eclipse.platform_3.7.0_946975857/plugins/"/-->
 
-	<property name="lib.dir" value="./../lib"/>
+	<property name="lib.dir" value="./lib"/>
 	<property name="add.lib.dir" value="./../add_libs"/>	
 	<property name="build.dir"   value="build"/>
 	<property name="classes.dir" value="${build.dir}/classes"/>

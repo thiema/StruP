@@ -9,6 +9,8 @@ package easyflow.execution;
 import easyflow.ui.DefaultProject;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -69,5 +71,13 @@ public interface DefaultExecutionSystem extends EObject {
 	 * @generated
 	 */
 	Logger getLogger();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model commandLinePartsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	String createCommandLine(String commandPattern, EMap<String, String> commandLineParts);
 
 } // DefaultExecutionSystem

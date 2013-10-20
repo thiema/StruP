@@ -8,10 +8,14 @@ package easyflow.graph.jgraphx;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.Catalog;
 import easyflow.core.Task;
 
+import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
+import easyflow.execution.IExecutionSystem;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
 
@@ -407,10 +411,10 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.GroupingInstanceNotFoundException"
 	 * @generated
 	 */
-	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent);
+	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -459,5 +463,29 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	void fixOffTargetCells(mxICell root, String groupingStr);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.TaskToCellMapKeyNotFoundException"
+	 * @generated
+	 */
+	boolean isChildOf(Task parent, Task child) throws TaskToCellMapKeyNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean generateWorklowForExecutionSystem(mxICell root, IExecutionSystem executionSystem);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean computeToolDeps(mxICell root, Catalog catalog);
 
 } // Util

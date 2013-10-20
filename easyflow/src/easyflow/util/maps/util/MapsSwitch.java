@@ -14,6 +14,7 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
@@ -194,6 +195,18 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.STRING_TO_PARAMETER_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, Parameter> stringToParameterMap = (Map.Entry<String, Parameter>)theEObject;
 				T result = caseStringToParameterMap(stringToParameterMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DocumentProperties> stringToDocumentPropertiesMap = (Map.Entry<String, DocumentProperties>)theEObject;
+				T result = caseStringToDocumentPropertiesMap(stringToDocumentPropertiesMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_PACKAGE_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, easyflow.tool.Package> stringToPackageMap = (Map.Entry<String, easyflow.tool.Package>)theEObject;
+				T result = caseStringToPackageMap(stringToPackageMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -453,6 +466,36 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToParameterMap(Map.Entry<String, Parameter> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Document Properties Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Document Properties Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToDocumentPropertiesMap(Map.Entry<String, DocumentProperties> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Package Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Package Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToPackageMap(Map.Entry<String, easyflow.tool.Package> object) {
 		return null;
 	}
 

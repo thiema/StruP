@@ -10,6 +10,7 @@ import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.Task;
 
+import easyflow.tool.Tool;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -174,24 +175,25 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
      * <!-- end-user-doc -->
      * @generated not
      */
-	public void readTemplate(String mode, EList<String> defaultGroupingCriteria) {
+	public boolean readTemplate(String mode, EList<String> defaultGroupingCriteria) {
         BufferedReader bufferedReader = getReader();
         String strLine;        
         try {
-                        while ((strLine = bufferedReader.readLine()) != null)   {
-                                if (!strLine.startsWith("#")) {
-                                        Task task=CoreFactoryImpl.eINSTANCE.createTask();
-                                        task.readTask(strLine, mode, defaultGroupingCriteria);
-
-                                        getTasks().add(task);
-                                }
-                        }
-                } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }
-
-        }
+        	while ((strLine = bufferedReader.readLine()) != null)   {
+				if (!strLine.startsWith("#")) {
+					Task task = CoreFactoryImpl.eINSTANCE.createTask();
+					task.readTask(strLine, mode, defaultGroupingCriteria);
+					getTasks().add(task);
+					
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return true;
+       }
+	
 
 	
 	/**

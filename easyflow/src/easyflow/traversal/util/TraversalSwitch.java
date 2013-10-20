@@ -101,6 +101,12 @@ public class TraversalSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case TraversalPackage.DATA_PORTS: {
+				DataPorts dataPorts = (DataPorts)theEObject;
+				T result = caseDataPorts(dataPorts);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -177,6 +183,21 @@ public class TraversalSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTraversalChunk(TraversalChunk object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Data Ports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Data Ports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDataPorts(DataPorts object) {
 		return null;
 	}
 

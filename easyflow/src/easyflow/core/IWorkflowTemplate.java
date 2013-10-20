@@ -6,6 +6,7 @@
  */
 package easyflow.core;
 
+import easyflow.tool.Tool;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -31,6 +32,6 @@ public interface IWorkflowTemplate extends EObject {
 	 * @model defaultGroupingCriteriaMany="true"
 	 * @generated
 	 */
-	void readTemplate(String mode, EList<String> defaultGroupingCriteria);
+	boolean readTemplate(String mode, EList<String> defaultGroupingCriteria);
 
 } // IWorkflowTemplate

@@ -14,6 +14,8 @@ import easyflow.ui.DefaultProject;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -128,6 +130,17 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 	 */
 	public Logger getLogger() {
 		return logger;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**

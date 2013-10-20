@@ -20,6 +20,8 @@ import easyflow.execution.ExecutionPackage;
 
 import easyflow.execution.impl.ExecutionPackageImpl;
 
+import easyflow.execution.makeflow.MakeflowPackage;
+import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
 import easyflow.execution.pegasus.PegasusPackage;
 
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
@@ -180,6 +182,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
 		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
 		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		MakeflowPackageImpl theMakeflowPackage = (MakeflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) instanceof MakeflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) : MakeflowPackage.eINSTANCE);
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
@@ -194,6 +197,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		theExecutionPackage.createPackageContents();
 		thePegasusPackage.createPackageContents();
 		theShellPackage.createPackageContents();
+		theMakeflowPackage.createPackageContents();
 		theToolPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
@@ -208,6 +212,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		theExecutionPackage.initializePackageContents();
 		thePegasusPackage.initializePackageContents();
 		theShellPackage.initializePackageContents();
+		theMakeflowPackage.initializePackageContents();
 		theToolPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();

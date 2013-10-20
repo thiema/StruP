@@ -49,6 +49,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.ui.DefaultProject#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getPackages <em>Packages</em>}</li>
  * </ul>
  * </p>
  *
@@ -294,5 +295,22 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	void setToolDefinitions(ToolDefinitions value);
+
+	/**
+	 * Returns the value of the '<em><b>Packages</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.Package},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Packages</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Packages</em>' map.
+	 * @see easyflow.ui.UiPackage#getDefaultProject_Packages()
+	 * @model mapType="easyflow.util.maps.StringToPackageMap<org.eclipse.emf.ecore.EString, easyflow.tool.Package>"
+	 * @generated
+	 */
+	EMap<String, easyflow.tool.Package> getPackages();
 
 } // DefaultProject

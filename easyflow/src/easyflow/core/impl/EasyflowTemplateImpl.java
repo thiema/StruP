@@ -21,6 +21,7 @@ import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
+import easyflow.tool.Tool;
 import easyflow.custom.util.XMLUtil;
 
 import java.util.Collection;
@@ -196,13 +197,12 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 					logger.debug("curTask: "+task.getName()+" "+taskName);
 					for (String parentTaskName:parentTaskNames) {
 						boolean found=false;
-						for (Task pTask:task.getParents()) {
-							if (pTask.getName().equals(parentTaskName)) found=true;
-						}
+						if (task.getParents().containsKey(parentTaskName))
+							found=true;
 						logger.debug(found+" "+parentTaskName);
 						if (!found)
 							if (tmpMap.containsKey(parentTaskName)) {
-								task.getParents().add(tmpMap.get(parentTaskName));
+								task.getParents().put(parentTaskName, tmpMap.get(parentTaskName));
 							} else logger.warn("parent task not found: "+parentTaskName);
 						
 					}
@@ -220,7 +220,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void readTemplate(String mode, EList<String> defaultGroupingCriteria) {
+	public boolean readTemplate(String mode, EList<String> defaultGroupingCriteria) {
 
 		Map<String,Task> tmpMap=new HashMap<String,Task>();
         // Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
@@ -240,8 +240,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 						String parentTaskName=tmp[0];
 						//if (tmp.length>1) 
 						if (tmpMap.containsKey(parentTaskName)) 
-							task.getParents().add(tmpMap.get(parentTaskName));
-						else if (task.isUtil()) task.getParents().add(tmpMap.get("Root"));
+							task.getParents().put(parentTaskName, tmpMap.get(parentTaskName));
+						else if (task.isUtil()) task.getParents().put("Root", tmpMap.get("Root"));
 					}
 					getTasks().add(task);
 					//if (!task.getParents().isEmpty())
@@ -253,6 +253,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			e.printStackTrace();
 		}
         checkParents(tmpMap);
+        return true;
 	}
 
 	/**

@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -31,6 +33,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -61,10 +66,14 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.mxgraph.model.mxCell;
 
+import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 
@@ -76,6 +85,7 @@ import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
+import easyflow.tool.DocumentProperties;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.Definitions;
@@ -84,11 +94,15 @@ import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.tool.saxparser.ToolContentHandler;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.URIUtil;
+import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
 import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToPackageMapImpl;
 import easyflow.util.maps.impl.StringToSchemaMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 
@@ -110,6 +124,7 @@ import easyflow.util.maps.impl.StringToToolMapImpl;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getPackages <em>Packages</em>}</li>
  * </ul>
  * </p>
  *
@@ -286,6 +301,16 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected ToolDefinitions toolDefinitions;
+
+	/**
+	 * The cached value of the '{@link #getPackages() <em>Packages</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPackages()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, easyflow.tool.Package> packages;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -483,6 +508,18 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, easyflow.tool.Package> getPackages() {
+		if (packages == null) {
+			packages = new EcoreEMap<String,easyflow.tool.Package>(MapsPackage.Literals.STRING_TO_PACKAGE_MAP, StringToPackageMapImpl.class, this, UiPackage.DEFAULT_PROJECT__PACKAGES);
+		}
+		return packages;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public JSONObject getJsonObject() {
 		return jsonObject;
 	}
@@ -614,6 +651,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	public boolean readConfiguration() {
 		boolean rc = true;
 		// general (project) config
+		
 		JSONObject projectCfg=jsonObject.getJSONObject("project");
 		//logger.debug(jsonObject.entrySet());
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
@@ -657,6 +695,35 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		workflow.setMetaData(metaData);
 
 		
+		
+		// processing config
+		if (jsonObject.has("processing"))
+		{
+			JSONObject processingCfg=jsonObject.getJSONObject("processing");
+			Iterator<String> it =processingCfg.keys();
+			while (it.hasNext())
+			{
+				String key = it.next();
+				logger.trace("read processing config key="+key);
+				workflow.getProcessingConfig().put(key, processingCfg.getString(key));
+			}
+		}
+		// catalog
+		if (jsonObject.has("catalog"))
+		{
+			JSONObject catalogCfg=jsonObject.getJSONObject("catalog");
+			
+			Catalog catalog = CoreFactory.eINSTANCE.createCatalog();
+			workflow.setCatalog(catalog);
+			Iterator<String> it = catalogCfg.keys();
+			while (it.hasNext())
+			{
+				String key = it.next();
+				logger.trace("read catalog key="+key);
+				catalog.getEntries().put(key, catalogCfg.getString(key));
+			}
+
+		}
 		// workflow config
 		JSONObject workflowCfg=jsonObject.getJSONObject("workflow");
 		workflow.setMode(workflowCfg.getString("mode"));
@@ -673,6 +740,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 
 		// tool config (dir, tools, schemata)
 		JSONObject toolCfg = jsonObject.getJSONObject("tool");
+		if (toolCfg.has("command_pattern"))
+			GlobalConfig.getToolConfig().put("command_pattern", 
+					(String) toolCfg.get("command_pattern"));
+		if (toolCfg.has("write_default_value_to_command_line"))
+			GlobalConfig.getToolConfig().put("write_default_value_to_command_line", 
+					(String) toolCfg.get("write_default_value_to_command_line"));
+		else
+			GlobalConfig.getToolConfig().put("write_default_value_to_command_line", "0");
+		//if (toolCfg.has(""))
+			//GlobalConfig.getToolConfig().put("", toolCfg.get(""));
+		
 		JSONArray schemata = toolCfg.getJSONArray("schemata");
 		// String toolDefPath = basePath;
 		URI toolDefPath = getBaseURI();
@@ -685,7 +763,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}		
+		
 		ToolSchemata toolSchemata = ToolFactory.eINSTANCE.createToolSchemata();
 		ToolDefinitions toolDefintions = ToolFactory.eINSTANCE.createToolDefinitions();
 		
@@ -730,14 +809,29 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			
 		}
 		
+		// read tool definitions
 		toolDefintions.setToolSchemata(toolSchemata);
 		JSONArray toolsArray = toolCfg.getJSONArray("tools");
 		//EList<Tool> tools = new BasicEList<Tool>();
 		for (int i=0; i<toolsArray.size(); i++)
 			try {
-				logger.debug(toolsArray.getString(i));
-				Document doc = toolDefintions.readToolDefinition(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)), isFromJar());
+				for (URI source:URIUtil.getSources(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)), isFromJar())) {
+					logger.debug(toolsArray.getString(i)+" "+source.toString());
+					if (toolDefintions.validateToolDefinition(source, isFromJar()))
+					{
+						DocumentProperties documentProperties = ToolFactory.eINSTANCE.createDocumentProperties();
+						documentProperties.setSourceURI(source);
+						documentProperties.setFromJar(isFromJar());
+						//ToolContentHandler toolContentHandler = new ToolContentHandler();
+						for (Tool tool : ToolContentHandler.parse(source, documentProperties, null, null))
+						{
+							logger.debug("SAX parser returned tool: "+tool.getId()+" pkg="+(tool.getPackage()==null?null:tool.getPackage().getId())+" params="+tool.getCommand().getParameters().keySet());
+							getTools().put(tool.getId(), tool);
+						}
+					}
+				}
 				
+				/*
 				for (int j=0; j<doc.getDocumentElement().getChildNodes().getLength(); j++) {
 					Node node=doc.getDocumentElement().getChildNodes().item(j);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -747,7 +841,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 						getTools().put(tool.getId(), tool);
 					}
 				}
-				
+				*/
 
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
@@ -777,7 +871,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public void setConfigAndBasePath(String path) {
 		try {
-			String baseName = URIUtil.getBasename(path);
+			logger.debug("Set base path to "+path);
+			String baseName = URIUtil.getDirname(path);
 			if (baseName != null)
 				setBaseURI(URIUtil.createURI(baseName, null));
 			String fileName = URIUtil.getFilename(path);  
@@ -796,6 +891,25 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	public boolean generateWorklowForExecutionSystem() {
+
+		return getActiveWorkflow().generateWorklowForExecutionSystem();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveToolDependencies() {
+		return getActiveWorkflow().resolveToolDependencies();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public boolean init() {
 
 		
@@ -805,9 +919,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
 		getActiveWorkflow().setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
+		
 		getActiveWorkflow().readWorkfowTemplate();
 		
-		getActiveWorkflow().generateGraphFromTemplate();
+		getActiveWorkflow().generateGraphFromTemplate(getTools());
 		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
 		
 		return rc;
@@ -822,7 +937,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	public void autoSetup() {
 		
 		Tool tool = ToolFactory.eINSTANCE.createTool();
-		tool.writeModelToXML();
+		//tool.writeModelToXML();
 		
 		clearWorkflows();
 		readProjectJson(getConfigSource());
@@ -845,6 +960,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		switch (featureID) {
 			case UiPackage.DEFAULT_PROJECT__TOOLS:
 				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
+			case UiPackage.DEFAULT_PROJECT__PACKAGES:
+				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -882,6 +999,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				if (resolve) return getToolDefinitions();
 				return basicGetToolDefinitions();
+			case UiPackage.DEFAULT_PROJECT__PACKAGES:
+				if (coreType) return getPackages();
+				else return getPackages().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -924,6 +1044,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				setToolDefinitions((ToolDefinitions)newValue);
 				return;
+			case UiPackage.DEFAULT_PROJECT__PACKAGES:
+				((EStructuralFeature.Setting)getPackages()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -963,6 +1086,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				setToolDefinitions((ToolDefinitions)null);
 				return;
+			case UiPackage.DEFAULT_PROJECT__PACKAGES:
+				getPackages().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -997,6 +1123,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT == null ? defaultConfigSourceString != null : !DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT.equals(defaultConfigSourceString);
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				return toolDefinitions != null;
+			case UiPackage.DEFAULT_PROJECT__PACKAGES:
+				return packages != null && !packages.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

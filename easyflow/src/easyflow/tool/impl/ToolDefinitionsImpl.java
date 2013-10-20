@@ -6,11 +6,15 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.tool.DocumentProperties;
 import easyflow.custom.util.XMLUtil;
 import easyflow.tool.ToolDefinitions;
+import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -18,14 +22,18 @@ import java.net.URI;
 
 import java.util.Collection;
 
+import java.util.Map;
 import org.apache.log4j.Logger;
 import javax.xml.validation.Schema;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -33,6 +41,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -47,6 +57,7 @@ import org.xml.sax.SAXException;
  *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getToolSchemata <em>Tool Schemata</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,6 +103,16 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProperties()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, DocumentProperties> properties;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,9 +195,21 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, DocumentProperties> getProperties() {
+		if (properties == null) {
+			properties = new EcoreEMap<String,DocumentProperties>(MapsPackage.Literals.STRING_TO_DOCUMENT_PROPERTIES_MAP, StringToDocumentPropertiesMapImpl.class, this, ToolPackage.TOOL_DEFINITIONS__PROPERTIES);
+		}
+		return properties;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Document readToolDefinition(URI xmlSource, boolean isFromJar) throws FileNotFoundException {
+	public boolean validateToolDefinition(URI xmlSource, boolean isFromJar) throws FileNotFoundException {
 		
 		Document doc = XMLUtil.readXML(xmlSource, isFromJar);
 		
@@ -188,15 +221,31 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			}
 			
 		// TODO: handle schema not found/unvalidated xml source
-		return doc;
+		return true;
 	}
-	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
+				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -212,6 +261,9 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 				return basicGetToolSchemata();
 			case ToolPackage.TOOL_DEFINITIONS__LOGGER:
 				return getLogger();
+			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
+				if (coreType) return getProperties();
+				else return getProperties().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -232,6 +284,9 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 			case ToolPackage.TOOL_DEFINITIONS__TOOL_SCHEMATA:
 				setToolSchemata((ToolSchemata)newValue);
 				return;
+			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
+				((EStructuralFeature.Setting)getProperties()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -249,6 +304,9 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 				return;
 			case ToolPackage.TOOL_DEFINITIONS__TOOL_SCHEMATA:
 				setToolSchemata((ToolSchemata)null);
+				return;
+			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
+				getProperties().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -268,6 +326,8 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 				return toolSchemata != null;
 			case ToolPackage.TOOL_DEFINITIONS__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
+				return properties != null && !properties.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -20,6 +20,8 @@ import easyflow.execution.ExecutionPackage;
 
 import easyflow.execution.impl.ExecutionPackageImpl;
 
+import easyflow.execution.makeflow.MakeflowPackage;
+import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
 import easyflow.execution.pegasus.PegasusPackage;
 
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
@@ -189,6 +191,20 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	private EClass stringToParameterMapEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToDocumentPropertiesMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToPackageMapEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -243,6 +259,7 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
 		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
 		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		MakeflowPackageImpl theMakeflowPackage = (MakeflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) instanceof MakeflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) : MakeflowPackage.eINSTANCE);
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
@@ -257,6 +274,7 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		theExecutionPackage.createPackageContents();
 		thePegasusPackage.createPackageContents();
 		theShellPackage.createPackageContents();
+		theMakeflowPackage.createPackageContents();
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
@@ -271,6 +289,7 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		theExecutionPackage.initializePackageContents();
 		thePegasusPackage.initializePackageContents();
 		theShellPackage.initializePackageContents();
+		theMakeflowPackage.initializePackageContents();
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
@@ -748,6 +767,60 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToDocumentPropertiesMap() {
+		return stringToDocumentPropertiesMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToDocumentPropertiesMap_Key() {
+		return (EAttribute)stringToDocumentPropertiesMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToDocumentPropertiesMap_Value() {
+		return (EReference)stringToDocumentPropertiesMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToPackageMap() {
+		return stringToPackageMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToPackageMap_Key() {
+		return (EAttribute)stringToPackageMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToPackageMap_Value() {
+		return (EReference)stringToPackageMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MapsFactory getMapsFactory() {
 		return (MapsFactory)getEFactoryInstance();
 	}
@@ -838,6 +911,14 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		stringToParameterMapEClass = createEClass(STRING_TO_PARAMETER_MAP);
 		createEAttribute(stringToParameterMapEClass, STRING_TO_PARAMETER_MAP__KEY);
 		createEReference(stringToParameterMapEClass, STRING_TO_PARAMETER_MAP__VALUE);
+
+		stringToDocumentPropertiesMapEClass = createEClass(STRING_TO_DOCUMENT_PROPERTIES_MAP);
+		createEAttribute(stringToDocumentPropertiesMapEClass, STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY);
+		createEReference(stringToDocumentPropertiesMapEClass, STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE);
+
+		stringToPackageMapEClass = createEClass(STRING_TO_PACKAGE_MAP);
+		createEAttribute(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__KEY);
+		createEReference(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__VALUE);
 	}
 
 	/**
@@ -945,6 +1026,14 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToParameterMapEClass, Map.Entry.class, "StringToParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToParameterMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToParameterMap_Value(), theToolPackage.getParameter(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDocumentPropertiesMapEClass, Map.Entry.class, "StringToDocumentPropertiesMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDocumentPropertiesMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDocumentPropertiesMap_Value(), theToolPackage.getDocumentProperties(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToPackageMapEClass, Map.Entry.class, "StringToPackageMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToPackageMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToPackageMap_Value(), theToolPackage.getPackage(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

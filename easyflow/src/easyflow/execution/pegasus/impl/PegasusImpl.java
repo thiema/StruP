@@ -6,6 +6,7 @@
  */
 package easyflow.execution.pegasus.impl;
 
+import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
 
@@ -19,6 +20,8 @@ import java.net.URI;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -311,6 +314,17 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void createWorkflow() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -323,6 +337,17 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * @generated
 	 */
 	public void executeWorkflow() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public mxICellVisitor getJgraphxVisitor() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();

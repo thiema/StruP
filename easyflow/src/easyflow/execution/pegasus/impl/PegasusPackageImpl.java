@@ -20,6 +20,8 @@ import easyflow.execution.ExecutionPackage;
 
 import easyflow.execution.impl.ExecutionPackageImpl;
 
+import easyflow.execution.makeflow.MakeflowPackage;
+import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
 import easyflow.execution.pegasus.Pegasus;
 import easyflow.execution.pegasus.PegasusFactory;
 import easyflow.execution.pegasus.PegasusPackage;
@@ -120,6 +122,7 @@ public class PegasusPackageImpl extends EPackageImpl implements PegasusPackage {
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
 		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		MakeflowPackageImpl theMakeflowPackage = (MakeflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) instanceof MakeflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) : MakeflowPackage.eINSTANCE);
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
@@ -134,6 +137,7 @@ public class PegasusPackageImpl extends EPackageImpl implements PegasusPackage {
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
 		theShellPackage.createPackageContents();
+		theMakeflowPackage.createPackageContents();
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
@@ -148,6 +152,7 @@ public class PegasusPackageImpl extends EPackageImpl implements PegasusPackage {
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
 		theShellPackage.initializePackageContents();
+		theMakeflowPackage.initializePackageContents();
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();

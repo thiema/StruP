@@ -13,6 +13,7 @@ import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
 
+import java.net.URI;
 import java.util.Map;
 
 import org.apache.commons.jexl2.JexlEngine;
@@ -52,6 +53,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#isRoot <em>Root</em>}</li>
  *   <li>{@link easyflow.core.Task#getFlags <em>Flags</em>}</li>
  *   <li>{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}</li>
+ *   <li>{@link easyflow.core.Task#getInputs <em>Inputs</em>}</li>
+ *   <li>{@link easyflow.core.Task#getOutputs <em>Outputs</em>}</li>
  * </ul>
  * </p>
  *
@@ -229,20 +232,21 @@ public interface Task extends EObject {
 	EMap<String, TraversalEvent> getTraversalEvents();
 
 	/**
-	 * Returns the value of the '<em><b>Parents</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.Task}.
+	 * Returns the value of the '<em><b>Parents</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.Task},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parents</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parents</em>' reference list.
+	 * @return the value of the '<em>Parents</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_Parents()
-	 * @model
+	 * @model mapType="easyflow.util.maps.StringToTaskMap<org.eclipse.emf.ecore.EString, easyflow.core.Task>"
 	 * @generated
 	 */
-	EList<Task> getParents();
+	EMap<String, Task> getParents();
 
 	/**
 	 * Returns the value of the '<em><b>Chunks</b></em>' map.
@@ -288,6 +292,9 @@ public interface Task extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Collection of processing tools.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Tools</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_Tools()
 	 * @model mapType="easyflow.util.maps.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.tool.Tool>"
@@ -391,6 +398,40 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EMap<String, String> getGroupingCriteria();
+
+	/**
+	 * Returns the value of the '<em><b>Inputs</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.net.URI},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inputs</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inputs</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Inputs()
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @generated
+	 */
+	EMap<String, URI> getInputs();
+
+	/**
+	 * Returns the value of the '<em><b>Outputs</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.net.URI},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Outputs</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Outputs</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Outputs()
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @generated
+	 */
+	EMap<String, URI> getOutputs();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -500,5 +541,44 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	Tool getPreferredTool();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataPorts1Many="true" dataPorts2Many="true"
+	 * @generated
+	 */
+	EList<DataPort> getOverlappingDataPorts(EList<DataPort> dataPorts1, EList<DataPort> dataPorts2);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Fill inputs and outputs with its concrete sources/targets (e.g. file names).
+	 * Resolve the executables (i.e. interpreter and/or executable (script) name).
+	 * Depending on configuration the whole path is used or only the 'dirname'. In 
+	 * the latter case resolving of path is done by execution system. (Which could 
+	 * also mean, that the name can be resolved e.g. using PATH environment variable)
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveToolDependencies();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> createCommandLineMap();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean validateTool(Tool tool);
 
 } // Task

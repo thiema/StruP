@@ -121,4 +121,20 @@ public interface IProject extends EObject {
 	 */
 	void setConfigAndBasePath(String path);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean generateWorklowForExecutionSystem();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveToolDependencies();
+
 } // IProject

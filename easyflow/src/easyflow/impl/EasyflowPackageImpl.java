@@ -10,6 +10,7 @@ import com.mxgraph.model.mxICell;
 
 import com.mxgraph.view.mxGraph;
 
+import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.EasyflowFactory;
 import easyflow.EasyflowPackage;
 
@@ -17,12 +18,16 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.example.ExamplePackage;
 import easyflow.example.impl.ExamplePackageImpl;
 import easyflow.execution.ExecutionPackage;
 import easyflow.execution.impl.ExecutionPackageImpl;
+import easyflow.execution.makeflow.MakeflowPackage;
+import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
 import easyflow.execution.pegasus.PegasusPackage;
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
 import easyflow.execution.shell.ShellPackage;
@@ -175,6 +180,27 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	private EDataType fileNotFoundExceptionEDataType = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType groupingInstanceNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType taskToCellMapKeyNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType mxICellVisitorEDataType = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -228,6 +254,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
 		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
 		ShellPackageImpl theShellPackage = (ShellPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) instanceof ShellPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI) : ShellPackage.eINSTANCE);
+		MakeflowPackageImpl theMakeflowPackage = (MakeflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) instanceof MakeflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) : MakeflowPackage.eINSTANCE);
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
@@ -242,6 +269,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theExecutionPackage.createPackageContents();
 		thePegasusPackage.createPackageContents();
 		theShellPackage.createPackageContents();
+		theMakeflowPackage.createPackageContents();
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
@@ -256,6 +284,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theExecutionPackage.initializePackageContents();
 		thePegasusPackage.initializePackageContents();
 		theShellPackage.initializePackageContents();
+		theMakeflowPackage.initializePackageContents();
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
@@ -410,6 +439,33 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getGroupingInstanceNotFoundException() {
+		return groupingInstanceNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getTaskToCellMapKeyNotFoundException() {
+		return taskToCellMapKeyNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getmxICellVisitor() {
+		return mxICellVisitorEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -448,6 +504,9 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		jsonObjectEDataType = createEDataType(JSON_OBJECT);
 		bufferedReaderEDataType = createEDataType(BUFFERED_READER);
 		fileNotFoundExceptionEDataType = createEDataType(FILE_NOT_FOUND_EXCEPTION);
+		groupingInstanceNotFoundExceptionEDataType = createEDataType(GROUPING_INSTANCE_NOT_FOUND_EXCEPTION);
+		taskToCellMapKeyNotFoundExceptionEDataType = createEDataType(TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION);
+		mxICellVisitorEDataType = createEDataType(MX_ICELL_VISITOR);
 	}
 
 	/**
@@ -511,6 +570,9 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(jsonObjectEDataType, JSONObject.class, "JSONObject", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(bufferedReaderEDataType, BufferedReader.class, "BufferedReader", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(fileNotFoundExceptionEDataType, FileNotFoundException.class, "FileNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(groupingInstanceNotFoundExceptionEDataType, GroupingInstanceNotFoundException.class, "GroupingInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(taskToCellMapKeyNotFoundExceptionEDataType, TaskToCellMapKeyNotFoundException.class, "TaskToCellMapKeyNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(mxICellVisitorEDataType, mxICellVisitor.class, "mxICellVisitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

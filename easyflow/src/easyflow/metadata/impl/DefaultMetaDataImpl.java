@@ -387,7 +387,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
         	logger.debug(groupingInstanceStr+": "+ instances);
         	
         }
-        logger.debug("");
 	}
 
 	/**
