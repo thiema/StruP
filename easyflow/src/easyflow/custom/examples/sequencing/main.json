@@ -37,8 +37,8 @@
   
   "tool" : {
   	"dir" : "tool_definitions",
-  	"tools" : ["anytool.xml", "tools.xml", "depth_of_coverage.xml"],
-  	"schemata" : ["../../../tool/schema/Easyflow.xsd", "../../../tool/schema/Easyflow_multiple.xsd", "../../../tool/schema/Galaxy.xsd"]
+  	"tools" : ["tool.xml", "anytool.xml", "tools.xml", "depth_of_coverage.xml"],
+  	"schemata" : ["../../../tool/schema/Easyflow.xsd", "../../../tool/schema/Easyflow_multiple.xsd", "../../../tool/schema/external/Galaxy.xsd"]
   }
 
 }

@@ -6,7 +6,6 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
@@ -20,12 +19,7 @@ import java.net.URI;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -42,7 +36,6 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /**
  * <!-- begin-user-doc -->

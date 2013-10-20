@@ -14,3 +14,6 @@ java -Dlog4j.debug -cp ".:build/jar/*"
 easyflow.sequencing.examples.Easyflow
 #the gui
 java -cp ".:build/jar/*" easyflow.custom.jgraphx.editor.SchemaEditor
+
+# apply xsl
+java -cp "lib/saxon-8.7.jar" net.sf.saxon.Transform src/easyflow/custom/examples/sequencing/tool_definitions/depth_of_coverage.xml src/easyflow/custom/tool/schema/external/Galaxy.xsl
