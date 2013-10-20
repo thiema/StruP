@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="picard_FastqToSam"
+      name="FASTQ to BAM"
+      version="1.56.0">
+  <description>creates an unaligned BAM file</description>
+  <requirements>
+      <requirement type="package" version="1.56.0">picard</requirement>
+   </requirements>
+  
+  
+  
+    <param name="input_fastq1" type="data"
+          format="fastqsanger,fastqillumina,fastqsolexa,fastqcssanger"
+          label="FASTQ file"/> 
+    <param name="input_fastq2" type="data"
+          format="fastqsanger,fastqillumina,fastqsolexa,fastqcssanger"
+          help="Only needed when using paired end data."
+          label="Second FASTQ of paired end data"
+          optional="true">
+      <key>Only</key>
+   </param>
+    <param name="read_group_name" type="text" label="Read Group Name"/>
+    <param name="sample_name" type="text" label="Sample Name"/>
+    <conditional name="param_type">
+      <param name="param_type_selector" type="select" label="Basic or Advanced options"/>
+      <when value="basic">
+        
+      </when>
+      <when value="advanced">
+        <param name="library_name" type="text" label="Library Name"/>
+        <param name="platform_unit" type="text" label="Platform Unit"/>
+        <param name="platform" type="text" label="Platform"/>
+        <param name="sequencing_center" type="text" label="Sequencing Center"/>
+        <param name="predicted_insert_size" type="integer" label="Predicted Insert Size"
+                optional="true"/>
+        <param name="description" type="text" label="Description"/>
+        <param name="run_date" type="text" label="Run Date"/>
+        <param name="min_q" type="integer" label="Min Q" optional="true"/>
+        <param name="max_q" type="integer" label="Max Q" optional="true"/>
+        <param name="sort_order" type="select" label="Sort order"/>
+      </when>
+    </conditional>
+  
+  
+    <param name="output_bam" type="data" format="bam" output="true"/>
+  
+    <data name="output_bam" format="bam" label=""/>
+  
+  
+  
+</tool>

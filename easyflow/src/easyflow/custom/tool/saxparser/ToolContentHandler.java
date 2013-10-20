@@ -1,0 +1,412 @@
+package easyflow.custom.tool.saxparser;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.log4j.Logger;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+import easyflow.custom.util.URIUtil;
+import easyflow.tool.Command;
+import easyflow.tool.Data;
+import easyflow.tool.DataFormat;
+import easyflow.tool.DataPort;
+import easyflow.tool.DocumentProperties;
+import easyflow.tool.Interpreter;
+import easyflow.tool.Key;
+import easyflow.tool.Parameter;
+import easyflow.tool.Requirement;
+import easyflow.tool.Tool;
+import easyflow.tool.ToolDefinitions;
+import easyflow.tool.ToolFactory;
+import easyflow.tool.Package;
+
+public class ToolContentHandler implements ContentHandler {
+	
+	List<Tool> tools = new ArrayList<Tool>();
+	Map<String,Package> packages= new HashMap<String,Package>();
+	Logger logger = Logger.getLogger(ToolContentHandler.class);
+	Map<String, String> conditionalMap = new HashMap<String, String>();
+	Map<String, URI> importMap = new HashMap<String, URI>();
+	Stack<Tag> tagStack = new Stack<Tag>();
+	Tool tool = null;
+	Package pkg = null;
+	Parameter parameter = null;
+	Parameter subParam = null;
+	Key key = null;
+	Requirement requirement = null;
+	Tag curTag = null;
+	Tag lastTag = null;
+	Tag parentTag = null;
+	String lastMainAttributeValue = null;
+	DocumentProperties documentProperties = null;
+	String xmlKey = null;
+	boolean xmlKeyFound = false;
+	
+	public static List<Tool> parse(URI source, DocumentProperties documentProperties, 
+			ToolContentHandler toolContentHandler, String xmlKey)
+	{
+		if (toolContentHandler == null)
+			toolContentHandler = new ToolContentHandler();
+		
+		if (xmlKey != null)
+			toolContentHandler.setXMLKey(xmlKey);
+		try {
+			// XMLReader erzeugen
+			//SAXParserFactory factory = SAXParserFactory.newInstance();
+			//factory.setValidating(true);
+			XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+			InputSource inputSource = new InputSource(URIUtil.getInputStreamReader(source, documentProperties.isFromJar()));
+			toolContentHandler.setDocumentProperties(documentProperties);
+			xmlReader.setContentHandler(toolContentHandler);
+			xmlReader.parse(inputSource);
+			
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return toolContentHandler.getTools();
+	}
+
+	public boolean shallProcess(String curValue)
+	{
+		if (xmlKey == null || (xmlKey != null && xmlKeyFound))
+			if (curValue == null || curValue.trim().length()>0)
+				return true;
+		return false;
+	}
+
+	
+	public void setXMLKey(String xmlKey)
+	{
+		this.xmlKey = xmlKey;
+	}
+	
+	public List<Tool> getTools() 
+	{
+		return tools;
+	}
+	
+	public void setDocumentProperties(DocumentProperties documentProperties) 
+	{
+		this.documentProperties = documentProperties;
+	}
+		
+	@Override
+	public void setDocumentLocator(Locator locator) {
+		// TODO Auto-generated method stub	
+	}
+
+	@Override
+	public void startDocument() throws SAXException {
+		logger.trace("startDoc: lastTag="+lastTag+" lastAttrib="+lastMainAttributeValue+" parameter="+parameter);
+	}
+
+	@Override
+	public void endDocument() throws SAXException {
+		
+		logger.trace("endDoc. reset xmlKey: "+xmlKey+" "+xmlKeyFound);
+		if (xmlKeyFound)
+			xmlKeyFound = false;
+		if (xmlKey != null)
+			xmlKey = null;
+		
+	}
+
+	@Override
+	public void startPrefixMapping(String prefix, String uri)
+			throws SAXException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void endPrefixMapping(String prefix) throws SAXException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void setParam(Attributes atts, Parameter parameter)
+	{
+		
+		parameter.setType(atts.getValue("type"));
+		if (atts.getValue("optional")!=null)
+			parameter.setOptional(atts.getValue("optional").equals("true")?true:false);
+		if (atts.getValue("multiple")!=null)
+			parameter.setMultiple(atts.getValue("multiple").equals("true")?true:false);
+		if (atts.getValue("multipleValue")!=null)
+			parameter.setMultipleValue(atts.getValue("multipleValue").equals("true")?true:false);
+		if (atts.getValue("defaultValue")!=null)
+			parameter.setDefaultValue(atts.getValue("defaultValue"));
+		if (atts.getValue("valueType")!=null)
+			parameter.setValueType(atts.getValue("valueType"));
+		if (atts.getValue("label")!=null)
+			parameter.setLabel(atts.getValue("label"));
+		if (atts.getValue("help")!=null)
+			parameter.setHelp(atts.getValue("help"));
+		if (atts.getValue("description")!=null)
+			parameter.setDescription(atts.getValue("description"));
+		if (atts.getValue("separator")!=null)
+			parameter.setDelimiter(atts.getValue("separator"));
+		if (atts.getValue("prefix")!=null)
+			parameter.setPrefix(atts.getValue("prefix"));
+		if (atts.getValue("minOcc")!=null)
+			parameter.setMinOcc(new Integer(atts.getValue("minOcc")));
+		if (atts.getValue("maxOCc")!=null)
+			parameter.setMaxOcc(new Integer(atts.getValue("maxOcc")));
+		if (atts.getValue("named")!=null)
+			parameter.setNamed(atts.getValue("named").equals("true")?true:false);
+		if (atts.getValue("advanced")!=null)
+			parameter.setAdvanced(atts.getValue("advanced").equals("true")?true:false);
+		if (atts.getValue("format")!=null)
+			for (String format:atts.getValue("format").split(","))
+				parameter.getFormat().add(format);
+
+	}
+	
+	@Override
+	public void startElement(String uri, String localName, String qName,
+			Attributes atts) throws SAXException {
+		
+
+		Tag tag = Tag.valueOf(localName.toUpperCase());
+		curTag  = tag;
+		tagStack.push(curTag);
+		//init parent and lastTag
+		if (parentTag==null)
+		{
+			parentTag = curTag;
+			lastTag   = curTag;
+		}
+		logger.trace("curTag="+curTag+" lastTag="+lastTag+" parentTag="+parentTag+" stack="+tagStack.toString());
+		if (shallProcess(null))
+		{
+		
+		
+		
+		switch (tag) {
+			case TOOLS:
+				break;
+			case PACKAGE:
+				pkg = ToolFactory.eINSTANCE.createPackage();
+				pkg.setDescription(atts.getValue("description"));
+				pkg.setName(atts.getValue("name"));
+				if (atts.getValue("id")==null)
+					pkg.setId(pkg.getName());
+				else
+					pkg.setId(atts.getValue("id"));
+				pkg.setVersion(atts.getValue("version"));
+				packages.put(pkg.getName(), pkg);
+			case TOOL:
+				tool=ToolFactory.eINSTANCE.createTool();
+				tools.add(tool);
+				Command command=ToolFactory.eINSTANCE.createCommand();
+				tool.setCommand(command);
+				tool.setName(atts.getValue("name"));
+				if (atts.getValue("id")==null)
+					tool.setId(tool.getName());
+				else
+					tool.setId(atts.getValue("id"));
+				tool.setVersion(atts.getValue("version"));
+				break;
+			case MACROS:
+				break;
+			case IMPORT:
+				break;
+			case EXPAND:
+				for (URI source:importMap.values())
+				{
+					logger.debug("parse macro defintion: "+source+" for key "+atts.getValue("macro"));
+					parse(source, documentProperties, this, atts.getValue("macro"));
+				}
+				break;
+			case XML:
+				xmlKeyFound = true;
+			case YIELD:
+				xmlKeyFound = false;
+			case REQUIREMENT:
+				requirement = ToolFactory.eINSTANCE.createRequirement();
+				requirement.setType(atts.getValue("type"));
+				requirement.setVersion(atts.getValue("version"));
+				tool.getRequirements().add(requirement);
+			case DESCRIPTION:
+				break;
+			case COMMAND:
+				tool.getCommand().setName(atts.getValue("name"));
+				break;
+			case REQUIREMENTS:
+				break;
+			case INTERPRETER:
+				break;
+			case PARAM:
+				if ("WHEN".equals(lastTag))
+				{
+					if (parameter.getValues().containsKey(lastMainAttributeValue))
+					{
+						subParam = parameter.getValues().get(lastMainAttributeValue);
+						setParam(atts, subParam);
+					}
+				}
+				else
+				{
+					parameter = ToolFactory.eINSTANCE.createParameter();
+					parameter.setName(atts.getValue("name"));
+					setParam(atts, parameter);
+					tool.getCommand().getParameters().put(parameter.getName(), parameter);
+					if ("PACKAGE".equals(parentTag))
+						pkg.getParameters().put(parameter.getName(), parameter);
+					//if (conditionalMap.containsKey("name"));
+				}
+				break;
+			case KEY:
+				key = ToolFactory.eINSTANCE.createKey();
+				key.setName(atts.getValue("name"));
+				if (atts.getValue("type")!=null)
+					key.setType(atts.getValue("type"));
+				if (atts.getValue("prefix")!=null)
+					key.setPrefix(atts.getValue("prefix"));
+				if (atts.getValue("separator")!=null)
+					key.setSeparator(atts.getValue("separator"));
+				
+				parameter.getKeys().add(key);
+				break;
+			case OPTION:
+				subParam = ToolFactory.eINSTANCE.createParameter();
+				parameter.getValues().put(atts.getValue("value"), subParam);
+				break;
+			case WHEN:
+				lastMainAttributeValue = atts.getValue("value");
+				break;
+			case CONDITIONAL:
+				conditionalMap.put("name", atts.getValue("name"));
+				break;
+			case DATA:
+				Data data = ToolFactory.eINSTANCE.createData();
+				if (atts.getValue("description")!=null)
+					data.setDescription(atts.getValue("description"));
+				if (atts.getValue("name")!=null)
+					data.setName(atts.getValue("name"));
+				if (atts.getValue("label")!=null)
+					data.setLabel(atts.getValue("label"));
+				data.setOutput(atts.getValue("output")==null?
+						false:atts.getValue("output").equals("true"));
+				
+				if (atts.getValue("format")!=null)
+				{
+					DataPort dataPort = ToolFactory.eINSTANCE.createDataPort();
+					DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+				
+					dataFormat.setName(atts.getValue("format"));
+					dataPort.setDataFormat(dataFormat);
+					data.setPort(dataPort);
+				}
+				break;
+			default: 
+				break;
+		}
+		
+		}
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String qName)
+			throws SAXException {
+		
+		lastTag   = tagStack.pop();
+		if (tagStack.isEmpty())
+			parentTag=null;
+		else
+			parentTag = tagStack.peek();
+		logger.trace("lastTag="+lastTag+" parentTag="+parentTag);
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length)
+			throws SAXException {
+		
+		String curValue=new String(ch, start, length);
+		if (shallProcess(curValue))
+		{
+			if (curTag != null)
+			{
+				//logger.debug(curValue.length()+" chars="+curValue+" curTag="+curTag+" ");
+				switch(curTag)
+				{
+					case KEY:
+						key.setValue(curValue);
+						break;
+					case OPTION:
+						subParam.setName(curValue);
+						break;
+					case REQUIREMENT:
+						requirement.setValue(curValue);
+						break;
+					case IMPORT:				
+						try {
+							logger.debug("import macro="+curValue);
+							URI source = URIUtil.addToURI(URIUtil.getDirnameUri(documentProperties.getSourceURI()), curValue);
+							importMap.put(curValue, source);
+						} catch (URISyntaxException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						break;
+					default: 
+						break;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void ignorableWhitespace(char[] ch, int start, int length)
+			throws SAXException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processingInstruction(String target, String data)
+			throws SAXException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void skippedEntity(String name) throws SAXException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public enum Tag {
+		EASYFLOW, TOOLS, MACROS, IMPORT,
+        XML, EXPAND, YIELD,
+        PACKAGE,
+        TOOL, DESCRIPTION, INTERPRETER, 
+        HELP, REQUIREMENTS, REQUIREMENT, COMMAND, PARAM, DATA,
+        CONDITIONAL, 
+        ACTIONS, WHEN, KEY, OPTION, ACTION, FILTER, 
+        VALIDATOR, OPTIONS,
+        TEMPLATE, TOKEN,
+        CHANGE_FORMAT, 
+        TOOL_DEPENDENCY, INSTALL, SOURCE_DIRECTORY, ENVIRONMENT_VARIABLE, DESTINATION_DIRECTORY, README,REPOSITORY
+
+	};
+}

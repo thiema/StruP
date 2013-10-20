@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="gatk2_variant_recalibrator"
+      name="Variant Recalibrator"
+      version="0.0.7">
+  <description/>
+  <requirements>
+      <requirement type="package" version="2.3">gatk</requirement>
+  </requirements>
+  
+  
+    <param name="input_variants" type="data" format="vcf"
+          help="-input,--input &amp;lt;input&amp;gt;"
+          label="Variant file to recalibrate"
+          multiple="true"
+          min_occur="1"/>
+   <param name="ref_file" type="data" format="fasta"
+          help="-R,--reference_sequence &amp;lt;reference_sequence&amp;gt;"
+          label="Using reference file">
+      <key type="short">R</key>
+      <key type="long">reference_sequence</key>
+   </param>
+    
+    <conditional name="rod_bind_type">
+          <param name="rod_bind_type_selector" type="select" label="Binding Type"/>
+          <when value="variant">
+              <param name="input_rod" type="data" format="vcf" label="Variant ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="comp">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="custom_rod_name" type="text" label="ROD Name"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="mask">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>          
+          <when value="dbsnp">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="snps">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="hapmap">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="omni">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="indels">
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+          <when value="custom">
+              <param name="custom_rod_name" type="text" label="ROD Name"/>
+              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <conditional name="rod_training_type">
+                  <param name="rod_training_type_selector" type="select"
+                   label="Use as training/truth/known sites"/>
+                  <when value="not_training_truth_known">
+                      
+                  </when>
+                  <when value="is_training_truth_known">
+                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                  <key>true</key>
+               </param>
+                      <param name="prior" type="float" label="prior probability of being true"/>
+                  </when>
+              </conditional>
+          </when>
+        </conditional>
+    
+    <param name="annotations" type="select"
+          help="-an,--use_annotation &amp;lt;use_annotation&amp;gt;"
+          label="annotations which should used for calculations">
+      <key type="short">an</key>
+      <key type="long">use_annotation</key>
+   </param>
+    
+    <param name="additional_annotation_name" type="text"
+          help="-an,--use_annotation &amp;lt;use_annotation&amp;gt;"
+          label="Annotation name"
+          multiple="true"/>
+    
+    <param name="mode" type="select" help="-mode,--mode &amp;lt;mode&amp;gt;"
+          label="Recalibration mode">
+      <key type="short">mode</key>
+      <key type="long">mode</key>
+   </param>
+    
+    <conditional name="gatk_param_type">
+      <param name="gatk_param_type_selector" type="select"
+             label="Basic or Advanced GATK options"/>
+      <when value="basic">
+        
+      </when>
+      <when value="advanced">
+        <param name="pedigree_file" type="data" format="txt"
+                help="-ped,--pedigree &amp;lt;pedigree&amp;gt;"
+                label="Pedigree files for samples"
+                multiple="true"/>
+        <param name="pedigree_string" type="text"
+                help="-pedString,--pedigreeString &amp;lt;pedigreeString&amp;gt;"
+                label="Pedigree string for samples"
+                multiple="true"/>
+        <param name="pedigree_validation_type" type="select"
+                help="-pedValidationType,--pedigreeValidationType &amp;lt;pedigreeValidationType&amp;gt;"
+                label="How strict should we be in validating the pedigree information">
+            <key type="short">pedValidationType</key>
+            <key type="long">pedigreeValidationType</key>
+         </param>
+        <conditional name="read_filter_type">
+              <param name="read_filter_type_selector" type="select" label="Read Filter Type"/>
+              <when value="BadCigar">
+                  
+              </when>
+              <when value="BadMate">
+                  
+              </when>
+              <when value="DuplicateRead">
+                  
+              </when>
+              <when value="FailsVendorQualityCheck">
+                  
+              </when>
+              <when value="MalformedRead">
+                  <param name="filter_mismatching_base_and_quals" type="boolean"
+                      help="filter out the mismatch reads instead of quitting with an error"
+                      label="filter out the reads with mismatching number of bases and base qualities"
+                      defaultValue="true">
+                  <key type="long">filter_mismatching_base_and_quals</key>
+                  <key>filter</key>
+               </param>
+              </when>
+              <when value="MappingQuality">
+                  <param name="min_mapping_quality_score" type="integer"
+                      label="Minimum read mapping quality required to consider a read for calling"/>
+              </when>
+              <when value="MappingQualityUnavailable">
+                  
+              </when>
+              <when value="MappingQualityZero">
+                  
+              </when>
+              <when value="MateSameStrand">
+                  
+              </when>
+              <when value="MaxInsertSize">
+                  <param name="maxInsertSize" type="integer"
+                      label="Discard reads with insert size greater than the specified value"/>
+              </when>
+              <when value="MaxReadLength">
+                  <param name="maxReadLength" type="integer" label="Max Read Length"/>
+              </when>
+              <when value="MissingReadGroup">
+                  
+              </when>
+              <when value="NoOriginalQualityScores">
+                  
+              </when>
+              <when value="NotPrimaryAlignment">
+                  
+              </when>
+              <when value="Platform454">
+                  
+              </when>
+              <when value="Platform">
+                  <param name="PLFilterName" type="text"
+                      label="Discard reads with RG:PL attribute containing this string"/>
+              </when>
+              <when value="PlatformUnit">
+                  
+              </when>
+              <when value="ReadGroupBlackList">
+                  
+              </when>
+              <when value="ReadName">
+                  <param name="readName" type="text"
+                      label="Filter out all reads except those with this read name"/>
+              </when>
+              <when value="ReadStrand">
+                  <param name="filterPositive" type="boolean"
+                      label="Discard reads on the forward strand"
+                      defaultValue="true">
+                  <key type="long">filterPositive</key>
+               </param>
+              </when>
+              <when value="ReassignMappingQuality">
+                  <param name="default_mapping_quality" type="integer"
+                      label="Default read mapping quality to assign to all reads"/>
+              </when>
+              <when value="Sample">
+                  <param name="sample_to_keep" type="text"
+                      label="The name of the sample(s) to keep, filtering out all others"/>
+              </when>
+              <when value="SingleReadGroup">
+                  <param name="read_group_to_keep" type="integer"
+                      label="The name of the read group to keep, filtering out all others"/>
+              </when>
+              <when value="UnmappedRead">
+                  
+              </when>
+            </conditional>
+        <param name="input_intervals" type="data"
+                format="bed,gatk_interval,picard_interval_list,vcf"
+                help="-L,--intervals &amp;lt;intervals&amp;gt;"
+                label="Genomic intervals"
+                multiple="true"/>
+        <param name="input_exclude_intervals" type="data"
+                format="bed,gatk_interval,picard_interval_list,vcf"
+                help="-XL,--excludeIntervals &amp;lt;excludeIntervals&amp;gt;"
+                label="Genomic intervals"
+                multiple="true"/>
+        
+        <param name="interval_set_rule" type="select"
+                help="-isr,--interval_set_rule &amp;lt;interval_set_rule&amp;gt;"
+                label="Interval set rule">
+            <key type="short">isr</key>
+            <key type="long">interval_set_rule</key>
+         </param>
+        
+        <conditional name="downsampling_type">
+            <param name="downsampling_type_selector" type="select"
+                   help="-dt,--downsampling_type &amp;lt;downsampling_type&amp;gt;"
+                   label="Type of reads downsampling to employ at a given locus">
+               <key type="short">dt</key>
+               <key type="long">downsampling_type</key>
+            </param>
+            <when value="NONE">
+              
+          </when>
+            <when value="ALL_READS">
+              <conditional name="downsample_to_type">
+                  <param name="downsample_to_type_selector" type="select" label="Downsample method"/>
+                  <when value="downsample_to_fraction">
+                      <param name="downsample_to_value" type="float"
+                            help="-dfrac,--downsample_to_fraction &amp;lt;downsample_to_fraction&amp;gt;"
+                            label="Fraction [0.0-1.0] of reads to downsample to">
+                        <key type="short">dfrac</key>
+                        <key type="long">downsample_to_fraction</key>
+                     </param>
+                  </when>
+                  <when value="downsample_to_coverage">
+                      <param name="downsample_to_value" type="integer"
+                            help="-dcov,--downsample_to_coverage &amp;lt;downsample_to_coverage&amp;gt;"
+                            label="Coverage to downsample to at any given locus">
+                        <key type="short">dcov</key>
+                        <key type="long">downsample_to_coverage</key>
+                     </param>
+                  </when>
+              </conditional>
+            </when>
+            <when value="BY_SAMPLE">
+              <conditional name="downsample_to_type">
+                  <param name="downsample_to_type_selector" type="select" label="Downsample method"/>
+                  <when value="downsample_to_fraction">
+                      <param name="downsample_to_value" type="float"
+                            help="-dfrac,--downsample_to_fraction &amp;lt;downsample_to_fraction&amp;gt;"
+                            label="Fraction [0.0-1.0] of reads to downsample to">
+                        <key type="short">dfrac</key>
+                        <key type="long">downsample_to_fraction</key>
+                     </param>
+                  </when>
+                  <when value="downsample_to_coverage">
+                      <param name="downsample_to_value" type="integer"
+                            help="-dcov,--downsample_to_coverage &amp;lt;downsample_to_coverage&amp;gt;"
+                            label="Coverage to downsample to at any given locus">
+                        <key type="short">dcov</key>
+                        <key type="long">downsample_to_coverage</key>
+                     </param>
+                  </when>
+              </conditional>
+            </when>
+        </conditional>
+        <param name="baq" type="select" help="-baq,--baq &amp;lt;baq&amp;gt;"
+                label="Type of BAQ calculation to apply in the engine">
+            <key type="short">baq</key>
+            <key type="long">baq</key>
+         </param>
+        <param name="baq_gap_open_penalty" type="float"
+                help="Default value is 40. 30 is perhaps better for whole genome call sets. -baqGOP,--baqGapOpenPenalty &amp;lt;baqGapOpenPenalty&amp;gt;"
+                label="BAQ gap open penalty (Phred Scaled)">
+            <key>Default</key>
+         </param>
+        <param name="use_original_qualities" type="boolean" help="-OQ,--useOriginalQualities"
+                label="Use the original base quality scores from the OQ tag"
+                defaultValue="true">
+            <key type="long">useOriginalQualities</key>
+            <key type="short">OQ</key>
+         </param>
+        <param name="default_base_qualities" type="integer"
+                help="-DBQ,--defaultBaseQualities &amp;lt;defaultBaseQualities&amp;gt;"
+                label="Value to be used for all base quality scores, when some are missing">
+            <key type="short">DBQ</key>
+            <key type="long">defaultBaseQualities</key>
+         </param>
+        <param name="validation_strictness" type="select"
+                help="-S,--validation_strictness &amp;lt;validation_strictness&amp;gt;"
+                label="How strict should we be with validation">
+            <key type="short">S</key>
+            <key type="long">validation_strictness</key>
+         </param>
+        <param name="interval_merging" type="select"
+                help="-im,--interval_merging &amp;lt;interval_merging&amp;gt;"
+                label="Interval merging rule">
+            <key type="short">im</key>
+            <key type="long">interval_merging</key>
+         </param>
+        
+        <conditional name="read_group_black_list_type">
+            <param name="read_group_black_list_type_selector" type="select"
+                   label="Type of reads read group black list"/>
+            <when value="file">
+              <param name="read_group_black_list" type="data" format="txt"
+                      label="Read group black list file"/>
+            </when>
+            <when value="text">
+              <param name="read_group_black_list" type="text"
+                      label="Read group black list tag:string"/>
+            </when>
+          </conditional>
+        
+        <param name="disable_experimental_low_memory_sharding" type="boolean"
+                help="--disable_experimental_low_memory_sharding"
+                label="Disable experimental low-memory sharding functionality."
+                defaultValue="true">
+            <key type="long">disable_experimental_low_memory_sharding</key>
+         </param>
+        <param name="non_deterministic_random_seed" type="boolean"
+                help="-ndrs,--nonDeterministicRandomSeed"
+                label="Makes the GATK behave non deterministically, that is, the random numbers generated will be different in every run"
+                defaultValue="true">
+            <key type="long">nonDeterministicRandomSeed</key>
+            <key type="short">ndrs</key>
+         </param>
+        <param name="fix_misencoded_quality_scores" type="boolean"
+                help="-fixMisencodedQuals / --fix_misencoded_quality_scores"
+                label="Fix mis-encoded base quality scores. Q0 == ASCII 33 according to the SAM specification, whereas Illumina encoding starts at Q64. The idea here is simple: we just iterate over all reads and subtract 31 from every quality score."
+                defaultValue="true">
+            <key type="long">fix_misencoded_quality_scores</key>
+            <key type="short">fixMisencodedQuals</key>
+         </param>
+        
+      </when>
+    </conditional>
+    
+    <conditional name="analysis_param_type">
+      <param name="analysis_param_type_selector" type="select"
+             label="Basic or Advanced Analysis options"/>
+      <when value="basic">
+        
+      </when>
+      <when value="advanced">
+        <param name="max_gaussians" type="integer"
+                help="-mG,--maxGaussians &amp;lt;maxGaussians&amp;gt;"
+                label="maximum number of Gaussians to try during variational Bayes Algorithm">
+            <key type="short">mG</key>
+            <key type="long">maxGaussians</key>
+         </param>
+        <param name="max_iterations" type="integer"
+                help="-mI,--maxIterations &amp;lt;maxIterations&amp;gt;"
+                label="maximum number of maximum number of VBEM iterations to be performed in variational Bayes Algorithm">
+            <key type="short">mI</key>
+            <key type="long">maxIterations</key>
+         </param>
+        <param name="num_k_means" type="integer" help="-nKM,--numKMeans &amp;lt;numKMeans&amp;gt;"
+                label="number of k-means iterations to perform in order to initialize the means of the Gaussians in the Gaussian mixture model">
+            <key type="short">nKM</key>
+            <key type="long">numKMeans</key>
+         </param>
+        <param name="std_threshold" type="float"
+                help="-std,--stdThreshold &amp;lt;stdThreshold&amp;gt;"
+                label="If a variant has annotations more than -std standard deviations away from mean then don't use it for building the Gaussian mixture model.">
+            <key type="short">std</key>
+            <key type="long">stdThreshold</key>
+         </param>
+        <param name="qual_threshold" type="float"
+                help="-qual,--qualThreshold &amp;lt;qualThreshold&amp;gt;"
+                label="If a known variant has raw QUAL value less than -qual then don't use it for building the Gaussian mixture model.">
+            <key type="short">qual</key>
+            <key type="long">qualThreshold</key>
+         </param>
+        <param name="shrinkage" type="float" help="-shrinkage,--shrinkage &amp;lt;shrinkage&amp;gt;"
+                label="shrinkage parameter in variational Bayes algorithm">
+            <key type="short">shrinkage</key>
+            <key type="long">shrinkage</key>
+         </param>
+        <param name="dirichlet" type="float" help="-dirichlet,--dirichlet &amp;lt;dirichlet&amp;gt;"
+                label="dirichlet parameter in variational Bayes algorithm">
+            <key type="short">dirichlet</key>
+            <key type="long">dirichlet</key>
+         </param>
+        <param name="prior_counts" type="float"
+                help="-priorCounts,--priorCounts &amp;lt;priorCounts&amp;gt;"
+                label="number of prior counts to use in variational Bayes algorithm">
+            <key type="short">priorCounts</key>
+            <key type="long">priorCounts</key>
+         </param>
+        <conditional name="bad_variant_selector">
+            <param name="bad_variant_selector_type" type="select"
+                   label="How to specify bad variants"/>
+            <when value="percent">
+               <param name="percent_bad_variants" type="float"
+                      help="-percentBad,--percentBadVariants &amp;lt;percentBadVariants&amp;gt;"
+                      label="percentage of the worst scoring variants to use when building the Gaussian mixture model of bad variants. 0.07 means bottom 7 percent.">
+                  <key type="short">percentBad</key>
+                  <key type="long">percentBadVariants</key>
+               </param>
+            </when>
+            <when value="min_num">
+               <param name="min_num_bad_variants" type="integer"
+                      help="-minNumBad,--minNumBadVariants &amp;lt;minNumBadVariants&amp;gt;"
+                      label="minimum amount of worst scoring variants to use when building the Gaussian mixture model of bad variants. Will override -percentBad arugment if necessary">
+                  <key type="short">minNumBad</key>
+                  <key type="long">minNumBadVariants</key>
+               </param>
+            </when>
+        </conditional>
+        <param name="target_titv" type="float" help="-titv,--target_titv &amp;lt;target_titv&amp;gt;"
+                label="expected novel Ti/Tv ratio to use when calculating FDR tranches and for display on optimization curve output figures. (approx 2.15 for whole genome experiments). ONLY USED FOR PLOTTING PURPOSES!">
+            <key type="short">titv</key>
+            <key type="long">target_titv</key>
+         </param>
+        <param name="ts_tranche" type="text" help="-tranche,--TStranche &amp;lt;TStranche&amp;gt;"
+                label="levels of novel false discovery rate (FDR, implied by ti/tv) at which to slice the data. (in percent, that is 1.0 for 1 percent)">
+            <key type="short">tranche</key>
+            <key type="long">TStranche</key>
+         </param>
+        <conditional name="ignore_filter_type">
+            <param name="ignore_filter_type_selector" type="select" label="Filter Type"/>
+            <when value="custom">
+              <param name="filter_name" type="text" label="Filter name"/>
+            </when>
+            <when value="HARD_TO_VALIDATE"/>
+            <when value="LowQual"/>
+          </conditional>
+        <param name="ts_filter_level" type="float"
+                help="-ts_filter_level,--ts_filter_level &amp;lt;ts_filter_level&amp;gt;"
+                label="truth sensitivity level at which to start filtering, used here to indicate filtered variants in plots">
+            <key type="short">ts_filter_level</key>
+            <key type="long">ts_filter_level</key>
+         </param>
+      </when>
+    </conditional>
+  
+  
+    <param name="output_recal" type="data" format="gatk_recal"
+          label="${tool.name} on ${on_string} (Recalibration File)"
+          output="true"/>
+    <param name="output_tranches" type="data" format="gatk_tranche"
+          label="${tool.name} on ${on_string} (Tranches File)"
+          output="true"/>
+    <param name="output_rscript" type="data" format="txt"
+          label="${tool.name} on ${on_string} (RScript File)"
+          output="true"/>
+    <param name="output_tranches_pdf" type="data" format="pdf"
+          label="${tool.name} on ${on_string} (PDF File)"
+          output="true"/>
+    <param name="output_log" type="data" format="txt"
+          label="${tool.name} on ${on_string} (log)"
+          output="true"/>
+  
+    <data name="output_recal" format="gatk_recal"
+         label="${tool.name} on ${on_string} (Recalibration File)"/>
+    <data name="output_tranches" format="gatk_tranche"
+         label="${tool.name} on ${on_string} (Tranches File)"/>
+    <data name="output_rscript" format="txt"
+         label="${tool.name} on ${on_string} (RScript File)"/>
+    <data name="output_tranches_pdf" format="pdf"
+         label="${tool.name} on ${on_string} (PDF File)"/>
+    <data name="output_log" format="txt" label="${tool.name} on ${on_string} (log)"/>
+  
+  
+  
+</tool>

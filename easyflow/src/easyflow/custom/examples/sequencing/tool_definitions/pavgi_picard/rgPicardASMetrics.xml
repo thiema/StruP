@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      name="SAM/BAM Alignment Summary Metrics"
+      id="PicardASMetrics"
+      version="1.56.0">
+  
+  <requirements>
+      <requirement type="package" version="1.56.0">picard</requirement>
+   </requirements>
+  
+    <param name="input_file" type="data" format="sam,bam"
+          help="If empty, upload or import a SAM/BAM dataset."
+          label="SAM/BAM dataset to generate statistics for">
+      <key>If</key>
+   </param>
+    <param name="out_prefix" type="text" help="Use this remind you what the job was for."
+          label="Title for the output file">
+      <key>Use</key>
+   </param>
+
+      <param name="ownFile" type="data" format="fasta"
+          help="This option works best for relatively small genomes. If you are working with large human-sized genomes, send request to Galaxy team for adding your reference to this Galaxy instance by using 'Help' link at the top of Galaxy interface."
+          label="Select a reference genome from history">
+      <key>This</key>
+   </param>
+    <param name="sorted" type="boolean" label="Assume the input file is already sorted"
+          defaultValue="true">
+      <key>true</key>
+   </param>
+    <param name="bisulphite" type="boolean"
+          label="Input file contains Bisulphite sequenced reads"
+          defaultValue="true">
+      <key>true</key>
+   </param>
+    <param name="adaptors" type="text" help="One per line if multiple"
+          label="Adapter sequences">
+      <key>One</key>
+   </param>
+    <param name="maxinsert" type="integer"
+          label="Larger paired end reads and inter-chromosomal pairs considered chimeric "/>
+  
+  
+    <param name="html_file" type="data" format="html" label="${out_prefix}.html"
+          output="true"/>
+  
+    <data name="html_file" format="html" label="${out_prefix}.html"/>
+  
+  
+  
+</tool>

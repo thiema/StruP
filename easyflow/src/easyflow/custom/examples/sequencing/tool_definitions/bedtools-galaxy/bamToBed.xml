@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="bedtools_bamtobed"
+      name="Convert from BAM to BED."
+      version="0.1.0">
+
+   <requirements>
+      <requirement type="binary">bamToBed</requirement>
+   </requirements>
+
+
+
+
+    <param name="input" type="data" format="bam"
+          label="Convert the following BAM file to BED"/>
+    <param name="option" type="select" label="What type of BED output would you like"/>
+    <param name="split" type="boolean"
+          label="Report spliced BAM alignments as separate BED entries"
+          defaultValue="true">
+      <key type="short">split</key>
+   </param>
+    <param name="ed_score" type="boolean"
+          label="Use alignment's edit-distance for BED score"
+          defaultValue="true">
+      <key type="short">ed</key>
+   </param>
+    <param name="tag" type="text"
+          label="Use other NUMERIC BAM alignment tag as the BED score"
+          optional="true"/>
+
+
+
+    <param name="output" type="data" format="bed" label="${input.name} (as BED)"
+          output="true"/>
+
+    <data name="output" format="bed" label="${input.name} (as BED)"
+         metadata_source="input"/>
+
+
+
+</tool>

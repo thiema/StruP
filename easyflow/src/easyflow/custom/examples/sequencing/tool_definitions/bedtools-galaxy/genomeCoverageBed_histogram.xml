@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="bedtools_genomecoveragebed_histogram"
+      name="Create a histogram of genome coverage"
+      version="0.1.0">
+	  <description/>
+	
+	  <requirements>
+        <requirement type="binary">genomeCoverageBed</requirement>
+    </requirements>
+    
+	
+
+	
+		<param name="input" type="data" format="bed,bam"
+          label="The BAM or BED file from which coverage should be computed"/>
+		<param name="max" type="text"
+          help="Combine all positions with a depth &gt;= max into a single bin in the histogram."
+          label="Max depth"
+          optional="true">
+      <key>Combine</key>
+   </param>
+	
+
+	
+		<param name="output" type="data" format="tabular"
+          label="${input.name} (Genome Coverage Histogram)"
+          output="true"/>
+	
+		<data name="output" format="tabular"
+         label="${input.name} (Genome Coverage Histogram)"
+         metadata_source="input"/>
+	
+
+
+</tool>

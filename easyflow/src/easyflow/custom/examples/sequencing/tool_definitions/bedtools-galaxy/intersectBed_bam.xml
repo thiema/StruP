@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool xmlns="urn:de.thiema.easyflow/types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      id="bedtools_intersectbed_bam"
+      name="Find BAM alignments that overlap intervals in another file"
+      version="0.1.0">
+
+   <requirements>
+      <requirement type="binary">intersectBed</requirement>
+   </requirements>
+
+
+
+
+    <param name="inputA" type="data" format="bed,bam"
+          label="Which alignments in this BAM file"/>
+    <param name="inputB" type="data" format="bed"
+          label="overlap intervaks in this BED file"/>
+    <param name="split" type="boolean"
+          help="If set, the coverage will be calculated based the spliced intervals only. For BAM files, this inspects the CIGAR N operation to infer the blocks for computing coverage. For BED12 files, this inspects the BlockCount, BlockStarts, and BlockEnds fields (i.e., columns 10,11,12). If this option is not set, coverage will be calculated based on the interval's START/END coordinates, and would include introns in the case of RNAseq data."
+          label="Treat split/spliced BAM or BED12 entries as distinct BED intervals when computing coverage."
+          defaultValue="true">
+      <key type="short">split</key>
+      <key>If</key>
+   </param>
+    
+    <param name="strand" type="select" label="Calculate coverage based on"/>
+    
+    <param name="fraction" type="text"
+          help="Alignments are only retained if the overlap with the an interval in the BED file comprises at least this fraction of the BAM alignment's length.  For example, to require that the overlap affects 50% of the BAM alignment, use 0.50"
+          label="Minimum overlap required as a fraction of the BAM alignment"
+          optional="true">
+      <key>Alignments</key>
+   </param>
+    
+    <param name="reciprocal" type="boolean"
+          help="If set, the overlap between the BAM alignment and the BED interval must affect the above fraction of both the alignment and the BED interval."
+          label="Require reciprocal overlap."
+          defaultValue="true">
+      <key type="short">r</key>
+      <key>If</key>
+   </param>
+    
+    <param name="invert" type="boolean"
+          label="Report only those alignments that **do not** overlap the BED file."
+          defaultValue="true">
+      <key type="short">v</key>
+   </param>
+    
+
+
+
+    <param name="output" type="data" format="bam"
+          label="Intersection of ${inputA.name} and ${inputB.name}"
+          output="true"/>
+
+    <data name="output" format="bam"
+         label="Intersection of ${inputA.name} and ${inputB.name}"
+         metadata_source="inputA"/>
+
+
+
+</tool>
