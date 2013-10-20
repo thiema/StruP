@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:de.thiema.easyflow/types"
-	xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd" id="id_TA3"
-	name="TA" version="1.0">
+<tool xmlns="urn:de.thiema.easyflow/types"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+	  id="id_TA3" name="TA" version="1.0">
 	<description>
 		The any dummy tool
 	</description>
@@ -9,29 +10,28 @@
 	<command interpreter="python">
 		any.py $input $output
 	</command>
-	<param key="input_bam" type="data" label="" seperator=" " named="true">
-		<name value="-i"/>
-		<name value="--input"/>
+	<param name="input_bam" type="data" label="" separator=" " named="true">
+		<key type="short">i</key>
+		<key type="long">input</key>
 	</param>
-	<param key="param1" type="integer" value="-1" label="the label"
+	<param name="param1" type="integer" defaultValue="-1" label="the label"
 		help="help info" />
-	<param key="param2" type="select"
+	<param name="param2" type="select"
 		label="Type of BAQ calculation to apply in the engine" help="help info">
 		<option value="OFF" selected="True">OFF</option>
 		<option value="CALCULATE_AS_NECESSARY">CALCULATE_AS_NECESSARY</option>
 		<option value="RECALCULATE">RECALCULATE</option>
 	</param>
-	<param key="option1" type="integer" value="-1" label="the label"
+	<param name="option1" type="integer" defaultValue="-1" label="the label"
 		help="help info" optional="true" />
-	<param key="output_bam" type="data" output="true" named="true">
-		<name value="-o"/>
+	<param name="output_bam" type="data" named="true">
+		<key type="short">o</key>
 	</param>
-	<param key="output_log" type="data" output="true" named="true">
-		<name value="--log" type="long"/>	
+	<param name="output_log" type="data" named="true">
+		<key type="long">log</key>	
 	</param>
-	<data key="input_bam" format="bam" label="${tool.name} on ${on_string} (BAM)" />
-	<data key="output_bam" format="bam" label="${tool.name} on ${on_string} (BAM)" />
-	<data key="output_log" format="txt" label="${tool.name} on ${on_string} (log)" />
+	<data name="bam" format="bam" label="${tool.name} on ${on_string} (BAM)" />
+	<data name="output_log" format="txt" label="${tool.name} on ${on_string} (log)"/>
 	<help>
 		The help page for any tool.
 	</help>

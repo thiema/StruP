@@ -1,25 +1,33 @@
 {
 	
   "project" : {
-	"workflowTemplateFile" : "abstract_multiple_traversal_event.workflow",
+	"workflowTemplateFile2" : "abstract_multiple_traversal_event.workflow",
 	"workflowTemplateFile1" : "abstract1.workflow",
-	"workflowTemplateFile3" : "reseq_simple.workflow",
+	"workflowTemplateFile" : "reseq_simple.workflow",
 	"workflowTemplateFile_reseq" : "reseq_full.workflow",
     "metadataFile" : "metadata_abstract.tsv", 
-    "metadataFile2" : "metadata_sequencing.tsv",	
-
-    "refFile" : "ref.fa",
+    "metadataFile2" : "metadata_sequencing.tsv",
 
     "isContrast" : "true",
     "useIntervalList" : "true",
     "splitByContig" : "true",
-
+},
+  "processing" : {
     "_target_enum" : ["sge", "local", "aws", "pegasus"],
+    "execution_system" : "makeflow",
+    "mem" : "1G",
     "target" : "sge",
     "useThreads" : "true",
     "numThreads" : 10,
     "queue" : "bioinf.q"
   },
+
+  "catalog":{
+	"genome_reference" : "human.fa",
+	"input_dir" : "input_dir",
+	"work_dir" : "analysis_dir",
+	"tmp_dir" : "tmp",
+	},
 
   "contrast": {
     "_rule_enum" : ["crossProduct", "groupWise", "sampleWise"],
@@ -36,9 +44,16 @@
   },
   
   "tool" : {
+    "command_pattern" : "interpreter executable submodule positional_arg optional_arg input output",
   	"dir" : "tool_definitions",
-  	"tools" : ["tool.xml", "anytool.xml", "tools.xml", "depth_of_coverage.xml"],
-  	"schemata" : ["../../../tool/schema/Easyflow.xsd", "../../../tool/schema/Easyflow_multiple.xsd", "../../../tool/schema/external/Galaxy.xsd"]
+  	"tools_test" : ["tool.xml", "tools.xml", "depth_of_coverage_gatk2_easyflow.xml", 
+  				"depth_of_coverage_gatk_easyflow.xml", "ngs_tools_easyflow.xml"],
+  	"tools" : ["ngs_tools_easyflow.xml"],
+  	"tools_" : ["ngs_tools_easyflow.xml",
+  				"pavgi_picard", "gatk2", "bedtools-galaxy"],
+  	"schemata" : ["../../../tool/schema/Easyflow.xsd", 
+  					"../../../tool/schema/Easyflow_multiple.xsd", 
+  					"../../../tool/schema/external/Galaxy.xsd"]
   }
 
 }
