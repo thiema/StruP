@@ -242,6 +242,8 @@
           <details key="documentation" value="Collection of processing tools."/>
         </eAnnotations>
       </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="toolMatches" upperBound="-1"
+          eType="#//util/maps/StringToToolMatchMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="previousTaskStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           defaultValueLiteral=""/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="root" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -310,6 +312,32 @@
     <eClassifiers xsi:type="ecore:EClass" name="Catalog">
       <eStructuralFeatures xsi:type="ecore:EReference" name="entries" upperBound="-1"
           eType="#//util/maps/StringToObjectMap" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ToolMatch">
+      <eOperations name="computeScore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      <eOperations name="computeExpectedScore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tool" eType="#//tool/Tool"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="score" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+          defaultValueLiteral="0"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedScore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+          defaultValueLiteral="0"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedToolScore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+          defaultValueLiteral="0"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="missingInDataPorts" upperBound="-1"
+          eType="#//tool/DataPort" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="missingOutDataPorts"
+          upperBound="-1" eType="#//tool/DataPort" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="missingGroupingCriteria"
+          upperBound="-1" eType="#//util/maps/StringToStringMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reverseMissingInDataPorts"
+          upperBound="-1" eType="#//tool/DataPort" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reverseMissingOutDataPorts"
+          upperBound="-1" eType="#//tool/DataPort" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reverseMissingGroupingCriteria"
+          upperBound="-1" eType="#//util/maps/StringToStringMap" containment="true"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
@@ -443,7 +471,7 @@
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="executionSystem" eType="#//execution/IExecutionSystem"/>
         </eOperations>
-        <eOperations name="computeToolDeps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="catalog" eType="#//core/Catalog"/>
         </eOperations>
@@ -611,6 +639,8 @@
           eType="#//tool/Requirement"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="executables" upperBound="-1"
           eType="#//util/maps/StringToURIMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="data" upperBound="-1"
+          eType="#//util/maps/StringToDataMap" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Interpreter" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="exe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -631,16 +661,16 @@
           <details key="documentation" value="Finds the static input files (e.g. the file name), that are not dependant on the previous task."/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="getInputs" eType="#//util/maps/StringToURIMap">
+      <eOperations name="getInputs" upperBound="-1" eType="#//util/maps/StringToURIMap">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="Returns the concrete input ports (e.g. file names) and with respect to the given &#xA;chunks. The returned keys correspond to the name of data format."/>
         </eAnnotations>
         <eParameters name="chunks" upperBound="-1" eType="#//util/maps/StringToChunksMap"/>
       </eOperations>
-      <eOperations name="getOutputs" eType="#//util/maps/StringToURIMap">
+      <eOperations name="getOutputs" upperBound="-1" eType="#//util/maps/StringToURIMap">
         <eParameters name="chunks" upperBound="-1" eType="#//util/maps/StringToChunksMap"/>
       </eOperations>
-      <eOperations name="getStaticInputs" eType="#//util/maps/StringToURIMap">
+      <eOperations name="getStaticInputs" upperBound="-1" eType="#//util/maps/StringToURIMap">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="Returns the concrete input ports (e.g. file names). The keys correspond to the&#xA;name of data format."/>
         </eAnnotations>
@@ -687,7 +717,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="advanced" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
           eType="#//util/maps/StringToParameterMap" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" upperBound="-1"
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="formats" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
@@ -700,15 +730,24 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="port" eType="#//tool/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="DataPort">
+    <eClassifiers xsi:type="ecore:EClass" name="DataPort" eSuperTypes="#//tool/DefaultToolElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A DataPort represents the Data that can be transformed by a Task. DataPorts have a Cardinality and a DataFormat and a List of GroupingCriteria that can be used to group the data."/>
+        <details key="documentation" value="A DataPort represents the Data that can be transformed by a Task. DataPorts&#xA;have a Cardinality and a DataFormat and a List of GroupingCriteria that can &#xA;be used to group the data."/>
       </eAnnotations>
+      <eOperations name="isCompatible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="dataPort" eType="#//tool/DataPort"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="groupingCriteria" upperBound="-1"
           eType="#//traversal/GroupingCriterion"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinality" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="dataFormat" eType="#//tool/DataFormat"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dataFormats" upperBound="-1"
+          eType="#//util/maps/StringToDataFormatMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="bitPos" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"
+          defaultValueLiteral="-1"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DataFormat" eSuperTypes="#//tool/DefaultToolElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -974,6 +1013,18 @@
       <eClassifiers xsi:type="ecore:EClass" name="StringToPackageMap" instanceClassName="java.util.Map$Entry">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//tool/Package"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToDataMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//tool/Data"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToDataFormatMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//tool/DataFormat"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToToolMatchMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/ToolMatch"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

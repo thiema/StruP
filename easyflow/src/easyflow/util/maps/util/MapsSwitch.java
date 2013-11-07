@@ -10,10 +10,13 @@ import com.mxgraph.model.mxICell;
 
 import easyflow.core.Task;
 
+import easyflow.core.ToolMatch;
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.Data;
+import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -207,6 +210,24 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.STRING_TO_PACKAGE_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, easyflow.tool.Package> stringToPackageMap = (Map.Entry<String, easyflow.tool.Package>)theEObject;
 				T result = caseStringToPackageMap(stringToPackageMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DATA_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Data> stringToDataMap = (Map.Entry<String, Data>)theEObject;
+				T result = caseStringToDataMap(stringToDataMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DataFormat> stringToDataFormatMap = (Map.Entry<String, DataFormat>)theEObject;
+				T result = caseStringToDataFormatMap(stringToDataFormatMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, ToolMatch> stringToToolMatchMap = (Map.Entry<String, ToolMatch>)theEObject;
+				T result = caseStringToToolMatchMap(stringToToolMatchMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -496,6 +517,51 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToPackageMap(Map.Entry<String, easyflow.tool.Package> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Data Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Data Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToDataMap(Map.Entry<String, Data> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Data Format Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Data Format Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToDataFormatMap(Map.Entry<String, DataFormat> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Tool Match Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Tool Match Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToToolMatchMap(Map.Entry<String, ToolMatch> object) {
 		return null;
 	}
 

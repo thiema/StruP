@@ -10,10 +10,13 @@ import com.mxgraph.model.mxICell;
 
 import easyflow.core.Task;
 
+import easyflow.core.ToolMatch;
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.Data;
+import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -105,6 +108,9 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_PARAMETER_MAP: return (EObject)createStringToParameterMap();
 			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: return (EObject)createStringToDocumentPropertiesMap();
 			case MapsPackage.STRING_TO_PACKAGE_MAP: return (EObject)createStringToPackageMap();
+			case MapsPackage.STRING_TO_DATA_MAP: return (EObject)createStringToDataMap();
+			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: return (EObject)createStringToDataFormatMap();
+			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -298,6 +304,36 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, easyflow.tool.Package> createStringToPackageMap() {
 		StringToPackageMapImpl stringToPackageMap = new StringToPackageMapImpl();
 		return stringToPackageMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, Data> createStringToDataMap() {
+		StringToDataMapImpl stringToDataMap = new StringToDataMapImpl();
+		return stringToDataMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, DataFormat> createStringToDataFormatMap() {
+		StringToDataFormatMapImpl stringToDataFormatMap = new StringToDataFormatMapImpl();
+		return stringToDataFormatMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, ToolMatch> createStringToToolMatchMap() {
+		StringToToolMatchMapImpl stringToToolMatchMap = new StringToToolMatchMapImpl();
+		return stringToToolMatchMap;
 	}
 
 	/**

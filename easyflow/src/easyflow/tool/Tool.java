@@ -32,6 +32,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getPackage <em>Package</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -217,6 +218,23 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EMap<String, URI> getExecutables();
+
+	/**
+	 * Returns the value of the '<em><b>Data</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.Data},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data</em>' map.
+	 * @see easyflow.tool.ToolPackage#getTool_Data()
+	 * @model mapType="easyflow.util.maps.StringToDataMap<org.eclipse.emf.ecore.EString, easyflow.tool.Data>"
+	 * @generated
+	 */
+	EMap<String, Data> getData();
 
 	/**
 	 * <!-- begin-user-doc -->

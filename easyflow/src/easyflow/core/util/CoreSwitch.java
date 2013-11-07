@@ -135,6 +135,12 @@ public class CoreSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CorePackage.TOOL_MATCH: {
+				ToolMatch toolMatch = (ToolMatch)theEObject;
+				T result = caseToolMatch(toolMatch);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -286,6 +292,21 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCatalog(Catalog object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Tool Match</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Tool Match</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseToolMatch(ToolMatch object) {
 		return null;
 	}
 

@@ -10,6 +10,7 @@ import easyflow.traversal.GroupingCriterion;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -18,7 +19,9 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A DataPort represents the Data that can be transformed by a Task. DataPorts have a Cardinality and a DataFormat and a List of GroupingCriteria that can be used to group the data.
+ * A DataPort represents the Data that can be transformed by a Task. DataPorts
+ * have a Cardinality and a DataFormat and a List of GroupingCriteria that can 
+ * be used to group the data.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -26,7 +29,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link easyflow.tool.DataPort#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.tool.DataPort#getCardinality <em>Cardinality</em>}</li>
- *   <li>{@link easyflow.tool.DataPort#getDataFormat <em>Data Format</em>}</li>
+ *   <li>{@link easyflow.tool.DataPort#getDataFormats <em>Data Formats</em>}</li>
+ *   <li>{@link easyflow.tool.DataPort#isOptional <em>Optional</em>}</li>
+ *   <li>{@link easyflow.tool.DataPort#getBitPos <em>Bit Pos</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,7 +39,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface DataPort extends EObject {
+public interface DataPort extends DefaultToolElement {
 	/**
 	 * Returns the value of the '<em><b>Grouping Criteria</b></em>' reference list.
 	 * The list contents are of type {@link easyflow.traversal.GroupingCriterion}.
@@ -78,29 +83,82 @@ public interface DataPort extends EObject {
 	void setCardinality(short value);
 
 	/**
-	 * Returns the value of the '<em><b>Data Format</b></em>' reference.
+	 * Returns the value of the '<em><b>Data Formats</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.DataFormat},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Data Format</em>' reference isn't clear,
+	 * If the meaning of the '<em>Data Formats</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Data Format</em>' reference.
-	 * @see #setDataFormat(DataFormat)
-	 * @see easyflow.tool.ToolPackage#getDataPort_DataFormat()
+	 * @return the value of the '<em>Data Formats</em>' map.
+	 * @see easyflow.tool.ToolPackage#getDataPort_DataFormats()
+	 * @model mapType="easyflow.util.maps.StringToDataFormatMap<org.eclipse.emf.ecore.EString, easyflow.tool.DataFormat>"
+	 * @generated
+	 */
+	EMap<String, DataFormat> getDataFormats();
+
+	/**
+	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Optional</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Optional</em>' attribute.
+	 * @see #setOptional(boolean)
+	 * @see easyflow.tool.ToolPackage#getDataPort_Optional()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isOptional();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.DataPort#isOptional <em>Optional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Optional</em>' attribute.
+	 * @see #isOptional()
+	 * @generated
+	 */
+	void setOptional(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Bit Pos</b></em>' attribute.
+	 * The default value is <code>"-1"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Bit Pos</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Bit Pos</em>' attribute.
+	 * @see #setBitPos(short)
+	 * @see easyflow.tool.ToolPackage#getDataPort_BitPos()
+	 * @model default="-1"
+	 * @generated
+	 */
+	short getBitPos();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.DataPort#getBitPos <em>Bit Pos</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Bit Pos</em>' attribute.
+	 * @see #getBitPos()
+	 * @generated
+	 */
+	void setBitPos(short value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
-	DataFormat getDataFormat();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.DataPort#getDataFormat <em>Data Format</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Data Format</em>' reference.
-	 * @see #getDataFormat()
-	 * @generated
-	 */
-	void setDataFormat(DataFormat value);
+	boolean isCompatible(DataPort dataPort);
 
 } // DataPort

@@ -68,7 +68,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMaxOcc <em>Max Occ</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isAdvanced <em>Advanced</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getFormat <em>Format</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getFormats <em>Formats</em>}</li>
  * </ul>
  * </p>
  *
@@ -466,14 +466,14 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected EMap<String, Parameter> values;
 
 	/**
-	 * The cached value of the '{@link #getFormat() <em>Format</em>}' attribute list.
+	 * The cached value of the '{@link #getFormats() <em>Formats</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFormat()
+	 * @see #getFormats()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> format;
+	protected EList<String> formats;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -637,11 +637,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getFormat() {
-		if (format == null) {
-			format = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__FORMAT);
+	public EList<String> getFormats() {
+		if (formats == null) {
+			formats = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__FORMATS);
 		}
-		return format;
+		return formats;
 	}
 
 	/**
@@ -1054,8 +1054,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__VALUES:
 				if (coreType) return getValues();
 				else return getValues().map();
-			case ToolPackage.PARAMETER__FORMAT:
-				return getFormat();
+			case ToolPackage.PARAMETER__FORMATS:
+				return getFormats();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1131,9 +1131,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__VALUES:
 				((EStructuralFeature.Setting)getValues()).set(newValue);
 				return;
-			case ToolPackage.PARAMETER__FORMAT:
-				getFormat().clear();
-				getFormat().addAll((Collection<? extends String>)newValue);
+			case ToolPackage.PARAMETER__FORMATS:
+				getFormats().clear();
+				getFormats().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1207,8 +1207,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__VALUES:
 				getValues().clear();
 				return;
-			case ToolPackage.PARAMETER__FORMAT:
-				getFormat().clear();
+			case ToolPackage.PARAMETER__FORMATS:
+				getFormats().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -1264,8 +1264,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return advanced != ADVANCED_EDEFAULT;
 			case ToolPackage.PARAMETER__VALUES:
 				return values != null && !values.isEmpty();
-			case ToolPackage.PARAMETER__FORMAT:
-				return format != null && !format.isEmpty();
+			case ToolPackage.PARAMETER__FORMATS:
+				return formats != null && !formats.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1352,8 +1352,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(maxOcc);
 		result.append(", advanced: ");
 		result.append(advanced);
-		result.append(", format: ");
-		result.append(format);
+		result.append(", formats: ");
+		result.append(formats);
 		result.append(')');
 		return result.toString();
 	}

@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.core.Task#getToolNames <em>Tool Names</em>}</li>
  *   <li>{@link easyflow.core.Task#getTools <em>Tools</em>}</li>
+ *   <li>{@link easyflow.core.Task#getToolMatches <em>Tool Matches</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}</li>
  *   <li>{@link easyflow.core.Task#isRoot <em>Root</em>}</li>
  *   <li>{@link easyflow.core.Task#getFlags <em>Flags</em>}</li>
@@ -301,6 +302,23 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EMap<String, Tool> getTools();
+
+	/**
+	 * Returns the value of the '<em><b>Tool Matches</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.ToolMatch},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tool Matches</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tool Matches</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_ToolMatches()
+	 * @model mapType="easyflow.util.maps.StringToToolMatchMap<org.eclipse.emf.ecore.EString, easyflow.core.ToolMatch>"
+	 * @generated
+	 */
+	EMap<String, ToolMatch> getToolMatches();
 
 	/**
 	 * Returns the value of the '<em><b>Previous Task Str</b></em>' attribute.

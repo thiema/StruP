@@ -159,6 +159,7 @@ public class ToolSwitch<T> extends Switch<T> {
 			case ToolPackage.DATA_PORT: {
 				DataPort dataPort = (DataPort)theEObject;
 				T result = caseDataPort(dataPort);
+				if (result == null) result = caseDefaultToolElement(dataPort);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

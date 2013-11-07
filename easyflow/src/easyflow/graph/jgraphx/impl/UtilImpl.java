@@ -1811,7 +1811,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return true;
 	}
 	
-	public boolean computeToolDepsForRoot(mxICell root)
+	/*public boolean resolveToolDependencies(mxICell root)
 	{
 		Tool tool = ToolFactory.eINSTANCE.createTool();
 		tool.setId("default");
@@ -1826,12 +1826,12 @@ public class UtilImpl extends EObjectImpl implements Util {
 			
 		}
 		return true;
-	}
+	}*/
 	
 	// set the tools ToolDependency, InputFiles, OutputFiles attributes
 	// resolve the outputs and use them when resolving the inputs of the 
 	// corresponding child tasks
-	public boolean computeToolDeps(mxICell root, Catalog catalog)
+	public boolean resolveToolDependencies(mxICell root, Catalog catalog)
 	{
 		mxICellVisitor visitor=new mxICellVisitor()
 		{
@@ -1871,7 +1871,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			}
 		};
 		getGraph().traverseTopologicalOrder(root, visitor);
-		computeToolDepsForRoot(root);
+		//computeToolDepsForRoot(root);
 		return true;
 	}
 

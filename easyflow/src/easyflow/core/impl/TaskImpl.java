@@ -7,11 +7,15 @@
 package easyflow.core.impl;
 
 
+import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.Task;
 
+import easyflow.core.ToolMatch;
+import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
 import easyflow.tool.DataPort;
+import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 
@@ -25,6 +29,7 @@ import easyflow.util.maps.impl.StringToStringListMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
+import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.net.URI;
@@ -84,6 +89,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getToolNames <em>Tool Names</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getTools <em>Tools</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getToolMatches <em>Tool Matches</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreviousTaskStr <em>Previous Task Str</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#isRoot <em>Root</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getFlags <em>Flags</em>}</li>
@@ -265,6 +271,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EMap<String, Tool> tools;
+
+	/**
+	 * The cached value of the '{@link #getToolMatches() <em>Tool Matches</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getToolMatches()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, ToolMatch> toolMatches;
 
 	/**
 	 * The default value of the '{@link #getPreviousTaskStr() <em>Previous Task Str</em>}' attribute.
@@ -558,6 +574,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, ToolMatch> getToolMatches() {
+		if (toolMatches == null) {
+			toolMatches = new EcoreEMap<String,ToolMatch>(MapsPackage.Literals.STRING_TO_TOOL_MATCH_MAP, StringToToolMatchMapImpl.class, this, CorePackage.TASK__TOOL_MATCHES);
+		}
+		return toolMatches;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getPreviousTaskStr() {
 		return previousTaskStr;
 	}
@@ -685,16 +713,24 @@ public class TaskImpl extends EObjectImpl implements Task {
         /**
          * Read DataFormatIn/Out. and set DataPorts
          */
+        short bitPos=0;
         Iterator<DataFormat> it=parseDataFormatField(wtplArray[3]).iterator();
         while (it.hasNext()) {
         	DataPort dataPort=ToolFactory.eINSTANCE.createDataPort();
-        	dataPort.setDataFormat(it.next());
+        	DataFormat dataFormat = it.next();
+        	dataPort.setName(dataFormat.getName());
+        	dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+        	dataPort.setBitPos(bitPos++);
             getInDataPorts().add(dataPort);
         }
+        bitPos=0;
         it=parseDataFormatField(wtplArray[4]).iterator();
         while (it.hasNext()) {
         	DataPort dataPort=ToolFactory.eINSTANCE.createDataPort();
-        	dataPort.setDataFormat(it.next());
+        	DataFormat dataFormat = it.next();
+        	dataPort.setName(dataFormat.getName());
+        	dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+        	dataPort.setBitPos(bitPos++);
             getOutDataPorts().add(dataPort);
         }        
         
@@ -933,8 +969,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		Iterator<DataPort> it1=getInDataPorts().iterator();
 		while (it1.hasNext()) {
 			DataPort parentDataPort=it1.next();
-			if (parentDataPort.getDataFormat().getName().
-					equals(dataPort.getDataFormat().getName())) return true;
+			if (parentDataPort.isCompatible(dataPort)) return true;
 		}
 
 		return false;
@@ -949,8 +984,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		Iterator<DataPort> it1=getOutDataPorts().iterator();
 		while (it1.hasNext()) {
 			DataPort parentDataPort=it1.next();
-			if (parentDataPort.getDataFormat().getName().
-					equals(dataPort.getDataFormat().getName())) return true;
+			if (parentDataPort.isCompatible(dataPort)) return true;
 		}
 
 		return false;
@@ -968,16 +1002,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 			Task parentTask=it.next();
 			logger.trace("getParentTaskByOutDataPort(): is task="
 					+parentTask.getUniqueString()+" compatible with dataPort=" 
-					+dataPort.getDataFormat().getName()+" :"+(parentTask.isCompatibleWithInDataPortFor(dataPort)?"yes":"no"));
+					+dataPort.getName()+" :"+(parentTask.isCompatibleWithInDataPortFor(dataPort)?"yes":"no"));
 			if (parentTask.isCompatibleWithInDataPortFor(dataPort))
 				tasks.add(parentTask);
 		}
 		if (tasks.size()>1) 
 			logger.debug("getParentTaskByOutDataPort(): "+"More than one compatible parents found with DataPort="+
-				dataPort.getDataFormat().getName()+". Return only first.");
+				dataPort.getName()+". Return only first.");
 		else if (tasks.isEmpty()) 
 			logger.debug("getParentTaskByOutDataPort(): "+"No compatible parent with DataPort="+
-				dataPort.getDataFormat().getName()+" found. Returning null.");
+				dataPort.getName()+" found. Returning null.");
 		return (tasks.size()>0) ? tasks.get(0):null;
 	}
 
@@ -1046,8 +1080,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		EList<DataPort> dataPorts=new BasicEList<DataPort>();
 		for (DataPort dataPort1:dataPorts1)
 			for (DataPort dataPort2:dataPorts2)
-				if (dataPort2.getDataFormat().getName().equals(
-						dataPort1.getDataFormat().getName()))
+				if (dataPort2.isCompatible(dataPort1))
 					dataPorts.add(dataPort1);
 		return dataPorts;
 					
@@ -1091,14 +1124,24 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean validateTool(Tool tool) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		boolean rc = false;
+		ToolMatch toolMatch = CoreFactory.eINSTANCE.createToolMatch();
+		toolMatch.setTask(this);
+		toolMatch.setTool(tool);
+		getToolMatches().put(tool.getName(), toolMatch);
+		long score=toolMatch.computeScore();
+		long expectedScore=toolMatch.computeExpectedScore();
+		logger.debug(Long.toBinaryString(score)+" ");
+		logger.debug(Long.toBinaryString(expectedScore)+" (exp)");
+		//logger.debug(Long.toHexString(score)+" vs "+Long.toHexString(expectedScore));
+		if (score==expectedScore)
+			rc=true;
+		return rc;
 	}
-
+	
 	private String list2String(EMap<String, URI> map)
 	{
 		Iterator<Entry<String, URI>> it = map.iterator();
@@ -1127,6 +1170,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getToolNames()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__TOOLS:
 				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__TOOL_MATCHES:
+				return ((InternalEList<?>)getToolMatches()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__GROUPING_CRITERIA:
 				return ((InternalEList<?>)getGroupingCriteria()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__INPUTS:
@@ -1174,6 +1219,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__TOOLS:
 				if (coreType) return getTools();
 				else return getTools().map();
+			case CorePackage.TASK__TOOL_MATCHES:
+				if (coreType) return getToolMatches();
+				else return getToolMatches().map();
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				return getPreviousTaskStr();
 			case CorePackage.TASK__ROOT:
@@ -1236,6 +1284,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case CorePackage.TASK__TOOLS:
 				((EStructuralFeature.Setting)getTools()).set(newValue);
+				return;
+			case CorePackage.TASK__TOOL_MATCHES:
+				((EStructuralFeature.Setting)getToolMatches()).set(newValue);
 				return;
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				setPreviousTaskStr((String)newValue);
@@ -1300,6 +1351,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__TOOLS:
 				getTools().clear();
 				return;
+			case CorePackage.TASK__TOOL_MATCHES:
+				getToolMatches().clear();
+				return;
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				setPreviousTaskStr(PREVIOUS_TASK_STR_EDEFAULT);
 				return;
@@ -1354,6 +1408,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return toolNames != null && !toolNames.isEmpty();
 			case CorePackage.TASK__TOOLS:
 				return tools != null && !tools.isEmpty();
+			case CorePackage.TASK__TOOL_MATCHES:
+				return toolMatches != null && !toolMatches.isEmpty();
 			case CorePackage.TASK__PREVIOUS_TASK_STR:
 				return PREVIOUS_TASK_STR_EDEFAULT == null ? previousTaskStr != null : !PREVIOUS_TASK_STR_EDEFAULT.equals(previousTaskStr);
 			case CorePackage.TASK__ROOT:

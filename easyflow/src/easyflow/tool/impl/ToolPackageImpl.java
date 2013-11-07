@@ -451,6 +451,15 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTool_Data() {
+		return (EReference)toolEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIToolElement() {
 		return iToolElementEClass;
 	}
@@ -604,7 +613,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameter_Format() {
+	public EAttribute getParameter_Formats() {
 		return (EAttribute)parameterEClass.getEStructuralFeatures().get(19);
 	}
 
@@ -811,6 +820,15 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getData_Format() {
+		return (EAttribute)dataEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDataPort() {
 		return dataPortEClass;
 	}
@@ -838,8 +856,26 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDataPort_DataFormat() {
+	public EReference getDataPort_DataFormats() {
 		return (EReference)dataPortEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataPort_Optional() {
+		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataPort_BitPos() {
+		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1013,6 +1049,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEReference(toolEClass, TOOL__PACKAGE);
 		createEReference(toolEClass, TOOL__REQUIREMENTS);
 		createEReference(toolEClass, TOOL__EXECUTABLES);
+		createEReference(toolEClass, TOOL__DATA);
 
 		interpreterEClass = createEClass(INTERPRETER);
 		createEAttribute(interpreterEClass, INTERPRETER__EXE);
@@ -1043,7 +1080,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(parameterEClass, PARAMETER__MAX_OCC);
 		createEAttribute(parameterEClass, PARAMETER__ADVANCED);
 		createEReference(parameterEClass, PARAMETER__VALUES);
-		createEAttribute(parameterEClass, PARAMETER__FORMAT);
+		createEAttribute(parameterEClass, PARAMETER__FORMATS);
 
 		packageEClass = createEClass(PACKAGE);
 		createEReference(packageEClass, PACKAGE__PARAMETERS);
@@ -1054,11 +1091,14 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(dataEClass, DATA__LABEL);
 		createEReference(dataEClass, DATA__PORT);
 		createEAttribute(dataEClass, DATA__OUTPUT);
+		createEAttribute(dataEClass, DATA__FORMAT);
 
 		dataPortEClass = createEClass(DATA_PORT);
 		createEReference(dataPortEClass, DATA_PORT__GROUPING_CRITERIA);
 		createEAttribute(dataPortEClass, DATA_PORT__CARDINALITY);
-		createEReference(dataPortEClass, DATA_PORT__DATA_FORMAT);
+		createEReference(dataPortEClass, DATA_PORT__DATA_FORMATS);
+		createEAttribute(dataPortEClass, DATA_PORT__OPTIONAL);
+		createEAttribute(dataPortEClass, DATA_PORT__BIT_POS);
 
 		dataFormatEClass = createEClass(DATA_FORMAT);
 
@@ -1122,6 +1162,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		packageEClass.getESuperTypes().add(this.getIToolElement());
 		packageEClass.getESuperTypes().add(this.getDefaultToolElement());
 		dataEClass.getESuperTypes().add(this.getDefaultToolElement());
+		dataPortEClass.getESuperTypes().add(this.getDefaultToolElement());
 		dataFormatEClass.getESuperTypes().add(this.getDefaultToolElement());
 		keyEClass.getESuperTypes().add(this.getDefaultToolElement());
 		requirementEClass.getESuperTypes().add(this.getDefaultToolElement());
@@ -1176,6 +1217,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEReference(getTool_Package(), this.getPackage(), null, "package", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_Requirements(), this.getRequirement(), null, "requirements", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_Executables(), theMapsPackage.getStringToURIMap(), null, "executables", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTool_Data(), theMapsPackage.getStringToDataMap(), null, "data", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(toolEClass, null, "writeModelToXML", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1195,13 +1237,13 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 
 		addEOperation(commandEClass, ecorePackage.getEBoolean(), "resolveStaticPorts", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(commandEClass, theMapsPackage.getStringToURIMap(), "getInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(commandEClass, theMapsPackage.getStringToURIMap(), "getInputs", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToChunksMap(), "chunks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(commandEClass, theMapsPackage.getStringToURIMap(), "getOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(commandEClass, theMapsPackage.getStringToURIMap(), "getOutputs", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToChunksMap(), "chunks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(commandEClass, theMapsPackage.getStringToURIMap(), "getStaticInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(commandEClass, theMapsPackage.getStringToURIMap(), "getStaticInputs", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToChunksMap(), "chunks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1224,7 +1266,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getParameter_MaxOcc(), ecorePackage.getEInt(), "maxOcc", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Advanced(), ecorePackage.getEBoolean(), "advanced", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_Values(), theMapsPackage.getStringToParameterMap(), null, "values", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Format(), ecorePackage.getEString(), "format", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Formats(), ecorePackage.getEString(), "formats", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(parameterEClass, ecorePackage.getEString(), "generateCommandString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constaints", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -1246,11 +1288,17 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getData_Label(), ecorePackage.getEString(), "label", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getData_Port(), this.getDataPort(), null, "port", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getData_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getData_Format(), ecorePackage.getEString(), "format", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dataPortEClass, DataPort.class, "DataPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataPort_GroupingCriteria(), theTraversalPackage.getGroupingCriterion(), null, "groupingCriteria", null, 0, -1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataPort_Cardinality(), ecorePackage.getEShort(), "cardinality", null, 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataPort_DataFormat(), this.getDataFormat(), null, "dataFormat", null, 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataPort_DataFormats(), theMapsPackage.getStringToDataFormatMap(), null, "dataFormats", null, 0, -1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataPort_Optional(), ecorePackage.getEBoolean(), "optional", "false", 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataPort_BitPos(), ecorePackage.getEShort(), "bitPos", "-1", 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(dataFormatEClass, DataFormat.class, "DataFormat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

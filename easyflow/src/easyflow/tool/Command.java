@@ -132,7 +132,7 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
 	 * @generated
 	 */
-	Map.Entry<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks);
+	EMap<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -140,7 +140,7 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
 	 * @generated
 	 */
-	Map.Entry<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks);
+	EMap<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -152,6 +152,6 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
 	 * @generated
 	 */
-	Map.Entry<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks);
+	EMap<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks);
 
 } // Command

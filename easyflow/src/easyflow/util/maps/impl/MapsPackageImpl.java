@@ -205,6 +205,27 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	private EClass stringToPackageMapEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToDataMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToDataFormatMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToToolMatchMapEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -821,6 +842,87 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToDataMap() {
+		return stringToDataMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToDataMap_Key() {
+		return (EAttribute)stringToDataMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToDataMap_Value() {
+		return (EReference)stringToDataMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToDataFormatMap() {
+		return stringToDataFormatMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToDataFormatMap_Key() {
+		return (EAttribute)stringToDataFormatMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToDataFormatMap_Value() {
+		return (EReference)stringToDataFormatMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToToolMatchMap() {
+		return stringToToolMatchMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToToolMatchMap_Key() {
+		return (EAttribute)stringToToolMatchMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToToolMatchMap_Value() {
+		return (EReference)stringToToolMatchMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MapsFactory getMapsFactory() {
 		return (MapsFactory)getEFactoryInstance();
 	}
@@ -919,6 +1021,18 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		stringToPackageMapEClass = createEClass(STRING_TO_PACKAGE_MAP);
 		createEAttribute(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__KEY);
 		createEReference(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__VALUE);
+
+		stringToDataMapEClass = createEClass(STRING_TO_DATA_MAP);
+		createEAttribute(stringToDataMapEClass, STRING_TO_DATA_MAP__KEY);
+		createEReference(stringToDataMapEClass, STRING_TO_DATA_MAP__VALUE);
+
+		stringToDataFormatMapEClass = createEClass(STRING_TO_DATA_FORMAT_MAP);
+		createEAttribute(stringToDataFormatMapEClass, STRING_TO_DATA_FORMAT_MAP__KEY);
+		createEReference(stringToDataFormatMapEClass, STRING_TO_DATA_FORMAT_MAP__VALUE);
+
+		stringToToolMatchMapEClass = createEClass(STRING_TO_TOOL_MATCH_MAP);
+		createEAttribute(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__KEY);
+		createEReference(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__VALUE);
 	}
 
 	/**
@@ -1034,6 +1148,18 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToPackageMapEClass, Map.Entry.class, "StringToPackageMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToPackageMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToPackageMap_Value(), theToolPackage.getPackage(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDataMapEClass, Map.Entry.class, "StringToDataMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDataMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDataMap_Value(), theToolPackage.getData(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDataFormatMapEClass, Map.Entry.class, "StringToDataFormatMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDataFormatMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDataFormatMap_Value(), theToolPackage.getDataFormat(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToToolMatchMapEClass, Map.Entry.class, "StringToToolMatchMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToToolMatchMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToToolMatchMap_Value(), theCorePackage.getToolMatch(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

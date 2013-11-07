@@ -98,7 +98,7 @@ Command: view        SAM<->BAM conversion
 		<!--  param name="aln" type="analysis_type" positional="true"/>-->
 		<param name="reference" type="data" format="fasta" positional="true"/>
 		<param name="input" type="data" format="fastq" positional="true"/>
-		<param name="output" type="data" format="bwt" output="true"/> 
+		<param name="output" type="data" format="sai" output="true"/> 
 	</tool>
 	
 	<tool id="bwa_xampe"
@@ -124,15 +124,15 @@ Command: view        SAM<->BAM conversion
 		
 		<param name="reference" type="data" format="fasta" positional="true"/>
 		<param name="input" type="data" format="fastq" positional="true"/>
-		<param name="input_index" type="data" format="bwt" positional="true"/>
-		<param name="output" type="data" format="bam" output="true"/> 
+		<param name="input_index" type="data" format="sai" positional="true"/>
+		<param name="output" type="data" format="sam" output="true"/> 
 		
 	</tool>
 	
 	<tool id="bwasw" name="bwasw" package="bwa">
 		<param name="reference" type="data" format="fasta" positional="true"/>
 		<param name="input" type="data" format="fastq" positional="true"/>
-		<param name="output" type="data" format="bwt" output="true"/> 
+		<param name="output" type="data" format="sam" output="true"/>
 		
 		<!--
  Usage:   bwa bwasw [options] <target.prefix> <query.fa> [query2.fa]

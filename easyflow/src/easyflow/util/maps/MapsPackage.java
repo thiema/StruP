@@ -766,6 +766,119 @@ public interface MapsPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataMapImpl <em>String To Data Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToDataMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataMap()
+	 * @generated
+	 */
+	int STRING_TO_DATA_MAP = 19;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Data Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataFormatMapImpl <em>String To Data Format Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToDataFormatMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataFormatMap()
+	 * @generated
+	 */
+	int STRING_TO_DATA_FORMAT_MAP = 20;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_FORMAT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_FORMAT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Data Format Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_FORMAT_MAP_FEATURE_COUNT = 2;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToToolMatchMapImpl <em>String To Tool Match Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToToolMatchMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMatchMap()
+	 * @generated
+	 */
+	int STRING_TO_TOOL_MATCH_MAP = 21;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MATCH_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MATCH_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Tool Match Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MATCH_MAP_FEATURE_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1412,6 +1525,108 @@ public interface MapsPackage extends EPackage {
 	EReference getStringToPackageMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Data Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Data Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.Data"
+	 * @generated
+	 */
+	EClass getStringToDataMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataMap()
+	 * @generated
+	 */
+	EAttribute getStringToDataMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataMap()
+	 * @generated
+	 */
+	EReference getStringToDataMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Data Format Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Data Format Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.DataFormat"
+	 * @generated
+	 */
+	EClass getStringToDataFormatMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataFormatMap()
+	 * @generated
+	 */
+	EAttribute getStringToDataFormatMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataFormatMap()
+	 * @generated
+	 */
+	EReference getStringToDataFormatMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Tool Match Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Tool Match Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.core.ToolMatch"
+	 * @generated
+	 */
+	EClass getStringToToolMatchMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToToolMatchMap()
+	 * @generated
+	 */
+	EAttribute getStringToToolMatchMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToToolMatchMap()
+	 * @generated
+	 */
+	EReference getStringToToolMatchMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1926,6 +2141,84 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_PACKAGE_MAP__VALUE = eINSTANCE.getStringToPackageMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDataMapImpl <em>String To Data Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToDataMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataMap()
+		 * @generated
+		 */
+		EClass STRING_TO_DATA_MAP = eINSTANCE.getStringToDataMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_DATA_MAP__KEY = eINSTANCE.getStringToDataMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_DATA_MAP__VALUE = eINSTANCE.getStringToDataMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDataFormatMapImpl <em>String To Data Format Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToDataFormatMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataFormatMap()
+		 * @generated
+		 */
+		EClass STRING_TO_DATA_FORMAT_MAP = eINSTANCE.getStringToDataFormatMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_DATA_FORMAT_MAP__KEY = eINSTANCE.getStringToDataFormatMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_DATA_FORMAT_MAP__VALUE = eINSTANCE.getStringToDataFormatMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToToolMatchMapImpl <em>String To Tool Match Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToToolMatchMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMatchMap()
+		 * @generated
+		 */
+		EClass STRING_TO_TOOL_MATCH_MAP = eINSTANCE.getStringToToolMatchMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_TOOL_MATCH_MAP__KEY = eINSTANCE.getStringToToolMatchMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_TOOL_MATCH_MAP__VALUE = eINSTANCE.getStringToToolMatchMap_Value();
 
 	}
 

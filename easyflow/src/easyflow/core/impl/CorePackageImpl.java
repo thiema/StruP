@@ -19,6 +19,7 @@ import easyflow.core.GalaxyTaskReader;
 import easyflow.core.ITaskReader;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
+import easyflow.core.ToolMatch;
 import easyflow.core.Workflow;
 
 import easyflow.example.ExamplePackage;
@@ -150,6 +151,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass catalogEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass toolMatchEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -525,8 +533,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTask_PreviousTaskStr() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(12);
+	public EReference getTask_ToolMatches() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -534,7 +542,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTask_Root() {
+	public EAttribute getTask_PreviousTaskStr() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(13);
 	}
 
@@ -543,7 +551,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTask_Flags() {
+	public EAttribute getTask_Root() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(14);
 	}
 
@@ -552,8 +560,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTask_GroupingCriteria() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(15);
+	public EAttribute getTask_Flags() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -561,7 +569,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTask_Inputs() {
+	public EReference getTask_GroupingCriteria() {
 		return (EReference)taskEClass.getEStructuralFeatures().get(16);
 	}
 
@@ -570,8 +578,17 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTask_Outputs() {
+	public EReference getTask_Inputs() {
 		return (EReference)taskEClass.getEStructuralFeatures().get(17);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTask_Outputs() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(18);
 	}
 
 	/**
@@ -714,6 +731,123 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getToolMatch() {
+		return toolMatchEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_Task() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_Tool() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_Score() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_ExpectedScore() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_ExpectedToolScore() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_MissingInDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_MissingOutDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_MissingGroupingCriteria() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_Logger() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_ReverseMissingInDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_ReverseMissingOutDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_ReverseMissingGroupingCriteria() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -768,6 +902,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__CHUNKS);
 		createEReference(taskEClass, TASK__TOOL_NAMES);
 		createEReference(taskEClass, TASK__TOOLS);
+		createEReference(taskEClass, TASK__TOOL_MATCHES);
 		createEAttribute(taskEClass, TASK__PREVIOUS_TASK_STR);
 		createEAttribute(taskEClass, TASK__ROOT);
 		createEAttribute(taskEClass, TASK__FLAGS);
@@ -797,6 +932,20 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		catalogEClass = createEClass(CATALOG);
 		createEReference(catalogEClass, CATALOG__ENTRIES);
+
+		toolMatchEClass = createEClass(TOOL_MATCH);
+		createEReference(toolMatchEClass, TOOL_MATCH__TASK);
+		createEReference(toolMatchEClass, TOOL_MATCH__TOOL);
+		createEAttribute(toolMatchEClass, TOOL_MATCH__SCORE);
+		createEAttribute(toolMatchEClass, TOOL_MATCH__EXPECTED_SCORE);
+		createEAttribute(toolMatchEClass, TOOL_MATCH__EXPECTED_TOOL_SCORE);
+		createEReference(toolMatchEClass, TOOL_MATCH__MISSING_IN_DATA_PORTS);
+		createEReference(toolMatchEClass, TOOL_MATCH__MISSING_OUT_DATA_PORTS);
+		createEReference(toolMatchEClass, TOOL_MATCH__MISSING_GROUPING_CRITERIA);
+		createEAttribute(toolMatchEClass, TOOL_MATCH__LOGGER);
+		createEReference(toolMatchEClass, TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS);
+		createEReference(toolMatchEClass, TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS);
+		createEReference(toolMatchEClass, TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA);
 	}
 
 	/**
@@ -921,6 +1070,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_Chunks(), theMapsPackage.getStringToChunksMap(), null, "chunks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_ToolNames(), theMapsPackage.getStringToStringListMap(), null, "toolNames", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Tools(), theMapsPackage.getStringToToolMap(), null, "tools", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_ToolMatches(), theMapsPackage.getStringToToolMatchMap(), null, "toolMatches", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_PreviousTaskStr(), ecorePackage.getEString(), "previousTaskStr", "", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Root(), ecorePackage.getEBoolean(), "root", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Flags(), ecorePackage.getEInt(), "flags", "0", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1015,6 +1165,24 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		initEClass(catalogEClass, Catalog.class, "Catalog", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCatalog_Entries(), theMapsPackage.getStringToObjectMap(), null, "entries", null, 0, -1, Catalog.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(toolMatchEClass, ToolMatch.class, "ToolMatch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getToolMatch_Task(), this.getTask(), null, "task", null, 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_Tool(), theToolPackage.getTool(), null, "tool", null, 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getToolMatch_Score(), ecorePackage.getELong(), "score", "0", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getToolMatch_ExpectedScore(), ecorePackage.getELong(), "expectedScore", "0", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getToolMatch_ExpectedToolScore(), ecorePackage.getELong(), "expectedToolScore", "0", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_MissingInDataPorts(), theToolPackage.getDataPort(), null, "missingInDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_MissingOutDataPorts(), theToolPackage.getDataPort(), null, "missingOutDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_MissingGroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "missingGroupingCriteria", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getToolMatch_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, ToolMatch.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_ReverseMissingInDataPorts(), theToolPackage.getDataPort(), null, "reverseMissingInDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_ReverseMissingOutDataPorts(), theToolPackage.getDataPort(), null, "reverseMissingOutDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_ReverseMissingGroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "reverseMissingGroupingCriteria", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeScore", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeExpectedScore", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //CorePackageImpl

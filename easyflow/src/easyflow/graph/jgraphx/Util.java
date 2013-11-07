@@ -486,6 +486,6 @@ public interface Util extends EObject {
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean computeToolDeps(mxICell root, Catalog catalog);
+	boolean resolveToolDependencies(mxICell root, Catalog catalog);
 
 } // Util

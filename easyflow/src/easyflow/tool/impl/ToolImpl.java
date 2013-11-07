@@ -7,6 +7,7 @@
 package easyflow.tool.impl;
 
 import easyflow.tool.Command;
+import easyflow.tool.Data;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Requirement;
@@ -14,6 +15,7 @@ import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 
 import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToDataMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.net.URI;
 import java.util.Collection;
@@ -52,6 +54,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getExecutables <em>Executables</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -197,6 +200,15 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @ordered
 	 */
 	protected EMap<String, URI> executables;
+	/**
+	 * The cached value of the '{@link #getData() <em>Data</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getData()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Data> data;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -455,6 +467,18 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, Data> getData() {
+		if (data == null) {
+			data = new EcoreEMap<String,Data>(MapsPackage.Literals.STRING_TO_DATA_MAP, StringToDataMapImpl.class, this, ToolPackage.TOOL__DATA);
+		}
+		return data;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public void writeModelToXML() {
@@ -485,6 +509,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return basicSetCommand(null, msgs);
 			case ToolPackage.TOOL__EXECUTABLES:
 				return ((InternalEList<?>)getExecutables()).basicRemove(otherEnd, msgs);
+			case ToolPackage.TOOL__DATA:
+				return ((InternalEList<?>)getData()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -520,6 +546,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__EXECUTABLES:
 				if (coreType) return getExecutables();
 				else return getExecutables().map();
+			case ToolPackage.TOOL__DATA:
+				if (coreType) return getData();
+				else return getData().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -561,6 +590,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__EXECUTABLES:
 				((EStructuralFeature.Setting)getExecutables()).set(newValue);
 				return;
+			case ToolPackage.TOOL__DATA:
+				((EStructuralFeature.Setting)getData()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -600,6 +632,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__EXECUTABLES:
 				getExecutables().clear();
 				return;
+			case ToolPackage.TOOL__DATA:
+				getData().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -632,6 +667,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return requirements != null && !requirements.isEmpty();
 			case ToolPackage.TOOL__EXECUTABLES:
 				return executables != null && !executables.isEmpty();
+			case ToolPackage.TOOL__DATA:
+				return data != null && !data.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

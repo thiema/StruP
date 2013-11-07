@@ -7,6 +7,7 @@
 package easyflow.tool.impl;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
@@ -29,6 +30,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -298,9 +300,24 @@ public class CommandImpl extends EObjectImpl implements Command {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public Map.Entry<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks) {
+	public EMap<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks) {
+		EMap<String, URI> inputs = new BasicEMap<String, URI>();
+		for (Entry<String, Parameter> parameterEntry:getParameters())
+		{
+			//if (parameterEntry.getValue())
+			logger.debug(parameterEntry.getKey()+" "+parameterEntry.getValue().getName());
+		}
+		return inputs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -311,18 +328,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Map.Entry<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks) {
+	public EMap<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();

@@ -37,7 +37,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getMaxOcc <em>Max Occ</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getFormat <em>Format</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getFormats <em>Formats</em>}</li>
  * </ul>
  * </p>
  *
@@ -168,20 +168,20 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	EMap<String, Parameter> getValues();
 
 	/**
-	 * Returns the value of the '<em><b>Format</b></em>' attribute list.
+	 * Returns the value of the '<em><b>Formats</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Format</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Formats</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Format</em>' attribute list.
-	 * @see easyflow.tool.ToolPackage#getParameter_Format()
+	 * @return the value of the '<em>Formats</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Formats()
 	 * @model
 	 * @generated
 	 */
-	EList<String> getFormat();
+	EList<String> getFormats();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -341,13 +341,22 @@ public interface CorePackage extends EPackage {
 	int TASK__TOOLS = 11;
 
 	/**
+	 * The feature id for the '<em><b>Tool Matches</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__TOOL_MATCHES = 12;
+
+	/**
 	 * The feature id for the '<em><b>Previous Task Str</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PREVIOUS_TASK_STR = 12;
+	int TASK__PREVIOUS_TASK_STR = 13;
 
 	/**
 	 * The feature id for the '<em><b>Root</b></em>' attribute.
@@ -356,7 +365,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__ROOT = 13;
+	int TASK__ROOT = 14;
 
 	/**
 	 * The feature id for the '<em><b>Flags</b></em>' attribute.
@@ -365,7 +374,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__FLAGS = 14;
+	int TASK__FLAGS = 15;
 
 	/**
 	 * The feature id for the '<em><b>Grouping Criteria</b></em>' map.
@@ -374,7 +383,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__GROUPING_CRITERIA = 15;
+	int TASK__GROUPING_CRITERIA = 16;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' map.
@@ -383,7 +392,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__INPUTS = 16;
+	int TASK__INPUTS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' map.
@@ -392,7 +401,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__OUTPUTS = 17;
+	int TASK__OUTPUTS = 18;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -401,7 +410,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 18;
+	int TASK_FEATURE_COUNT = 19;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -645,6 +654,134 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int CATALOG_FEATURE_COUNT = 1;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.ToolMatchImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getToolMatch()
+	 * @generated
+	 */
+	int TOOL_MATCH = 10;
+
+	/**
+	 * The feature id for the '<em><b>Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__TASK = 0;
+
+	/**
+	 * The feature id for the '<em><b>Tool</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__TOOL = 1;
+
+	/**
+	 * The feature id for the '<em><b>Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__SCORE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Expected Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__EXPECTED_SCORE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Expected Tool Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__EXPECTED_TOOL_SCORE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Missing In Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__MISSING_IN_DATA_PORTS = 5;
+
+	/**
+	 * The feature id for the '<em><b>Missing Out Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__MISSING_OUT_DATA_PORTS = 6;
+
+	/**
+	 * The feature id for the '<em><b>Missing Grouping Criteria</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__MISSING_GROUPING_CRITERIA = 7;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__LOGGER = 8;
+
+	/**
+	 * The feature id for the '<em><b>Reverse Missing In Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS = 9;
+
+	/**
+	 * The feature id for the '<em><b>Reverse Missing Out Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS = 10;
+
+	/**
+	 * The feature id for the '<em><b>Reverse Missing Grouping Criteria</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA = 11;
+
+	/**
+	 * The number of structural features of the '<em>Tool Match</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH_FEATURE_COUNT = 12;
 
 
 	/**
@@ -976,6 +1113,17 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Tools();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getToolMatches <em>Tool Matches</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Tool Matches</em>'.
+	 * @see easyflow.core.Task#getToolMatches()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_ToolMatches();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getPreviousTaskStr <em>Previous Task Str</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1197,6 +1345,148 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCatalog_Entries();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.ToolMatch <em>Tool Match</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Tool Match</em>'.
+	 * @see easyflow.core.ToolMatch
+	 * @generated
+	 */
+	EClass getToolMatch();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.ToolMatch#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Task</em>'.
+	 * @see easyflow.core.ToolMatch#getTask()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_Task();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.ToolMatch#getTool <em>Tool</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Tool</em>'.
+	 * @see easyflow.core.ToolMatch#getTool()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_Tool();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ToolMatch#getScore <em>Score</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Score</em>'.
+	 * @see easyflow.core.ToolMatch#getScore()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EAttribute getToolMatch_Score();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ToolMatch#getExpectedScore <em>Expected Score</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expected Score</em>'.
+	 * @see easyflow.core.ToolMatch#getExpectedScore()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EAttribute getToolMatch_ExpectedScore();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ToolMatch#getExpectedToolScore <em>Expected Tool Score</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expected Tool Score</em>'.
+	 * @see easyflow.core.ToolMatch#getExpectedToolScore()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EAttribute getToolMatch_ExpectedToolScore();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.core.ToolMatch#getMissingInDataPorts <em>Missing In Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Missing In Data Ports</em>'.
+	 * @see easyflow.core.ToolMatch#getMissingInDataPorts()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_MissingInDataPorts();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.core.ToolMatch#getMissingOutDataPorts <em>Missing Out Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Missing Out Data Ports</em>'.
+	 * @see easyflow.core.ToolMatch#getMissingOutDataPorts()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_MissingOutDataPorts();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.ToolMatch#getMissingGroupingCriteria <em>Missing Grouping Criteria</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Missing Grouping Criteria</em>'.
+	 * @see easyflow.core.ToolMatch#getMissingGroupingCriteria()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_MissingGroupingCriteria();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ToolMatch#getLogger <em>Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.core.ToolMatch#getLogger()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EAttribute getToolMatch_Logger();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.core.ToolMatch#getReverseMissingInDataPorts <em>Reverse Missing In Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Reverse Missing In Data Ports</em>'.
+	 * @see easyflow.core.ToolMatch#getReverseMissingInDataPorts()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_ReverseMissingInDataPorts();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link easyflow.core.ToolMatch#getReverseMissingOutDataPorts <em>Reverse Missing Out Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Reverse Missing Out Data Ports</em>'.
+	 * @see easyflow.core.ToolMatch#getReverseMissingOutDataPorts()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_ReverseMissingOutDataPorts();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.ToolMatch#getReverseMissingGroupingCriteria <em>Reverse Missing Grouping Criteria</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Reverse Missing Grouping Criteria</em>'.
+	 * @see easyflow.core.ToolMatch#getReverseMissingGroupingCriteria()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EReference getToolMatch_ReverseMissingGroupingCriteria();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1465,6 +1755,14 @@ public interface CorePackage extends EPackage {
 		EReference TASK__TOOLS = eINSTANCE.getTask_Tools();
 
 		/**
+		 * The meta object literal for the '<em><b>Tool Matches</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__TOOL_MATCHES = eINSTANCE.getTask_ToolMatches();
+
+		/**
 		 * The meta object literal for the '<em><b>Previous Task Str</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1647,6 +1945,112 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference CATALOG__ENTRIES = eINSTANCE.getCatalog_Entries();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.ToolMatchImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getToolMatch()
+		 * @generated
+		 */
+		EClass TOOL_MATCH = eINSTANCE.getToolMatch();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__TASK = eINSTANCE.getToolMatch_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Tool</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__TOOL = eINSTANCE.getToolMatch_Tool();
+
+		/**
+		 * The meta object literal for the '<em><b>Score</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL_MATCH__SCORE = eINSTANCE.getToolMatch_Score();
+
+		/**
+		 * The meta object literal for the '<em><b>Expected Score</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL_MATCH__EXPECTED_SCORE = eINSTANCE.getToolMatch_ExpectedScore();
+
+		/**
+		 * The meta object literal for the '<em><b>Expected Tool Score</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL_MATCH__EXPECTED_TOOL_SCORE = eINSTANCE.getToolMatch_ExpectedToolScore();
+
+		/**
+		 * The meta object literal for the '<em><b>Missing In Data Ports</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__MISSING_IN_DATA_PORTS = eINSTANCE.getToolMatch_MissingInDataPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Missing Out Data Ports</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__MISSING_OUT_DATA_PORTS = eINSTANCE.getToolMatch_MissingOutDataPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Missing Grouping Criteria</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__MISSING_GROUPING_CRITERIA = eINSTANCE.getToolMatch_MissingGroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL_MATCH__LOGGER = eINSTANCE.getToolMatch_Logger();
+
+		/**
+		 * The meta object literal for the '<em><b>Reverse Missing In Data Ports</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS = eINSTANCE.getToolMatch_ReverseMissingInDataPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Reverse Missing Out Data Ports</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS = eINSTANCE.getToolMatch_ReverseMissingOutDataPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Reverse Missing Grouping Criteria</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA = eINSTANCE.getToolMatch_ReverseMissingGroupingCriteria();
 
 	}
 

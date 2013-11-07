@@ -13,6 +13,7 @@ public class Easyflow {
 	private static final Logger logger = Logger.getLogger(Easyflow.class);
 	
 	public static void main(String args[]) {
+		
 		Examples examples = ExampleFactory.eINSTANCE.createExamples();
 		if (isFromJar)
 			examples.setLocator("/easyflow/custom/examples");
@@ -33,8 +34,8 @@ public class Easyflow {
 				defaultProject.setFromJar(false);
 			defaultProject.autoSetup();
 			defaultProject.applyTraversalEvents();
-			defaultProject.resolveToolDependencies();
-			defaultProject.generateWorklowForExecutionSystem();
+			//defaultProject.resolveToolDependencies();
+			//defaultProject.generateWorklowForExecutionSystem();
 			
 		}
 	}	

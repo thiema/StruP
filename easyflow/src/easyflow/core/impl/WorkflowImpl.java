@@ -698,99 +698,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * - read the general tools implementation xml and xsd
-	 * - iterate over graph and read each tasks implementing tool by calling
-	 * readImplementation() of class Tool.
-	 * Tool definition is expected to be in xml.
-	 * - 1. check if definition is available in general tools.xml
-	 * - 2. check if <toolName>.xml exists (this definition has precedence )
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 
-	public void readToolDefinitions(String basePath) {
-		
-		logger.debug("tool def="+getToolsDescription().toString()+
-				" tool schema="+getToolsSchemaDefinition().toString());
-		for (Tool tool : readToolDefinition(getToolsDescription(), getToolsSchemaDefinition()))
-		{
-			getTools().put(tool.getId()+"_default", tool);
-		}		
-		//File file = new File(createURI(basePath, "tool_definitions").toFileString());
-		String fileName = getClass().getResource(basePath+"tool_definitions").toString();
-		logger.debug("check dir="+fileName +" for tool definitions files...");
-		File[] peers = new File(fileName).listFiles();
-		
-		if (peers != null)
-		for (File file1 : peers)
-		{
-			try {
-				for (Tool tool : readToolDefinition(createURI(basePath, file1.getName()), 
-									getToolsSchemaDefinition()))
-					getTools().put(tool.getId(), tool);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		
-		for (Task task:getWorkflowTemplate().getTasks()) {
-			logger.debug(task.getUniqueString()+": "+task.getToolNames().keySet());
-			
-			EList<Tool> help = new BasicEList<Tool>();
-			help.addAll(getTools().values());
-			task.readTools(help);
-			
-			logger.debug(task.getUniqueString()+": "+task.getTools().keySet());
-			// assume path of tool definition files based on the task-name
-			//logger.debug("check tool definition for task"+task.getUniqueString()+
-				//	" URI="+createURI(basePath, task.getUniqueString())+
-				//	" tools="+task.getTools().keySet());
-			//for (String toolName:task.getTools().keySet())
-				//tools = readToolDefinition(createURI(basePath, toolName), 
-					//	getToolsSchemaDefinition());				
-			
-		}
-		logger.debug("known tools: "+getTools().keySet());
-	}
-
-	
-	
-	public EList<Tool> readToolDefinition(URI xmlSource, URI xsdSource) {
-		InputStream isXML=getClass().getResourceAsStream(xmlSource.toString());
-		Source xmlFile = new StreamSource(isXML);
-		EList<Tool> tools = new BasicEList<Tool>();
-		try {
-			logger.debug(xmlFile.getSystemId() + " is valid");
-			
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder;
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(getClass().getResourceAsStream(getToolsDescription().toString()));
-			
-			
-			
-		} catch (SAXException e) {
-			System.out.println(xmlFile.getSystemId() + " is NOT valid");
-			System.out.println("Reason: " + e.getLocalizedMessage());
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		} catch (MalformedURLException e) {
-			logger.info("malformed resource string: "+xmlSource.toString());
-			e.printStackTrace();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			logger.info("no resource found: "+xmlSource.toString());
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}		
-		return tools;
-	}
-	*/
-	/**
-	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
@@ -856,7 +763,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	logger.debug("got definition for tools: "+(tools!=null?tools.keySet():null));
         	for (Task task:getWorkflowTemplate().getTasks()) {
         		// try to find tool definition/implementation
-        		logger.debug(task.getToolNames().keySet());
+        		logger.debug("check tool definitions for task="+task.getUniqueString());
         		if (tools!=null)
         			for (String toolName:task.getToolNames().keySet())
         			{
@@ -872,7 +779,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         				if (tools.containsKey(toolName))
         				{
         					Tool tool=tools.get(toolName);
-        					logger.debug("add tool="+toolName);
         					if (packageName!=null)
         						if (tool.getPackage() != null && !tool.getPackage().getName().equals(packageName))
         							logger.warn("package name ("+packageName
@@ -885,7 +791,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         							tool.setPackage(pkg);
         						}
         					task.getTools().put(toolName, tool);
+        					logger.debug("validation result for tool="+toolName+" "+task.validateTool(tool));
         				}
+        				else
+        					logger.warn("no tool matching name="+toolName+" found.");
         			}
         		
         		Object target=getGraph().insertVertexEasyFlow(parent, null, task);
@@ -895,9 +804,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         				+" cell="+getGraph().getLabel(target));
         		map.put(task.getName(), target);
         		getGraphUtil().getTasks().put(task.getUniqueString(), task);
-        		//((mxCell)target).setValue(XMLUtil.getElement(task));
-        		
-        		
         	}
 
         	// create the special root task/cell which is the root
@@ -922,16 +828,11 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
 			if (!task.isUtil()) {
 				Object target=getGraphUtil().getCells().get(task.getUniqueString());
-				//logger.debug("determine parents for "+task.getUniqueString());
-				if (getLastTasks().isEmpty()) {
-					//setFirstNode(target);
+				EList<Task> parentTaskList=getParentTasksFor(task);
+				if (parentTaskList.isEmpty())
 					graph.insertEdgeEasyFlow(parent, null, rootTarget, target);
 				
-				} else {
-					
-					EList<Task> parentTaskList=getParentTasksFor(task);
-					//if (parentTaskList.isEmpty())
-						//parentTaskList.add(getLastTasks().peek());					
+				else {
 					for (Task pTask:parentTaskList) {
 						
 						Object source=map.get(pTask.getName());
@@ -1132,6 +1033,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean generateWorklowForExecutionSystem() {
+		
 		Makeflow makeflow = MakeflowFactory.eINSTANCE.createMakeflow();
 		return getGraphUtil().generateWorklowForExecutionSystem((mxICell) getFirstNode(), makeflow);
 	}
@@ -1142,7 +1044,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean resolveToolDependencies() {
-		return getGraphUtil().computeToolDeps((mxICell) getFirstNode(), getCatalog());
+		return getGraphUtil().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
 	}
 
 	private String tasks2String(EList<Task> tasks)
@@ -1154,8 +1056,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return StringUtils.join(tmp, " ");
 	}
 	private void insertTaskIntoParentTaskList(Task task, 
-			EList<Task> tasks, 
-			int rank, EMap<String,Integer> rankMap)
+					EList<Task> tasks, 
+					int rank, EMap<String,Integer> rankMap)
 	{
 		Iterator<Task> it = tasks.iterator();
 		int i = 0;
@@ -1177,7 +1079,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		Iterator<DataPort> it = dataPorts.iterator();
 		int i=0;
 		while (it.hasNext())
-			names[i++]=it.next().getDataFormat().getName();
+			names[i++]=it.next().getName();
 		return StringUtils.join(names, "_");
 		
 	}

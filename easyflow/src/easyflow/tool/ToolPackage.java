@@ -321,13 +321,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL__EXECUTABLES = ITOOL_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
+	 * The feature id for the '<em><b>Data</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+
+	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InterpreterImpl <em>Interpreter</em>}' class.
@@ -648,13 +657,13 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 20;
 
 	/**
-	 * The feature id for the '<em><b>Format</b></em>' attribute list.
+	 * The feature id for the '<em><b>Formats</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__FORMAT = ITOOL_ELEMENT_FEATURE_COUNT + 21;
+	int PARAMETER__FORMATS = ITOOL_ELEMENT_FEATURE_COUNT + 21;
 
 	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
@@ -785,13 +794,22 @@ public interface ToolPackage extends EPackage {
 	int DATA__OUTPUT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Format</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__FORMAT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
+	int DATA_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.DataPortImpl <em>Data Port</em>}' class.
@@ -804,13 +822,31 @@ public interface ToolPackage extends EPackage {
 	int DATA_PORT = 10;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT__NAME = DEFAULT_TOOL_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+
+	/**
 	 * The feature id for the '<em><b>Grouping Criteria</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_PORT__GROUPING_CRITERIA = 0;
+	int DATA_PORT__GROUPING_CRITERIA = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Cardinality</b></em>' attribute.
@@ -819,16 +855,34 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_PORT__CARDINALITY = 1;
+	int DATA_PORT__CARDINALITY = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Data Format</b></em>' reference.
+	 * The feature id for the '<em><b>Data Formats</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_PORT__DATA_FORMAT = 2;
+	int DATA_PORT__DATA_FORMATS = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT__OPTIONAL = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Bit Pos</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT__BIT_POS = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Data Port</em>' class.
@@ -837,7 +891,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_PORT_FEATURE_COUNT = 3;
+	int DATA_PORT_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.DataFormatImpl <em>Data Format</em>}' class.
@@ -1250,6 +1304,17 @@ public interface ToolPackage extends EPackage {
 	EReference getTool_Executables();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.tool.Tool#getData <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Data</em>'.
+	 * @see easyflow.tool.Tool#getData()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EReference getTool_Data();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.IToolElement <em>ITool Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1432,15 +1497,15 @@ public interface ToolPackage extends EPackage {
 	EReference getParameter_Values();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getFormat <em>Format</em>}'.
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getFormats <em>Formats</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Format</em>'.
-	 * @see easyflow.tool.Parameter#getFormat()
+	 * @return the meta object for the attribute list '<em>Formats</em>'.
+	 * @see easyflow.tool.Parameter#getFormats()
 	 * @see #getParameter()
 	 * @generated
 	 */
-	EAttribute getParameter_Format();
+	EAttribute getParameter_Formats();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getValueType <em>Value Type</em>}'.
@@ -1683,6 +1748,17 @@ public interface ToolPackage extends EPackage {
 	EAttribute getData_Output();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Data#getFormat <em>Format</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Format</em>'.
+	 * @see easyflow.tool.Data#getFormat()
+	 * @see #getData()
+	 * @generated
+	 */
+	EAttribute getData_Format();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.DataPort <em>Data Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1715,15 +1791,37 @@ public interface ToolPackage extends EPackage {
 	EAttribute getDataPort_Cardinality();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.tool.DataPort#getDataFormat <em>Data Format</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.tool.DataPort#getDataFormats <em>Data Formats</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Data Format</em>'.
-	 * @see easyflow.tool.DataPort#getDataFormat()
+	 * @return the meta object for the map '<em>Data Formats</em>'.
+	 * @see easyflow.tool.DataPort#getDataFormats()
 	 * @see #getDataPort()
 	 * @generated
 	 */
-	EReference getDataPort_DataFormat();
+	EReference getDataPort_DataFormats();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.DataPort#isOptional <em>Optional</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Optional</em>'.
+	 * @see easyflow.tool.DataPort#isOptional()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_Optional();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.DataPort#getBitPos <em>Bit Pos</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Bit Pos</em>'.
+	 * @see easyflow.tool.DataPort#getBitPos()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_BitPos();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.DataFormat <em>Data Format</em>}'.
@@ -2037,6 +2135,14 @@ public interface ToolPackage extends EPackage {
 		EReference TOOL__EXECUTABLES = eINSTANCE.getTool_Executables();
 
 		/**
+		 * The meta object literal for the '<em><b>Data</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL__DATA = eINSTANCE.getTool_Data();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.IToolElement <em>ITool Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2183,12 +2289,12 @@ public interface ToolPackage extends EPackage {
 		EReference PARAMETER__VALUES = eINSTANCE.getParameter_Values();
 
 		/**
-		 * The meta object literal for the '<em><b>Format</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Formats</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__FORMAT = eINSTANCE.getParameter_Format();
+		EAttribute PARAMETER__FORMATS = eINSTANCE.getParameter_Formats();
 
 		/**
 		 * The meta object literal for the '<em><b>Value Type</b></em>' attribute feature.
@@ -2371,6 +2477,14 @@ public interface ToolPackage extends EPackage {
 		EAttribute DATA__OUTPUT = eINSTANCE.getData_Output();
 
 		/**
+		 * The meta object literal for the '<em><b>Format</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA__FORMAT = eINSTANCE.getData_Format();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.DataPortImpl <em>Data Port</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2397,12 +2511,28 @@ public interface ToolPackage extends EPackage {
 		EAttribute DATA_PORT__CARDINALITY = eINSTANCE.getDataPort_Cardinality();
 
 		/**
-		 * The meta object literal for the '<em><b>Data Format</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Data Formats</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DATA_PORT__DATA_FORMAT = eINSTANCE.getDataPort_DataFormat();
+		EReference DATA_PORT__DATA_FORMATS = eINSTANCE.getDataPort_DataFormats();
+
+		/**
+		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__OPTIONAL = eINSTANCE.getDataPort_Optional();
+
+		/**
+		 * The meta object literal for the '<em><b>Bit Pos</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__BIT_POS = eINSTANCE.getDataPort_BitPos();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.DataFormatImpl <em>Data Format</em>}' class.

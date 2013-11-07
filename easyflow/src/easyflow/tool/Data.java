@@ -18,6 +18,7 @@ package easyflow.tool;
  *   <li>{@link easyflow.tool.Data#getLabel <em>Label</em>}</li>
  *   <li>{@link easyflow.tool.Data#getPort <em>Port</em>}</li>
  *   <li>{@link easyflow.tool.Data#isOutput <em>Output</em>}</li>
+ *   <li>{@link easyflow.tool.Data#getFormat <em>Format</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,5 +104,31 @@ public interface Data extends DefaultToolElement {
 	 * @generated
 	 */
 	void setOutput(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Format</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Format</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Format</em>' attribute.
+	 * @see #setFormat(String)
+	 * @see easyflow.tool.ToolPackage#getData_Format()
+	 * @model
+	 * @generated
+	 */
+	String getFormat();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Data#getFormat <em>Format</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Format</em>' attribute.
+	 * @see #getFormat()
+	 * @generated
+	 */
+	void setFormat(String value);
 
 } // Data

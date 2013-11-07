@@ -98,6 +98,15 @@ public interface CoreFactory extends EFactory {
 	Catalog createCatalog();
 
 	/**
+	 * Returns a new object of class '<em>Tool Match</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tool Match</em>'.
+	 * @generated
+	 */
+	ToolMatch createToolMatch();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

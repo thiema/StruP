@@ -55,6 +55,7 @@ import easyflow.core.CorePackage;
 import easyflow.core.Task;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.tool.Data;
 import easyflow.tool.DataPort;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -281,6 +282,7 @@ public class XMLUtil {
 		resource.getContents().addAll(task.getTraversalEvents().values());
 		resource.getContents().addAll(task.getInDataPorts());
 		resource.getContents().addAll(task.getOutDataPorts());
+		resource.getContents().addAll(task.getToolMatches().values());
 		for (EList<TraversalChunk> chunks : task.getChunks().values())
 			resource.getContents().addAll(chunks);
 		//resource.getContents().addAll(task.getChunks().values());
@@ -288,14 +290,14 @@ public class XMLUtil {
 		while (it.hasNext()) {
 			DataPort dataPort = it.next();
 			resource.getContents().addAll(dataPort.getGroupingCriteria());
-			resource.getContents().add(dataPort.getDataFormat());
+			resource.getContents().addAll(dataPort.getDataFormats().values());
 			
 		}
 		it=task.getOutDataPorts().iterator();
 		while (it.hasNext()) {
 			DataPort dataPort = it.next();
 			resource.getContents().addAll(dataPort.getGroupingCriteria());
-			resource.getContents().add(dataPort.getDataFormat());
+			resource.getContents().addAll(dataPort.getDataFormats().values());
 		}
 		Iterator<TraversalEvent> it1=task.getTraversalEvents().values().iterator();
 		
@@ -341,6 +343,13 @@ public class XMLUtil {
 				resource.getContents().addAll(tool.getRequirements());
 			if (tool.getPackage() != null)
 				resource.getContents().add(tool.getPackage());
+			for (Data data:tool.getData().values())
+			{
+				resource.getContents().add(data);
+				resource.getContents().add(data.getPort());
+				resource.getContents().addAll(data.getPort().getDataFormats().values());
+				
+			}
 			
 		}
 			

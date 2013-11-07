@@ -472,7 +472,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theExecutionPackage.getIExecutionSystem(), "executionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "computeToolDeps", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getCatalog(), "catalog", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}

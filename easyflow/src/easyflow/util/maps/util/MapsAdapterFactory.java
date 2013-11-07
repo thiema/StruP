@@ -10,10 +10,13 @@ import com.mxgraph.model.mxICell;
 
 import easyflow.core.Task;
 
+import easyflow.core.ToolMatch;
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.Data;
+import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -172,6 +175,18 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToPackageMap(Map.Entry<String, easyflow.tool.Package> object) {
 				return createStringToPackageMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDataMap(Map.Entry<String, Data> object) {
+				return createStringToDataMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDataFormatMap(Map.Entry<String, DataFormat> object) {
+				return createStringToDataFormatMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToToolMatchMap(Map.Entry<String, ToolMatch> object) {
+				return createStringToToolMatchMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -456,6 +471,48 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToPackageMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Data Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToDataMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Data Format Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToDataFormatMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Tool Match Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToToolMatchMapAdapter() {
 		return null;
 	}
 

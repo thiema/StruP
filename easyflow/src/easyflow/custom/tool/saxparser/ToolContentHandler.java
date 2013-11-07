@@ -42,11 +42,14 @@ public class ToolContentHandler implements ContentHandler {
 	Logger logger = Logger.getLogger(ToolContentHandler.class);
 	Map<String, String> conditionalMap = new HashMap<String, String>();
 	Map<String, URI> importMap = new HashMap<String, URI>();
+	Map<String, DataFormat> dataFormatMap = new HashMap<String, DataFormat>();
 	Stack<Tag> tagStack = new Stack<Tag>();
 	Tool tool = null;
 	Package pkg = null;
 	Parameter parameter = null;
 	Parameter subParam = null;
+	Data data = null;
+	DataPort dataPort = null;
 	Key key = null;
 	Requirement requirement = null;
 	Tag curTag = null;
@@ -55,7 +58,12 @@ public class ToolContentHandler implements ContentHandler {
 	String lastMainAttributeValue = null;
 	DocumentProperties documentProperties = null;
 	String xmlKey = null;
+	String condition = null;
+	String conditionValue = null;
+	String action = null;
 	boolean xmlKeyFound = false;
+	boolean withinParam = false;
+	boolean withinData = false;
 	
 	public static List<Tool> parse(URI source, DocumentProperties documentProperties, 
 			ToolContentHandler toolContentHandler, String xmlKey)
@@ -122,7 +130,7 @@ public class ToolContentHandler implements ContentHandler {
 	@Override
 	public void endDocument() throws SAXException {
 		
-		logger.trace("endDoc. reset xmlKey: "+xmlKey+" "+xmlKeyFound);
+		logger.trace("endDoc: reset xmlKey: "+xmlKey+" "+xmlKeyFound);
 		if (xmlKeyFound)
 			xmlKeyFound = false;
 		if (xmlKey != null)
@@ -143,6 +151,29 @@ public class ToolContentHandler implements ContentHandler {
 		
 	}
 
+	private void setDataPort(String format)
+	{
+		List<String> formats = new ArrayList<String>();
+		formats.add(format);
+		setDataPort(formats);
+	}
+	private void setDataPort(List<String> formats)
+	{
+		for (String format:formats)
+		{
+			DataFormat dataFormat = null;
+			if (dataFormatMap.containsKey(format))
+			{
+				dataFormat = dataFormatMap.get(format);
+			}
+			else
+			{
+				dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+				dataFormat.setName(format);
+			}
+			dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+		}
+	}
 	private void setParam(Attributes atts, Parameter parameter)
 	{
 		
@@ -177,7 +208,7 @@ public class ToolContentHandler implements ContentHandler {
 			parameter.setAdvanced(atts.getValue("advanced").equals("true")?true:false);
 		if (atts.getValue("format")!=null)
 			for (String format:atts.getValue("format").split(","))
-				parameter.getFormat().add(format);
+				parameter.getFormats().add(format);
 
 	}
 	
@@ -256,6 +287,7 @@ public class ToolContentHandler implements ContentHandler {
 			case INTERPRETER:
 				break;
 			case PARAM:
+				withinParam = true;
 				if ("WHEN".equals(lastTag))
 				{
 					if (parameter.getValues().containsKey(lastMainAttributeValue))
@@ -268,11 +300,31 @@ public class ToolContentHandler implements ContentHandler {
 				{
 					parameter = ToolFactory.eINSTANCE.createParameter();
 					parameter.setName(atts.getValue("name"));
+					Data data = ToolFactory.eINSTANCE.createData();
+					data.setName(parameter.getName());
+					if (atts.getValue("output")!=null)
+					{
+						if (atts.getValue("output").equalsIgnoreCase("true"))
+							data.setOutput(true);
+						else
+							data.setOutput(false);
+					}
+					else
+						data.setOutput(false);
+					if (tool.getData().containsKey(data.getName()))
+						logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
+					tool.getData().put(data.getName(), data);
+					dataPort = ToolFactory.eINSTANCE.createDataPort();
 					setParam(atts, parameter);
+					setDataPort(parameter.getFormats());
+					dataPort.setName(parameter.getName());
+					//data.setName(parameter.getName());
+					data.setPort(dataPort);
+					
 					tool.getCommand().getParameters().put(parameter.getName(), parameter);
 					if ("PACKAGE".equals(parentTag))
 						pkg.getParameters().put(parameter.getName(), parameter);
-					//if (conditionalMap.containsKey("name"));
+					
 				}
 				break;
 			case KEY:
@@ -288,35 +340,56 @@ public class ToolContentHandler implements ContentHandler {
 				parameter.getKeys().add(key);
 				break;
 			case OPTION:
-				subParam = ToolFactory.eINSTANCE.createParameter();
-				parameter.getValues().put(atts.getValue("value"), subParam);
+				if (withinData)
+				{
+					if (conditionalMap.containsKey("name"))
+					{
+					}
+				}
+				else
+				{
+					subParam = ToolFactory.eINSTANCE.createParameter();
+					parameter.getValues().put(atts.getValue("value"), subParam);
+				}
 				break;
-			case WHEN:
-				lastMainAttributeValue = atts.getValue("value");
+			case ACTIONS:
 				break;
 			case CONDITIONAL:
 				conditionalMap.put("name", atts.getValue("name"));
 				break;
+			case WHEN:
+				lastMainAttributeValue = atts.getValue("value");
+				conditionalMap.put("when_value", atts.getValue("value"));
+				break;
+			case ACTION:
+				conditionalMap.put("action_type", atts.getValue("type"));
+				if (atts.getValue("type").equals("format"))
+				{
+					String format = conditionalMap.get("when_value");
+					setDataPort(format);
+
+				}
+					
+				break;
 			case DATA:
-				Data data = ToolFactory.eINSTANCE.createData();
-				if (atts.getValue("description")!=null)
+				withinData = true;
+				data = ToolFactory.eINSTANCE.createData();
+				if (atts.getValue("description") !=null)
 					data.setDescription(atts.getValue("description"));
-				if (atts.getValue("name")!=null)
+				if (atts.getValue("name") !=null)
 					data.setName(atts.getValue("name"));
-				if (atts.getValue("label")!=null)
+				if (atts.getValue("label") !=null)
 					data.setLabel(atts.getValue("label"));
+				if (atts.getValue("format") != null)
+					data.setFormat(atts.getValue("format"));
 				data.setOutput(atts.getValue("output")==null?
 						false:atts.getValue("output").equals("true"));
-				
-				if (atts.getValue("format")!=null)
-				{
-					DataPort dataPort = ToolFactory.eINSTANCE.createDataPort();
-					DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
-				
-					dataFormat.setName(atts.getValue("format"));
-					dataPort.setDataFormat(dataFormat);
-					data.setPort(dataPort);
-				}
+				if (tool.getData().containsKey(data.getName()))
+					logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
+				tool.getData().put(data.getName(), data);
+				dataPort = ToolFactory.eINSTANCE.createDataPort();
+				dataPort.setName(data.getName());
+				data.setPort(dataPort);
 				break;
 			default: 
 				break;
@@ -334,7 +407,29 @@ public class ToolContentHandler implements ContentHandler {
 			parentTag=null;
 		else
 			parentTag = tagStack.peek();
-		logger.trace("lastTag="+lastTag+" parentTag="+parentTag);
+		logger.trace("curTag="+curTag+" lastTag="+lastTag+" parentTag="+parentTag);
+		
+		switch (curTag) {
+			case ACTIONS:
+				conditionalMap.clear();
+				break;
+			case DATA:
+				withinData = false;
+				if (data.getPort().getDataFormats() == null || data.getPort().getDataFormats().isEmpty())
+				{
+					String format = data.getFormat();
+					setDataPort(format);
+				}
+				data = null;
+				
+				break;
+			case PARAM:
+				withinParam = false;
+				break;
+			default:
+				break;
+		}
+		curTag=parentTag;
 	}
 
 	@Override

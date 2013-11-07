@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link easyflow.tool.impl.DataImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link easyflow.tool.impl.DataImpl#getPort <em>Port</em>}</li>
  *   <li>{@link easyflow.tool.impl.DataImpl#isOutput <em>Output</em>}</li>
+ *   <li>{@link easyflow.tool.impl.DataImpl#getFormat <em>Format</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,6 +84,26 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 	 * @ordered
 	 */
 	protected boolean output = OUTPUT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFormat() <em>Format</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFormat()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FORMAT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFormat() <em>Format</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFormat()
+	 * @generated
+	 * @ordered
+	 */
+	protected String format = FORMAT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -188,6 +209,27 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFormat() {
+		return format;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFormat(String newFormat) {
+		String oldFormat = format;
+		format = newFormat;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.DATA__FORMAT, oldFormat, format));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -198,6 +240,8 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 				return basicGetPort();
 			case ToolPackage.DATA__OUTPUT:
 				return isOutput();
+			case ToolPackage.DATA__FORMAT:
+				return getFormat();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,6 +262,9 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 				return;
 			case ToolPackage.DATA__OUTPUT:
 				setOutput((Boolean)newValue);
+				return;
+			case ToolPackage.DATA__FORMAT:
+				setFormat((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -240,6 +287,9 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 			case ToolPackage.DATA__OUTPUT:
 				setOutput(OUTPUT_EDEFAULT);
 				return;
+			case ToolPackage.DATA__FORMAT:
+				setFormat(FORMAT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -258,6 +308,8 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 				return port != null;
 			case ToolPackage.DATA__OUTPUT:
 				return output != OUTPUT_EDEFAULT;
+			case ToolPackage.DATA__FORMAT:
+				return FORMAT_EDEFAULT == null ? format != null : !FORMAT_EDEFAULT.equals(format);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -276,6 +328,8 @@ public class DataImpl extends DefaultToolElementImpl implements Data {
 		result.append(label);
 		result.append(", output: ");
 		result.append(output);
+		result.append(", format: ");
+		result.append(format);
 		result.append(')');
 		return result.toString();
 	}
