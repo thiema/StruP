@@ -8,6 +8,8 @@ package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.DataLink;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
@@ -187,6 +189,14 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToToolMatchMap(Map.Entry<String, ToolMatch> object) {
 				return createStringToToolMatchMapAdapter();
+			}
+			@Override
+			public Adapter caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
+				return createTaskToDataPortsMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDataLinkMap(Map.Entry<String, DataLink> object) {
+				return createStringToDataLinkMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -513,6 +523,34 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToToolMatchMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Ports Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createTaskToDataPortsMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Data Link Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToDataLinkMapAdapter() {
 		return null;
 	}
 

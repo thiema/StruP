@@ -52,14 +52,15 @@ import org.xml.sax.SAXException;
 import easyflow.EasyflowPackage;
 import easyflow.core.CorePackage;
 
+import easyflow.core.DataLink;
 import easyflow.core.Task;
+import easyflow.core.DataPort;
 
-import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.tool.Data;
-import easyflow.tool.DataPort;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 
 
@@ -260,6 +261,67 @@ public class XMLUtil {
 		return options;
 	}
 	
+	public static Element getElement(DataLink dataLink)
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+			(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+
+		// Register the package to ensure it is available during loading.
+		resourceSet.getPackageRegistry().put
+			(CorePackage.eNS_URI, 
+			 CorePackage.eINSTANCE);
+		Resource resource = resourceSet.createResource(URI.createURI(new File("document.xml").getAbsolutePath()));
+
+		resource.getContents().add(dataLink);
+		resource.getContents().add(dataLink.getDataPort());
+		//resource.getContents().add(dataLink)
+		
+		Document doc=((XMLResource)resource).save(null, getOptions(), null);
+		return doc.getDocumentElement();
+	}
+	
+	public static DataLink loadDataLinkFromElement(Element element)
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		// Register the appropriate resource factory to handle all file extensions.
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+				(Resource.Factory.Registry.DEFAULT_EXTENSION, 
+				 new XMIResourceFactoryImpl());
+
+		// Register the package to ensure it is available during loading.
+		resourceSet.getPackageRegistry().put
+					(CorePackage.eNS_URI, 
+					 CorePackage.eINSTANCE);
+		Resource resource = resourceSet.createResource(
+				URI.createFileURI(new File("document.xml").getAbsolutePath()));
+		Map<String, Object> options = new HashMap<String, Object>();
+		
+		try {
+			((XMLResource) resource).load(element, options);
+			DataLink dataLink = (DataLink) resource.getContents().get(0);
+			
+			dataLink=GlobalVar.getGraphUtil().getDataLinks().get(Integer.toString(dataLink.getId()));
+			return dataLink;
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+		}
+		return null;
+		
+	}
+	
+	public static DataLink loadDataLinkFromValue(Object value)
+	{
+		return loadDataLinkFromElement((Element) value);	
+	}
+	
+	public static DataLink loadDataLinkFromEdge(Object mxcell) {
+		return loadDataLinkFromElement((Element) ((mxICell)mxcell).getValue());
+	}
+
+	
 	public static Element getElement(Task task) {
 		
 		//task.setFullName(task.getUniqueString());
@@ -276,7 +338,7 @@ public class XMLUtil {
 		
 		resource.getContents().add(task);
 		//EcoreUtil.resolveAll(resource);
-		if (!task.isRoot())
+		if (!task.isRoot()||true)
 		{
 		resource.getContents().addAll(task.getTools().values());
 		resource.getContents().addAll(task.getTraversalEvents().values());

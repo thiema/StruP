@@ -62,13 +62,15 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 		switch (eClass.getClassifierID()) {
 			case CorePackage.WORKFLOW: return createWorkflow();
 			case CorePackage.TASK: return createTask();
+			case CorePackage.TOOL_MATCH: return createToolMatch();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE: return createDefaultWorkflowTemplate();
 			case CorePackage.EASYFLOW_TEMPLATE: return createEasyflowTemplate();
 			case CorePackage.EASYFLOW_TASK_READER: return createEasyflowTaskReader();
 			case CorePackage.GALAXY_TASK_READER: return createGalaxyTaskReader();
 			case CorePackage.DEFAULT_RECORD: return createDefaultRecord();
 			case CorePackage.CATALOG: return createCatalog();
-			case CorePackage.TOOL_MATCH: return createToolMatch();
+			case CorePackage.DATA_PORT: return createDataPort();
+			case CorePackage.DATA_LINK: return createDataLink();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -152,6 +154,26 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public Catalog createCatalog() {
 		CatalogImpl catalog = new CatalogImpl();
 		return catalog;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataPort createDataPort() {
+		DataPortImpl dataPort = new DataPortImpl();
+		return dataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataLink createDataLink() {
+		DataLinkImpl dataLink = new DataLinkImpl();
+		return dataLink;
 	}
 
 	/**

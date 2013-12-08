@@ -7,18 +7,22 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-import org.w3c.dom.Element;
+
 
 import com.mxgraph.analysis.mxConstantCostFunction;
 import com.mxgraph.analysis.mxGraphAnalysis;
 import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGraphModel;
+
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraph.mxICellVisitor;
 
+
+import easyflow.core.DataLink;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
+import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
+
 
 public class EasyFlowGraphUtil extends mxGraph
 {
@@ -35,24 +39,62 @@ public class EasyFlowGraphUtil extends mxGraph
 			return false;
 
 	}
-		
+	
+	public String setCellUnvisible(Object cell)
+	{
+		return getModel().setStyle(cell, "strokeColor=none;noLabel=1;textOpacity=0");
+	}
 	
 	public Object insertVertexEasyFlow(Object parent, String id, Task task) {
+		if (task == null)
+			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
-		return insertVertex(parent, id, XMLUtil.getElement(task), 400, 100, defaultWidth, defaultHight);
+		//return insertVertex(parent, id, XMLUtil.getElement(task), 400, 100, defaultWidth, defaultHight);
+		return insertVertex(parent, id, task.getUniqueString(), 400, 100, defaultWidth, defaultHight, "EASYFLOW_VERTEX_STYLE");
 	}
 	public Object insertVertexEasyFlow(Object parent, String id, Object value) {
+		if (value == null)
+			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
-		return insertVertex(parent, id, value, 400, 100, defaultWidth, defaultHight);
+		return insertVertex(parent, id, value, 400, 100, defaultWidth, defaultHight, "EASYFLOW_VERTEX_STYLE");
 	}
 	public Object insertVertexEasyFlow(Object parent, String id, mxCell vertex) {
+		if (vertex == null)
+			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
-		return insertVertex(parent, id, vertex.getValue(), 400, 100, defaultWidth, defaultHight);
+		return insertVertex(parent, id, vertex.getValue(), 400, 100, defaultWidth, defaultHight, "EASYFLOW_VERTEX_STYLE");
 	}
+	
+	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, DataLink dataLink) {
+		if (source == null || target == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		if (dataLink!=null)
+		{
+			//return insertEdge(parent, id, XMLUtil.getElement(dataPort), source, target);
+			//return insertEdge(parent, id, XMLUtil.getElement(dataLink), source, target);
+			if (dataLink.getId()==0)
+				dataLink.setId(dataLink.hashCode());
+			if (!GlobalVar.getGraphUtil().getDataLinks().containsKey(Integer.toString(dataLink.getId())))
+				GlobalVar.getGraphUtil().getDataLinks().put(Integer.toString(dataLink.getId()), dataLink);
+			return insertEdge(parent, id, dataLink.getId(), source, target);
+		}
+		else
+			return insertEdge(parent, id, "", source, target);
+	}
+	
+	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, Object value) {
+		if (source == null || target == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		return insertEdge(parent, id, value, source, target);
+	}
+	
 	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target) {
-		if (parent==null) parent=getDefaultParent();
-		return insertEdge(parent, id, "", source, target);
+		return insertEdgeEasyFlow(parent, id, source, target, null);
 	}
+	
+	
 	public Object removeGraph(Object cell) {
 		return removeCells(getVertices(cell).toArray());
 	}

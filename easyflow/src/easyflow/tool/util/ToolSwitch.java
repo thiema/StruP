@@ -9,10 +9,10 @@ package easyflow.tool.util;
 import easyflow.tool.Command;
 import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
-import easyflow.tool.DataPort;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.IToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.Parameter;
@@ -21,7 +21,6 @@ import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-import easyflow.tool.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -141,6 +140,15 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ToolPackage.IN_OUT_PARAMETER: {
+				InOutParameter inOutParameter = (InOutParameter)theEObject;
+				T result = caseInOutParameter(inOutParameter);
+				if (result == null) result = caseParameter(inOutParameter);
+				if (result == null) result = caseIToolElement(inOutParameter);
+				if (result == null) result = caseDefaultToolElement(inOutParameter);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ToolPackage.PACKAGE: {
 				easyflow.tool.Package package_ = (easyflow.tool.Package)theEObject;
 				T result = casePackage(package_);
@@ -153,13 +161,6 @@ public class ToolSwitch<T> extends Switch<T> {
 				Data data = (Data)theEObject;
 				T result = caseData(data);
 				if (result == null) result = caseDefaultToolElement(data);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ToolPackage.DATA_PORT: {
-				DataPort dataPort = (DataPort)theEObject;
-				T result = caseDataPort(dataPort);
-				if (result == null) result = caseDefaultToolElement(dataPort);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -225,21 +226,6 @@ public class ToolSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Tool</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Tool</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTool(Tool object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>ITool Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -266,6 +252,21 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDefaultToolElement(DefaultToolElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Tool</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Tool</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTool(Tool object) {
 		return null;
 	}
 
@@ -315,6 +316,21 @@ public class ToolSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>In Out Parameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>In Out Parameter</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInOutParameter(InOutParameter object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Package</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -341,21 +357,6 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseData(Data object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data Port</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data Port</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDataPort(DataPort object) {
 		return null;
 	}
 

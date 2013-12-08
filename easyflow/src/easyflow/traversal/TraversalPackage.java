@@ -67,70 +67,7 @@ public interface TraversalPackage extends EPackage {
 	 * @see easyflow.traversal.impl.TraversalPackageImpl#getGroupingCriterion()
 	 * @generated
 	 */
-	int GROUPING_CRITERION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION__ID = 0;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION__DESCRIPTION = 1;
-
-	/**
-	 * The feature id for the '<em><b>Mode</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION__MODE = 2;
-
-	/**
-	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION__MULTIPLE_INSTANCES = 3;
-
-	/**
-	 * The feature id for the '<em><b>Seperate Input Ports</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION__SEPERATE_INPUT_PORTS = 4;
-
-	/**
-	 * The feature id for the '<em><b>Logger</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION__LOGGER = 5;
-
-	/**
-	 * The number of structural features of the '<em>Grouping Criterion</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION_FEATURE_COUNT = 6;
+	int GROUPING_CRITERION = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.traversal.impl.TraversalCriterionImpl <em>Criterion</em>}' class.
@@ -140,97 +77,7 @@ public interface TraversalPackage extends EPackage {
 	 * @see easyflow.traversal.impl.TraversalPackageImpl#getTraversalCriterion()
 	 * @generated
 	 */
-	int TRAVERSAL_CRITERION = 1;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__ID = GROUPING_CRITERION__ID;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__DESCRIPTION = GROUPING_CRITERION__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Mode</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__MODE = GROUPING_CRITERION__MODE;
-
-	/**
-	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__MULTIPLE_INSTANCES = GROUPING_CRITERION__MULTIPLE_INSTANCES;
-
-	/**
-	 * The feature id for the '<em><b>Seperate Input Ports</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__SEPERATE_INPUT_PORTS = GROUPING_CRITERION__SEPERATE_INPUT_PORTS;
-
-	/**
-	 * The feature id for the '<em><b>Logger</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__LOGGER = GROUPING_CRITERION__LOGGER;
-
-	/**
-	 * The feature id for the '<em><b>Operation</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__OPERATION = GROUPING_CRITERION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Chunks</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__CHUNKS = GROUPING_CRITERION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Chunk Source</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION__CHUNK_SOURCE = GROUPING_CRITERION_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Criterion</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION_FEATURE_COUNT = GROUPING_CRITERION_FEATURE_COUNT + 3;
+	int TRAVERSAL_CRITERION = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.traversal.impl.TraversalEventImpl <em>Event</em>}' class.
@@ -240,7 +87,7 @@ public interface TraversalPackage extends EPackage {
 	 * @see easyflow.traversal.impl.TraversalPackageImpl#getTraversalEvent()
 	 * @generated
 	 */
-	int TRAVERSAL_EVENT = 2;
+	int TRAVERSAL_EVENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Merge Task</b></em>' reference list.
@@ -313,6 +160,177 @@ public interface TraversalPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRAVERSAL_EVENT_FEATURE_COUNT = 7;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__DESCRIPTION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Mode</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__MODE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__MULTIPLE_INSTANCES = 3;
+
+	/**
+	 * The feature id for the '<em><b>Seperate Input Ports</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__SEPERATE_INPUT_PORTS = 4;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__LOGGER = 5;
+
+	/**
+	 * The feature id for the '<em><b>Data Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__DATA_PORT = 6;
+
+	/**
+	 * The number of structural features of the '<em>Grouping Criterion</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION_FEATURE_COUNT = 7;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__ID = GROUPING_CRITERION__ID;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__DESCRIPTION = GROUPING_CRITERION__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Mode</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__MODE = GROUPING_CRITERION__MODE;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__MULTIPLE_INSTANCES = GROUPING_CRITERION__MULTIPLE_INSTANCES;
+
+	/**
+	 * The feature id for the '<em><b>Seperate Input Ports</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__SEPERATE_INPUT_PORTS = GROUPING_CRITERION__SEPERATE_INPUT_PORTS;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__LOGGER = GROUPING_CRITERION__LOGGER;
+
+	/**
+	 * The feature id for the '<em><b>Data Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__DATA_PORT = GROUPING_CRITERION__DATA_PORT;
+
+	/**
+	 * The feature id for the '<em><b>Operation</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__OPERATION = GROUPING_CRITERION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Chunks</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__CHUNKS = GROUPING_CRITERION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Chunk Source</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__CHUNK_SOURCE = GROUPING_CRITERION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Criterion</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION_FEATURE_COUNT = GROUPING_CRITERION_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link easyflow.traversal.impl.TraversalOperationImpl <em>Operation</em>}' class.
@@ -399,53 +417,6 @@ public interface TraversalPackage extends EPackage {
 
 
 	/**
-	 * The meta object id for the '{@link easyflow.traversal.impl.DataPortsImpl <em>Data Ports</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.traversal.impl.DataPortsImpl
-	 * @see easyflow.traversal.impl.TraversalPackageImpl#getDataPorts()
-	 * @generated
-	 */
-	int DATA_PORTS = 5;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_PORTS__NAME = 0;
-
-	/**
-	 * The feature id for the '<em><b>Data Ports</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_PORTS__DATA_PORTS = 1;
-
-	/**
-	 * The feature id for the '<em><b>Last Tasks</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_PORTS__LAST_TASKS = 2;
-
-	/**
-	 * The number of structural features of the '<em>Data Ports</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_PORTS_FEATURE_COUNT = 3;
-
-
-	/**
 	 * Returns the meta object for class '{@link easyflow.traversal.GroupingCriterion <em>Grouping Criterion</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -520,6 +491,17 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getGroupingCriterion_Logger();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.traversal.GroupingCriterion#getDataPort <em>Data Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Data Port</em>'.
+	 * @see easyflow.traversal.GroupingCriterion#getDataPort()
+	 * @see #getGroupingCriterion()
+	 * @generated
+	 */
+	EReference getGroupingCriterion_DataPort();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.traversal.TraversalCriterion <em>Criterion</em>}'.
@@ -727,49 +709,6 @@ public interface TraversalPackage extends EPackage {
 	EAttribute getTraversalChunk_Logger();
 
 	/**
-	 * Returns the meta object for class '{@link easyflow.traversal.DataPorts <em>Data Ports</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Data Ports</em>'.
-	 * @see easyflow.traversal.DataPorts
-	 * @generated
-	 */
-	EClass getDataPorts();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.traversal.DataPorts#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see easyflow.traversal.DataPorts#getName()
-	 * @see #getDataPorts()
-	 * @generated
-	 */
-	EAttribute getDataPorts_Name();
-
-	/**
-	 * Returns the meta object for the reference list '{@link easyflow.traversal.DataPorts#getDataPorts <em>Data Ports</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Data Ports</em>'.
-	 * @see easyflow.traversal.DataPorts#getDataPorts()
-	 * @see #getDataPorts()
-	 * @generated
-	 */
-	EReference getDataPorts_DataPorts();
-
-	/**
-	 * Returns the meta object for the reference list '{@link easyflow.traversal.DataPorts#getLastTasks <em>Last Tasks</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Last Tasks</em>'.
-	 * @see easyflow.traversal.DataPorts#getLastTasks()
-	 * @see #getDataPorts()
-	 * @generated
-	 */
-	EReference getDataPorts_LastTasks();
-
-	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -848,6 +787,14 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GROUPING_CRITERION__LOGGER = eINSTANCE.getGroupingCriterion_Logger();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Port</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GROUPING_CRITERION__DATA_PORT = eINSTANCE.getGroupingCriterion_DataPort();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.traversal.impl.TraversalCriterionImpl <em>Criterion</em>}' class.
@@ -1008,40 +955,6 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRAVERSAL_CHUNK__LOGGER = eINSTANCE.getTraversalChunk_Logger();
-
-		/**
-		 * The meta object literal for the '{@link easyflow.traversal.impl.DataPortsImpl <em>Data Ports</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.traversal.impl.DataPortsImpl
-		 * @see easyflow.traversal.impl.TraversalPackageImpl#getDataPorts()
-		 * @generated
-		 */
-		EClass DATA_PORTS = eINSTANCE.getDataPorts();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DATA_PORTS__NAME = eINSTANCE.getDataPorts_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Data Ports</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DATA_PORTS__DATA_PORTS = eINSTANCE.getDataPorts_DataPorts();
-
-		/**
-		 * The meta object literal for the '<em><b>Last Tasks</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DATA_PORTS__LAST_TASKS = eINSTANCE.getDataPorts_LastTasks();
 
 	}
 

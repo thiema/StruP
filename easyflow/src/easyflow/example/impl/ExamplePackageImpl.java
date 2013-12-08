@@ -281,7 +281,7 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		initEAttribute(getExamples_Locator(), ecorePackage.getEString(), "locator", "true", 0, 1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExamples_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Examples.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExamples_Examples(), theMapsPackage.getStringToProjectMap(), null, "examples", null, 0, -1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getExamples_FromJar(), ecorePackage.getEBoolean(), "fromJar", null, 0, 1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExamples_FromJar(), ecorePackage.getEBoolean(), "fromJar", "false", 0, 1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(examplesEClass, ecorePackage.getEString(), "readExamples", 0, -1, IS_UNIQUE, IS_ORDERED);
 

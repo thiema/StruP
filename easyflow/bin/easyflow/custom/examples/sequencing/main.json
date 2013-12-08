@@ -1,59 +1,66 @@
 {
 	
   "project" : {
-	"workflowTemplateFile2" : "abstract_multiple_traversal_event.workflow",
-	"workflowTemplateFile1" : "abstract1.workflow",
-	"workflowTemplateFile" : "reseq_simple.workflow",
+	"workflowTemplateFile2"      : "abstract_multiple_traversal_event.workflow",
+	"workflowTemplateFile1"      : "abstract1.workflow",
+	"workflowTemplateFile"       : "reseq_simple.workflow",
 	"workflowTemplateFile_reseq" : "reseq_full.workflow",
-    "metadataFile" : "metadata_abstract.tsv", 
-    "metadataFile2" : "metadata_sequencing.tsv",
-
-    "isContrast" : "true",
-    "useIntervalList" : "true",
-    "splitByContig" : "true",
+    "metadataFile"               : "metadata_abstract.tsv", 
+    "metadataFile2"              : "metadata_sequencing.tsv",
+    "isContrast"                 : "true",
+    "useIntervalList"            : "true",
+    "splitByContig"              : "true",
 },
   "processing" : {
-    "_target_enum" : ["sge", "local", "aws", "pegasus"],
+    "_target_enum"     : ["sge", "local", "aws", "pegasus"],
     "execution_system" : "makeflow",
-    "mem" : "1G",
-    "target" : "sge",
-    "useThreads" : "true",
-    "numThreads" : 10,
-    "queue" : "bioinf.q"
+    "mem"              : "1G",
+    "target"           : "sge",
+    "useThreads"       : "true",
+    "numThreads"       : 10,
+    "queue"            : "bioinf.q",
+    "handles"          : "pipe,file",
+    "defaultHandle"    : "file",
+    "stdin_operator"   : "<",
+    "stdout_operator"  : "1>",
+    "stderr_operator"  : "2>",
+    "append_stdout_operator"  : "1>>",
+    "append_stderr_operator"  : "2>>"
   },
 
   "catalog":{
 	"genome_reference" : "human.fa",
-	"input_dir" : "input_dir",
-	"work_dir" : "analysis_dir",
-	"tmp_dir" : "tmp",
+	"input_dir"        : "input_dir",
+	"work_dir"         : "analysis_dir",
+	"tmp_dir"          : "tmp",
 	},
 
   "contrast": {
-    "_rule_enum" : ["crossProduct", "groupWise", "sampleWise"],
-    "rule" : "crossProduct"
+    "_rule_enum"       : ["crossProduct", "groupWise", "sampleWise"],
+    "rule"             : "crossProduct"
   },
 
   "workflow": {
-    "input" : "FASTQ",
-    "workflows" : ["w1", "w2"], 
-    "w1" : ["MapReads", "AddReadGroup"],
-    "w2" : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
+    "inputs"                  : ["FASTQ"],
+    "static_inputs"           : ["FASTA"],
+    "workflows"               : ["w1", "w2"], 
+    "w1"                      : ["MapReads", "AddReadGroup"],
+    "w2"                      : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
     "defaultGroupingCriteria" : ["Record"],
-    "mode" : "batch"
+    "defaultMode"             : "batch"
   },
   
   "tool" : {
     "command_pattern" : "interpreter executable submodule positional_arg optional_arg input output",
-  	"dir" : "tool_definitions",
-  	"tools_test" : ["tool.xml", "tools.xml", "depth_of_coverage_gatk2_easyflow.xml", 
-  				"depth_of_coverage_gatk_easyflow.xml", "ngs_tools_easyflow.xml"],
-  	"tools" : ["ngs_tools_easyflow.xml"],
-  	"tools_" : ["ngs_tools_easyflow.xml",
-  				"pavgi_picard", "gatk2", "bedtools-galaxy"],
-  	"schemata" : ["../../../tool/schema/Easyflow.xsd", 
-  					"../../../tool/schema/Easyflow_multiple.xsd", 
-  					"../../../tool/schema/external/Galaxy.xsd"]
+  	"dir"             : "tool_definitions",
+  	"tools_test"      : ["tool.xml", "tools.xml", "depth_of_coverage_gatk2_easyflow.xml", 
+  				         "depth_of_coverage_gatk_easyflow.xml", "ngs_tools_easyflow.xml"],
+  	"tools"           : ["ngs_tools_easyflow.xml"],
+  	"tools_"          : ["ngs_tools_easyflow.xml",
+  				         "pavgi_picard", "gatk2", "bedtools-galaxy"],
+  	"schemata"        : ["../../../tool/schema/Easyflow.xsd", 
+  					     "../../../tool/schema/Easyflow_multiple.xsd", 
+  					     "../../../tool/schema/external/Galaxy.xsd"]
   }
 
 }

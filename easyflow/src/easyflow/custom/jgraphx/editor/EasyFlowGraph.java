@@ -13,6 +13,11 @@ import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 
+import easyflow.core.Task;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.util.GlobalVar;
+
 
 // testing
 
@@ -46,7 +51,7 @@ public class EasyFlowGraph extends EasyFlowGraphUtil
 	 */
 	public EasyFlowGraph()
 	{
-		setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
+		//setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
 	}
 
 	/**
@@ -159,6 +164,7 @@ public class EasyFlowGraph extends EasyFlowGraphUtil
 	 * @param style
 	 * @return
 	 */
+	/*
 	public Object createEdge(Object parent, String id, Object value,
 			Object source, Object target, String style)
 	{
@@ -172,37 +178,49 @@ public class EasyFlowGraph extends EasyFlowGraphUtil
 
 		return super.createEdge(parent, id, value, source, target, style);
 	}
-
+*/
 	/*
 	 *custom label 
 	 */
-	public String getLabel(Object cell) {
-		if (cell instanceof mxCell)
+	public String getLabel(Object o) {
+		
+		if (o instanceof mxCell)
 		{
-			Object value = ((mxCell) cell).getValue();
-			if (value instanceof Element)
+			mxCell cell = (mxCell) o;
+			if (cell.isVertex())
+			{
+				try {
+					if (GlobalVar.getGraphUtil()!=null)
+					{
+						Task task = GlobalVar.getGraphUtil().loadTask(cell);
+						if (task != null)
+							return task.getUniqueString();
+					}
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (cell.isEdge())
+			{
+				try {
+					if (GlobalVar.getGraphUtil()!=null)
+						return GlobalVar.getGraphUtil().loadDataLink(cell).getDataPort().getName();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
 			{
 				
-				Element elt = (Element) value;
-				logger.trace("getLabel(): elements first child="+elt.getFirstChild()
-						+" "+elt.getLocalName()
-						//+" "+elt.getFirstChild().getLocalName()
-						);
-				if (elt.getFirstChild() == null && elt.getLocalName().equalsIgnoreCase("Task"))
+				if (cell.getValue() instanceof String)
 				{
-					String label = elt.getAttributes().getNamedItem("name").getNodeValue();
-					logger.trace(label);
-					return label;
-				}
-				else if (elt.getFirstChild() != null && elt.getFirstChild().getLocalName().equalsIgnoreCase("Task"))
-				{
-					String label = elt.getFirstChild().getAttributes().getNamedItem("name").getNodeValue();
-					logger.trace(label);
-					return label;
+					return (String)cell.getValue();
 				}
 			}
 		}
-		logger.trace("label=null");
+		logger.trace("cannot retrieve label");
 		return null;
 	}
 	

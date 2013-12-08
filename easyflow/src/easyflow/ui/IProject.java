@@ -8,6 +8,8 @@ package easyflow.ui;
 
 import easyflow.core.Workflow;
 
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import javax.xml.validation.Schema;
@@ -65,10 +67,10 @@ public interface IProject extends EObject {
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
-	 * @model
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	void autoSetup();
+	void autoSetup() throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -84,10 +86,10 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	void applyTraversalEvents();
+	void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->

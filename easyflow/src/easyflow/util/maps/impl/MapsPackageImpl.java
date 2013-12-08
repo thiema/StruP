@@ -226,6 +226,20 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	private EClass stringToToolMatchMapEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass taskToDataPortsMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToDataLinkMapEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -923,6 +937,60 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTaskToDataPortsMap() {
+		return taskToDataPortsMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskToDataPortsMap_Key() {
+		return (EReference)taskToDataPortsMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskToDataPortsMap_Value() {
+		return (EReference)taskToDataPortsMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToDataLinkMap() {
+		return stringToDataLinkMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToDataLinkMap_Key() {
+		return (EAttribute)stringToDataLinkMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToDataLinkMap_Value() {
+		return (EReference)stringToDataLinkMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MapsFactory getMapsFactory() {
 		return (MapsFactory)getEFactoryInstance();
 	}
@@ -1033,6 +1101,14 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		stringToToolMatchMapEClass = createEClass(STRING_TO_TOOL_MATCH_MAP);
 		createEAttribute(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__KEY);
 		createEReference(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__VALUE);
+
+		taskToDataPortsMapEClass = createEClass(TASK_TO_DATA_PORTS_MAP);
+		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__KEY);
+		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__VALUE);
+
+		stringToDataLinkMapEClass = createEClass(STRING_TO_DATA_LINK_MAP);
+		createEAttribute(stringToDataLinkMapEClass, STRING_TO_DATA_LINK_MAP__KEY);
+		createEReference(stringToDataLinkMapEClass, STRING_TO_DATA_LINK_MAP__VALUE);
 	}
 
 	/**
@@ -1160,6 +1236,14 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToToolMatchMapEClass, Map.Entry.class, "StringToToolMatchMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToToolMatchMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToToolMatchMap_Value(), theCorePackage.getToolMatch(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(taskToDataPortsMapEClass, Map.Entry.class, "TaskToDataPortsMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTaskToDataPortsMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTaskToDataPortsMap_Value(), theCorePackage.getDataPort(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDataLinkMapEClass, Map.Entry.class, "StringToDataLinkMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDataLinkMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDataLinkMap_Value(), theCorePackage.getDataLink(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

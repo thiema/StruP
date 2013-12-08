@@ -60,15 +60,24 @@ public class TraversalFactoryImpl extends EFactoryImpl implements TraversalFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case TraversalPackage.TRAVERSAL_EVENT: return createTraversalEvent();
 			case TraversalPackage.GROUPING_CRITERION: return createGroupingCriterion();
 			case TraversalPackage.TRAVERSAL_CRITERION: return createTraversalCriterion();
-			case TraversalPackage.TRAVERSAL_EVENT: return createTraversalEvent();
 			case TraversalPackage.TRAVERSAL_OPERATION: return createTraversalOperation();
 			case TraversalPackage.TRAVERSAL_CHUNK: return createTraversalChunk();
-			case TraversalPackage.DATA_PORTS: return createDataPorts();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TraversalEvent createTraversalEvent() {
+		TraversalEventImpl traversalEvent = new TraversalEventImpl();
+		return traversalEvent;
 	}
 
 	/**
@@ -96,16 +105,6 @@ public class TraversalFactoryImpl extends EFactoryImpl implements TraversalFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TraversalEvent createTraversalEvent() {
-		TraversalEventImpl traversalEvent = new TraversalEventImpl();
-		return traversalEvent;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TraversalOperation createTraversalOperation() {
 		TraversalOperationImpl traversalOperation = new TraversalOperationImpl();
 		return traversalOperation;
@@ -119,16 +118,6 @@ public class TraversalFactoryImpl extends EFactoryImpl implements TraversalFacto
 	public TraversalChunk createTraversalChunk() {
 		TraversalChunkImpl traversalChunk = new TraversalChunkImpl();
 		return traversalChunk;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DataPorts createDataPorts() {
-		DataPortsImpl dataPorts = new DataPortsImpl();
-		return dataPorts;
 	}
 
 	/**

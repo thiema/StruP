@@ -9,13 +9,21 @@ package easyflow.graph.jgraphx;
 import com.mxgraph.model.mxICell;
 
 import easyflow.core.Catalog;
+import easyflow.core.DataLink;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
 
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
+
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.execution.IExecutionSystem;
+
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
 
@@ -51,6 +59,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getCurrentSubGraphs <em>Current Sub Graphs</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getNewTraversalEvents <em>New Traversal Events</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getDataLinks <em>Data Links</em>}</li>
  * </ul>
  * </p>
  *
@@ -337,60 +346,85 @@ public interface Util extends EObject {
 	EList<TraversalEvent> getNewTraversalEvents();
 
 	/**
+	 * Returns the value of the '<em><b>Data Links</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.DataLink},
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Links</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
+	 * @return the value of the '<em>Data Links</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_DataLinks()
+	 * @model mapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.core.DataLink>"
 	 * @generated
 	 */
-	boolean resolveTraversalEvents(mxICell root);
+	EMap<String, DataLink> getDataLinks();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.mxICell"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	mxICell computeSubgraph(TraversalEvent traversalEvent, boolean isComplete);
+	boolean resolveTraversalEvents(mxICell root) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
+	 * @model dataType="easyflow.mxICell" exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	EList<TraversalEvent> getNewTraversalEvents(TraversalEvent traversalEvent, mxICell root);
+	mxICell computeSubgraph(TraversalEvent traversalEvent, boolean isComplete) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, String instanceStr);
+	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, String instanceStr) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.mxICell" rootDataType="easyflow.mxICell"
+	 * @model dataType="easyflow.mxICell" exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	mxICell applyTraversalEventCopyGraph(mxICell root, String groupingStr, GroupingInstance groupingInstance);
+	mxICell applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, GroupingInstance groupingInstance) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.mxICell" rootDataType="easyflow.mxICell" groupingInstancesMany="true"
+	 * @model dataType="easyflow.mxICell" exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell" groupingInstancesMany="true"
 	 * @generated
 	 */
-	mxICell applyTraversalEventCopyGraph(mxICell root, String groupingStr, EList<GroupingInstance> groupingInstances);
+	mxICell applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, EList<GroupingInstance> groupingInstances) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	EList<TraversalEvent> getTraversalEvents(mxICell root, boolean isGrouping);
+	EList<TraversalEvent> getTraversalEvents(mxICell root, boolean isGrouping) throws CellNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	EList<TraversalEvent> getNewTraversalEvents(TraversalEvent traversalEvent, mxICell root) throws CellNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @generated
+	 */
+	TraversalEvent getNextTraversalEvent() throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -406,7 +440,7 @@ public interface Util extends EObject {
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean removeSubGraph(mxICell root, String groupingStr);
+	boolean removeSubGraph(mxICell root, TraversalEvent traversalEvent);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -423,14 +457,6 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	void resetFlags();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation"
-	 * @generated
-	 */
-	TraversalEvent getNextTraversalEvent();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -487,5 +513,61 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	boolean resolveToolDependencies(mxICell root, Catalog catalog);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException"
+	 * @generated
+	 */
+	EList<DataPort> getParentDataPortsFor(Task task) throws CellNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException"
+	 * @generated
+	 */
+	EList<DataPort> getChildDataPortsFor(Task task) throws CellNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.TaskNotFoundException" vertexDataType="easyflow.Object"
+	 * @generated
+	 */
+	Task loadTask(Object vertex) throws TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataLinkNotFoundException" edgeDataType="easyflow.Object"
+	 * @generated
+	 */
+	DataLink loadDataLink(Object edge) throws DataLinkNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @generated
+	 */
+	EList<Task> getChildTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @generated
+	 */
+	EList<Task> getSiblingTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @generated
+	 */
+	EList<Task> getParentTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException;
 
 } // Util

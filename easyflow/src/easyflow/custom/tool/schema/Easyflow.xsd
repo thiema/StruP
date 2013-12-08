@@ -16,16 +16,20 @@
 	<xs:complexType name="Package">
 		<xs:sequence>
 			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:element name="exe" type="Exe" minOccurs="0"/>
 			<xs:element name="command" type="Command" minOccurs="0"/>
 			<xs:group ref="InputElement" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="help" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:string"/>
 		<xs:attribute name="name" type="xs:string"/>
 		<xs:attribute name="version" type="xs:string"/>
 	</xs:complexType>
+	
 	<xs:complexType name="Tool">
 		<xs:sequence>
 			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:element name="exe" type="Exe" minOccurs="0"/>
 			<xs:element name="requirements" type="Requirements" minOccurs="0"/>
 			<xs:element name="macros" type="Macros" minOccurs="0" />
 			<xs:element name="interpreter" type="Interpreter" minOccurs="0"/>
@@ -42,7 +46,8 @@
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="version" type="xs:string"/>
 		<xs:attribute name="package" type="xs:string"/>
-		<xs:attribute name="force_history_refresh" type="xs:string"/>
+		<xs:attribute name="analysis_type" type="xs:string"/>
+		<!-- xs:attribute name="force_history_refresh" type="xs:string"/-->
 		
 	</xs:complexType>
 	
@@ -70,6 +75,10 @@
 
 	<xs:complexType name="Interpreter">
 		<xs:attribute name="exe" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:complexType name="Exe">
+		<xs:attribute name="name" type="xs:string" />
 	</xs:complexType>
 
 	<xs:complexType name="Command" mixed="true">
@@ -126,6 +135,8 @@
 		<xs:attribute name="defaultValue" type="xs:string" />
 		<xs:attribute name="multiple" type="xs:boolean" />
 		<xs:attribute name="multipleValue" type="xs:boolean" />
+		<xs:attribute name="grouping" type="xs:string"/>
+		<xs:attribute name="handle" type="xs:string"/>
 	</xs:complexType>
 	
 	<xs:simpleType name="ParamType">
@@ -170,7 +181,7 @@
 				<xs:attribute name="selected" type="PermissiveBoolean"
 					default="false" />
 				<xs:attribute name="help" type="xs:string"/>
-				<xs:attribute name="condition" type="xs:string"></xs:attribute>
+				<xs:attribute name="condition" type="xs:string"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -215,7 +226,7 @@
     <xs:complexContent>
       <xs:extension base="InputType">
         <xs:sequence>
-          <xs:group ref="InputElement" />
+          <xs:group ref="InputElement" minOccurs="0"/>
           <xs:element name="when" type="ConditionalWhen" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
       </xs:extension>

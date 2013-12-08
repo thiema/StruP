@@ -8,6 +8,8 @@ package easyflow.util.maps.impl;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.DataLink;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
@@ -111,6 +113,8 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_DATA_MAP: return (EObject)createStringToDataMap();
 			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: return (EObject)createStringToDataFormatMap();
 			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
+			case MapsPackage.TASK_TO_DATA_PORTS_MAP: return (EObject)createTaskToDataPortsMap();
+			case MapsPackage.STRING_TO_DATA_LINK_MAP: return (EObject)createStringToDataLinkMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -334,6 +338,26 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, ToolMatch> createStringToToolMatchMap() {
 		StringToToolMatchMapImpl stringToToolMatchMap = new StringToToolMatchMapImpl();
 		return stringToToolMatchMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<Task, EList<DataPort>> createTaskToDataPortsMap() {
+		TaskToDataPortsMapImpl taskToDataPortsMap = new TaskToDataPortsMapImpl();
+		return taskToDataPortsMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, DataLink> createStringToDataLinkMap() {
+		StringToDataLinkMapImpl stringToDataLinkMap = new StringToDataLinkMapImpl();
+		return stringToDataLinkMap;
 	}
 
 	/**

@@ -879,6 +879,81 @@ public interface MapsPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.TaskToDataPortsMapImpl <em>Task To Data Ports Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.TaskToDataPortsMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataPortsMap()
+	 * @generated
+	 */
+	int TASK_TO_DATA_PORTS_MAP = 22;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TO_DATA_PORTS_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TO_DATA_PORTS_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Task To Data Ports Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TO_DATA_PORTS_MAP_FEATURE_COUNT = 2;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataLinkMapImpl <em>String To Data Link Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToDataLinkMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataLinkMap()
+	 * @generated
+	 */
+	int STRING_TO_DATA_LINK_MAP = 23;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_LINK_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_LINK_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Data Link Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_LINK_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1627,6 +1702,74 @@ public interface MapsPackage extends EPackage {
 	EReference getStringToToolMatchMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Task To Data Ports Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Task To Data Ports Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyType="easyflow.core.Task"
+	 *        valueType="easyflow.core.DataPort" valueMany="true"
+	 * @generated
+	 */
+	EClass getTaskToDataPortsMap();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getTaskToDataPortsMap()
+	 * @generated
+	 */
+	EReference getTaskToDataPortsMap_Key();
+
+	/**
+	 * Returns the meta object for the reference list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getTaskToDataPortsMap()
+	 * @generated
+	 */
+	EReference getTaskToDataPortsMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Data Link Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Data Link Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.core.DataLink"
+	 * @generated
+	 */
+	EClass getStringToDataLinkMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataLinkMap()
+	 * @generated
+	 */
+	EAttribute getStringToDataLinkMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataLinkMap()
+	 * @generated
+	 */
+	EReference getStringToDataLinkMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2219,6 +2362,58 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_TOOL_MATCH_MAP__VALUE = eINSTANCE.getStringToToolMatchMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.TaskToDataPortsMapImpl <em>Task To Data Ports Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.TaskToDataPortsMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataPortsMap()
+		 * @generated
+		 */
+		EClass TASK_TO_DATA_PORTS_MAP = eINSTANCE.getTaskToDataPortsMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_TO_DATA_PORTS_MAP__KEY = eINSTANCE.getTaskToDataPortsMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_TO_DATA_PORTS_MAP__VALUE = eINSTANCE.getTaskToDataPortsMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDataLinkMapImpl <em>String To Data Link Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToDataLinkMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataLinkMap()
+		 * @generated
+		 */
+		EClass STRING_TO_DATA_LINK_MAP = eINSTANCE.getStringToDataLinkMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_DATA_LINK_MAP__KEY = eINSTANCE.getStringToDataLinkMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_DATA_LINK_MAP__VALUE = eINSTANCE.getStringToDataLinkMap_Value();
 
 	}
 

@@ -70,6 +70,12 @@ public class TraversalSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case TraversalPackage.TRAVERSAL_EVENT: {
+				TraversalEvent traversalEvent = (TraversalEvent)theEObject;
+				T result = caseTraversalEvent(traversalEvent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case TraversalPackage.GROUPING_CRITERION: {
 				GroupingCriterion groupingCriterion = (GroupingCriterion)theEObject;
 				T result = caseGroupingCriterion(groupingCriterion);
@@ -83,12 +89,6 @@ public class TraversalSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TraversalPackage.TRAVERSAL_EVENT: {
-				TraversalEvent traversalEvent = (TraversalEvent)theEObject;
-				T result = caseTraversalEvent(traversalEvent);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case TraversalPackage.TRAVERSAL_OPERATION: {
 				TraversalOperation traversalOperation = (TraversalOperation)theEObject;
 				T result = caseTraversalOperation(traversalOperation);
@@ -98,12 +98,6 @@ public class TraversalSwitch<T> extends Switch<T> {
 			case TraversalPackage.TRAVERSAL_CHUNK: {
 				TraversalChunk traversalChunk = (TraversalChunk)theEObject;
 				T result = caseTraversalChunk(traversalChunk);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case TraversalPackage.DATA_PORTS: {
-				DataPorts dataPorts = (DataPorts)theEObject;
-				T result = caseDataPorts(dataPorts);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -183,21 +177,6 @@ public class TraversalSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTraversalChunk(TraversalChunk object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data Ports</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data Ports</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDataPorts(DataPorts object) {
 		return null;
 	}
 

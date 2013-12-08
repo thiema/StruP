@@ -9,10 +9,10 @@ package easyflow.tool.util;
 import easyflow.tool.Command;
 import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
-import easyflow.tool.DataPort;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.IToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.Parameter;
@@ -21,7 +21,6 @@ import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-import easyflow.tool.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -119,16 +118,16 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createParameterAdapter();
 			}
 			@Override
+			public Adapter caseInOutParameter(InOutParameter object) {
+				return createInOutParameterAdapter();
+			}
+			@Override
 			public Adapter casePackage(easyflow.tool.Package object) {
 				return createPackageAdapter();
 			}
 			@Override
 			public Adapter caseData(Data object) {
 				return createDataAdapter();
-			}
-			@Override
-			public Adapter caseDataPort(DataPort object) {
-				return createDataPortAdapter();
 			}
 			@Override
 			public Adapter caseDataFormat(DataFormat object) {
@@ -195,20 +194,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.tool.Tool <em>Tool</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.tool.Tool
-	 * @generated
-	 */
-	public Adapter createToolAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link easyflow.tool.IToolElement <em>ITool Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -233,6 +218,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDefaultToolElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.Tool <em>Tool</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.Tool
+	 * @generated
+	 */
+	public Adapter createToolAdapter() {
 		return null;
 	}
 
@@ -279,6 +278,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.InOutParameter
+	 * @generated
+	 */
+	public Adapter createInOutParameterAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link easyflow.tool.Package <em>Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -303,20 +316,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDataAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.tool.DataPort <em>Data Port</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.tool.DataPort
-	 * @generated
-	 */
-	public Adapter createDataPortAdapter() {
 		return null;
 	}
 

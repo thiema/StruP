@@ -8,6 +8,8 @@ package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.DataLink;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
@@ -228,6 +230,18 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, ToolMatch> stringToToolMatchMap = (Map.Entry<String, ToolMatch>)theEObject;
 				T result = caseStringToToolMatchMap(stringToToolMatchMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.TASK_TO_DATA_PORTS_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataPort>> taskToDataPortsMap = (Map.Entry<Task, EList<DataPort>>)theEObject;
+				T result = caseTaskToDataPortsMap(taskToDataPortsMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DATA_LINK_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DataLink> stringToDataLinkMap = (Map.Entry<String, DataLink>)theEObject;
+				T result = caseStringToDataLinkMap(stringToDataLinkMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -562,6 +576,36 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToToolMatchMap(Map.Entry<String, ToolMatch> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Ports Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Task To Data Ports Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Data Link Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Data Link Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToDataLinkMap(Map.Entry<String, DataLink> object) {
 		return null;
 	}
 

@@ -6,6 +6,7 @@
  */
 package easyflow.traversal;
 
+import easyflow.core.DataPort;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.traversal.GroupingCriterion#isMultipleInstances <em>Multiple Instances</em>}</li>
  *   <li>{@link easyflow.traversal.GroupingCriterion#isSeperateInputPorts <em>Seperate Input Ports</em>}</li>
  *   <li>{@link easyflow.traversal.GroupingCriterion#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.traversal.GroupingCriterion#getDataPort <em>Data Port</em>}</li>
  * </ul>
  * </p>
  *
@@ -180,5 +182,31 @@ public interface GroupingCriterion extends EObject {
 	 * @generated
 	 */
 	Logger getLogger();
+
+	/**
+	 * Returns the value of the '<em><b>Data Port</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Port</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Port</em>' reference.
+	 * @see #setDataPort(DataPort)
+	 * @see easyflow.traversal.TraversalPackage#getGroupingCriterion_DataPort()
+	 * @model
+	 * @generated
+	 */
+	DataPort getDataPort();
+
+	/**
+	 * Sets the value of the '{@link easyflow.traversal.GroupingCriterion#getDataPort <em>Data Port</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data Port</em>' reference.
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	void setDataPort(DataPort value);
 
 } // GroupingCriterion

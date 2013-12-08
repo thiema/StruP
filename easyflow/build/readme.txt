@@ -16,3 +16,7 @@ java -cp ".:build/jar/*" easyflow.custom.jgraphx.editor.SchemaEditor
 
 # apply xsl
 java -cp "lib/saxon-8.7.jar" net.sf.saxon.Transform src/easyflow/custom/examples/sequencing/tool_definitions/depth_of_coverage.xml src/easyflow/custom/tool/schema/external/Galaxy.xsl
+
+#test regexps to define valid input/output data sets
+echo -e "A,B\nB\nA,B\nB,A\nA,A,A\n" |perl -pe 's/(A,[AB,]+)/ $1 "found"/g'
+echo -e "SAM,BAM\nBAM\nSAM,BAM\nBAM,SAM\nSAM,SAM,SAM\n" |perl -pe 's/(SAM,[(SAM)(BAM),]+)/ $1 "found"/g'

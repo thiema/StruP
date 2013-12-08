@@ -76,6 +76,8 @@ import com.mxgraph.model.mxCell;
 import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
+import easyflow.core.DataPort;
+import easyflow.core.Task;
 
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.Workflow;
@@ -85,6 +87,7 @@ import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
+import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
@@ -93,9 +96,12 @@ import easyflow.tool.Schemata;
 import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.JgraphxFactory;
@@ -619,7 +625,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void applyTraversalEvents() {
+	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
 		getActiveWorkflow().applyTraversalEvents();
 	}
 
@@ -726,7 +732,39 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		}
 		// workflow config
 		JSONObject workflowCfg=jsonObject.getJSONObject("workflow");
-		workflow.setMode(workflowCfg.getString("mode"));
+		workflow.setMode(workflowCfg.getString("defaultMode"));
+    	// create the special root task/cell which is the root
+    	// in all subsequent processed graphs, the root should link any
+    	// task from the workflow template that has no incoming task
+    	Task rootTask = CoreFactory.eINSTANCE.createTask();
+    	rootTask.setName("_root_");
+    	rootTask.setRoot(true);
+    	short bitPos=0;
+    	for (int i=0; i<workflowCfg.getJSONArray("inputs").size();i++)
+    	{
+    		DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+    		dataFormat.setName(workflowCfg.getJSONArray("inputs").getString(i));
+    		DataPort dataPort=CoreFactory.eINSTANCE.createDataPort();
+    		dataPort.setBitPos(bitPos++);
+    		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+    		dataPort.setName(dataFormat.getName());
+    		rootTask.getOutDataPorts().add(dataPort);
+    	}
+    	for (int i=0; i<workflowCfg.getJSONArray("static_inputs").size();i++)
+    	{
+    		DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+    		dataFormat.setName(workflowCfg.getJSONArray("static_inputs").getString(i));
+    		DataPort dataPort=CoreFactory.eINSTANCE.createDataPort();
+    		dataPort.setBitPos(bitPos++);
+    		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+    		dataPort.setName(dataFormat.getName());
+    		dataPort.setStatic(true);
+    		rootTask.getOutDataPorts().add(dataPort);
+    	}
+    	
+    	workflow.setRootTask(rootTask);
+    	//rootTask.getO
+
 		//JSONArray tmp=workflowCfg.getJSONArray("defaultGroupingCriteria");
 
 		for (int i=0; i<workflowCfg.getJSONArray("defaultGroupingCriteria").size();i++)
@@ -917,6 +955,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		if (getGraphUtil() == null)
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
+		// XML util depricated !! ... to be removed/refactored.
+		XMLUtil.container.put("tasks", getGraphUtil().getTasks());
+		
+        GlobalVar.setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
 		
@@ -934,7 +976,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void autoSetup() {
+	public void autoSetup() throws CellNotFoundException, TaskNotFoundException {
 		
 		Tool tool = ToolFactory.eINSTANCE.createTool();
 		//tool.writeModelToXML();

@@ -243,6 +243,56 @@ public interface EasyflowPackage extends EPackage {
 	int MX_ICELL_VISITOR = 17;
 
 	/**
+	 * The meta object id for the '<em>Pattern</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.util.regex.Pattern
+	 * @see easyflow.impl.EasyflowPackageImpl#getPattern()
+	 * @generated
+	 */
+	int PATTERN = 18;
+
+	/**
+	 * The meta object id for the '<em>Cell Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.CellNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getCellNotFoundException()
+	 * @generated
+	 */
+	int CELL_NOT_FOUND_EXCEPTION = 19;
+
+	/**
+	 * The meta object id for the '<em>Task Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.TaskNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getTaskNotFoundException()
+	 * @generated
+	 */
+	int TASK_NOT_FOUND_EXCEPTION = 20;
+
+	/**
+	 * The meta object id for the '<em>Data Port Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.DataPortNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getDataPortNotFoundException()
+	 * @generated
+	 */
+	int DATA_PORT_NOT_FOUND_EXCEPTION = 21;
+
+	/**
+	 * The meta object id for the '<em>Data Link Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.DataLinkNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getDataLinkNotFoundException()
+	 * @generated
+	 */
+	int DATA_LINK_NOT_FOUND_EXCEPTION = 22;
+
+	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph <em>mx Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -439,6 +489,61 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getmxICellVisitor();
+
+	/**
+	 * Returns the meta object for data type '{@link java.util.regex.Pattern <em>Pattern</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Pattern</em>'.
+	 * @see java.util.regex.Pattern
+	 * @model instanceClass="java.util.regex.Pattern"
+	 * @generated
+	 */
+	EDataType getPattern();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.CellNotFoundException <em>Cell Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Cell Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.CellNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.CellNotFoundException"
+	 * @generated
+	 */
+	EDataType getCellNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.TaskNotFoundException <em>Task Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Task Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.TaskNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.TaskNotFoundException"
+	 * @generated
+	 */
+	EDataType getTaskNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.DataPortNotFoundException <em>Data Port Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Data Port Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.DataPortNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.DataPortNotFoundException"
+	 * @generated
+	 */
+	EDataType getDataPortNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.DataLinkNotFoundException <em>Data Link Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Data Link Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.DataLinkNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.DataLinkNotFoundException"
+	 * @generated
+	 */
+	EDataType getDataLinkNotFoundException();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -641,6 +746,56 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType MX_ICELL_VISITOR = eINSTANCE.getmxICellVisitor();
+
+		/**
+		 * The meta object literal for the '<em>Pattern</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.regex.Pattern
+		 * @see easyflow.impl.EasyflowPackageImpl#getPattern()
+		 * @generated
+		 */
+		EDataType PATTERN = eINSTANCE.getPattern();
+
+		/**
+		 * The meta object literal for the '<em>Cell Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.CellNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getCellNotFoundException()
+		 * @generated
+		 */
+		EDataType CELL_NOT_FOUND_EXCEPTION = eINSTANCE.getCellNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Task Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.TaskNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getTaskNotFoundException()
+		 * @generated
+		 */
+		EDataType TASK_NOT_FOUND_EXCEPTION = eINSTANCE.getTaskNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Data Port Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.DataPortNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getDataPortNotFoundException()
+		 * @generated
+		 */
+		EDataType DATA_PORT_NOT_FOUND_EXCEPTION = eINSTANCE.getDataPortNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Data Link Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.DataLinkNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getDataLinkNotFoundException()
+		 * @generated
+		 */
+		EDataType DATA_LINK_NOT_FOUND_EXCEPTION = eINSTANCE.getDataLinkNotFoundException();
 
 	}
 

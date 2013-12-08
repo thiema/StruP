@@ -16,7 +16,7 @@ package easyflow.tool;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.tool.Key#getValue <em>Value</em>}</li>
- *   <li>{@link easyflow.tool.Key#getSeparator <em>Separator</em>}</li>
+ *   <li>{@link easyflow.tool.Key#getDelimiter <em>Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.Key#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link easyflow.tool.Key#getType <em>Type</em>}</li>
  * </ul>
@@ -54,30 +54,30 @@ public interface Key extends DefaultToolElement {
 	void setValue(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Separator</b></em>' attribute.
+	 * Returns the value of the '<em><b>Delimiter</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Separator</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Delimiter</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Separator</em>' attribute.
-	 * @see #setSeparator(String)
-	 * @see easyflow.tool.ToolPackage#getKey_Separator()
+	 * @return the value of the '<em>Delimiter</em>' attribute.
+	 * @see #setDelimiter(String)
+	 * @see easyflow.tool.ToolPackage#getKey_Delimiter()
 	 * @model
 	 * @generated
 	 */
-	String getSeparator();
+	String getDelimiter();
 
 	/**
-	 * Sets the value of the '{@link easyflow.tool.Key#getSeparator <em>Separator</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.tool.Key#getDelimiter <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Separator</em>' attribute.
-	 * @see #getSeparator()
+	 * @param value the new value of the '<em>Delimiter</em>' attribute.
+	 * @see #getDelimiter()
 	 * @generated
 	 */
-	void setSeparator(String value);
+	void setDelimiter(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Prefix</b></em>' attribute.

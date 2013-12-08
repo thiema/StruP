@@ -21,7 +21,9 @@ import easyflow.execution.ExecutionPackage;
 import easyflow.execution.impl.ExecutionPackageImpl;
 
 import easyflow.execution.makeflow.MakeflowPackage;
+
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
+
 import easyflow.execution.pegasus.PegasusPackage;
 
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
@@ -37,14 +39,11 @@ import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 import easyflow.impl.EasyflowPackageImpl;
 
 import easyflow.metadata.MetadataPackage;
-
 import easyflow.metadata.impl.MetadataPackageImpl;
 
 import easyflow.tool.ToolPackage;
-
 import easyflow.tool.impl.ToolPackageImpl;
 
-import easyflow.traversal.DataPorts;
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
@@ -81,6 +80,13 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass traversalEventEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass groupingCriterionEClass = null;
 
 	/**
@@ -95,13 +101,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass traversalEventEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass traversalOperationEClass = null;
 
 	/**
@@ -110,13 +109,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * @generated
 	 */
 	private EClass traversalChunkEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass dataPortsEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -222,105 +214,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getGroupingCriterion() {
-		return groupingCriterionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getGroupingCriterion_Id() {
-		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getGroupingCriterion_Description() {
-		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getGroupingCriterion_Mode() {
-		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getGroupingCriterion_MultipleInstances() {
-		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getGroupingCriterion_SeperateInputPorts() {
-		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getGroupingCriterion_Logger() {
-		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTraversalCriterion() {
-		return traversalCriterionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTraversalCriterion_Operation() {
-		return (EReference)traversalCriterionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTraversalCriterion_Chunks() {
-		return (EReference)traversalCriterionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTraversalCriterion_ChunkSource() {
-		return (EAttribute)traversalCriterionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getTraversalEvent() {
 		return traversalEventEClass;
 	}
@@ -393,6 +286,114 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getGroupingCriterion() {
+		return groupingCriterionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingCriterion_Id() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingCriterion_Description() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingCriterion_Mode() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingCriterion_MultipleInstances() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingCriterion_SeperateInputPorts() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingCriterion_Logger() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGroupingCriterion_DataPort() {
+		return (EReference)groupingCriterionEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTraversalCriterion() {
+		return traversalCriterionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTraversalCriterion_Operation() {
+		return (EReference)traversalCriterionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTraversalCriterion_Chunks() {
+		return (EReference)traversalCriterionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTraversalCriterion_ChunkSource() {
+		return (EAttribute)traversalCriterionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTraversalOperation() {
 		return traversalOperationEClass;
 	}
@@ -456,42 +457,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDataPorts() {
-		return dataPortsEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataPorts_Name() {
-		return (EAttribute)dataPortsEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataPorts_DataPorts() {
-		return (EReference)dataPortsEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataPorts_LastTasks() {
-		return (EReference)dataPortsEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public TraversalFactory getTraversalFactory() {
 		return (TraversalFactory)getEFactoryInstance();
 	}
@@ -515,19 +480,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		isCreated = true;
 
 		// Create classes and their features
-		groupingCriterionEClass = createEClass(GROUPING_CRITERION);
-		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__ID);
-		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__DESCRIPTION);
-		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__MODE);
-		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__MULTIPLE_INSTANCES);
-		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__SEPERATE_INPUT_PORTS);
-		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__LOGGER);
-
-		traversalCriterionEClass = createEClass(TRAVERSAL_CRITERION);
-		createEReference(traversalCriterionEClass, TRAVERSAL_CRITERION__OPERATION);
-		createEReference(traversalCriterionEClass, TRAVERSAL_CRITERION__CHUNKS);
-		createEAttribute(traversalCriterionEClass, TRAVERSAL_CRITERION__CHUNK_SOURCE);
-
 		traversalEventEClass = createEClass(TRAVERSAL_EVENT);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__MERGE_TASK);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__SPLIT_TASK);
@@ -537,6 +489,20 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__LOGGER);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__META_DATA);
 
+		groupingCriterionEClass = createEClass(GROUPING_CRITERION);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__ID);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__DESCRIPTION);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__MODE);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__MULTIPLE_INSTANCES);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__SEPERATE_INPUT_PORTS);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__LOGGER);
+		createEReference(groupingCriterionEClass, GROUPING_CRITERION__DATA_PORT);
+
+		traversalCriterionEClass = createEClass(TRAVERSAL_CRITERION);
+		createEReference(traversalCriterionEClass, TRAVERSAL_CRITERION__OPERATION);
+		createEReference(traversalCriterionEClass, TRAVERSAL_CRITERION__CHUNKS);
+		createEAttribute(traversalCriterionEClass, TRAVERSAL_CRITERION__CHUNK_SOURCE);
+
 		traversalOperationEClass = createEClass(TRAVERSAL_OPERATION);
 		createEAttribute(traversalOperationEClass, TRAVERSAL_OPERATION__NAME);
 		createEAttribute(traversalOperationEClass, TRAVERSAL_OPERATION__LOGGER);
@@ -545,11 +511,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		traversalChunkEClass = createEClass(TRAVERSAL_CHUNK);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__NAME);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__LOGGER);
-
-		dataPortsEClass = createEClass(DATA_PORTS);
-		createEAttribute(dataPortsEClass, DATA_PORTS__NAME);
-		createEReference(dataPortsEClass, DATA_PORTS__DATA_PORTS);
-		createEReference(dataPortsEClass, DATA_PORTS__LAST_TASKS);
 	}
 
 	/**
@@ -576,10 +537,9 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
-		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -589,19 +549,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		traversalCriterionEClass.getESuperTypes().add(this.getGroupingCriterion());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(groupingCriterionEClass, GroupingCriterion.class, "GroupingCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getGroupingCriterion_Id(), ecorePackage.getEString(), "id", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroupingCriterion_Description(), ecorePackage.getEString(), "description", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroupingCriterion_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroupingCriterion_MultipleInstances(), ecorePackage.getEBoolean(), "multipleInstances", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroupingCriterion_SeperateInputPorts(), ecorePackage.getEBoolean(), "seperateInputPorts", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroupingCriterion_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, GroupingCriterion.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(traversalCriterionEClass, TraversalCriterion.class, "TraversalCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTraversalCriterion_Operation(), this.getTraversalOperation(), null, "operation", null, 0, 1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTraversalCriterion_Chunks(), theMapsPackage.getStringToChunkMap(), null, "chunks", null, 0, -1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTraversalCriterion_ChunkSource(), ecorePackage.getEString(), "chunkSource", null, 0, 1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(traversalEventEClass, TraversalEvent.class, "TraversalEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraversalEvent_MergeTask(), theCorePackage.getTask(), null, "mergeTask", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_SplitTask(), theCorePackage.getTask(), null, "splitTask", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -623,6 +570,20 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 
 		addEOperation(traversalEventEClass, ecorePackage.getEString(), "getType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		initEClass(groupingCriterionEClass, GroupingCriterion.class, "GroupingCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGroupingCriterion_Id(), ecorePackage.getEString(), "id", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingCriterion_Description(), ecorePackage.getEString(), "description", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingCriterion_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingCriterion_MultipleInstances(), ecorePackage.getEBoolean(), "multipleInstances", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingCriterion_SeperateInputPorts(), ecorePackage.getEBoolean(), "seperateInputPorts", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingCriterion_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, GroupingCriterion.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGroupingCriterion_DataPort(), theCorePackage.getDataPort(), null, "dataPort", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(traversalCriterionEClass, TraversalCriterion.class, "TraversalCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTraversalCriterion_Operation(), this.getTraversalOperation(), null, "operation", null, 0, 1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTraversalCriterion_Chunks(), theMapsPackage.getStringToChunkMap(), null, "chunks", null, 0, -1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalCriterion_ChunkSource(), ecorePackage.getEString(), "chunkSource", null, 0, 1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(traversalOperationEClass, TraversalOperation.class, "TraversalOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTraversalOperation_Name(), ecorePackage.getEString(), "name", null, 0, 1, TraversalOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalOperation_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalOperation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -631,11 +592,6 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEClass(traversalChunkEClass, TraversalChunk.class, "TraversalChunk", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTraversalChunk_Name(), ecorePackage.getEString(), "name", null, 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalChunk_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalChunk.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(dataPortsEClass, DataPorts.class, "DataPorts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDataPorts_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataPorts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataPorts_DataPorts(), theToolPackage.getDataPort(), null, "dataPorts", null, 0, -1, DataPorts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataPorts_LastTasks(), theCorePackage.getTask(), null, "lastTasks", null, 0, -1, DataPorts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //TraversalPackageImpl

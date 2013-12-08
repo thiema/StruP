@@ -13,7 +13,11 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.*;
 
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
@@ -22,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.Stack;
 
+import java.util.regex.Pattern;
 import javax.xml.validation.Schema;
 import net.sf.json.JSONObject;
 import org.apache.commons.jexl2.JexlEngine;
@@ -127,6 +132,16 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createTaskToCellMapKeyNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.MX_ICELL_VISITOR:
 				return createmxICellVisitorFromString(eDataType, initialValue);
+			case EasyflowPackage.PATTERN:
+				return createPatternFromString(eDataType, initialValue);
+			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
+				return createCellNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.TASK_NOT_FOUND_EXCEPTION:
+				return createTaskNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.DATA_PORT_NOT_FOUND_EXCEPTION:
+				return createDataPortNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.DATA_LINK_NOT_FOUND_EXCEPTION:
+				return createDataLinkNotFoundExceptionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -174,6 +189,16 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertTaskToCellMapKeyNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.MX_ICELL_VISITOR:
 				return convertmxICellVisitorToString(eDataType, instanceValue);
+			case EasyflowPackage.PATTERN:
+				return convertPatternToString(eDataType, instanceValue);
+			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
+				return convertCellNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.TASK_NOT_FOUND_EXCEPTION:
+				return convertTaskNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.DATA_PORT_NOT_FOUND_EXCEPTION:
+				return convertDataPortNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.DATA_LINK_NOT_FOUND_EXCEPTION:
+				return convertDataLinkNotFoundExceptionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -482,6 +507,96 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertmxICellVisitorToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Pattern createPatternFromString(EDataType eDataType, String initialValue) {
+		return (Pattern)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertPatternToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CellNotFoundException createCellNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (CellNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertCellNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskNotFoundException createTaskNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (TaskNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertTaskNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataPortNotFoundException createDataPortNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (DataPortNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertDataPortNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataLinkNotFoundException createDataLinkNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (DataLinkNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertDataLinkNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

@@ -44,7 +44,7 @@ import com.mxgraph.view.mxGraph;
 
 import easyflow.core.Task;
 import easyflow.custom.util.XMLUtil;
-import easyflow.tool.DataPort;
+import easyflow.core.DataPort;
 import easyflow.traversal.GroupingCriterion;
 
 

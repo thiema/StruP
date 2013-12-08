@@ -6,13 +6,15 @@
  */
 package easyflow.core;
 
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
+
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.graph.jgraphx.Util;
 
-import easyflow.tool.DataPort;
-
 import easyflow.tool.Tool;
+
 import easyflow.traversal.TraversalEvent;
 
 import java.util.Map;
@@ -53,6 +55,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}</li>
  * </ul>
  * </p>
  *
@@ -419,6 +422,32 @@ public interface Workflow extends EObject {
 	EMap<String, String> getProcessingConfig();
 
 	/**
+	 * Returns the value of the '<em><b>Root Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Root Task</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Root Task</em>' reference.
+	 * @see #setRootTask(Task)
+	 * @see easyflow.core.CorePackage#getWorkflow_RootTask()
+	 * @model
+	 * @generated
+	 */
+	Task getRootTask();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Root Task</em>' reference.
+	 * @see #getRootTask()
+	 * @generated
+	 */
+	void setRootTask(Task value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -492,18 +521,18 @@ public interface Workflow extends EObject {
 	 * breadth first iteration of graph. compute new graph with 
 	 * given traversal event applied.
 	 * <!-- end-model-doc -->
-	 * @model
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	void applyTraversalEvents();
+	void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	void applyTraversalEvent(TraversalEvent traversalEvent);
+	void applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -514,10 +543,10 @@ public interface Workflow extends EObject {
 	 * merging event complements a splitting event.
 	 * Moreover the parent for each splitting event is set.
 	 * <!-- end-model-doc -->
-	 * @model
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	boolean resolveTraversalEvents();
+	boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -553,10 +582,10 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>"
 	 * @generated
 	 */
-	EList<Task> getParentTasksFor(Task task);
+	EMap<Task, EList<DataPort>> getParentTasksFor(Task task);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -573,5 +602,13 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	boolean resolveToolDependencies();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveMissingDataPortsByToolFor(Task task);
 
 } // Workflow

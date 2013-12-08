@@ -72,6 +72,10 @@ public class TraversalAdapterFactory extends AdapterFactoryImpl {
 	protected TraversalSwitch<Adapter> modelSwitch =
 		new TraversalSwitch<Adapter>() {
 			@Override
+			public Adapter caseTraversalEvent(TraversalEvent object) {
+				return createTraversalEventAdapter();
+			}
+			@Override
 			public Adapter caseGroupingCriterion(GroupingCriterion object) {
 				return createGroupingCriterionAdapter();
 			}
@@ -80,20 +84,12 @@ public class TraversalAdapterFactory extends AdapterFactoryImpl {
 				return createTraversalCriterionAdapter();
 			}
 			@Override
-			public Adapter caseTraversalEvent(TraversalEvent object) {
-				return createTraversalEventAdapter();
-			}
-			@Override
 			public Adapter caseTraversalOperation(TraversalOperation object) {
 				return createTraversalOperationAdapter();
 			}
 			@Override
 			public Adapter caseTraversalChunk(TraversalChunk object) {
 				return createTraversalChunkAdapter();
-			}
-			@Override
-			public Adapter caseDataPorts(DataPorts object) {
-				return createDataPortsAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -182,20 +178,6 @@ public class TraversalAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTraversalChunkAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.traversal.DataPorts <em>Data Ports</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.traversal.DataPorts
-	 * @generated
-	 */
-	public Adapter createDataPortsAdapter() {
 		return null;
 	}
 

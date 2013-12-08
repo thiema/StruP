@@ -6,6 +6,7 @@
  */
 package easyflow.traversal.impl;
 
+import easyflow.core.DataPort;
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalPackage;
 
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#isMultipleInstances <em>Multiple Instances</em>}</li>
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#isSeperateInputPorts <em>Seperate Input Ports</em>}</li>
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#getDataPort <em>Data Port</em>}</li>
  * </ul>
  * </p>
  *
@@ -156,6 +159,16 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getDataPort() <em>Data Port</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataPort()
+	 * @generated
+	 * @ordered
+	 */
+	protected DataPort dataPort;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -295,6 +308,44 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public DataPort getDataPort() {
+		if (dataPort != null && dataPort.eIsProxy()) {
+			InternalEObject oldDataPort = (InternalEObject)dataPort;
+			dataPort = (DataPort)eResolveProxy(oldDataPort);
+			if (dataPort != oldDataPort) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TraversalPackage.GROUPING_CRITERION__DATA_PORT, oldDataPort, dataPort));
+			}
+		}
+		return dataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataPort basicGetDataPort() {
+		return dataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataPort(DataPort newDataPort) {
+		DataPort oldDataPort = dataPort;
+		dataPort = newDataPort;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TraversalPackage.GROUPING_CRITERION__DATA_PORT, oldDataPort, dataPort));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -310,6 +361,9 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 				return isSeperateInputPorts();
 			case TraversalPackage.GROUPING_CRITERION__LOGGER:
 				return getLogger();
+			case TraversalPackage.GROUPING_CRITERION__DATA_PORT:
+				if (resolve) return getDataPort();
+				return basicGetDataPort();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -336,6 +390,9 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 				return;
 			case TraversalPackage.GROUPING_CRITERION__SEPERATE_INPUT_PORTS:
 				setSeperateInputPorts((Boolean)newValue);
+				return;
+			case TraversalPackage.GROUPING_CRITERION__DATA_PORT:
+				setDataPort((DataPort)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -364,6 +421,9 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 			case TraversalPackage.GROUPING_CRITERION__SEPERATE_INPUT_PORTS:
 				setSeperateInputPorts(SEPERATE_INPUT_PORTS_EDEFAULT);
 				return;
+			case TraversalPackage.GROUPING_CRITERION__DATA_PORT:
+				setDataPort((DataPort)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -388,6 +448,8 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 				return seperateInputPorts != SEPERATE_INPUT_PORTS_EDEFAULT;
 			case TraversalPackage.GROUPING_CRITERION__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case TraversalPackage.GROUPING_CRITERION__DATA_PORT:
+				return dataPort != null;
 		}
 		return super.eIsSet(featureID);
 	}

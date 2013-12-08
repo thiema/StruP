@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.tool.impl.KeyImpl#getValue <em>Value</em>}</li>
- *   <li>{@link easyflow.tool.impl.KeyImpl#getSeparator <em>Separator</em>}</li>
+ *   <li>{@link easyflow.tool.impl.KeyImpl#getDelimiter <em>Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.KeyImpl#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link easyflow.tool.impl.KeyImpl#getType <em>Type</em>}</li>
  * </ul>
@@ -53,24 +53,24 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	protected String value = VALUE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getSeparator() <em>Separator</em>}' attribute.
+	 * The default value of the '{@link #getDelimiter() <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSeparator()
+	 * @see #getDelimiter()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SEPARATOR_EDEFAULT = null;
+	protected static final String DELIMITER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getSeparator() <em>Separator</em>}' attribute.
+	 * The cached value of the '{@link #getDelimiter() <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSeparator()
+	 * @see #getDelimiter()
 	 * @generated
 	 * @ordered
 	 */
-	protected String separator = SEPARATOR_EDEFAULT;
+	protected String delimiter = DELIMITER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
@@ -157,8 +157,8 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getSeparator() {
-		return separator;
+	public String getDelimiter() {
+		return delimiter;
 	}
 
 	/**
@@ -166,11 +166,11 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSeparator(String newSeparator) {
-		String oldSeparator = separator;
-		separator = newSeparator;
+	public void setDelimiter(String newDelimiter) {
+		String oldDelimiter = delimiter;
+		delimiter = newDelimiter;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.KEY__SEPARATOR, oldSeparator, separator));
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.KEY__DELIMITER, oldDelimiter, delimiter));
 	}
 
 	/**
@@ -225,8 +225,8 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 		switch (featureID) {
 			case ToolPackage.KEY__VALUE:
 				return getValue();
-			case ToolPackage.KEY__SEPARATOR:
-				return getSeparator();
+			case ToolPackage.KEY__DELIMITER:
+				return getDelimiter();
 			case ToolPackage.KEY__PREFIX:
 				return getPrefix();
 			case ToolPackage.KEY__TYPE:
@@ -246,8 +246,8 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 			case ToolPackage.KEY__VALUE:
 				setValue((String)newValue);
 				return;
-			case ToolPackage.KEY__SEPARATOR:
-				setSeparator((String)newValue);
+			case ToolPackage.KEY__DELIMITER:
+				setDelimiter((String)newValue);
 				return;
 			case ToolPackage.KEY__PREFIX:
 				setPrefix((String)newValue);
@@ -270,8 +270,8 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 			case ToolPackage.KEY__VALUE:
 				setValue(VALUE_EDEFAULT);
 				return;
-			case ToolPackage.KEY__SEPARATOR:
-				setSeparator(SEPARATOR_EDEFAULT);
+			case ToolPackage.KEY__DELIMITER:
+				setDelimiter(DELIMITER_EDEFAULT);
 				return;
 			case ToolPackage.KEY__PREFIX:
 				setPrefix(PREFIX_EDEFAULT);
@@ -293,8 +293,8 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 		switch (featureID) {
 			case ToolPackage.KEY__VALUE:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-			case ToolPackage.KEY__SEPARATOR:
-				return SEPARATOR_EDEFAULT == null ? separator != null : !SEPARATOR_EDEFAULT.equals(separator);
+			case ToolPackage.KEY__DELIMITER:
+				return DELIMITER_EDEFAULT == null ? delimiter != null : !DELIMITER_EDEFAULT.equals(delimiter);
 			case ToolPackage.KEY__PREFIX:
 				return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
 			case ToolPackage.KEY__TYPE:
@@ -315,8 +315,8 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (value: ");
 		result.append(value);
-		result.append(", separator: ");
-		result.append(separator);
+		result.append(", delimiter: ");
+		result.append(delimiter);
 		result.append(", prefix: ");
 		result.append(prefix);
 		result.append(", type: ");

@@ -47,6 +47,8 @@ import easyflow.core.CorePackage;
 import easyflow.core.Task;
 
 import easyflow.core.Workflow;
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.Util;
@@ -157,9 +159,18 @@ public class EasyFlowToolBar extends JToolBar
 				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
 				getDefaultProject().setFromJar(isFromJar);
 				getDefaultProject().setGraphUtil(getGraphUtil());
-				getDefaultProject().autoSetup();
+				try {
+					getDefaultProject().autoSetup();
+					getDefaultProject().applyTraversalEvents();
+				} catch (CellNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//Workflow workflow = getDefaultProject().getActiveWorkflow();
-				getDefaultProject().applyTraversalEvents();
+				
 				getGraphUtil().layoutGraph();
 			}
 		});
@@ -168,13 +179,21 @@ public class EasyFlowToolBar extends JToolBar
 				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
 				getDefaultProject().setFromJar(isFromJar);
 				getDefaultProject().setGraphUtil(getGraphUtil());
-				getDefaultProject().autoSetup();
+				try {
+					getDefaultProject().autoSetup();
+				} catch (CellNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				btnCheckTools.setEnabled(true);
 				btnApplyTraversalCrit.setEnabled(true);
 				getGraphUtil().layoutGraph();
-				objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
-				objects.put("state", State.NONE);
-				objects.put("event", Event.NONE);
+				//objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
+				//objects.put("state", State.NONE);
+				//objects.put("event", Event.NONE);
 			}
 		});
 
@@ -185,7 +204,15 @@ public class EasyFlowToolBar extends JToolBar
 		});
 		btnApplyTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				getDefaultProject().applyTraversalEvents();
+				try {
+					getDefaultProject().applyTraversalEvents();
+				} catch (CellNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});		
 
@@ -249,9 +276,17 @@ public class EasyFlowToolBar extends JToolBar
 		btnApplyNextTraversalEvent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				
-				traversalEvent = getGraphUtil().getNextTraversalEvent();
-				if (traversalEvent != null)
-					getDefaultProject().getActiveWorkflow().applyTraversalEvent(traversalEvent);
+				try {
+					traversalEvent = getGraphUtil().getNextTraversalEvent();
+					if (traversalEvent != null)
+						getDefaultProject().getActiveWorkflow().applyTraversalEvent(traversalEvent);
+				} catch (CellNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -293,7 +328,7 @@ public class EasyFlowToolBar extends JToolBar
 		metaData = newMetaData;
 	}
 	
-	private TraversalEvent getNextTraversalEvent()
+	private TraversalEvent getNextTraversalEvent() throws CellNotFoundException, TaskNotFoundException
 	{
 		return getGraphUtil().getNextTraversalEvent();
 	}

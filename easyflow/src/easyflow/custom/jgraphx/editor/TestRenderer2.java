@@ -95,6 +95,7 @@ public class TestRenderer2 extends JComponent {
 	
 	public static TestRenderer2 getVertex(Component component)
 	{
+		logger.debug("render vertex");
 		while (component != null)
 		{
 			if (component instanceof TestRenderer2)
@@ -104,6 +105,19 @@ public class TestRenderer2 extends JComponent {
 			component = component.getParent();
 		}
 
+		return null;
+	}
+	public static TestRenderer2 getEdge(Component component)
+	{
+		logger.debug("render edge");
+		while (component != null)
+		{
+			if (component instanceof TestRenderer2)
+			{
+				return (TestRenderer2) component;
+			}
+			component = component.getParent();
+		}
 		return null;
 	}
 }

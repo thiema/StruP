@@ -7,14 +7,17 @@
 package easyflow.core.impl;
 
 
+import dk.brics.automaton.Automaton;
+import dk.brics.automaton.RegExp;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
+import easyflow.custom.util.XMLUtil;
 import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
-import easyflow.tool.DataPort;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
@@ -38,6 +41,7 @@ import easyflow.traversal.TraversalOperation;
 
 import java.lang.Object;
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -45,6 +49,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import java.util.Iterator;
 import java.util.Map;
 
+import java.util.regex.Pattern;
 import java.util.Map.Entry;
 import org.apache.commons.jexl2.JexlEngine;
 import org.apache.log4j.Logger;
@@ -66,6 +71,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -96,6 +102,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  * </ul>
  * </p>
  *
@@ -371,6 +379,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EMap<String, URI> outputs;
+
+	/**
+	 * The cached value of the '{@link #getInputDataPortValidator() <em>Input Data Port Validator</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInputDataPortValidator()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Pattern> inputDataPortValidator;
+
+	/**
+	 * The cached value of the '{@link #getOutputDataPortValidator() <em>Output Data Port Validator</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputDataPortValidator()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Pattern> outputDataPortValidator;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -683,10 +711,56 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Pattern> getInputDataPortValidator() {
+		if (inputDataPortValidator == null) {
+			inputDataPortValidator = new EDataTypeUniqueEList<Pattern>(Pattern.class, this, CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR);
+		}
+		return inputDataPortValidator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Pattern> getOutputDataPortValidator() {
+		if (outputDataPortValidator == null) {
+			outputDataPortValidator = new EDataTypeUniqueEList<Pattern>(Pattern.class, this, CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR);
+		}
+		return outputDataPortValidator;
+	}
+
+	/*private EList<String> enumerateInstances(String regexp)
+	{
+		regexp = "ab(c|d){2,3}";
+		RegExp r = new RegExp(regexp);
+		Automaton a = r.toAutomaton();
+		String s = "abcccdc";
+		System.out.println("Match: " + a.run(s)); // prints: true
+		
+		logger.debug(regexp+": "+a.getFiniteStrings());
+		
+		return null;
+	}*/
+	
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public void readTask(String wtplLine, String defaultMode, EList<String> defaultGroupingCriteria) {
 		
+		short taskField          = 0;
+		short taskType           = 1;
+		short toolField          = 2;
+		short inDataPortField    = 3;
+		short outDataPortField   = 4;
+		short groupingCritField  = 5;
+		short traversalCritField = 6;
+		short jexlField          = 7;
 		//String[] defaultGroupingCriteria={};
 		//defaultGroupingCriteria=new String[] {"Sample"};
 		/**
@@ -697,80 +771,100 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		String[] wtplArray=wtplLine.split("\t");
 		//logger.debug(wtplArray[0]);
-		setName(wtplArray[0]);
-		util= wtplArray[1].equals("STATIC") ? true :false;
+		setName(wtplArray[taskField]);
+		setUtil(wtplArray[taskType].equals("STATIC"));
 		
 		/**
 		 * Parse the tools field. Check for multiple implementing tools
 		 */
-        String[] tmp=wtplArray[2].split(",");
+        String[] tmp=wtplArray[toolField].split(",");
         for (int i=0; i<tmp.length; i++) {
         	getToolNames().put(tmp[i], new BasicEList<String>());
         }
 
         
-
         /**
          * Read DataFormatIn/Out. and set DataPorts
          */
         short bitPos=0;
-        Iterator<DataFormat> it=parseDataFormatField(wtplArray[3]).iterator();
-        while (it.hasNext()) {
-        	DataPort dataPort=ToolFactory.eINSTANCE.createDataPort();
-        	DataFormat dataFormat = it.next();
-        	dataPort.setName(dataFormat.getName());
-        	dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+        for (String dataPortField:wtplArray[inDataPortField].split(";"))
+        {
+        	DataPort dataPort=parseDataPortField(dataPortField, inputDataPortValidator);
+        	getInDataPorts().add(dataPort);
         	dataPort.setBitPos(bitPos++);
-            getInDataPorts().add(dataPort);
         }
+        
         bitPos=0;
-        it=parseDataFormatField(wtplArray[4]).iterator();
-        while (it.hasNext()) {
-        	DataPort dataPort=ToolFactory.eINSTANCE.createDataPort();
-        	DataFormat dataFormat = it.next();
-        	dataPort.setName(dataFormat.getName());
-        	dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+        for (String dataPortField:wtplArray[outDataPortField].split(";"))
+        {
+        	DataPort dataPort=parseDataPortField(dataPortField, outputDataPortValidator);
+        	getOutDataPorts().add(dataPort);
         	dataPort.setBitPos(bitPos++);
-            getOutDataPorts().add(dataPort);
-        }        
+        }
         
-        
+        EList<DataPort> x=getInDataPorts();
         /**
          * Read Data(Grouping)Criteria. 
          */
         //skip if line ended or record empty
         if ((wtplArray.length>5)) {
+        	//if (!wtplArray[groupingCritField].equals(""))
+        	//{
         	
-        	tmp= (wtplArray[5].equals("") ? (String[])defaultGroupingCriteria.toArray():wtplArray[5].split(","));
-        	logger.trace("readTask(): "+tmp[0]+" "+wtplArray[5]);
-        	if (tmp.length>0) {
-		        
-		        for (int i=0;i<tmp.length;i++) {
-		        	
-		        	TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
-		        	//GroupingCriterion traversalCriterion=TraversalFactory.eINSTANCE.createGroupingCriterion();
-		        	String[] group=tmp[i].split(":");
-		        	if (group.length>1)	traversalCriterion.setMode(group[1]);
-		        	else traversalCriterion.setMode(defaultMode); 
-		        	//GroupingCriterion groupingCriterion=CoreFactory.eINSTANCE.createGroupingCriterion();
-		        	TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
-		        	//TraversalChunk traversalChunk=CoreFactory.eINSTANCE.createTraversalChunk();
-		        	traversalCriterion.setId(group[0]);
-		        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion);
-		        	//traversalEvent.setSplitTask(this);
-		        	TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
-		        	//traversalOperation.setName();
-		        	traversalOperation.setType("grouping");
-		        	traversalCriterion.setOperation(traversalOperation);
-		        	//traversalCriterion.setChunkSource();
-		        	traversalEvent.setTraversalCriterion(traversalCriterion);
-		        	traversalEvent.setSplitTask(this);
-		        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalCriterion);
-		        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
-		        	getInDataPorts().get(0).getGroupingCriteria().add(traversalCriterion);
-		        	getGroupingCriteria().put(traversalCriterion.getId(), traversalCriterion.getMode());
-		        }
+        	short dataPortNo=0;
+        	for (String groupingString:wtplArray[groupingCritField].split(";"))
+        	{
+	        	DataPort dataPort=null;
+	        	if (groupingString.equals(""))
+	        	{
+	        		tmp=(String[])defaultGroupingCriteria.toArray();
+	        		dataPort=getInDataPorts().get(dataPortNo++);
+	        	}
+	        	else
+	        	{	tmp=groupingString.split(";");
+	        		if (tmp.length>1)
+	        		{
+	        			dataPort=getDataPortByName(tmp[0], false);
+	        			groupingString=tmp[1];
+	        		}
+	        		else
+	        			dataPort=getInDataPorts().get(dataPortNo++);
+	        		tmp=groupingString.split(",");
+	        	}
+	        	logger.trace("readTask(): "+getName()+" "+groupingString+" dataPort="+dataPort+" ("+getInDataPorts().size()+","+getOutDataPorts().size()+")");
+	        	
+	        	if (tmp.length>0) {
+			        for (int i=0;i<tmp.length;i++) {
+			        	
+			        	TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
+			        	traversalCriterion.setDataPort(dataPort);
+			        	//dataPort.getGroupingCriteria().add(traversalCriterion);
+			        	//GroupingCriterion traversalCriterion=TraversalFactory.eINSTANCE.createGroupingCriterion();
+			        	String[] group=tmp[i].split(":");
+			        	if (group.length>1)	traversalCriterion.setMode(group[1]);
+			        	else traversalCriterion.setMode(defaultMode); 
+			        	//GroupingCriterion groupingCriterion=CoreFactory.eINSTANCE.createGroupingCriterion();
+			        	TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
+			        	//TraversalChunk traversalChunk=CoreFactory.eINSTANCE.createTraversalChunk();
+			        	traversalCriterion.setId(group[0]);
+			        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion);
+			        	//traversalEvent.setSplitTask(this);
+			        	TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
+			        	//traversalOperation.setName();
+			        	traversalOperation.setType("grouping");
+			        	traversalCriterion.setOperation(traversalOperation);
+			        	//traversalCriterion.setChunkSource();
+			        	traversalEvent.setTraversalCriterion(traversalCriterion);
+			        	traversalEvent.setSplitTask(this);
+			        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalCriterion);
+			        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
+			        	
+			        	
+			        	getGroupingCriteria().put(traversalCriterion.getId(), traversalCriterion.getMode());
+			        }
+	        	}
         	}
+        	//}
         }
 
 		/**
@@ -781,7 +875,7 @@ public class TaskImpl extends EObjectImpl implements Task {
         
 		if ((wtplArray.length>6)) {
 			if (!wtplArray[6].equals("")) {
-				tmp=wtplArray[6].split(",");
+				tmp=wtplArray[6].split(";");
 				//logger.debug(tmp.length);
 				for (int i=0;i<tmp.length;i++) {
 					String[] tmp1=tmp[i].split(":");
@@ -798,7 +892,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 						//} else {
 						TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
 						if (tmp1.length>2) {
-							String[] tmp2=tmp1[2].split(";");
+							String[] tmp2=tmp1[2].split(",");
 							if (tmp2.length==1) traversalCriterion.setChunkSource(tmp1[2]);
 							else {
 								for (String tmp3:tmp2) {
@@ -833,10 +927,64 @@ public class TaskImpl extends EObjectImpl implements Task {
         	
 		}
         setPreviousTaskStr(getUniqueString());
-        logger.trace("readTask(): traversalEvents="+getTraversalEvents().keySet());
+        logger.trace("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet());
 	}
 
+	private DataPort parseDataPortField(String field, EList<Pattern> pattern)
+	{
+		DataPort dataPort = CoreFactory.eINSTANCE.createDataPort();
+		String[] tmp=field.split(":");
+		String dataPortString = tmp[0];
+		String dataFormatString;
+		if (tmp.length>1)
+		{
+			dataPort.setName(dataPortString);
+			dataFormatString = tmp[1];
+			if (tmp.length>2)
+				logger.warn("unexpected format detected: multiple occurance of ':'.");
+		}
+		else
+			dataFormatString = dataPortString;
+		
+		Iterator<DataFormat> it=parseDataFormatField(dataFormatString, pattern).iterator();
+        
+        while (it.hasNext()) {
+        	
+        	DataFormat dataFormat = it.next();
+        	//enumerateInstances(dataFormat.getName());
+        	dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+        	if (dataPort.getName()==null || dataPort.getName().equals(""))
+        		dataPort.setName(dataFormat.getName());
+        }
+		
+		return dataPort;
+	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<DataFormat> parseDataFormatField(String dataFormatString, EList<Pattern> pattern) {
+		String[] overall=dataFormatString.split(";");
+		if (overall.length>1)
+		{
+			//String[] tmp=overall[1].split(regex)
+			int i=1;
+			while (i<overall.length)
+				pattern.add(Pattern.compile(overall[i++]));
+		}
+		String[] tmp=overall[0].split(",");
+		EList<DataFormat> list=new BasicEList<DataFormat>();
+		for (int i=0;i<tmp.length;i++) {
+			//System.out.println(tmp[i]);
+			DataFormat dataFormat=ToolFactory.eINSTANCE.createDataFormat();
+			dataFormat.setName(tmp[i]);
+			list.add(dataFormat);
+		}
+		return list;
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -901,23 +1049,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		JexlContext context = new MapContext(metaDataMap);
 		//logger.debug(e+" "+e.evaluate(context));
 		return e.evaluate(context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public EList<DataFormat> parseDataFormatField(String dataFormatString) {
-		String[] tmp=dataFormatString.split(",");
-		EList<DataFormat> list=new BasicEList<DataFormat>();
-		for (int i=0;i<tmp.length;i++) {
-			//System.out.println(tmp[i]);
-			DataFormat dataFormat=ToolFactory.eINSTANCE.createDataFormat();
-			dataFormat.setName(tmp[i]);
-			list.add(dataFormat);
-		}
-		return list;
 	}
 
 	
@@ -1067,7 +1198,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 		if (getTools().isEmpty())
 			return null;
 		else
-			return getTools().get(0).getValue();
+		{
+			Iterator<Entry<String, Tool>> it=getTools().iterator();
+			while(it.hasNext())
+			{
+				Entry<String,Tool> entry=it.next();
+				if (getToolMatches().containsKey(entry.getKey()))
+					if (getToolMatches().get(entry.getKey()).isValid())
+						return entry.getValue();
+			}
+		}
+			
+		return getTools().get(0).getValue();
 	}
 
 	/**
@@ -1131,6 +1273,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		ToolMatch toolMatch = CoreFactory.eINSTANCE.createToolMatch();
 		toolMatch.setTask(this);
 		toolMatch.setTool(tool);
+		
 		getToolMatches().put(tool.getName(), toolMatch);
 		long score=toolMatch.computeScore();
 		long expectedScore=toolMatch.computeExpectedScore();
@@ -1138,10 +1281,90 @@ public class TaskImpl extends EObjectImpl implements Task {
 		logger.debug(Long.toBinaryString(expectedScore)+" (exp)");
 		//logger.debug(Long.toHexString(score)+" vs "+Long.toHexString(expectedScore));
 		if (score==expectedScore)
+		{
 			rc=true;
+			toolMatch.setValid(true);
+		}
 		return rc;
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean validateTools() {
+		boolean rc = false;
+		for (Entry<String, Tool> toolEntry:getTools())
+		{
+			logger.debug("validate tool="+toolEntry.getKey());
+			if (validateTool(toolEntry.getValue()))
+			{
+				rc = true;
+			}
+		}
+		return rc;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public DataPort getDataPortByDataPort(DataPort testDataPort, boolean isOutDataPort) {
+		EList<DataPort> dataPorts=isOutDataPort?getOutDataPorts():getInDataPorts();
+		for (DataPort dataPort:dataPorts)
+			if (dataPort.isCompatible(testDataPort))
+				return dataPort;
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public DataPort getDataPortByNameOfFormat(String formatName, boolean isOutDataPort) {
+		EList<DataPort> dataPorts=isOutDataPort?getOutDataPorts():getInDataPorts();
+		for (DataPort dataPort:dataPorts)
+		{
+			for (DataFormat dataFormat:dataPort.getDataFormats().values())
+				if (dataFormat.getName().equals(formatName))
+					return dataPort;
+		}
+		return null;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public DataPort getDataPortByName(String dataPortName, boolean isOutDataPort) {
+		EList<DataPort> dataPorts=isOutDataPort?getOutDataPorts():getInDataPorts();
+		for (DataPort dataPort:dataPorts)
+		{
+			if (dataPort.getName().equals(dataPortName))
+				return dataPort;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<Task, EList<DataPort>> resolveMissingDataPortsByTool(EList<Task> tasks) {
+		for (ToolMatch toolMatch:getToolMatches().values())
+		{
+			if (!toolMatch.isValid())
+				return toolMatch.resolveReverseMissingInDataPorts(tasks);
+		}
+		return null;	
+	}
+
+
 	private String list2String(EMap<String, URI> map)
 	{
 		Iterator<Entry<String, URI>> it = map.iterator();
@@ -1237,6 +1460,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUTS:
 				if (coreType) return getOutputs();
 				else return getOutputs().map();
+			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
+				return getInputDataPortValidator();
+			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
+				return getOutputDataPortValidator();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1306,6 +1533,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUTS:
 				((EStructuralFeature.Setting)getOutputs()).set(newValue);
 				return;
+			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
+				getInputDataPortValidator().clear();
+				getInputDataPortValidator().addAll((Collection<? extends Pattern>)newValue);
+				return;
+			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
+				getOutputDataPortValidator().clear();
+				getOutputDataPortValidator().addAll((Collection<? extends Pattern>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1372,6 +1607,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUTS:
 				getOutputs().clear();
 				return;
+			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
+				getInputDataPortValidator().clear();
+				return;
+			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
+				getOutputDataPortValidator().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1422,6 +1663,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return inputs != null && !inputs.isEmpty();
 			case CorePackage.TASK__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
+			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
+				return inputDataPortValidator != null && !inputDataPortValidator.isEmpty();
+			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
+				return outputDataPortValidator != null && !outputDataPortValidator.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1452,6 +1697,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(root);
 		result.append(", flags: ");
 		result.append(flags);
+		result.append(", inputDataPortValidator: ");
+		result.append(inputDataPortValidator);
+		result.append(", outputDataPortValidator: ");
+		result.append(outputDataPortValidator);
 		result.append(')');
 		return result.toString();
 	}

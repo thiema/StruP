@@ -214,13 +214,22 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__PROCESSING_CONFIG = 15;
 
 	/**
+	 * The feature id for the '<em><b>Root Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__ROOT_TASK = 16;
+
+	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 16;
+	int WORKFLOW_FEATURE_COUNT = 17;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -404,13 +413,31 @@ public interface CorePackage extends EPackage {
 	int TASK__OUTPUTS = 18;
 
 	/**
+	 * The feature id for the '<em><b>Input Data Port Validator</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__INPUT_DATA_PORT_VALIDATOR = 19;
+
+	/**
+	 * The feature id for the '<em><b>Output Data Port Validator</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__OUTPUT_DATA_PORT_VALIDATOR = 20;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 19;
+	int TASK_FEATURE_COUNT = 21;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -420,16 +447,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getIWorkflowTemplate()
 	 * @generated
 	 */
-	int IWORKFLOW_TEMPLATE = 2;
-
-	/**
-	 * The number of structural features of the '<em>IWorkflow Template</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IWORKFLOW_TEMPLATE_FEATURE_COUNT = 0;
+	int IWORKFLOW_TEMPLATE = 3;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.DefaultWorkflowTemplateImpl <em>Default Workflow Template</em>}' class.
@@ -439,7 +457,212 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDefaultWorkflowTemplate()
 	 * @generated
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE = 3;
+	int DEFAULT_WORKFLOW_TEMPLATE = 4;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.EasyflowTemplateImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTemplate()
+	 * @generated
+	 */
+	int EASYFLOW_TEMPLATE = 5;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.ITaskReader <em>ITask Reader</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.ITaskReader
+	 * @see easyflow.core.impl.CorePackageImpl#getITaskReader()
+	 * @generated
+	 */
+	int ITASK_READER = 6;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTaskReaderImpl <em>Easyflow Task Reader</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.EasyflowTaskReaderImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTaskReader()
+	 * @generated
+	 */
+	int EASYFLOW_TASK_READER = 7;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.GalaxyTaskReaderImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getGalaxyTaskReader()
+	 * @generated
+	 */
+	int GALAXY_TASK_READER = 8;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.DefaultRecordImpl <em>Default Record</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.DefaultRecordImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getDefaultRecord()
+	 * @generated
+	 */
+	int DEFAULT_RECORD = 9;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.CatalogImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getCatalog()
+	 * @generated
+	 */
+	int CATALOG = 10;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.ToolMatchImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getToolMatch()
+	 * @generated
+	 */
+	int TOOL_MATCH = 2;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__LOGGER = 0;
+
+	/**
+	 * The feature id for the '<em><b>Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__TASK = 1;
+
+	/**
+	 * The feature id for the '<em><b>Tool</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__TOOL = 2;
+
+	/**
+	 * The feature id for the '<em><b>Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__SCORE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Expected Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__EXPECTED_SCORE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Expected Tool Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__EXPECTED_TOOL_SCORE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Missing In Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__MISSING_IN_DATA_PORTS = 6;
+
+	/**
+	 * The feature id for the '<em><b>Missing Out Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__MISSING_OUT_DATA_PORTS = 7;
+
+	/**
+	 * The feature id for the '<em><b>Missing Grouping Criteria</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__MISSING_GROUPING_CRITERIA = 8;
+
+	/**
+	 * The feature id for the '<em><b>Reverse Missing In Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS = 9;
+
+	/**
+	 * The feature id for the '<em><b>Reverse Missing Out Data Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS = 10;
+
+	/**
+	 * The feature id for the '<em><b>Reverse Missing Grouping Criteria</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA = 11;
+
+	/**
+	 * The feature id for the '<em><b>Valid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH__VALID = 12;
+
+	/**
+	 * The number of structural features of the '<em>Tool Match</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH_FEATURE_COUNT = 13;
+
+	/**
+	 * The number of structural features of the '<em>IWorkflow Template</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IWORKFLOW_TEMPLATE_FEATURE_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Tasks</b></em>' reference list.
@@ -478,16 +701,6 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.EasyflowTemplateImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTemplate()
-	 * @generated
-	 */
-	int EASYFLOW_TEMPLATE = 4;
-
-	/**
 	 * The feature id for the '<em><b>Tasks</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -524,16 +737,6 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.ITaskReader <em>ITask Reader</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.ITaskReader
-	 * @see easyflow.core.impl.CorePackageImpl#getITaskReader()
-	 * @generated
-	 */
-	int ITASK_READER = 5;
-
-	/**
 	 * The number of structural features of the '<em>ITask Reader</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -541,16 +744,6 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int ITASK_READER_FEATURE_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTaskReaderImpl <em>Easyflow Task Reader</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.EasyflowTaskReaderImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTaskReader()
-	 * @generated
-	 */
-	int EASYFLOW_TASK_READER = 6;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -571,16 +764,6 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TASK_READER_FEATURE_COUNT = ITASK_READER_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.GalaxyTaskReaderImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getGalaxyTaskReader()
-	 * @generated
-	 */
-	int GALAXY_TASK_READER = 7;
-
-	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -599,16 +782,6 @@ public interface CorePackage extends EPackage {
 	int GALAXY_TASK_READER_FEATURE_COUNT = ITASK_READER_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.impl.DefaultRecordImpl <em>Default Record</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.DefaultRecordImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getDefaultRecord()
-	 * @generated
-	 */
-	int DEFAULT_RECORD = 8;
-
-	/**
 	 * The feature id for the '<em><b>Generic Attributes</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -625,17 +798,6 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int DEFAULT_RECORD_FEATURE_COUNT = 1;
-
-
-	/**
-	 * The meta object id for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.CatalogImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getCatalog()
-	 * @generated
-	 */
-	int CATALOG = 9;
 
 	/**
 	 * The feature id for the '<em><b>Entries</b></em>' map.
@@ -657,131 +819,151 @@ public interface CorePackage extends EPackage {
 
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
+	 * The meta object id for the '{@link easyflow.core.impl.DataPortImpl <em>Data Port</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.ToolMatchImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getToolMatch()
+	 * @see easyflow.core.impl.DataPortImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getDataPort()
 	 * @generated
 	 */
-	int TOOL_MATCH = 10;
+	int DATA_PORT = 11;
 
 	/**
-	 * The feature id for the '<em><b>Task</b></em>' reference.
+	 * The feature id for the '<em><b>Grouping Criteria</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__TASK = 0;
+	int DATA_PORT__GROUPING_CRITERIA = 0;
 
 	/**
-	 * The feature id for the '<em><b>Tool</b></em>' reference.
+	 * The feature id for the '<em><b>Cardinality</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__TOOL = 1;
+	int DATA_PORT__CARDINALITY = 1;
 
 	/**
-	 * The feature id for the '<em><b>Score</b></em>' attribute.
+	 * The feature id for the '<em><b>Data Formats</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__SCORE = 2;
+	int DATA_PORT__DATA_FORMATS = 2;
 
 	/**
-	 * The feature id for the '<em><b>Expected Score</b></em>' attribute.
+	 * The feature id for the '<em><b>Optional</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__EXPECTED_SCORE = 3;
+	int DATA_PORT__OPTIONAL = 3;
 
 	/**
-	 * The feature id for the '<em><b>Expected Tool Score</b></em>' attribute.
+	 * The feature id for the '<em><b>Bit Pos</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__EXPECTED_TOOL_SCORE = 4;
+	int DATA_PORT__BIT_POS = 4;
 
 	/**
-	 * The feature id for the '<em><b>Missing In Data Ports</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__MISSING_IN_DATA_PORTS = 5;
+	int DATA_PORT__NAME = 5;
 
 	/**
-	 * The feature id for the '<em><b>Missing Out Data Ports</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Tools</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__MISSING_OUT_DATA_PORTS = 6;
+	int DATA_PORT__TOOLS = 6;
 
 	/**
-	 * The feature id for the '<em><b>Missing Grouping Criteria</b></em>' map.
+	 * The feature id for the '<em><b>Static</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__MISSING_GROUPING_CRITERIA = 7;
+	int DATA_PORT__STATIC = 7;
 
 	/**
-	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * The number of structural features of the '<em>Data Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__LOGGER = 8;
+	int DATA_PORT_FEATURE_COUNT = 8;
+
 
 	/**
-	 * The feature id for the '<em><b>Reverse Missing In Data Ports</b></em>' containment reference list.
+	 * The meta object id for the '{@link easyflow.core.impl.DataLinkImpl <em>Data Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.DataLinkImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getDataLink()
+	 * @generated
+	 */
+	int DATA_LINK = 12;
+
+	/**
+	 * The feature id for the '<em><b>Data Port</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS = 9;
+	int DATA_LINK__DATA_PORT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Reverse Missing Out Data Ports</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Chunks</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS = 10;
+	int DATA_LINK__CHUNKS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Reverse Missing Grouping Criteria</b></em>' map.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA = 11;
+	int DATA_LINK__ID = 2;
 
 	/**
-	 * The number of structural features of the '<em>Tool Match</em>' class.
+	 * The feature id for the '<em><b>Traversal Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_MATCH_FEATURE_COUNT = 12;
+	int DATA_LINK__TRAVERSAL_NAME = 3;
+
+	/**
+	 * The number of structural features of the '<em>Data Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK_FEATURE_COUNT = 4;
 
 
 	/**
@@ -969,6 +1151,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_ProcessingConfig();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Root Task</em>'.
+	 * @see easyflow.core.Workflow#getRootTask()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_RootTask();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
@@ -1190,6 +1383,28 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Outputs();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getInputDataPortValidator <em>Input Data Port Validator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Input Data Port Validator</em>'.
+	 * @see easyflow.core.Task#getInputDataPortValidator()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_InputDataPortValidator();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getOutputDataPortValidator <em>Output Data Port Validator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Output Data Port Validator</em>'.
+	 * @see easyflow.core.Task#getOutputDataPortValidator()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_OutputDataPortValidator();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1347,6 +1562,158 @@ public interface CorePackage extends EPackage {
 	EReference getCatalog_Entries();
 
 	/**
+	 * Returns the meta object for class '{@link easyflow.core.DataPort <em>Data Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data Port</em>'.
+	 * @see easyflow.core.DataPort
+	 * @generated
+	 */
+	EClass getDataPort();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.DataPort#getGroupingCriteria <em>Grouping Criteria</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Grouping Criteria</em>'.
+	 * @see easyflow.core.DataPort#getGroupingCriteria()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EReference getDataPort_GroupingCriteria();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataPort#getCardinality <em>Cardinality</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Cardinality</em>'.
+	 * @see easyflow.core.DataPort#getCardinality()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_Cardinality();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.DataPort#getDataFormats <em>Data Formats</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Data Formats</em>'.
+	 * @see easyflow.core.DataPort#getDataFormats()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EReference getDataPort_DataFormats();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataPort#isOptional <em>Optional</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Optional</em>'.
+	 * @see easyflow.core.DataPort#isOptional()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_Optional();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataPort#getBitPos <em>Bit Pos</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Bit Pos</em>'.
+	 * @see easyflow.core.DataPort#getBitPos()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_BitPos();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataPort#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.core.DataPort#getName()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_Name();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.DataPort#getTools <em>Tools</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Tools</em>'.
+	 * @see easyflow.core.DataPort#getTools()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EReference getDataPort_Tools();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataPort#isStatic <em>Static</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Static</em>'.
+	 * @see easyflow.core.DataPort#isStatic()
+	 * @see #getDataPort()
+	 * @generated
+	 */
+	EAttribute getDataPort_Static();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.DataLink <em>Data Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Data Link</em>'.
+	 * @see easyflow.core.DataLink
+	 * @generated
+	 */
+	EClass getDataLink();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.DataLink#getDataPort <em>Data Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Data Port</em>'.
+	 * @see easyflow.core.DataLink#getDataPort()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EReference getDataLink_DataPort();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.DataLink#getChunks <em>Chunks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Chunks</em>'.
+	 * @see easyflow.core.DataLink#getChunks()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EReference getDataLink_Chunks();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see easyflow.core.DataLink#getId()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#getTraversalName <em>Traversal Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Traversal Name</em>'.
+	 * @see easyflow.core.DataLink#getTraversalName()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_TraversalName();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.ToolMatch <em>Tool Match</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1487,6 +1854,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getToolMatch_ReverseMissingGroupingCriteria();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ToolMatch#isValid <em>Valid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Valid</em>'.
+	 * @see easyflow.core.ToolMatch#isValid()
+	 * @see #getToolMatch()
+	 * @generated
+	 */
+	EAttribute getToolMatch_Valid();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1647,6 +2025,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__PROCESSING_CONFIG = eINSTANCE.getWorkflow_ProcessingConfig();
+
+		/**
+		 * The meta object literal for the '<em><b>Root Task</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__ROOT_TASK = eINSTANCE.getWorkflow_RootTask();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -1811,6 +2197,22 @@ public interface CorePackage extends EPackage {
 		EReference TASK__OUTPUTS = eINSTANCE.getTask_Outputs();
 
 		/**
+		 * The meta object literal for the '<em><b>Input Data Port Validator</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__INPUT_DATA_PORT_VALIDATOR = eINSTANCE.getTask_InputDataPortValidator();
+
+		/**
+		 * The meta object literal for the '<em><b>Output Data Port Validator</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__OUTPUT_DATA_PORT_VALIDATOR = eINSTANCE.getTask_OutputDataPortValidator();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1947,6 +2349,122 @@ public interface CorePackage extends EPackage {
 		EReference CATALOG__ENTRIES = eINSTANCE.getCatalog_Entries();
 
 		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.DataPortImpl <em>Data Port</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.DataPortImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getDataPort()
+		 * @generated
+		 */
+		EClass DATA_PORT = eINSTANCE.getDataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping Criteria</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_PORT__GROUPING_CRITERIA = eINSTANCE.getDataPort_GroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Cardinality</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__CARDINALITY = eINSTANCE.getDataPort_Cardinality();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Formats</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_PORT__DATA_FORMATS = eINSTANCE.getDataPort_DataFormats();
+
+		/**
+		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__OPTIONAL = eINSTANCE.getDataPort_Optional();
+
+		/**
+		 * The meta object literal for the '<em><b>Bit Pos</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__BIT_POS = eINSTANCE.getDataPort_BitPos();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__NAME = eINSTANCE.getDataPort_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_PORT__TOOLS = eINSTANCE.getDataPort_Tools();
+
+		/**
+		 * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_PORT__STATIC = eINSTANCE.getDataPort_Static();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.DataLinkImpl <em>Data Link</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.DataLinkImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getDataLink()
+		 * @generated
+		 */
+		EClass DATA_LINK = eINSTANCE.getDataLink();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Port</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_LINK__DATA_PORT = eINSTANCE.getDataLink_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Chunks</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_LINK__CHUNKS = eINSTANCE.getDataLink_Chunks();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__ID = eINSTANCE.getDataLink_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Traversal Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__TRAVERSAL_NAME = eINSTANCE.getDataLink_TraversalName();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2051,6 +2569,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA = eINSTANCE.getToolMatch_ReverseMissingGroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Valid</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL_MATCH__VALID = eINSTANCE.getToolMatch_Valid();
 
 	}
 

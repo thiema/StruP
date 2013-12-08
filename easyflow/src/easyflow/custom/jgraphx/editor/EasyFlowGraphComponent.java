@@ -39,7 +39,10 @@ public class EasyFlowGraphComponent extends mxGraphComponent {
 			return new Component[] {new TestRenderer2(state.getCell(), this)};
 			//return new Component[] {new TestCellFoldingRenderer(state.getCell(), this)};
 		}
-
+		else if (getGraph().getModel().isEdge(state.getCell()))
+		{
+			return new Component[] {new TestRenderer2(state.getCell(), this)};
+		}
 		return null;
 	}
 	

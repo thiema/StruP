@@ -98,6 +98,24 @@ public interface CoreFactory extends EFactory {
 	Catalog createCatalog();
 
 	/**
+	 * Returns a new object of class '<em>Data Port</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data Port</em>'.
+	 * @generated
+	 */
+	DataPort createDataPort();
+
+	/**
+	 * Returns a new object of class '<em>Data Link</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Data Link</em>'.
+	 * @generated
+	 */
+	DataLink createDataLink();
+
+	/**
 	 * Returns a new object of class '<em>Tool Match</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

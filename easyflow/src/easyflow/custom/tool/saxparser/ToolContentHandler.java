@@ -20,12 +20,14 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import easyflow.core.CoreFactory;
+import easyflow.core.DataPort;
 import easyflow.custom.util.URIUtil;
 import easyflow.tool.Command;
 import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
-import easyflow.tool.DataPort;
 import easyflow.tool.DocumentProperties;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.Parameter;
@@ -176,7 +178,7 @@ public class ToolContentHandler implements ContentHandler {
 	}
 	private void setParam(Attributes atts, Parameter parameter)
 	{
-		
+		parameter.setName(atts.getValue("name"));
 		parameter.setType(atts.getValue("type"));
 		if (atts.getValue("optional")!=null)
 			parameter.setOptional(atts.getValue("optional").equals("true")?true:false);
@@ -206,10 +208,40 @@ public class ToolContentHandler implements ContentHandler {
 			parameter.setNamed(atts.getValue("named").equals("true")?true:false);
 		if (atts.getValue("advanced")!=null)
 			parameter.setAdvanced(atts.getValue("advanced").equals("true")?true:false);
-		if (atts.getValue("format")!=null)
-			for (String format:atts.getValue("format").split(","))
-				parameter.getFormats().add(format);
-
+		if (atts.getValue("grouping")!=null)
+			for (String group:atts.getValue("grouping").split(","))
+				parameter.getGrouping().add(group);
+		if (atts.getValue("type").equals("data"))
+		{
+			Data data = ToolFactory.eINSTANCE.createData();
+			
+			data.setName(parameter.getName());
+			if (atts.getValue("output")!=null)
+			{
+				if (atts.getValue("output").equalsIgnoreCase("true"))
+					data.setOutput(true);
+				else
+					data.setOutput(false);
+			}
+			else
+				data.setOutput(false);
+			
+			if (tool.getData().containsKey(data.getName()))
+				logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
+			tool.getData().put(data.getName(), data);
+			if (atts.getValue("format")!=null)
+				for (String format:atts.getValue("format").split(","))
+					((InOutParameter)parameter).getFormats().add(format);
+			if (atts.getValue("handle")!=null)
+				for (String handle:atts.getValue("handle").split(","))
+					((InOutParameter)parameter).getHandles().add(handle);
+			dataPort = CoreFactory.eINSTANCE.createDataPort();
+			dataPort.setName(parameter.getName());
+			dataPort.getTools().put(tool.getName(), tool);
+			data.setPort(dataPort);
+			setDataPort(((InOutParameter)parameter).getFormats());
+			
+		}
 	}
 	
 	@Override
@@ -226,7 +258,7 @@ public class ToolContentHandler implements ContentHandler {
 			parentTag = curTag;
 			lastTag   = curTag;
 		}
-		logger.trace("curTag="+curTag+" lastTag="+lastTag+" parentTag="+parentTag+" stack="+tagStack.toString());
+		//logger.trace("curTag="+curTag+" lastTag="+lastTag+" parentTag="+parentTag+" stack="+tagStack.toString());
 		if (shallProcess(null))
 		{
 		
@@ -298,28 +330,15 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				else
 				{
-					parameter = ToolFactory.eINSTANCE.createParameter();
-					parameter.setName(atts.getValue("name"));
-					Data data = ToolFactory.eINSTANCE.createData();
-					data.setName(parameter.getName());
-					if (atts.getValue("output")!=null)
+					if (atts.getValue("type").equals("data"))
 					{
-						if (atts.getValue("output").equalsIgnoreCase("true"))
-							data.setOutput(true);
-						else
-							data.setOutput(false);
+						parameter = ToolFactory.eINSTANCE.createInOutParameter();
 					}
 					else
-						data.setOutput(false);
-					if (tool.getData().containsKey(data.getName()))
-						logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
-					tool.getData().put(data.getName(), data);
-					dataPort = ToolFactory.eINSTANCE.createDataPort();
+					{
+						parameter = ToolFactory.eINSTANCE.createParameter();
+					}
 					setParam(atts, parameter);
-					setDataPort(parameter.getFormats());
-					dataPort.setName(parameter.getName());
-					//data.setName(parameter.getName());
-					data.setPort(dataPort);
 					
 					tool.getCommand().getParameters().put(parameter.getName(), parameter);
 					if ("PACKAGE".equals(parentTag))
@@ -335,7 +354,7 @@ public class ToolContentHandler implements ContentHandler {
 				if (atts.getValue("prefix")!=null)
 					key.setPrefix(atts.getValue("prefix"));
 				if (atts.getValue("separator")!=null)
-					key.setSeparator(atts.getValue("separator"));
+					key.setDelimiter(atts.getValue("separator"));
 				
 				parameter.getKeys().add(key);
 				break;
@@ -387,7 +406,7 @@ public class ToolContentHandler implements ContentHandler {
 				if (tool.getData().containsKey(data.getName()))
 					logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
 				tool.getData().put(data.getName(), data);
-				dataPort = ToolFactory.eINSTANCE.createDataPort();
+				dataPort = CoreFactory.eINSTANCE.createDataPort();
 				dataPort.setName(data.getName());
 				data.setPort(dataPort);
 				break;
@@ -407,7 +426,7 @@ public class ToolContentHandler implements ContentHandler {
 			parentTag=null;
 		else
 			parentTag = tagStack.peek();
-		logger.trace("curTag="+curTag+" lastTag="+lastTag+" parentTag="+parentTag);
+		//logger.trace("curTag="+curTag+" lastTag="+lastTag+" parentTag="+parentTag);
 		
 		switch (curTag) {
 			case ACTIONS:
@@ -494,7 +513,7 @@ public class ToolContentHandler implements ContentHandler {
 		EASYFLOW, TOOLS, MACROS, IMPORT,
         XML, EXPAND, YIELD,
         PACKAGE,
-        TOOL, DESCRIPTION, INTERPRETER, 
+        TOOL, DESCRIPTION, INTERPRETER, EXE,
         HELP, REQUIREMENTS, REQUIREMENT, COMMAND, PARAM, DATA,
         CONDITIONAL, 
         ACTIONS, WHEN, KEY, OPTION, ACTION, FILTER, 

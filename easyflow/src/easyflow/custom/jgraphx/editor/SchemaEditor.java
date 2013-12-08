@@ -45,7 +45,7 @@ public class SchemaEditor extends BasicGraphEditor
 	public SchemaEditor()
 	{
 		//super("mxGraph for JFC/Swing", new SchemaGraphComponent(new mxGraph()
-		super("mxGraph for JFC/Swing", new SchemaGraphComponent(new EasyFlowGraph()
+		super("EasyFlow", new SchemaGraphComponent(new EasyFlowGraph()
 		{
 			/**
 			 * Allows expanding tables

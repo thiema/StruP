@@ -18,7 +18,11 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
@@ -52,6 +56,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.util.Stack;
 
+import java.util.regex.Pattern;
 import javax.xml.validation.Schema;
 import net.sf.json.JSONObject;
 import org.apache.commons.jexl2.JexlEngine;
@@ -199,6 +204,41 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType mxICellVisitorEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType patternEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType cellNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType taskNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType dataPortNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType dataLinkNotFoundExceptionEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -466,6 +506,51 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getPattern() {
+		return patternEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getCellNotFoundException() {
+		return cellNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getTaskNotFoundException() {
+		return taskNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getDataPortNotFoundException() {
+		return dataPortNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getDataLinkNotFoundException() {
+		return dataLinkNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -507,6 +592,11 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		groupingInstanceNotFoundExceptionEDataType = createEDataType(GROUPING_INSTANCE_NOT_FOUND_EXCEPTION);
 		taskToCellMapKeyNotFoundExceptionEDataType = createEDataType(TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION);
 		mxICellVisitorEDataType = createEDataType(MX_ICELL_VISITOR);
+		patternEDataType = createEDataType(PATTERN);
+		cellNotFoundExceptionEDataType = createEDataType(CELL_NOT_FOUND_EXCEPTION);
+		taskNotFoundExceptionEDataType = createEDataType(TASK_NOT_FOUND_EXCEPTION);
+		dataPortNotFoundExceptionEDataType = createEDataType(DATA_PORT_NOT_FOUND_EXCEPTION);
+		dataLinkNotFoundExceptionEDataType = createEDataType(DATA_LINK_NOT_FOUND_EXCEPTION);
 	}
 
 	/**
@@ -573,6 +663,11 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(groupingInstanceNotFoundExceptionEDataType, GroupingInstanceNotFoundException.class, "GroupingInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(taskToCellMapKeyNotFoundExceptionEDataType, TaskToCellMapKeyNotFoundException.class, "TaskToCellMapKeyNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(mxICellVisitorEDataType, mxICellVisitor.class, "mxICellVisitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(patternEDataType, Pattern.class, "Pattern", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(cellNotFoundExceptionEDataType, CellNotFoundException.class, "CellNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(taskNotFoundExceptionEDataType, TaskNotFoundException.class, "TaskNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(dataPortNotFoundExceptionEDataType, DataPortNotFoundException.class, "DataPortNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(dataLinkNotFoundExceptionEDataType, DataLinkNotFoundException.class, "DataLinkNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

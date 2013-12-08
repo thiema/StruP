@@ -7,26 +7,38 @@
 package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
+import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.util.GlobalVar;
 
+import easyflow.graph.jgraphx.Util;
 import easyflow.tool.Data;
-import easyflow.tool.DataPort;
+import easyflow.tool.DataFormat;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
+import easyflow.traversal.TraversalCriterion;
 
 import easyflow.util.maps.MapsPackage;
 
 import easyflow.util.maps.impl.StringToStringMapImpl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.regex.Pattern;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -48,6 +60,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link easyflow.core.impl.ToolMatchImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getTask <em>Task</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getTool <em>Tool</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getScore <em>Score</em>}</li>
@@ -56,10 +69,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getMissingInDataPorts <em>Missing In Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getMissingOutDataPorts <em>Missing Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getMissingGroupingCriteria <em>Missing Grouping Criteria</em>}</li>
- *   <li>{@link easyflow.core.impl.ToolMatchImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getReverseMissingInDataPorts <em>Reverse Missing In Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getReverseMissingOutDataPorts <em>Reverse Missing Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.ToolMatchImpl#getReverseMissingGroupingCriteria <em>Reverse Missing Grouping Criteria</em>}</li>
+ *   <li>{@link easyflow.core.impl.ToolMatchImpl#isValid <em>Valid</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,6 +92,36 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	static final int    outputOffset = 16;
 	static final int  groupingOffset =  8;
 	static final int traversalOffset =  0;
+	
+	static final int  matchingPortOffset= 24;
+	static final int  distanceOffset    = 16;
+	static final int  propAOffset       = 8;
+	static final int  propBOffset       = 0;
+	static final long matchingPortMask  = 0x1000;
+	static final long distantOffsetMask = 0x0100;
+	static final long propAOffsetMask   = 0x0010;
+	static final long propBOffsetMask   = 0x0001;
+
+
+	/**
+	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated not
+	 * @ordered
+	 */
+	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(ToolMatch.class);
+
+	/**
+	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
@@ -191,26 +234,6 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	protected EMap<String, String> missingGroupingCriteria;
 
 	/**
-	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLogger()
-	 * @generated not
-	 * @ordered
-	 */
-	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(ToolMatch.class);
-
-	/**
-	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLogger()
-	 * @generated
-	 * @ordered
-	 */
-	protected Logger logger = LOGGER_EDEFAULT;
-
-	/**
 	 * The cached value of the '{@link #getReverseMissingInDataPorts() <em>Reverse Missing In Data Ports</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -239,6 +262,26 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	 * @ordered
 	 */
 	protected EMap<String, String> reverseMissingGroupingCriteria;
+
+	/**
+	 * The default value of the '{@link #isValid() <em>Valid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isValid()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean VALID_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isValid() <em>Valid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isValid()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean valid = VALID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -491,6 +534,27 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		return reverseMissingGroupingCriteria;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isValid() {
+		return valid;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setValid(boolean newValid) {
+		boolean oldValid = valid;
+		valid = newValid;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TOOL_MATCH__VALID, oldValid, valid));
+	}
+
 	private void testBitComparison()
 	{
 		int score=0x000f;
@@ -506,6 +570,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				Integer.toHexString(res2)+") = "+Integer.toHexString(score|res2));
 		logger.debug("---");
 	}
+	
+	
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -530,51 +596,64 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		{
 			taskMissingOutDataPorts.add(dataPort);
 		}
-		logger.debug("name="+getTool().getId()+" "+(getTool().getData()==null ? null:getTool().getData().keySet()));
+		logger.trace("name="+getTool().getId()+" "+(getTool().getData()==null ? null:getTool().getData().keySet()));
 		for (Entry<String, Parameter> parameterEntry:getTool().getCommand().getParameters().entrySet())
 		{
-			Parameter parameter = parameterEntry.getValue(); 
-			logger.debug(parameter.getName()+" "+parameter.getFormats()+" "
-					+parameter.isOptional());
+			Parameter parameter = parameterEntry.getValue();
 			
-			if (getTool().getData().containsKey(parameterEntry.getKey()))
+			if (parameter.getType().equals("data"))
 			{
-				Data data = getTool().getData().get(parameterEntry.getKey());
-				if (data.isOutput())
-				{
-					DataPort dataPort = isDataPortMatching(parameterEntry.getValue(), getTask().getOutDataPorts(), data.getPort());
-					if (dataPort != null)
+				if (getTool().getData().containsKey(parameterEntry.getKey()))
+				{	
+					Data data = getTool().getData().get(parameterEntry.getKey());
+					logger.trace(parameter.getName()+" "+((InOutParameter)parameter).getFormats()+" "
+							+parameter.isOptional());
+					if (data.isOutput())
 					{
-						score|=1<<(outputOffset+dataPort.getBitPos());
-						taskMissingOutDataPorts.remove(dataPort);
+						DataPort dataPort = isDataPortMatching(parameterEntry.getValue(), getTask().getOutDataPorts(), data.getPort());
+						if (dataPort != null)
+						{
+							score|=1<<(outputOffset+dataPort.getBitPos());
+							taskMissingOutDataPorts.remove(dataPort);
+						}
+						else if (!parameter.isOptional())
+						{
+							getReverseMissingOutDataPorts().add(data.getPort());
+							expectedToolScore|=1<<(outputOffset+getTask().getOutDataPorts().size());
+						}
 					}
-					else if (!parameter.isOptional())
+					else
 					{
-						getReverseMissingOutDataPorts().add(data.getPort());
-						expectedToolScore|=1<<(outputOffset+getTask().getOutDataPorts().size());
+						DataPort dataPort = isDataPortMatching(parameterEntry.getValue(), getTask().getInDataPorts(), data.getPort());
+						if (dataPort != null)
+						{
+							//logger.debug("match input. shift="+inputOffset+" "+dataPort.getBitPos());
+							score|=1<<(inputOffset+dataPort.getBitPos());
+							taskMissingInDataPorts.remove(dataPort);
+						}
+						else if (!parameter.isOptional())
+						{
+							getReverseMissingInDataPorts().add(data.getPort());
+							expectedToolScore|=1<<(inputOffset+getTask().getInDataPorts().size());
+						}
 					}
+					
 				}
 				else
 				{
-					DataPort dataPort = isDataPortMatching(parameterEntry.getValue(), getTask().getInDataPorts(), data.getPort());
-					if (dataPort != null)
-					{
-						//logger.debug("match input. shift="+inputOffset+" "+dataPort.getBitPos());
-						score|=1<<(inputOffset+dataPort.getBitPos());
-						taskMissingInDataPorts.remove(dataPort);
-					}
-					else if (!parameter.isOptional())
-					{
-						getReverseMissingInDataPorts().add(data.getPort());
-						expectedToolScore|=1<<(inputOffset+getTask().getInDataPorts().size());
-					}
+					logger.warn("could not found data(port) for "+parameterEntry.getKey()+".");
 				}
-				
 			}
-			else if (parameter.getType().equals("data"))
+			else if (!parameter.getGrouping().isEmpty())
 			{
-				logger.warn("could not found data(port) for "+parameterEntry.getKey()+".");
+				logger.debug("set grouping"+" "+parameter.getGrouping()+" "
+						+getTask().getGroupingCriteria().keySet()+" "
+						+getTask().getGroupingCriteria().values());
+				//getTask().getGroupingCriteria().containsKey()
 			}
+			//else if (!parameter.getTraversal().isEmpty())
+				//logger.debug("set traversal");
+				
 			
 
 		}
@@ -589,7 +668,6 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				logger.debug("could not resolve: "+dataPort.getName()+" (IN)");
 			}
 		}
-		
 		for (DataPort dataPort:getTask().getOutDataPorts())
 		{
 			if (taskMissingOutDataPorts.contains(dataPort.getName()))
@@ -598,21 +676,23 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				logger.debug("could not resolve: "+dataPort.getName()+" (OUT)");
 			}
 		}
+		
+		// required by Tool but not provided by Task
 		for (DataPort dataPort:getReverseMissingInDataPorts())
 		{
-			logger.debug("undefined but required dataport="+dataPort.getName()+" (IN, tool) detected.");
+			logger.debug("undefined but required dataport="+dataPort.getName()+
+					" (IN, "+dataPort.getDataFormats().keySet().toString()+", tool) detected.");
 		}
 		for (DataPort dataPort:getReverseMissingOutDataPorts())
 		{
-			logger.debug("undefined but required dataport="+dataPort.getName()+" (OUT, tool) detected.");
+			logger.debug("undefined but required dataport="+dataPort.getName()+
+					" (OUT, "+dataPort.getDataFormats().keySet().toString()+", tool) detected.");
 		}
-			
-		// retuired by Tool but not provided by Task
 		
 		return score;
 		
 	}
-
+	
 	private DataPort isDataPortMatching(Parameter parameter, EList<DataPort> dataPorts, DataPort toolDataPort)
 	{
 		for (DataPort dataPort : dataPorts)
@@ -647,6 +727,191 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean validateDataPorts(EList<DataPort> dataPorts, EList<Pattern> patterns) {
+		List<String> dataPortStrings = new ArrayList<String>();
+		List<String> allDataPortStrings = new ArrayList<String>();
+		//List<List<String>> dataPortStringsList = new ArrayList<List<String>>();
+		char formatSymbol='A';
+		for (DataPort dataPort:dataPorts)
+		{
+			String dataPortString="";
+			int numberOfInputs=0;
+			for (String format:dataPort.getDataFormats().keySet())
+			{
+				
+				for (TraversalCriterion traversalCriterion:dataPort.getGroupingCriteria())
+				{
+					numberOfInputs+=traversalCriterion.getChunks().size();
+					StringUtils.rightPad(dataPortString, 
+							traversalCriterion.getChunks().size(), 
+							formatSymbol);
+				}			
+				dataPortStrings.add(dataPortString);
+				formatSymbol++;
+			}
+			//dataPortStringsList.add(dataPortStrings);
+		}
+		
+		return true;
+	}
+
+
+	/* get most adequate tasks providing the given dataport
+	 * most adequate could be:
+	 *  - the root task (it has access to static inputs)
+	 *  - tasks providing most ports
+	 *  - less distant tasks already connected
+	 *  - sibling tasks, (not yet connected to)
+	 */
+	public EList<Task> getMostAdequateTasks(
+			EMap<Task, EList<DataPort>> taskDataPortsMap, 
+			EList<DataPort> dataPorts)
+	{
+		EList<Task> adequateTasks=new BasicEList<Task>();
+		EMap<Task, Long> taskScores= new BasicEMap<Task, Long>();
+		for (Task task:taskDataPortsMap.keySet())
+		{
+			//           #matching ports
+			//           |#distance from root to task - distance from task providing ports to task
+			//           ||
+			//           |||
+			//           ||||
+			long score=0x0000;
+			score|=1<<(matchingPortOffset+taskDataPortsMap.get(task).size());
+			taskScores.put(task, score);
+		}
+		for (int i=0; i<dataPorts.size()||!dataPorts.isEmpty(); i++)
+		{
+			Task t=getMostAdequateTask(taskScores);
+			adequateTasks.add(t);
+			for (DataPort dataPort:taskDataPortsMap.get(t))
+				dataPort.removeDataPortFrom(dataPorts);
+		}
+		return adequateTasks;
+		
+	}
+	
+	
+	private Task getMostAdequateTask(EMap<Task, Long> taskScores)
+	{
+		Task bestHit = null;
+		for (Task task:taskScores.keySet())
+		{
+			if (bestHit==null)
+				bestHit=task;
+			else
+			{
+				if (
+				(taskScores.get(task)&matchingPortMask)>
+				(taskScores.get(bestHit)&matchingPortMask))
+					bestHit=task;
+			}
+			
+		}
+		return bestHit;
+	}
+	
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<Task, EList<DataPort>> resolveReverseMissingOutDataPorts(EList<Task> tasks) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<Task, EList<DataPort>> resolveReverseMissingInDataPorts(EList<Task> tasks) {
+		
+		EMap<Task, EList<DataPort>> taskDataPortsMap = null;
+		EList<Task> adequateTasks=null; 
+		if (tasks != null && !tasks.isEmpty())
+		{
+			taskDataPortsMap=getDataPortProvidingTasks(tasks, getReverseMissingInDataPorts());
+			adequateTasks=getMostAdequateTasks(taskDataPortsMap, getReverseMissingInDataPorts());
+		}
+		
+		if (!getReverseMissingInDataPorts().isEmpty())
+		{
+			// try to resolve data ports which are required by tool definition
+			
+				logger.trace("unresolved data ports remain, trying to resolve... ");
+				/*
+				logger.trace("Task="+getTask().getUniqueString()+" DataPort="+GlobalVar.getGraphUtil().getParentsFor(getTask()));
+				for (DataPort unresolvedDataPort:getReverseMissingInDataPorts())
+				{
+					logger.trace("test unresolved dataPort="+unresolvedDataPort.getName());
+					boolean resolved = false;
+					
+					// try to resolve based on graph edges (and possibly associated data ports)
+					for (DataPort dataPort:GlobalVar.getGraphUtil().getParentDataPortsFor(getTask()))
+					{
+						logger.trace("against dataPort drawn from parent task (from graph)="+dataPort.getName());
+						if (dataPort.isCompatible(unresolvedDataPort))
+						{
+							getTask().getInDataPorts().add(unresolvedDataPort);
+							resolved = true;
+						}
+						
+					}
+				}
+				*/
+				// trying to resolve based on data port objects (check for overlapping data ports)
+				//getMatchingDataPorts(getReverseMissingInDataPorts(), GlobalVar.getGraphUtil().getParentTasksFor(getTask()));
+				
+					
+		}
+		if (taskDataPortsMap!=null)
+		{
+			EMap<Task, EList<DataPort>> finalTaskDataPortsMap = new BasicEMap<Task, EList<DataPort>>();
+			for (Task t:adequateTasks)
+			{
+				finalTaskDataPortsMap.put(t, taskDataPortsMap.get(t));
+			}
+			return finalTaskDataPortsMap;
+			
+		}
+		else
+			return null;
+			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<Task, EList<DataPort>> getDataPortProvidingTasks(EList<Task> tasks, EList<DataPort> dataPorts) {
+		EMap<Task, EList<DataPort>> taskDataPortList = new BasicEMap<Task, EList<DataPort>>();
+		EList<DataPort> dataPortList=null;
+		for (Task tmpTask:tasks)
+		{
+			for (DataPort dataPort:getTask().getOverlappingDataPorts(dataPorts, tmpTask.getOutDataPorts()))
+			{
+				if (taskDataPortList.contains(tmpTask))
+					dataPortList=taskDataPortList.get(tmpTask);
+				else
+				{
+					dataPortList=new BasicEList<DataPort>();
+					taskDataPortList.put(tmpTask, dataPortList);
+				}
+				dataPortList.add(dataPort);
+			}
+		}
+		return taskDataPortList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -676,6 +941,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case CorePackage.TOOL_MATCH__LOGGER:
+				return getLogger();
 			case CorePackage.TOOL_MATCH__TASK:
 				if (resolve) return getTask();
 				return basicGetTask();
@@ -695,8 +962,6 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			case CorePackage.TOOL_MATCH__MISSING_GROUPING_CRITERIA:
 				if (coreType) return getMissingGroupingCriteria();
 				else return getMissingGroupingCriteria().map();
-			case CorePackage.TOOL_MATCH__LOGGER:
-				return getLogger();
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS:
 				return getReverseMissingInDataPorts();
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS:
@@ -704,6 +969,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA:
 				if (coreType) return getReverseMissingGroupingCriteria();
 				else return getReverseMissingGroupingCriteria().map();
+			case CorePackage.TOOL_MATCH__VALID:
+				return isValid();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -717,6 +984,9 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case CorePackage.TOOL_MATCH__LOGGER:
+				setLogger((Logger)newValue);
+				return;
 			case CorePackage.TOOL_MATCH__TASK:
 				setTask((Task)newValue);
 				return;
@@ -743,9 +1013,6 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			case CorePackage.TOOL_MATCH__MISSING_GROUPING_CRITERIA:
 				((EStructuralFeature.Setting)getMissingGroupingCriteria()).set(newValue);
 				return;
-			case CorePackage.TOOL_MATCH__LOGGER:
-				setLogger((Logger)newValue);
-				return;
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS:
 				getReverseMissingInDataPorts().clear();
 				getReverseMissingInDataPorts().addAll((Collection<? extends DataPort>)newValue);
@@ -756,6 +1023,9 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				return;
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA:
 				((EStructuralFeature.Setting)getReverseMissingGroupingCriteria()).set(newValue);
+				return;
+			case CorePackage.TOOL_MATCH__VALID:
+				setValid((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -769,6 +1039,9 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case CorePackage.TOOL_MATCH__LOGGER:
+				setLogger(LOGGER_EDEFAULT);
+				return;
 			case CorePackage.TOOL_MATCH__TASK:
 				setTask((Task)null);
 				return;
@@ -793,9 +1066,6 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			case CorePackage.TOOL_MATCH__MISSING_GROUPING_CRITERIA:
 				getMissingGroupingCriteria().clear();
 				return;
-			case CorePackage.TOOL_MATCH__LOGGER:
-				setLogger(LOGGER_EDEFAULT);
-				return;
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS:
 				getReverseMissingInDataPorts().clear();
 				return;
@@ -804,6 +1074,9 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				return;
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA:
 				getReverseMissingGroupingCriteria().clear();
+				return;
+			case CorePackage.TOOL_MATCH__VALID:
+				setValid(VALID_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -817,6 +1090,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case CorePackage.TOOL_MATCH__LOGGER:
+				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.TOOL_MATCH__TASK:
 				return task != null;
 			case CorePackage.TOOL_MATCH__TOOL:
@@ -833,14 +1108,14 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				return missingOutDataPorts != null && !missingOutDataPorts.isEmpty();
 			case CorePackage.TOOL_MATCH__MISSING_GROUPING_CRITERIA:
 				return missingGroupingCriteria != null && !missingGroupingCriteria.isEmpty();
-			case CorePackage.TOOL_MATCH__LOGGER:
-				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_IN_DATA_PORTS:
 				return reverseMissingInDataPorts != null && !reverseMissingInDataPorts.isEmpty();
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS:
 				return reverseMissingOutDataPorts != null && !reverseMissingOutDataPorts.isEmpty();
 			case CorePackage.TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA:
 				return reverseMissingGroupingCriteria != null && !reverseMissingGroupingCriteria.isEmpty();
+			case CorePackage.TOOL_MATCH__VALID:
+				return valid != VALID_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -855,14 +1130,16 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (score: ");
+		result.append(" (logger: ");
+		result.append(logger);
+		result.append(", score: ");
 		result.append(score);
 		result.append(", expectedScore: ");
 		result.append(expectedScore);
 		result.append(", expectedToolScore: ");
 		result.append(expectedToolScore);
-		result.append(", logger: ");
-		result.append(logger);
+		result.append(", valid: ");
+		result.append(valid);
 		result.append(')');
 		return result.toString();
 	}

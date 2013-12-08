@@ -7,7 +7,9 @@
 package easyflow.tool;
 
 import java.net.URI;
+
 import org.apache.log4j.Logger;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 

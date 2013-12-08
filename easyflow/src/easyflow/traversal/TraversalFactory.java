@@ -26,6 +26,15 @@ public interface TraversalFactory extends EFactory {
 	TraversalFactory eINSTANCE = easyflow.traversal.impl.TraversalFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Event</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Event</em>'.
+	 * @generated
+	 */
+	TraversalEvent createTraversalEvent();
+
+	/**
 	 * Returns a new object of class '<em>Grouping Criterion</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -44,15 +53,6 @@ public interface TraversalFactory extends EFactory {
 	TraversalCriterion createTraversalCriterion();
 
 	/**
-	 * Returns a new object of class '<em>Event</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Event</em>'.
-	 * @generated
-	 */
-	TraversalEvent createTraversalEvent();
-
-	/**
 	 * Returns a new object of class '<em>Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -69,15 +69,6 @@ public interface TraversalFactory extends EFactory {
 	 * @generated
 	 */
 	TraversalChunk createTraversalChunk();
-
-	/**
-	 * Returns a new object of class '<em>Data Ports</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Data Ports</em>'.
-	 * @generated
-	 */
-	DataPorts createDataPorts();
 
 	/**
 	 * Returns the package supported by this factory.

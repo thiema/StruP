@@ -9,9 +9,9 @@ package easyflow.tool.impl;
 import easyflow.tool.Command;
 import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
-import easyflow.tool.DataPort;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.Parameter;
@@ -21,7 +21,6 @@ import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-import easyflow.tool.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -82,9 +81,9 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.INTERPRETER: return createInterpreter();
 			case ToolPackage.COMMAND: return createCommand();
 			case ToolPackage.PARAMETER: return createParameter();
+			case ToolPackage.IN_OUT_PARAMETER: return createInOutParameter();
 			case ToolPackage.PACKAGE: return createPackage();
 			case ToolPackage.DATA: return createData();
-			case ToolPackage.DATA_PORT: return createDataPort();
 			case ToolPackage.DATA_FORMAT: return createDataFormat();
 			case ToolPackage.KEY: return createKey();
 			case ToolPackage.REQUIREMENT: return createRequirement();
@@ -119,9 +118,9 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Tool createTool() {
-		ToolImpl tool = new ToolImpl();
-		return tool;
+	public DefaultToolElement createDefaultToolElement() {
+		DefaultToolElementImpl defaultToolElement = new DefaultToolElementImpl();
+		return defaultToolElement;
 	}
 
 	/**
@@ -129,9 +128,9 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DefaultToolElement createDefaultToolElement() {
-		DefaultToolElementImpl defaultToolElement = new DefaultToolElementImpl();
-		return defaultToolElement;
+	public Tool createTool() {
+		ToolImpl tool = new ToolImpl();
+		return tool;
 	}
 
 	/**
@@ -169,6 +168,16 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public InOutParameter createInOutParameter() {
+		InOutParameterImpl inOutParameter = new InOutParameterImpl();
+		return inOutParameter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public easyflow.tool.Package createPackage() {
 		PackageImpl package_ = new PackageImpl();
 		return package_;
@@ -182,16 +191,6 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public Data createData() {
 		DataImpl data = new DataImpl();
 		return data;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DataPort createDataPort() {
-		DataPortImpl dataPort = new DataPortImpl();
-		return dataPort;
 	}
 
 	/**

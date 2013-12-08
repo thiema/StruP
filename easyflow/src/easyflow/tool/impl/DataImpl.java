@@ -6,9 +6,8 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.core.DataPort;
 import easyflow.tool.Data;
-import easyflow.tool.DataPort;
-import easyflow.tool.DataFormat;
 import easyflow.tool.ToolPackage;
 
 import org.eclipse.emf.common.notify.Notification;

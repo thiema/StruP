@@ -205,13 +205,22 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__NEW_TRAVERSAL_EVENTS = 14;
 
 	/**
+	 * The feature id for the '<em><b>Data Links</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__DATA_LINKS = 15;
+
+	/**
 	 * The number of structural features of the '<em>Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 15;
+	int UTIL_FEATURE_COUNT = 16;
 
 
 	/**
@@ -390,6 +399,17 @@ public interface JgraphxPackage extends EPackage {
 	EReference getUtil_NewTraversalEvents();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getDataLinks <em>Data Links</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Data Links</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getDataLinks()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_DataLinks();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -525,6 +545,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UTIL__NEW_TRAVERSAL_EVENTS = eINSTANCE.getUtil_NewTraversalEvents();
+		/**
+		 * The meta object literal for the '<em><b>Data Links</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__DATA_LINKS = eINSTANCE.getUtil_DataLinks();
 
 	}
 

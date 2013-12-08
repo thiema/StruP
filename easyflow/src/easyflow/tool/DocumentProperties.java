@@ -55,6 +55,7 @@ public interface DocumentProperties extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>From Jar</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>From Jar</em>' attribute isn't clear,
@@ -64,7 +65,7 @@ public interface DocumentProperties extends EObject {
 	 * @return the value of the '<em>From Jar</em>' attribute.
 	 * @see #setFromJar(boolean)
 	 * @see easyflow.tool.ToolPackage#getDocumentProperties_FromJar()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isFromJar();

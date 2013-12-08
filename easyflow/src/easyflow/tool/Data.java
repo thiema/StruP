@@ -6,6 +6,8 @@
  */
 package easyflow.tool;
 
+import easyflow.core.DataPort;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -81,6 +83,7 @@ public interface Data extends DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Output</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Output</em>' attribute isn't clear,
@@ -90,7 +93,7 @@ public interface Data extends DefaultToolElement {
 	 * @return the value of the '<em>Output</em>' attribute.
 	 * @see #setOutput(boolean)
 	 * @see easyflow.tool.ToolPackage#getData_Output()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isOutput();

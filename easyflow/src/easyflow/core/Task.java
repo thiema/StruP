@@ -7,14 +7,16 @@
 package easyflow.core;
 
 import easyflow.tool.DataFormat;
-import easyflow.tool.DataPort;
 import easyflow.tool.Tool;
 
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
 
 import java.net.URI;
+
 import java.util.Map;
+
+import java.util.regex.Pattern;
 
 import org.apache.commons.jexl2.JexlEngine;
 
@@ -56,6 +58,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.Task#getInputs <em>Inputs</em>}</li>
  *   <li>{@link easyflow.core.Task#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link easyflow.core.Task#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
+ *   <li>{@link easyflow.core.Task#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,7 +70,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Task extends EObject {
 	/**
 	 * Returns the value of the '<em><b>In Data Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.tool.DataPort}.
+	 * The list contents are of type {@link easyflow.core.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>In Data Ports</em>' reference list isn't clear,
@@ -82,7 +86,7 @@ public interface Task extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Out Data Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.tool.DataPort}.
+	 * The list contents are of type {@link easyflow.core.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Out Data Ports</em>' reference list isn't clear,
@@ -150,6 +154,7 @@ public interface Task extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Util</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Util</em>' attribute isn't clear,
@@ -159,7 +164,7 @@ public interface Task extends EObject {
 	 * @return the value of the '<em>Util</em>' attribute.
 	 * @see #setUtil(boolean)
 	 * @see easyflow.core.CorePackage#getTask_Util()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isUtil();
@@ -238,7 +243,7 @@ public interface Task extends EObject {
 	 * and the value is of type {@link easyflow.core.Task},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Parents</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Parents</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
@@ -288,10 +293,6 @@ public interface Task extends EObject {
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link easyflow.tool.Tool},
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tools</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Collection of processing tools.
@@ -452,6 +453,38 @@ public interface Task extends EObject {
 	EMap<String, URI> getOutputs();
 
 	/**
+	 * Returns the value of the '<em><b>Input Data Port Validator</b></em>' attribute list.
+	 * The list contents are of type {@link java.util.regex.Pattern}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Input Data Port Validator</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Input Data Port Validator</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getTask_InputDataPortValidator()
+	 * @model dataType="easyflow.Pattern"
+	 * @generated
+	 */
+	EList<Pattern> getInputDataPortValidator();
+
+	/**
+	 * Returns the value of the '<em><b>Output Data Port Validator</b></em>' attribute list.
+	 * The list contents are of type {@link java.util.regex.Pattern}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Output Data Port Validator</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Output Data Port Validator</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getTask_OutputDataPortValidator()
+	 * @model dataType="easyflow.Pattern"
+	 * @generated
+	 */
+	EList<Pattern> getOutputDataPortValidator();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -487,10 +520,10 @@ public interface Task extends EObject {
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
-	 * @model many="false"
+	 * @model many="false" patternDataType="easyflow.Pattern" patternMany="true"
 	 * @generated
 	 */
-	EList<DataFormat> parseDataFormatField(String dataFormatString);
+	EList<DataFormat> parseDataFormatField(String dataFormatString, EList<Pattern> pattern);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -598,5 +631,45 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	boolean validateTool(Tool tool);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean validateTools();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	DataPort getDataPortByDataPort(DataPort testDataPort, boolean isOutDataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	DataPort getDataPortByNameOfFormat(String name, boolean isOutDataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	DataPort getDataPortByName(String dataPortName, boolean isOutDataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>" tasksMany="true"
+	 * @generated
+	 */
+	EMap<Task, EList<DataPort>> resolveMissingDataPortsByTool(EList<Task> tasks);
 
 } // Task

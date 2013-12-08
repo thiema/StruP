@@ -44,15 +44,6 @@ public interface ToolFactory extends EFactory {
 	ToolDefinitions createToolDefinitions();
 
 	/**
-	 * Returns a new object of class '<em>Tool</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Tool</em>'.
-	 * @generated
-	 */
-	Tool createTool();
-
-	/**
 	 * Returns a new object of class '<em>Default Tool Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -60,6 +51,15 @@ public interface ToolFactory extends EFactory {
 	 * @generated
 	 */
 	DefaultToolElement createDefaultToolElement();
+
+	/**
+	 * Returns a new object of class '<em>Tool</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tool</em>'.
+	 * @generated
+	 */
+	Tool createTool();
 
 	/**
 	 * Returns a new object of class '<em>Interpreter</em>'.
@@ -89,6 +89,15 @@ public interface ToolFactory extends EFactory {
 	Parameter createParameter();
 
 	/**
+	 * Returns a new object of class '<em>In Out Parameter</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>In Out Parameter</em>'.
+	 * @generated
+	 */
+	InOutParameter createInOutParameter();
+
+	/**
 	 * Returns a new object of class '<em>Package</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,15 +114,6 @@ public interface ToolFactory extends EFactory {
 	 * @generated
 	 */
 	Data createData();
-
-	/**
-	 * Returns a new object of class '<em>Data Port</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Data Port</em>'.
-	 * @generated
-	 */
-	DataPort createDataPort();
 
 	/**
 	 * Returns a new object of class '<em>Data Format</em>'.

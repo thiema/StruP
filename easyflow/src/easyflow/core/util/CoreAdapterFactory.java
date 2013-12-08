@@ -80,6 +80,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createTaskAdapter();
 			}
 			@Override
+			public Adapter caseToolMatch(ToolMatch object) {
+				return createToolMatchAdapter();
+			}
+			@Override
 			public Adapter caseIWorkflowTemplate(IWorkflowTemplate object) {
 				return createIWorkflowTemplateAdapter();
 			}
@@ -112,8 +116,12 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createCatalogAdapter();
 			}
 			@Override
-			public Adapter caseToolMatch(ToolMatch object) {
-				return createToolMatchAdapter();
+			public Adapter caseDataPort(DataPort object) {
+				return createDataPortAdapter();
+			}
+			@Override
+			public Adapter caseDataLink(DataLink object) {
+				return createDataLinkAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -272,6 +280,34 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCatalogAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.core.DataPort <em>Data Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.core.DataPort
+	 * @generated
+	 */
+	public Adapter createDataPortAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.core.DataLink <em>Data Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.core.DataLink
+	 * @generated
+	 */
+	public Adapter createDataLinkAdapter() {
 		return null;
 	}
 

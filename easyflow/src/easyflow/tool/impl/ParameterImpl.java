@@ -57,9 +57,10 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isMultipleValue <em>Multiple Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValueType <em>Value Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDefaultValue <em>Default Value</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getOptionKey <em>Option Key</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDelimiter <em>Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValueDelimiter <em>Value Delimiter</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getKeys <em>Keys</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isNamed <em>Named</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getLabel <em>Label</em>}</li>
@@ -68,7 +69,8 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMaxOcc <em>Max Occ</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isAdvanced <em>Advanced</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getFormats <em>Formats</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isPositional <em>Positional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getGrouping <em>Grouping</em>}</li>
  * </ul>
  * </p>
  *
@@ -266,6 +268,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected String defaultValue = DEFAULT_VALUE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PREFIX_EDEFAULT = "-";
+
+	/**
+	 * The cached value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected String prefix = PREFIX_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getOptionKey() <em>Option Key</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOptionKey()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String OPTION_KEY_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getOptionKey() <em>Option Key</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOptionKey()
+	 * @generated
+	 * @ordered
+	 */
+	protected String optionKey = OPTION_KEY_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #getDelimiter() <em>Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -304,26 +346,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @ordered
 	 */
 	protected String valueDelimiter = VALUE_DELIMITER_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPrefix()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PREFIX_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPrefix()
-	 * @generated
-	 * @ordered
-	 */
-	protected String prefix = PREFIX_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getKeys() <em>Keys</em>}' reference list.
@@ -403,7 +425,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int MIN_OCC_EDEFAULT = 0;
+	protected static final int MIN_OCC_EDEFAULT = 1;
 
 	/**
 	 * The cached value of the '{@link #getMinOcc() <em>Min Occ</em>}' attribute.
@@ -423,7 +445,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int MAX_OCC_EDEFAULT = 0;
+	protected static final int MAX_OCC_EDEFAULT = 1;
 
 	/**
 	 * The cached value of the '{@link #getMaxOcc() <em>Max Occ</em>}' attribute.
@@ -466,14 +488,34 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected EMap<String, Parameter> values;
 
 	/**
-	 * The cached value of the '{@link #getFormats() <em>Formats</em>}' attribute list.
+	 * The default value of the '{@link #isPositional() <em>Positional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFormats()
+	 * @see #isPositional()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> formats;
+	protected static final boolean POSITIONAL_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isPositional() <em>Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean positional = POSITIONAL_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getGrouping() <em>Grouping</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGrouping()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> grouping;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -637,11 +679,32 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getFormats() {
-		if (formats == null) {
-			formats = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__FORMATS);
+	public boolean isPositional() {
+		return positional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPositional(boolean newPositional) {
+		boolean oldPositional = positional;
+		positional = newPositional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__POSITIONAL, oldPositional, positional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getGrouping() {
+		if (grouping == null) {
+			grouping = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__GROUPING);
 		}
-		return formats;
+		return grouping;
 	}
 
 	/**
@@ -695,7 +758,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 */
 	public String getArgDelimiter() {
 		if (isNamed() && !getKeys().isEmpty())
-			return getKeys().get(0).getSeparator();
+			return getKeys().get(0).getDelimiter();
 		else
 			return "";
 	}
@@ -817,6 +880,27 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		prefix = newPrefix;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__PREFIX, oldPrefix, prefix));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getOptionKey() {
+		return optionKey;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOptionKey(String newOptionKey) {
+		String oldOptionKey = optionKey;
+		optionKey = newOptionKey;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OPTION_KEY, oldOptionKey, optionKey));
 	}
 
 	/**
@@ -1031,12 +1115,14 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getValueType();
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				return getDefaultValue();
+			case ToolPackage.PARAMETER__PREFIX:
+				return getPrefix();
+			case ToolPackage.PARAMETER__OPTION_KEY:
+				return getOptionKey();
 			case ToolPackage.PARAMETER__DELIMITER:
 				return getDelimiter();
 			case ToolPackage.PARAMETER__VALUE_DELIMITER:
 				return getValueDelimiter();
-			case ToolPackage.PARAMETER__PREFIX:
-				return getPrefix();
 			case ToolPackage.PARAMETER__KEYS:
 				return getKeys();
 			case ToolPackage.PARAMETER__NAMED:
@@ -1054,8 +1140,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__VALUES:
 				if (coreType) return getValues();
 				else return getValues().map();
-			case ToolPackage.PARAMETER__FORMATS:
-				return getFormats();
+			case ToolPackage.PARAMETER__POSITIONAL:
+				return isPositional();
+			case ToolPackage.PARAMETER__GROUPING:
+				return getGrouping();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1097,14 +1185,17 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				setDefaultValue((String)newValue);
 				return;
+			case ToolPackage.PARAMETER__PREFIX:
+				setPrefix((String)newValue);
+				return;
+			case ToolPackage.PARAMETER__OPTION_KEY:
+				setOptionKey((String)newValue);
+				return;
 			case ToolPackage.PARAMETER__DELIMITER:
 				setDelimiter((String)newValue);
 				return;
 			case ToolPackage.PARAMETER__VALUE_DELIMITER:
 				setValueDelimiter((String)newValue);
-				return;
-			case ToolPackage.PARAMETER__PREFIX:
-				setPrefix((String)newValue);
 				return;
 			case ToolPackage.PARAMETER__KEYS:
 				getKeys().clear();
@@ -1131,9 +1222,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__VALUES:
 				((EStructuralFeature.Setting)getValues()).set(newValue);
 				return;
-			case ToolPackage.PARAMETER__FORMATS:
-				getFormats().clear();
-				getFormats().addAll((Collection<? extends String>)newValue);
+			case ToolPackage.PARAMETER__POSITIONAL:
+				setPositional((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__GROUPING:
+				getGrouping().clear();
+				getGrouping().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1174,14 +1268,17 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				setDefaultValue(DEFAULT_VALUE_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__PREFIX:
+				setPrefix(PREFIX_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__OPTION_KEY:
+				setOptionKey(OPTION_KEY_EDEFAULT);
+				return;
 			case ToolPackage.PARAMETER__DELIMITER:
 				setDelimiter(DELIMITER_EDEFAULT);
 				return;
 			case ToolPackage.PARAMETER__VALUE_DELIMITER:
 				setValueDelimiter(VALUE_DELIMITER_EDEFAULT);
-				return;
-			case ToolPackage.PARAMETER__PREFIX:
-				setPrefix(PREFIX_EDEFAULT);
 				return;
 			case ToolPackage.PARAMETER__KEYS:
 				getKeys().clear();
@@ -1207,8 +1304,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__VALUES:
 				getValues().clear();
 				return;
-			case ToolPackage.PARAMETER__FORMATS:
-				getFormats().clear();
+			case ToolPackage.PARAMETER__POSITIONAL:
+				setPositional(POSITIONAL_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__GROUPING:
+				getGrouping().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -1242,12 +1342,14 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return VALUE_TYPE_EDEFAULT == null ? valueType != null : !VALUE_TYPE_EDEFAULT.equals(valueType);
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
 				return DEFAULT_VALUE_EDEFAULT == null ? defaultValue != null : !DEFAULT_VALUE_EDEFAULT.equals(defaultValue);
+			case ToolPackage.PARAMETER__PREFIX:
+				return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
+			case ToolPackage.PARAMETER__OPTION_KEY:
+				return OPTION_KEY_EDEFAULT == null ? optionKey != null : !OPTION_KEY_EDEFAULT.equals(optionKey);
 			case ToolPackage.PARAMETER__DELIMITER:
 				return DELIMITER_EDEFAULT == null ? delimiter != null : !DELIMITER_EDEFAULT.equals(delimiter);
 			case ToolPackage.PARAMETER__VALUE_DELIMITER:
 				return VALUE_DELIMITER_EDEFAULT == null ? valueDelimiter != null : !VALUE_DELIMITER_EDEFAULT.equals(valueDelimiter);
-			case ToolPackage.PARAMETER__PREFIX:
-				return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
 			case ToolPackage.PARAMETER__KEYS:
 				return keys != null && !keys.isEmpty();
 			case ToolPackage.PARAMETER__NAMED:
@@ -1264,8 +1366,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return advanced != ADVANCED_EDEFAULT;
 			case ToolPackage.PARAMETER__VALUES:
 				return values != null && !values.isEmpty();
-			case ToolPackage.PARAMETER__FORMATS:
-				return formats != null && !formats.isEmpty();
+			case ToolPackage.PARAMETER__POSITIONAL:
+				return positional != POSITIONAL_EDEFAULT;
+			case ToolPackage.PARAMETER__GROUPING:
+				return grouping != null && !grouping.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1334,12 +1438,14 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(valueType);
 		result.append(", defaultValue: ");
 		result.append(defaultValue);
+		result.append(", prefix: ");
+		result.append(prefix);
+		result.append(", optionKey: ");
+		result.append(optionKey);
 		result.append(", delimiter: ");
 		result.append(delimiter);
 		result.append(", valueDelimiter: ");
 		result.append(valueDelimiter);
-		result.append(", prefix: ");
-		result.append(prefix);
 		result.append(", named: ");
 		result.append(named);
 		result.append(", label: ");
@@ -1352,8 +1458,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(maxOcc);
 		result.append(", advanced: ");
 		result.append(advanced);
-		result.append(", formats: ");
-		result.append(formats);
+		result.append(", positional: ");
+		result.append(positional);
+		result.append(", grouping: ");
+		result.append(grouping);
 		result.append(')');
 		return result.toString();
 	}

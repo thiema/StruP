@@ -26,9 +26,10 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#isMultipleValue <em>Multiple Value</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getValueType <em>Value Type</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getDefaultValue <em>Default Value</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getOptionKey <em>Option Key</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getDelimiter <em>Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getValueDelimiter <em>Value Delimiter</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getPrefix <em>Prefix</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getKeys <em>Keys</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isNamed <em>Named</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getLabel <em>Label</em>}</li>
@@ -37,7 +38,8 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getMaxOcc <em>Max Occ</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getFormats <em>Formats</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isPositional <em>Positional</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getGrouping <em>Grouping</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,6 +76,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Optional</em>' attribute isn't clear,
@@ -83,7 +86,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Optional</em>' attribute.
 	 * @see #setOptional(boolean)
 	 * @see easyflow.tool.ToolPackage#getParameter_Optional()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isOptional();
@@ -100,6 +103,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Multiple</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Multiple</em>' attribute isn't clear,
@@ -109,7 +113,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Multiple</em>' attribute.
 	 * @see #setMultiple(boolean)
 	 * @see easyflow.tool.ToolPackage#getParameter_Multiple()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isMultiple();
@@ -126,6 +130,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Multiple Value</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Multiple Value</em>' attribute isn't clear,
@@ -135,7 +140,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Multiple Value</em>' attribute.
 	 * @see #setMultipleValue(boolean)
 	 * @see easyflow.tool.ToolPackage#getParameter_MultipleValue()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isMultipleValue();
@@ -168,20 +173,47 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	EMap<String, Parameter> getValues();
 
 	/**
-	 * Returns the value of the '<em><b>Formats</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Positional</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Formats</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Positional</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Formats</em>' attribute list.
-	 * @see easyflow.tool.ToolPackage#getParameter_Formats()
+	 * @return the value of the '<em>Positional</em>' attribute.
+	 * @see #setPositional(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Positional()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isPositional();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isPositional <em>Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Positional</em>' attribute.
+	 * @see #isPositional()
+	 * @generated
+	 */
+	void setPositional(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Grouping</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Grouping()
 	 * @model
 	 * @generated
 	 */
-	EList<String> getFormats();
+	EList<String> getGrouping();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -329,6 +361,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Prefix</b></em>' attribute.
+	 * The default value is <code>"-"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Prefix</em>' attribute isn't clear,
@@ -338,7 +371,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Prefix</em>' attribute.
 	 * @see #setPrefix(String)
 	 * @see easyflow.tool.ToolPackage#getParameter_Prefix()
-	 * @model
+	 * @model default="-"
 	 * @generated
 	 */
 	String getPrefix();
@@ -352,6 +385,32 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setPrefix(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Option Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Option Key</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Option Key</em>' attribute.
+	 * @see #setOptionKey(String)
+	 * @see easyflow.tool.ToolPackage#getParameter_OptionKey()
+	 * @model
+	 * @generated
+	 */
+	String getOptionKey();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getOptionKey <em>Option Key</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Option Key</em>' attribute.
+	 * @see #getOptionKey()
+	 * @generated
+	 */
+	void setOptionKey(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
@@ -402,6 +461,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Named</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Named</em>' attribute isn't clear,
@@ -411,7 +471,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Named</em>' attribute.
 	 * @see #setNamed(boolean)
 	 * @see easyflow.tool.ToolPackage#getParameter_Named()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isNamed();
@@ -480,6 +540,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Min Occ</b></em>' attribute.
+	 * The default value is <code>"1"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Min Occ</em>' attribute isn't clear,
@@ -489,7 +550,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Min Occ</em>' attribute.
 	 * @see #setMinOcc(int)
 	 * @see easyflow.tool.ToolPackage#getParameter_MinOcc()
-	 * @model
+	 * @model default="1"
 	 * @generated
 	 */
 	int getMinOcc();
@@ -506,6 +567,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Max Occ</b></em>' attribute.
+	 * The default value is <code>"1"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Max Occ</em>' attribute isn't clear,
@@ -515,7 +577,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Max Occ</em>' attribute.
 	 * @see #setMaxOcc(int)
 	 * @see easyflow.tool.ToolPackage#getParameter_MaxOcc()
-	 * @model
+	 * @model default="1"
 	 * @generated
 	 */
 	int getMaxOcc();
@@ -532,6 +594,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Advanced</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Advanced</em>' attribute isn't clear,
@@ -541,7 +604,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Advanced</em>' attribute.
 	 * @see #setAdvanced(boolean)
 	 * @see easyflow.tool.ToolPackage#getParameter_Advanced()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isAdvanced();
