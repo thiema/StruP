@@ -125,22 +125,13 @@ public interface MetadataPackage extends EPackage {
 	int DEFAULT_META_DATA__GROUPING_INSTANCES = IMETA_DATA_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Grouping Instances By Group</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP = IMETA_DATA_FEATURE_COUNT + 4;
-
-	/**
 	 * The number of structural features of the '<em>Default Meta Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 5;
+	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.
@@ -227,13 +218,40 @@ public interface MetadataPackage extends EPackage {
 	int GROUPING_INSTANCE__FEATURES = 1;
 
 	/**
+	 * The feature id for the '<em><b>Grouping</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE__GROUPING = 2;
+
+	/**
+	 * The feature id for the '<em><b>Grouping Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE__GROUPING_STR = 3;
+
+	/**
+	 * The feature id for the '<em><b>Records</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE__RECORDS = 4;
+
+	/**
 	 * The number of structural features of the '<em>Grouping Instance</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_INSTANCE_FEATURE_COUNT = 2;
+	int GROUPING_INSTANCE_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.
@@ -366,17 +384,6 @@ public interface MetadataPackage extends EPackage {
 	EReference getDefaultMetaData_GroupingInstances();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.metadata.DefaultMetaData#getGroupingInstancesByGroup <em>Grouping Instances By Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Grouping Instances By Group</em>'.
-	 * @see easyflow.metadata.DefaultMetaData#getGroupingInstancesByGroup()
-	 * @see #getDefaultMetaData()
-	 * @generated
-	 */
-	EReference getDefaultMetaData_GroupingInstancesByGroup();
-
-	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -449,6 +456,39 @@ public interface MetadataPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getGroupingInstance_Features();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.metadata.GroupingInstance#getGrouping <em>Grouping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Grouping</em>'.
+	 * @see easyflow.metadata.GroupingInstance#getGrouping()
+	 * @see #getGroupingInstance()
+	 * @generated
+	 */
+	EReference getGroupingInstance_Grouping();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.metadata.GroupingInstance#getGroupingStr <em>Grouping Str</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Grouping Str</em>'.
+	 * @see easyflow.metadata.GroupingInstance#getGroupingStr()
+	 * @see #getGroupingInstance()
+	 * @generated
+	 */
+	EAttribute getGroupingInstance_GroupingStr();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.metadata.GroupingInstance#getRecords <em>Records</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Records</em>'.
+	 * @see easyflow.metadata.GroupingInstance#getRecords()
+	 * @see #getGroupingInstance()
+	 * @generated
+	 */
+	EAttribute getGroupingInstance_Records();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.GroupingFeature <em>Grouping Feature</em>}'.
@@ -578,14 +618,6 @@ public interface MetadataPackage extends EPackage {
 		EReference DEFAULT_META_DATA__GROUPING_INSTANCES = eINSTANCE.getDefaultMetaData_GroupingInstances();
 
 		/**
-		 * The meta object literal for the '<em><b>Grouping Instances By Group</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP = eINSTANCE.getDefaultMetaData_GroupingInstancesByGroup();
-
-		/**
 		 * The meta object literal for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -646,6 +678,30 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference GROUPING_INSTANCE__FEATURES = eINSTANCE.getGroupingInstance_Features();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GROUPING_INSTANCE__GROUPING = eINSTANCE.getGroupingInstance_Grouping();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping Str</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GROUPING_INSTANCE__GROUPING_STR = eINSTANCE.getGroupingInstance_GroupingStr();
+
+		/**
+		 * The meta object literal for the '<em><b>Records</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GROUPING_INSTANCE__RECORDS = eINSTANCE.getGroupingInstance_Records();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.

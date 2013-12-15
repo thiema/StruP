@@ -115,13 +115,6 @@ public class CoreSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CorePackage.EASYFLOW_TASK_READER: {
-				EasyflowTaskReader easyflowTaskReader = (EasyflowTaskReader)theEObject;
-				T result = caseEasyflowTaskReader(easyflowTaskReader);
-				if (result == null) result = caseITaskReader(easyflowTaskReader);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CorePackage.GALAXY_TASK_READER: {
 				GalaxyTaskReader galaxyTaskReader = (GalaxyTaskReader)theEObject;
 				T result = caseGalaxyTaskReader(galaxyTaskReader);
@@ -244,21 +237,6 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseITaskReader(ITaskReader object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Easyflow Task Reader</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Easyflow Task Reader</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseEasyflowTaskReader(EasyflowTaskReader object) {
 		return null;
 	}
 

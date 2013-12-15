@@ -16,9 +16,12 @@ import easyflow.traversal.GroupingCriterion;
 import easyflow.util.maps.MapsPackage;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
+import easyflow.custom.util.GlobalVar;
+
 import java.util.Collection;
 import easyflow.ui.DefaultProject;
 import easyflow.util.maps.impl.StringToGroupingInstanceListMapImpl;
+import easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl;
 import easyflow.util.maps.impl.StringToGroupingMapImpl;
 
 import java.io.BufferedReader;
@@ -27,15 +30,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import java.util.Map.Entry;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -61,7 +71,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
- *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingInstancesByGroup <em>Grouping Instances By Group</em>}</li>
  * </ul>
  * </p>
  *
@@ -127,16 +136,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @ordered
 	 */
 	protected EMap<String, GroupingInstanceList> groupingInstances;
-
-	/**
-	 * The cached value of the '{@link #getGroupingInstancesByGroup() <em>Grouping Instances By Group</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroupingInstancesByGroup()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, GroupingInstanceList> groupingInstancesByGroup;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -216,18 +215,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, GroupingInstanceList> getGroupingInstancesByGroup() {
-		if (groupingInstancesByGroup == null) {
-			groupingInstancesByGroup = new EcoreEMap<String,GroupingInstanceList>(MapsPackage.Literals.STRING_TO_GROUPING_INSTANCE_LIST_MAP, StringToGroupingInstanceListMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP);
-		}
-		return groupingInstancesByGroup;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EMap<String, Grouping> getGroupings() {
 		if (groupings == null) {
 			groupings = new EcoreEMap<String,Grouping>(MapsPackage.Literals.STRING_TO_GROUPING_MAP, StringToGroupingMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__GROUPINGS);
@@ -238,12 +225,43 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public Map<String, Object> getDefaultRecords() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public void initMetaData() {
+		BufferedReader bufferedReader = getReader();
+		String sep="\t";
+        String strLine;
+        Map<String, Integer> colNames=new HashMap<String, Integer>();
+		int rows=0;
+    	
+    	List<String> rowHeader=new ArrayList<String>();
+    	boolean firstLine=true;
+    	try {
+			while ((strLine = bufferedReader.readLine()) != null)   {
+				// expect first line to row colheader
+				String lina[]=strLine.split(sep);
+				if (!strLine.startsWith("#")) {
+					
+					if (firstLine)
+					{
+						//bufferedReader.mark(0);
+						GlobalVar.createNewMetaDataColHeader(Arrays.copyOfRange(lina, 1, lina.length));
+						firstLine=false;
+					}
+					else
+					{
+						rows++;
+						rowHeader.add(lina[0]);
+					}
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	String rowHead[]=new String[rowHeader.size()];
+    	GlobalVar.createNewMetaDataRowHeader(rowHeader.toArray(rowHead));
+    	GlobalVar.createNewMetaDataTable();
 	}
 
 	/**
@@ -256,26 +274,21 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		Map<String, String> aliases = new HashMap<String, String>();
 		aliases.put("ID", "Record");
 		
-		
         //Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
         BufferedReader bufferedReader = getReader();
-        
         String sep="\t";
-        String strLine;
         Map<String, Integer> colNames=new HashMap<String, Integer>();
         String[] colnames={};
-        //expecting first line to be header
+        
         try {
-			strLine = bufferedReader.readLine();
+        	//expecting first line to be header
+        	String strLine = bufferedReader.readLine();
 			colnames=strLine.split(sep);
 			for (int i=0; i<colnames.length; i++) {
 				colNames.put(colnames[i], i);
 			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        try {
+			//read the remainder
+			int row=0;
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				
 				if (!strLine.startsWith("#")) {
@@ -289,6 +302,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 					
 			        for (String colName1:colNames.keySet())
 			        {
+			        	if (lina.length>colNames.get(colName1))
+			        	{
 			        	String alias1 = aliases.containsKey(colName1) ? aliases.get(colName1) : colName1;
 			        	// fill groupingInsances map
 			        	GroupingInstanceList groupingInstanceList = null;
@@ -304,7 +319,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			        		getGroupingInstances().put(alias1, groupingInstanceList);
 			        	}
 			        	logger.debug("readMetaData(): process Group="+alias1+" Instance="+lina[colNames.get(colName1)]);
-			        	GroupingInstance groupingInstance;
+			        	GroupingInstance groupingInstance = null;
 			        	boolean known = false;
 			        	for (GroupingInstance groupingInstanceTmp : groupingInstanceList.getInstances())
 			        	{
@@ -320,86 +335,148 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			        	{
 			        		groupingInstance = MetadataFactory.eINSTANCE.createGroupingInstance();
 			        		groupingInstance.setName(lina[colNames.get(colName1)]);
+			        		groupingInstance.setGroupingStr(alias1);
+			        		groupingInstance.getRecords().add(lina[0]);
 			        		groupingInstanceList.getInstances().add(groupingInstance);
 			        	}
-			        	
-			        	
-			        	
-			        	// fill groupingInstancesByGroup map
-			        	for (String colName2:colNames.keySet())
+			        	else
 			        	{
-			        		String alias2 = aliases.containsKey(colName2) ? aliases.get(colName2) : colName2;
-			        		if (!alias1.equals(alias2))
-			        		{
-			        			String key = alias1+"_"+alias2+"_"+lina[colNames.get(colName1)];
-			        			String value = lina[colNames.get(colName2)];
-			        			GroupingInstanceList groupingInstanceListByGroup = null;
-			        			if (getGroupingInstancesByGroup().containsKey(key))
-			        			{
-			        				groupingInstanceListByGroup = getGroupingInstancesByGroup().get(key);
-			        				logger.trace(key+" known");
-			        			}
-			        			else
-			        			{
-			        				groupingInstanceListByGroup = MetadataFactory.eINSTANCE.createGroupingInstanceList();
-			        				getGroupingInstancesByGroup().put(key, groupingInstanceListByGroup);
-			        				logger.trace("readMetaData(): add key="+key+" grouingInstanceList size="+groupingInstanceListByGroup.getInstances().size());
-			        			}
-			        			boolean groupingInstanceKnown = false;
-			        			for (GroupingInstance processedGI : groupingInstanceListByGroup.getInstances())
-			        			{
-			        				logger.trace("readMetaData(): check "+processedGI.getName()+" "+value);
-			        				if (processedGI.getName().equals(value))
-			        				{
-			        					groupingInstanceKnown = true;
-			        					break;
-			        				}
-			        			}
-			        			if (!groupingInstanceKnown)
-			        			{
-			        				groupingInstance = MetadataFactory.eINSTANCE.createGroupingInstance();
-			        				groupingInstance.setName(value);
-			        				groupingInstanceListByGroup.getInstances().add(groupingInstance);
-			        				logger.trace("readMetaData(): added "+value+" to "+key);
-			        				//logger.debug("added: "+colName1+"_"+colName2+"_"+lina[colNames.get(colName1)]+":"+lina[colNames.get(colName2)]);
-			        			}
-			        			else
-			        				logger.trace("readMetaData(): "+value+"already in the list.");			        				
-
-			        		}
+			        		//make some validation
+			        		//if ()
+			        		if (!groupingInstance.getRecords().contains(lina[0]))
+			        			groupingInstance.getRecords().add(lina[0]);
 			        	}
+			        	
+			        	GlobalVar.setMetaDataTableRow(lina);
+			        	
 			        }
-					//getGroupingInstancesByGroup().put("s1", groupingInstanceList);
+			        }
+
 				}
 			}
         } catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        EMap<String, GroupingInstanceList> tmp = getGroupingInstancesByGroup();
         for (String groupingInstanceStr : getGroupingInstances().keySet())
         {
 
         	GroupingInstanceList groupingInstanceList = getGroupingInstances().get(groupingInstanceStr);
         	String instances="";
         	for (GroupingInstance groupingInstance : groupingInstanceList.getInstances())
-        		instances+=groupingInstance.getName()+", ";
+        		instances+=groupingInstance.getName()+" ("+groupingInstance.getRecords()+"), ";
         	logger.debug(groupingInstanceStr+": "+ instances);
         	
         }
+        logger.debug("");
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public EList<GroupingCriterion> getInstances(String field, String parentField, String instance) {
+	public EList<GroupingInstance> getInstances(GroupingInstance groupingInstance, String resolvedAs) {
+		return getInstances(groupingInstance.getGroupingStr(), resolvedAs, groupingInstance.getName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr) {
+		//EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
+		//logger.debug(groupingStr1+" "+groupingStr2+" "+instanceStr);
+		EList<String> records=getRecordsBy(groupingStr1, instanceStr);
+		EList<GroupingInstance> groupingInstances = getInstances(groupingStr2, records);
+		//logger.debug(GlobalVar.getMetaDataTableRow(groupingStr1));
+		//logger.debug(GlobalVar.getMetaDataTableEntry(groupingInstance.getName(), col))
+		//logger.debug(getGroupings().keySet());
+		//logger.debug(getGroupingInstances().keySet());
+		String res="";
+		for (GroupingInstance groupingInstance:groupingInstances)
+			res+=","+groupingInstance.getName();
+		//logger.debug(groupingStr1+" "+groupingStr2+" "+instanceStr+" "+res);
+		return groupingInstances;
+	}
+	
+	private EList<GroupingInstance> getInstances(String group, EList<String> records)
+	{
+		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
+		for (GroupingInstance groupingInstance:getGroupingInstances().get(group).getInstances())
+		{
+			EList<String> recs=groupingInstance.getOverlappingRecords(records);
+			if (!recs.isEmpty())
+				if (!groupingInstances.contains(groupingInstance))
+					groupingInstances.add(groupingInstance);
+
+		}
+		return groupingInstances;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void getValueForGroupingInstance(GroupingInstance groupingInstance, String field) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getRecordsBy(String groupingStr, String instanceStr) {
+		EList<String> records = new BasicEList<String>();
+		if (groupingStr.equals("Record"))
+		{
+			if(!GlobalVar.getMetaDataTableRow(instanceStr).isEmpty())
+				records.add(instanceStr);
+		}
+		else
+		{
+			for (String rowHead:GlobalVar.getMetaDataRowHeader().keySet())
+			{
+				Map<String, String> map=GlobalVar.getMetaDataTableRow(rowHead);
+				if (map.get(groupingStr).equals(instanceStr))
+					records.add(rowHead);
+			}
+		}
+		return records;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, Object> getRecord(GroupingInstance recordInstance) {
+		Map<String, String> map=GlobalVar.getMetaDataTableRow(recordInstance.getName());
+		EMap<String, Object> emap=new BasicEMap<String, Object>();
+		logger.debug(map.values());
+		for (Entry<String, String> e:map.entrySet())
+		{
+			if (e.getValue()!=null)
+				emap.put(e.getKey(), parseString(e.getValue()));
+		}
+		emap.put("Record", recordInstance.getName());
+		return emap;
+	}
+
+	private Object parseString(String field)
+	{
+		Object o=field;
+		String[] a=StringUtils.split(field, ",");
+		//convert into list object
+		if (a.length>1)
+			o=a;
+		return o;
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -412,8 +489,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return ((InternalEList<?>)getGroupings()).basicRemove(otherEnd, msgs);
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				return ((InternalEList<?>)getGroupingInstances()).basicRemove(otherEnd, msgs);
-			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
-				return ((InternalEList<?>)getGroupingInstancesByGroup()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -436,9 +511,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				if (coreType) return getGroupingInstances();
 				else return getGroupingInstances().map();
-			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
-				if (coreType) return getGroupingInstancesByGroup();
-				else return getGroupingInstancesByGroup().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -464,9 +536,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				((EStructuralFeature.Setting)getGroupingInstances()).set(newValue);
 				return;
-			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
-				((EStructuralFeature.Setting)getGroupingInstancesByGroup()).set(newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -491,9 +560,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				getGroupingInstances().clear();
 				return;
-			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
-				getGroupingInstancesByGroup().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -514,8 +580,6 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return groupings != null && !groupings.isEmpty();
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				return groupingInstances != null && !groupingInstances.isEmpty();
-			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP:
-				return groupingInstancesByGroup != null && !groupingInstancesByGroup.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -6,6 +6,7 @@
  */
 package easyflow.metadata;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +26,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link easyflow.metadata.GroupingInstance#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.metadata.GroupingInstance#getFeatures <em>Features</em>}</li>
+ *   <li>{@link easyflow.metadata.GroupingInstance#getGrouping <em>Grouping</em>}</li>
+ *   <li>{@link easyflow.metadata.GroupingInstance#getGroupingStr <em>Grouping Str</em>}</li>
+ *   <li>{@link easyflow.metadata.GroupingInstance#getRecords <em>Records</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,5 +79,81 @@ public interface GroupingInstance extends EObject {
 	 * @generated
 	 */
 	EMap<String, GroupingFeature> getFeatures();
+
+	/**
+	 * Returns the value of the '<em><b>Grouping</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping</em>' reference.
+	 * @see #setGrouping(Grouping)
+	 * @see easyflow.metadata.MetadataPackage#getGroupingInstance_Grouping()
+	 * @model
+	 * @generated
+	 */
+	Grouping getGrouping();
+
+	/**
+	 * Sets the value of the '{@link easyflow.metadata.GroupingInstance#getGrouping <em>Grouping</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Grouping</em>' reference.
+	 * @see #getGrouping()
+	 * @generated
+	 */
+	void setGrouping(Grouping value);
+
+	/**
+	 * Returns the value of the '<em><b>Grouping Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping Str</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping Str</em>' attribute.
+	 * @see #setGroupingStr(String)
+	 * @see easyflow.metadata.MetadataPackage#getGroupingInstance_GroupingStr()
+	 * @model
+	 * @generated
+	 */
+	String getGroupingStr();
+
+	/**
+	 * Sets the value of the '{@link easyflow.metadata.GroupingInstance#getGroupingStr <em>Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Grouping Str</em>' attribute.
+	 * @see #getGroupingStr()
+	 * @generated
+	 */
+	void setGroupingStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Records</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Records</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Records</em>' attribute list.
+	 * @see easyflow.metadata.MetadataPackage#getGroupingInstance_Records()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getRecords();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model recordsMany="true"
+	 * @generated
+	 */
+	EList<String> getOverlappingRecords(EList<String> records);
 
 } // GroupingInstance

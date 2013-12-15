@@ -570,4 +570,20 @@ public interface Util extends EObject {
 	 */
 	EList<Task> getParentTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException;
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.mxICell"
+	 * @generated
+	 */
+	EList<mxICell> findEdgesToBeResolved();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model edgeDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean resolveEdge(mxICell edge);
+
 } // Util

@@ -15,7 +15,11 @@ import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
+import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
+import easyflow.metadata.DefaultMetaData;
+import easyflow.metadata.Grouping;
+import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Data;
 import easyflow.tool.DataFormat;
 import easyflow.tool.Parameter;
@@ -47,10 +51,14 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import java.util.regex.Pattern;
 import java.util.Map.Entry;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import org.apache.commons.jexl2.JexlEngine;
 import org.apache.log4j.Logger;
 
@@ -86,7 +94,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getInDataPorts <em>In Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutDataPorts <em>Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getName <em>Name</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getShallProcessJEXL <em>Shall Process JEXL</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getJexlString <em>Jexl String</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#isUtil <em>Util</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getJexlEngine <em>Jexl Engine</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getLogger <em>Logger</em>}</li>
@@ -104,6 +112,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getAnalysisTypes <em>Analysis Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -151,24 +160,24 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getShallProcessJEXL() <em>Shall Process JEXL</em>}' attribute.
+	 * The default value of the '{@link #getJexlString() <em>Jexl String</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getShallProcessJEXL()
+	 * @see #getJexlString()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SHALL_PROCESS_JEXL_EDEFAULT = null;
+	protected static final String JEXL_STRING_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getShallProcessJEXL() <em>Shall Process JEXL</em>}' attribute.
+	 * The cached value of the '{@link #getJexlString() <em>Jexl String</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getShallProcessJEXL()
+	 * @see #getJexlString()
 	 * @generated
 	 * @ordered
 	 */
-	protected String shallProcessJEXL = SHALL_PROCESS_JEXL_EDEFAULT;
+	protected String jexlString = JEXL_STRING_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isUtil() <em>Util</em>}' attribute.
@@ -401,6 +410,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EList<Pattern> outputDataPortValidator;
 
 	/**
+	 * The cached value of the '{@link #getAnalysisTypes() <em>Analysis Types</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAnalysisTypes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> analysisTypes;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -469,20 +488,20 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getShallProcessJEXL() {
-		return shallProcessJEXL;
+	public String getJexlString() {
+		return jexlString;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
-	public void setShallProcessJEXL(String newShallProcessJEXL) {
-		String oldShallProcessJEXL = shallProcessJEXL;
-		shallProcessJEXL = newShallProcessJEXL;
+	public void setJexlString(String newJexlString) {
+		String oldJexlString = jexlString;
+		jexlString = newJexlString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__SHALL_PROCESS_JEXL, oldShallProcessJEXL, shallProcessJEXL));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__JEXL_STRING, oldJexlString, jexlString));
 	}
 
 	/**
@@ -732,6 +751,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return outputDataPortValidator;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getAnalysisTypes() {
+		if (analysisTypes == null) {
+			analysisTypes = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.TASK__ANALYSIS_TYPES);
+		}
+		return analysisTypes;
+	}
+
 	/*private EList<String> enumerateInstances(String regexp)
 	{
 		regexp = "ab(c|d){2,3}";
@@ -768,16 +799,28 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 * Process array and set  task attributes
 		 * appropriately.
 		 */
-		
 		String[] wtplArray=wtplLine.split("\t");
+		
+		String[] tmp;
 		//logger.debug(wtplArray[0]);
 		setName(wtplArray[taskField]);
-		setUtil(wtplArray[taskType].equals("STATIC"));
-		
+		for (String parent:wtplArray[taskType].split(","))
+		{
+			tmp=parent.split(":");
+			if (tmp[0].equals("STATIC"))
+			{
+				setUtil(true);
+				if (tmp.length>1)
+					getAnalysisTypes().add(tmp[1]);
+			}
+			// the actual parents are resolved by class EasyflowTemplate 
+			//else
+				//getParents().put(tmp[0], null);	
+		}
 		/**
 		 * Parse the tools field. Check for multiple implementing tools
 		 */
-        String[] tmp=wtplArray[toolField].split(",");
+        tmp=wtplArray[toolField].split(",");
         for (int i=0; i<tmp.length; i++) {
         	getToolNames().put(tmp[i], new BasicEList<String>());
         }
@@ -802,17 +845,20 @@ public class TaskImpl extends EObjectImpl implements Task {
         	dataPort.setBitPos(bitPos++);
         }
         
-        EList<DataPort> x=getInDataPorts();
+        //EList<DataPort> x=getInDataPorts();
         /**
          * Read Data(Grouping)Criteria. 
          */
         //skip if line ended or record empty
+        String groupingStr="";
         if ((wtplArray.length>5)) {
+        	groupingStr=wtplArray[groupingCritField];
+        }
         	//if (!wtplArray[groupingCritField].equals(""))
         	//{
         	
         	short dataPortNo=0;
-        	for (String groupingString:wtplArray[groupingCritField].split(";"))
+        	for (String groupingString:groupingStr.split(";"))
         	{
 	        	DataPort dataPort=null;
 	        	if (groupingString.equals(""))
@@ -865,7 +911,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	        	}
         	}
         	//}
-        }
+        //}
 
 		/**
 		 * Read the traversal Expression
@@ -922,14 +968,110 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 * Read JEXL
 		 */
         if (wtplArray.length>7) {
-        	shallProcessJEXL=wtplArray[7];
+        	setJexlString(wtplArray[7]);
         	//logger.debug(shallProcessJEXL);
         	
 		}
         setPreviousTaskStr(getUniqueString());
-        logger.trace("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet());
+        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet());
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping) {
+		
+		Object evalObject=evaluateJexl(createMetaDataMapForJexl(groupingInstances, forGrouping));
+		if (evalObject instanceof Boolean)
+			return (Boolean) evalObject;
+			//return true;
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Object evaluateJexl(EMap<String, Object> metaDataMap) {
+		//evaluate the tasks jexl expression against metaDataMap
+		logger.debug("shallProcessJEXL: "+getJexlString()+" map:"+metaDataMap.keySet());
+		if (getJexlString()==null || getJexlString().equals("")) return true;
+		if (metaDataMap.isEmpty()) return true;
+		Expression e = jexlEngine.createExpression(getJexlString());
+		JexlContext context = new MapContext(metaDataMap.map());
+		logger.debug(e+" "+metaDataMap.values()+" "+e.evaluate(context));
+    	return e.evaluate(context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * we need to create a map of the kind:
+	 * Platform -> "Illumina"
+	 * InputFiles -> ["a","b","c"]
+	 * Group -> "g1"
+	 * ReadGroup -> ["rg1"," rg2"]
+	 * Records -> ["rec1", "rec2, "rec3"]
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, Object> createMetaDataMapForJexl(EList<GroupingInstance> groupingInstances, String forGrouping) {
+		
+		EMap<String, Object> metaDataMap=new BasicEMap<String, Object>();
+		//logger.debug(forGrouping);
+		//for (GroupingInstance groupingInstance:groupingInstances)
+			//logger.debug(groupingInstance.getName());
+		
+		DefaultMetaData metaData=GlobalVar.getGraphUtil().getMetaData();
+		for (GroupingInstance groupingInstance:groupingInstances)
+		{
+			EList<GroupingInstance> recordInstances=metaData.getInstances(groupingInstance, "Record");
+			for (GroupingInstance recordInstance:recordInstances)
+				for (Entry<String, Object> entry:metaData.getRecord(recordInstance).entrySet())
+				{
+					Object value=entry.getValue();
+					if (metaDataMap.containsKey(entry.getKey()))
+					{
+						mergeValue(metaDataMap.get(entry.getKey()), value);
+					}
+					metaDataMap.put(entry.getKey(), value);
+				}
+		}
+		//for (Entry<String, Grouping> entry:metaData.getGroupings().entrySet())
+		//{			metaData.g		}
+		return metaDataMap;
+	}
+
+	private Object mergeValue(Object o1, Object o2)
+	{
+		Object ret=null;
+		if (o1 instanceof List)
+		{
+			if (o2 instanceof List)
+				((List)o1).addAll((List)o2);
+			else
+				((List)o1).add(o2);
+			ret=o1;
+		}
+		else
+		{
+			if (o2 instanceof List)
+			{
+				((List)o2).add(o2);
+				ret=o2;
+			}
+			else
+			{
+				Object[] o={o1, o2};
+				ret = o;
+			}
+		}
+		return ret;
+	}
+	
 	private DataPort parseDataPortField(String field, EList<Pattern> pattern)
 	{
 		DataPort dataPort = CoreFactory.eINSTANCE.createDataPort();
@@ -990,7 +1132,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean shallProcess(Map<String, Object> metaDataMap) {
+	private void shallProcess(Map<String, Object> metaDataMap) {
 			/* =====EXAMPLES====
 			 * 
 			 */
@@ -1020,35 +1162,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		    System.out.println(""+e1.evaluate(context));
 		    
 		    */
-
-		
-			//evaluate the tasks jexl expression against metaDataMap
-			logger.debug("shallProcessJEXL: "+shallProcessJEXL+" map:"+metaDataMap.keySet());
-			if (shallProcessJEXL==null) return true;
-			if (metaDataMap.isEmpty()) return true;
-			Expression e = jexlEngine.createExpression(shallProcessJEXL);
-			JexlContext context = new MapContext(metaDataMap);
-			logger.debug(e+" "+metaDataMap.values()+" "+e.evaluate(context));
-	    	return (Boolean) e.evaluate(context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public Object evaluateJexl(TraversalEvent traversalEvent, Map<String, Object> metaDataMap) {
-		//evaluate the traversalEvent against metaDataMap
-		String jexl=traversalEvent.getTraversalCriterion().getChunkSource();
-		//logger.debug(jexl+" "+metaDataMap);
-		if (jexl==null) return true;
-		if (jexl.equals("")) return true;
-		if (jexl.equals("GENERIC")) return true;
-		if (metaDataMap.isEmpty()) return true;
-		Expression e = jexlEngine.createExpression(jexl);
-		JexlContext context = new MapContext(metaDataMap);
-		//logger.debug(e+" "+e.evaluate(context));
-		return e.evaluate(context);
 	}
 
 	
@@ -1277,8 +1390,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		getToolMatches().put(tool.getName(), toolMatch);
 		long score=toolMatch.computeScore();
 		long expectedScore=toolMatch.computeExpectedScore();
-		logger.debug(Long.toBinaryString(score)+" ");
-		logger.debug(Long.toBinaryString(expectedScore)+" (exp)");
+		logger.trace(Long.toBinaryString(score)+" ");
+		logger.trace(Long.toBinaryString(expectedScore)+" (exp)");
 		//logger.debug(Long.toHexString(score)+" vs "+Long.toHexString(expectedScore));
 		if (score==expectedScore)
 		{
@@ -1297,7 +1410,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		boolean rc = false;
 		for (Entry<String, Tool> toolEntry:getTools())
 		{
-			logger.debug("validate tool="+toolEntry.getKey());
+			logger.trace("validate tool="+toolEntry.getKey());
 			if (validateTool(toolEntry.getValue()))
 			{
 				rc = true;
@@ -1419,8 +1532,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getOutDataPorts();
 			case CorePackage.TASK__NAME:
 				return getName();
-			case CorePackage.TASK__SHALL_PROCESS_JEXL:
-				return getShallProcessJEXL();
+			case CorePackage.TASK__JEXL_STRING:
+				return getJexlString();
 			case CorePackage.TASK__UTIL:
 				return isUtil();
 			case CorePackage.TASK__JEXL_ENGINE:
@@ -1464,6 +1577,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getInputDataPortValidator();
 			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
 				return getOutputDataPortValidator();
+			case CorePackage.TASK__ANALYSIS_TYPES:
+				return getAnalysisTypes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1488,8 +1603,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__NAME:
 				setName((String)newValue);
 				return;
-			case CorePackage.TASK__SHALL_PROCESS_JEXL:
-				setShallProcessJEXL((String)newValue);
+			case CorePackage.TASK__JEXL_STRING:
+				setJexlString((String)newValue);
 				return;
 			case CorePackage.TASK__UTIL:
 				setUtil((Boolean)newValue);
@@ -1541,6 +1656,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getOutputDataPortValidator().clear();
 				getOutputDataPortValidator().addAll((Collection<? extends Pattern>)newValue);
 				return;
+			case CorePackage.TASK__ANALYSIS_TYPES:
+				getAnalysisTypes().clear();
+				getAnalysisTypes().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1562,8 +1681,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case CorePackage.TASK__SHALL_PROCESS_JEXL:
-				setShallProcessJEXL(SHALL_PROCESS_JEXL_EDEFAULT);
+			case CorePackage.TASK__JEXL_STRING:
+				setJexlString(JEXL_STRING_EDEFAULT);
 				return;
 			case CorePackage.TASK__UTIL:
 				setUtil(UTIL_EDEFAULT);
@@ -1613,6 +1732,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
 				getOutputDataPortValidator().clear();
 				return;
+			case CorePackage.TASK__ANALYSIS_TYPES:
+				getAnalysisTypes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1631,8 +1753,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return outDataPorts != null && !outDataPorts.isEmpty();
 			case CorePackage.TASK__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case CorePackage.TASK__SHALL_PROCESS_JEXL:
-				return SHALL_PROCESS_JEXL_EDEFAULT == null ? shallProcessJEXL != null : !SHALL_PROCESS_JEXL_EDEFAULT.equals(shallProcessJEXL);
+			case CorePackage.TASK__JEXL_STRING:
+				return JEXL_STRING_EDEFAULT == null ? jexlString != null : !JEXL_STRING_EDEFAULT.equals(jexlString);
 			case CorePackage.TASK__UTIL:
 				return util != UTIL_EDEFAULT;
 			case CorePackage.TASK__JEXL_ENGINE:
@@ -1667,6 +1789,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return inputDataPortValidator != null && !inputDataPortValidator.isEmpty();
 			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
 				return outputDataPortValidator != null && !outputDataPortValidator.isEmpty();
+			case CorePackage.TASK__ANALYSIS_TYPES:
+				return analysisTypes != null && !analysisTypes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1683,8 +1807,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", shallProcessJEXL: ");
-		result.append(shallProcessJEXL);
+		result.append(", jexlString: ");
+		result.append(jexlString);
 		result.append(", util: ");
 		result.append(util);
 		result.append(", jexlEngine: ");
@@ -1701,6 +1825,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(inputDataPortValidator);
 		result.append(", outputDataPortValidator: ");
 		result.append(outputDataPortValidator);
+		result.append(", analysisTypes: ");
+		result.append(analysisTypes);
 		result.append(')');
 		return result.toString();
 	}

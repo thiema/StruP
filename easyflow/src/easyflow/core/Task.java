@@ -6,10 +6,12 @@
  */
 package easyflow.core;
 
+import easyflow.metadata.GroupingInstance;
 import easyflow.tool.DataFormat;
 import easyflow.tool.Tool;
 
 import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 
 import java.net.URI;
@@ -42,7 +44,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getInDataPorts <em>In Data Ports</em>}</li>
  *   <li>{@link easyflow.core.Task#getOutDataPorts <em>Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.Task#getName <em>Name</em>}</li>
- *   <li>{@link easyflow.core.Task#getShallProcessJEXL <em>Shall Process JEXL</em>}</li>
+ *   <li>{@link easyflow.core.Task#getJexlString <em>Jexl String</em>}</li>
  *   <li>{@link easyflow.core.Task#isUtil <em>Util</em>}</li>
  *   <li>{@link easyflow.core.Task#getJexlEngine <em>Jexl Engine</em>}</li>
  *   <li>{@link easyflow.core.Task#getLogger <em>Logger</em>}</li>
@@ -60,6 +62,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getOutputs <em>Outputs</em>}</li>
  *   <li>{@link easyflow.core.Task#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.Task#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
+ *   <li>{@link easyflow.core.Task#getAnalysisTypes <em>Analysis Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -127,30 +130,30 @@ public interface Task extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Shall Process JEXL</b></em>' attribute.
+	 * Returns the value of the '<em><b>Jexl String</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Shall Process JEXL</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Jexl String</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Shall Process JEXL</em>' attribute.
-	 * @see #setShallProcessJEXL(String)
-	 * @see easyflow.core.CorePackage#getTask_ShallProcessJEXL()
+	 * @return the value of the '<em>Jexl String</em>' attribute.
+	 * @see #setJexlString(String)
+	 * @see easyflow.core.CorePackage#getTask_JexlString()
 	 * @model
 	 * @generated
 	 */
-	String getShallProcessJEXL();
+	String getJexlString();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getShallProcessJEXL <em>Shall Process JEXL</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.core.Task#getJexlString <em>Jexl String</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Shall Process JEXL</em>' attribute.
-	 * @see #getShallProcessJEXL()
+	 * @param value the new value of the '<em>Jexl String</em>' attribute.
+	 * @see #getJexlString()
 	 * @generated
 	 */
-	void setShallProcessJEXL(String value);
+	void setJexlString(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Util</b></em>' attribute.
@@ -485,6 +488,22 @@ public interface Task extends EObject {
 	EList<Pattern> getOutputDataPortValidator();
 
 	/**
+	 * Returns the value of the '<em><b>Analysis Types</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Analysis Types</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Analysis Types</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getTask_AnalysisTypes()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getAnalysisTypes();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -501,18 +520,26 @@ public interface Task extends EObject {
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
-	 * @model
+	 * @model groupingInstancesMany="true"
 	 * @generated
 	 */
-	boolean shallProcess(Map<String, Object> metaDataMap);
+	boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Object"
+	 * @model dataType="easyflow.Object" metaDataMapMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
 	 * @generated
 	 */
-	Object evaluateJexl(TraversalEvent traversalEvent, Map<String, Object> metaDataMap);
+	Object evaluateJexl(EMap<String, Object> metaDataMap);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>" groupingInstancesMany="true"
+	 * @generated
+	 */
+	EMap<String, Object> createMetaDataMapForJexl(EList<GroupingInstance> groupingInstances, String forGrouping);
 
 	/**
 	 * <!-- begin-user-doc -->

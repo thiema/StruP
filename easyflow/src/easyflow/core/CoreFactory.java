@@ -62,15 +62,6 @@ public interface CoreFactory extends EFactory {
 	EasyflowTemplate createEasyflowTemplate();
 
 	/**
-	 * Returns a new object of class '<em>Easyflow Task Reader</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Easyflow Task Reader</em>'.
-	 * @generated
-	 */
-	EasyflowTaskReader createEasyflowTaskReader();
-
-	/**
 	 * Returns a new object of class '<em>Galaxy Task Reader</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

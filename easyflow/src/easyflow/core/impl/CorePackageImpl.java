@@ -15,7 +15,6 @@ import easyflow.core.DataLink;
 import easyflow.core.DataPort;
 import easyflow.core.DefaultRecord;
 import easyflow.core.DefaultWorkflowTemplate;
-import easyflow.core.EasyflowTaskReader;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.GalaxyTaskReader;
 import easyflow.core.ITaskReader;
@@ -125,13 +124,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass iTaskReaderEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass easyflowTaskReaderEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -477,7 +469,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTask_ShallProcessJEXL() {
+	public EAttribute getTask_JexlString() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -639,6 +631,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTask_AnalysisTypes() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(21);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIWorkflowTemplate() {
 		return iWorkflowTemplateEClass;
 	}
@@ -695,24 +696,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EClass getITaskReader() {
 		return iTaskReaderEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEasyflowTaskReader() {
-		return easyflowTaskReaderEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEasyflowTaskReader_Logger() {
-		return (EAttribute)easyflowTaskReaderEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1072,7 +1055,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__IN_DATA_PORTS);
 		createEReference(taskEClass, TASK__OUT_DATA_PORTS);
 		createEAttribute(taskEClass, TASK__NAME);
-		createEAttribute(taskEClass, TASK__SHALL_PROCESS_JEXL);
+		createEAttribute(taskEClass, TASK__JEXL_STRING);
 		createEAttribute(taskEClass, TASK__UTIL);
 		createEAttribute(taskEClass, TASK__JEXL_ENGINE);
 		createEAttribute(taskEClass, TASK__LOGGER);
@@ -1090,6 +1073,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__OUTPUTS);
 		createEAttribute(taskEClass, TASK__INPUT_DATA_PORT_VALIDATOR);
 		createEAttribute(taskEClass, TASK__OUTPUT_DATA_PORT_VALIDATOR);
+		createEAttribute(taskEClass, TASK__ANALYSIS_TYPES);
 
 		toolMatchEClass = createEClass(TOOL_MATCH);
 		createEAttribute(toolMatchEClass, TOOL_MATCH__LOGGER);
@@ -1116,9 +1100,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		easyflowTemplateEClass = createEClass(EASYFLOW_TEMPLATE);
 
 		iTaskReaderEClass = createEClass(ITASK_READER);
-
-		easyflowTaskReaderEClass = createEClass(EASYFLOW_TASK_READER);
-		createEAttribute(easyflowTaskReaderEClass, EASYFLOW_TASK_READER__LOGGER);
 
 		galaxyTaskReaderEClass = createEClass(GALAXY_TASK_READER);
 		createEAttribute(galaxyTaskReaderEClass, GALAXY_TASK_READER__LOGGER);
@@ -1174,6 +1155,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
+		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 
 		// Create type parameters
@@ -1184,7 +1166,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		defaultWorkflowTemplateEClass.getESuperTypes().add(this.getIWorkflowTemplate());
 		easyflowTemplateEClass.getESuperTypes().add(this.getIWorkflowTemplate());
 		easyflowTemplateEClass.getESuperTypes().add(this.getDefaultWorkflowTemplate());
-		easyflowTaskReaderEClass.getESuperTypes().add(this.getITaskReader());
 		galaxyTaskReaderEClass.getESuperTypes().add(this.getITaskReader());
 
 		// Initialize classes and features; add operations and parameters
@@ -1248,11 +1229,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "shallProcessTask", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		addEOperation(workflowEClass, null, "evaluateJEXLString", 0, 1, IS_UNIQUE, IS_ORDERED);
-
 		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "readWorkfowTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(workflowEClass, theMapsPackage.getTaskToDataPortsMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -1265,11 +1241,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveMissingDataPortsByToolFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(workflowEClass, this.getTask(), "findUtilityTaskFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTask_InDataPorts(), this.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_OutDataPorts(), this.getDataPort(), null, "outDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTask_ShallProcessJEXL(), ecorePackage.getEString(), "shallProcessJEXL", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_JexlString(), ecorePackage.getEString(), "jexlString", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Util(), ecorePackage.getEBoolean(), "util", "false", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_JexlEngine(), theEasyflowPackage.getJexlEngine(), "jexlEngine", null, 0, 1, Task.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Task.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1287,6 +1266,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_Outputs(), theMapsPackage.getStringToURIMap(), null, "outputs", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_InputDataPortValidator(), theEasyflowPackage.getPattern(), "inputDataPortValidator", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_OutputDataPortValidator(), theEasyflowPackage.getPattern(), "outputDataPortValidator", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_AnalysisTypes(), ecorePackage.getEString(), "analysisTypes", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1294,21 +1274,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, ecorePackage.getEString(), "defaultGroupingCriteria", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "shallProcess", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(ecorePackage.getEMap());
-		g2 = createEGenericType(ecorePackage.getEString());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(theEasyflowPackage.getObject());
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "metaDataMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, theEasyflowPackage.getObject(), "evaluateJexl", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(ecorePackage.getEMap());
-		g2 = createEGenericType(ecorePackage.getEString());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(theEasyflowPackage.getObject());
-		g1.getETypeArguments().add(g2);
-		addEParameter(op, g1, "metaDataMap", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "metaDataMap", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, theMapsPackage.getStringToObjectMap(), "createMetaDataMapForJexl", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "parseDataFormatField", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "dataFormatString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1414,9 +1388,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(iTaskReaderEClass, ITaskReader.class, "ITaskReader", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		addEOperation(iTaskReaderEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(easyflowTaskReaderEClass, EasyflowTaskReader.class, "EasyflowTaskReader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEasyflowTaskReader_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, EasyflowTaskReader.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(galaxyTaskReaderEClass, GalaxyTaskReader.class, "GalaxyTaskReader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGalaxyTaskReader_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, GalaxyTaskReader.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

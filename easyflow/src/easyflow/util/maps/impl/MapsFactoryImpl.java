@@ -39,6 +39,7 @@ import javax.xml.validation.Schema;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -103,6 +104,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_GROUPING_MAP: return (EObject)createStringToGroupingMap();
 			case MapsPackage.STRING_TO_GROUPING_FEATURE_MAP: return (EObject)createStringToGroupingFeatureMap();
 			case MapsPackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: return (EObject)createStringToGroupingInstanceListMap();
+			case MapsPackage.STRING_TO_GROUPING_INSTANCE_MAP_MAP: return (EObject)createStringToGroupingInstanceMapMap();
 			case MapsPackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
 			case MapsPackage.STRING_TO_URI_MAP: return (EObject)createStringToURIMap();
 			case MapsPackage.STRING_TO_SCHEMA_MAP: return (EObject)createStringToSchemaMap();
@@ -238,6 +240,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, GroupingInstanceList> createStringToGroupingInstanceListMap() {
 		StringToGroupingInstanceListMapImpl stringToGroupingInstanceListMap = new StringToGroupingInstanceListMapImpl();
 		return stringToGroupingInstanceListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, EMap<String, GroupingInstanceList>> createStringToGroupingInstanceMapMap() {
+		StringToGroupingInstanceMapMapImpl stringToGroupingInstanceMapMap = new StringToGroupingInstanceMapMapImpl();
+		return stringToGroupingInstanceMapMap;
 	}
 
 	/**

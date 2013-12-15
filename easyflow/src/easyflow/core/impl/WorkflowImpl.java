@@ -833,7 +833,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         		if (tools!=null)
         			for (String toolName:task.getToolNames().keySet())
         			{
-        				logger.debug("trying to find tool implementation definition for "+toolName);
+        				logger.trace("trying to find tool implementation definition for "+toolName);
         				// if tool name is separated by ":" -> assume package:tool and parse both entities
         				String tmp[] = toolName.split(":");
         				String packageName=null;
@@ -885,7 +885,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	getGraph().getModel().endUpdate();
         }
         
-        
         Task tmp;
 		try {
 			tmp = getGraphUtil().loadTask(getFirstNode());
@@ -906,7 +905,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
     	setFirstNode(rootTarget);
     	getGraphUtil().setDefaultRootCell((mxICell) rootTarget);
     	getLastTasks().add(getRootTask());
-        logger.debug(getWorkflowTemplate().getTasks());
+        logger.trace(getWorkflowTemplate().getTasks());
         Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
 		while (it.hasNext()) {
 			Task task=it.next();
@@ -1029,13 +1028,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			EList<DataPort> overlappingDataPorts=task.getOverlappingDataPorts(
 					task.getInDataPorts(), parent.getOutDataPorts());
 			for (DataPort outDataPort:overlappingDataPorts)
-				//unresolvedDataPorts.remove(outDataPort);
-				logger.debug(outDataPort.getName());
+				unresolvedDataPorts.remove(outDataPort);
+				//logger.debug(outDataPort.getName());
 			if (!overlappingDataPorts.isEmpty())
+			{
 				tasks.put(parent, overlappingDataPorts);
-			
+			}
 		}
-
+		
 		// find possible tasks compatible with the unresolved ports
 		// the tasks are to be ranked:
 		// providing more ports gets higher rank
@@ -1089,7 +1089,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					}
 				}
 			}
-      logger.debug(tasks.size()+" parents ("+tasks2String(new BasicEList<Task>(tasks.keySet()))+") found.");
+      logger.trace(tasks.size()+" parents ("+tasks2String(new BasicEList<Task>(tasks.keySet()))+") found.");
 /*
 		if (!unresolvedDataPorts.isEmpty())
 		{
@@ -1172,6 +1172,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			}
 		}
 		return task.validateTools();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * find utility task by evaluating tasks analysisTypes attribute
+	 * and if nothing found analysisType of its tools
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Task findUtilityTaskFor(Task task) {
+		
 	}
 
 	private String tasks2String(EList<Task> tasks)
@@ -1272,7 +1283,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			{
 				if (!newTasks.contains(possibleParent))
 				{
-					logger.debug("add "+possibleParent.getUniqueString()+" "+possibleParent.hashCode());
+					logger.debug("add "+possibleParent.getUniqueString()+" as possible parent.");
 					newTasks.add(possibleParent);
 				}
 			}
@@ -1310,14 +1321,22 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			public boolean visit(Object vertex, Object edge) {
 				String path = "";
 				// set the current task
-				Task task = XMLUtil.loadTaskFromVertex(vertex);
+				Task task;
+				try {
+					task = getGraphUtil().loadTask(vertex);
+				
 				path += task.getUniqueString();
 				Task parentTask = null;
 				//Object parent = null;
 				
 				if (edge != null)
 				{
-					parentTask = XMLUtil.loadTaskFromVertex(getGraph().getView().getVisibleTerminal(edge, true));
+					try {
+						parentTask = getGraphUtil().loadTask(getGraph().getView().getVisibleTerminal(edge, true));
+					} catch (TaskNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//logger.debug(lastParent+" "+parentTask.getUniqueString());
 					if (lastParent != null && !parentTask.getUniqueString().equals(lastParent))
 					{
@@ -1333,6 +1352,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				if (getGraph().getOutgoingEdges(vertex).length > 0)
 					path +="=>";
 				System.out.print(path);
+				} catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				return true;
 			}
 		};
@@ -1416,7 +1439,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 								traversalEvent.getTraversalCriterion().getId(),
 								groupingInstance.getName());
-						logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+						//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
 					}
 				}
 				else
@@ -1441,7 +1464,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		if (getGraphUtil().getNewTraversalEvents().isEmpty())
 		{
-			getGraphUtil().fixOffTargetCells((mxICell) getFirstNode(), traversalEvent.getTraversalCriterion().getId());
+			//getGraphUtil().fixOffTargetCells((mxICell) getFirstNode(), traversalEvent.getTraversalCriterion().getId());
 			// cleanup and reset
 			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
 				getGraphUtil().removeSubGraph(
@@ -1464,50 +1487,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		return getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode());			
 	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean shallProcessTask(Task task) {
-		EMap<String, Object> records=(EMap<String, Object>) ((EObject) getMetaData()).eGet(((EObject)getMetaData()).eClass().getEStructuralFeature("records"));
-		for (String key:records.keySet()) {
-			DefaultRecord defaultRecord=(DefaultRecord)records.get(key);
-			if (task.shallProcess(defaultRecord.getGenericAttributes().map())) return true;
-		}
-		return false;
-	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void evaluateJEXLString() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean shallProcessTask(Task task, TraversalEvent traversalEvent) {
-		EMap<String, Object> records=(EMap<String, Object>) ((EObject) getMetaData()).eGet(((EObject)getMetaData()).eClass().getEStructuralFeature("records"));
-		logger.debug(task.getUniqueString()+" "+traversalEvent.getTraversalCriterion().getId());
-		boolean shallProcess=false;
-		for (String key:records.keySet()) {
-			DefaultRecord defaultRecord=(DefaultRecord)records.get(key);
-			Object o=task.evaluateJexl(traversalEvent, defaultRecord.getGenericAttributes().map());
-			logger.debug(" "+o);
-			
-		}
-		return shallProcess;
-	}
 
 	/**
 	 * <!-- begin-user-doc -->

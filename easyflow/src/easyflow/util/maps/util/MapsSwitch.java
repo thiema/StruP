@@ -39,6 +39,7 @@ import javax.xml.validation.Schema;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -170,6 +171,12 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, GroupingInstanceList> stringToGroupingInstanceListMap = (Map.Entry<String, GroupingInstanceList>)theEObject;
 				T result = caseStringToGroupingInstanceListMap(stringToGroupingInstanceListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_GROUPING_INSTANCE_MAP_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EMap<String, GroupingInstanceList>> stringToGroupingInstanceMapMap = (Map.Entry<String, EMap<String, GroupingInstanceList>>)theEObject;
+				T result = caseStringToGroupingInstanceMapMap(stringToGroupingInstanceMapMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -426,6 +433,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToGroupingInstanceListMap(Map.Entry<String, GroupingInstanceList> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Grouping Instance Map Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Grouping Instance Map Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToGroupingInstanceMapMap(Map.Entry<String, EMap<String, GroupingInstanceList>> object) {
 		return null;
 	}
 

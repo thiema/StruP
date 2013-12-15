@@ -44,6 +44,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -149,6 +150,10 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToGroupingInstanceListMap(Map.Entry<String, GroupingInstanceList> object) {
 				return createStringToGroupingInstanceListMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToGroupingInstanceMapMap(Map.Entry<String, EMap<String, GroupingInstanceList>> object) {
+				return createStringToGroupingInstanceMapMapAdapter();
 			}
 			@Override
 			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
@@ -383,6 +388,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToGroupingInstanceListMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Grouping Instance Map Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToGroupingInstanceMapMapAdapter() {
 		return null;
 	}
 

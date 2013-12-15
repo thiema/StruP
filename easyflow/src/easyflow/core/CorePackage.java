@@ -269,13 +269,13 @@ public interface CorePackage extends EPackage {
 	int TASK__NAME = 2;
 
 	/**
-	 * The feature id for the '<em><b>Shall Process JEXL</b></em>' attribute.
+	 * The feature id for the '<em><b>Jexl String</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__SHALL_PROCESS_JEXL = 3;
+	int TASK__JEXL_STRING = 3;
 
 	/**
 	 * The feature id for the '<em><b>Util</b></em>' attribute.
@@ -431,13 +431,22 @@ public interface CorePackage extends EPackage {
 	int TASK__OUTPUT_DATA_PORT_VALIDATOR = 20;
 
 	/**
+	 * The feature id for the '<em><b>Analysis Types</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__ANALYSIS_TYPES = 21;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 21;
+	int TASK_FEATURE_COUNT = 22;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -480,16 +489,6 @@ public interface CorePackage extends EPackage {
 	int ITASK_READER = 6;
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTaskReaderImpl <em>Easyflow Task Reader</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.EasyflowTaskReaderImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTaskReader()
-	 * @generated
-	 */
-	int EASYFLOW_TASK_READER = 7;
-
-	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -497,7 +496,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGalaxyTaskReader()
 	 * @generated
 	 */
-	int GALAXY_TASK_READER = 8;
+	int GALAXY_TASK_READER = 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.DefaultRecordImpl <em>Default Record</em>}' class.
@@ -507,7 +506,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDefaultRecord()
 	 * @generated
 	 */
-	int DEFAULT_RECORD = 9;
+	int DEFAULT_RECORD = 8;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
@@ -517,7 +516,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getCatalog()
 	 * @generated
 	 */
-	int CATALOG = 10;
+	int CATALOG = 9;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
@@ -752,24 +751,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TASK_READER__LOGGER = ITASK_READER_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Easyflow Task Reader</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EASYFLOW_TASK_READER_FEATURE_COUNT = ITASK_READER_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Logger</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
 	int GALAXY_TASK_READER__LOGGER = ITASK_READER_FEATURE_COUNT + 0;
 
 	/**
@@ -826,7 +807,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDataPort()
 	 * @generated
 	 */
-	int DATA_PORT = 11;
+	int DATA_PORT = 10;
 
 	/**
 	 * The feature id for the '<em><b>Grouping Criteria</b></em>' reference list.
@@ -918,7 +899,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDataLink()
 	 * @generated
 	 */
-	int DATA_LINK = 12;
+	int DATA_LINK = 11;
 
 	/**
 	 * The feature id for the '<em><b>Data Port</b></em>' reference.
@@ -1207,15 +1188,15 @@ public interface CorePackage extends EPackage {
 	EAttribute getTask_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getShallProcessJEXL <em>Shall Process JEXL</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getJexlString <em>Jexl String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Shall Process JEXL</em>'.
-	 * @see easyflow.core.Task#getShallProcessJEXL()
+	 * @return the meta object for the attribute '<em>Jexl String</em>'.
+	 * @see easyflow.core.Task#getJexlString()
 	 * @see #getTask()
 	 * @generated
 	 */
-	EAttribute getTask_ShallProcessJEXL();
+	EAttribute getTask_JexlString();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.Task#isUtil <em>Util</em>}'.
@@ -1405,6 +1386,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getTask_OutputDataPortValidator();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getAnalysisTypes <em>Analysis Types</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Analysis Types</em>'.
+	 * @see easyflow.core.Task#getAnalysisTypes()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_AnalysisTypes();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1476,27 +1468,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getITaskReader();
-
-	/**
-	 * Returns the meta object for class '{@link easyflow.core.EasyflowTaskReader <em>Easyflow Task Reader</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Easyflow Task Reader</em>'.
-	 * @see easyflow.core.EasyflowTaskReader
-	 * @generated
-	 */
-	EClass getEasyflowTaskReader();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.EasyflowTaskReader#getLogger <em>Logger</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Logger</em>'.
-	 * @see easyflow.core.EasyflowTaskReader#getLogger()
-	 * @see #getEasyflowTaskReader()
-	 * @generated
-	 */
-	EAttribute getEasyflowTaskReader_Logger();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.GalaxyTaskReader <em>Galaxy Task Reader</em>}'.
@@ -2069,12 +2040,12 @@ public interface CorePackage extends EPackage {
 		EAttribute TASK__NAME = eINSTANCE.getTask_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Shall Process JEXL</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Jexl String</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TASK__SHALL_PROCESS_JEXL = eINSTANCE.getTask_ShallProcessJEXL();
+		EAttribute TASK__JEXL_STRING = eINSTANCE.getTask_JexlString();
 
 		/**
 		 * The meta object literal for the '<em><b>Util</b></em>' attribute feature.
@@ -2213,6 +2184,14 @@ public interface CorePackage extends EPackage {
 		EAttribute TASK__OUTPUT_DATA_PORT_VALIDATOR = eINSTANCE.getTask_OutputDataPortValidator();
 
 		/**
+		 * The meta object literal for the '<em><b>Analysis Types</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__ANALYSIS_TYPES = eINSTANCE.getTask_AnalysisTypes();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2275,24 +2254,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EClass ITASK_READER = eINSTANCE.getITaskReader();
-
-		/**
-		 * The meta object literal for the '{@link easyflow.core.impl.EasyflowTaskReaderImpl <em>Easyflow Task Reader</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.core.impl.EasyflowTaskReaderImpl
-		 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTaskReader()
-		 * @generated
-		 */
-		EClass EASYFLOW_TASK_READER = eINSTANCE.getEasyflowTaskReader();
-
-		/**
-		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute EASYFLOW_TASK_READER__LOGGER = eINSTANCE.getEasyflowTaskReader_Logger();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.

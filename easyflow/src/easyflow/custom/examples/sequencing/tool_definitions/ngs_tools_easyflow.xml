@@ -59,6 +59,7 @@ Command: index         index sequences in the FASTA format
 				<option value="fixmate" help="fix mate information"/>
 				<option value="flagstat" help="simple stats"/>
 				<option value="rmdup" help="remove PCR duplicates"/>
+				<option value="merge" help="merge sorted alignments"/>
 			</param>
 		</conditional>
 		<help>

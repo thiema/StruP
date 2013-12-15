@@ -139,4 +139,12 @@ public interface IProject extends EObject {
 	 */
 	boolean resolveToolDependencies();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean setMetaDataReader();
+
 } // IProject

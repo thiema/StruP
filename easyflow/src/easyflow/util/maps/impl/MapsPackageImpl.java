@@ -160,6 +160,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToGroupingInstanceMapMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToStringListMapEClass = null;
 
 	/**
@@ -667,6 +674,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToGroupingInstanceMapMap() {
+		return stringToGroupingInstanceMapMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToGroupingInstanceMapMap_Key() {
+		return (EAttribute)stringToGroupingInstanceMapMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToGroupingInstanceMapMap_Value() {
+		return (EReference)stringToGroupingInstanceMapMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToStringListMap() {
 		return stringToStringListMapEClass;
 	}
@@ -1062,6 +1096,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		createEAttribute(stringToGroupingInstanceListMapEClass, STRING_TO_GROUPING_INSTANCE_LIST_MAP__KEY);
 		createEReference(stringToGroupingInstanceListMapEClass, STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE);
 
+		stringToGroupingInstanceMapMapEClass = createEClass(STRING_TO_GROUPING_INSTANCE_MAP_MAP);
+		createEAttribute(stringToGroupingInstanceMapMapEClass, STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY);
+		createEReference(stringToGroupingInstanceMapMapEClass, STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE);
+
 		stringToStringListMapEClass = createEClass(STRING_TO_STRING_LIST_MAP);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__KEY);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__VALUE);
@@ -1196,6 +1234,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToGroupingInstanceListMapEClass, Map.Entry.class, "StringToGroupingInstanceListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToGroupingInstanceListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToGroupingInstanceListMap_Value(), theMetadataPackage.getGroupingInstanceList(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToGroupingInstanceMapMapEClass, Map.Entry.class, "StringToGroupingInstanceMapMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToGroupingInstanceMapMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToGroupingInstanceMapMap_Value(), this.getStringToGroupingInstanceListMap(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stringToStringListMapEClass, Map.Entry.class, "StringToStringListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

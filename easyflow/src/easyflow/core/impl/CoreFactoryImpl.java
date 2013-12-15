@@ -65,7 +65,6 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.TOOL_MATCH: return createToolMatch();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE: return createDefaultWorkflowTemplate();
 			case CorePackage.EASYFLOW_TEMPLATE: return createEasyflowTemplate();
-			case CorePackage.EASYFLOW_TASK_READER: return createEasyflowTaskReader();
 			case CorePackage.GALAXY_TASK_READER: return createGalaxyTaskReader();
 			case CorePackage.DEFAULT_RECORD: return createDefaultRecord();
 			case CorePackage.CATALOG: return createCatalog();
@@ -114,16 +113,6 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public EasyflowTemplate createEasyflowTemplate() {
 		EasyflowTemplateImpl easyflowTemplate = new EasyflowTemplateImpl();
 		return easyflowTemplate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EasyflowTaskReader createEasyflowTaskReader() {
-		EasyflowTaskReaderImpl easyflowTaskReader = new EasyflowTaskReaderImpl();
-		return easyflowTaskReader;
 	}
 
 	/**

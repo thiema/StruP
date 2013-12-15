@@ -30,7 +30,6 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.metadata.DefaultMetaData#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupingInstances <em>Grouping Instances</em>}</li>
- *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupingInstancesByGroup <em>Grouping Instances By Group</em>}</li>
  * </ul>
  * </p>
  *
@@ -124,30 +123,5 @@ public interface DefaultMetaData extends IMetaData {
 	 * @generated
 	 */
 	EMap<String, GroupingInstanceList> getGroupingInstances();
-
-	/**
-	 * Returns the value of the '<em><b>Grouping Instances By Group</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.metadata.GroupingInstanceList},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Grouping Instances By Group</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Grouping Instances By Group</em>' map.
-	 * @see easyflow.metadata.MetadataPackage#getDefaultMetaData_GroupingInstancesByGroup()
-	 * @model mapType="easyflow.util.maps.StringToGroupingInstanceListMap<org.eclipse.emf.ecore.EString, easyflow.metadata.GroupingInstanceList>"
-	 * @generated
-	 */
-	EMap<String, GroupingInstanceList> getGroupingInstancesByGroup();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation"
-	 * @generated
-	 */
-	Map<String, Object> getDefaultRecords();
 
 } // DefaultMetaData

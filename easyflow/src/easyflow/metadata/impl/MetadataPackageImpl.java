@@ -285,15 +285,6 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultMetaData_GroupingInstancesByGroup() {
-		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getIProjectMetaData() {
 		return iProjectMetaDataEClass;
 	}
@@ -350,6 +341,33 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 */
 	public EReference getGroupingInstance_Features() {
 		return (EReference)groupingInstanceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGroupingInstance_Grouping() {
+		return (EReference)groupingInstanceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingInstance_GroupingStr() {
+		return (EAttribute)groupingInstanceEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGroupingInstance_Records() {
+		return (EAttribute)groupingInstanceEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -432,7 +450,6 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEAttribute(defaultMetaDataEClass, DEFAULT_META_DATA__LOGGER);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPINGS);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_INSTANCES);
-		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_INSTANCES_BY_GROUP);
 
 		iProjectMetaDataEClass = createEClass(IPROJECT_META_DATA);
 
@@ -443,6 +460,9 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		groupingInstanceEClass = createEClass(GROUPING_INSTANCE);
 		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__NAME);
 		createEReference(groupingInstanceEClass, GROUPING_INSTANCE__FEATURES);
+		createEReference(groupingInstanceEClass, GROUPING_INSTANCE__GROUPING);
+		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__GROUPING_STR);
+		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__RECORDS);
 
 		groupingFeatureEClass = createEClass(GROUPING_FEATURE);
 		createEAttribute(groupingFeatureEClass, GROUPING_FEATURE__NAME);
@@ -476,9 +496,8 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
-		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -490,27 +509,35 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		// Initialize classes and features; add operations and parameters
 		initEClass(iMetaDataEClass, IMetaData.class, "IMetaData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		addEOperation(iMetaDataEClass, null, "initMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		addEOperation(iMetaDataEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(iMetaDataEClass, theTraversalPackage.getGroupingCriterion(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(iMetaDataEClass, this.getGroupingInstance(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "resolvedAs", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iMetaDataEClass, this.getGroupingInstance(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStr1", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStr2", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iMetaDataEClass, null, "getValueForGroupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "field", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "parentField", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "instance", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iMetaDataEClass, ecorePackage.getEString(), "getRecordsBy", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getGroupingInstance(), "recordInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultMetaDataEClass, DefaultMetaData.class, "DefaultMetaData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDefaultMetaData_Reader(), theEasyflowPackage.getBufferedReader(), "reader", null, 0, 1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultMetaData_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultMetaData.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_Groupings(), theMapsPackage.getStringToGroupingMap(), null, "groupings", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_GroupingInstances(), theMapsPackage.getStringToGroupingInstanceListMap(), null, "groupingInstances", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDefaultMetaData_GroupingInstancesByGroup(), theMapsPackage.getStringToGroupingInstanceListMap(), null, "groupingInstancesByGroup", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = addEOperation(defaultMetaDataEClass, null, "getDefaultRecords", 0, 1, IS_UNIQUE, IS_ORDERED);
-		EGenericType g1 = createEGenericType(ecorePackage.getEMap());
-		EGenericType g2 = createEGenericType(ecorePackage.getEString());
-		g1.getETypeArguments().add(g2);
-		g2 = createEGenericType(theEasyflowPackage.getObject());
-		g1.getETypeArguments().add(g2);
-		initEOperation(op, g1);
 
 		initEClass(iProjectMetaDataEClass, IProjectMetaData.class, "IProjectMetaData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -523,6 +550,12 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		initEClass(groupingInstanceEClass, GroupingInstance.class, "GroupingInstance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroupingInstance_Name(), ecorePackage.getEString(), "name", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGroupingInstance_Features(), theMapsPackage.getStringToGroupingFeatureMap(), null, "features", null, 0, -1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGroupingInstance_Grouping(), this.getGrouping(), null, "grouping", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingInstance_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingInstance_Records(), ecorePackage.getEString(), "records", null, 0, -1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = addEOperation(groupingInstanceEClass, ecorePackage.getEString(), "getOverlappingRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "records", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(groupingFeatureEClass, GroupingFeature.class, "GroupingFeature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroupingFeature_Name(), ecorePackage.getEString(), "name", null, 0, 1, GroupingFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

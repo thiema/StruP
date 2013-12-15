@@ -100,10 +100,6 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createITaskReaderAdapter();
 			}
 			@Override
-			public Adapter caseEasyflowTaskReader(EasyflowTaskReader object) {
-				return createEasyflowTaskReaderAdapter();
-			}
-			@Override
 			public Adapter caseGalaxyTaskReader(GalaxyTaskReader object) {
 				return createGalaxyTaskReaderAdapter();
 			}
@@ -224,20 +220,6 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createITaskReaderAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.core.EasyflowTaskReader <em>Easyflow Task Reader</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.core.EasyflowTaskReader
-	 * @generated
-	 */
-	public Adapter createEasyflowTaskReaderAdapter() {
 		return null;
 	}
 

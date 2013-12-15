@@ -691,6 +691,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 					URIUtil.addToURI(getBaseURI(), projectCfg.getString("metadataFile"))
 					, isFromJar());
 			metaData.setReader(new BufferedReader(isReader));
+			metaData.initMetaData();
+			isReader = URIUtil.getInputStreamReader(
+					URIUtil.addToURI(getBaseURI(), projectCfg.getString("metadataFile"))
+					, isFromJar());
+			metaData.setReader(new BufferedReader(isReader));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -946,6 +951,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean setMetaDataReader() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean init() {
@@ -956,7 +972,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		if (getGraphUtil() == null)
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
 		// XML util depricated !! ... to be removed/refactored.
-		XMLUtil.container.put("tasks", getGraphUtil().getTasks());
+		//XMLUtil.container.put("tasks", getGraphUtil().getTasks());
 		
         GlobalVar.setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraphUtil(getGraphUtil());

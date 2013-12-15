@@ -646,7 +646,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			}
 			else if (!parameter.getGrouping().isEmpty())
 			{
-				logger.debug("set grouping"+" "+parameter.getGrouping()+" "
+				logger.trace("set grouping"+" "+parameter.getGrouping()+" "
 						+getTask().getGroupingCriteria().keySet()+" "
 						+getTask().getGroupingCriteria().values());
 				//getTask().getGroupingCriteria().containsKey()
@@ -836,7 +836,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		if (tasks != null && !tasks.isEmpty())
 		{
 			taskDataPortsMap=getDataPortProvidingTasks(tasks, getReverseMissingInDataPorts());
-			adequateTasks=getMostAdequateTasks(taskDataPortsMap, getReverseMissingInDataPorts());
+			if (!taskDataPortsMap.isEmpty())
+				adequateTasks=getMostAdequateTasks(taskDataPortsMap, getReverseMissingInDataPorts());
 		}
 		
 		if (!getReverseMissingInDataPorts().isEmpty())
@@ -869,7 +870,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				
 					
 		}
-		if (taskDataPortsMap!=null)
+		if (taskDataPortsMap!=null && adequateTasks != null && !taskDataPortsMap.isEmpty())
 		{
 			EMap<Task, EList<DataPort>> finalTaskDataPortsMap = new BasicEMap<Task, EList<DataPort>>();
 			for (Task t:adequateTasks)

@@ -551,29 +551,6 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * evaluate the task's jexl expression to decide if the task's grouping instance
-	 * violates the constains given by jexl. Assume grouping criteria was already applied.
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean shallProcessTask(Task task);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * iterate over tasks of the graph and call shallProcessTask(Task).
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	void evaluateJEXLString();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
@@ -610,5 +587,13 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	boolean resolveMissingDataPortsByToolFor(Task task);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Task findUtilityTaskFor(Task task);
 
 } // Workflow

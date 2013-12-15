@@ -533,6 +533,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+
+		addEOperation(utilEClass, theEasyflowPackage.getmxICell(), "findEdgesToBeResolved", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "resolveEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getmxICell(), "edge", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //JgraphxPackageImpl

@@ -504,6 +504,43 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_GROUPING_INSTANCE_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl <em>String To Grouping Instance Map Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToGroupingInstanceMapMap()
+	 * @generated
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP = 12;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Grouping Instance Map Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToStringListMapImpl <em>String To String List Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -511,7 +548,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToStringListMap()
 	 * @generated
 	 */
-	int STRING_TO_STRING_LIST_MAP = 12;
+	int STRING_TO_STRING_LIST_MAP = 13;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -548,7 +585,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToURIMap()
 	 * @generated
 	 */
-	int STRING_TO_URI_MAP = 13;
+	int STRING_TO_URI_MAP = 14;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -585,7 +622,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToSchemaMap()
 	 * @generated
 	 */
-	int STRING_TO_SCHEMA_MAP = 14;
+	int STRING_TO_SCHEMA_MAP = 15;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -622,7 +659,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToProjectMap()
 	 * @generated
 	 */
-	int STRING_TO_PROJECT_MAP = 15;
+	int STRING_TO_PROJECT_MAP = 16;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -659,7 +696,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToParameterMap()
 	 * @generated
 	 */
-	int STRING_TO_PARAMETER_MAP = 16;
+	int STRING_TO_PARAMETER_MAP = 17;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -697,7 +734,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDocumentPropertiesMap()
 	 * @generated
 	 */
-	int STRING_TO_DOCUMENT_PROPERTIES_MAP = 17;
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP = 18;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -735,7 +772,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToPackageMap()
 	 * @generated
 	 */
-	int STRING_TO_PACKAGE_MAP = 18;
+	int STRING_TO_PACKAGE_MAP = 19;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -773,7 +810,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataMap()
 	 * @generated
 	 */
-	int STRING_TO_DATA_MAP = 19;
+	int STRING_TO_DATA_MAP = 20;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -810,7 +847,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataFormatMap()
 	 * @generated
 	 */
-	int STRING_TO_DATA_FORMAT_MAP = 20;
+	int STRING_TO_DATA_FORMAT_MAP = 21;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -848,7 +885,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMatchMap()
 	 * @generated
 	 */
-	int STRING_TO_TOOL_MATCH_MAP = 21;
+	int STRING_TO_TOOL_MATCH_MAP = 22;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -886,7 +923,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataPortsMap()
 	 * @generated
 	 */
-	int TASK_TO_DATA_PORTS_MAP = 22;
+	int TASK_TO_DATA_PORTS_MAP = 23;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -924,7 +961,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataLinkMap()
 	 * @generated
 	 */
-	int STRING_TO_DATA_LINK_MAP = 23;
+	int STRING_TO_DATA_LINK_MAP = 24;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1360,6 +1397,40 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getStringToGroupingInstanceListMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Grouping Instance Map Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Grouping Instance Map Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueMapType="easyflow.util.maps.StringToGroupingInstanceListMap<org.eclipse.emf.ecore.EString, easyflow.metadata.GroupingInstanceList>"
+	 * @generated
+	 */
+	EClass getStringToGroupingInstanceMapMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToGroupingInstanceMapMap()
+	 * @generated
+	 */
+	EAttribute getStringToGroupingInstanceMapMap_Key();
+
+	/**
+	 * Returns the meta object for the map '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToGroupingInstanceMapMap()
+	 * @generated
+	 */
+	EReference getStringToGroupingInstanceMapMap_Value();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String List Map</em>}'.
@@ -2102,6 +2173,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE = eINSTANCE.getStringToGroupingInstanceListMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl <em>String To Grouping Instance Map Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToGroupingInstanceMapMap()
+		 * @generated
+		 */
+		EClass STRING_TO_GROUPING_INSTANCE_MAP_MAP = eINSTANCE.getStringToGroupingInstanceMapMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY = eINSTANCE.getStringToGroupingInstanceMapMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE = eINSTANCE.getStringToGroupingInstanceMapMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToStringListMapImpl <em>String To String List Map</em>}' class.
