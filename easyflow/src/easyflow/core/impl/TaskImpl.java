@@ -15,6 +15,8 @@ import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
+import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
 import easyflow.metadata.DefaultMetaData;
@@ -985,8 +987,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		Object evalObject=evaluateJexl(createMetaDataMapForJexl(groupingInstances, forGrouping));
 		if (evalObject instanceof Boolean)
+		{
 			return (Boolean) evalObject;
 			//return true;
+		}
 		return true;
 	}
 
@@ -997,15 +1001,37 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public Object evaluateJexl(EMap<String, Object> metaDataMap) {
 		//evaluate the tasks jexl expression against metaDataMap
-		logger.debug("shallProcessJEXL: "+getJexlString()+" map:"+metaDataMap.keySet());
+		logger.trace(getUniqueString()+" shallProcessJEXL: "+getJexlString()+" map:"+metaDataMap);
 		if (getJexlString()==null || getJexlString().equals("")) return true;
 		if (metaDataMap.isEmpty()) return true;
 		Expression e = jexlEngine.createExpression(getJexlString());
 		JexlContext context = new MapContext(metaDataMap.map());
-		logger.debug(e+" "+metaDataMap.values()+" "+e.evaluate(context));
+		logger.trace(e+" "+context);
+		Object eval=e.evaluate(context);
+		if (eval instanceof Boolean && !(Boolean) eval)
+			logger.info("Skip Task "+getUniqueString()
+					+" due to jexl condition: "+getJexlString()
+					+" and context: "+mapToString(metaDataMap));
     	return e.evaluate(context);
 	}
 
+	private String mapToString(EMap<String, Object> map)
+	{
+		String res="";
+		for (Entry<String, Object> e:map.entrySet())
+		{
+			if (e.getValue() instanceof String[])
+			{
+				res+=e.getKey()+"->[";
+				for (String v:(String[])e.getValue())
+					res+=v+", ";
+				res+="]; ";
+			}
+			else
+				res+=e.getKey()+"->"+e.getValue()+"; ";
+		}
+		return res;
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * we need to create a map of the kind:
@@ -1477,6 +1503,82 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return null;	
 	}
 
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultiplesInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+		if (tool == null)
+			tool=getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProcessMultiplesInstancesFor(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canFilterInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+		if (tool == null)
+			tool=getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canFilterInstancesFor(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws ToolNotFoundException 
+	 * @generated not
+	 */
+	public EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException {
+		if (tool == null)
+			tool=getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.getRequiredGroupings(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws ToolNotFoundException 
+	 * @generated not
+	 */
+	public EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException {
+		if (tool == null)
+			tool=getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.getRequiredGroupings(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<TraversalChunk> getOverlappingChunksFor(Task parentTask, String groupingStr) {
+		EList<TraversalChunk> tc=new BasicEList<TraversalChunk>();
+		for (TraversalChunk parentTraversalChunk:parentTask.getChunks().get(groupingStr))
+		{
+			if (getChunks().containsKey(groupingStr))
+			{
+				for (TraversalChunk traversalChunk: getChunks().get(groupingStr))
+				{
+					if (traversalChunk.getName().equals(parentTraversalChunk.getName()))
+						tc.add(traversalChunk);
+				}
+						
+			}
+		}
+		return tc;
+	}
 
 	private String list2String(EMap<String, URI> map)
 	{

@@ -34,10 +34,10 @@ import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.exception.TraversalChunkNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.execution.IExecutionSystem;
@@ -109,6 +109,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.graph.jgraphx.impl.UtilImpl#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.impl.UtilImpl#getNewTraversalEvents <em>New Traversal Events</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.impl.UtilImpl#getDataLinks <em>Data Links</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.impl.UtilImpl#getUtilityTasks <em>Utility Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -287,6 +288,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 * @ordered
 	 */
 	protected EMap<String, DataLink> dataLinks;
+	/**
+	 * The cached value of the '{@link #getUtilityTasks() <em>Utility Tasks</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilityTasks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Task> utilityTasks;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -542,6 +552,18 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return dataLinks;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, Task> getUtilityTasks() {
+		if (utilityTasks == null) {
+			utilityTasks = new EcoreEMap<String,Task>(MapsPackage.Literals.STRING_TO_TASK_MAP, StringToTaskMapImpl.class, this, JgraphxPackage.UTIL__UTILITY_TASKS);
+		}
+		return utilityTasks;
+	}
+
 	public void layoutGraph()
 	{
     	mxHierarchicalLayout layout = new mxHierarchicalLayout(graph);
@@ -614,7 +636,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 					// set vertex's parent task
 					
 					if (edge != null)
-						parentTask=loadTask(getGraph().getView().getVisibleTerminal(edge, true));
+						parentTask=getSourceTask((mxCell) edge);
 					
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -1017,43 +1039,46 @@ public class UtilImpl extends EObjectImpl implements Util {
 				if (returnCell.isEmpty()) returnCell.add(cell);
 				if (edge != null)
 				{
-					Task source = null;
 					try {
-						source = loadTask(getGraph().getView().getVisibleTerminal(edge, true));
+						Task source = null;
+					
+						source = getSourceTask((mxCell) edge);
+						//DataLink oldDataLink=loadDataLink(edge);
+						logger.debug("applyTraversalEventCopyGraph(): try to insert edge:"
+								+(source!=null?source.getUniqueString():null)
+								+" ("+taskPreviousTaskMap.get(source.getUniqueString())+") "
+								+"->"+copyTask.getUniqueString()
+								);
+						if (getProcessedEdgesCopyGraph().containsKey(taskPreviousTaskMap.get(source.getUniqueString()))
+								&& getProcessedEdgesCopyGraph().get(taskPreviousTaskMap.get(source.getUniqueString())).equals(copyTask.getUniqueString()))
+							logger.debug("applyTraversalEventCopyGraph(): skip already inserted edge");
+						else
+						{
+							String taskStr=taskPreviousTaskMap.get(source.getUniqueString());
+							Task tmp=getTasks().get(taskStr);
+							logger.debug(tmp.getTraversalEvents().keySet()+" "+groupingStr);
+							try {
+								DataLink dataLink = createDataLink(edge, copyTask, groupingStr, groupingStr);
+								
+								getGraph().insertEdgeEasyFlow(null, null, 
+										getCells().get(taskStr),
+										cell,
+										dataLink
+										);
+								getProcessedEdgesCopyGraph().put(
+										taskPreviousTaskMap.get(source.getUniqueString()),
+										copyTask.getUniqueString());
+							} catch (DataLinkNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+						}
 					} catch (TaskNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
-					logger.debug("applyTraversalEventCopyGraph(): try to insert edge:"
-							+(source!=null?source.getUniqueString():null)
-							+" ("+taskPreviousTaskMap.get(source.getUniqueString())+") "
-							+"->"+copyTask.getUniqueString());
-					if (getProcessedEdgesCopyGraph().containsKey(taskPreviousTaskMap.get(source.getUniqueString()))
-							&& getProcessedEdgesCopyGraph().get(taskPreviousTaskMap.get(source.getUniqueString())).equals(copyTask.getUniqueString()))
-						logger.debug("applyTraversalEventCopyGraph(): skip already inserted edge");
-					else
-					{
-						String taskStr=taskPreviousTaskMap.get(source.getUniqueString());
-						Task tmp=getTasks().get(taskStr);
-						logger.debug(tmp.getTraversalEvents().keySet()+" "+groupingStr);
-						try {
-							DataLink dataLink = createDataLink(edge, copyTask, groupingStr);
-							
-							getGraph().insertEdgeEasyFlow(null, null, 
-									getCells().get(taskStr),
-									cell,
-									dataLink
-									);
-							getProcessedEdgesCopyGraph().put(
-									taskPreviousTaskMap.get(source.getUniqueString()),
-									copyTask.getUniqueString());
-						} catch (DataLinkNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-					}
 				}						
 
 				//getMostProcessedTasks().put(copyTask.getUniqueString(), task.getUniqueString());
@@ -1071,11 +1096,13 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return returnCell.size() > 0 ? returnCell.get(0) : null;
 	}
 
-	private DataLink createDataLink(Object edge, Task task, String groupingStr) throws DataLinkNotFoundException
+	private DataLink createDataLink(Object edge, Task task, String groupingStr, String parentGroupingStr) throws DataLinkNotFoundException
 	{
 		DataLink dataLink = loadDataLink(edge);
 		DataLink newDataLink=CoreFactory.eINSTANCE.createDataLink();
-		
+		newDataLink.setGroupingStr(groupingStr);
+		if (parentGroupingStr != null)
+			newDataLink.setParentGroupingStr(parentGroupingStr);
 		newDataLink.setDataPort(dataLink.getDataPort());
 		int i=task.getChunks().indexOfKey(groupingStr);		
 		if (i!=-1)
@@ -1162,15 +1189,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 					+" ->"+task.getUniqueString());
 			
 			getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
-					createDataLink(edgeIn, task, groupingStr)
+					createDataLink(edgeIn, task, groupingStr, null)
 					);
 		}
 		else 
 		{
-			for (String parentChunkStr : parentTask.getChunks().keySet()) {
+			for (String parentGroupingStr : parentTask.getChunks().keySet()) {
 	
 				// grouping criterion doesn't change
-				if (parentChunkStr.equals(groupingStr)) {
+				if (parentGroupingStr.equals(groupingStr)) {
 					if (task.getGroupingCriteria().containsKey(groupingStr) &&
 							parentTask.getGroupingCriteria().containsKey(groupingStr))
 					{
@@ -1181,13 +1208,13 @@ public class UtilImpl extends EObjectImpl implements Util {
 							equals(parentTask.getGroupingCriteria().get(groupingStr)))
 						{
 							//for (TraversalChunk traversalChunk :
-								//parentTask.getChunks().get(parentChunkStr))
-								//if (parentChunkStr.equals(traversalChunk.getName()))
+								//parentTask.getChunks().get(parentGroupingStr))
+								//if (parentGroupingStr.equals(traversalChunk.getName()))
 							logger.debug("applySplittingCriterion(): insert edge: "+parentTask.getUniqueString()
 									+" ->"+task.getUniqueString());
 							
 							getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
-									createDataLink(edgeIn, task, groupingStr)
+									createDataLink(edgeIn, task, groupingStr, parentGroupingStr)
 									);
 						}
 					}
@@ -1196,38 +1223,38 @@ public class UtilImpl extends EObjectImpl implements Util {
 					
 				}
 	
-				for (TraversalChunk parentTraversalChunk: parentTask.getChunks().get(parentChunkStr))
+				for (TraversalChunk parentTraversalChunk: parentTask.getChunks().get(parentGroupingStr))
 				{
 					if (!(getProcessedEdges().containsKey(parentTask.getUniqueString())
 							&& getProcessedEdges().get(parentTask.getUniqueString()).equals(task.getUniqueString())))
 					{
-						String key = parentChunkStr + "_" + groupingStr + "_" + parentTraversalChunk.getName();
+						String key = parentGroupingStr + "_" + groupingStr + "_" + parentTraversalChunk.getName();
 						logger.trace("applySplittingCriterion(): check grouping instance="+key);
 		
 						logger.trace("applySplittingCriterion(): "+
-								!getMetaData().getInstances(parentChunkStr, 
+								!getMetaData().getInstances(parentGroupingStr, 
 										groupingStr, 
 										parentTraversalChunk.getName()
 										).isEmpty());
 						
-						if (!getMetaData().getInstances(parentChunkStr, 
+						if (!getMetaData().getInstances(parentGroupingStr, 
 								groupingStr, 
 								parentTraversalChunk.getName()
 								).isEmpty()
 								&& task.getChunks().containsKey(groupingStr))
 						{
 							if (isValidConversion(task.getChunks().get(groupingStr),
-									getMetaData().getInstances(parentChunkStr, 
+									getMetaData().getInstances(parentGroupingStr, 
 											groupingStr, 
 											parentTraversalChunk.getName()
 											)
-									))
+								))
 							{
 								logger.debug("applySplittingCriterion(): "+"insert edge:"
 										+parentTask.getUniqueString()+"->"+task.getUniqueString());
 								// insert edge from parent cell to cell
 								getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
-										createDataLink(edgeIn, task, groupingStr));
+										createDataLink(edgeIn, task, groupingStr, parentGroupingStr));
 								getProcessedEdges().put(parentTask.getUniqueString(), task.getUniqueString());
 							}
 							else
@@ -1254,7 +1281,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 		// get all child cells
 		for (Object edgeOut:getGraph().getOutgoingEdges(previousCell))
 		{
-			Object o = getGraph().getView().getVisibleTerminal(edgeOut, false);
+			Object o = getTarget((mxCell) edgeOut);
+					//getGraph().getView().getVisibleTerminal(edgeOut, false);
 			Task childTask = loadTask(((mxICell) o));
 			
 			logger.trace("applyMergingCriterion(): "+"insert edge: "
@@ -1274,7 +1302,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						+childTask.getUniqueString()+")");
 				
 				getGraph().insertEdgeEasyFlow(null, null, cell, o,
-						createDataLink(edgeOut, childTask, groupingStr)
+						createDataLink(edgeOut, childTask, groupingStr, null)
 						);
 				getProcessedEdges().put(task.getUniqueString(), childTask.getUniqueString());
 			}
@@ -1332,8 +1360,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 				for (Object edgeIn : getGraph().getIncomingEdges(
 						getCells().get(task.getPreviousTaskStr()))) 
 				{
-					Object parentCell = getGraph().getView().getVisibleTerminal(
-							edgeIn, true);
+					Object parentCell = getSource((mxCell) edgeIn);
+							//getGraph().getView().getVisibleTerminal(edgeIn, true);
 					try {
 						applySplittingCriterion((mxICell) vertex,
 								(mxICell) parentCell, edgeIn, groupingStr);
@@ -1421,7 +1449,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 						// check the childs
 						for (Object o : getGraph().getOutgoingEdges(cell))
 						{
-							Object target = getGraph().getView().getVisibleTerminal(o, false);
+							Object target = getTarget((mxCell) o); 
+							//getGraph().getView().getVisibleTerminal(o, false);
 							Task child=null;
 							try {
 								child = loadTask(target);
@@ -1439,7 +1468,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 								
 								try {
 									getGraph().insertEdgeEasyFlow(null, null, vertex, target,
-											createDataLink(edge, child, groupingStr));
+											createDataLink(edge, child, groupingStr, null));
 								} catch (DataLinkNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -1449,7 +1478,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 						// check parents
 						for (Object o : getGraph().getIncomingEdges(cell))
 						{
-							Object source = getGraph().getView().getVisibleTerminal(o, true);
+							Object source = getTarget((mxCell) o);
+							//getGraph().getView().getVisibleTerminal(o, true);
 							Task parent=null;;
 							try {
 								parent = loadTask(source);
@@ -1466,7 +1496,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 										+parent.getUniqueString()+"->"+taskString);
 								try {
 									getGraph().insertEdgeEasyFlow(null, null, source, vertex,
-											createDataLink(edge, task, groupingStr));
+											createDataLink(edge, task, groupingStr, null));
 								} catch (DataLinkNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -1622,32 +1652,26 @@ public class UtilImpl extends EObjectImpl implements Util {
 	
 	private mxCell getSource(mxCell edge)
 	{
-		mxCell source=(mxCell) getGraph().getTerminalForPort(edge, true);
+		mxCell source=(mxCell) getGraph().getView().getVisibleTerminal(edge, true);
 		return source;
 	}
 	
 	private mxCell getTarget(mxCell edge)
 	{
-		mxCell target=(mxCell) getGraph().getTerminalForPort(edge, false);
+		mxCell target=(mxCell) getGraph().getView().getVisibleTerminal(edge, false);
 		return target;
 	}
 	
 	private Task getSourceTask(mxCell edge) throws TaskNotFoundException
 	{
 		mxCell source=getSource(edge);
-		if (getTasks().contains(source))
-			return getTasks().get(source);
-		else
-			throw new TaskNotFoundException();
+		return loadTask(source);
 	}
 	
 	private Task getTargetTask(mxCell edge) throws TaskNotFoundException
 	{
 		mxCell target=getTarget(edge);
-		if (getTasks().contains(target))
-			return getTasks().get(target);
-		else
-			throw new TaskNotFoundException();
+		return loadTask(target);
 	}
 	
 	private TraversalEvent getNewTraversalEventBySplittingTask(Task task, TraversalEvent traversalEvent)
@@ -1855,16 +1879,16 @@ public class UtilImpl extends EObjectImpl implements Util {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws GroupingInstanceNotFoundException 
+	 * @throws GroupingCriterionNotFoundException 
 	 * @generated not
 	 */
-	public EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingInstanceNotFoundException {
+	public EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingCriterionNotFoundException {
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		if (traversalEvent.isGrouping())
 			if (traversalEvent.getType().equals("grouping"))
 				//if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
 				if (!getMetaData().getGroupingInstances().containsKey(traversalEvent.getTraversalCriterion().getId()))
-					throw new GroupingInstanceNotFoundException();
+					throw new GroupingCriterionNotFoundException();
 				for (GroupingInstance groupingInstance :
 						getMetaData().getGroupingInstances().
 					get(traversalEvent.getTraversalCriterion().getId()).getInstances())
@@ -2024,7 +2048,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return null;
 	}
 	
-	public boolean isChildOf(Task child, Task parent) throws TaskToCellMapKeyNotFoundException
+	public boolean isChildOf(Task child, Task parent) throws TaskNotFoundException
 	{
 		Object childCell=getCells().get(child.getUniqueString());
 		Object parentCell=getCells().get(parent.getUniqueString());
@@ -2097,7 +2121,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 					{
 						Task child=null;
 						try {
-							child = loadTask(getGraph().getView().getVisibleTerminal(o, false));
+							child = getTargetTask((mxCell) o);
+							//loadTask(getGraph().getView().getVisibleTerminal(o, false));
 						} catch (TaskNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -2170,7 +2195,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 	private DataPort getDataPortBySource(Object e)
 	{
 		String dataPortName=(String) ((mxCell)e).getValue();
-		Object c=getGraph().getView().getVisibleTerminal(e, true);
+		Object c=getSource((mxCell) e);
+		//getGraph().getView().getVisibleTerminal(e, true);
 		String parentTaskName = (String) ((mxCell)c).getValue();
 		Task parentTask = getTasks().get(parentTaskName);
 		return parentTask.getDataPortByName(dataPortName, true);
@@ -2179,7 +2205,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 	private DataPort getDataPortByTarget(Object e)
 	{
 		String dataPortName=(String) ((mxCell)e).getValue();
-		Object c=getGraph().getView().getVisibleTerminal(e, false);
+		Object c=getTarget((mxCell) e);
+		//getGraph().getView().getVisibleTerminal(e, false);
 		String childTaskName = (String) ((mxCell)c).getValue();
 		Task childTask = getTasks().get(childTaskName);
 		return childTask.getDataPortByName(dataPortName, false);
@@ -2193,6 +2220,147 @@ public class UtilImpl extends EObjectImpl implements Util {
 			tasks.add(loadTask(o));
 		}
 		return tasks;
+	}
+	
+	private EList<mxICell> getInEdgesForDataPort(Object vertex, DataPort dataPort) throws DataLinkNotFoundException, TaskNotFoundException
+	{
+		EList<mxICell> cells = new BasicEList<mxICell>();
+		Task task = loadTask(vertex);
+		logger.trace("getInEdgesForDataPort(): retrieving incoming edges for "+task.getUniqueString());
+		for (Object edge:getGraph().getIncomingEdges(vertex))
+		{
+			DataLink dataLink = loadDataLink(edge);
+			logger.trace("getInEdgesForDataPort(): check edge to "+getSourceTask((mxCell) edge).getUniqueString());
+			if (dataPort.isCompatible(dataLink.getDataPort()))
+			{
+				cells.add((mxICell) edge);
+				logger.trace("getInEdgesForDataPort(): edge added");
+			}
+		}
+		return cells;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<mxICell,EList<mxICell>> findCellsWithUntranslatedDataLinks() {
+		final EMap<mxICell,EList<mxICell>> edges = new BasicEMap<mxICell, EList<mxICell>>();
+		mxICellVisitor visitor=new mxICellVisitor()
+		{
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				if (edge==null)
+					return true;
+				try {
+					Task sourceTask=getSourceTask((mxCell) edge);
+					Task targetTask=getTargetTask((mxCell) edge);
+					Task task = loadTask(vertex);
+					DataLink dataLink=loadDataLink(edge);
+					
+					DataPort dataPortIn=dataLink.getDataPort();
+					logger.debug(task.getUniqueString()+"("+sourceTask.getUniqueString()+"): "+dataLink.getTraversalName()+" "
+							+dataLink.getParentGroupingStr()+"->"+dataLink.getGroupingStr()+" "
+							+dataPortIn.getName()+" "
+							//+dataPortIn.getGroupingCriteria()+" "+sourceTask.getGroupingCriteria()
+							);
+					if (!dataLink.getGroupingStr().equals(dataLink.getParentGroupingStr()))
+						edges.put((mxICell) vertex, getInEdgesForDataPort(vertex, dataLink.getDataPort()));
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return true;
+			}
+		};
+		getGraph().traverse(getDefaultRootCell(), true, visitor);
+		return edges;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws DataLinkNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException {
+		boolean rc=false;
+		for (mxICell edge:entry.getValue())
+		{
+			DataLink dataLink = loadDataLink(edge);
+			Task parentTask = getSourceTask((mxCell) edge);
+			Task task = loadTask(entry.getKey());
+			logger.trace(task.getChunks().get(dataLink.getGroupingStr())
+					+" "+parentTask.getChunks().get(dataLink.getParentGroupingStr()));
+			
+			//entry.getKey(), dataLink.getDataPort());
+		}
+		return rc;	
+	}
+
+	private EList<mxICell> createFilterTasks(mxICell cell, EList<mxICell> edges) throws TaskNotFoundException, DataLinkNotFoundException
+	{
+		EList<mxICell> cells = new BasicEList<mxICell>();
+		EMap<String, EList<TraversalChunk>> coveredChunks = null;
+		Task filterTask=getUtilityTasks().get("filter");
+		filterTask.getProvidedGroupingsFor(tool, dataPort);
+		Task mergeTask=getUtilityTasks().get("merge");
+		
+		//if (filterTask.getRequiredGroupingsFor(null, dataPort))
+		for (mxICell edge:edges)
+		{
+			DataLink dataLink = loadDataLink(edge);
+			if (coveredChunks==null)
+				coveredChunks=dataLink.getCoveredChunks();
+			else
+				for (Entry<String, EList<TraversalChunk>> e:dataLink.getCoveredChunks().entrySet())
+				{
+					//if (coveredChunks.containsKey(e.getKey()))
+					coveredChunks.get(e.getKey()).addAll(e.getValue());
+				}
+			cells.add(createFilterTask(cell, edge, dataLink));
+		}
+		return cells;
+	}
+	
+	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, DataPort dataPort)
+	{
+		EList<String> requiredGroupings=task.getRequiredGroupingsFor(null, dataPort);
+		EList<String> providedGroupings=sourceTask.getProvidedGroupingsFor(null, dataPort);
+		for (TraversalChunk chunk:task.getOverlappingChunksFor(sourceTask))
+		{
+			
+		}
+		
+
+	}
+	
+	private mxICell createFilterTask(mxICell vertex, mxICell edge, DataLink dataLink) throws TaskNotFoundException, DataLinkNotFoundException
+	{
+		EMap<String, EList<TraversalChunk>> coveredChunks=dataLink.getCoveredChunks();
+		
+		Task sourceTask = getSourceTask((mxCell) edge);
+		mxCell source   = getSource((mxCell)edge);
+		Task task       = loadTask(vertex);
+		task.getRequiredGroupingsFor(null, dataLink.getDataPort());
+		sourceTask.getProvidedGroupingsFor(null, dataLink.getDataPort());
+		
+		
+		
+		Task filterTask = EcoreUtil.copy(getUtilityTasks().get("filter"));
+		
+		filterTask.getChunks().clear();
+		filterTask.getChunks().addAll(coveredChunks);
+		getCells().put(filterTask.getUniqueString(), (mxICell)getGraph().insertVertexEasyFlow(null, null, filterTask));
+		//task.get
+		//task.getPreferredTool().getRequiredGroupings(dataPort)
+		
 	}
 	
 	public EList<Task> getParentTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException
@@ -2209,28 +2377,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 		
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<mxICell> findEdgesToBeResolved() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean resolveEdge(mxICell edge) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
 	public EList<Task> getChildTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException
 	{
 		final EList<Task> tasks = new BasicEList<Task>(); 
@@ -2289,6 +2435,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 		if (vertex instanceof mxCell)
 		{
 			Object value=((mxCell)vertex).getValue();
+			if (value==null)
+				throw new TaskNotFoundException();
 			if (value instanceof Element)
 				return XMLUtil.loadTaskFromValue(value);
 			else if (value instanceof String)
@@ -2360,6 +2508,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 				return ((InternalEList<?>)getCopiedCells()).basicRemove(otherEnd, msgs);
 			case JgraphxPackage.UTIL__DATA_LINKS:
 				return ((InternalEList<?>)getDataLinks()).basicRemove(otherEnd, msgs);
+			case JgraphxPackage.UTIL__UTILITY_TASKS:
+				return ((InternalEList<?>)getUtilityTasks()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -2416,6 +2566,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 			case JgraphxPackage.UTIL__DATA_LINKS:
 				if (coreType) return getDataLinks();
 				else return getDataLinks().map();
+			case JgraphxPackage.UTIL__UTILITY_TASKS:
+				if (coreType) return getUtilityTasks();
+				else return getUtilityTasks().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2477,6 +2630,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 			case JgraphxPackage.UTIL__DATA_LINKS:
 				((EStructuralFeature.Setting)getDataLinks()).set(newValue);
 				return;
+			case JgraphxPackage.UTIL__UTILITY_TASKS:
+				((EStructuralFeature.Setting)getUtilityTasks()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2534,6 +2690,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 			case JgraphxPackage.UTIL__DATA_LINKS:
 				getDataLinks().clear();
 				return;
+			case JgraphxPackage.UTIL__UTILITY_TASKS:
+				getUtilityTasks().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2578,6 +2737,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 				return newTraversalEvents != null && !newTraversalEvents.isEmpty();
 			case JgraphxPackage.UTIL__DATA_LINKS:
 				return dataLinks != null && !dataLinks.isEmpty();
+			case JgraphxPackage.UTIL__UTILITY_TASKS:
+				return utilityTasks != null && !utilityTasks.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

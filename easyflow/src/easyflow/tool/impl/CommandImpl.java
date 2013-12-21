@@ -6,6 +6,8 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.core.DataPort;
+import easyflow.custom.exception.ParameterNotFoundException;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -14,14 +16,12 @@ import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalCriterion;
 import easyflow.util.maps.MapsPackage;
 
 import easyflow.util.maps.impl.StringToParameterMapImpl;
 
-
-import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.net.URI;
-import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -334,6 +334,42 @@ public class CommandImpl extends EObjectImpl implements Command {
 		throw new UnsupportedOperationException();
 	}
 
+	
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * find the groupings that are (implicitly) defined for given dataport by 
+	 * resolving the associated parameters groupings field.
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getGroupingsForDataPort(DataPort dataPort, boolean isRequired) {
+		EList<String> groupings=new BasicEList<String>();
+		
+		Parameter parameter=getParameterForDataPort(dataPort);
+				
+		
+		for (TraversalCriterion tc:dataPort.getGroupingCriteria())
+		{
+			
+			for (String groupingStr:tc.getChunks().keySet())
+			{
+				if (getParameters().containsKey(groupingStr))
+				{
+					Parameter parameter = getParameters().get(groupingStr);
+					if (!parameter.isOptional() && isRequired)
+						groupings.addAll(parameter.getGrouping());
+					else
+						groupings.addAll(parameter.getGrouping());
+				}
+			}	
+		}
+		return groupings;
+	}
+
+
+	
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -6,6 +6,8 @@
  */
 package easyflow.core;
 
+import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.DataFormat;
 import easyflow.tool.Tool;
@@ -698,5 +700,45 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EMap<Task, EList<DataPort>> resolveMissingDataPortsByTool(EList<Task> tasks);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getOverlappingChunksFor(Task parentTask, String groupingStr);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultiplesInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canFilterInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException;
 
 } // Task

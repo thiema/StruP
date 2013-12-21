@@ -11,6 +11,7 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import com.mxgraph.view.mxStylesheet;
 import com.mxgraph.view.mxCellState;
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 import easyflow.EasyflowFactory;
 import easyflow.core.CoreFactory;
@@ -27,38 +28,34 @@ import easyflow.core.Task;
 import easyflow.core.Workflow;
 
 import easyflow.custom.exception.CellNotFoundException;
+
 import easyflow.custom.exception.DataLinkNotFoundException;
-import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.graph.jgraphx.Util;
-import easyflow.metadata.DefaultMetaData;
+
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.Tool;
+import easyflow.traversal.TraversalCriterion;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
 
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
-import easyflow.custom.util.GlobalVar;
-import easyflow.custom.util.XMLUtil;
 import easyflow.execution.makeflow.Makeflow;
 import easyflow.execution.makeflow.MakeflowFactory;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import java.util.Stack;
 
@@ -84,6 +81,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -113,6 +111,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessingConfig <em>Processing Config</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getRootTask <em>Root Task</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getStaticTasks <em>Static Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -359,6 +358,16 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected Task rootTask;
+
+	/**
+	 * The cached value of the '{@link #getStaticTasks() <em>Static Tasks</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStaticTasks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Task> staticTasks;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -753,6 +762,18 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Task> getStaticTasks() {
+		if (staticTasks == null) {
+			staticTasks = new EObjectResolvingEList<Task>(Task.class, this, CorePackage.WORKFLOW__STATIC_TASKS);
+		}
+		return staticTasks;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean readWorkfowTemplate() {
@@ -871,6 +892,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	        				+" cell="+getGraph().getLabel(target));
 	        		map.put(task.getName(), target);
         		}
+        		else
+        		{
+        			getStaticTasks().add(task);
+        		}
         		getGraphUtil().getTasks().put(task.getUniqueString(), task);
         	}
 
@@ -885,6 +910,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	getGraph().getModel().endUpdate();
         }
         
+		findUtilityTaskForAnalysisType("filter");
+		findUtilityTaskForAnalysisType("merge");
+
         Task tmp;
 		try {
 			tmp = getGraphUtil().loadTask(getFirstNode());
@@ -1174,15 +1202,33 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return task.validateTools();
 	}
 
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Task findUtilityTaskForAnalysisType(String analysisType, DataPort dataPort, EList<TraversalCriterion> traversalCriterion) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * find utility task by evaluating tasks analysisTypes attribute
-	 * and if nothing found analysisType of its tools
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Task findUtilityTaskFor(Task task) {
+	public Task findUtilityTaskForAnalysisType(String analysisType) {
 		
+		Task utilityTask=null;
+		for (Task task:getStaticTasks())
+			if (task.getAnalysisTypes().contains(analysisType))
+			{
+				utilityTask=task;
+			}
+		return utilityTask;
 	}
 
 	private String tasks2String(EList<Task> tasks)
@@ -1275,7 +1321,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 //						isDistantParentMap.put(
 	//							possibleParent.getName(),
 		//						getGraphUtil().isChildOf(possibleParent,possibleChild));
-					} catch (TaskToCellMapKeyNotFoundException e) {
+					} catch (TaskNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -1391,9 +1437,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
 	 * @throws CellNotFoundException 
+	 * @throws GroupingCriterionInstanceNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
+	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
 		while (traversalEvent != null)
 		{
@@ -1402,6 +1449,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			applyTraversalEvent(traversalEvent);
 			traversalEvent = getGraphUtil().getNextTraversalEvent();
 		}
+		for (Entry<mxICell, EList<mxICell>> e:getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet())
+		{
+			try {
+				getGraphUtil().resolveEdge(e);
+				
+			} catch (DataLinkNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 	
 	/**
@@ -1409,9 +1467,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
 	 * @throws CellNotFoundException 
+	 * @throws GroupingCriterionInstanceNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException {
+	public void applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		
 		mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
 		getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
@@ -1455,7 +1514,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
 		
 				}
-			} catch (GroupingInstanceNotFoundException e) {
+			} catch (GroupingCriterionNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -1553,6 +1612,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				if (resolve) return getRootTask();
 				return basicGetRootTask();
+			case CorePackage.WORKFLOW__STATIC_TASKS:
+				return getStaticTasks();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1617,6 +1678,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				setRootTask((Task)newValue);
 				return;
+			case CorePackage.WORKFLOW__STATIC_TASKS:
+				getStaticTasks().clear();
+				getStaticTasks().addAll((Collection<? extends Task>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1677,6 +1742,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				setRootTask((Task)null);
 				return;
+			case CorePackage.WORKFLOW__STATIC_TASKS:
+				getStaticTasks().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1723,6 +1791,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return processingConfig != null && !processingConfig.isEmpty();
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				return rootTask != null;
+			case CorePackage.WORKFLOW__STATIC_TASKS:
+				return staticTasks != null && !staticTasks.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

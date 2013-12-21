@@ -7,9 +7,8 @@ Samse	BwtAlignShort	bwa_xampe	FASTQ;SAI	SAM			size(InputFiles)==1&&Platform=~["I
 Sampe	BwtAlignShort	bwa_xampe	FASTQ;SAI	SAM		ReadEnd:merge	size(InputFiles)>1&&Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
 #Split1		samtools:view	SAM	SAM
 #Merge1		samtools:merge	SAM	SAM	ReadGroup
-AddReadgroup		picard_ARRG	SAM	BAM	ReadGroup	
-#Locus:split:chr1,chr2;ReadMappingFlag:split;Read:sort:Queryname
-#RealignIndels		gatk2_indel_realigner	BAM	BAM	Group
+AddReadgroup		picard_ARRG	SAM	BAM	ReadGroup	Locus:split:chr1,chr2;ReadMappingFlag:split;Read:sort:Queryname
+RealignIndels		gatk2_indel_realigner	BAM	BAM	Group
 #RemoveDuplicates		samtools:rmdup	Alignment:BAM	BAM	Library	Locus:merge	size(InputFiles)>1
 #DetectVariants		gatk2_unified_genotyper	BAM	VCF	Group	Locus:merge;Read:sort:Coordinate
 ######
@@ -18,9 +17,9 @@ AddReadgroup		picard_ARRG	SAM	BAM	ReadGroup
 ######
 #SortSam	STATIC	samtools:sort	BAM	BAM
 #IndexSam	STATIC	samtools:index	BAM	BAI		Read:sort:Coordinate	
-##MergeSam	STATIC	samtools:merge	BAM,SAM	BAM,SAM	ReadGroup	
+MergeSam	STATIC:merge	samtools:merge	BAM,SAM	BAM,SAM	ReadGroup	
 #SplitSam	STATIC	samtools:split	BAM,SAM	BAM,SAM	ReadGroup	
-##PrintSam	STATIC:split	samtools:view	(SAM | BAM)	SAM || BAM
+PrintSam	STATIC:filter	samtools:view	(SAM | BAM)	SAM || BAM
 #ReadMappingFlag,Contig,IntervalList	
 #IndexFasta	STATIC	samtools:indexFasta	FASTA	FAI		Read:Coordinate	
 #BwtFasta	STATIC	bwa:index	FASTA	SAI		

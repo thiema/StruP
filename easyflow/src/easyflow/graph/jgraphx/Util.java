@@ -15,10 +15,10 @@ import easyflow.core.Task;
 
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
@@ -29,6 +29,7 @@ import easyflow.metadata.GroupingInstance;
 
 import easyflow.traversal.TraversalEvent;
 
+import java.util.Map;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -60,6 +61,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getNewTraversalEvents <em>New Traversal Events</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getDataLinks <em>Data Links</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getUtilityTasks <em>Utility Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -363,6 +365,23 @@ public interface Util extends EObject {
 	EMap<String, DataLink> getDataLinks();
 
 	/**
+	 * Returns the value of the '<em><b>Utility Tasks</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.core.Task},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Utility Tasks</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Utility Tasks</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_UtilityTasks()
+	 * @model mapType="easyflow.util.maps.StringToTaskMap<org.eclipse.emf.ecore.EString, easyflow.core.Task>"
+	 * @generated
+	 */
+	EMap<String, Task> getUtilityTasks();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
@@ -445,10 +464,10 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.GroupingInstanceNotFoundException"
+	 * @model exceptions="easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingInstanceNotFoundException;
+	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingCriterionNotFoundException, GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -493,10 +512,10 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.TaskToCellMapKeyNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean isChildOf(Task parent, Task child) throws TaskToCellMapKeyNotFoundException;
+	boolean isChildOf(Task parent, Task child) throws TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -573,17 +592,17 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.mxICell"
+	 * @model mapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
 	 * @generated
 	 */
-	EList<mxICell> findEdgesToBeResolved();
+	EMap<mxICell, EList<mxICell>> findCellsWithUntranslatedDataLinks();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model edgeDataType="easyflow.mxICell"
+	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException" entryMapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
 	 * @generated
 	 */
-	boolean resolveEdge(mxICell edge);
+	boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException;
 
 } // Util

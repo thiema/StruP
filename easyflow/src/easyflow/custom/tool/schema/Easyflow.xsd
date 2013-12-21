@@ -104,6 +104,7 @@
 		<xs:attribute name="label" type="xs:string" />
 		<xs:attribute name="from_work_dir" type="xs:string" />
 		<xs:attribute name="hidden" type="xs:boolean" />
+		<xs:attribute name="data" type="xs:string" />
 	</xs:complexType>
 
 

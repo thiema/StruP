@@ -7,6 +7,7 @@
 package easyflow.core;
 
 import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
@@ -15,6 +16,7 @@ import easyflow.graph.jgraphx.Util;
 
 import easyflow.tool.Tool;
 
+import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 
 import java.util.Map;
@@ -56,6 +58,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getStaticTasks <em>Static Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -448,6 +451,22 @@ public interface Workflow extends EObject {
 	void setRootTask(Task value);
 
 	/**
+	 * Returns the value of the '<em><b>Static Tasks</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.Task}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Static Tasks</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Static Tasks</em>' reference list.
+	 * @see easyflow.core.CorePackage#getWorkflow_StaticTasks()
+	 * @model
+	 * @generated
+	 */
+	EList<Task> getStaticTasks();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -521,18 +540,18 @@ public interface Workflow extends EObject {
 	 * breadth first iteration of graph. compute new graph with 
 	 * given traversal event applied.
 	 * <!-- end-model-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
+	void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	void applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException;
+	void applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -591,9 +610,9 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model traversalCriterionMany="true"
 	 * @generated
 	 */
-	Task findUtilityTaskFor(Task task);
+	Task findUtilityTaskForAnalysisType(String analysisType, DataPort dataPort, EList<TraversalCriterion> traversalCriterion);
 
 } // Workflow

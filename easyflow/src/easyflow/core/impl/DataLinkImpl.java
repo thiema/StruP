@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -38,6 +39,9 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getTraversalName <em>Traversal Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
+ *   <li>{@link easyflow.core.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
+ *   <li>{@link easyflow.core.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,6 +107,66 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected String traversalName = TRAVERSAL_NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getGroupingStr() <em>Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupingStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String GROUPING_STR_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getGroupingStr() <em>Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupingStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected String groupingStr = GROUPING_STR_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getParentGroupingStr() <em>Parent Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParentGroupingStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PARENT_GROUPING_STR_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getParentGroupingStr() <em>Parent Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParentGroupingStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected String parentGroupingStr = PARENT_GROUPING_STR_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isIdenticalGrouping() <em>Identical Grouping</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIdenticalGrouping()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IDENTICAL_GROUPING_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIdenticalGrouping() <em>Identical Grouping</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIdenticalGrouping()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean identicalGrouping = IDENTICAL_GROUPING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -220,6 +284,69 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getGroupingStr() {
+		return groupingStr;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGroupingStr(String newGroupingStr) {
+		String oldGroupingStr = groupingStr;
+		groupingStr = newGroupingStr;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DATA_LINK__GROUPING_STR, oldGroupingStr, groupingStr));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getParentGroupingStr() {
+		return parentGroupingStr;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParentGroupingStr(String newParentGroupingStr) {
+		String oldParentGroupingStr = parentGroupingStr;
+		parentGroupingStr = newParentGroupingStr;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DATA_LINK__PARENT_GROUPING_STR, oldParentGroupingStr, parentGroupingStr));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isIdenticalGrouping() {
+		return identicalGrouping;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIdenticalGrouping(boolean newIdenticalGrouping) {
+		boolean oldIdenticalGrouping = identicalGrouping;
+		identicalGrouping = newIdenticalGrouping;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DATA_LINK__IDENTICAL_GROUPING, oldIdenticalGrouping, identicalGrouping));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -232,6 +359,12 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return getId();
 			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
 				return getTraversalName();
+			case CorePackage.DATA_LINK__GROUPING_STR:
+				return getGroupingStr();
+			case CorePackage.DATA_LINK__PARENT_GROUPING_STR:
+				return getParentGroupingStr();
+			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
+				return isIdenticalGrouping();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -258,6 +391,15 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
 				setTraversalName((String)newValue);
 				return;
+			case CorePackage.DATA_LINK__GROUPING_STR:
+				setGroupingStr((String)newValue);
+				return;
+			case CorePackage.DATA_LINK__PARENT_GROUPING_STR:
+				setParentGroupingStr((String)newValue);
+				return;
+			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
+				setIdenticalGrouping((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -282,6 +424,15 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
 				setTraversalName(TRAVERSAL_NAME_EDEFAULT);
 				return;
+			case CorePackage.DATA_LINK__GROUPING_STR:
+				setGroupingStr(GROUPING_STR_EDEFAULT);
+				return;
+			case CorePackage.DATA_LINK__PARENT_GROUPING_STR:
+				setParentGroupingStr(PARENT_GROUPING_STR_EDEFAULT);
+				return;
+			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
+				setIdenticalGrouping(IDENTICAL_GROUPING_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -302,6 +453,12 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return id != ID_EDEFAULT;
 			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
 				return TRAVERSAL_NAME_EDEFAULT == null ? traversalName != null : !TRAVERSAL_NAME_EDEFAULT.equals(traversalName);
+			case CorePackage.DATA_LINK__GROUPING_STR:
+				return GROUPING_STR_EDEFAULT == null ? groupingStr != null : !GROUPING_STR_EDEFAULT.equals(groupingStr);
+			case CorePackage.DATA_LINK__PARENT_GROUPING_STR:
+				return PARENT_GROUPING_STR_EDEFAULT == null ? parentGroupingStr != null : !PARENT_GROUPING_STR_EDEFAULT.equals(parentGroupingStr);
+			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
+				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -320,6 +477,12 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		result.append(id);
 		result.append(", traversalName: ");
 		result.append(traversalName);
+		result.append(", groupingStr: ");
+		result.append(groupingStr);
+		result.append(", parentGroupingStr: ");
+		result.append(parentGroupingStr);
+		result.append(", identicalGrouping: ");
+		result.append(identicalGrouping);
 		result.append(')');
 		return result.toString();
 	}

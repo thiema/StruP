@@ -991,6 +991,43 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_DATA_LINK_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.CellToCellListMapImpl <em>Cell To Cell List Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.CellToCellListMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getCellToCellListMap()
+	 * @generated
+	 */
+	int CELL_TO_CELL_LIST_MAP = 25;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CELL_TO_CELL_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CELL_TO_CELL_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Cell To Cell List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CELL_TO_CELL_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1841,6 +1878,40 @@ public interface MapsPackage extends EPackage {
 	EReference getStringToDataLinkMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Cell To Cell List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Cell To Cell List Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="easyflow.mxICell"
+	 *        valueDataType="easyflow.mxICell" valueMany="true"
+	 * @generated
+	 */
+	EClass getCellToCellListMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getCellToCellListMap()
+	 * @generated
+	 */
+	EAttribute getCellToCellListMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getCellToCellListMap()
+	 * @generated
+	 */
+	EAttribute getCellToCellListMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2511,6 +2582,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_DATA_LINK_MAP__VALUE = eINSTANCE.getStringToDataLinkMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.CellToCellListMapImpl <em>Cell To Cell List Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.CellToCellListMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getCellToCellListMap()
+		 * @generated
+		 */
+		EClass CELL_TO_CELL_LIST_MAP = eINSTANCE.getCellToCellListMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CELL_TO_CELL_LIST_MAP__KEY = eINSTANCE.getCellToCellListMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CELL_TO_CELL_LIST_MAP__VALUE = eINSTANCE.getCellToCellListMap_Value();
 
 	}
 

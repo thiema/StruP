@@ -3,6 +3,8 @@ package easyflow.custom.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import sun.security.action.GetLongAction;
 
 public class GlobalVar {
@@ -11,6 +13,7 @@ public class GlobalVar {
 	private static String metaDataTable[][];
 	private static Map<String, Integer> colHeaderMap = new HashMap<String, Integer>();
 	private static Map<String, Integer> rowHeaderMap = new HashMap<String, Integer>();
+	private static Map<String, String>  colTypeMap   = new HashMap<String, String>();
 	
 	public static easyflow.graph.jgraphx.Util getGraphUtil()
 	{
@@ -25,8 +28,16 @@ public class GlobalVar {
 	public static void createNewMetaDataColHeader(String[] header)
 	{
 		colHeaderMap.clear();
+		colTypeMap.clear();
 		for (int i=0;i<header.length;i++)
-			colHeaderMap.put(header[i],i);
+		{
+			String[] a=StringUtils.split(header[i], ":");
+			colHeaderMap.put(a[0],i);
+			if (a.length>1)
+				colTypeMap.put(a[0], a[1]);
+			else
+				colTypeMap.put(a[0], "String");
+		}
 		//System.out.println(colHeaderMap);
 	}
 	
@@ -44,6 +55,10 @@ public class GlobalVar {
 	public static Map<String, Integer> getMetaDataColHeader()
 	{
 		return colHeaderMap;
+	}
+	public static Map<String, String> getMetaDataColType()
+	{
+		return colTypeMap;
 	}
 	
 	public static void createNewMetaDataTable()

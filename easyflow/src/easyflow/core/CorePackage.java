@@ -223,13 +223,22 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__ROOT_TASK = 16;
 
 	/**
+	 * The feature id for the '<em><b>Static Tasks</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__STATIC_TASKS = 17;
+
+	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 17;
+	int WORKFLOW_FEATURE_COUNT = 18;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -938,13 +947,40 @@ public interface CorePackage extends EPackage {
 	int DATA_LINK__TRAVERSAL_NAME = 3;
 
 	/**
+	 * The feature id for the '<em><b>Grouping Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__GROUPING_STR = 4;
+
+	/**
+	 * The feature id for the '<em><b>Parent Grouping Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__PARENT_GROUPING_STR = 5;
+
+	/**
+	 * The feature id for the '<em><b>Identical Grouping</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__IDENTICAL_GROUPING = 6;
+
+	/**
 	 * The number of structural features of the '<em>Data Link</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 4;
+	int DATA_LINK_FEATURE_COUNT = 7;
 
 
 	/**
@@ -1143,6 +1179,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_RootTask();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.Workflow#getStaticTasks <em>Static Tasks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Static Tasks</em>'.
+	 * @see easyflow.core.Workflow#getStaticTasks()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_StaticTasks();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
@@ -1685,6 +1732,39 @@ public interface CorePackage extends EPackage {
 	EAttribute getDataLink_TraversalName();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Grouping Str</em>'.
+	 * @see easyflow.core.DataLink#getGroupingStr()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_GroupingStr();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Parent Grouping Str</em>'.
+	 * @see easyflow.core.DataLink#getParentGroupingStr()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_ParentGroupingStr();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Identical Grouping</em>'.
+	 * @see easyflow.core.DataLink#isIdenticalGrouping()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_IdenticalGrouping();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.ToolMatch <em>Tool Match</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2004,6 +2084,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__ROOT_TASK = eINSTANCE.getWorkflow_RootTask();
+
+		/**
+		 * The meta object literal for the '<em><b>Static Tasks</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__STATIC_TASKS = eINSTANCE.getWorkflow_StaticTasks();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -2424,6 +2512,30 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_LINK__TRAVERSAL_NAME = eINSTANCE.getDataLink_TraversalName();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping Str</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__GROUPING_STR = eINSTANCE.getDataLink_GroupingStr();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent Grouping Str</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__PARENT_GROUPING_STR = eINSTANCE.getDataLink_ParentGroupingStr();
+
+		/**
+		 * The meta object literal for the '<em><b>Identical Grouping</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__IDENTICAL_GROUPING = eINSTANCE.getDataLink_IdenticalGrouping();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.

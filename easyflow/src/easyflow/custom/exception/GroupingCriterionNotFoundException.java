@@ -1,5 +1,6 @@
 package easyflow.custom.exception;
-public class TaskToCellMapKeyNotFoundException extends Exception {
+
+public class GroupingCriterionNotFoundException extends Exception {
 
 	/**
 	 * 

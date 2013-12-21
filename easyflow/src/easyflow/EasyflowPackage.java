@@ -85,7 +85,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getLogger()
 	 * @generated
 	 */
-	int LOGGER = 2;
+	int LOGGER = 3;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -95,7 +95,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 3;
+	int OBJECT = 4;
 
 	/**
 	 * The meta object id for the '<em>Jexl Engine</em>' data type.
@@ -105,7 +105,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getJexlEngine()
 	 * @generated
 	 */
-	int JEXL_ENGINE = 4;
+	int JEXL_ENGINE = 5;
 
 	/**
 	 * The meta object id for the '<em>Stack</em>' data type.
@@ -115,7 +115,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getStack()
 	 * @generated
 	 */
-	int STACK = 5;
+	int STACK = 6;
 
 	/**
 	 * The meta object id for the '<em>URI</em>' data type.
@@ -125,7 +125,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 6;
+	int URI = 7;
 
 	/**
 	 * The meta object id for the '<em>Easy Flow Graph</em>' data type.
@@ -135,7 +135,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowGraph()
 	 * @generated
 	 */
-	int EASY_FLOW_GRAPH = 7;
+	int EASY_FLOW_GRAPH = 8;
 
 	/**
 	 * The meta object id for the '<em>EObject</em>' data type.
@@ -145,7 +145,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getEObject()
 	 * @generated
 	 */
-	int EOBJECT = 8;
+	int EOBJECT = 9;
 
 	/**
 	 * The meta object id for the '<em>Document</em>' data type.
@@ -155,7 +155,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDocument()
 	 * @generated
 	 */
-	int DOCUMENT = 9;
+	int DOCUMENT = 10;
 
 	/**
 	 * The meta object id for the '<em>Element</em>' data type.
@@ -165,7 +165,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getElement()
 	 * @generated
 	 */
-	int ELEMENT = 10;
+	int ELEMENT = 11;
 
 
 	/**
@@ -176,7 +176,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getSchema()
 	 * @generated
 	 */
-	int SCHEMA = 11;
+	int SCHEMA = 12;
 
 
 	/**
@@ -187,7 +187,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getJSONObject()
 	 * @generated
 	 */
-	int JSON_OBJECT = 12;
+	int JSON_OBJECT = 13;
 
 
 	/**
@@ -198,7 +198,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getBufferedReader()
 	 * @generated
 	 */
-	int BUFFERED_READER = 13;
+	int BUFFERED_READER = 14;
 
 
 	/**
@@ -209,28 +209,8 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
 	 * @generated
 	 */
-	int FILE_NOT_FOUND_EXCEPTION = 14;
+	int FILE_NOT_FOUND_EXCEPTION = 17;
 
-
-	/**
-	 * The meta object id for the '<em>Grouping Instance Not Found Exception</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.custom.exception.GroupingInstanceNotFoundException
-	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingInstanceNotFoundException()
-	 * @generated
-	 */
-	int GROUPING_INSTANCE_NOT_FOUND_EXCEPTION = 15;
-
-	/**
-	 * The meta object id for the '<em>Task To Cell Map Key Not Found Exception</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.custom.exception.TaskToCellMapKeyNotFoundException
-	 * @see easyflow.impl.EasyflowPackageImpl#getTaskToCellMapKeyNotFoundException()
-	 * @generated
-	 */
-	int TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION = 16;
 
 	/**
 	 * The meta object id for the '<em>mx ICell Visitor</em>' data type.
@@ -240,7 +220,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
 	 * @generated
 	 */
-	int MX_ICELL_VISITOR = 17;
+	int MX_ICELL_VISITOR = 2;
 
 	/**
 	 * The meta object id for the '<em>Pattern</em>' data type.
@@ -250,7 +230,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getPattern()
 	 * @generated
 	 */
-	int PATTERN = 18;
+	int PATTERN = 15;
 
 	/**
 	 * The meta object id for the '<em>Cell Not Found Exception</em>' data type.
@@ -260,7 +240,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getCellNotFoundException()
 	 * @generated
 	 */
-	int CELL_NOT_FOUND_EXCEPTION = 19;
+	int CELL_NOT_FOUND_EXCEPTION = 16;
 
 	/**
 	 * The meta object id for the '<em>Task Not Found Exception</em>' data type.
@@ -270,7 +250,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getTaskNotFoundException()
 	 * @generated
 	 */
-	int TASK_NOT_FOUND_EXCEPTION = 20;
+	int TASK_NOT_FOUND_EXCEPTION = 18;
 
 	/**
 	 * The meta object id for the '<em>Data Port Not Found Exception</em>' data type.
@@ -280,7 +260,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataPortNotFoundException()
 	 * @generated
 	 */
-	int DATA_PORT_NOT_FOUND_EXCEPTION = 21;
+	int DATA_PORT_NOT_FOUND_EXCEPTION = 19;
 
 	/**
 	 * The meta object id for the '<em>Data Link Not Found Exception</em>' data type.
@@ -290,7 +270,67 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataLinkNotFoundException()
 	 * @generated
 	 */
-	int DATA_LINK_NOT_FOUND_EXCEPTION = 22;
+	int DATA_LINK_NOT_FOUND_EXCEPTION = 20;
+
+	/**
+	 * The meta object id for the '<em>Tool Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.ToolNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getToolNotFoundException()
+	 * @generated
+	 */
+	int TOOL_NOT_FOUND_EXCEPTION = 21;
+
+	/**
+	 * The meta object id for the '<em>Grouping Criterion Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.GroupingCriterionNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionNotFoundException()
+	 * @generated
+	 */
+	int GROUPING_CRITERION_NOT_FOUND_EXCEPTION = 22;
+
+	/**
+	 * The meta object id for the '<em>Grouping Criterion Instance Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.GroupingCriterionInstanceNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionInstanceNotFoundException()
+	 * @generated
+	 */
+	int GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 23;
+
+	/**
+	 * The meta object id for the '<em>Parameter Criterion Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.ParameterCriterionNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionNotFoundException()
+	 * @generated
+	 */
+	int PARAMETER_CRITERION_NOT_FOUND_EXCEPTION = 24;
+
+	/**
+	 * The meta object id for the '<em>Parameter Criterion Instance Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.ParameterCriterionInstanceNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionInstanceNotFoundException()
+	 * @generated
+	 */
+	int PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 25;
+
+	/**
+	 * The meta object id for the '<em>Parameter Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.ParameterNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getParameterNotFoundException()
+	 * @generated
+	 */
+	int PARAMETER_NOT_FOUND_EXCEPTION = 26;
 
 	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph <em>mx Graph</em>}'.
@@ -458,28 +498,6 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getFileNotFoundException();
 
 	/**
-	 * Returns the meta object for data type '{@link easyflow.custom.exception.GroupingInstanceNotFoundException <em>Grouping Instance Not Found Exception</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Grouping Instance Not Found Exception</em>'.
-	 * @see easyflow.custom.exception.GroupingInstanceNotFoundException
-	 * @model instanceClass="easyflow.custom.exception.GroupingInstanceNotFoundException"
-	 * @generated
-	 */
-	EDataType getGroupingInstanceNotFoundException();
-
-	/**
-	 * Returns the meta object for data type '{@link easyflow.custom.exception.TaskToCellMapKeyNotFoundException <em>Task To Cell Map Key Not Found Exception</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Task To Cell Map Key Not Found Exception</em>'.
-	 * @see easyflow.custom.exception.TaskToCellMapKeyNotFoundException
-	 * @model instanceClass="easyflow.custom.exception.TaskToCellMapKeyNotFoundException"
-	 * @generated
-	 */
-	EDataType getTaskToCellMapKeyNotFoundException();
-
-	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph.mxICellVisitor <em>mx ICell Visitor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -544,6 +562,72 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getDataLinkNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.ToolNotFoundException <em>Tool Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Tool Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.ToolNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.ToolNotFoundException"
+	 * @generated
+	 */
+	EDataType getToolNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.GroupingCriterionNotFoundException <em>Grouping Criterion Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Grouping Criterion Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.GroupingCriterionNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.GroupingCriterionNotFoundException"
+	 * @generated
+	 */
+	EDataType getGroupingCriterionNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.GroupingCriterionInstanceNotFoundException <em>Grouping Criterion Instance Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Grouping Criterion Instance Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.GroupingCriterionInstanceNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.GroupingCriterionInstanceNotFoundException"
+	 * @generated
+	 */
+	EDataType getGroupingCriterionInstanceNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.ParameterCriterionNotFoundException <em>Parameter Criterion Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Parameter Criterion Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.ParameterCriterionNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.ParameterCriterionNotFoundException"
+	 * @generated
+	 */
+	EDataType getParameterCriterionNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.ParameterCriterionInstanceNotFoundException <em>Parameter Criterion Instance Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Parameter Criterion Instance Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.ParameterCriterionInstanceNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.ParameterCriterionInstanceNotFoundException"
+	 * @generated
+	 */
+	EDataType getParameterCriterionInstanceNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.ParameterNotFoundException <em>Parameter Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Parameter Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.ParameterNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.ParameterNotFoundException"
+	 * @generated
+	 */
+	EDataType getParameterNotFoundException();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -718,26 +802,6 @@ public interface EasyflowPackage extends EPackage {
 		EDataType FILE_NOT_FOUND_EXCEPTION = eINSTANCE.getFileNotFoundException();
 
 		/**
-		 * The meta object literal for the '<em>Grouping Instance Not Found Exception</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.custom.exception.GroupingInstanceNotFoundException
-		 * @see easyflow.impl.EasyflowPackageImpl#getGroupingInstanceNotFoundException()
-		 * @generated
-		 */
-		EDataType GROUPING_INSTANCE_NOT_FOUND_EXCEPTION = eINSTANCE.getGroupingInstanceNotFoundException();
-
-		/**
-		 * The meta object literal for the '<em>Task To Cell Map Key Not Found Exception</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.custom.exception.TaskToCellMapKeyNotFoundException
-		 * @see easyflow.impl.EasyflowPackageImpl#getTaskToCellMapKeyNotFoundException()
-		 * @generated
-		 */
-		EDataType TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION = eINSTANCE.getTaskToCellMapKeyNotFoundException();
-
-		/**
 		 * The meta object literal for the '<em>mx ICell Visitor</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -796,6 +860,66 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType DATA_LINK_NOT_FOUND_EXCEPTION = eINSTANCE.getDataLinkNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Tool Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.ToolNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getToolNotFoundException()
+		 * @generated
+		 */
+		EDataType TOOL_NOT_FOUND_EXCEPTION = eINSTANCE.getToolNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Grouping Criterion Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.GroupingCriterionNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionNotFoundException()
+		 * @generated
+		 */
+		EDataType GROUPING_CRITERION_NOT_FOUND_EXCEPTION = eINSTANCE.getGroupingCriterionNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Grouping Criterion Instance Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.GroupingCriterionInstanceNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionInstanceNotFoundException()
+		 * @generated
+		 */
+		EDataType GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = eINSTANCE.getGroupingCriterionInstanceNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Parameter Criterion Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.ParameterCriterionNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionNotFoundException()
+		 * @generated
+		 */
+		EDataType PARAMETER_CRITERION_NOT_FOUND_EXCEPTION = eINSTANCE.getParameterCriterionNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Parameter Criterion Instance Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.ParameterCriterionInstanceNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionInstanceNotFoundException()
+		 * @generated
+		 */
+		EDataType PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = eINSTANCE.getParameterCriterionInstanceNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Parameter Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.ParameterNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getParameterNotFoundException()
+		 * @generated
+		 */
+		EDataType PARAMETER_NOT_FOUND_EXCEPTION = eINSTANCE.getParameterNotFoundException();
 
 	}
 

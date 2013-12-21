@@ -1,6 +1,6 @@
 package easyflow.custom.exception;
 
-public class GroupingInstanceNotFoundException extends Exception {
+public class GroupingCriterionInstanceNotFoundException extends Exception {
 
 	/**
 	 * 

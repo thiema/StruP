@@ -71,6 +71,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGrouping <em>Grouping</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -518,6 +519,16 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected EList<String> grouping;
 
 	/**
+	 * The cached value of the '{@link #getData() <em>Data</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getData()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Data> data;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -705,6 +716,18 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			grouping = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__GROUPING);
 		}
 		return grouping;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Data> getData() {
+		if (data == null) {
+			data = new EObjectResolvingEList<Data>(Data.class, this, ToolPackage.PARAMETER__DATA);
+		}
+		return data;
 	}
 
 	/**
@@ -1144,6 +1167,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return isPositional();
 			case ToolPackage.PARAMETER__GROUPING:
 				return getGrouping();
+			case ToolPackage.PARAMETER__DATA:
+				return getData();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1229,6 +1254,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				getGrouping().clear();
 				getGrouping().addAll((Collection<? extends String>)newValue);
 				return;
+			case ToolPackage.PARAMETER__DATA:
+				getData().clear();
+				getData().addAll((Collection<? extends Data>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1310,6 +1339,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__GROUPING:
 				getGrouping().clear();
 				return;
+			case ToolPackage.PARAMETER__DATA:
+				getData().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1370,6 +1402,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return positional != POSITIONAL_EDEFAULT;
 			case ToolPackage.PARAMETER__GROUPING:
 				return grouping != null && !grouping.isEmpty();
+			case ToolPackage.PARAMETER__DATA:
+				return data != null && !data.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

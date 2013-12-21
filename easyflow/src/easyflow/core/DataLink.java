@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -26,6 +27,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.DataLink#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getTraversalName <em>Traversal Name</em>}</li>
+ *   <li>{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}</li>
+ *   <li>{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
+ *   <li>{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  * </ul>
  * </p>
  *
@@ -127,5 +131,84 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setTraversalName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Grouping Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping Str</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping Str</em>' attribute.
+	 * @see #setGroupingStr(String)
+	 * @see easyflow.core.CorePackage#getDataLink_GroupingStr()
+	 * @model
+	 * @generated
+	 */
+	String getGroupingStr();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Grouping Str</em>' attribute.
+	 * @see #getGroupingStr()
+	 * @generated
+	 */
+	void setGroupingStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Parent Grouping Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent Grouping Str</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent Grouping Str</em>' attribute.
+	 * @see #setParentGroupingStr(String)
+	 * @see easyflow.core.CorePackage#getDataLink_ParentGroupingStr()
+	 * @model
+	 * @generated
+	 */
+	String getParentGroupingStr();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent Grouping Str</em>' attribute.
+	 * @see #getParentGroupingStr()
+	 * @generated
+	 */
+	void setParentGroupingStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Identical Grouping</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Identical Grouping</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Identical Grouping</em>' attribute.
+	 * @see #setIdenticalGrouping(boolean)
+	 * @see easyflow.core.CorePackage#getDataLink_IdenticalGrouping()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isIdenticalGrouping();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Identical Grouping</em>' attribute.
+	 * @see #isIdenticalGrouping()
+	 * @generated
+	 */
+	void setIdenticalGrouping(boolean value);
 
 } // DataLink

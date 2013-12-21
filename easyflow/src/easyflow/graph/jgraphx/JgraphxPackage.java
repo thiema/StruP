@@ -214,13 +214,22 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__DATA_LINKS = 15;
 
 	/**
+	 * The feature id for the '<em><b>Utility Tasks</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__UTILITY_TASKS = 16;
+
+	/**
 	 * The number of structural features of the '<em>Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 16;
+	int UTIL_FEATURE_COUNT = 17;
 
 
 	/**
@@ -410,6 +419,17 @@ public interface JgraphxPackage extends EPackage {
 	EReference getUtil_DataLinks();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getUtilityTasks <em>Utility Tasks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Utility Tasks</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getUtilityTasks()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EReference getUtil_UtilityTasks();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -552,6 +572,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UTIL__DATA_LINKS = eINSTANCE.getUtil_DataLinks();
+		/**
+		 * The meta object literal for the '<em><b>Utility Tasks</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UTIL__UTILITY_TASKS = eINSTANCE.getUtil_UtilityTasks();
 
 	}
 

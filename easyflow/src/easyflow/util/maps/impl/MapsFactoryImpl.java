@@ -117,6 +117,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
 			case MapsPackage.TASK_TO_DATA_PORTS_MAP: return (EObject)createTaskToDataPortsMap();
 			case MapsPackage.STRING_TO_DATA_LINK_MAP: return (EObject)createStringToDataLinkMap();
+			case MapsPackage.CELL_TO_CELL_LIST_MAP: return (EObject)createCellToCellListMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -370,6 +371,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, DataLink> createStringToDataLinkMap() {
 		StringToDataLinkMapImpl stringToDataLinkMap = new StringToDataLinkMapImpl();
 		return stringToDataLinkMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<mxICell, EList<mxICell>> createCellToCellListMap() {
+		CellToCellListMapImpl cellToCellListMap = new CellToCellListMapImpl();
+		return cellToCellListMap;
 	}
 
 	/**

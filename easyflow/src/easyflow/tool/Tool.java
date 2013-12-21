@@ -6,6 +6,8 @@
  */
 package easyflow.tool;
 
+import easyflow.core.DataPort;
+import easyflow.custom.exception.DataPortNotFoundException;
 import java.net.URI;
 
 import org.apache.log4j.Logger;
@@ -245,5 +247,53 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void writeModelToXML();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultiplesInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canFilterInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean requiresGrouping(String groupingCriterion, DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean providesGrouping(String groupingCriterion, DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getGroupingsForInputPort(DataPort dataPort, boolean required);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getGroupingsForOutputPort(DataPort dataPort, boolean required);
 
 } // Tool

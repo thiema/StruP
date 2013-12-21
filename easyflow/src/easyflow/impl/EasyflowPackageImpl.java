@@ -21,9 +21,13 @@ import easyflow.core.impl.CorePackageImpl;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionNotFoundException;
+import easyflow.custom.exception.ParameterCriterionInstanceNotFoundException;
+import easyflow.custom.exception.ParameterCriterionNotFoundException;
+import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.example.ExamplePackage;
@@ -189,20 +193,6 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType groupingInstanceNotFoundExceptionEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EDataType taskToCellMapKeyNotFoundExceptionEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EDataType mxICellVisitorEDataType = null;
 
 	/**
@@ -239,6 +229,48 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType dataLinkNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType toolNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType groupingCriterionNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType groupingCriterionInstanceNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType parameterCriterionNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType parameterCriterionInstanceNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType parameterNotFoundExceptionEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -479,24 +511,6 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EDataType getGroupingInstanceNotFoundException() {
-		return groupingInstanceNotFoundExceptionEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EDataType getTaskToCellMapKeyNotFoundException() {
-		return taskToCellMapKeyNotFoundExceptionEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EDataType getmxICellVisitor() {
 		return mxICellVisitorEDataType;
 	}
@@ -551,6 +565,60 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getToolNotFoundException() {
+		return toolNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getGroupingCriterionNotFoundException() {
+		return groupingCriterionNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getGroupingCriterionInstanceNotFoundException() {
+		return groupingCriterionInstanceNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getParameterCriterionNotFoundException() {
+		return parameterCriterionNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getParameterCriterionInstanceNotFoundException() {
+		return parameterCriterionInstanceNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getParameterNotFoundException() {
+		return parameterNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -576,6 +644,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Create data types
 		mxGraphEDataType = createEDataType(MX_GRAPH);
 		mxICellEDataType = createEDataType(MX_ICELL);
+		mxICellVisitorEDataType = createEDataType(MX_ICELL_VISITOR);
 		loggerEDataType = createEDataType(LOGGER);
 		objectEDataType = createEDataType(OBJECT);
 		jexlEngineEDataType = createEDataType(JEXL_ENGINE);
@@ -588,15 +657,18 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		schemaEDataType = createEDataType(SCHEMA);
 		jsonObjectEDataType = createEDataType(JSON_OBJECT);
 		bufferedReaderEDataType = createEDataType(BUFFERED_READER);
-		fileNotFoundExceptionEDataType = createEDataType(FILE_NOT_FOUND_EXCEPTION);
-		groupingInstanceNotFoundExceptionEDataType = createEDataType(GROUPING_INSTANCE_NOT_FOUND_EXCEPTION);
-		taskToCellMapKeyNotFoundExceptionEDataType = createEDataType(TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION);
-		mxICellVisitorEDataType = createEDataType(MX_ICELL_VISITOR);
 		patternEDataType = createEDataType(PATTERN);
 		cellNotFoundExceptionEDataType = createEDataType(CELL_NOT_FOUND_EXCEPTION);
+		fileNotFoundExceptionEDataType = createEDataType(FILE_NOT_FOUND_EXCEPTION);
 		taskNotFoundExceptionEDataType = createEDataType(TASK_NOT_FOUND_EXCEPTION);
 		dataPortNotFoundExceptionEDataType = createEDataType(DATA_PORT_NOT_FOUND_EXCEPTION);
 		dataLinkNotFoundExceptionEDataType = createEDataType(DATA_LINK_NOT_FOUND_EXCEPTION);
+		toolNotFoundExceptionEDataType = createEDataType(TOOL_NOT_FOUND_EXCEPTION);
+		groupingCriterionNotFoundExceptionEDataType = createEDataType(GROUPING_CRITERION_NOT_FOUND_EXCEPTION);
+		groupingCriterionInstanceNotFoundExceptionEDataType = createEDataType(GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION);
+		parameterCriterionNotFoundExceptionEDataType = createEDataType(PARAMETER_CRITERION_NOT_FOUND_EXCEPTION);
+		parameterCriterionInstanceNotFoundExceptionEDataType = createEDataType(PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION);
+		parameterNotFoundExceptionEDataType = createEDataType(PARAMETER_NOT_FOUND_EXCEPTION);
 	}
 
 	/**
@@ -647,6 +719,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Initialize data types
 		initEDataType(mxGraphEDataType, mxGraph.class, "mxGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(mxICellEDataType, mxICell.class, "mxICell", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(mxICellVisitorEDataType, mxICellVisitor.class, "mxICellVisitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(loggerEDataType, Logger.class, "Logger", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(jexlEngineEDataType, JexlEngine.class, "JexlEngine", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
@@ -659,15 +732,18 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(schemaEDataType, Schema.class, "Schema", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(jsonObjectEDataType, JSONObject.class, "JSONObject", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(bufferedReaderEDataType, BufferedReader.class, "BufferedReader", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(fileNotFoundExceptionEDataType, FileNotFoundException.class, "FileNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(groupingInstanceNotFoundExceptionEDataType, GroupingInstanceNotFoundException.class, "GroupingInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(taskToCellMapKeyNotFoundExceptionEDataType, TaskToCellMapKeyNotFoundException.class, "TaskToCellMapKeyNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(mxICellVisitorEDataType, mxICellVisitor.class, "mxICellVisitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(patternEDataType, Pattern.class, "Pattern", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(cellNotFoundExceptionEDataType, CellNotFoundException.class, "CellNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(fileNotFoundExceptionEDataType, FileNotFoundException.class, "FileNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(taskNotFoundExceptionEDataType, TaskNotFoundException.class, "TaskNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(dataPortNotFoundExceptionEDataType, DataPortNotFoundException.class, "DataPortNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(dataLinkNotFoundExceptionEDataType, DataLinkNotFoundException.class, "DataLinkNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(toolNotFoundExceptionEDataType, ToolNotFoundException.class, "ToolNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(groupingCriterionNotFoundExceptionEDataType, GroupingCriterionNotFoundException.class, "GroupingCriterionNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(groupingCriterionInstanceNotFoundExceptionEDataType, GroupingCriterionInstanceNotFoundException.class, "GroupingCriterionInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(parameterCriterionNotFoundExceptionEDataType, ParameterCriterionNotFoundException.class, "ParameterCriterionNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(parameterCriterionInstanceNotFoundExceptionEDataType, ParameterCriterionInstanceNotFoundException.class, "ParameterCriterionInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(parameterNotFoundExceptionEDataType, ParameterNotFoundException.class, "ParameterNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

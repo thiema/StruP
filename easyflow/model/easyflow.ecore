@@ -5,6 +5,7 @@
     nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
   <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Logger" instanceClassName="org.apache.log4j.Logger"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
@@ -18,17 +19,22 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Schema" instanceClassName="javax.xml.validation.Schema"/>
   <eClassifiers xsi:type="ecore:EDataType" name="JSONObject" instanceClassName="net.sf.json.JSONObject"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BufferedReader" instanceClassName="java.io.BufferedReader"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="FileNotFoundException" instanceClassName="java.io.FileNotFoundException"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="GroupingInstanceNotFoundException"
-      instanceClassName="easyflow.custom.exception.GroupingInstanceNotFoundException"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="TaskToCellMapKeyNotFoundException"
-      instanceClassName="easyflow.custom.exception.TaskToCellMapKeyNotFoundException"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Pattern" instanceClassName="java.util.regex.Pattern"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CellNotFoundException" instanceClassName="easyflow.custom.exception.CellNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="FileNotFoundException" instanceClassName="java.io.FileNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TaskNotFoundException" instanceClassName="easyflow.custom.exception.TaskNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="DataPortNotFoundException" instanceClassName="easyflow.custom.exception.DataPortNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="DataLinkNotFoundException" instanceClassName="easyflow.custom.exception.DataLinkNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ToolNotFoundException" instanceClassName="easyflow.custom.exception.ToolNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="GroupingCriterionNotFoundException"
+      instanceClassName="easyflow.custom.exception.GroupingCriterionNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="GroupingCriterionInstanceNotFoundException"
+      instanceClassName="easyflow.custom.exception.GroupingCriterionInstanceNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ParameterCriterionNotFoundException"
+      instanceClassName="easyflow.custom.exception.ParameterCriterionNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ParameterCriterionInstanceNotFoundException"
+      instanceClassName="easyflow.custom.exception.ParameterCriterionInstanceNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ParameterNotFoundException" instanceClassName="easyflow.custom.exception.ParameterNotFoundException"/>
   <eSubpackages name="core" nsURI="http:///de/thiema/easyflow/core/easyflow.core/1.0.0"
       nsPrefix="easyflow">
     <eClassifiers xsi:type="ecore:EClass" name="Workflow">
@@ -75,12 +81,12 @@
           <details key="documentation" value=""/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="applyTraversalEvents" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+      <eOperations name="applyTraversalEvents" eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="breadth first iteration of graph. compute new graph with &#xA;given traversal event applied."/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+      <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
         <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
       </eOperations>
       <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -98,8 +104,10 @@
       <eOperations name="resolveMissingDataPortsByToolFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="task" eType="#//core/Task"/>
       </eOperations>
-      <eOperations name="findUtilityTaskFor" eType="#//core/Task">
-        <eParameters name="task" eType="#//core/Task"/>
+      <eOperations name="findUtilityTaskForAnalysisType" eType="#//core/Task">
+        <eParameters name="analysisType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="traversalCriterion" upperBound="-1" eType="#//traversal/TraversalCriterion"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstNode" eType="#//Object"/>
@@ -130,6 +138,8 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="processingConfig" upperBound="-1"
           eType="#//util/maps/StringToStringMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="rootTask" eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="staticTasks" upperBound="-1"
+          eType="#//core/Task"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Task">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -225,6 +235,30 @@
       </eOperations>
       <eOperations name="resolveMissingDataPortsByTool" upperBound="-1" eType="#//util/maps/TaskToDataPortsMap">
         <eParameters name="tasks" upperBound="-1" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="getOverlappingChunksFor" upperBound="-1" eType="#//traversal/TraversalChunk">
+        <eParameters name="parentTask" eType="#//core/Task"/>
+        <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="canProcessMultiplesInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="canFilterInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="getRequiredGroupingsFor" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          eExceptions="#//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="getProvidedGroupingsFor" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          eExceptions="#//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPorts" upperBound="-1"
           eType="#//core/DataPort"/>
@@ -376,7 +410,7 @@
         <details key="documentation" value="A DataPort represents the Data that can be transformed by a Task. DataPorts&#xA;have a Cardinality and a DataFormat and a List of GroupingCriteria that can &#xA;be used to group the data."/>
       </eAnnotations>
       <eOperations name="isCompatible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="dataPorts" eType="#//core/DataPort"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
       </eOperations>
       <eOperations name="removeDataPortFrom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="dataPort" upperBound="-1" eType="#//core/DataPort"/>
@@ -402,6 +436,10 @@
           eType="#//traversal/TraversalChunk"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="traversalName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentGroupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="identicalGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
@@ -518,7 +556,7 @@
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
         </eOperations>
         <eOperations name="getGroupingInstances" upperBound="-1" eType="#//metadata/GroupingInstance"
-            eExceptions="#//GroupingInstanceNotFoundException">
+            eExceptions="#//GroupingCriterionInstanceNotFoundException">
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
         </eOperations>
         <eOperations name="resetFlags"/>
@@ -531,8 +569,7 @@
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         </eOperations>
-        <eOperations name="isChildOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-            eExceptions="#//TaskToCellMapKeyNotFoundException">
+        <eOperations name="isChildOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="parent" eType="#//core/Task"/>
           <eParameters name="child" eType="#//core/Task"/>
         </eOperations>
@@ -570,9 +607,10 @@
             eExceptions="#//CellNotFoundException #//TaskNotFoundException">
           <eParameters name="task" eType="#//core/Task"/>
         </eOperations>
-        <eOperations name="findEdgesToBeResolved" upperBound="-1" eType="#//mxICell"/>
-        <eOperations name="resolveEdge" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-          <eParameters name="edge" eType="#//mxICell"/>
+        <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//util/maps/CellToCellListMap"/>
+        <eOperations name="resolveEdge" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
+          <eParameters name="entry" eType="#//util/maps/CellToCellListMap"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
             changeable="false" transient="true"/>
@@ -603,6 +641,8 @@
             upperBound="-1" eType="#//traversal/TraversalEvent"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="dataLinks" upperBound="-1"
             eType="#//util/maps/StringToDataLinkMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="utilityTasks" upperBound="-1"
+            eType="#//util/maps/StringToTaskMap" containment="true"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>
@@ -729,6 +769,30 @@
         <details key="documentation" value="Tool represents the tool which is used to implement an processing step.&#xA;The tools behaviour is mainly implemented by its command reference."/>
       </eAnnotations>
       <eOperations name="writeModelToXML"/>
+      <eOperations name="canProcessMultiplesInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="canFilterInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="requiresGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="groupingCriterion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="providesGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="groupingCriterion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="getGroupingsForInputPort" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getGroupingsForOutputPort" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -777,6 +841,21 @@
           <details key="documentation" value="Returns the concrete input ports (e.g. file names). The keys correspond to the&#xA;name of data format."/>
         </eAnnotations>
         <eParameters name="chunks" upperBound="-1" eType="#//util/maps/StringToChunksMap"/>
+      </eOperations>
+      <eOperations name="getGroupingsForDataPort" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getGroupingsForDataPortAny" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        <eParameters name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getParameterForDataPort" eType="#//tool/Parameter" eExceptions="#//ParameterNotFoundException">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+      </eOperations>
+      <eOperations name="getParameterForDataPortAny" eType="#//tool/Parameter">
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="executable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
@@ -832,6 +911,8 @@
           defaultValueLiteral="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="grouping" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="data" upperBound="-1"
+          eType="#//tool/Data"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="InOutParameter" eSuperTypes="#//tool/Parameter">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="handles" upperBound="-1"
@@ -1153,6 +1234,11 @@
       <eClassifiers xsi:type="ecore:EClass" name="StringToDataLinkMap" instanceClassName="java.util.Map$Entry">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/DataLink"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="CellToCellListMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//mxICell"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
+            eType="#//mxICell"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

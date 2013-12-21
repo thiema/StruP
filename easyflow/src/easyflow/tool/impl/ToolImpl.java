@@ -6,13 +6,17 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.core.DataPort;
+import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.tool.Command;
 import easyflow.tool.Data;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
+import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
+import easyflow.traversal.TraversalCriterion;
 
 import easyflow.util.maps.MapsPackage;
 
@@ -22,12 +26,14 @@ import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.net.URI;
 
 import java.util.Collection;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -504,6 +510,83 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultiplesInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data data = getData().get(dataPort.getName());
+		if (data==null)
+			throw new DataPortNotFoundException();
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canFilterInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data data = getData().get(dataPort.getName());
+		if (data==null)
+			throw new DataPortNotFoundException();
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean requiresGrouping(String groupingCriterion, DataPort dataPort) {
+		for (Entry<String, Data> e:getData().entrySet())
+			if (!e.getValue().isOutput() && e.getValue().getPort().isCompatible(dataPort))
+				return true;
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean providesGrouping(String groupingCriterion, DataPort dataPort) {
+		for (Entry<String, Data> e:getData().entrySet())
+			if (e.getValue().isOutput() && e.getValue().getPort().isCompatible(dataPort))
+				return true;
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getGroupingsForInputPort(DataPort dataPort, boolean isRequired) {
+		EList<String> groupings=new BasicEList<String>();
+		for (Entry<String, Data> e:getData().entrySet())
+			if (!e.getValue().isOutput())
+				if (dataPort.isCompatible(e.getValue().getPort()))
+					groupings.addAll(getCommand().getGroupingsForInputPort(dataPort));
+		return groupings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getGroupingsForOutputPort(DataPort dataPort, boolean isRequired) {
+		EList<String> groupings=new BasicEList<String>();
+		for (Entry<String, Data> e:getData().entrySet())
+			if (e.getValue().isOutput())
+				if (dataPort.isCompatible(e.getValue().getPort()))
+					groupings.addAll(getCommand().getGroupingsForInputPort(dataPort));
+				
+		return groupings;
 	}
 
 	/**

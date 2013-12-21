@@ -462,18 +462,33 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		for (Entry<String, String> e:map.entrySet())
 		{
 			if (e.getValue()!=null)
-				emap.put(e.getKey(), parseString(e.getValue()));
+				emap.put(e.getKey(), parseString(e.getKey(), e.getValue()));
 		}
 		emap.put("Record", recordInstance.getName());
 		return emap;
 	}
 
-	private Object parseString(String field)
+	private Object parseString(String field, String value)
 	{
-		Object o=field;
-		String[] a=StringUtils.split(field, ",");
+		Object o=value;
+		String[] a = StringUtils.split(value, ",");
+		boolean isArray=false;
+		if (GlobalVar.getMetaDataColType().containsKey(field))
+		{
+			if(value.startsWith("[") && value.endsWith("]"))
+			{
+				a[0]=a[0].subSequence(1, a[0].length()-1).toString();
+				a[a.length-1]=a[a.length-1].subSequence(0, a[0].length()-2).toString();
+				isArray=true;
+			}
+			else if (GlobalVar.getMetaDataColType().get(field).equals("List")
+				|| GlobalVar.getMetaDataColType().get(field).equals("Array"))
+			{
+				isArray=true;
+			}
+		}
 		//convert into list object
-		if (a.length>1)
+		if (a.length>1 || isArray)
 			o=a;
 		return o;
 	}

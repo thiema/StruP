@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -66,6 +68,7 @@ public class ToolContentHandler implements ContentHandler {
 	boolean xmlKeyFound = false;
 	boolean withinParam = false;
 	boolean withinData = false;
+	Map<String, String> dataStrings=new HashMap<String, String>();
 	
 	public static List<Tool> parse(URI source, DocumentProperties documentProperties, 
 			ToolContentHandler toolContentHandler, String xmlKey)
@@ -211,6 +214,10 @@ public class ToolContentHandler implements ContentHandler {
 		if (atts.getValue("grouping")!=null)
 			for (String group:atts.getValue("grouping").split(","))
 				parameter.getGrouping().add(group);
+		if (atts.getValue("data")!=null)
+		{
+			dataStrings.put(parameter.getName(), atts.getValue("data"));
+		}
 		if (atts.getValue("type").equals("data"))
 		{
 			Data data = ToolFactory.eINSTANCE.createData();
@@ -278,6 +285,7 @@ public class ToolContentHandler implements ContentHandler {
 				pkg.setVersion(atts.getValue("version"));
 				packages.put(pkg.getName(), pkg);
 			case TOOL:
+				dataStrings.clear();
 				tool=ToolFactory.eINSTANCE.createTool();
 				tools.add(tool);
 				Command command=ToolFactory.eINSTANCE.createCommand();
@@ -445,6 +453,31 @@ public class ToolContentHandler implements ContentHandler {
 			case PARAM:
 				withinParam = false;
 				break;
+			case TOOL:
+				for (Entry<String, String> e:dataStrings.entrySet())
+				{
+					if (tool.getCommand().getParameters().containsKey(e.getKey()))
+					{
+						Parameter p=tool.getCommand().getParameters().get(e.getKey());
+					
+						for (String dataString:StringUtils.split(e.getValue()))
+						{
+							if (tool.getData().containsKey(dataString))
+							{
+								Data d=tool.getData().get(dataString);
+								p.getData().add(d);
+							}
+							else
+							{
+								logger.warn("couldnt find data "+dataString+" which is referenced by parameter "+e.getKey() );
+							}
+						}
+					}
+					else
+					{
+						logger.warn("couldnt find parameter "+e.getKey());
+					}
+				}
 			default:
 				break;
 		}

@@ -196,11 +196,13 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 	</tool>
 	<tool id="view" package="samtools" analysis_type="view">
 		<!-- the optional grouping attribute tells us that this parameter
-		triggers processing of only those data records matching the specified group -->
+		triggers processing (e.g. displaying) of only those data records 
+		matching the specified group. When attribute data is set, the grouping
+		refers only for the specified data (ports), otherwise it is valid for all data  -->
 		<param name="r" label="filter_readgroup" type="text" named="true"
-			grouping="ReadGroup" optional="true"/>
+			grouping="ReadGroup" optional="true" data="output"/>
 		<param name="l" label="filter_library" type="text" named="true"
-			grouping="Library" optional="true"/>
+			grouping="Library" optional="true" data="output"/>
 		<!-- the input/output can be either in the sam or bam format
 		corresponding params can be defined either separately, i.e. defining 2 param elements
 		or at once (using comma seperated values to set the format attribute). see below

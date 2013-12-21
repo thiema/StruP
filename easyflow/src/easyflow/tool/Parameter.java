@@ -40,6 +40,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getGrouping <em>Grouping</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -214,6 +215,22 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<String> getGrouping();
+
+	/**
+	 * Returns the value of the '<em><b>Data</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.tool.Data}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data</em>' reference list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Data()
+	 * @model
+	 * @generated
+	 */
+	EList<Data> getData();
 
 	/**
 	 * <!-- begin-user-doc -->

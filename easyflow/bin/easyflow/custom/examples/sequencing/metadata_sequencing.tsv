@@ -1,7 +1,7 @@
-ID	ReadGroup	Sample	Group	InputFiles	Library	ReadLength	InsertSize	Platform	PlatformUnit	Description	FASTA
+ID	ReadGroup	Sample	Group	InputFiles:List	Library	ReadLength	InsertSize	Platform	PlatformUnit	Description	FASTA
 ID1	RG1	SampleA	GroupA	A_Lane1_1.fq,A_Lane1_2.fq	libraryA	100	350	ILLUMINA	Lane1	DummyDesc	hg19.fa
-ID2	RG1_Rep	SampleA_Rep	GroupA	A_Lane2_1.fq,A_Lane2_2.fq	libraryA_	100	350	ILLUMINA	Lane2	DummyDesc
-ID3	RG3	SampleC	GroupB	B_1.fq,B_2.fq	libraryC	51	350	ILLUMINA	Lane3	DummyDesc
+#ID2	RG1_Rep	SampleA_Rep	GroupA	A_Lane2_1.fq,A_Lane2_2.fq	libraryA_	100	350	ILLUMINA	Lane2	DummyDesc
+#ID3	RG3	SampleC	GroupB	B_1.fq,B_2.fq	libraryC	51	350	ILLUMINA	Lane3	DummyDesc
 #ID4	RG4	SampleC_2	GroupB	C_1.fq,C_2.fq	libraryC	51	350	ILLUMINA	Lane4	DummyDesc
-ID5	RG5	SampleC	GroupB	C.fq	librarySingleC	51	0	ILLUMINA	Lane5	DummyDesc
-#ID6	RG6	SampleC	GroupB	C_454.fq	libraryFlxC	500	0	ROCHE	X	DummyDescFlx
+ID5	RG5	SampleA	GroupB	C.fq	librarySingleC	51	0	ILLUMINA	Lane5	DummyDesc
+ID6	RG6	SampleC	GroupB	C_454.fq	libraryFlxC	500	0	ROCHE	X	DummyDescFlx

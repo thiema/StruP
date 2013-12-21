@@ -16,9 +16,13 @@ import easyflow.*;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.GroupingCriterionNotFoundException;
+import easyflow.custom.exception.ParameterCriterionInstanceNotFoundException;
+import easyflow.custom.exception.ParameterCriterionNotFoundException;
+import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.TaskToCellMapKeyNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import java.io.BufferedReader;
@@ -102,6 +106,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createmxGraphFromString(eDataType, initialValue);
 			case EasyflowPackage.MX_ICELL:
 				return createmxICellFromString(eDataType, initialValue);
+			case EasyflowPackage.MX_ICELL_VISITOR:
+				return createmxICellVisitorFromString(eDataType, initialValue);
 			case EasyflowPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			case EasyflowPackage.JEXL_ENGINE:
@@ -124,24 +130,30 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createJSONObjectFromString(eDataType, initialValue);
 			case EasyflowPackage.BUFFERED_READER:
 				return createBufferedReaderFromString(eDataType, initialValue);
-			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
-				return createFileNotFoundExceptionFromString(eDataType, initialValue);
-			case EasyflowPackage.GROUPING_INSTANCE_NOT_FOUND_EXCEPTION:
-				return createGroupingInstanceNotFoundExceptionFromString(eDataType, initialValue);
-			case EasyflowPackage.TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION:
-				return createTaskToCellMapKeyNotFoundExceptionFromString(eDataType, initialValue);
-			case EasyflowPackage.MX_ICELL_VISITOR:
-				return createmxICellVisitorFromString(eDataType, initialValue);
 			case EasyflowPackage.PATTERN:
 				return createPatternFromString(eDataType, initialValue);
 			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
 				return createCellNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
+				return createFileNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.TASK_NOT_FOUND_EXCEPTION:
 				return createTaskNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.DATA_PORT_NOT_FOUND_EXCEPTION:
 				return createDataPortNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.DATA_LINK_NOT_FOUND_EXCEPTION:
 				return createDataLinkNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.TOOL_NOT_FOUND_EXCEPTION:
+				return createToolNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.GROUPING_CRITERION_NOT_FOUND_EXCEPTION:
+				return createGroupingCriterionNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION:
+				return createGroupingCriterionInstanceNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.PARAMETER_CRITERION_NOT_FOUND_EXCEPTION:
+				return createParameterCriterionNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION:
+				return createParameterCriterionInstanceNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.PARAMETER_NOT_FOUND_EXCEPTION:
+				return createParameterNotFoundExceptionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -159,6 +171,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertmxGraphToString(eDataType, instanceValue);
 			case EasyflowPackage.MX_ICELL:
 				return convertmxICellToString(eDataType, instanceValue);
+			case EasyflowPackage.MX_ICELL_VISITOR:
+				return convertmxICellVisitorToString(eDataType, instanceValue);
 			case EasyflowPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			case EasyflowPackage.JEXL_ENGINE:
@@ -181,24 +195,30 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertJSONObjectToString(eDataType, instanceValue);
 			case EasyflowPackage.BUFFERED_READER:
 				return convertBufferedReaderToString(eDataType, instanceValue);
-			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
-				return convertFileNotFoundExceptionToString(eDataType, instanceValue);
-			case EasyflowPackage.GROUPING_INSTANCE_NOT_FOUND_EXCEPTION:
-				return convertGroupingInstanceNotFoundExceptionToString(eDataType, instanceValue);
-			case EasyflowPackage.TASK_TO_CELL_MAP_KEY_NOT_FOUND_EXCEPTION:
-				return convertTaskToCellMapKeyNotFoundExceptionToString(eDataType, instanceValue);
-			case EasyflowPackage.MX_ICELL_VISITOR:
-				return convertmxICellVisitorToString(eDataType, instanceValue);
 			case EasyflowPackage.PATTERN:
 				return convertPatternToString(eDataType, instanceValue);
 			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
 				return convertCellNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
+				return convertFileNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.TASK_NOT_FOUND_EXCEPTION:
 				return convertTaskNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.DATA_PORT_NOT_FOUND_EXCEPTION:
 				return convertDataPortNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.DATA_LINK_NOT_FOUND_EXCEPTION:
 				return convertDataLinkNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.TOOL_NOT_FOUND_EXCEPTION:
+				return convertToolNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.GROUPING_CRITERION_NOT_FOUND_EXCEPTION:
+				return convertGroupingCriterionNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION:
+				return convertGroupingCriterionInstanceNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.PARAMETER_CRITERION_NOT_FOUND_EXCEPTION:
+				return convertParameterCriterionNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION:
+				return convertParameterCriterionInstanceNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.PARAMETER_NOT_FOUND_EXCEPTION:
+				return convertParameterNotFoundExceptionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -461,42 +481,6 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GroupingInstanceNotFoundException createGroupingInstanceNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
-		return (GroupingInstanceNotFoundException)super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertGroupingInstanceNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TaskToCellMapKeyNotFoundException createTaskToCellMapKeyNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
-		return (TaskToCellMapKeyNotFoundException)super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertTaskToCellMapKeyNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public mxICellVisitor createmxICellVisitorFromString(EDataType eDataType, String initialValue) {
 		return (mxICellVisitor)super.createFromString(eDataType, initialValue);
 	}
@@ -597,6 +581,114 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertDataLinkNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ToolNotFoundException createToolNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (ToolNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertToolNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GroupingCriterionNotFoundException createGroupingCriterionNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (GroupingCriterionNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertGroupingCriterionNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GroupingCriterionInstanceNotFoundException createGroupingCriterionInstanceNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (GroupingCriterionInstanceNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertGroupingCriterionInstanceNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ParameterCriterionNotFoundException createParameterCriterionNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (ParameterCriterionNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertParameterCriterionNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ParameterCriterionInstanceNotFoundException createParameterCriterionInstanceNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (ParameterCriterionInstanceNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertParameterCriterionInstanceNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ParameterNotFoundException createParameterNotFoundExceptionFromString(EDataType eDataType, String initialValue) {
+		return (ParameterNotFoundException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertParameterNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

@@ -6,6 +6,8 @@
  */
 package easyflow.tool;
 
+import easyflow.core.DataPort;
+import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.traversal.TraversalChunk;
 import java.net.URI;
 import java.util.Map;
@@ -153,5 +155,21 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EMap<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getGroupingsForDataPort(DataPort dataPort, boolean required, boolean isOutput);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException"
+	 * @generated
+	 */
+	Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException;
 
 } // Command

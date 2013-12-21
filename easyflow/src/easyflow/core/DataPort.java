@@ -237,7 +237,7 @@ public interface DataPort extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean isCompatible(DataPort dataPorts);
+	boolean isCompatible(DataPort dataPort);
 
 	/**
 	 * <!-- begin-user-doc -->

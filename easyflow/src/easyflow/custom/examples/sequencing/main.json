@@ -1,10 +1,10 @@
 {
 	
   "project" : {
-	"workflowTemplateFile2"      : "abstract_multiple_traversal_event.workflow",
-	"workflowTemplateFile1"      : "abstract1.workflow",
+	"workflowTemplateFile2"       : "abstract_multiple_traversal_event.workflow",
+	"workflowTemplateFile1"       : "abstract1.workflow",
 	"workflowTemplateFile"       : "reseq_simple.workflow",
-	"workflowTemplateFile_reseq" : "reseq_full.workflow",
+	"workflowTemplateFile3"       : "reseq_full.workflow",
     "metadataFile1"               : "metadata_abstract.tsv", 
     "metadataFile"               : "metadata_sequencing.tsv",
     "isContrast"                 : "true",
