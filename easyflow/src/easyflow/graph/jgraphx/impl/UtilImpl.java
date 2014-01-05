@@ -38,6 +38,8 @@ import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.exception.TraversalChunkNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.execution.IExecutionSystem;
@@ -1096,14 +1098,13 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return returnCell.size() > 0 ? returnCell.get(0) : null;
 	}
 
-	private DataLink createDataLink(Object edge, Task task, String groupingStr, String parentGroupingStr) throws DataLinkNotFoundException
+	private DataLink createDataLink(DataPort dataPort, Task task, String groupingStr, String parentGroupingStr)
 	{
-		DataLink dataLink = loadDataLink(edge);
 		DataLink newDataLink=CoreFactory.eINSTANCE.createDataLink();
 		newDataLink.setGroupingStr(groupingStr);
+		newDataLink.setDataPort(dataPort);
 		if (parentGroupingStr != null)
 			newDataLink.setParentGroupingStr(parentGroupingStr);
-		newDataLink.setDataPort(dataLink.getDataPort());
 		int i=task.getChunks().indexOfKey(groupingStr);		
 		if (i!=-1)
 		{
@@ -1115,7 +1116,13 @@ public class UtilImpl extends EObjectImpl implements Util {
 			newDataLink.setTraversalName(task.getChunks().get(i).getKey());
 		}
 		return newDataLink;
-
+	}
+	
+	private DataLink createDataLink(Object edge, Task task, String groupingStr, String parentGroupingStr) throws DataLinkNotFoundException
+	{
+		DataLink dataLink = loadDataLink(edge);
+		return createDataLink(dataLink.getDataPort(), task, groupingStr, parentGroupingStr);
+		
 	}
 	
 	private Task createTask(Task task, String groupingStr, EList<GroupingInstance> groupingInstances)
@@ -1865,7 +1872,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			
 			getGraph().removeCells(tmpGraphCells.toArray(), true);
 			layoutGraph();
-
+		
 		}finally{graph.getModel().endUpdate();}
 
 		getProcessedEdgesCopyGraph().clear();
@@ -2284,83 +2291,216 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 	 * 1.   test if current task (entry key) and its dataport which are going to be resolved
+		 *   - have multiple inputs 
+		 *   - have inputs consisting of more than one grouping instance
+		 *   - have inputs consisting of instances of two or more different groups
+		 * 1a.  test if the task can handle the inputs by its own 
+		 *   - if yes: nothing to do
+		 *   - else  : continue with step 2
+		 *     
+		 * 2. find the utility task that fits best to the input constellation as found in step 1
+		 * 
+		 * 3. create new filter task and insert into graph (using utility task from step 2 as template)
+		 * 
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
 	 * @throws DataLinkNotFoundException 
+	 * @throws ToolNotFoundException 
+	 * @throws DataPortNotFoundException 
+	 * @throws UtilityTaskNotFoundException 
 	 * @generated not
 	 */
-	public boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException {
+	public boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
+				
 		boolean rc=false;
-		for (mxICell edge:entry.getValue())
+		
+		int constellation = 0x00;
+		int processMultipleInputs    = 1;
+		int processMultipleGroupings = 2;
+		int processMultipleInstances = 4;
+		
+		Task task = loadTask(entry.getKey());
+		logger.debug("apply filter for "+task.getUniqueString()+" "+entry.getValue().size());
+		if (!entry.getValue().isEmpty())
 		{
-			DataLink dataLink = loadDataLink(edge);
-			Task parentTask = getSourceTask((mxCell) edge);
-			Task task = loadTask(entry.getKey());
-			logger.trace(task.getChunks().get(dataLink.getGroupingStr())
-					+" "+parentTask.getChunks().get(dataLink.getParentGroupingStr()));
-			
-			//entry.getKey(), dataLink.getDataPort());
+			DataLink firstDataLink = loadDataLink(entry.getValue().get(0));
+			if (
+					!task.canProcessMultipleInputsFor(null, firstDataLink.getDataPort())
+				)
+			{
+				
+			}
+			else { 
+				if (
+					task.hasMultipleGroupingsFor(firstDataLink.getDataPort()) && task.canProcessMultipleGroupingsFor(null, firstDataLink.getDataPort())
+					|| task.hasMultipleInputsFor(firstDataLink.getDataPort()) && task.canProcessMultipleInputsFor(null, firstDataLink.getDataPort())
+					)
+				{
+				//constellation|=1<<
+				}
+			}
+			//graph.getModel().beginUpdate(); try {
+				
+				EMap<mxICell, mxICell> cellMap = createFilterTasks(entry.getKey(), entry.getValue(), firstDataLink.getDataPort(), constellation);
+				EMap<String, EList<TraversalChunk>> traversalChunks = new BasicEMap<String, EList<TraversalChunk>>();
+				for (Entry<mxICell, mxICell> e:cellMap.entrySet())
+				{
+					Task t=loadTask(e.getKey());
+					for (Entry<String, EList<TraversalChunk>> e1:task.getChunks())
+						traversalChunks.put(e1.getKey(), new BasicEList(EcoreUtil.copyAll(e1.getValue())));
+				}
+				if (!cellMap.isEmpty())
+				{
+				Task newTask=createUtilityTask(traversalChunks, "merge", task.getName());
+				mxICell newCell=getCells().get(newTask.getUniqueString());
+
+				for (Entry<mxICell, mxICell> e:cellMap.entrySet())
+				{
+					logger.debug("insert edge: (filter-merge)"+loadTask(e.getKey()).getUniqueString()+"->"+newTask.getUniqueString());
+					getGraph().insertEdgeEasyFlow(null, null, e.getKey(), newCell, loadDataLink(e.getValue()));
+				}
+				logger.debug("insert edge: (merge-task) "+newTask.getUniqueString()+"->"+task.getUniqueString());
+				getGraph().insertEdgeEasyFlow(null, null, newCell, entry.getKey(), 
+						createDataLink(firstDataLink.getDataPort(), task, "Record", "Record"));
+				}
+				
+			//} finally { graph.getModel().endUpdate(); }
+
 		}
-		return rc;	
+		return rc;
 	}
 
-	private EList<mxICell> createFilterTasks(mxICell cell, EList<mxICell> edges) throws TaskNotFoundException, DataLinkNotFoundException
+	private EMap<mxICell, mxICell> createFilterTasks(
+			mxICell cell, 
+			EList<mxICell> edges, 
+			DataPort dataPort, 
+			int constellation) 
+					throws TaskNotFoundException, DataLinkNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException
 	{
-		EList<mxICell> cells = new BasicEList<mxICell>();
+		boolean rc = false;
+		Task task = loadTask(cell);
+		EMap<mxICell, mxICell> cells = new BasicEMap<mxICell, mxICell>();
 		EMap<String, EList<TraversalChunk>> coveredChunks = null;
-		Task filterTask=getUtilityTasks().get("filter");
-		filterTask.getProvidedGroupingsFor(tool, dataPort);
-		Task mergeTask=getUtilityTasks().get("merge");
+		//Task filterTask=getUtilityTasks().get("filter");
+		//filterTask.getProvidedGroupingsFor(null, dataPort);
+		//Task mergeTask=getUtilityTasks().get("merge");
 		
 		//if (filterTask.getRequiredGroupingsFor(null, dataPort))
+		logger.debug("createFilterTasks(): "+task.getUniqueString()+": requiredChunks="+task.getChunks().keySet());
 		for (mxICell edge:edges)
 		{
 			DataLink dataLink = loadDataLink(edge);
+			EMap<String, EList<TraversalChunk>> currentCoveredChunks = getCoveredChunks(
+					getTargetTask((mxCell) edge),
+					getSourceTask((mxCell) edge),
+					dataLink.getDataPort());
+			if (!currentCoveredChunks.isEmpty())
+			{
 			if (coveredChunks==null)
-				coveredChunks=dataLink.getCoveredChunks();
+				coveredChunks=currentCoveredChunks;
 			else
-				for (Entry<String, EList<TraversalChunk>> e:dataLink.getCoveredChunks().entrySet())
+				for (Entry<String, EList<TraversalChunk>> e:currentCoveredChunks.entrySet())
 				{
 					//if (coveredChunks.containsKey(e.getKey()))
 					coveredChunks.get(e.getKey()).addAll(e.getValue());
 				}
-			cells.add(createFilterTask(cell, edge, dataLink));
+			logger.debug("createFilterTasks(): coveredChunks="+coveredChunks.keySet());
+			Task newTask=createUtilityTask(currentCoveredChunks, "filter", task.getName());
+			mxICell newCell=getCells().get(newTask.getUniqueString());
+			logger.debug("createFilterTasks(): "+newTask.getUniqueString());
+			mxICell newEdge=(mxICell) getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), newCell, dataLink);
+			getGraph().removeCells(new Object[]{edge}, true);
+			cells.put(newCell, newEdge);
+					//createDataLink(edge, newTask, groupingStr, parentGroupingStr));
+			}
+			else
+			{
+				logger.debug("no chunks found that can be translated.");	
+			}
 		}
 		return cells;
 	}
-	
-	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, DataPort dataPort)
-	{
-		EList<String> requiredGroupings=task.getRequiredGroupingsFor(null, dataPort);
-		EList<String> providedGroupings=sourceTask.getProvidedGroupingsFor(null, dataPort);
-		for (TraversalChunk chunk:task.getOverlappingChunksFor(sourceTask))
-		{
-			
-		}
-		
 
+	
+	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, DataPort dataPort) throws ToolNotFoundException
+	{
+		EMap<String, EList<TraversalChunk>> allCoveredChunks = new BasicEMap<String, EList<TraversalChunk>>();
+		//EList<String> requiredGroupings=task.getRequiredGroupingsFor(null, dataPort);
+		//EList<String> providedGroupings=sourceTask.getProvidedGroupingsFor(null, dataPort);
+		for (String groupingStr:task.getChunks().keySet())
+		{
+			EList<TraversalChunk> coveredChunks = task.getOverlappingChunksFor(sourceTask, groupingStr);
+			if (!coveredChunks.isEmpty())
+				allCoveredChunks.put(groupingStr, coveredChunks);
+		}
+		if (allCoveredChunks.isEmpty())
+		{
+			EList<TraversalChunk> traversalChunks = new BasicEList<TraversalChunk>();
+			for (TraversalChunk traversalChunk : getRecordsForChunks(sourceTask))
+			{
+				for (TraversalChunk targetTC : getRecordsForChunks(task))
+				{
+					if (traversalChunk.getName().equals(targetTC.getName()))
+						traversalChunks.add(traversalChunk);
+							
+				}
+			}
+			if (!traversalChunks.isEmpty())
+				allCoveredChunks.put("Record", traversalChunks);
+					
+		}
+		return allCoveredChunks;
+
+	}	
+
+	private EList<TraversalChunk> getRecordsForChunks(Task task)
+	{
+		EList<TraversalChunk> chunks = new BasicEList<TraversalChunk>();
+		for (String groupingStr:task.getChunks().keySet())
+		{
+			if (!groupingStr.equals("Record"))
+			{
+				for (TraversalChunk traversalChunk:task.getChunks().get(groupingStr))
+				{
+					for (String rec : getMetaData().getRecordsBy(groupingStr, traversalChunk.getName()))
+					{				
+						TraversalChunk newTC = TraversalFactory.eINSTANCE.createTraversalChunk();
+						newTC.setName(rec);
+						chunks.add(newTC);
+					}
+				}
+			}
+			else
+			{
+				chunks.addAll(task.getChunks().get(groupingStr));
+			}
+		}
+		return chunks;
 	}
 	
-	private mxICell createFilterTask(mxICell vertex, mxICell edge, DataLink dataLink) throws TaskNotFoundException, DataLinkNotFoundException
+	private Task createUtilityTask(
+			EMap<String, EList<TraversalChunk>> chunks,
+			String utilityType,
+			String uniqueString) 
+					throws TaskNotFoundException, DataLinkNotFoundException, UtilityTaskNotFoundException
 	{
-		EMap<String, EList<TraversalChunk>> coveredChunks=dataLink.getCoveredChunks();
+		Task utilityTask;
+		if (getUtilityTasks().containsKey(utilityType))
+			utilityTask = EcoreUtil.copy(getUtilityTasks().get(utilityType));
+		else
+			throw new UtilityTaskNotFoundException();
+		utilityTask.setName(utilityTask.getName()+(uniqueString==null||uniqueString.equals("")?"":"_"+uniqueString));
+		utilityTask.getChunks().clear();
+		for (Entry<String, EList<TraversalChunk>> e:chunks.entrySet())
+		{
+			utilityTask.getChunks().put(e.getKey(), new BasicEList<TraversalChunk>(EcoreUtil.copyAll(e.getValue())));
+			logger.debug(e.getValue().size());
+		}
+		getTasks().put(utilityTask.getUniqueString(), utilityTask);
+		getCells().put(utilityTask.getUniqueString(), (mxICell)getGraph().insertVertexEasyFlow(null, null, utilityTask));
 		
-		Task sourceTask = getSourceTask((mxCell) edge);
-		mxCell source   = getSource((mxCell)edge);
-		Task task       = loadTask(vertex);
-		task.getRequiredGroupingsFor(null, dataLink.getDataPort());
-		sourceTask.getProvidedGroupingsFor(null, dataLink.getDataPort());
-		
-		
-		
-		Task filterTask = EcoreUtil.copy(getUtilityTasks().get("filter"));
-		
-		filterTask.getChunks().clear();
-		filterTask.getChunks().addAll(coveredChunks);
-		getCells().put(filterTask.getUniqueString(), (mxICell)getGraph().insertVertexEasyFlow(null, null, filterTask));
-		//task.get
-		//task.getPreferredTool().getRequiredGroupings(dataPort)
-		
+		return utilityTask;
 	}
 	
 	public EList<Task> getParentTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException

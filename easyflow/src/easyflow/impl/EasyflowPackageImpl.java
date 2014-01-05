@@ -28,6 +28,7 @@ import easyflow.custom.exception.ParameterCriterionNotFoundException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.example.ExamplePackage;
@@ -271,6 +272,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType parameterNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType utilityTaskNotFoundExceptionEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -619,6 +627,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getUtilityTaskNotFoundException() {
+		return utilityTaskNotFoundExceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -669,6 +686,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		parameterCriterionNotFoundExceptionEDataType = createEDataType(PARAMETER_CRITERION_NOT_FOUND_EXCEPTION);
 		parameterCriterionInstanceNotFoundExceptionEDataType = createEDataType(PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION);
 		parameterNotFoundExceptionEDataType = createEDataType(PARAMETER_NOT_FOUND_EXCEPTION);
+		utilityTaskNotFoundExceptionEDataType = createEDataType(UTILITY_TASK_NOT_FOUND_EXCEPTION);
 	}
 
 	/**
@@ -744,6 +762,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(parameterCriterionNotFoundExceptionEDataType, ParameterCriterionNotFoundException.class, "ParameterCriterionNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(parameterCriterionInstanceNotFoundExceptionEDataType, ParameterCriterionInstanceNotFoundException.class, "ParameterCriterionInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(parameterNotFoundExceptionEDataType, ParameterNotFoundException.class, "ParameterNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(utilityTaskNotFoundExceptionEDataType, UtilityTaskNotFoundException.class, "UtilityTaskNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

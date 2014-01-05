@@ -6,9 +6,6 @@
  */
 package easyflow.core.impl;
 
-
-import dk.brics.automaton.Automaton;
-import dk.brics.automaton.RegExp;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DataPort;
@@ -1536,12 +1533,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @throws ToolNotFoundException 
 	 * @generated not
 	 */
-	public EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException {
+	public EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException {
 		if (tool == null)
 			tool=getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
-		return tool.getRequiredGroupings(dataPort);
+		return tool.getGroupingsForInputPort(dataPort, required);
 	}
 
 	/**
@@ -1550,12 +1547,76 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @throws ToolNotFoundException 
 	 * @generated not
 	 */
-	public EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException {
+	public EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException {
 		if (tool == null)
 			tool=getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
-		return tool.getRequiredGroupings(dataPort);
+		return tool.getGroupingsForOutputPort(dataPort, required);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean hasMultipleInputsFor(DataPort dataPort) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean hasMultipleInstancesFor(DataPort dataPort) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean hasMultipleGroupingsFor(DataPort dataPort) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean canProcessMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1565,18 +1626,19 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public EList<TraversalChunk> getOverlappingChunksFor(Task parentTask, String groupingStr) {
 		EList<TraversalChunk> tc=new BasicEList<TraversalChunk>();
-		for (TraversalChunk parentTraversalChunk:parentTask.getChunks().get(groupingStr))
-		{
-			if (getChunks().containsKey(groupingStr))
+		if (getChunks().containsKey(groupingStr))
+			for (TraversalChunk traversalChunk: getChunks().get(groupingStr))
 			{
-				for (TraversalChunk traversalChunk: getChunks().get(groupingStr))
+				if (parentTask.getChunks().containsKey(groupingStr))
 				{
-					if (traversalChunk.getName().equals(parentTraversalChunk.getName()))
-						tc.add(traversalChunk);
+					for (TraversalChunk parentTraversalChunk:parentTask.getChunks().get(groupingStr))		
+					{
+						if (traversalChunk.getName().equals(parentTraversalChunk.getName()))
+							tc.add(traversalChunk);
+					}
+							
 				}
-						
 			}
-		}
 		return tc;
 	}
 

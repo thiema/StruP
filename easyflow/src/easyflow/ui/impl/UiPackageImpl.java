@@ -410,6 +410,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		op = addEOperation(iProjectEClass, null, "applyTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
 		addEOperation(iProjectEClass, null, "clearWorkflows", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -428,7 +429,12 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "setMetaDataReader", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveUtilityTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
 		initEClass(defaultProjectEClass, DefaultProject.class, "DefaultProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultProject_Workflows(), theCorePackage.getWorkflow(), null, "workflows", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

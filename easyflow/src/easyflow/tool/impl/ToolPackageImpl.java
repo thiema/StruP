@@ -1279,11 +1279,18 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		op = addEOperation(commandEClass, ecorePackage.getEString(), "getGroupingsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(commandEClass, ecorePackage.getEString(), "getGroupingsForDataPortAny", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutput", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(commandEClass, this.getParameter(), "getParameterForDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
+
+		op = addEOperation(commandEClass, this.getParameter(), "getParameterForDataPortAny", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameter_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Parameter.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

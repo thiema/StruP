@@ -67,7 +67,7 @@ public class SchemaGraphComponent extends mxGraphComponent
 				label.setFont(panel.getFont().deriveFont(Font.BOLD, 8));
 				logger.trace(label.getText()+" "+task.getPreferredTool());
 				logger.trace(task.getPreferredTool()+" "+task.getToolMatches().keySet());
-				if (task.getPreferredTool()==null)
+				if (task.getPreferredTool()==null || task.getToolMatches().get(task.getPreferredTool().getName())==null)
 					panel.setBackground(warnMissingToolBgColor);
 				else if (task.getToolMatches().get(task.getPreferredTool().getName()).isValid())
 					panel.setBackground(normalBgColor);

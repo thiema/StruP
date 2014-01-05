@@ -1028,6 +1028,43 @@ public interface MapsPackage extends EPackage {
 	int CELL_TO_CELL_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToBooleanMapImpl <em>String To Boolean Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToBooleanMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToBooleanMap()
+	 * @generated
+	 */
+	int STRING_TO_BOOLEAN_MAP = 26;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_BOOLEAN_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_BOOLEAN_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Boolean Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_BOOLEAN_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1912,6 +1949,40 @@ public interface MapsPackage extends EPackage {
 	EAttribute getCellToCellListMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Boolean Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Boolean Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="org.eclipse.emf.ecore.EBooleanObject"
+	 * @generated
+	 */
+	EClass getStringToBooleanMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToBooleanMap()
+	 * @generated
+	 */
+	EAttribute getStringToBooleanMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToBooleanMap()
+	 * @generated
+	 */
+	EAttribute getStringToBooleanMap_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2608,6 +2679,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CELL_TO_CELL_LIST_MAP__VALUE = eINSTANCE.getCellToCellListMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToBooleanMapImpl <em>String To Boolean Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToBooleanMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToBooleanMap()
+		 * @generated
+		 */
+		EClass STRING_TO_BOOLEAN_MAP = eINSTANCE.getStringToBooleanMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_BOOLEAN_MAP__KEY = eINSTANCE.getStringToBooleanMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_BOOLEAN_MAP__VALUE = eINSTANCE.getStringToBooleanMap_Value();
 
 	}
 

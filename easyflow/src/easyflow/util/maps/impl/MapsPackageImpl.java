@@ -254,6 +254,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	private EClass cellToCellListMapEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToBooleanMapEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -1059,6 +1066,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToBooleanMap() {
+		return stringToBooleanMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToBooleanMap_Key() {
+		return (EAttribute)stringToBooleanMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToBooleanMap_Value() {
+		return (EAttribute)stringToBooleanMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MapsFactory getMapsFactory() {
 		return (MapsFactory)getEFactoryInstance();
 	}
@@ -1185,6 +1219,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		cellToCellListMapEClass = createEClass(CELL_TO_CELL_LIST_MAP);
 		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__KEY);
 		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__VALUE);
+
+		stringToBooleanMapEClass = createEClass(STRING_TO_BOOLEAN_MAP);
+		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__KEY);
+		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__VALUE);
 	}
 
 	/**
@@ -1328,6 +1366,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(cellToCellListMapEClass, Map.Entry.class, "CellToCellListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCellToCellListMap_Key(), theEasyflowPackage.getmxICell(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCellToCellListMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToBooleanMapEClass, Map.Entry.class, "StringToBooleanMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToBooleanMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToBooleanMap_Value(), ecorePackage.getEBooleanObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl
