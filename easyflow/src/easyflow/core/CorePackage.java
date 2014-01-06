@@ -169,22 +169,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__DEFAULT_GROUPING_CRITERIA = 10;
 
 	/**
-	 * The feature id for the '<em><b>Previous Task Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__PREVIOUS_TASK_NAME = 11;
-
-	/**
 	 * The feature id for the '<em><b>Generic Attributes</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__GENERIC_ATTRIBUTES = 12;
+	int WORKFLOW__GENERIC_ATTRIBUTES = 11;
 
 	/**
 	 * The feature id for the '<em><b>Graph Util</b></em>' reference.
@@ -193,7 +184,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__GRAPH_UTIL = 13;
+	int WORKFLOW__GRAPH_UTIL = 12;
 
 	/**
 	 * The feature id for the '<em><b>Catalog</b></em>' reference.
@@ -202,7 +193,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__CATALOG = 14;
+	int WORKFLOW__CATALOG = 13;
 
 	/**
 	 * The feature id for the '<em><b>Processing Config</b></em>' map.
@@ -211,7 +202,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__PROCESSING_CONFIG = 15;
+	int WORKFLOW__PROCESSING_CONFIG = 14;
 
 	/**
 	 * The feature id for the '<em><b>Root Task</b></em>' reference.
@@ -220,7 +211,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__ROOT_TASK = 16;
+	int WORKFLOW__ROOT_TASK = 15;
 
 	/**
 	 * The feature id for the '<em><b>Static Tasks</b></em>' reference list.
@@ -229,7 +220,25 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__STATIC_TASKS = 17;
+	int WORKFLOW__STATIC_TASKS = 16;
+
+	/**
+	 * The feature id for the '<em><b>Processed States</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__PROCESSED_STATES = 17;
+
+	/**
+	 * The feature id for the '<em><b>Previous Task Name</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__PREVIOUS_TASK_NAME = 18;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -238,7 +247,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 18;
+	int WORKFLOW_FEATURE_COUNT = 19;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -1115,15 +1124,15 @@ public interface CorePackage extends EPackage {
 	EAttribute getWorkflow_DefaultGroupingCriteria();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Previous Task Name</em>'.
+	 * @return the meta object for the map '<em>Previous Task Name</em>'.
 	 * @see easyflow.core.Workflow#getPreviousTaskName()
 	 * @see #getWorkflow()
 	 * @generated
 	 */
-	EAttribute getWorkflow_PreviousTaskName();
+	EReference getWorkflow_PreviousTaskName();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}'.
@@ -1190,6 +1199,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_StaticTasks();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getProcessedStates <em>Processed States</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Processed States</em>'.
+	 * @see easyflow.core.Workflow#getProcessedStates()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_ProcessedStates();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
@@ -2038,12 +2058,12 @@ public interface CorePackage extends EPackage {
 		EAttribute WORKFLOW__DEFAULT_GROUPING_CRITERIA = eINSTANCE.getWorkflow_DefaultGroupingCriteria();
 
 		/**
-		 * The meta object literal for the '<em><b>Previous Task Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Previous Task Name</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute WORKFLOW__PREVIOUS_TASK_NAME = eINSTANCE.getWorkflow_PreviousTaskName();
+		EReference WORKFLOW__PREVIOUS_TASK_NAME = eINSTANCE.getWorkflow_PreviousTaskName();
 
 		/**
 		 * The meta object literal for the '<em><b>Generic Attributes</b></em>' map feature.
@@ -2092,6 +2112,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__STATIC_TASKS = eINSTANCE.getWorkflow_StaticTasks();
+
+		/**
+		 * The meta object literal for the '<em><b>Processed States</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__PROCESSED_STATES = eINSTANCE.getWorkflow_ProcessedStates();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.

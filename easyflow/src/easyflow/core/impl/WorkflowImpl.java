@@ -30,10 +30,15 @@ import easyflow.core.Workflow;
 import easyflow.custom.exception.CellNotFoundException;
 
 import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.util.GlobalVar;
 import easyflow.graph.jgraphx.Util;
 
 import easyflow.metadata.GroupingInstance;
@@ -44,6 +49,7 @@ import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
 
 import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.execution.makeflow.Makeflow;
@@ -105,13 +111,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getMetaData <em>Meta Data</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getMode <em>Mode</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGenericAttributes <em>Generic Attributes</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessingConfig <em>Processing Config</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getRootTask <em>Root Task</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getStaticTasks <em>Static Tasks</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessedStates <em>Processed States</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -126,7 +133,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 * @ordered
 	 */
-	//protected static final mxGraph GRAPH_EDEFAULT = new mxGraph();
 	protected static final EasyFlowGraph GRAPH_EDEFAULT = new EasyFlowGraph();
 
 	/**
@@ -300,16 +306,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EList<String> defaultGroupingCriteria;
 
 	/**
-	 * The cached value of the '{@link #getPreviousTaskName() <em>Previous Task Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPreviousTaskName()
-	 * @generated
-	 * @ordered
-	 */
-	protected Map<String, String> previousTaskName;
-
-	/**
 	 * The cached value of the '{@link #getGenericAttributes() <em>Generic Attributes</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -368,6 +364,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected EList<Task> staticTasks;
+
+	/**
+	 * The cached value of the '{@link #getProcessedStates() <em>Processed States</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProcessedStates()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Boolean> processedStates;
+
+	/**
+	 * The cached value of the '{@link #getPreviousTaskName() <em>Previous Task Name</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreviousTaskName()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> previousTaskName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -602,23 +618,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map<String, String> getPreviousTaskName() {
+	public EMap<String, String> getPreviousTaskName() {
+		if (previousTaskName == null) {
+			previousTaskName = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.WORKFLOW__PREVIOUS_TASK_NAME);
+		}
 		return previousTaskName;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPreviousTaskName(Map<String, String> newPreviousTaskName) {
-		Map<String, String> oldPreviousTaskName = previousTaskName;
-		previousTaskName = newPreviousTaskName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__PREVIOUS_TASK_NAME, oldPreviousTaskName, previousTaskName));
-	}
-
-	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -774,6 +779,18 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, Boolean> getProcessedStates() {
+		if (processedStates == null) {
+			processedStates = new EcoreEMap<String,Boolean>(MapsPackage.Literals.STRING_TO_BOOLEAN_MAP, StringToBooleanMapImpl.class, this, CorePackage.WORKFLOW__PROCESSED_STATES);
+		}
+		return processedStates;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean readWorkfowTemplate() {
@@ -841,7 +858,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		getGraph().getModel().beginUpdate();
 		// create styles
 		
-		
+		updateComposeWorkflowPanel(GlobalVar.ABSTRACT_NODES);
 		logger.debug("got definition for tools: "+(tools!=null?tools.keySet():null));
         try {
 
@@ -904,14 +921,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	
         	//logger.debug(getGraph().getLabel(rootTarget));
         	
-        	
+        	getProcessedStates().put(GlobalVar.ABSTRACT_NODES, true);
         	generateAbstractGraphEdges(map);
         } finally {
         	getGraph().getModel().endUpdate();
         }
         
-		findUtilityTaskForAnalysisType("filter");
-		findUtilityTaskForAnalysisType("merge");
+		getGraphUtil().getUtilityTasks().put("filter", findUtilityTaskForAnalysisType("filter"));
+		getGraphUtil().getUtilityTasks().put("merge", findUtilityTaskForAnalysisType("merge"));
 
         Task tmp;
 		try {
@@ -927,6 +944,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 
 	private void generateAbstractGraphEdges(Map<String,Object> map)
 	{
+		updateComposeWorkflowPanel(GlobalVar.ABSTRACT_WORKFLOW);
 		Object rootTarget=getGraph().insertVertexEasyFlow(null, null, getRootTask());
     	map.put(getRootTask().getName(), rootTarget);
     	getGraphUtil().getCells().put(getRootTask().getUniqueString(), (mxICell)rootTarget);
@@ -981,6 +999,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 			}
 		}
+		getProcessedStates().put(GlobalVar.ABSTRACT_WORKFLOW, true);
 
 	}
 
@@ -1202,16 +1221,38 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return task.validateTools();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+		boolean rc=false;
+		for (Entry<mxICell, EList<mxICell>> e:getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet())
+		{
+			rc=getGraphUtil().resolveEdge(e);
+		}
+		if (rc)
+			getProcessedStates().put(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
+		return rc;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public Task findUtilityTaskForAnalysisType(String analysisType, DataPort dataPort, EList<TraversalCriterion> traversalCriterion) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public void updateComposeWorkflowPanel(String step) {
+		
+		if (GlobalVar.isGuiMode())
+		{
+			ComposeWorkflowPanel cWP=GlobalVar.getComposeWorkflowPanel();
+			if (cWP != null)
+			{
+				cWP.getCurrentTaskPanel().setSelectedTask(step);
+			}
+		}
 	}
 
 	/**
@@ -1223,6 +1264,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public Task findUtilityTaskForAnalysisType(String analysisType) {
 		
 		Task utilityTask=null;
+		updateComposeWorkflowPanel(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED);
 		for (Task task:getStaticTasks())
 			if (task.getAnalysisTypes().contains(analysisType))
 			{
@@ -1441,6 +1483,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+		updateComposeWorkflowPanel(GlobalVar.GROUPING_APPLIED);
 		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
 		while (traversalEvent != null)
 		{
@@ -1449,16 +1492,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			applyTraversalEvent(traversalEvent);
 			traversalEvent = getGraphUtil().getNextTraversalEvent();
 		}
-		for (Entry<mxICell, EList<mxICell>> e:getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet())
-		{
-			try {
-				getGraphUtil().resolveEdge(e);
-				
-			} catch (DataLinkNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		getProcessedStates().put(GlobalVar.GROUPING_APPLIED, true);
 		
 	}
 	
@@ -1544,7 +1578,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
 		
-		return getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode());			
+		updateComposeWorkflowPanel(GlobalVar.TRAVERSAL_EVENTS_RESOLVED);
+		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
+		{
+			getProcessedStates().put(GlobalVar.TRAVERSAL_EVENTS_RESOLVED, true);
+			return true;
+		}
+		return false;
+			
 	}
 
 
@@ -1560,6 +1601,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return ((InternalEList<?>)getGenericAttributes()).basicRemove(otherEnd, msgs);
 			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
 				return ((InternalEList<?>)getProcessingConfig()).basicRemove(otherEnd, msgs);
+			case CorePackage.WORKFLOW__PROCESSED_STATES:
+				return ((InternalEList<?>)getProcessedStates()).basicRemove(otherEnd, msgs);
+			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
+				return ((InternalEList<?>)getPreviousTaskName()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1595,8 +1640,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return getMode();
 			case CorePackage.WORKFLOW__DEFAULT_GROUPING_CRITERIA:
 				return getDefaultGroupingCriteria();
-			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
-				return getPreviousTaskName();
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				if (coreType) return getGenericAttributes();
 				else return getGenericAttributes().map();
@@ -1614,6 +1657,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return basicGetRootTask();
 			case CorePackage.WORKFLOW__STATIC_TASKS:
 				return getStaticTasks();
+			case CorePackage.WORKFLOW__PROCESSED_STATES:
+				if (coreType) return getProcessedStates();
+				else return getProcessedStates().map();
+			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
+				if (coreType) return getPreviousTaskName();
+				else return getPreviousTaskName().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1660,9 +1709,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				getDefaultGroupingCriteria().clear();
 				getDefaultGroupingCriteria().addAll((Collection<? extends String>)newValue);
 				return;
-			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
-				setPreviousTaskName((Map<String, String>)newValue);
-				return;
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				((EStructuralFeature.Setting)getGenericAttributes()).set(newValue);
 				return;
@@ -1681,6 +1727,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__STATIC_TASKS:
 				getStaticTasks().clear();
 				getStaticTasks().addAll((Collection<? extends Task>)newValue);
+				return;
+			case CorePackage.WORKFLOW__PROCESSED_STATES:
+				((EStructuralFeature.Setting)getProcessedStates()).set(newValue);
+				return;
+			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
+				((EStructuralFeature.Setting)getPreviousTaskName()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1724,9 +1776,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__DEFAULT_GROUPING_CRITERIA:
 				getDefaultGroupingCriteria().clear();
 				return;
-			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
-				setPreviousTaskName((Map<String, String>)null);
-				return;
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				getGenericAttributes().clear();
 				return;
@@ -1744,6 +1793,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return;
 			case CorePackage.WORKFLOW__STATIC_TASKS:
 				getStaticTasks().clear();
+				return;
+			case CorePackage.WORKFLOW__PROCESSED_STATES:
+				getProcessedStates().clear();
+				return;
+			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
+				getPreviousTaskName().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -1779,8 +1834,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return MODE_EDEFAULT == null ? mode != null : !MODE_EDEFAULT.equals(mode);
 			case CorePackage.WORKFLOW__DEFAULT_GROUPING_CRITERIA:
 				return defaultGroupingCriteria != null && !defaultGroupingCriteria.isEmpty();
-			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
-				return previousTaskName != null;
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return genericAttributes != null && !genericAttributes.isEmpty();
 			case CorePackage.WORKFLOW__GRAPH_UTIL:
@@ -1793,6 +1846,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return rootTask != null;
 			case CorePackage.WORKFLOW__STATIC_TASKS:
 				return staticTasks != null && !staticTasks.isEmpty();
+			case CorePackage.WORKFLOW__PROCESSED_STATES:
+				return processedStates != null && !processedStates.isEmpty();
+			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
+				return previousTaskName != null && !previousTaskName.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1827,8 +1884,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		result.append(mode);
 		result.append(", defaultGroupingCriteria: ");
 		result.append(defaultGroupingCriteria);
-		result.append(", previousTaskName: ");
-		result.append(previousTaskName);
 		result.append(')');
 		return result.toString();
 	}

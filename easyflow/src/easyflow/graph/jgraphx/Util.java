@@ -20,6 +20,8 @@ import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.execution.IExecutionSystem;
@@ -600,9 +602,9 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException" entryMapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
+	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException" entryMapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
 	 * @generated
 	 */
-	boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException;
+	boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException;
 
 } // Util

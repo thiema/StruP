@@ -48,7 +48,15 @@ import easyflow.core.Task;
 
 import easyflow.core.Workflow;
 import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.ComposeWorkflowPanel;
+import easyflow.custom.util.EasyFlowUtil;
+import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.Util;
@@ -79,6 +87,7 @@ public class EasyFlowToolBar extends JToolBar
 	private              Util           graphUtil      = JgraphxFactory.eINSTANCE.createUtil();
 	private final   Map<String, Object> objects        = new HashMap<String, Object>();
 	private         DefaultMetaData     metaData;
+	private  ComposeWorkflowPanel composeWorkflowPanel = null;
 
 	//static int counter = 0, iteration = 1;
 	static String lastParent=null;
@@ -125,13 +134,15 @@ public class EasyFlowToolBar extends JToolBar
 		final Action deleteGraphAction         = new DeleteGraphAction();
 		final Action validateGraphComponent    = new ValidateGraphComponentAction();
 		final Action anyGraphComponent         = new AnyGraphComponentAction();
-		final Action applyNextTraversalEvent    = new ApplyNextTraversalEventAction();
+		final Action applyNextTraversalEvent   = new ApplyNextTraversalEventAction();
+		final Action resolveUtilityTasksAction = new ResolveUtilityTaskAction();
 
 
 		final JButton btnConfigureProject      = add(configureProjectAction);
 		final JButton btnCalcAll               = add(calcAllProjectAction);
 		final JButton btnGenAbstractWorkflow   = add(genAbstractWorkflowAction);
 		final JButton btnApplyTraversalCrit    = add(applyTraversalCritAction);
+		final JButton btnResolveUtilityTask    = add(resolveUtilityTasksAction);
 	  //final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
 		final JButton btnDeleteGraph           = add(deleteGraphAction);
 		final JButton btnCheckTools            = add(checkToolsAction);
@@ -139,58 +150,63 @@ public class EasyFlowToolBar extends JToolBar
 		final JButton btnAny                   = add(anyGraphComponent);
 		final JButton btnApplyNextTraversalEvent= add(applyNextTraversalEvent);
 		
+		
 		//btnGenAbstractW.setEnabled(false);
 		//btnApplyGroupingCrit.setEnabled(false);
 		btnApplyTraversalCrit.setEnabled(false);
+		btnResolveUtilityTask.setEnabled(false);
 		
 		// init with a defaultproject
-		setDefaultProject(getExamples().getExamples().get("sequencing"));
+		GlobalVar.setDefaultProject(getExamples().getExamples().get("sequencing"));
+		GlobalVar.getDefaultProject().setFromJar(isFromJar);
+		getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
+		//GlobalVar.setEditor(editor);
+		GlobalVar.setUtil(getGraphUtil());
+		GlobalVar.getDefaultProject().setGraphUtil(getGraphUtil());
+		setComposeWorkflowPanel(editor.getComposeWorkflowPanel());
+		GlobalVar.setGuiMode(true);
+		GlobalVar.setComposeWorkflowPanel(getComposeWorkflowPanel());
 		
+		
+		if (GlobalVar.getDefaultProject()!=null)
+		{
+			getComposeWorkflowPanel().getRunButton().setEnabled(true);
+			getComposeWorkflowPanel().getNextButton().setEnabled(true);
+		}
 		btnConfigureProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConfigureProjectDialog(editor);
 			}
 		});
 		
+		btnResolveUtilityTask.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (EasyFlowUtil.resolveIncompatibleGroupings())
+				{
+					
+				}
+			}
+		});
+		
 		btnCalcAll.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				logger.debug(getDefaultProject().hashCode());
-				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
-				getDefaultProject().setFromJar(isFromJar);
-				getDefaultProject().setGraphUtil(getGraphUtil());
-				try {
-					getDefaultProject().autoSetup();
-					getDefaultProject().applyTraversalEvents();
-				} catch (CellNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (TaskNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (EasyFlowUtil.composeEntireWorkflow())
+				{
+					btnResolveUtilityTask.setEnabled(true);
 				}
-				//Workflow workflow = getDefaultProject().getActiveWorkflow();
-				
-				getGraphUtil().layoutGraph();
 			}
 		});
 		btnGenAbstractWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
-				getDefaultProject().setFromJar(isFromJar);
-				getDefaultProject().setGraphUtil(getGraphUtil());
-				try {
-					getDefaultProject().autoSetup();
-				} catch (CellNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+				if (EasyFlowUtil.generateAbstractWorkflow())
+				{
+					btnCheckTools.setEnabled(true);
+					btnApplyTraversalCrit.setEnabled(true);
 				}
-				btnCheckTools.setEnabled(true);
-				btnApplyTraversalCrit.setEnabled(true);
-				getGraphUtil().layoutGraph();
 				//objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
 				//objects.put("state", State.NONE);
 				//objects.put("event", Event.NONE);
@@ -204,15 +220,8 @@ public class EasyFlowToolBar extends JToolBar
 		});
 		btnApplyTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				try {
-					getDefaultProject().applyTraversalEvents();
-				} catch (CellNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				if (EasyFlowUtil.applyGroupingCriteria())
+					btnResolveUtilityTask.setEnabled(true);
 			}
 		});		
 
@@ -286,14 +295,17 @@ public class EasyFlowToolBar extends JToolBar
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (GroupingCriterionInstanceNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
 		
 	}
 	
-	private DefaultProject getDefaultProject() {return defaultProject;}
-	private void setDefaultProject(DefaultProject newDefaultProject) {defaultProject = newDefaultProject;}
+	public static DefaultProject getDefaultProject() {return defaultProject;}
+	public static void setDefaultProject(DefaultProject newDefaultProject) {defaultProject = newDefaultProject;}
 	private Examples getExamples()
 	{
 		if (examples == null)
@@ -429,7 +441,17 @@ public class EasyFlowToolBar extends JToolBar
 		}
 	}
 	
-	//private class TestDialog 
+	private class ResolveUtilityTaskAction extends AbstractAction
+	{
+		public ResolveUtilityTaskAction()
+		{
+			putValue(NAME, "util");
+		}
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+		
+	}
 	
 	private class ConfigureProjectDialog extends JWindow implements ActionListener {
 		
@@ -629,4 +651,12 @@ public class EasyFlowToolBar extends JToolBar
 
 	  return rs;
 	 }
+
+	public ComposeWorkflowPanel getComposeWorkflowPanel() {
+		return composeWorkflowPanel;
+	}
+
+	public void setComposeWorkflowPanel(ComposeWorkflowPanel composeWorkflowPanel) {
+		this.composeWorkflowPanel = composeWorkflowPanel;
+	}
 }

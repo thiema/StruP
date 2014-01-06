@@ -9,7 +9,12 @@ package easyflow.ui;
 import easyflow.core.Workflow;
 
 import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import javax.xml.validation.Schema;
@@ -86,10 +91,10 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
+	void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -142,9 +147,9 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	boolean setMetaDataReader();
+	boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException;
 
 } // IProject

@@ -712,10 +712,18 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @model exceptions="easyflow.ToolNotFoundException"
 	 * @generated
 	 */
-	boolean canProcessMultiplesInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+	EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -728,17 +736,49 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ToolNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException;
+	boolean hasMultipleInputsFor(DataPort dataPort);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ToolNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException;
+	boolean hasMultipleInstancesFor(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean hasMultipleGroupingsFor(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
 
 } // Task

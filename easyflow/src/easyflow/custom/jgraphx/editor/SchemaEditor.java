@@ -26,10 +26,11 @@ import com.mxgraph.view.mxGraph;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.Task;
+import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.util.ResourceManager;
 import easyflow.custom.util.XMLUtil;
 
-public class SchemaEditor extends BasicGraphEditor
+public class SchemaEditor extends EasyFlowBasicGraphEditor
 {
 
 	/**
@@ -42,6 +43,7 @@ public class SchemaEditor extends BasicGraphEditor
 	 * 
 	 */
 	private JPanel upperPanel;
+	private ComposeWorkflowPanel composeWorkflowPanel;
 	public SchemaEditor()
 	{
 		//super("mxGraph for JFC/Swing", new SchemaGraphComponent(new mxGraph()
@@ -73,25 +75,26 @@ public class SchemaEditor extends BasicGraphEditor
 			}
 
 		});
-		logger.debug(((EasyFlowGraph)getGraphComponent().getGraph()).hashCode());
+		//logger.debug(((EasyFlowGraph)getGraphComponent().getGraph()).hashCode());
 
+		setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		// Creates a single shapes palette
-		EditorPalette shapesPalette = insertPalette("Schema");
-		graphOutline.setVisible(false);
+		EditorPalette shapesPalette = insertPalette("Editor");
+		graphOutline.setVisible(true);
 
-		mxCell tableTemplate = new mxCell("New Table", new mxGeometry(0, 0,
+		mxCell taskTemplate = new mxCell("Task", new mxGeometry(0, 0,
 				200, 280), null);
-		tableTemplate.getGeometry().setAlternateBounds(
+		taskTemplate.getGeometry().setAlternateBounds(
 				new mxRectangle(0, 0, 140, 25));
-		tableTemplate.setVertex(true);
+		taskTemplate.setVertex(true);
 
 		shapesPalette
 				.addTemplate(
-						"Table",
+						"Task",
 						new ImageIcon(
 								GraphEditor.class
 										.getResource("/com/mxgraph/examples/swing/images/rectangle.png")),
-						tableTemplate);
+						taskTemplate);
 
 		getGraphComponent().getGraph().setCellsResizable(false);
 		getGraphComponent().setConnectable(false);
@@ -102,7 +105,7 @@ public class SchemaEditor extends BasicGraphEditor
 		//getGraphComponent().getGraphHandler().setKeepOnTop(false);
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
-		upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+		//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 
@@ -157,7 +160,16 @@ public class SchemaEditor extends BasicGraphEditor
 		}
 
 		SchemaEditor editor = new SchemaEditor();
-		editor.createFrame(new SchemaEditorMenuBar(editor)).setVisible(true);
+		//editor.createFrame(new SchemaEditorMenuBar(editor)).setVisible(true);
+		editor.createFrame().setVisible(true);
+	}
+
+	public ComposeWorkflowPanel getComposeWorkflowPanel() {
+		return composeWorkflowPanel;
+	}
+
+	public void setComposeWorkflowPanel(ComposeWorkflowPanel composeWorkflowPanel) {
+		this.composeWorkflowPanel = composeWorkflowPanel;
 	}
 
 }

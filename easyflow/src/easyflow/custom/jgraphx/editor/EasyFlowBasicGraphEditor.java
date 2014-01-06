@@ -3,6 +3,8 @@ package easyflow.custom.jgraphx.editor;
 import java.awt.BorderLayout;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -21,6 +23,8 @@ import com.mxgraph.util.mxUndoableEdit;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
 import com.mxgraph.view.mxGraph;
+
+import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 
 public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 {
@@ -126,5 +130,25 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		installListeners();
 		updateTitle();
 	}
+	
+	public JFrame createFrame()
+	{
+		JFrame frame = new JFrame();
+		frame.getContentPane().add(this);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(870, 640);
 
+		// Updates the frame title
+		updateTitle();
+
+		return frame;
+	}
+
+	public ComposeWorkflowPanel insertComposeWorkflowPanel(String title)
+	{
+		final ComposeWorkflowPanel jPanel = new ComposeWorkflowPanel();
+		libraryPane.add(title, jPanel);
+		return jPanel;
+		
+	}
 }

@@ -1,14 +1,14 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package easyflow.core;
 
 import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
@@ -16,10 +16,8 @@ import easyflow.graph.jgraphx.Util;
 
 import easyflow.tool.Tool;
 
-import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 
-import java.util.Map;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
@@ -52,13 +50,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getMetaData <em>Meta Data</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getMode <em>Mode</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getStaticTasks <em>Static Tasks</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getProcessedStates <em>Processed States</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -313,32 +312,6 @@ public interface Workflow extends EObject {
 	EList<String> getDefaultGroupingCriteria();
 
 	/**
-	 * Returns the value of the '<em><b>Previous Task Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Previous Task Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Previous Task Name</em>' attribute.
-	 * @see #setPreviousTaskName(Map)
-	 * @see easyflow.core.CorePackage#getWorkflow_PreviousTaskName()
-	 * @model transient="true"
-	 * @generated
-	 */
-	Map<String, String> getPreviousTaskName();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Previous Task Name</em>' attribute.
-	 * @see #getPreviousTaskName()
-	 * @generated
-	 */
-	void setPreviousTaskName(Map<String, String> value);
-
-	/**
 	 * Returns the value of the '<em><b>Generic Attributes</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link java.lang.Object},
@@ -465,6 +438,40 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	EList<Task> getStaticTasks();
+
+	/**
+	 * Returns the value of the '<em><b>Processed States</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.Boolean},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processed States</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processed States</em>' map.
+	 * @see easyflow.core.CorePackage#getWorkflow_ProcessedStates()
+	 * @model mapType="easyflow.util.maps.StringToBooleanMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EBooleanObject>"
+	 * @generated
+	 */
+	EMap<String, Boolean> getProcessedStates();
+
+	/**
+	 * Returns the value of the '<em><b>Previous Task Name</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Previous Task Name</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Previous Task Name</em>' map.
+	 * @see easyflow.core.CorePackage#getWorkflow_PreviousTaskName()
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getPreviousTaskName();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -610,9 +617,17 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model traversalCriterionMany="true"
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	Task findUtilityTaskForAnalysisType(String analysisType, DataPort dataPort, EList<TraversalCriterion> traversalCriterion);
+	boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void updateComposeWorkflowPanel(String step);
 
 } // Workflow

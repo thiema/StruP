@@ -97,7 +97,12 @@ import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
 import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
@@ -623,9 +628,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws GroupingCriterionInstanceNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
+	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		getActiveWorkflow().applyTraversalEvents();
 	}
 
@@ -663,6 +669,13 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
+		workflow.getProcessedStates().put(GlobalVar.ABSTRACT_NODES, false);
+		workflow.getProcessedStates().put(GlobalVar.ABSTRACT_WORKFLOW, false);
+		workflow.getProcessedStates().put(GlobalVar.TRAVERSAL_EVENTS_RESOLVED, false);
+		workflow.getProcessedStates().put(GlobalVar.GROUPING_APPLIED, false);
+		workflow.getProcessedStates().put(GlobalVar.PARAMETER_APPLIED, false);
+		workflow.getProcessedStates().put(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
+		
 		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
 		
 		InputStreamReader isReader;
@@ -951,12 +964,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public boolean setMetaDataReader() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+		return getActiveWorkflow().resolveUtilityTasks();
 	}
 
 	/**

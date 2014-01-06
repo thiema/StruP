@@ -333,6 +333,16 @@ public interface EasyflowPackage extends EPackage {
 	int PARAMETER_NOT_FOUND_EXCEPTION = 26;
 
 	/**
+	 * The meta object id for the '<em>Utility Task Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.UtilityTaskNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getUtilityTaskNotFoundException()
+	 * @generated
+	 */
+	int UTILITY_TASK_NOT_FOUND_EXCEPTION = 27;
+
+	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph <em>mx Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -630,6 +640,17 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getParameterNotFoundException();
 
 	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.UtilityTaskNotFoundException <em>Utility Task Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Utility Task Not Found Exception</em>'.
+	 * @see easyflow.custom.exception.UtilityTaskNotFoundException
+	 * @model instanceClass="easyflow.custom.exception.UtilityTaskNotFoundException"
+	 * @generated
+	 */
+	EDataType getUtilityTaskNotFoundException();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -920,6 +941,16 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType PARAMETER_NOT_FOUND_EXCEPTION = eINSTANCE.getParameterNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Utility Task Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.UtilityTaskNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getUtilityTaskNotFoundException()
+		 * @generated
+		 */
+		EDataType UTILITY_TASK_NOT_FOUND_EXCEPTION = eINSTANCE.getUtilityTaskNotFoundException();
 
 	}
 

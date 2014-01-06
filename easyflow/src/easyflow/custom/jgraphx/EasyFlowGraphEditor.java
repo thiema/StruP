@@ -36,8 +36,6 @@ import com.mxgraph.view.mxGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowBasicGraphEditor;
 import easyflow.custom.jgraphx.editor.EasyFlowCustomGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
-import easyflow.custom.jgraphx.editor.EasyFlowGraphComponent;
-import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.jgraphx.editor.SchemaGraphComponent;
 
 public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor

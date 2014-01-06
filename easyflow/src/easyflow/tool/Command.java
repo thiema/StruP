@@ -162,7 +162,15 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @model
 	 * @generated
 	 */
-	EList<String> getGroupingsForDataPort(DataPort dataPort, boolean required, boolean isOutput);
+	EList<String> getGroupingsForDataPort(DataPort dataPort, boolean required);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getGroupingsForDataPortAny(DataPort dataPort, boolean required, boolean isOutput);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -171,5 +179,13 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Parameter getParameterForDataPortAny(DataPort dataPort);
 
 } // Command

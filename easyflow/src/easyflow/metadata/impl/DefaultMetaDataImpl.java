@@ -17,6 +17,7 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.GlobalVarMetaData;
 
 import java.util.Collection;
 import easyflow.ui.DefaultProject;
@@ -245,7 +246,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 					if (firstLine)
 					{
 						//bufferedReader.mark(0);
-						GlobalVar.createNewMetaDataColHeader(Arrays.copyOfRange(lina, 1, lina.length));
+						GlobalVarMetaData.createNewMetaDataColHeader(Arrays.copyOfRange(lina, 1, lina.length));
 						firstLine=false;
 					}
 					else
@@ -260,8 +261,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			e.printStackTrace();
 		}
     	String rowHead[]=new String[rowHeader.size()];
-    	GlobalVar.createNewMetaDataRowHeader(rowHeader.toArray(rowHead));
-    	GlobalVar.createNewMetaDataTable();
+    	GlobalVarMetaData.createNewMetaDataRowHeader(rowHeader.toArray(rowHead));
+    	GlobalVarMetaData.createNewMetaDataTable();
 	}
 
 	/**
@@ -347,7 +348,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			        			groupingInstance.getRecords().add(lina[0]);
 			        	}
 			        	
-			        	GlobalVar.setMetaDataTableRow(lina);
+			        	GlobalVarMetaData.setMetaDataTableRow(lina);
 			        	
 			        }
 			        }
@@ -435,14 +436,14 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		EList<String> records = new BasicEList<String>();
 		if (groupingStr.equals("Record"))
 		{
-			if(!GlobalVar.getMetaDataTableRow(instanceStr).isEmpty())
+			if(!GlobalVarMetaData.getMetaDataTableRow(instanceStr).isEmpty())
 				records.add(instanceStr);
 		}
 		else
 		{
-			for (String rowHead:GlobalVar.getMetaDataRowHeader().keySet())
+			for (String rowHead:GlobalVarMetaData.getMetaDataRowHeader().keySet())
 			{
-				Map<String, String> map=GlobalVar.getMetaDataTableRow(rowHead);
+				Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(rowHead);
 				if (map.get(groupingStr).equals(instanceStr))
 					records.add(rowHead);
 			}
@@ -456,7 +457,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @generated not
 	 */
 	public EMap<String, Object> getRecord(GroupingInstance recordInstance) {
-		Map<String, String> map=GlobalVar.getMetaDataTableRow(recordInstance.getName());
+		Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(recordInstance.getName());
 		EMap<String, Object> emap=new BasicEMap<String, Object>();
 		logger.debug(map.values());
 		for (Entry<String, String> e:map.entrySet())
@@ -473,7 +474,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		Object o=value;
 		String[] a = StringUtils.split(value, ",");
 		boolean isArray=false;
-		if (GlobalVar.getMetaDataColType().containsKey(field))
+		if (GlobalVarMetaData.getMetaDataColType().containsKey(field))
 		{
 			if(value.startsWith("[") && value.endsWith("]"))
 			{
@@ -481,8 +482,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				a[a.length-1]=a[a.length-1].subSequence(0, a[0].length()-2).toString();
 				isArray=true;
 			}
-			else if (GlobalVar.getMetaDataColType().get(field).equals("List")
-				|| GlobalVar.getMetaDataColType().get(field).equals("Array"))
+			else if (GlobalVarMetaData.getMetaDataColType().get(field).equals("List")
+				|| GlobalVarMetaData.getMetaDataColType().get(field).equals("Array"))
 			{
 				isArray=true;
 			}

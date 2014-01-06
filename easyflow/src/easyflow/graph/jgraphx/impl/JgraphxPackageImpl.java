@@ -550,6 +550,9 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEParameter(op, theMapsPackage.getCellToCellListMap(), "entry", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
 	}
 
 } //JgraphxPackageImpl
