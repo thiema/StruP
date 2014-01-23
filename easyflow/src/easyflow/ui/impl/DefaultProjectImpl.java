@@ -103,6 +103,7 @@ import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
@@ -619,44 +620,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public void applyMetaData() {
-		getActiveWorkflow().readMetaData();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws GroupingCriterionInstanceNotFoundException 
-	 * @generated not
-	 */
-	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
-		getActiveWorkflow().applyTraversalEvents();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public void clearWorkflows() {
-		if (getWorkflows().size()>0) getWorkflows().clear();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public Workflow getActiveWorkflow() {
-		return getWorkflows().isEmpty() ? null : getWorkflows().get(0);
-	}
-
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @throws FileNotFoundException 
 	 * @generated not
 	 */
@@ -907,7 +870,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				e.printStackTrace();
 			}
 		
-
+		workflow.getTools().addAll(tools);
 		getWorkflows().add(workflow);
 
 		/*JSONArray cms = jsonObject.getJSONArray("project");
@@ -947,9 +910,196 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	public boolean init() {
+
+		
+		clearWorkflows();
+		readProjectJson(getConfigSource());
+		
+		boolean rc = readConfiguration();
+		
+		if (getGraphUtil() == null)
+			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
+		// XML util depricated !! ... to be removed/refactored.
+		//XMLUtil.container.put("tasks", getGraphUtil().getTasks());
+		
+        GlobalVar.setGraphUtil(getGraphUtil());
+		getActiveWorkflow().setGraphUtil(getGraphUtil());
+		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
+		
+		getActiveWorkflow().readWorkfowTemplate();
+		
+		//getActiveWorkflow().generateGraphFromTemplate(getTools());
+		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+		
+		applyMetaData();
+		
+		return rc;
+		
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void applyMetaData() {
+		getActiveWorkflow().readMetaData();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean generateAbstractGraph() {
+		return getActiveWorkflow().generateAbstractWorkflow();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+		return getActiveWorkflow().applyGroupingCriteria();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean applyParameterCriteria() {
+		return getActiveWorkflow().applyParameterCriteria();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void clearWorkflows() {
+		if (getWorkflows().size()>0) getWorkflows().clear();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Workflow getActiveWorkflow() {
+		return getWorkflows().isEmpty() ? null : getWorkflows().get(0);
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public boolean generateWorklowForExecutionSystem() {
 
 		return getActiveWorkflow().generateWorklowForExecutionSystem();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void setWorker(EasyFlowOverallWorker worker) {
+		getActiveWorkflow().setWorker(worker);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int runNextWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+		return getActiveWorkflow().runNextWorkflowStep();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int runPrevWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+		return getActiveWorkflow().runPrevWorkflowStep();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean hasNextWorkflowStep() {
+		return getActiveWorkflow().hasNextWorkflowStep();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getWorkflowStepLabelFor(String step) {
+		return getActiveWorkflow().getWorkflowStepLabelFor(step);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getWorkflowStepDescFor(String step) {
+		return getActiveWorkflow().getWorkflowStepDescFor(step);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int getTotalNumberOfWorkflowSteps() {
+		return getActiveWorkflow().getTotalNumberOfWorkflowSteps();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int getNumberOfCurrentWorkflowStep() {
+		return getActiveWorkflow().getNumberOfCurrentWorkflowStep();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getNextWorkflowStep() {
+		return getActiveWorkflow().getNextWorkflowStep();
+	}
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getCurWorkflowStep() {
+		return getActiveWorkflow().getCurWorkflowStep();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolveTraversalCriteria() throws CellNotFoundException, TaskNotFoundException {
+		return getActiveWorkflow().resolveTraversalEvents();
 	}
 
 	/**
@@ -967,7 +1117,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
-		return getActiveWorkflow().resolveUtilityTasks();
+		return getActiveWorkflow().resolveIncompatibleGroupings();
 	}
 
 	/**
@@ -975,34 +1125,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean init() {
-
-		
-		boolean rc = readConfiguration();
-		
-		if (getGraphUtil() == null)
-			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
-		// XML util depricated !! ... to be removed/refactored.
-		//XMLUtil.container.put("tasks", getGraphUtil().getTasks());
-		
-        GlobalVar.setGraphUtil(getGraphUtil());
-		getActiveWorkflow().setGraphUtil(getGraphUtil());
-		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
-		
-		getActiveWorkflow().readWorkfowTemplate();
-		
-		getActiveWorkflow().generateGraphFromTemplate(getTools());
-		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
-		
-		return rc;
-		
+	public boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+		return getActiveWorkflow().runEntireWorkflow()==0;
 	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+	/*
 	public void autoSetup() throws CellNotFoundException, TaskNotFoundException {
 		
 		Tool tool = ToolFactory.eINSTANCE.createTool();
@@ -1013,11 +1146,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		if (init())
 		{
-			applyMetaData();
+			
 			getActiveWorkflow().resolveTraversalEvents();
 		}
 	}
-
+	*/
 	
 	/**
 	 * <!-- begin-user-doc -->

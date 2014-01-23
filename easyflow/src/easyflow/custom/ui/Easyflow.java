@@ -40,8 +40,9 @@ public class Easyflow {
 			if (!isFromJar)
 				defaultProject.setFromJar(false);
 			try {
-				defaultProject.autoSetup();
-				defaultProject.applyTraversalEvents();
+				defaultProject.init();
+				defaultProject.resolveTraversalCriteria();
+				defaultProject.applyGroupingCriteria();
 				defaultProject.resolveUtilityTasks();
 				//defaultProject.resolveToolDependencies();
 				//defaultProject.generateWorklowForExecutionSystem();

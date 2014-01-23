@@ -1,231 +1,371 @@
 package easyflow.custom.jgraphx.editor;
 
-import java.text.NumberFormat;
-import java.util.Iterator;
-import java.util.List;
+import java.awt.Point;
+import java.util.Collections;
+import java.util.HashSet;
 
-import org.apache.log4j.Logger;
-import org.w3c.dom.Element;
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+
+
+import com.mxgraph.analysis.mxConstantCostFunction;
+import com.mxgraph.analysis.mxGraphAnalysis;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.view.mxCellState;
+
+import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph;
 
+
+import easyflow.core.DataLink;
+import easyflow.core.DataPort;
 import easyflow.core.Task;
-import easyflow.custom.exception.DataLinkNotFoundException;
-import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.XMLUtil;
 
 
-// testing
-
-
-
-
-/**
- * A graph that creates new edges from a given template edge.
- */
-
-
-public class EasyFlowGraph extends EasyFlowGraphUtil
+public class EasyFlowGraph extends EasyFlowCustomGraph
 {
-	private static final Logger logger = Logger.getLogger(EasyFlowGraph.class);
-
-	/**
-	 * Holds the shared number formatter.
-	 * 
-	 * @see NumberFormat#getInstance()
-	 */
-	public static final NumberFormat numberFormat = NumberFormat.getInstance();
-
-	/**
-	 * Holds the edge to be used as a template for inserting new edges.
-	 */
-	protected Object edgeTemplate;
-
-	/**
-	 * Custom graph that defines the alternate edge style to be used when
-	 * the middle control point of edges is double clicked (flipped).
-	 */
-	public EasyFlowGraph()
+	
+	final int    maxEdges      = 100;
+	final double defaultXPos   = GlobalVar.defaultCellXPos;
+	final double defaultYPos   = GlobalVar.defaultCellYPos;
+	final double defaultWidth  = GlobalVar.defaultCellWidth;
+	final double defaultHeight = GlobalVar.defaultCellHeight;
+	final String vertexStyle   = GlobalVar.VERTEX_STYLE;
+	//final String vertexStyle   = null;
+	final String edgeStyle     = GlobalVar.EDGE_STYLE;
+	//final String edgeStyle     = null;
+	
+	public boolean isConnected(Object source, Object target)
 	{
-		//setAlternateEdgeStyle("edgeStyle=mxEdgeStyle.ElbowConnector;elbow=vertical");
-	}
-
-	/**
-	 * Sets the edge template to be used to inserting edges.
-	 */
-	public void setEdgeTemplate(Object template)
-	{
-		edgeTemplate = template;
-	}
-
-	/**
-	 * Prints out some useful information about the cell in the tooltip.
-	 */
-	public String getToolTipForCell(Object cell)
-	{
-		String tip = "<html>";
-		mxGeometry geo = getModel().getGeometry(cell);
-		mxCellState state = getView().getState(cell);
-
-		if (getModel().isEdge(cell))
-		{
-			tip += "points={";
-
-			if (geo != null)
-			{
-				List<mxPoint> points = geo.getPoints();
-
-				if (points != null)
-				{
-					Iterator<mxPoint> it = points.iterator();
-
-					while (it.hasNext())
-					{
-						mxPoint point = it.next();
-						tip += "[x=" + numberFormat.format(point.getX())
-								+ ",y=" + numberFormat.format(point.getY())
-								+ "],";
-					}
-
-					tip = tip.substring(0, tip.length() - 1);
-				}
-			}
-
-			tip += "}<br>";
-			tip += "absPoints={";
-
-			if (state != null)
-			{
-
-				for (int i = 0; i < state.getAbsolutePointCount(); i++)
-				{
-					mxPoint point = state.getAbsolutePoint(i);
-					tip += "[x=" + numberFormat.format(point.getX())
-							+ ",y=" + numberFormat.format(point.getY())
-							+ "],";
-				}
-
-				tip = tip.substring(0, tip.length() - 1);
-			}
-
-			tip += "}";
-		}
+		if (getEdgesBetween(source, target).length > 0)
+			return true;
 		else
-		{
-			tip += "geo=[";
+			return false;
 
-			if (geo != null)
-			{
-				tip += "x=" + numberFormat.format(geo.getX()) + ",y="
-						+ numberFormat.format(geo.getY()) + ",width="
-						+ numberFormat.format(geo.getWidth()) + ",height="
-						+ numberFormat.format(geo.getHeight());
-			}
-
-			tip += "]<br>";
-			tip += "state=[";
-
-			if (state != null)
-			{
-				tip += "x=" + numberFormat.format(state.getX()) + ",y="
-						+ numberFormat.format(state.getY()) + ",width="
-						+ numberFormat.format(state.getWidth())
-						+ ",height="
-						+ numberFormat.format(state.getHeight());
-			}
-
-			tip += "]";
-		}
-
-		mxPoint trans = getView().getTranslate();
-
-		tip += "<br>scale=" + numberFormat.format(getView().getScale())
-				+ ", translate=[x=" + numberFormat.format(trans.getX())
-				+ ",y=" + numberFormat.format(trans.getY()) + "]";
-		tip += "</html>";
-
-		return tip;
-	}
-
-	/**
-	 * Overrides the method to use the currently selected edge template for
-	 * new edges.
-	 * 
-	 * @param graph
-	 * @param parent
-	 * @param id
-	 * @param value
-	 * @param source
-	 * @param target
-	 * @param style
-	 * @return
-	 */
-	/*
-	public Object createEdge(Object parent, String id, Object value,
-			Object source, Object target, String style)
-	{
-		if (edgeTemplate != null)
-		{
-			mxCell edge = (mxCell) cloneCells(new Object[] { edgeTemplate })[0];
-			edge.setId(id);
-
-			return edge;
-		}
-
-		return super.createEdge(parent, id, value, source, target, style);
-	}
-*/
-	/*
-	 *custom label 
-	 */
-	public String getLabel(Object o) {
-		
-		if (o instanceof mxCell)
-		{
-			mxCell cell = (mxCell) o;
-			if (cell.isVertex())
-			{
-				try {
-					if (GlobalVar.getGraphUtil()!=null)
-					{
-						Task task = GlobalVar.getGraphUtil().loadTask(cell);
-						if (task != null)
-							return task.getUniqueString();
-					}
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else if (cell.isEdge())
-			{
-				try {
-					if (GlobalVar.getGraphUtil()!=null)
-						return GlobalVar.getGraphUtil().loadDataLink(cell).getDataPort().getName();
-				} catch (DataLinkNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else
-			{
-				
-				if (cell.getValue() instanceof String)
-				{
-					return (String)cell.getValue();
-				}
-			}
-		}
-		logger.trace("cannot retrieve label");
-		return null;
 	}
 	
+	public String setCellUnvisible(Object cell)
+	{
+		return getModel().setStyle(cell, "strokeColor=none;noLabel=1;textOpacity=0");
+	}
+	
+	
+	
+	public Object createNewCell(Object object, mxGeometry geometry)
+	{
+		if (geometry==null)
+			geometry=new mxGeometry(0, 0,
+					defaultWidth, defaultHeight);
+		if (object instanceof Task)
+			return new mxCell(((Task) object).getUniqueString(), geometry, vertexStyle);
+		else if (object instanceof DataLink)
+			return new mxCell(((DataLink) object).getDataPort().getName(), geometry, edgeStyle);
+		else
+			return null;
+			
+	}
+	
+	public Object insertVertexEasyFlow(Object parent, String id, Task task) {
+		if (task == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		//return insertVertex(parent, id, XMLUtil.getElement(task), 400, 100, defaultWidth, defaultHight);
+		//return setCellUnvisible(insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
+		return (insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
+	}
+	
+	public Object insertVertexEasyFlow(Object parent, String id, Object value) {
+		if (value == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		//return setCellUnvisible(insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
+		return insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+	}
+	
+	public Object insertVertexEasyFlow(Object parent, String id, mxCell vertex) {
+		if (vertex == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		//return setCellUnvisible(insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
+		return insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+	}
+	
+	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, DataLink dataLink) {
+		if (source == null || target == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		if (dataLink!=null)
+		{
+			//return insertEdge(parent, id, XMLUtil.getElement(dataPort), source, target);
+			//return insertEdge(parent, id, XMLUtil.getElement(dataLink), source, target);
+			if (dataLink.getId()==0)
+				dataLink.setId(dataLink.hashCode());
+			if (!GlobalVar.getGraphUtil().getDataLinks().containsKey(Integer.toString(dataLink.getId())))
+				GlobalVar.getGraphUtil().getDataLinks().put(Integer.toString(dataLink.getId()), dataLink);
+			return insertEdge(parent, id, dataLink.getId(), source, target, edgeStyle);
+		}
+		else
+			return insertEdge(parent, id, "", source, target, edgeStyle);
+	}
+	
+	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, Object value) {
+		if (source == null || target == null)
+			throw new NullPointerException();
+		if (parent==null) parent=getDefaultParent();
+		return insertEdge(parent, id, value, source, target, edgeStyle);
+	}
+	
+	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target) {
+		return insertEdgeEasyFlow(parent, id, source, target, null);
+	}
+	
+	
+	public Object removeGraph(Object cell) {
+		return removeCells(getVertices(cell).toArray());
+	}
+
+	public Object removeFromGraph(Object cell) {
+		removeCells(getChildVertices(cell));
+		removeCells(getChildCells(cell, true, true));
+		return removeCells(new Object[]{cell});
+	}
+	
+	/*
+	 * get all vertices
+	 */
+	public EList<Object> getVertices(Object source) {
+		final EList<Object> cells=new BasicEList<Object>();
+		if (source==null) source=getDefaultParent();
+		traverse(source, true, new mxICellVisitor() {
+			
+			@Override
+			public boolean visit(Object arg0, Object arg1) {
+				cells.add(arg0);
+				return true;
+			}
+		});
+		return cells;
+	}
+	
+	/*
+	 * get all vertices
+	 */
+	public EList<Object> getVertices(final Object source, final boolean includeRoot) {
+		final EList<Object> cells=new BasicEList<Object>();
+		//if (source==null) source=getDefaultParent();
+		traverse(source, true, new mxICellVisitor() {
+			
+			@Override
+			public boolean visit(Object arg0, Object arg1) {
+				if (source!=arg0 || !includeRoot)
+					cells.add(arg0);
+				return true;
+			}
+		});
+		return cells;
+	}
+
+	
+	public void traverseAllPaths(Object vertex, boolean directed,
+			mxICellVisitor visitor, Object edge) {
+		
+		if (vertex != null && visitor != null) {
+			if (visitor.visit(vertex, edge)) {
+				int edgeCount = model.getEdgeCount(vertex);
+				if (edgeCount > 0) {
+					for (int i = 0; i < edgeCount; i++) {
+						Object e = model.getEdgeAt(vertex, i);
+						boolean isSource = model.getTerminal(e, true) == vertex;
+						if (!directed || isSource) {
+							Object next = model.getTerminal(e, !isSource);
+							traverseAllPaths(next, directed, visitor, e);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	
+	public void printGraph(mxCell root) {
+		mxICellVisitor visitor=new mxICellVisitor(){
+
+			/**
+			 * 
+			 */
+			@Override
+			public boolean visit(Object vertex1, Object edge1) {
+				
+				Task curTask=XMLUtil.loadTaskFromVertex(vertex1);
+				System.out.print("\n"+(curTask.getUniqueString())+" "+curTask.getTraversalEvents().keySet());
+				/*for (TraversalEvent te:curTask.getTraversalEvents().values()) {
+					if (!te.isProcessed()) {
+						System.out.print(te.getTraversalCriterion().getId()
+								+" "+te.getSplitTask().getUniqueString());
+						//te.setSplitTask(curTask);
+					}
+				}*/
+				return true;
+			}
+		};
+		traverse(root, true, visitor);
+	}
+	
+	
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * test for iterative breadth first graph traversal
+	 * <!-- end-user-doc -->
+	 */
+	/*
+	public void traverse_iterativeBreadthFirstSearch(mxICell parent) {
+		//EasyFlowGraph graph=new EasyFlowGraph();
+
+		
+		// clear marker set
+		Set<mxICell> visitedSet = new HashSet<mxICell>();
+
+        // create a queue Q
+        List<mxICell> queue = new ArrayList<mxICell>();
+
+        // enqueue v onto Q
+        queue.add(parent);
+
+        // mark v
+        visitedSet.add(parent);
+        
+        // while Q is not empty:
+        while (!queue.isEmpty()) {
+
+            // t <- Q.dequeue()
+            mxICell cell = queue.get(0);
+            queue.remove(cell);
+
+        	//'cast' to task
+        	Task sourceTask=XMLUtil.loadTaskFromElement((Element) cell.getValue());
+        	sourceTask=getTasks().get(sourceTask.getUniqueString());
+            //Object newSource=graph.insertVertex(parent, null, cell.getValue(), 400, 100, 100, 30);
+            
+            // for all edges e in G.incidentEdges(t) do
+            Object[] edges = getOutgoingEdges(cell);
+        	logger.debug("visiting: " + sourceTask.getUniqueString()+" "+getVertices(cell).size()+" ");
+        	//logger.debug(sourceTask+" ");
+        	//logger.debug(getTasks().get(sourceTask.getUniqueString()));
+            for (Object edge : edges) {
+            	// o <- G.opposite(t,e)
+                // get node from edge
+                mxICell target = (mxICell) getView().getVisibleTerminal(edge, false);
+            	
+                Task targetTask=XMLUtil.loadTaskFromElement((Element) target.getValue());
+                targetTask=getTasks().get(targetTask.getUniqueString());
+	            // if o is not marked:
+	            if (!visitedSet.contains(target)) {
+	            	//'cast' to task
+	            	
+	                    // mark o
+	                	visitedSet.add(target);
+	                    // enqueue o onto Q
+	                    queue.add(target);
+	                    //logger.debug(sourceTask.getUniqueString()+"=>"+targetTask.getUniqueString());
+	            } else {
+	            	//graph.insertEdge(parent, null, "", source, target);
+	                //if (visitor.visit(cell, target)) {	                		
+	                //}
+	            	logger.debug(sourceTask.getUniqueString()+"=>"+targetTask.getUniqueString()+" (skipped)");
+	            }
+	            for (TraversalEvent traversalEvent:sourceTask.getTraversalEvents().values()) {
+	            	System.out.print(
+	            			traversalEvent.getTraversalCriterion().getId()+" "
+	            					+traversalEvent.getType());
+
+	            		System.out.print(" "
+	            				+((traversalEvent.getParentTask()!=null)?traversalEvent.getParentTask().getName():null)+"=>"
+	            				+((traversalEvent.getSplitTask()!=null)?traversalEvent.getSplitTask().getName():null)+"=>"
+	            				+traversalEvent.getMergeTask().size()+" ("
+	            			);
+	            		for (Task tmp:traversalEvent.getMergeTask()) System.out.print(tmp.getUniqueString()+" ");
+	            	System.out.println(")");
+	            }
+	            if (getOutgoingEdges(target).length==0) {
+	            	for (TraversalEvent traversalEvent:targetTask.getTraversalEvents().values()) {
+		            	System.out.print(
+		            			traversalEvent.getTraversalCriterion().getId()+" "
+		            					+traversalEvent.getType());
+
+		            	System.out.print(" "
+		            				+((traversalEvent.getParentTask()!=null)?traversalEvent.getParentTask().getName():null)+"=>"
+		            				+((traversalEvent.getSplitTask()!=null)?traversalEvent.getSplitTask().getName():null)+"=>"
+		            				+traversalEvent.getMergeTask().size()+" "
+		            			);
+		            	System.out.println();
+	            	}
+	            }
+            }
+        }
+	}
+
+*/
+	
+	public void traverseTopologicalOrder(mxICell root, mxICellVisitor visitor)
+	{
+		EMap<mxICell, mxICell> edgeMap = new BasicEMap<mxICell, mxICell>();
+		traverse_topologicalOrder(traverse_topologicalOrder(root, edgeMap), visitor, edgeMap);
+	}
+	
+	private void traverse_topologicalOrder(EList<mxICell> cells, mxICellVisitor visitor, EMap<mxICell, mxICell> edgeMap)
+	{
+		for (mxICell cell : cells)
+			if (edgeMap == null)
+				visitor.visit(cell, null);
+				//if (!visitor.visit(cell, null))
+					//break;
+			else
+				visitor.visit(cell, edgeMap.get(cell));
+				//if (!visitor.visit(cell, edgeMap.get(cell)))
+					//break;
+	}
+	
+	private EList<mxICell> traverse_topologicalOrder(mxICell parent, EMap<mxICell, mxICell> edgeMap) {
+		EList<mxICell> sortedList=new BasicEList<mxICell>();
+		// clear marker set
+		HashSet<mxICell> visitedSet = new HashSet<mxICell>();
+
+		visit_topologicalOrder(parent, sortedList, visitedSet, edgeMap, null);
+		Collections.reverse(sortedList);
+		return sortedList;
+	}
+	
+	
+	private void visit_topologicalOrder(mxICell vertex, EList<mxICell> sortedList, 
+			HashSet<mxICell> visitedSet, EMap<mxICell, mxICell> edgeMap, mxICell edge1) {
+		if (!visitedSet.contains(vertex)) {
+			visitedSet.add(vertex);
+			for (Object edge : getOutgoingEdges(vertex)) {			
+				visit_topologicalOrder((mxICell) getView().getVisibleTerminal(edge, false), 
+						sortedList, visitedSet, edgeMap, (mxICell)edge);
+			}
+			edgeMap.put(vertex, edge1);
+			sortedList.add(vertex);
+			//logger.debug(XMLUtil.loadTaskFromVertex(parent).getUniqueString());
+		}
+	}
+	
+	
+	public Object[] getShortestPath(mxICell source, mxICell target) {
+		return getShortestPath((Object)source, (Object)target);
+	}
+
+	public Object[] getShortestPath(Object source, Object target) {
+        return mxGraphAnalysis.getInstance().
+        		getShortestPath(this, source, target,  
+        				new mxConstantCostFunction(1),
+        				maxEdges, true);
+	}
 }
-
-// end testing
-
-

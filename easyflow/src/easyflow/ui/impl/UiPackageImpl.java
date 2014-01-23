@@ -380,8 +380,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
@@ -399,35 +399,35 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		EOperation op = addEOperation(iProjectEClass, null, "autoSetup", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-
-		addEOperation(iProjectEClass, null, "applyMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(iProjectEClass, null, "applyTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		addEOperation(iProjectEClass, theCorePackage.getWorkflow(), "getActiveWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, null, "clearWorkflows", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, theCorePackage.getWorkflow(), "getActiveWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "readConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(iProjectEClass, null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "source", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
-
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "readConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(iProjectEClass, null, "setConfigAndBasePath", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iProjectEClass, null, "applyMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveTraversalCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "generateAbstractGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveUtilityTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
@@ -435,6 +435,56 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, null, "setWorker", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getEasyFlowOverallWorker(), "worker", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEString(), "getWorkflowStepLabelFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iProjectEClass, ecorePackage.getEString(), "getWorkflowStepDescFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(iProjectEClass, ecorePackage.getEInt(), "getTotalNumberOfWorkflowSteps", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(iProjectEClass, ecorePackage.getEInt(), "getNumberOfCurrentWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(iProjectEClass, ecorePackage.getEString(), "getNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(iProjectEClass, ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultProjectEClass, DefaultProject.class, "DefaultProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultProject_Workflows(), theCorePackage.getWorkflow(), null, "workflows", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

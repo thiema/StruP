@@ -241,13 +241,31 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__PREVIOUS_TASK_NAME = 18;
 
 	/**
+	 * The feature id for the '<em><b>Worker</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__WORKER = 19;
+
+	/**
+	 * The feature id for the '<em><b>Tools</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__TOOLS = 20;
+
+	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 19;
+	int WORKFLOW_FEATURE_COUNT = 21;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -1133,6 +1151,28 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_PreviousTaskName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.Workflow#getWorker <em>Worker</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Worker</em>'.
+	 * @see easyflow.core.Workflow#getWorker()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EAttribute getWorkflow_Worker();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getTools <em>Tools</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Tools</em>'.
+	 * @see easyflow.core.Workflow#getTools()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_Tools();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}'.
@@ -2064,6 +2104,22 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__PREVIOUS_TASK_NAME = eINSTANCE.getWorkflow_PreviousTaskName();
+
+		/**
+		 * The meta object literal for the '<em><b>Worker</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WORKFLOW__WORKER = eINSTANCE.getWorkflow_Worker();
+
+		/**
+		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__TOOLS = eINSTANCE.getWorkflow_Tools();
 
 		/**
 		 * The meta object literal for the '<em><b>Generic Attributes</b></em>' map feature.

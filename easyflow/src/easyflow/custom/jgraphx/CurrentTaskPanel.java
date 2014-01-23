@@ -87,12 +87,6 @@ public final class CurrentTaskPanel extends JPanel implements ListSelectionListe
 		if (list.getSelectedIndex()<list.getLastVisibleIndex())
 		{
 			list.setSelectedIndex(list.getSelectedIndex()+1);
-			try {
-				wait(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	

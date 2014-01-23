@@ -1,12 +1,10 @@
 package easyflow.custom.jgraphx.editor;
 
-import java.awt.BorderLayout;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,37 +14,31 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.URI;
+
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxICell;
-import com.mxgraph.util.mxRectangle;
 
-import easyflow.core.CoreFactory;
+import com.mxgraph.model.mxICell;
+
 import easyflow.core.CorePackage;
 
-import easyflow.core.Task;
-
-import easyflow.core.Workflow;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -55,10 +47,8 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
-import easyflow.custom.util.EasyFlowUtil;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
-import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.Util;
 import easyflow.traversal.TraversalEvent;
 import easyflow.ui.DefaultProject;
@@ -115,7 +105,7 @@ public class EasyFlowToolBar extends JToolBar
 	 * 
 	 */
 	//public EasyFlowToolBar(final BasicGraphEditor editor, int orientation)
-	public EasyFlowToolBar(final SchemaEditor editor, int orientation)
+	public EasyFlowToolBar(final EasyFlowGraphEditor editor, int orientation)
 	{
 		super(orientation);
 		
@@ -132,6 +122,7 @@ public class EasyFlowToolBar extends JToolBar
 		final Action applyTraversalCritAction  = new ApplyTraversalCritAction();
 		final Action genAbstractWorkflowAction = new GenAbstractWorkflowAction();
 		final Action deleteGraphAction         = new DeleteGraphAction();
+		final Action drawGraphAction         = new DrawGraphAction();
 		final Action validateGraphComponent    = new ValidateGraphComponentAction();
 		final Action anyGraphComponent         = new AnyGraphComponentAction();
 		final Action applyNextTraversalEvent   = new ApplyNextTraversalEventAction();
@@ -145,6 +136,7 @@ public class EasyFlowToolBar extends JToolBar
 		final JButton btnResolveUtilityTask    = add(resolveUtilityTasksAction);
 	  //final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
 		final JButton btnDeleteGraph           = add(deleteGraphAction);
+		final JButton btnDrawGraph             = add(drawGraphAction);
 		final JButton btnCheckTools            = add(checkToolsAction);
 		final JButton btnValidate              = add(validateGraphComponent);
 		final JButton btnAny                   = add(anyGraphComponent);
@@ -157,16 +149,20 @@ public class EasyFlowToolBar extends JToolBar
 		btnResolveUtilityTask.setEnabled(false);
 		
 		// init with a defaultproject
+		
 		GlobalVar.setDefaultProject(getExamples().getExamples().get("sequencing"));
+		setDefaultProject(GlobalVar.getDefaultProject());
+		
 		GlobalVar.getDefaultProject().setFromJar(isFromJar);
 		getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
 		//GlobalVar.setEditor(editor);
 		GlobalVar.setUtil(getGraphUtil());
 		GlobalVar.getDefaultProject().setGraphUtil(getGraphUtil());
+		getDefaultProject().init();
+		editor.getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
 		setComposeWorkflowPanel(editor.getComposeWorkflowPanel());
 		GlobalVar.setGuiMode(true);
 		GlobalVar.setComposeWorkflowPanel(getComposeWorkflowPanel());
-		
 		
 		if (GlobalVar.getDefaultProject()!=null)
 		{
@@ -183,9 +179,26 @@ public class EasyFlowToolBar extends JToolBar
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (EasyFlowUtil.resolveIncompatibleGroupings())
-				{
-					
+				try {
+					if (defaultProject.resolveUtilityTasks())
+					{
+						
+					}
+				} catch (DataLinkNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DataPortNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ToolNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UtilityTaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -193,16 +206,30 @@ public class EasyFlowToolBar extends JToolBar
 		btnCalcAll.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if (EasyFlowUtil.composeEntireWorkflow())
-				{
-					btnResolveUtilityTask.setEnabled(true);
+				try {
+					logger.debug(defaultProject.getActiveWorkflow());
+					if (defaultProject.generateAbstractGraph()
+							&& defaultProject.resolveTraversalCriteria()
+							&& defaultProject.applyGroupingCriteria())
+					{
+						btnResolveUtilityTask.setEnabled(true);
+					}
+				} catch (CellNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (GroupingCriterionInstanceNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
 		btnGenAbstractWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 
-				if (EasyFlowUtil.generateAbstractWorkflow())
+				if (defaultProject.generateAbstractGraph())
 				{
 					btnCheckTools.setEnabled(true);
 					btnApplyTraversalCrit.setEnabled(true);
@@ -218,10 +245,22 @@ public class EasyFlowToolBar extends JToolBar
 				
 			}
 		});
+		
 		btnApplyTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				if (EasyFlowUtil.applyGroupingCriteria())
-					btnResolveUtilityTask.setEnabled(true);
+				try {
+					if (defaultProject.applyGroupingCriteria())
+						btnResolveUtilityTask.setEnabled(true);
+				} catch (CellNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (GroupingCriterionInstanceNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});		
 
@@ -230,6 +269,13 @@ public class EasyFlowToolBar extends JToolBar
 				
 			}
 		});
+		
+		btnDrawGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getGraphUtil().layoutGraph();
+			}
+		});
+		
 		
 		btnValidate.addActionListener(new ActionListener() {
 			
@@ -245,7 +291,7 @@ public class EasyFlowToolBar extends JToolBar
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				EasyFlowGraphUtil graph = (EasyFlowGraphUtil) editor.getGraphComponent().getGraph();
+				EasyFlowGraph graph = (EasyFlowGraph) editor.getGraphComponent().getGraph();
 				Object parent = graph.getDefaultParent();
 				graph.getModel().beginUpdate();
 				try
@@ -364,11 +410,21 @@ public class EasyFlowToolBar extends JToolBar
 		public void actionPerformed(ActionEvent e) {}
 	}
 	
+	private class DrawGraphAction extends AbstractAction {
+		public DrawGraphAction() {
+			putValue(NAME, "DrawGraph");
+			putValue(SHORT_DESCRIPTION, "Draw Graph.");
+			
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {}
+	}
+	
 	private class DeleteGraphAction extends AbstractAction {
 
 		public DeleteGraphAction() {
-			putValue(NAME, "DrawGraph");
-			putValue(SHORT_DESCRIPTION, "Draw Graph.");
+			putValue(NAME, "DeleteGraph");
+			putValue(SHORT_DESCRIPTION, "Delete Graph.");
 			
 		}
 		@Override
@@ -470,7 +526,7 @@ public class EasyFlowToolBar extends JToolBar
 		final ButtonGroup group       = new ButtonGroup();
 		/**/
 		
-		public ConfigureProjectDialog(SchemaEditor editor)
+		public ConfigureProjectDialog(EasyFlowGraphEditor editor)
 		{
 			super();
 			//fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

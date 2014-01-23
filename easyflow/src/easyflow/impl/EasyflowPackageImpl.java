@@ -29,6 +29,7 @@ import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.example.ExamplePackage;
@@ -279,6 +280,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType utilityTaskNotFoundExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType easyFlowOverallWorkerEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -636,6 +644,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getEasyFlowOverallWorker() {
+		return easyFlowOverallWorkerEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EasyflowFactory getEasyflowFactory() {
 		return (EasyflowFactory)getEFactoryInstance();
 	}
@@ -687,6 +704,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		parameterCriterionInstanceNotFoundExceptionEDataType = createEDataType(PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION);
 		parameterNotFoundExceptionEDataType = createEDataType(PARAMETER_NOT_FOUND_EXCEPTION);
 		utilityTaskNotFoundExceptionEDataType = createEDataType(UTILITY_TASK_NOT_FOUND_EXCEPTION);
+		easyFlowOverallWorkerEDataType = createEDataType(EASY_FLOW_OVERALL_WORKER);
 	}
 
 	/**
@@ -763,6 +781,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(parameterCriterionInstanceNotFoundExceptionEDataType, ParameterCriterionInstanceNotFoundException.class, "ParameterCriterionInstanceNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(parameterNotFoundExceptionEDataType, ParameterNotFoundException.class, "ParameterNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(utilityTaskNotFoundExceptionEDataType, UtilityTaskNotFoundException.class, "UtilityTaskNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(easyFlowOverallWorkerEDataType, EasyFlowOverallWorker.class, "EasyFlowOverallWorker", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -1,29 +1,33 @@
 package easyflow.custom.jgraphx;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
+
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 import javax.swing.JToolBar;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 
-import easyflow.custom.jgraphx.editor.EasyFlowToolBar;
-import easyflow.custom.util.EasyFlowUtil;
-import easyflow.custom.util.GlobalVar;
+import easyflow.custom.jgraphx.EasyFlowWorker.Informable;
+import easyflow.ui.DefaultProject;
 
 public class ComposeWorkflowPanel extends JPanel {
 
@@ -31,16 +35,24 @@ public class ComposeWorkflowPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -7097891149697524964L;
-	private static final Logger         logger         = Logger.getLogger(ComposeWorkflowPanel.class);
+	private static final Logger         logger = Logger.getLogger(ComposeWorkflowPanel.class);
 
-	final Action runAction      = new RunAction();
-	final Action stopAction     = new StopAction();
-	final Action nextStepAction = new NextStepAction();
-	final Action prevStepAction = new PrevStepAction();
+	private final Action runAction      = new RunAction();
+	private final Action stopAction     = new StopAction();
+	private final Action nextStepAction = new NextStepAction();
+	private final Action prevStepAction = new PrevStepAction();
 
 	private JToolBar toolBar;
+	private JProgressBar progressBar = null;
 	private CurrentTaskPanel currentTaskPanel;
+	final private JTextArea textAreaTaskDesc     = new JTextArea(5, 10);
+	final private JTextArea textAreaTaskProgress = new JTextArea(5, 10);
+    final private JLabel taskLabel               = new JLabel();
 
+	final private EasyFlowOverallWorker worker;
+	private DefaultProject defaultProject;
+	private boolean mayInterruptIfRunning = true;
+	
 	private JButton runButton;
 	private JButton stopButton;
 	private JButton nextButton;
@@ -48,24 +60,78 @@ public class ComposeWorkflowPanel extends JPanel {
 	
 	public ComposeWorkflowPanel() {
 		super();
-		//setLayout(new BorderLayout(1, 0));
+		worker = new EasyFlowOverallWorker(new Informable() {
+
+			@Override
+			public void messageChanged(String message) {
+				// TODO Auto-generated method stub
+				textAreaTaskProgress.append(message + "\n");
+			}
+			}, this);
+		worker.addPropertyChangeListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getPropertyName().equals("progress"))
+				{
+					getProgressBar().setIndeterminate(false);
+					getProgressBar().setValue((Integer) event.getNewValue());
+					getProgressBar().validate();
+				}
+			}
+		});
+
+		setLayout(new BorderLayout());
 		//setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
 		add(createTaskPanel(), BorderLayout.NORTH);
 		add(createControlPanel(), BorderLayout.SOUTH);
 	}
 	
-	private JProgressBar getProgressBar() {
+	public JProgressBar getProgressBar() {
 		//JProgressBar progressBar = new JProgressBar(0, GlobalVar.getGraphUtil().getTraversalEvents().size());
-		JProgressBar progressBar = new JProgressBar(0, 10);
-		progressBar.setValue(0);
-		progressBar.setStringPainted(true);
+		if (progressBar == null)
+		{
+			progressBar = new JProgressBar();
+			progressBar.setValue(0);
+			progressBar.setStringPainted(true);
+		}
 		return progressBar;
+	}
+	
+	public JTextArea getTextAreaTaskDesc() {
+		return textAreaTaskDesc;
+	}
+	
+	public EasyFlowOverallWorker getWorker()
+	{
+		return worker;
 	}
 	
 	private JPanel createTaskPanel()
 	{
-		currentTaskPanel = new CurrentTaskPanel();
+		// implementation as a selection list
+		//currentTaskPanel = new CurrentTaskPanel();
+		
+		JPanel currentTaskPanel = new JPanel();
+		currentTaskPanel.setLayout(new BoxLayout(currentTaskPanel, BoxLayout.PAGE_AXIS));
+        textAreaTaskDesc.setBorder(BorderFactory.createLineBorder(Color.black));
+        textAreaTaskDesc.setMinimumSize(new Dimension(50, 25));
+        textAreaTaskDesc.setMaximumSize(new Dimension(350, 100));
+        textAreaTaskDesc.setEditable(false);
+        textAreaTaskDesc.setFont(new Font("Serif", Font.ITALIC, 12));
+        textAreaTaskDesc.setLineWrap(true);
+        textAreaTaskDesc.setWrapStyleWord(true);
+        
+        textAreaTaskProgress.setMinimumSize(new Dimension(50, 25));
+        textAreaTaskProgress.setMaximumSize(new Dimension(350, 100));
+        textAreaTaskProgress.setEditable(false);
+        textAreaTaskProgress.setBorder(BorderFactory.createLineBorder(Color.black));
+        currentTaskPanel.add(taskLabel);
+		
+		currentTaskPanel.add(textAreaTaskDesc);
+		currentTaskPanel.add(textAreaTaskProgress);
 		currentTaskPanel.setVisible(true);
+		
 		return currentTaskPanel;
 	}
 	
@@ -124,9 +190,6 @@ public class ComposeWorkflowPanel extends JPanel {
 		this.currentTaskPanel = currentTaskPanel;
 	}
 
-
-
-
 	public JButton getRunButton() {
 		return runButton;
 	}
@@ -143,6 +206,19 @@ public class ComposeWorkflowPanel extends JPanel {
 		return prevButton;
 	}
 
+	public DefaultProject getDefaultProject() {
+		return defaultProject;
+	}
+
+	public void setDefaultProject(DefaultProject defaultProject) {
+		this.defaultProject = defaultProject;
+		this.worker.setDefaultProject(defaultProject);
+		this.defaultProject.setWorker(this.worker);
+	}
+
+	public JLabel getTaskLabel() {
+		return taskLabel;
+	}
 
 	private class RunAction extends AbstractAction {
 		public RunAction() {
@@ -152,8 +228,15 @@ public class ComposeWorkflowPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			getStopButton().setEnabled(true);
 			setEnabled(false);
-			EasyFlowUtil.composeEntireWorkflow();
-			getStopButton().setEnabled(false);
+			worker.setAddUtilityTask(false);
+			worker.setProcessNextStepOnly(false);
+			try {
+				worker.execute();
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -163,6 +246,8 @@ public class ComposeWorkflowPanel extends JPanel {
 			putValue(SHORT_DESCRIPTION, "");
 		}
 		public void actionPerformed(ActionEvent e) {
+			worker.cancel(mayInterruptIfRunning);
+			setEnabled(false);
 		}
 	}
 
@@ -172,6 +257,19 @@ public class ComposeWorkflowPanel extends JPanel {
 			putValue(SHORT_DESCRIPTION, "");
 		}
 		public void actionPerformed(ActionEvent e) {
+			worker.setProcessNextStepOnly(true);
+			
+			try {
+				int old=worker.getProgress();
+				worker.doInBackground();
+				//if (worker.isDone())
+					worker.firePropertyChange("progress", old, worker.getProgress());
+				
+				//worker.execute();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -194,4 +292,5 @@ public class ComposeWorkflowPanel extends JPanel {
 		}
 	
 	}
+	
 }

@@ -36,6 +36,7 @@ import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.util.GlobalVar;
@@ -52,6 +53,7 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.execution.makeflow.Makeflow;
 import easyflow.execution.makeflow.MakeflowFactory;
 
@@ -119,12 +121,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getStaticTasks <em>Static Tasks</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessedStates <em>Processed States</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getWorker <em>Worker</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getTools <em>Tools</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class WorkflowImpl extends EObjectImpl implements Workflow {
+	
+	protected static int totSteps = 5;
 	/**
 	 * The default value of the '{@link #getGraph() <em>Graph</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -386,6 +392,36 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EMap<String, String> previousTaskName;
 
 	/**
+	 * The default value of the '{@link #getWorker() <em>Worker</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWorker()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final EasyFlowOverallWorker WORKER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWorker() <em>Worker</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWorker()
+	 * @generated
+	 * @ordered
+	 */
+	protected EasyFlowOverallWorker worker = WORKER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTools()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Tool> tools;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -630,6 +666,39 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EasyFlowOverallWorker getWorker() {
+		return worker;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWorker(EasyFlowOverallWorker newWorker) {
+		EasyFlowOverallWorker oldWorker = worker;
+		worker = newWorker;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__WORKER, oldWorker, worker));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, Tool> getTools() {
+		if (tools == null) {
+			tools = new EcoreEMap<String,Tool>(MapsPackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.WORKFLOW__TOOLS);
+		}
+		return tools;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMap<String, Object> getGenericAttributes() {
 		if (genericAttributes == null) {
 			genericAttributes = new EcoreEMap<String,Object>(MapsPackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.WORKFLOW__GENERIC_ATTRIBUTES);
@@ -800,47 +869,32 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 
 	
 	
-	private static void setStyleSheet(mxStylesheet stylesheet) {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean generateAbstractWorkflow() {
+    	
+    	boolean res=generateGraphFromTemplate(getTools());
+    	if (res)
+    	{
+    		generateAbstractGraphEdges();
+    	
+		getGraphUtil().getUtilityTasks().put("filter", findUtilityTaskForAnalysisType("filter"));
+		getGraphUtil().getUtilityTasks().put("merge", findUtilityTaskForAnalysisType("merge"));
 
-        // base style
-        Hashtable<String, Object> baseStyle = new Hashtable<String, Object>();
-        baseStyle.put(mxConstants.STYLE_STROKECOLOR, "#FF0000");
-
-        // custom vertex style
-        Map<String, Object> vertexStyle = new Hashtable<String, Object>(baseStyle);
-        //style.put(mxConstants.STYLE_FILLCOLOR, "#000000");
-        //style.put(mxConstants.STYLE_STROKECOLOR, "#000000");
-        //style.put(mxConstants.STYLE_AUTOSIZE, 1);
-        vertexStyle.put(mxConstants.STYLE_RESIZABLE, 0);
-        vertexStyle.put(mxConstants.STYLE_NOLABEL, 1);
-        vertexStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
-        stylesheet.putCellStyle("EASYFLOW_VERTEX_STYLE", vertexStyle);
-
-        // custom edge style
-        Map<String, Object> edgeStyle = new Hashtable<String, Object>(baseStyle);
-        edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
-        stylesheet.putCellStyle("EASYFLOW_EDGE_STYLE", edgeStyle);
-        
-        /*
-        mxDefaultTextShape textShape=new mxDefaultTextShape(){
-        	public void paintShape(mxGraphics2DCanvas canvas, String text,
-                    mxCellState state, Map<String, Object> style)
-        	{
-        		Rectangle rect = state.getLabelBounds().getRectangle();
-        		Graphics2D g = canvas.getGraphics();
-        	}
-
-        };
-        mxGraphics2DCanvas.putTextShape("default", textShape);
-        mxIShape shape=new mxBasicShape() {
-        	
-        };
-        
-        mxGraphics2DCanvas.putShape("default", shape);
-        */
-    }
-	
-	
+        Task tmp;
+		try {
+			tmp = getGraphUtil().loadTask(getFirstNode());
+			logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
+		} catch (TaskNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	}
+    	return res;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -850,15 +904,13 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean generateGraphFromTemplate(EMap<String, Tool> tools) {
 		
 		//Iterator<Task> taskIterator=getWorkflowTemplate().getTasks().iterator();
-		setStyleSheet(getGraph().getStylesheet());
 		//Object parent=graph.getDefaultParent();
 		//Object parent = null;
-		Map<String,Object> map=new HashMap<String,Object>();
+		//Map<String,Object> map=new HashMap<String,Object>();
 		
 		getGraph().getModel().beginUpdate();
 		// create styles
 		
-		updateComposeWorkflowPanel(GlobalVar.ABSTRACT_NODES);
 		logger.debug("got definition for tools: "+(tools!=null?tools.keySet():null));
         try {
 
@@ -907,7 +959,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	        		logger.trace("generateGraphFromTemplate(): "
 	        				+"add to cell map: key="+task.getUniqueString()
 	        				+" cell="+getGraph().getLabel(target));
-	        		map.put(task.getName(), target);
+	        		//map.put(task.getName(), target);
         		}
         		else
         		{
@@ -922,83 +974,75 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	//logger.debug(getGraph().getLabel(rootTarget));
         	
         	getProcessedStates().put(GlobalVar.ABSTRACT_NODES, true);
-        	generateAbstractGraphEdges(map);
+
         } finally {
         	getGraph().getModel().endUpdate();
         }
         
-		getGraphUtil().getUtilityTasks().put("filter", findUtilityTaskForAnalysisType("filter"));
-		getGraphUtil().getUtilityTasks().put("merge", findUtilityTaskForAnalysisType("merge"));
-
-        Task tmp;
-		try {
-			tmp = getGraphUtil().loadTask(getFirstNode());
-			logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
-		} catch (TaskNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
         return true;
 	}
 
-	private void generateAbstractGraphEdges(Map<String,Object> map)
+	private void generateAbstractGraphEdges()
 	{
-		updateComposeWorkflowPanel(GlobalVar.ABSTRACT_WORKFLOW);
-		Object rootTarget=getGraph().insertVertexEasyFlow(null, null, getRootTask());
-    	map.put(getRootTask().getName(), rootTarget);
-    	getGraphUtil().getCells().put(getRootTask().getUniqueString(), (mxICell)rootTarget);
-    	setFirstNode(rootTarget);
-    	getGraphUtil().setDefaultRootCell((mxICell) rootTarget);
-    	getLastTasks().add(getRootTask());
-        logger.trace(getWorkflowTemplate().getTasks());
-        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
-		while (it.hasNext()) {
-			Task task=it.next();
-			logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
-			if (!task.isUtil()) {
-				Object target=getGraphUtil().getCells().get(task.getUniqueString());
-				EMap<Task, EList<DataPort>> parentTaskList=getParentTasksFor(task);
-				//EList<Task> parentTaskList=getParentTasksFor(task);
-				if (parentTaskList.isEmpty())
-					getGraph().insertEdgeEasyFlow(null, null, rootTarget, target);
-				
-				else {
-					for (Task pTask:parentTaskList.keySet()) {
-						Object source=map.get(pTask.getName());
-						if (parentTaskList.get(pTask)==null)
-						{
-							logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") (no edge label)");
-							Object o=getGraph().insertEdgeEasyFlow(null, null, source, target);
-							if (pTask.isUtil())
-								getGraph().setCellUnvisible(o);
-						}
-						else
-						for (DataPort dataPort:parentTaskList.get(pTask))
-						{
-							DataPort dp=pTask.getDataPortByDataPort(dataPort, true);
-							if (dp!=null)
-								dataPort.setStatic(dp.isStatic());
-							logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") with dataPort="
-						+dataPort.getName()+" staticPort:"+dataPort.isStatic()+"-"+dp.isStatic()+" util:"+pTask.isUtil());
-							DataLink dataLink = CoreFactory.eINSTANCE.createDataLink();
-							dataLink.setDataPort(dataPort);
-							Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
-							if (dataPort.isStatic()||pTask.isUtil())
-								getGraph().setCellUnvisible(o);
+		try {
+			Object rootTarget=getGraph().insertVertexEasyFlow(null, null, getRootTask());
+	    	//map.put(getRootTask().getName(), rootTarget);
+	    	getGraphUtil().getCells().put(getRootTask().getUniqueString(), (mxICell)rootTarget);
+	    	setFirstNode(rootTarget);
+	    	getGraphUtil().setDefaultRootCell((mxICell) rootTarget);
+	    	getLastTasks().add(getRootTask());
+	        logger.trace(getWorkflowTemplate().getTasks());
+	        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
+			while (it.hasNext()) {
+				Task task=it.next();
+				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
+				if (!task.isUtil()) {
+					Object target=getGraphUtil().getCells().get(task.getUniqueString());
+					EMap<Task, EList<DataPort>> parentTaskList=getParentTasksFor(task);
+					//EList<Task> parentTaskList=getParentTasksFor(task);
+					if (parentTaskList.isEmpty())
+						getGraph().insertEdgeEasyFlow(null, null, rootTarget, target);
+					
+					else {
+						for (Task pTask:parentTaskList.keySet()) {
+							//Object source=map.get(pTask.getName());
+							Object source=getGraphUtil().getCells().get(pTask.getUniqueString());
+							if (parentTaskList.get(pTask)==null)
+							{
+								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") (no edge label)");
+								Object o=getGraph().insertEdgeEasyFlow(null, null, source, target);
+								if (pTask.isUtil())
+									getGraph().setCellUnvisible(o);
+							}
+							else
+							for (DataPort dataPort:parentTaskList.get(pTask))
+							{
+								DataPort dp=pTask.getDataPortByDataPort(dataPort, true);
+								if (dp!=null)
+									dataPort.setStatic(dp.isStatic());
+								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") with dataPort="
+							+dataPort.getName()+" staticPort:"+dataPort.isStatic()+"-"+dp.isStatic()+" util:"+pTask.isUtil());
+								DataLink dataLink = CoreFactory.eINSTANCE.createDataLink();
+								dataLink.setDataPort(dataPort);
+								Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
+								if (dataPort.isStatic()||pTask.isUtil())
+									getGraph().setCellUnvisible(o);
+							}
 						}
 					}
+					if (!task.validateTools())
+					{
+						logger.debug("validation for "+task.getUniqueString()+" failed. Trying to resolve tool depenendencies...");
+						if (resolveMissingDataPortsByToolFor(task))
+							logger.debug("resolved data port by Tool !");
+					}
+					getLastTasks().add(task);
+					//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 				}
-				if (!task.validateTools())
-				{
-					logger.debug("validation for "+task.getUniqueString()+" failed. Trying to resolve tool depenendencies...");
-					if (resolveMissingDataPortsByToolFor(task))
-						logger.debug("resolved data port by Tool !");
-				}
-				getLastTasks().add(task);
-				//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 			}
-		}
+		} finally {
+        	getGraph().getModel().endUpdate();
+        }
 		getProcessedStates().put(GlobalVar.ABSTRACT_WORKFLOW, true);
 
 	}
@@ -1224,10 +1268,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
 	 * @generated not
 	 */
-	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+	public boolean resolveIncompatibleGroupings() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+		
 		boolean rc=false;
 		for (Entry<mxICell, EList<mxICell>> e:getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet())
 		{
@@ -1243,16 +1287,224 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void updateComposeWorkflowPanel(String step) {
-		
-		if (GlobalVar.isGuiMode())
-		{
-			ComposeWorkflowPanel cWP=GlobalVar.getComposeWorkflowPanel();
-			if (cWP != null)
-			{
-				cWP.getCurrentTaskPanel().setSelectedTask(step);
-			}
-		}
+	public boolean applyParameterCriteria() {
+		boolean rc = true;
+		if (rc)
+			getProcessedStates().put(GlobalVar.PARAMETER_APPLIED, true);
+		return rc;
+	}
+
+	public String getCurWorkflowStep()
+	{
+		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
+				getProcessedStates().get(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED))
+			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalVar.GROUPING_APPLIED) &&
+				getProcessedStates().get(GlobalVar.GROUPING_APPLIED))
+			return GlobalVar.APPLY_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalVar.PARAMETER_APPLIED) &&
+				getProcessedStates().get(GlobalVar.PARAMETER_APPLIED))
+			return GlobalVar.APPLY_PARAMETERS;
+		else if (getProcessedStates().containsKey(GlobalVar.TRAVERSAL_EVENTS_RESOLVED) &&
+				getProcessedStates().get(GlobalVar.TRAVERSAL_EVENTS_RESOLVED))
+			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS;
+		else if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
+				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
+			return GlobalVar.GENERATE_ABSTRACT_WORKFLOW;
+		else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
+				getProcessedStates().get(GlobalVar.FINISHED))
+			return GlobalVar.FINISHED;
+		else
+			return GlobalVar.START;		
+	}
+	
+	public String getNextWorkflowStep()
+	{
+		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
+				getProcessedStates().get(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED))
+			return GlobalVar.FINISHED;
+		else if (getProcessedStates().containsKey(GlobalVar.GROUPING_APPLIED) &&
+				getProcessedStates().get(GlobalVar.GROUPING_APPLIED))
+			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalVar.PARAMETER_APPLIED) &&
+				getProcessedStates().get(GlobalVar.PARAMETER_APPLIED))
+			return GlobalVar.APPLY_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalVar.TRAVERSAL_EVENTS_RESOLVED) &&
+				getProcessedStates().get(GlobalVar.TRAVERSAL_EVENTS_RESOLVED))
+			return GlobalVar.APPLY_PARAMETERS;
+		else if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
+				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
+			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS;
+		else
+			return GlobalVar.GENERATE_ABSTRACT_WORKFLOW;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @throws UtilityTaskNotFoundException 
+	 * @throws ToolNotFoundException 
+	 * @throws DataPortNotFoundException 
+	 * @throws DataLinkNotFoundException 
+	 * @generated not
+	 */
+	public int runNextWorkflowStep() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
+		if (getNextWorkflowStep().equals(GlobalVar.START) || 
+				getNextWorkflowStep().equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
+			return generateAbstractWorkflow()     ?  0:1;
+		else if (getNextWorkflowStep().equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
+			return resolveTraversalEvents()       ?  0:1;
+		else if (getNextWorkflowStep().equals(GlobalVar.APPLY_PARAMETERS))
+			return applyParameterCriteria()       ?  0:1;
+		else if (getNextWorkflowStep().equals(GlobalVar.APPLY_GROUPINGS))
+			return applyGroupingCriteria()        ?  0:1;
+		else if (getNextWorkflowStep().equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
+			return resolveIncompatibleGroupings() ?  0:1;
+		return 2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int runPrevWorkflowStep() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @throws UtilityTaskNotFoundException 
+	 * @throws ToolNotFoundException 
+	 * @throws DataPortNotFoundException 
+	 * @throws DataLinkNotFoundException 
+	 * @generated not
+	 */
+	public int runEntireWorkflow() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
+		int rc = 0;
+		if (getNextWorkflowStep().equals(GlobalVar.START) || 
+				getNextWorkflowStep().equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
+			rc = generateAbstractWorkflow()     ? 0:1;
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
+			rc = resolveTraversalEvents()       ? 0:1;
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.APPLY_PARAMETERS))
+			rc = applyParameterCriteria()       ? 0:1;
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.APPLY_GROUPINGS))
+			rc = applyGroupingCriteria()        ? 0:1;
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
+			rc = resolveIncompatibleGroupings() ? 0:1;
+		if (getNextWorkflowStep().equals(GlobalVar.FINISHED))
+			return 0;
+		return rc;
+ 
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean hasNextWorkflowStep() {
+		return !(getNextWorkflowStep().equals(GlobalVar.FINISHED));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getWorkflowStepLabelFor(String step) {
+		if (step==null)
+			step=getCurWorkflowStep();
+		if (step.equals(GlobalVar.FINISHED))
+			return GlobalVar.FINISHED_LABEL;
+		else if (step.equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
+			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS_LABEL;
+		else if (step.equals(GlobalVar.APPLY_PARAMETERS))
+			return GlobalVar.APPLY_PARAMETER_LABEL;
+		else if (step.equals(GlobalVar.APPLY_GROUPINGS))
+			return GlobalVar.APPLY_GROUPING_LABEL;
+		else if (step.equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
+			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS_LABEL;
+		else if (step.equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
+			return GlobalVar.GENERATE_ABSTRACT_GRAPH_LABEL;
+		else if (step.equals(GlobalVar.START))
+			return GlobalVar.START_LABEL;
+		return "Unkown";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getWorkflowStepDescFor(String step) {
+		if (step==null)
+			step=getCurWorkflowStep();
+		if (step.equals(GlobalVar.FINISHED))
+			return GlobalVar.FINISHED_DESCRIPTION;
+		else if (step.equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
+			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS_DESCRIPTION;
+		else if (step.equals(GlobalVar.APPLY_PARAMETERS))
+			return GlobalVar.APPLY_PARAMETER_DESCRIPTION;
+		else if (step.equals(GlobalVar.APPLY_GROUPINGS))
+			return GlobalVar.APPLY_GROUPING_DESCRIPTION;
+		else if (step.equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
+			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS_DESCRIPTION;
+		else if (step.equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
+			return GlobalVar.GENERATE_ABSTRACT_GRAPH_DESCRIPTION;
+		else if (step.equals(GlobalVar.START))
+			return GlobalVar.START_DESCRIPTION;
+		return "Unkown";
+
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int getNumberOfCurrentWorkflowStep() {
+		//String step=getCurWorkflowStep();
+		int curStep=0;
+		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
+				getProcessedStates().get(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED))
+			curStep++;
+		if (getProcessedStates().containsKey(GlobalVar.GROUPING_APPLIED) &&
+				getProcessedStates().get(GlobalVar.GROUPING_APPLIED))
+			curStep++;
+		if (getProcessedStates().containsKey(GlobalVar.PARAMETER_APPLIED) &&
+				getProcessedStates().get(GlobalVar.PARAMETER_APPLIED))
+			curStep++;
+		if (getProcessedStates().containsKey(GlobalVar.TRAVERSAL_EVENTS_RESOLVED) &&
+				getProcessedStates().get(GlobalVar.TRAVERSAL_EVENTS_RESOLVED))
+			curStep++;
+		if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
+				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
+			curStep++;
+		//else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
+			//	getProcessedStates().get(GlobalVar.FINISHED))
+			//curStep++;
+		return curStep;
+
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int getTotalNumberOfWorkflowSteps() {
+		return totSteps;
 	}
 
 	/**
@@ -1264,7 +1516,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public Task findUtilityTaskForAnalysisType(String analysisType) {
 		
 		Task utilityTask=null;
-		updateComposeWorkflowPanel(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED);
 		for (Task task:getStaticTasks())
 			if (task.getAnalysisTypes().contains(analysisType))
 			{
@@ -1482,8 +1733,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @throws GroupingCriterionInstanceNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvents() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
-		updateComposeWorkflowPanel(GlobalVar.GROUPING_APPLIED);
+	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
 		while (traversalEvent != null)
 		{
@@ -1493,6 +1743,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			traversalEvent = getGraphUtil().getNextTraversalEvent();
 		}
 		getProcessedStates().put(GlobalVar.GROUPING_APPLIED, true);
+		return true;
 		
 	}
 	
@@ -1578,7 +1829,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
 		
-		updateComposeWorkflowPanel(GlobalVar.TRAVERSAL_EVENTS_RESOLVED);
 		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
 		{
 			getProcessedStates().put(GlobalVar.TRAVERSAL_EVENTS_RESOLVED, true);
@@ -1605,6 +1855,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return ((InternalEList<?>)getProcessedStates()).basicRemove(otherEnd, msgs);
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				return ((InternalEList<?>)getPreviousTaskName()).basicRemove(otherEnd, msgs);
+			case CorePackage.WORKFLOW__TOOLS:
+				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1663,6 +1915,11 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				if (coreType) return getPreviousTaskName();
 				else return getPreviousTaskName().map();
+			case CorePackage.WORKFLOW__WORKER:
+				return getWorker();
+			case CorePackage.WORKFLOW__TOOLS:
+				if (coreType) return getTools();
+				else return getTools().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1734,6 +1991,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				((EStructuralFeature.Setting)getPreviousTaskName()).set(newValue);
 				return;
+			case CorePackage.WORKFLOW__WORKER:
+				setWorker((EasyFlowOverallWorker)newValue);
+				return;
+			case CorePackage.WORKFLOW__TOOLS:
+				((EStructuralFeature.Setting)getTools()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1800,6 +2063,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				getPreviousTaskName().clear();
 				return;
+			case CorePackage.WORKFLOW__WORKER:
+				setWorker(WORKER_EDEFAULT);
+				return;
+			case CorePackage.WORKFLOW__TOOLS:
+				getTools().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1850,6 +2119,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return processedStates != null && !processedStates.isEmpty();
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				return previousTaskName != null && !previousTaskName.isEmpty();
+			case CorePackage.WORKFLOW__WORKER:
+				return WORKER_EDEFAULT == null ? worker != null : !WORKER_EDEFAULT.equals(worker);
+			case CorePackage.WORKFLOW__TOOLS:
+				return tools != null && !tools.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1884,6 +2157,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		result.append(mode);
 		result.append(", defaultGroupingCriteria: ");
 		result.append(defaultGroupingCriteria);
+		result.append(", worker: ");
+		result.append(worker);
 		result.append(')');
 		return result.toString();
 	}

@@ -24,6 +24,7 @@ import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import java.io.BufferedReader;
@@ -157,6 +158,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createParameterNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.UTILITY_TASK_NOT_FOUND_EXCEPTION:
 				return createUtilityTaskNotFoundExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.EASY_FLOW_OVERALL_WORKER:
+				return createEasyFlowOverallWorkerFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -224,6 +227,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertParameterNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.UTILITY_TASK_NOT_FOUND_EXCEPTION:
 				return convertUtilityTaskNotFoundExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.EASY_FLOW_OVERALL_WORKER:
+				return convertEasyFlowOverallWorkerToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -712,6 +717,24 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertUtilityTaskNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EasyFlowOverallWorker createEasyFlowOverallWorkerFromString(EDataType eDataType, String initialValue) {
+		return (EasyFlowOverallWorker)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertEasyFlowOverallWorkerToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

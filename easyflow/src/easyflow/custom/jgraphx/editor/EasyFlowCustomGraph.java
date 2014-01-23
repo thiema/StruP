@@ -1,30 +1,43 @@
 package easyflow.custom.jgraphx.editor;
 
+import java.awt.Point;
 import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
+import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 
+import easyflow.core.Task;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.util.GlobalVar;
+
+
 /**
  * A graph that creates new edges from a given template edge.
  */
-public class EasyFlowCustomGraph extends EasyFlowGraphUtil
+
+
+public class EasyFlowCustomGraph extends mxGraph
 {
-	
+	private static final Logger logger = Logger.getLogger(EasyFlowCustomGraph.class);
+
 	/**
 	 * Holds the shared number formatter.
 	 * 
 	 * @see NumberFormat#getInstance()
 	 */
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
-	
+
 	/**
 	 * Holds the edge to be used as a template for inserting new edges.
 	 */
@@ -49,7 +62,7 @@ public class EasyFlowCustomGraph extends EasyFlowGraphUtil
 
 	/**
 	 * Prints out some useful information about the cell in the tooltip.
-	 
+	 */
 	public String getToolTipForCell(Object cell)
 	{
 		String tip = "<html>";
@@ -135,7 +148,6 @@ public class EasyFlowCustomGraph extends EasyFlowGraphUtil
 
 		return tip;
 	}
-	*/
 
 	/**
 	 * Overrides the method to use the currently selected edge template for
@@ -150,6 +162,7 @@ public class EasyFlowCustomGraph extends EasyFlowGraphUtil
 	 * @param style
 	 * @return
 	 */
+	
 	public Object createEdge(Object parent, String id, Object value,
 			Object source, Object target, String style)
 	{
@@ -167,30 +180,115 @@ public class EasyFlowCustomGraph extends EasyFlowGraphUtil
 	/*
 	 *custom label 
 	 */
-	public String getLabel(Object cell) {
-		if (cell instanceof mxCell)
+	public String getLabel(Object o) {
+		
+		if (o instanceof mxCell)
 		{
-			Object value = ((mxCell) cell).getValue();
-			if (value instanceof Element)
+			mxCell cell = (mxCell) o;
+			if (cell.isVertex())
+			{
+				try {
+					if (GlobalVar.getGraphUtil()!=null)
+					{
+						Task task = GlobalVar.getGraphUtil().loadTask(cell);
+						if (task != null)
+							return task.getUniqueString();
+					}
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (cell.isEdge())
+			{
+				try {
+					if (GlobalVar.getGraphUtil()!=null)
+						return GlobalVar.getGraphUtil().loadDataLink(cell).getDataPort().getName();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
 			{
 				
-				Element elt = (Element) value;
-				//logger.debug("getLabel(): elements first child="+elt.getFirstChild());
-				if (elt.getFirstChild() == null && elt.getLocalName().equalsIgnoreCase("Task"))
+				if (cell.getValue() instanceof String)
 				{
-					
-					return elt.getAttributes().getNamedItem("name").getNodeValue();
-				}
-				else if (! elt.getFirstChild().getLocalName().equalsIgnoreCase("Task"))
-				{
-					String label = elt.getFirstChild().getAttributes().getNamedItem("name").getNodeValue();
-					//logger.debug(label);
-					return label;
+					return (String)cell.getValue();
 				}
 			}
 		}
-		return "dummy";
+		logger.trace("cannot retrieve label");
+		return null;
 	}
 	
+	/**
+	 * Moves or clones the specified cells and moves the cells or clones by the
+	 * given amount, adding them to the optional target cell. The location is
+	 * the position of the mouse pointer as the mouse was released. The change
+	 * is carried out using cellsMoved. This method fires mxEvent.MOVE_CELLS
+	 * while the transaction is in progress.
+	 * 
+	 * @param cells Array of cells to be moved, cloned or added to the target.
+	 * @param dx Integer that specifies the x-coordinate of the vector.
+	 * @param dy Integer that specifies the y-coordinate of the vector.
+	 * @param clone Boolean indicating if the cells should be cloned.
+	 * @param target Cell that represents the new parent of the cells.
+	 * @param location Location where the mouse was released.
+	 * @return Returns the cells that were moved.
+	 */
+	@Override
+	public Object[] moveCells(Object[] cells, double dx, double dy,
+			boolean clone, Object target, Point location)
+	{
+		if (cells != null && (dx != 0 || dy != 0 || clone || target != null))
+		{
+			model.beginUpdate();
+			try
+			{
+				if (clone)
+				{
+					cells = cloneCells(cells, isCloneInvalidEdges());
+
+					if (target == null)
+					{
+						target = getDefaultParent();
+					}
+				}
+
+				// Need to disable allowNegativeCoordinates if target not null to
+				// allow for temporary negative numbers until cellsAdded is called.
+				boolean previous = isAllowNegativeCoordinates();
+				
+				if (target != null)
+				{
+					setAllowNegativeCoordinates(true);
+				}
+				
+				cellsMoved(cells, dx, dy, !clone && isDisconnectOnMove()
+						&& isAllowDanglingEdges(), target == null);
+				
+				setAllowNegativeCoordinates(previous);
+
+				if (target != null)
+				{
+					Integer index = model.getChildCount(target);
+					cellsAdded(cells, target, index, null, null, true);
+				}
+
+				fireEvent(new mxEventObject(mxEvent.MOVE_CELLS, "cells", cells,
+						"dx", dx, "dy", dy, "clone", clone, "target", target,
+						"location", location));
+			}
+			finally
+			{
+				model.endUpdate();
+			}
+		}
+
+		return cells;
+	}
 }
+
+
 

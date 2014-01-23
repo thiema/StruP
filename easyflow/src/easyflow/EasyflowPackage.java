@@ -343,6 +343,16 @@ public interface EasyflowPackage extends EPackage {
 	int UTILITY_TASK_NOT_FOUND_EXCEPTION = 27;
 
 	/**
+	 * The meta object id for the '<em>Easy Flow Overall Worker</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.jgraphx.EasyFlowOverallWorker
+	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowOverallWorker()
+	 * @generated
+	 */
+	int EASY_FLOW_OVERALL_WORKER = 28;
+
+	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph <em>mx Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -651,6 +661,17 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getUtilityTaskNotFoundException();
 
 	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.jgraphx.EasyFlowOverallWorker <em>Easy Flow Overall Worker</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Easy Flow Overall Worker</em>'.
+	 * @see easyflow.custom.jgraphx.EasyFlowOverallWorker
+	 * @model instanceClass="easyflow.custom.jgraphx.EasyFlowOverallWorker"
+	 * @generated
+	 */
+	EDataType getEasyFlowOverallWorker();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -951,6 +972,16 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType UTILITY_TASK_NOT_FOUND_EXCEPTION = eINSTANCE.getUtilityTaskNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>Easy Flow Overall Worker</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.jgraphx.EasyFlowOverallWorker
+		 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowOverallWorker()
+		 * @generated
+		 */
+		EDataType EASY_FLOW_OVERALL_WORKER = eINSTANCE.getEasyFlowOverallWorker();
 
 	}
 

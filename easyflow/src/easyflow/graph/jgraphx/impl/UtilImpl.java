@@ -44,6 +44,7 @@ import easyflow.custom.exception.TraversalChunkNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.execution.IExecutionSystem;
 import easyflow.core.Workflow;
+import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
 
 import easyflow.graph.jgraphx.JgraphxPackage;
@@ -2313,7 +2314,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
 				
-		boolean rc=false;
+		boolean rc = true;
 		
 		int constellation = 0x00;
 		int processMultipleInputs    = 1;
@@ -2575,12 +2576,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 		if (vertex instanceof mxCell)
 		{
 			Object value=((mxCell)vertex).getValue();
+			
 			if (value==null)
 				throw new TaskNotFoundException();
 			if (value instanceof Element)
 				return XMLUtil.loadTaskFromValue(value);
 			else if (value instanceof String)
 			{
+				if (value.equals(GlobalVar.templateTaskName))
+					return GlobalVar.getTemplateTask();
 				return getTasks().get(value);
 			}
 		}
@@ -2601,12 +2605,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 		if (edge instanceof mxCell)
 		{
 			Object value=((mxCell)edge).getValue();
+			
 			if (value instanceof Element)
 			{
 				return XMLUtil.loadDataLinkFromEdge(edge);
 			}
 			else if (value instanceof String)
 			{
+				if (value.equals(GlobalVar.templateDataPortName))
+					return GlobalVar.getTemplateLink();
 				return getDataLinks().get((String)value);
 			}
 			else if (value instanceof Integer)

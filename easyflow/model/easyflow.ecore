@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow" nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0"
-    nsPrefix="easyflow">
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
+    nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
   <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EasyFlowGraph" instanceClassName="easyflow.custom.jgraphx.editor.EasyFlowGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Logger" instanceClassName="org.apache.log4j.Logger"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" name="JexlEngine" instanceClassName="org.apache.commons.jexl2.JexlEngine"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Stack" instanceClassName="java.util.Stack"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="java.net.URI"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="EasyFlowGraph" instanceClassName="easyflow.custom.jgraphx.editor.EasyFlowGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="EObject" instanceClassName="org.eclipse.emf.ecore.EObject"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Document" instanceClassName="org.w3c.dom.Document"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Element" instanceClassName="org.w3c.dom.Element"/>
@@ -35,6 +36,7 @@
       instanceClassName="easyflow.custom.exception.ParameterCriterionInstanceNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ParameterNotFoundException" instanceClassName="easyflow.custom.exception.ParameterNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="UtilityTaskNotFoundException" instanceClassName="easyflow.custom.exception.UtilityTaskNotFoundException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EasyFlowOverallWorker" instanceClassName="easyflow.custom.jgraphx.EasyFlowOverallWorker"/>
   <eSubpackages name="core" nsURI="http:///de/thiema/easyflow/core/easyflow.core/1.0.0"
       nsPrefix="easyflow">
     <eClassifiers xsi:type="ecore:EClass" name="Workflow">
@@ -81,11 +83,21 @@
           <details key="documentation" value=""/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="applyTraversalEvents" eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
+      <eOperations name="getParentTasksFor" upperBound="-1" eType="#//util/maps/TaskToDataPortsMap">
+        <eParameters name="task" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="resolveMissingDataPortsByToolFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="task" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="readWorkfowTemplate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="generateAbstractWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="applyGroupingCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="breadth first iteration of graph. compute new graph with &#xA;given traversal event applied."/>
         </eAnnotations>
       </eOperations>
+      <eOperations name="applyParameterCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
         <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
       </eOperations>
@@ -95,20 +107,27 @@
           <details key="documentation" value="breadth first iteration of graph and completing/checking the traversal events of each task&#xA;in order to combine splitting and merging events into a single events. Usually each&#xA;merging event complements a splitting event.&#xA;Moreover the parent for each splitting event is set."/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="readWorkfowTemplate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="getParentTasksFor" upperBound="-1" eType="#//util/maps/TaskToDataPortsMap">
-        <eParameters name="task" eType="#//core/Task"/>
-      </eOperations>
+      <eOperations name="resolveIncompatibleGroupings" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
       <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="resolveMissingDataPortsByToolFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="task" eType="#//core/Task"/>
-      </eOperations>
-      <eOperations name="resolveUtilityTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="updateComposeWorkflowPanel">
+      <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="hasNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getTotalNumberOfWorkflowSteps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getWorkflowStepLabelFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
+      <eOperations name="getWorkflowStepDescFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getNumberOfCurrentWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getCurWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstNode" eType="#//Object"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="knownGroupingCriteria"
@@ -138,6 +157,9 @@
           eType="#//util/maps/StringToBooleanMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="previousTaskName" upperBound="-1"
           eType="#//util/maps/StringToStringMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="worker" eType="#//EasyFlowOverallWorker"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tools" upperBound="-1"
+          eType="#//util/maps/StringToToolMap" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Task">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -468,38 +490,58 @@
         <details key="documentation" value=""/>
       </eAnnotations>
       <eOperations name="validate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="init" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value=""/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="autoSetup" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value=""/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="applyMetaData">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value=""/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="applyTraversalEvents" eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
-      <eOperations name="clearWorkflows"/>
       <eOperations name="getActiveWorkflow" eType="#//core/Workflow"/>
+      <eOperations name="clearWorkflows"/>
+      <eOperations name="readConfiguration" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="readProjectJson" eExceptions="#//FileNotFoundException">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value=""/>
         </eAnnotations>
         <eParameters name="source" eType="#//URI"/>
       </eOperations>
-      <eOperations name="readConfiguration" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="setConfigAndBasePath">
         <eParameters name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
-      <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="applyMetaData">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="init" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value=""/>
+        </eAnnotations>
+      </eOperations>
+      <eOperations name="resolveTraversalCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//CellNotFoundException #//TaskNotFoundException"/>
+      <eOperations name="generateAbstractGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="applyGroupingCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="applyParameterCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="resolveUtilityTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
+      <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="setWorker">
+        <eParameters name="worker" eType="#//EasyFlowOverallWorker"/>
+      </eOperations>
+      <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+      <eOperations name="hasNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getWorkflowStepLabelFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getWorkflowStepDescFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getTotalNumberOfWorkflowSteps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNumberOfCurrentWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getCurWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DefaultProject" eSuperTypes="#//ui/IProject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
