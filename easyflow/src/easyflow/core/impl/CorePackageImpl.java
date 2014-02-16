@@ -19,6 +19,7 @@ import easyflow.core.EasyflowTemplate;
 import easyflow.core.GalaxyTaskReader;
 import easyflow.core.ITaskReader;
 import easyflow.core.IWorkflowTemplate;
+import easyflow.core.ParentTaskResult;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.core.Workflow;
@@ -159,6 +160,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass dataLinkEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass parentTaskResultEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -946,6 +954,69 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDataLink_NotPermittedConditions() {
+		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getParentTaskResult() {
+		return parentTaskResultEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getParentTaskResult_ParentTask() {
+		return (EReference)parentTaskResultEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getParentTaskResult_CoveredPorts() {
+		return (EReference)parentTaskResultEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParentTaskResult_Condition() {
+		return (EAttribute)parentTaskResultEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParentTaskResult_Generic() {
+		return (EAttribute)parentTaskResultEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParentTaskResult_Rank() {
+		return (EAttribute)parentTaskResultEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getToolMatch() {
 		return toolMatchEClass;
 	}
@@ -1195,6 +1266,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(dataLinkEClass, DATA_LINK__GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__PARENT_GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__IDENTICAL_GROUPING);
+		createEAttribute(dataLinkEClass, DATA_LINK__NOT_PERMITTED_CONDITIONS);
+
+		parentTaskResultEClass = createEClass(PARENT_TASK_RESULT);
+		createEReference(parentTaskResultEClass, PARENT_TASK_RESULT__PARENT_TASK);
+		createEReference(parentTaskResultEClass, PARENT_TASK_RESULT__COVERED_PORTS);
+		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__CONDITION);
+		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__GENERIC);
+		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__RANK);
 	}
 
 	/**
@@ -1285,7 +1364,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		addEOperation(workflowEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowEClass, theMapsPackage.getTaskToDataPortsMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, theMapsPackage.getTaskToDataLinksMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveMissingDataPortsByToolFor", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1399,8 +1478,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "shallProcess", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "jexlStrings", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "isInverse", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		op = addEOperation(taskEClass, theEasyflowPackage.getObject(), "evaluateJexl", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToObjectMap(), "metaDataMap", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "jexlString", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, theMapsPackage.getStringToObjectMap(), "createMetaDataMapForJexl", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -1593,6 +1679,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getDataLink_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_ParentGroupingStr(), ecorePackage.getEString(), "parentGroupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_IdenticalGrouping(), ecorePackage.getEBoolean(), "identicalGrouping", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataLink_NotPermittedConditions(), ecorePackage.getEString(), "notPermittedConditions", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(parentTaskResultEClass, ParentTaskResult.class, "ParentTaskResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getParentTaskResult_ParentTask(), this.getTask(), null, "parentTask", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getParentTaskResult_CoveredPorts(), this.getDataPort(), null, "coveredPorts", null, 0, -1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParentTaskResult_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParentTaskResult_Generic(), ecorePackage.getEBoolean(), "generic", "false", 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParentTaskResult_Rank(), ecorePackage.getEInt(), "rank", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //CorePackageImpl

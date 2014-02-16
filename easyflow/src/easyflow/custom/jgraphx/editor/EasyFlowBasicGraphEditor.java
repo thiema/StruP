@@ -112,13 +112,13 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		add(statusBar, BorderLayout.SOUTH);
 		
 		
-		//installToolBar();
+		installToolBar();
 		/*
 		 * EditorToolBar and EasyFlowToolBar in one Panel
 		 */
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
-		upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+		//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		//upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 		

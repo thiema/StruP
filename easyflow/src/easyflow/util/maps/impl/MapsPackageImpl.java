@@ -244,6 +244,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass taskToDataLinksMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToDataLinkMapEClass = null;
 
 	/**
@@ -1012,6 +1019,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTaskToDataLinksMap() {
+		return taskToDataLinksMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskToDataLinksMap_Key() {
+		return (EReference)taskToDataLinksMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskToDataLinksMap_Value() {
+		return (EReference)taskToDataLinksMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToDataLinkMap() {
 		return stringToDataLinkMapEClass;
 	}
@@ -1208,9 +1242,9 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		createEAttribute(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__KEY);
 		createEReference(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__VALUE);
 
-		taskToDataPortsMapEClass = createEClass(TASK_TO_DATA_PORTS_MAP);
-		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__KEY);
-		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__VALUE);
+		stringToBooleanMapEClass = createEClass(STRING_TO_BOOLEAN_MAP);
+		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__KEY);
+		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__VALUE);
 
 		stringToDataLinkMapEClass = createEClass(STRING_TO_DATA_LINK_MAP);
 		createEAttribute(stringToDataLinkMapEClass, STRING_TO_DATA_LINK_MAP__KEY);
@@ -1220,9 +1254,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__KEY);
 		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__VALUE);
 
-		stringToBooleanMapEClass = createEClass(STRING_TO_BOOLEAN_MAP);
-		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__KEY);
-		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__VALUE);
+		taskToDataPortsMapEClass = createEClass(TASK_TO_DATA_PORTS_MAP);
+		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__KEY);
+		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__VALUE);
+
+		taskToDataLinksMapEClass = createEClass(TASK_TO_DATA_LINKS_MAP);
+		createEReference(taskToDataLinksMapEClass, TASK_TO_DATA_LINKS_MAP__KEY);
+		createEReference(taskToDataLinksMapEClass, TASK_TO_DATA_LINKS_MAP__VALUE);
 	}
 
 	/**
@@ -1355,9 +1393,9 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEAttribute(getStringToToolMatchMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToToolMatchMap_Value(), theCorePackage.getToolMatch(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(taskToDataPortsMapEClass, Map.Entry.class, "TaskToDataPortsMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTaskToDataPortsMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTaskToDataPortsMap_Value(), theCorePackage.getDataPort(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(stringToBooleanMapEClass, Map.Entry.class, "StringToBooleanMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToBooleanMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToBooleanMap_Value(), ecorePackage.getEBooleanObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stringToDataLinkMapEClass, Map.Entry.class, "StringToDataLinkMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToDataLinkMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1367,9 +1405,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEAttribute(getCellToCellListMap_Key(), theEasyflowPackage.getmxICell(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCellToCellListMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(stringToBooleanMapEClass, Map.Entry.class, "StringToBooleanMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToBooleanMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToBooleanMap_Value(), ecorePackage.getEBooleanObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(taskToDataPortsMapEClass, Map.Entry.class, "TaskToDataPortsMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTaskToDataPortsMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTaskToDataPortsMap_Value(), theCorePackage.getDataPort(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(taskToDataLinksMapEClass, Map.Entry.class, "TaskToDataLinksMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTaskToDataLinksMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTaskToDataLinksMap_Value(), theCorePackage.getDataLink(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

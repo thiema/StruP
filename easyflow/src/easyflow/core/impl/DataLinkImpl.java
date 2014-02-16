@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
+ *   <li>{@link easyflow.core.impl.DataLinkImpl#getNotPermittedConditions <em>Not Permitted Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -167,6 +169,16 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected boolean identicalGrouping = IDENTICAL_GROUPING_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getNotPermittedConditions() <em>Not Permitted Conditions</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNotPermittedConditions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> notPermittedConditions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -347,6 +359,18 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getNotPermittedConditions() {
+		if (notPermittedConditions == null) {
+			notPermittedConditions = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS);
+		}
+		return notPermittedConditions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -365,6 +389,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return getParentGroupingStr();
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				return isIdenticalGrouping();
+			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
+				return getNotPermittedConditions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -400,6 +426,10 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping((Boolean)newValue);
 				return;
+			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
+				getNotPermittedConditions().clear();
+				getNotPermittedConditions().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -433,6 +463,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping(IDENTICAL_GROUPING_EDEFAULT);
 				return;
+			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
+				getNotPermittedConditions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -459,6 +492,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return PARENT_GROUPING_STR_EDEFAULT == null ? parentGroupingStr != null : !PARENT_GROUPING_STR_EDEFAULT.equals(parentGroupingStr);
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
+			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
+				return notPermittedConditions != null && !notPermittedConditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -483,6 +518,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		result.append(parentGroupingStr);
 		result.append(", identicalGrouping: ");
 		result.append(identicalGrouping);
+		result.append(", notPermittedConditions: ");
+		result.append(notPermittedConditions);
 		result.append(')');
 		return result.toString();
 	}

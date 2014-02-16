@@ -70,6 +70,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.CATALOG: return createCatalog();
 			case CorePackage.DATA_PORT: return createDataPort();
 			case CorePackage.DATA_LINK: return createDataLink();
+			case CorePackage.PARENT_TASK_RESULT: return createParentTaskResult();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -163,6 +164,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public DataLink createDataLink() {
 		DataLinkImpl dataLink = new DataLinkImpl();
 		return dataLink;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ParentTaskResult createParentTaskResult() {
+		ParentTaskResultImpl parentTaskResult = new ParentTaskResultImpl();
+		return parentTaskResult;
 	}
 
 	/**

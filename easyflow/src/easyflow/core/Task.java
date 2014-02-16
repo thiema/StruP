@@ -530,10 +530,21 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model groupingInstancesMany="true" jexlStringsMany="true"
+	 * @generated
+	 */
+	boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping, EList<String> jexlStrings, boolean isInverse);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model dataType="easyflow.Object" metaDataMapMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
 	 * @generated
 	 */
-	Object evaluateJexl(EMap<String, Object> metaDataMap);
+	Object evaluateJexl(EMap<String, Object> metaDataMap, String jexlString);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
+ *   <li>{@link easyflow.core.DataLink#getNotPermittedConditions <em>Not Permitted Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -210,5 +211,21 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setIdenticalGrouping(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Not Permitted Conditions</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Not Permitted Conditions</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Not Permitted Conditions</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getDataLink_NotPermittedConditions()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getNotPermittedConditions();
 
 } // DataLink

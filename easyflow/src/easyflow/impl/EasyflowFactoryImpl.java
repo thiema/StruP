@@ -110,6 +110,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createmxICellFromString(eDataType, initialValue);
 			case EasyflowPackage.MX_ICELL_VISITOR:
 				return createmxICellVisitorFromString(eDataType, initialValue);
+			case EasyflowPackage.EASY_FLOW_GRAPH:
+				return createEasyFlowGraphFromString(eDataType, initialValue);
 			case EasyflowPackage.OBJECT:
 				return createObjectFromString(eDataType, initialValue);
 			case EasyflowPackage.JEXL_ENGINE:
@@ -118,8 +120,6 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createStackFromString(eDataType, initialValue);
 			case EasyflowPackage.URI:
 				return createURIFromString(eDataType, initialValue);
-			case EasyflowPackage.EASY_FLOW_GRAPH:
-				return createEasyFlowGraphFromString(eDataType, initialValue);
 			case EasyflowPackage.EOBJECT:
 				return createEObjectFromString(eDataType, initialValue);
 			case EasyflowPackage.DOCUMENT:
@@ -179,6 +179,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertmxICellToString(eDataType, instanceValue);
 			case EasyflowPackage.MX_ICELL_VISITOR:
 				return convertmxICellVisitorToString(eDataType, instanceValue);
+			case EasyflowPackage.EASY_FLOW_GRAPH:
+				return convertEasyFlowGraphToString(eDataType, instanceValue);
 			case EasyflowPackage.OBJECT:
 				return convertObjectToString(eDataType, instanceValue);
 			case EasyflowPackage.JEXL_ENGINE:
@@ -187,8 +189,6 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertStackToString(eDataType, instanceValue);
 			case EasyflowPackage.URI:
 				return convertURIToString(eDataType, instanceValue);
-			case EasyflowPackage.EASY_FLOW_GRAPH:
-				return convertEasyFlowGraphToString(eDataType, instanceValue);
 			case EasyflowPackage.EOBJECT:
 				return convertEObjectToString(eDataType, instanceValue);
 			case EasyflowPackage.DOCUMENT:

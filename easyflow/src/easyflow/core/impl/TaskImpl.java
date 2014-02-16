@@ -982,32 +982,62 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping) {
 		
-		Object evalObject=evaluateJexl(createMetaDataMapForJexl(groupingInstances, forGrouping));
+		Object evalObject=evaluateJexl(createMetaDataMapForJexl(groupingInstances, forGrouping), null);
+		return shallProcess(evalObject);
+	}
+
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping, 
+			EList<String> jexlStrings, boolean isInverse) {
+		
+		EMap<String, Object> map=createMetaDataMapForJexl(groupingInstances, forGrouping);
+		
+		for (String jexlString:jexlStrings)
+		{
+			boolean shallProcess=shallProcess(evaluateJexl(map, jexlString));
+			if (isInverse)
+				shallProcess=!shallProcess;
+			if (!shallProcess)
+				return false;
+		}
+		return true;
+	}
+
+	private boolean shallProcess(Object evalObject)
+	{
 		if (evalObject instanceof Boolean)
 		{
 			return (Boolean) evalObject;
 			//return true;
 		}
 		return true;
-	}
 
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Object evaluateJexl(EMap<String, Object> metaDataMap) {
+	public Object evaluateJexl(EMap<String, Object> metaDataMap, String jexl) {
+		
 		//evaluate the tasks jexl expression against metaDataMap
-		logger.trace(getUniqueString()+" shallProcessJEXL: "+getJexlString()+" map:"+metaDataMap);
-		if (getJexlString()==null || getJexlString().equals("")) return true;
+		if (jexl==null || jexl.equals(""))
+			jexl=getJexlString();
+		logger.trace(getUniqueString()+" shallProcessJEXL: "+jexl+" map:"+metaDataMap);
+		if (jexl==null || jexl.equals("")) return true;
 		if (metaDataMap.isEmpty()) return true;
-		Expression e = jexlEngine.createExpression(getJexlString());
+		Expression e = jexlEngine.createExpression(jexl);
 		JexlContext context = new MapContext(metaDataMap.map());
 		logger.trace(e+" "+context);
 		Object eval=e.evaluate(context);
 		if (eval instanceof Boolean && !(Boolean) eval)
 			logger.info("Skip Task "+getUniqueString()
-					+" due to jexl condition: "+getJexlString()
+					+" due to jexl condition: "+jexl
 					+" and context: "+mapToString(metaDataMap));
     	return e.evaluate(context);
 	}

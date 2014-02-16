@@ -41,7 +41,9 @@ public class Easyflow {
 				defaultProject.setFromJar(false);
 			try {
 				defaultProject.init();
+				defaultProject.generateAbstractGraph();
 				defaultProject.resolveTraversalCriteria();
+				defaultProject.applyParameterCriteria();
 				defaultProject.applyGroupingCriteria();
 				defaultProject.resolveUtilityTasks();
 				//defaultProject.resolveToolDependencies();

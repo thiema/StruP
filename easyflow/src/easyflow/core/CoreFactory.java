@@ -107,6 +107,15 @@ public interface CoreFactory extends EFactory {
 	DataLink createDataLink();
 
 	/**
+	 * Returns a new object of class '<em>Parent Task Result</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Parent Task Result</em>'.
+	 * @generated
+	 */
+	ParentTaskResult createParentTaskResult();
+
+	/**
 	 * Returns a new object of class '<em>Tool Match</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

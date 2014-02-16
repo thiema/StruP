@@ -196,8 +196,8 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 				return createStringToToolMatchMapAdapter();
 			}
 			@Override
-			public Adapter caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
-				return createTaskToDataPortsMapAdapter();
+			public Adapter caseStringToBooleanMap(Map.Entry<String, Boolean> object) {
+				return createStringToBooleanMapAdapter();
 			}
 			@Override
 			public Adapter caseStringToDataLinkMap(Map.Entry<String, DataLink> object) {
@@ -208,8 +208,12 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 				return createCellToCellListMapAdapter();
 			}
 			@Override
-			public Adapter caseStringToBooleanMap(Map.Entry<String, Boolean> object) {
-				return createStringToBooleanMapAdapter();
+			public Adapter caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
+				return createTaskToDataPortsMapAdapter();
+			}
+			@Override
+			public Adapter caseTaskToDataLinksMap(Map.Entry<Task, EList<DataLink>> object) {
+				return createTaskToDataLinksMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -564,6 +568,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTaskToDataPortsMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Links Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createTaskToDataLinksMapAdapter() {
 		return null;
 	}
 

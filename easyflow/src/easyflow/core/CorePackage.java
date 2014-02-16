@@ -1001,13 +1001,87 @@ public interface CorePackage extends EPackage {
 	int DATA_LINK__IDENTICAL_GROUPING = 6;
 
 	/**
+	 * The feature id for the '<em><b>Not Permitted Conditions</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__NOT_PERMITTED_CONDITIONS = 7;
+
+	/**
 	 * The number of structural features of the '<em>Data Link</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 7;
+	int DATA_LINK_FEATURE_COUNT = 8;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.ParentTaskResultImpl <em>Parent Task Result</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.ParentTaskResultImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getParentTaskResult()
+	 * @generated
+	 */
+	int PARENT_TASK_RESULT = 12;
+
+	/**
+	 * The feature id for the '<em><b>Parent Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__PARENT_TASK = 0;
+
+	/**
+	 * The feature id for the '<em><b>Covered Ports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__COVERED_PORTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__CONDITION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Generic</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__GENERIC = 3;
+
+	/**
+	 * The feature id for the '<em><b>Rank</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__RANK = 4;
+
+	/**
+	 * The number of structural features of the '<em>Parent Task Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT_FEATURE_COUNT = 5;
 
 
 	/**
@@ -1825,6 +1899,82 @@ public interface CorePackage extends EPackage {
 	EAttribute getDataLink_IdenticalGrouping();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.DataLink#getNotPermittedConditions <em>Not Permitted Conditions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Not Permitted Conditions</em>'.
+	 * @see easyflow.core.DataLink#getNotPermittedConditions()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_NotPermittedConditions();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.ParentTaskResult <em>Parent Task Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Parent Task Result</em>'.
+	 * @see easyflow.core.ParentTaskResult
+	 * @generated
+	 */
+	EClass getParentTaskResult();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.ParentTaskResult#getParentTask <em>Parent Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent Task</em>'.
+	 * @see easyflow.core.ParentTaskResult#getParentTask()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EReference getParentTaskResult_ParentTask();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.ParentTaskResult#getCoveredPorts <em>Covered Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Covered Ports</em>'.
+	 * @see easyflow.core.ParentTaskResult#getCoveredPorts()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EReference getParentTaskResult_CoveredPorts();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ParentTaskResult#getCondition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Condition</em>'.
+	 * @see easyflow.core.ParentTaskResult#getCondition()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EAttribute getParentTaskResult_Condition();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ParentTaskResult#isGeneric <em>Generic</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Generic</em>'.
+	 * @see easyflow.core.ParentTaskResult#isGeneric()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EAttribute getParentTaskResult_Generic();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ParentTaskResult#getRank <em>Rank</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rank</em>'.
+	 * @see easyflow.core.ParentTaskResult#getRank()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EAttribute getParentTaskResult_Rank();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.ToolMatch <em>Tool Match</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2620,6 +2770,64 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_LINK__IDENTICAL_GROUPING = eINSTANCE.getDataLink_IdenticalGrouping();
+
+		/**
+		 * The meta object literal for the '<em><b>Not Permitted Conditions</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__NOT_PERMITTED_CONDITIONS = eINSTANCE.getDataLink_NotPermittedConditions();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.ParentTaskResultImpl <em>Parent Task Result</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.ParentTaskResultImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getParentTaskResult()
+		 * @generated
+		 */
+		EClass PARENT_TASK_RESULT = eINSTANCE.getParentTaskResult();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent Task</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARENT_TASK_RESULT__PARENT_TASK = eINSTANCE.getParentTaskResult_ParentTask();
+
+		/**
+		 * The meta object literal for the '<em><b>Covered Ports</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PARENT_TASK_RESULT__COVERED_PORTS = eINSTANCE.getParentTaskResult_CoveredPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARENT_TASK_RESULT__CONDITION = eINSTANCE.getParentTaskResult_Condition();
+
+		/**
+		 * The meta object literal for the '<em><b>Generic</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARENT_TASK_RESULT__GENERIC = eINSTANCE.getParentTaskResult_Generic();
+
+		/**
+		 * The meta object literal for the '<em><b>Rank</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARENT_TASK_RESULT__RANK = eINSTANCE.getParentTaskResult_Rank();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.

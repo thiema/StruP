@@ -755,6 +755,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 				String parentTasks="("+StringUtils.join(getTaskStringList(allTraversalEvents.get(key).getParentTask()), ", ")+")";
 				String mergeTasks="("+StringUtils.join(getTaskStringList(allTraversalEvents.get(key).getMergeTask()), ", ")+")";
 				TraversalEvent traversalEvent=allTraversalEvents.get(key);
+				if (traversalEvent.getType().equals("grouping"))
 				logger.debug("resolveTraversalEvents(): "+"processed traversal event "+key+" with"
 						+" Parent:"+parentTasks
 						+" Split:"+(traversalEvent.getSplitTask() != null ? 
@@ -1003,9 +1004,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 			public boolean visit(Object vertex, Object edge) {
 				// set the current task
 				Task task = null;
+				DataLink inDataLink = null;
 				try {
 					task = loadTask(vertex);
+					if (edge != null)
+						inDataLink = loadDataLink(edge);
 				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -1015,9 +1022,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 						" valid="+isValidConversion(task.getChunks(), groupingStr, groupingInstances));
 				if (!isValidConversion(task.getChunks(), groupingStr, groupingInstances))
 					return false;
-				if (!task.shallProcess(groupingInstances,groupingStr))
+				if (!task.shallProcess(groupingInstances, groupingStr))
 					return false;
-					
+				if (inDataLink != null && !task.shallProcess(groupingInstances, groupingStr, 
+						inDataLink.getNotPermittedConditions(),
+						true))
+				{
+					logger.debug("skip due to unpermitted conditions: "+inDataLink.getNotPermittedConditions());
+					return false;
+				}
 				// create the new task/cell and add it to a map with key of 
 				// tasks unique string (without the current instance information resolved)
 				
@@ -1058,8 +1071,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 						else
 						{
 							String taskStr=taskPreviousTaskMap.get(source.getUniqueString());
-							Task tmp=getTasks().get(taskStr);
-							logger.debug(tmp.getTraversalEvents().keySet()+" "+groupingStr);
+							//Task tmp=getTasks().get(taskStr);
+							//logger.debug(tmp.getTraversalEvents().keySet()+" "+groupingStr);
 							try {
 								DataLink dataLink = createDataLink(edge, copyTask, groupingStr, groupingStr);
 								
@@ -2060,11 +2073,11 @@ public class UtilImpl extends EObjectImpl implements Util {
 	{
 		Object childCell=getCells().get(child.getUniqueString());
 		Object parentCell=getCells().get(parent.getUniqueString());
-		logger.trace("test child="+child.getUniqueString()+" vs. parent="+parent.getUniqueString());
+		//logger.trace("test child="+child.getUniqueString()+" vs. parent="+parent.getUniqueString());
 		for (Object cell:getGraph().getVertices(parentCell, false))
 		{
-			logger.trace("child="+getTaskNameForCell(cell)+" vs="+getTaskNameForCell(childCell)
-					+" isChild="+(cell==childCell)+" "+cell.hashCode()+" "+childCell.hashCode());
+			//logger.trace("child="+getTaskNameForCell(cell)+" vs="+getTaskNameForCell(childCell)
+				//	+" isChild="+(cell==childCell)+" "+cell.hashCode()+" "+childCell.hashCode());
 			if (cell == childCell )
 				return true;
 		}

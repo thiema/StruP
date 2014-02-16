@@ -5,6 +5,7 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
@@ -16,6 +17,7 @@ import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 
+import easyflow.core.DataLink;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
@@ -203,7 +205,18 @@ public class EasyFlowCustomGraph extends mxGraph
 			{
 				try {
 					if (GlobalVar.getGraphUtil()!=null)
-						return GlobalVar.getGraphUtil().loadDataLink(cell).getDataPort().getName();
+					{
+						DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(cell);
+						if (dataLink!=null && dataLink.getDataPort()!=null)
+						{
+							String label = dataLink.getDataPort().getName(); 
+							if (dataLink.getNotPermittedConditions() != null && 
+									!dataLink.getNotPermittedConditions().isEmpty())
+								label+=" "+StringUtils.join(dataLink.getNotPermittedConditions(), "_");
+							//logger.debug(dataLink.hashCode());
+							return label;
+						}
+					}
 				} catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

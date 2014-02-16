@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
+import com.mxgraph.examples.swing.editor.EditorToolBar;
 import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
 
 import com.mxgraph.model.mxCell;
@@ -122,7 +123,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		//getGraphComponent().getGraphHandler().setKeepOnTop(false);
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
-		//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+		upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 
@@ -157,6 +158,9 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
         Map<String, Object> edgeStyle = new Hashtable<String, Object>(baseStyle);
         edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
         edgeStyle.put(mxConstants.STYLE_FILLCOLOR, "#000000");
+        //edgeStyle.put(mxConstants.STYLE_FILLCOLOR, vertexFillColor);
+        //edgeStyle.put(mxConstants.STYLE_NOLABEL, 1);
+        //edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
         stylesheet.putCellStyle(GlobalVar.EDGE_STYLE, edgeStyle);
         
         /*

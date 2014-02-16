@@ -95,27 +95,6 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 	public Component[] createComponents(mxCellState state)
 	{
 		mxCell cell=(mxCell) state.getCell();
-		logger.debug(state+" "+state.getCell()+" "
-				+getGraph().getModel().isEdge(state.getCell())+" "
-				+cell.isEdge()+" "+cell.isVertex()+" "
-				+cell.isVisible());
-		/*
-		Object value=((mxCell)state.getCell()).getValue();
-		if (value instanceof String)
-			try {
-				if (GlobalVar.getGraphUtil().loadTask(state.getCell())!=null)
-					return new Component[] { new TaskRenderer(state.getCell(), this) };
-				if (GlobalVar.getGraphUtil().loadDataLink(state.getCell())!=null)
-					return new Component[] { new LinkRenderer(state.getCell(), this) };	
-					
-			} catch (DataLinkNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-*/
 
 		if (getGraph().getModel().isVertex(state.getCell())) {
 			return new Component[] { new TaskRenderer(state.getCell(), this) };
@@ -125,9 +104,6 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 			// logger.debug("edge rendering to be implemented.");
 			return new Component[] { new LinkRenderer(state.getCell(), this) };
 		}
-
-				//return new Component[] { new LinkRenderer(state.getCell(), this) };
-				
 		return null;
 	}
 	/**
@@ -230,7 +206,6 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 		public TaskRenderer(final Object cell,
 				final mxGraphComponent graphContainer)
 		{
-			
 			JPanel panel = new JPanel();
 			//setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 			setLayout(new BorderLayout());
@@ -277,8 +252,6 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 				//panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
 				//panel.setLayout(new BorderLayout());
 				
-				
-				
 				panel.add(label, BorderLayout.CENTER);
 				add(createDataPortInterface(task.getInDataPorts()), BorderLayout.PAGE_START);
 				add(panel, BorderLayout.CENTER);
@@ -320,17 +293,24 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 			 * implement a jcomponent that is adequately sized and positioned.
 			 */
 			JPanel panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			try {
 				DataLink dataLink=GlobalVar.getGraphUtil().loadDataLink(cell);
 				if (dataLink!=null && dataLink.getDataPort()!=null)
 				{
-					JLabel label = new JLabel(dataLink.getDataPort().getName());
+					JLabel label = new JLabel(dataLink.getDataPort().getName()+"_dummy");
 					label.setForeground(Color.BLACK);
 					label.setFont(panel.getFont().deriveFont(Font.BOLD, 8));
 					panel.setBackground(new Color(149, 173, 239));
 					panel.setOpaque(true);
 					panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
 					panel.add(label);
+					if (dataLink.getNotPermittedConditions()!=null)
+					{
+						JLabel perms = new JLabel(new Integer(dataLink.getNotPermittedConditions().size()).toString());
+						panel.add(perms);
+					}
+					
 					add(panel);
 					logger.debug("label renderer: set label="+label.getText());
 				}

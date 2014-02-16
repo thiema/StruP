@@ -120,6 +120,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createDataLinkAdapter();
 			}
 			@Override
+			public Adapter caseParentTaskResult(ParentTaskResult object) {
+				return createParentTaskResultAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -290,6 +294,20 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDataLinkAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.core.ParentTaskResult <em>Parent Task Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.core.ParentTaskResult
+	 * @generated
+	 */
+	public Adapter createParentTaskResultAdapter() {
 		return null;
 	}
 

@@ -679,12 +679,12 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		mxGraphEDataType = createEDataType(MX_GRAPH);
 		mxICellEDataType = createEDataType(MX_ICELL);
 		mxICellVisitorEDataType = createEDataType(MX_ICELL_VISITOR);
+		easyFlowGraphEDataType = createEDataType(EASY_FLOW_GRAPH);
 		loggerEDataType = createEDataType(LOGGER);
 		objectEDataType = createEDataType(OBJECT);
 		jexlEngineEDataType = createEDataType(JEXL_ENGINE);
 		stackEDataType = createEDataType(STACK);
 		uriEDataType = createEDataType(URI);
-		easyFlowGraphEDataType = createEDataType(EASY_FLOW_GRAPH);
 		eObjectEDataType = createEDataType(EOBJECT);
 		documentEDataType = createEDataType(DOCUMENT);
 		elementEDataType = createEDataType(ELEMENT);
@@ -756,12 +756,12 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(mxGraphEDataType, mxGraph.class, "mxGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(mxICellEDataType, mxICell.class, "mxICell", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(mxICellVisitorEDataType, mxICellVisitor.class, "mxICellVisitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(easyFlowGraphEDataType, EasyFlowGraph.class, "EasyFlowGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(loggerEDataType, Logger.class, "Logger", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(jexlEngineEDataType, JexlEngine.class, "JexlEngine", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(stackEDataType, Stack.class, "Stack", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(uriEDataType, java.net.URI.class, "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(easyFlowGraphEDataType, EasyFlowGraph.class, "EasyFlowGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(eObjectEDataType, EObject.class, "EObject", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(documentEDataType, Document.class, "Document", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(elementEDataType, Element.class, "Element", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

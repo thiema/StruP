@@ -85,7 +85,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getLogger()
 	 * @generated
 	 */
-	int LOGGER = 3;
+	int LOGGER = 4;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -95,7 +95,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 4;
+	int OBJECT = 5;
 
 	/**
 	 * The meta object id for the '<em>Jexl Engine</em>' data type.
@@ -105,7 +105,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getJexlEngine()
 	 * @generated
 	 */
-	int JEXL_ENGINE = 5;
+	int JEXL_ENGINE = 6;
 
 	/**
 	 * The meta object id for the '<em>Stack</em>' data type.
@@ -115,7 +115,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getStack()
 	 * @generated
 	 */
-	int STACK = 6;
+	int STACK = 7;
 
 	/**
 	 * The meta object id for the '<em>URI</em>' data type.
@@ -125,7 +125,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getURI()
 	 * @generated
 	 */
-	int URI = 7;
+	int URI = 8;
 
 	/**
 	 * The meta object id for the '<em>Easy Flow Graph</em>' data type.
@@ -135,7 +135,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowGraph()
 	 * @generated
 	 */
-	int EASY_FLOW_GRAPH = 8;
+	int EASY_FLOW_GRAPH = 3;
 
 	/**
 	 * The meta object id for the '<em>EObject</em>' data type.

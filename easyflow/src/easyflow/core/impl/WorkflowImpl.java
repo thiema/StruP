@@ -19,6 +19,7 @@ import easyflow.core.CorePackage;
 import easyflow.core.DataLink;
 import easyflow.core.DataPort;
 import easyflow.core.DefaultRecord;
+import easyflow.core.ParentTaskResult;
 
 
 import easyflow.core.DefaultWorkflowTemplate;
@@ -91,6 +92,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -993,18 +995,22 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	    	getLastTasks().add(getRootTask());
 	        logger.trace(getWorkflowTemplate().getTasks());
 	        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
-			while (it.hasNext()) {
+			while (it.hasNext()) 
+			{
 				Task task=it.next();
 				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
-				if (!task.isUtil()) {
+				if (!task.isUtil()) 
+				{
 					Object target=getGraphUtil().getCells().get(task.getUniqueString());
-					EMap<Task, EList<DataPort>> parentTaskList=getParentTasksFor(task);
-					//EList<Task> parentTaskList=getParentTasksFor(task);
+					EMap<Task, EList<DataLink>> parentTaskList=getParentTasksFor(task);
 					if (parentTaskList.isEmpty())
+					{
 						getGraph().insertEdgeEasyFlow(null, null, rootTarget, target);
-					
-					else {
-						for (Task pTask:parentTaskList.keySet()) {
+					}
+					else 
+					{
+						for (Task pTask:parentTaskList.keySet()) 
+						{
 							//Object source=map.get(pTask.getName());
 							Object source=getGraphUtil().getCells().get(pTask.getUniqueString());
 							if (parentTaskList.get(pTask)==null)
@@ -1015,24 +1021,21 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 									getGraph().setCellUnvisible(o);
 							}
 							else
-							for (DataPort dataPort:parentTaskList.get(pTask))
 							{
-								DataPort dp=pTask.getDataPortByDataPort(dataPort, true);
-								if (dp!=null)
-									dataPort.setStatic(dp.isStatic());
-								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") with dataPort="
-							+dataPort.getName()+" staticPort:"+dataPort.isStatic()+"-"+dp.isStatic()+" util:"+pTask.isUtil());
-								DataLink dataLink = CoreFactory.eINSTANCE.createDataLink();
-								dataLink.setDataPort(dataPort);
-								Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
-								if (dataPort.isStatic()||pTask.isUtil())
-									getGraph().setCellUnvisible(o);
+								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
+								for (DataLink dataLink:parentTaskList.get(pTask))
+								{
+									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode());
+									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
+									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
+										getGraph().setCellUnvisible(o);
+								}
 							}
 						}
 					}
 					if (!task.validateTools())
 					{
-						logger.debug("validation for "+task.getUniqueString()+" failed. Trying to resolve tool depenendencies...");
+						logger.debug("validation for "+task.getUniqueString()+" failed. Trying to resolve tool dependencies...");
 						if (resolveMissingDataPortsByToolFor(task))
 							logger.debug("resolved data port by Tool !");
 					}
@@ -1089,43 +1092,304 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return tasks;
 	}
 	
-	public EMap<Task, EList<DataPort>> getParentTasksFor(Task task) {
+	private void copyDPforTasks(EMap<Task, EList<DataPort>> tasks)
+	{
+		EList<EList<DataPort>> tmp = new BasicEList<EList<DataPort>>();
 		
-		EMap<Task, EList<DataPort>> tasks=new BasicEMap<Task, EList<DataPort>>();
-		//EList<Task> tasks=new BasicEList<Task>();
+		for (int i=0;i<tasks.size();i++)
+		{
+			Entry<Task, EList<DataPort>> entry = tasks.get(i);
+			EList<DataPort> newDataPortSet = new BasicEList<DataPort>();
+			for (DataPort dp:entry.getValue())
+			{
+				newDataPortSet.add(EcoreUtil.copy(dp));
+			}
+			tmp.add(i, newDataPortSet);
+			
+		}
+		for (int i=0;i<tasks.size();i++)
+		{
+			tasks.get(i).setValue(tmp.get(i));
+		}
+	}
+	
+	
+	public EMap<Task, EList<DataLink>> getParentTasksFor(Task task)
+	{
+		
+		// options:
+		boolean allowGenericParents = true;  // - must be true in order to search for parents by dataport
+		boolean pinPrimaryParents   = false; // - if true, only use the first/best (primary) parents. do
+		
+		// get parents as defined in the workflow template
+		EList<ParentTaskResult> results = getFixedParentTasksFor(task);
+		if (allowGenericParents)
+		{
+			// get parents which cover at least one port
+			results.addAll(getParentTasksFor(task, getTasksFromParentTaskList(results)));
+		}
+
+		for (ParentTaskResult result:results)
+		{
+			logger.debug(result.getParentTask().getUniqueString()+" "+result.getCondition()+""+result.getCoveredPorts()+" ");
+		}
+		
+		// produce the resulting map
+		EMap<Task, EList<DataLink>> tasks = getParents(task, results);
+		return tasks;
+		
+	}
+	
+	private EMap<Task, EList<DataLink>> getParents(Task task, EList<ParentTaskResult> results)
+	{
+		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
+		
+		// add parents unconditionally
+		tasks.addAll(getBestFittingParentSet(task, results, null));
+		
+		// evaluate conditions
+		EList<String> conditions = new BasicEList<String>();
+		for (ParentTaskResult result:results)
+		{
+			if (result.getCondition() != null && !result.getCondition().equals(""))
+				conditions.add(result.getCondition());
+		}
+		
+		EList<EList<String>> powerSet = enumeratePowerSet1(conditions);
+		for (EList<String> conditionSet: powerSet)
+		{
+			// find parents which circumvent the given set of conditions
+			tasks.addAll(getBestFittingParentSet(task, getMatchingParentTasks(results, conditionSet), conditionSet));
+		}
+		
+		return tasks;
+	}
+	
+	// find those results which, taken together, cover all dataports of the given task and create
+	// a corresponding map
+	private EMap<Task, EList<DataLink>> getBestFittingParentSet(Task task, 
+			EList<ParentTaskResult> results,
+			EList<String> conditionsToCircumvent)
+	{
+		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
+		EList<DataPort> resolvedDataPorts = new BasicEList<DataPort>();
+		
+		for (ParentTaskResult result:results)
+		{
+			EList<DataLink> dataLinks = new BasicEList<DataLink>();
+			for (DataPort dataPort:result.getCoveredPorts())
+			{
+				DataLink dataLink = CoreFactory.eINSTANCE.createDataLink();
+				dataLink.setDataPort(dataPort);
+				if (conditionsToCircumvent != null)
+					dataLink.getNotPermittedConditions().addAll(conditionsToCircumvent);
+				dataLinks.add(dataLink);
+				logger.trace("add new datalink="+dataLink.getDataPort().getName()
+						+" cirumvent="+dataLink.getNotPermittedConditions()+" "+dataLink.hashCode());
+			}
+			resolvedDataPorts.addAll(result.getCoveredPorts());
+			tasks.put(result.getParentTask(), dataLinks);
+			logger.trace("parent="+result.getParentTask().getUniqueString()+" (resolving "+result.getCoveredPorts().size()+" ports) added."+" "+dataLinks.hashCode());
+			if (task.getInDataPorts().size() == resolvedDataPorts.size())
+				break;
+		}
+		return tasks;
+	}
+	
+	private EList<ParentTaskResult> getMatchingParentTasks(EList<ParentTaskResult> results, 
+			EList<String> conditionsToCircumvent)
+	{
+		EList<ParentTaskResult> filteredResults = new BasicEList<ParentTaskResult>();
+		Iterator<ParentTaskResult> it = results.iterator();
+		while (it.hasNext())
+		{
+			ParentTaskResult result = it.next();
+			if (conditionsToCircumvent.contains(result.getCondition()))
+			{
+				ParentTaskResult match=findParentBehindOf(results, result, conditionsToCircumvent);
+				if (match != null)
+				{
+					filteredResults.add(match);
+					logger.trace("found alternate parent to cirumvent cond="+conditionsToCircumvent);
+				}
+				else
+				{
+					logger.trace("no alternate parent found to cirumvent cond="+conditionsToCircumvent);
+				}
+			}
+			else
+				break;
+		}
+		return filteredResults;
+	}
+	
+	// find a parent which circumvent the condition and provides at least one 
+	// of the ports the current parent provides as well.
+	private ParentTaskResult findParentBehindOf(EList<ParentTaskResult> results,
+			ParentTaskResult result,
+			EList<String> conditionsToCircumvent)
+	{
+		Iterator<ParentTaskResult> it = results.iterator();
+		boolean active = false; 
+		while (it.hasNext())
+		{
+			ParentTaskResult current = it.next();
+			if (active)
+				if (current.getParentTask().getOverlappingDataPorts(
+						result.getCoveredPorts(), 
+						current.getParentTask().getOutDataPorts()
+						).size()==current.getCoveredPorts().size())
+					if (!conditionsToCircumvent.contains(current.getCondition()))
+						return current;
+			if (result == current)
+				active = true;
+		}
+		return null;
+	}
+	
+	private EList<Task> getTasksFromParentTaskList(EList<ParentTaskResult> results)
+	{
+		EList<Task> tasks = new BasicEList<Task>();
+		for (ParentTaskResult parentTaskResult:results)
+			tasks.add(parentTaskResult.getParentTask());
+		return tasks;
+	}
+	
+	private EList<ParentTaskResult> getFixedParentTasksFor(Task task)
+	{
+		
+		EList<ParentTaskResult> results=new BasicEList<ParentTaskResult>();
+		Iterator<Task> it=task.getParents().values().iterator();
+		while (it.hasNext())
+		{
+			Task parent = it.next();
+			EList<DataPort> overlappingDataPorts = task
+					.getOverlappingDataPorts(task.getInDataPorts(),
+							parent.getOutDataPorts());
+			
+			if (!overlappingDataPorts.isEmpty()) {
+				ParentTaskResult parentTaskResult = CoreFactory.eINSTANCE.createParentTaskResult();
+				parentTaskResult.setParentTask(parent);
+				parentTaskResult.setCondition(parent.getJexlString());
+				parentTaskResult.getCoveredPorts().addAll(overlappingDataPorts);
+				parentTaskResult.setRank(overlappingDataPorts.size());
+				results.add(parentTaskResult);
+			}
+		}
+		
+		return results;
+	}
+	
+	
+	private EList<ParentTaskResult> getParentTasksFor(Task task, EList<Task> resolvedTasks)
+	{
+		EList<ParentTaskResult> results = new BasicEList<ParentTaskResult>();
+		ListIterator<Task> it = getLastTasks().listIterator(getLastTasks().size());
+		ParentTaskResult lastResult = null;
+		while (it.hasPrevious())
+		{
+			Task lastTask = it.previous();
+			if ((resolvedTasks == null || resolvedTasks.isEmpty())  || 
+					(resolvedTasks != null && !resolvedTasks.contains(lastTask)))
+			{
+				EList<DataPort> overlappingDataPorts = task
+						.getOverlappingDataPorts(task.getInDataPorts(), lastTask.getOutDataPorts());
+				if (!overlappingDataPorts.isEmpty())
+				{
+					ParentTaskResult parentTaskResult = CoreFactory.eINSTANCE.createParentTaskResult();
+					parentTaskResult.setParentTask(lastTask);
+					parentTaskResult.setCondition(lastTask.getJexlString());
+					parentTaskResult.getCoveredPorts().addAll(overlappingDataPorts);
+					parentTaskResult.setRank(overlappingDataPorts.size());
+					parentTaskResult.setGeneric(true);
+					lastResult = parentTaskResult;
+					results.add(parentTaskResult);
+				}
+			}
+		}
+		if (lastResult != null && (lastResult.getCondition() != null && !lastResult.getCondition().equals("")))
+			lastResult.setCondition(null);
+		
+		return results;
+	}
+	
+	
+	
+	
+	/*
+	public EMap<Task, EList<DataPort>> getParentTasksFor1(Task task) {
+		
+		EList<String> notPermittedConditions = new BasicEList<String>();
+		EList<String> notPermittedConditionsOfDirectParents = new BasicEList<String>();
 		
 		// data structure to track not yet resolved data ports
 		EList<DataPort> unresolvedDataPorts = new BasicEList<DataPort>();
+			
+		EMap<Task, EList<DataPort>> tasks = getFixedParentTasksFor(task, unresolvedDataPorts);
+		EList<Task> resolvedTasks = new BasicEList<Task>(tasks.keySet());
+		tasks.addAll(getParentTasksFor(task, notPermittedConditions, resolvedTasks, unresolvedDataPorts));
+		copyDPforTasks(tasks);
+		//logger.debug(tasks.get(0).getValue().get(0).getNotPermittedConditions());
+		for (String s:notPermittedConditions)
+			notPermittedConditionsOfDirectParents.add(s);
 		
-		for (DataPort dataPort:task.getInDataPorts())
-			unresolvedDataPorts.add(dataPort);
-		
-		logger.trace("parents so far="+task.getParents().keySet());
-		for (Task parent:task.getParents().values())
+		if (!tasks.isEmpty() && !notPermittedConditions.isEmpty())
 		{
-			//boolean found=false;
-			//if (parent.getOutDataPorts()!=null)
-			/*for (DataPort outDataPort:parent.getOutDataPorts())
+			EList<EList<String>> powerSet = enumeratePowerSet1(notPermittedConditions);
+			for (EList<String> notPermittedConds:powerSet)
 			{
-				unresolvedDataPorts.remove(outDataPort);
-				found=true;
-				logger.debug(outDataPort.getName());
-			}
-			if (found)
-				tasks.put(parent, null);
-				//tasks.add(parent);
-			*/
-			// test
-			EList<DataPort> overlappingDataPorts=task.getOverlappingDataPorts(
-					task.getInDataPorts(), parent.getOutDataPorts());
-			for (DataPort outDataPort:overlappingDataPorts)
-				unresolvedDataPorts.remove(outDataPort);
-				//logger.debug(outDataPort.getName());
-			if (!overlappingDataPorts.isEmpty())
-			{
-				tasks.put(parent, overlappingDataPorts);
+				// todo: simplify filtration (find powerset where each element contains all 
+				// strings of notPermittedConditionsOfDirectParents)
+				
+				
+				
+				logger.trace("####find parents for perm:"+notPermittedConds);
+				int i=0;
+				while (true)
+				{
+					int nrOfNotPermittedConditions=notPermittedConds.size();
+					EMap<Task, EList<DataPort>> moreTasks = getParentTasksFor(task, notPermittedConds,
+							resolvedTasks, unresolvedDataPorts);
+					logger.debug("##iteration="+(i++)+" "+tasks2String(new BasicEList(moreTasks.keySet()))+"  ###");
+					if (moreTasks.isEmpty())
+						break;
+
+					for (Entry<Task, EList<DataPort>> ks:moreTasks.entrySet())
+					{
+						EList<DataPort> dps = ks.getValue();
+						for (DataPort dp: dps)
+						{
+							logger.debug("add parent task:"+ks.getKey().getUniqueString()+" dp:"+dp.getName()+" unperm:"+dp.getNotPermittedConditions());
+						}
+					}
+					tasks.addAll(moreTasks);
+					if (nrOfNotPermittedConditions==notPermittedConds.size())
+						break;
+				}
 			}
 		}
+		return tasks;
+	}
+
+	 */
+	/** 
+	 * Check all parents that provide unresolved ports. In case a conditional parent is found, 
+	 * add the condition to the notPermittedConditions list.
+	 * @param task
+	 * @param notPermittedConditions
+	 * @param resolvedTasks
+	 * @param unresolvedDataPorts
+	 * @return
+	 */
+	/*
+	public EMap<Task, EList<DataPort>> getParentTasksFor(Task task, 
+			EList<String> notPermittedConditions,
+			EList<Task> resolvedTasks,
+			EList<DataPort> unresolvedDataPorts) 
+	{
+		
+		EList<String> foundConditions = new BasicEList<String>();
+		EMap<Task, EList<DataPort>> tasks=new BasicEMap<Task, EList<DataPort>>();
 		
 		// find possible tasks compatible with the unresolved ports
 		// the tasks are to be ranked:
@@ -1136,7 +1400,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		{
 			EList<Task> lastTasksForDataPort=getLastTasksForDataPort(
 					dataPorts, getLastTasks(), 
-					new BasicEList<Task>(tasks.keySet()));
+					resolvedTasks,
+					notPermittedConditions,
+					foundConditions);
 			//EList<Task> lastTasksForDataPort=getLastTasksForDataPort(dataPorts, getLastTasks(), tasks);
 			String joinedName=joinDataPortNamesToString(dataPorts);
 			if (!lastTasksForDataPort.isEmpty())
@@ -1154,12 +1420,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			for (Map.Entry<String, Integer> entry : sortedRankMap.entrySet()) {
 				
 				EList<Task> curTasks=lastTasksByDataPort.get(entry.getKey());
-				logger.trace("process lastTasks="
+				logger.trace("process lastTasks=("
 						+ tasks2String(curTasks)
-						+ " with rank=" + entry.getValue());
+						+ ") with rank=" + entry.getValue());
 				curTasks=removeParentsFromLastTasks(curTasks);
-				logger.trace("lastTasks removed as a distant parent:"
-						+ tasks2String(curTasks));
+				logger.trace("after removing of distant parents the following parents remain: ("
+						+ tasks2String(curTasks)+")");
 
 				ListIterator<Task> it = curTasks.listIterator(curTasks.size());
 				while (it.hasPrevious()) {
@@ -1168,48 +1434,101 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 
 					Task curTask = it.previous();
 					EList<DataPort> resolvedDataPorts = task
-							.getOverlappingDataPorts(unresolvedDataPorts,
-									curTask.getOutDataPorts());
+							.getOverlappingDataPorts(unresolvedDataPorts, curTask.getOutDataPorts());
 					if (!(resolvedDataPorts.isEmpty() || tasks.contains(curTask)))
 					{
 						// add Task
+						if (!notPermittedConditions.isEmpty())
+							for (DataPort dp : resolvedDataPorts)
+							{
+								dp.getNotPermittedConditions().addAll(notPermittedConditions);
+								logger.debug("add unperm:"+notPermittedConditions+" for port="+dp.getName());
+							}
 						tasks.put(curTask, resolvedDataPorts);
 						// update tasks in-data port
 						//task.getInDataPorts().addAll(resolvedDataPorts);
-						
 					}
 				}
 			}
-      logger.trace(tasks.size()+" parents ("+tasks2String(new BasicEList<Task>(tasks.keySet()))+") found.");
-/*
-		if (!unresolvedDataPorts.isEmpty())
+    	notPermittedConditions.addAll(foundConditions);
+    	logger.trace(tasks.size()+" parents ("+tasks2String(new BasicEList<Task>(tasks.keySet()))+") found.");
+
+    	return tasks;
+	}
+	*/
+	
+	
+	private EList<EList<DataPort>> enumeratePowerSet(EList<DataPort> dataPorts)
+	{
+		EList<EList<DataPort>> powerSet=new BasicEList<EList<DataPort>>();
+		int N=dataPorts.size();
+		int allMasks = (1 << N);
+		
+		for (int i = 1; i < allMasks; i++)
 		{
-			EMap<String,Integer> rankMap = new BasicEMap<String,Integer>();
-			//logger.debug(unresolvedDataPorts);
-			//logger.debug(getLastTasks());
-			ListIterator<Task> it=getLastTasks().listIterator(getLastTasks().size());
-			while (it.hasPrevious())
+			EList<DataPort> subSet=new BasicEList<DataPort>();
+		    for (int j = 0; j < N; j++)
+		        if ((i & (1 << j)) > 0) //The j-th element is used
+		        {
+		           //System.out.print((j + 1) + ": "+dataPorts.get(j).getDataFormat().getName()+"; ");
+		           subSet.add(dataPorts.get(j));
+		        }
+		    powerSet.add(subSet);
+		    //System.out.println();
+		}
+		return powerSet;
+	}
+	
+	private EList<EList<String>> enumeratePowerSet1(EList<String> objects)
+	{
+		EList<EList<String>> powerSet=new BasicEList<EList<String>>();
+		int N=objects.size();
+		int allMasks = (1 << N);
+		
+		for (int i = 1; i < allMasks; i++)
+		{
+			EList<String> subSet=new BasicEList<String>();
+		    for (int j = 0; j < N; j++)
+		        if ((i & (1 << j)) > 0) //The j-th element is used
+		        {
+		           //System.out.print((j + 1) + ": "+dataPorts.get(j).getDataFormat().getName()+"; ");
+		           subSet.add(objects.get(j));
+		        }
+		    powerSet.add(subSet);
+		    //System.out.println();
+		}
+		return powerSet;
+	}
+	
+	private EList<Task> removeParentsFromLastTasks(EList<Task> tasks)
+	{
+		// remove those tasks that can be exchanged by a closer task.
+		// (i.e. a task that is a parent of another one, providing the same
+		// port)
+
+		EList<Task> newTasks=new BasicEList<Task>();
+		for (Task possibleParent : tasks) {
+
+			boolean childFound=false;
+			for (Task possibleChild : tasks)
+				if (possibleChild != possibleParent)
+					try {
+						childFound=getGraphUtil().isChildOf(possibleChild, possibleParent);
+					} catch (TaskNotFoundException e) {
+						e.printStackTrace();
+					}
+			if (!childFound)
 			{
-				
-				Task tmp=it.previous();
-				logger.debug("test last task="+tmp.getUniqueString());
-				EList<DataPort> unresolvedOutDataPorts=
-						task.getOverlappingDataPorts(unresolvedDataPorts, tmp.getOutDataPorts());
-				int i=unresolvedOutDataPorts.size();
-				if (i>0)
+				if (!newTasks.contains(possibleParent))
 				{
-					logger.debug("would insert task"+tmp.getUniqueString()+" "+getWorkflowTemplate().getTasks().size());
-					insertTaskIntoParentTaskList(tmp, tasks2, i, rankMap);
+					logger.trace("add "+possibleParent.getUniqueString()+" as possible parent.");
+					newTasks.add(possibleParent);
 				}
 			}
+		
 		}
-		
-		
-		for (String taskName:isDistantParentMap.keySet())
-			logger.debug("Task="+taskName+" is distant="+isDistantParentMap.get(taskName));
-		tasks.addAll(tasks2);
-*/
-		return tasks;
+		return newTasks;
+
 	}
 	
 	/**
@@ -1561,76 +1880,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 	}
 	
-	private EList<Task> getLastTasksForDataPort(EList<DataPort> dataPorts, Stack<Task> lastTasks,
-			EList<Task> resolvedTasks)
-	{
-		EList<Task> tasks=new BasicEList<Task>();
-		Iterator<Task> it = lastTasks.iterator();
-		while (it.hasNext())
-		{
-			Task lastTask = it.next();
-			EList<DataPort> overlappingDataPorts=lastTask.getOverlappingDataPorts(dataPorts, lastTask.getOutDataPorts());
-			if (overlappingDataPorts.size() == dataPorts.size())
-				if (resolvedTasks!=null && !resolvedTasks.contains(lastTask))
-					tasks.add(lastTask);
-		}
-		return tasks;
-	}
-	
-	private EList<EList<DataPort>> enumeratePowerSet(EList<DataPort> dataPorts)
-	{
-		EList<EList<DataPort>> powerSet=new BasicEList<EList<DataPort>>();
-		int N=dataPorts.size();
-		int allMasks = (1 << N);
-		
-		for (int i = 1; i < allMasks; i++)
-		{
-			EList<DataPort> subSet=new BasicEList<DataPort>();
-		    for (int j = 0; j < N; j++)
-		        if ((i & (1 << j)) > 0) //The j-th element is used
-		        {
-		           //System.out.print((j + 1) + ": "+dataPorts.get(j).getDataFormat().getName()+"; ");
-		           subSet.add(dataPorts.get(j));
-		        }
-		    powerSet.add(subSet);
-		    //System.out.println();
-		}
-		return powerSet;
-	}
-	
-	private EList<Task> removeParentsFromLastTasks(EList<Task> tasks) {
-		// remove those tasks that can be exchanged by a closer task.
-		// (i.e. a task that is a parent of another one, providing the same
-		// port)
-		//EMap<String, Boolean> isDistantParentMap = new BasicEMap<String, Boolean>();
-		EList<Task> newTasks=new BasicEList<Task>();
-		for (Task possibleParent : tasks) {
-			//logger.debug("test " + possibleParent.getUniqueString());
-			boolean childFound=false;
-			for (Task possibleChild : tasks)
-				if (possibleChild != possibleParent)
-					try {
-						childFound=getGraphUtil().isChildOf(possibleChild, possibleParent);
-//						isDistantParentMap.put(
-	//							possibleParent.getName(),
-		//						getGraphUtil().isChildOf(possibleParent,possibleChild));
-					} catch (TaskNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			if (!childFound)
-			{
-				if (!newTasks.contains(possibleParent))
-				{
-					logger.debug("add "+possibleParent.getUniqueString()+" as possible parent.");
-					newTasks.add(possibleParent);
-				}
-			}
-		
-		}
-		return newTasks;
-		
-	}
 	
 	/**
 	 * <!-- begin-user-doc -->

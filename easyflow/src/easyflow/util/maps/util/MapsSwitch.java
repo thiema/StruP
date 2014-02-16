@@ -240,9 +240,9 @@ public class MapsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MapsPackage.TASK_TO_DATA_PORTS_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataPort>> taskToDataPortsMap = (Map.Entry<Task, EList<DataPort>>)theEObject;
-				T result = caseTaskToDataPortsMap(taskToDataPortsMap);
+			case MapsPackage.STRING_TO_BOOLEAN_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Boolean> stringToBooleanMap = (Map.Entry<String, Boolean>)theEObject;
+				T result = caseStringToBooleanMap(stringToBooleanMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -258,9 +258,15 @@ public class MapsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MapsPackage.STRING_TO_BOOLEAN_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Boolean> stringToBooleanMap = (Map.Entry<String, Boolean>)theEObject;
-				T result = caseStringToBooleanMap(stringToBooleanMap);
+			case MapsPackage.TASK_TO_DATA_PORTS_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataPort>> taskToDataPortsMap = (Map.Entry<Task, EList<DataPort>>)theEObject;
+				T result = caseTaskToDataPortsMap(taskToDataPortsMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.TASK_TO_DATA_LINKS_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataLink>> taskToDataLinksMap = (Map.Entry<Task, EList<DataLink>>)theEObject;
+				T result = caseTaskToDataLinksMap(taskToDataLinksMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -625,6 +631,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTaskToDataLinksMap(Map.Entry<Task, EList<DataLink>> object) {
 		return null;
 	}
 

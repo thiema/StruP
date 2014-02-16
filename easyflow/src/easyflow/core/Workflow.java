@@ -639,10 +639,10 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>"
+	 * @model mapType="easyflow.util.maps.TaskToDataLinksMap<easyflow.core.Task, easyflow.core.DataLink>"
 	 * @generated
 	 */
-	EMap<Task, EList<DataPort>> getParentTasksFor(Task task);
+	EMap<Task, EList<DataLink>> getParentTasksFor(Task task);
 
 	/**
 	 * <!-- begin-user-doc -->
