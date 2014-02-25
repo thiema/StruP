@@ -18,6 +18,7 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 
 import com.mxgraph.model.mxICell;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 
 
@@ -63,7 +64,10 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 			geometry=new mxGeometry(0, 0,
 					defaultWidth, defaultHeight);
 		if (object instanceof Task)
-			return new mxCell(((Task) object).getUniqueString(), geometry, vertexStyle);
+		{
+			Object cell=new mxCell(((Task) object).getUniqueString(), geometry, vertexStyle);
+			return updateCellSize(cell);
+		}
 		else if (object instanceof DataLink)
 			return new mxCell(((DataLink) object).getDataPort().getName(), geometry, edgeStyle);
 		else
@@ -71,21 +75,24 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 			
 	}
 	
+	
 	public Object insertVertexEasyFlow(Object parent, String id, Task task) {
 		if (task == null)
 			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
 		//return insertVertex(parent, id, XMLUtil.getElement(task), 400, 100, defaultWidth, defaultHight);
 		//return setCellUnvisible(insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
-		return (insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
+		Object cell=insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		return updateCellSize(cell);
 	}
 	
 	public Object insertVertexEasyFlow(Object parent, String id, Object value) {
 		if (value == null)
 			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
+		Object cell=insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
 		//return setCellUnvisible(insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
-		return insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		return updateCellSize(cell);
 	}
 	
 	public Object insertVertexEasyFlow(Object parent, String id, mxCell vertex) {
@@ -93,7 +100,8 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
 		//return setCellUnvisible(insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
-		return insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		Object cell= insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		return updateCellSize(cell);
 	}
 	
 	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, DataLink dataLink) {

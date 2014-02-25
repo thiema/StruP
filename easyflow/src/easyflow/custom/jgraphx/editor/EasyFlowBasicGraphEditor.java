@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
+import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.examples.swing.editor.EditorToolBar;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
@@ -118,7 +119,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		 */
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
-		//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+		upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		//upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 		
@@ -136,8 +137,10 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setJMenuBar(new EditorMenuBar(this));
+		
 		frame.setSize(870, 640);
-
+		
 		// Updates the frame title
 		updateTitle();
 

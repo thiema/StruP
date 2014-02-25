@@ -239,9 +239,11 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
     	boolean firstLine=true;
     	try {
 			while ((strLine = bufferedReader.readLine()) != null)   {
+				if ( strLine.trim().length() == 0 )
+				    continue;  // Skip blank lines
 				// expect first line to row colheader
 				String lina[]=strLine.split(sep);
-				if (!strLine.startsWith("#")) {
+				if (!strLine.startsWith("#") && !strLine.equals("")) {
 					
 					if (firstLine)
 					{
@@ -291,7 +293,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			//read the remainder
 			int row=0;
 			while ((strLine = bufferedReader.readLine()) != null)   {
-				
+				if ( strLine.trim().length() == 0 )
+				    continue;  // Skip blank lines
+				else
 				if (!strLine.startsWith("#")) {
 					String[] lina=strLine.split(sep);
 					//logger.debug("Sample: "+lina[colNames.get("Sample")]);
@@ -459,7 +463,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	public EMap<String, Object> getRecord(GroupingInstance recordInstance) {
 		Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(recordInstance.getName());
 		EMap<String, Object> emap=new BasicEMap<String, Object>();
-		logger.debug(map.values());
+		//logger.debug(map.values());
 		for (Entry<String, String> e:map.entrySet())
 		{
 			if (e.getValue()!=null)

@@ -97,12 +97,12 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 		mxCell cell=(mxCell) state.getCell();
 
 		if (getGraph().getModel().isVertex(state.getCell())) {
-			return new Component[] { new TaskRenderer(state.getCell(), this) };
+			//return new Component[] { new TaskRenderer(state.getCell(), this) };
 			//return new Component[] { new TestRenderer(state.getCell(), this) };
 			//return null;
 		} else if (getGraph().getModel().isEdge(state.getCell())) {
 			// logger.debug("edge rendering to be implemented.");
-			return new Component[] { new LinkRenderer(state.getCell(), this) };
+			//return new Component[] { new LinkRenderer(state.getCell(), this) };
 		}
 		return null;
 	}
@@ -231,7 +231,7 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 			JLabel label = null;
 			//mxCell mxcell=(mxCell) cell;
 			//Object value = ((mxCell) cell).getValue();
-			logger.debug(getParent());//.getBounds().getMaxX()+" "+getParent().getBounds().getX());
+			//logger.debug(getParent());//.getBounds().getMaxX()+" "+getParent().getBounds().getX());
 			//setMaximumSize(dim);
 			Task task;
 			try {
@@ -240,7 +240,7 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 				label.setForeground(Color.BLACK);
 				label.setFont(panel.getFont().deriveFont(Font.BOLD, 8));
 				//label.setMaximumSize(dim);
-				logger.trace(label.getText()+" "+task.getPreferredTool());
+				logger.trace(label.getText()+" preferred tool defined="+task.getPreferredTool()!=null);
 				logger.trace(task.getPreferredTool()+" "+task.getToolMatches().keySet());
 				if (task.getPreferredTool()==null || task.getToolMatches().get(task.getPreferredTool().getName())==null)
 					panel.setBackground(warnMissingToolBgColor);

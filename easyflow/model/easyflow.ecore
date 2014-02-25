@@ -360,6 +360,8 @@
           upperBound="-1" eType="#//Pattern"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="analysisTypes" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="notPermittedParents"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ToolMatch">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

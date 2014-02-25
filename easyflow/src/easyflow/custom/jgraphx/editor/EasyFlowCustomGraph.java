@@ -16,6 +16,7 @@ import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxGraphView;
 
 import easyflow.core.DataLink;
 import easyflow.core.Task;
@@ -192,9 +193,14 @@ public class EasyFlowCustomGraph extends mxGraph
 				try {
 					if (GlobalVar.getGraphUtil()!=null)
 					{
+						
 						Task task = GlobalVar.getGraphUtil().loadTask(cell);
+						
 						if (task != null)
+						{
+							//logger.debug(" "+task.getUniqueString()+" autosize="+isAutoSizeCell(o)+" resize="+isCellResizable(o));
 							return task.getUniqueString();
+						}
 					}
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -209,10 +215,10 @@ public class EasyFlowCustomGraph extends mxGraph
 						DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(cell);
 						if (dataLink!=null && dataLink.getDataPort()!=null)
 						{
-							String label = dataLink.getDataPort().getName(); 
+							String label = "";//dataLink.getDataPort().getName(); 
 							if (dataLink.getNotPermittedConditions() != null && 
 									!dataLink.getNotPermittedConditions().isEmpty())
-								label+=" "+StringUtils.join(dataLink.getNotPermittedConditions(), "_");
+								label+=" not ("+StringUtils.join(dataLink.getNotPermittedConditions(), " || ")+")";
 							//logger.debug(dataLink.hashCode());
 							return label;
 						}
@@ -231,6 +237,7 @@ public class EasyFlowCustomGraph extends mxGraph
 				}
 			}
 		}
+		
 		logger.trace("cannot retrieve label");
 		return null;
 	}
@@ -301,6 +308,28 @@ public class EasyFlowCustomGraph extends mxGraph
 
 		return cells;
 	}
+
+	protected mxGraphView createGraphView()
+	{
+	  return new mxGraphView(this)
+	  {
+	    public mxPoint getPoint(mxCellState state,
+	        mxGeometry geometry)
+	    {
+	      double x = state.getCenterX();
+	      double y = state.getCenterY();
+	      if (state.getAbsolutePointCount() == 3)
+	      {
+	        mxPoint mid = state.getAbsolutePoint(1);
+	        x = mid.getX();
+	        y = mid.getY();
+	      }
+
+	      return new mxPoint(x, y);
+	    }
+	  };
+	}
+
 }
 
 

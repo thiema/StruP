@@ -967,13 +967,30 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         		{
         			getStaticTasks().add(task);
         		}
-        		getGraphUtil().getTasks().put(task.getUniqueString(), task);
+        		if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
+        		{
+        			Task t = getRootTask();
+        			t.getInDataPorts().clear();
+        			t.getInDataPorts().addAll(task.getInDataPorts());
+        			t.getOutDataPorts().clear();
+        			t.getOutDataPorts().addAll(task.getOutDataPorts());
+        			t.getTraversalEvents().clear();
+        			t.getTraversalEvents().addAll(task.getTraversalEvents());
+        			t.getGroupingCriteria().clear();
+        			t.getGroupingCriteria().addAll(task.getGroupingCriteria());
+        			logger.debug(t.getUniqueString()+" "+task.getUniqueString());
+        			t.setJexlString(task.getJexlString());
+        			
+        		}
+        		else
+        			getGraphUtil().getTasks().put(task.getUniqueString(), task);
         	}
-
+        	Task rt=getRootTask();
+        	
         	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());
         	//logger.trace("insert dedicated root cell"+" "+rootTask.getUniqueString());
         	
-        	//logger.debug(getGraph().getLabel(rootTarget));
+        	//logger.debug(getGraph().getLabel(rootCell));
         	
         	getProcessedStates().put(GlobalVar.ABSTRACT_NODES, true);
 
@@ -987,17 +1004,24 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	private void generateAbstractGraphEdges()
 	{
 		try {
-			Object rootTarget=getGraph().insertVertexEasyFlow(null, null, getRootTask());
-	    	//map.put(getRootTask().getName(), rootTarget);
-	    	getGraphUtil().getCells().put(getRootTask().getUniqueString(), (mxICell)rootTarget);
-	    	setFirstNode(rootTarget);
-	    	getGraphUtil().setDefaultRootCell((mxICell) rootTarget);
-	    	getLastTasks().add(getRootTask());
+			Object rootCell = getGraphUtil().getCells().get(getRootTask().getUniqueString());
+			if (rootCell==null)
+			{
+				rootCell=getGraph().insertVertexEasyFlow(null, null, getRootTask());
+				//map.put(getRootTask().getName(), rootCell);
+				getGraphUtil().getCells().put(getRootTask().getUniqueString(), (mxICell)rootCell);
+			}
+	    	setFirstNode(rootCell);
+	    	getGraphUtil().setDefaultRootCell((mxICell) rootCell);
+	    	if (!getLastTasks().contains(getRootTask()))
+	    		getLastTasks().add(getRootTask());
 	        logger.trace(getWorkflowTemplate().getTasks());
 	        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
 			while (it.hasNext()) 
 			{
 				Task task=it.next();
+				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
+					continue;
 				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
 				if (!task.isUtil()) 
 				{
@@ -1005,7 +1029,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					EMap<Task, EList<DataLink>> parentTaskList=getParentTasksFor(task);
 					if (parentTaskList.isEmpty())
 					{
-						getGraph().insertEdgeEasyFlow(null, null, rootTarget, target);
+						getGraph().insertEdgeEasyFlow(null, null, rootCell, target);
 					}
 					else 
 					{
@@ -1984,6 +2008,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
+		//Task mostAdvancedMergeTask = traversalEvent.getMergeTask();
 		while (traversalEvent != null)
 		{
 			logger.debug(getGraphUtil().traversalEventToString(traversalEvent)
@@ -2055,7 +2080,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			
 		}
 		
-		if (getGraphUtil().getNewTraversalEvents().isEmpty())
+		if (getGraphUtil().getNewTraversalEvents().isEmpty() && true)
 		{
 			//getGraphUtil().fixOffTargetCells((mxICell) getFirstNode(), traversalEvent.getTraversalCriterion().getId());
 			// cleanup and reset

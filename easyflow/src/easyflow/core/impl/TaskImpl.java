@@ -829,17 +829,27 @@ public class TaskImpl extends EObjectImpl implements Task {
          * Read DataFormatIn/Out. and set DataPorts
          */
         short bitPos=0;
+        boolean hasIndataPorts=false;
         for (String dataPortField:wtplArray[inDataPortField].split(";"))
         {
         	DataPort dataPort=parseDataPortField(dataPortField, inputDataPortValidator);
+        	if (dataPort == null || dataPort.getName().equals(""))
+        		break;
+        	else
+        		hasIndataPorts=true;
         	getInDataPorts().add(dataPort);
         	dataPort.setBitPos(bitPos++);
         }
         
         bitPos=0;
+        boolean hasOutdataPorts=false;
         for (String dataPortField:wtplArray[outDataPortField].split(";"))
         {
         	DataPort dataPort=parseDataPortField(dataPortField, outputDataPortValidator);
+        	if (dataPort == null || dataPort.getName().equals(""))
+        		break;
+        	else
+        		hasOutdataPorts=true;
         	getOutDataPorts().add(dataPort);
         	dataPort.setBitPos(bitPos++);
         }
@@ -855,7 +865,8 @@ public class TaskImpl extends EObjectImpl implements Task {
         }
         	//if (!wtplArray[groupingCritField].equals(""))
         	//{
-        	
+        if (hasIndataPorts)
+        {
         	short dataPortNo=0;
         	for (String groupingString:groupingStr.split(";"))
         	{
@@ -910,7 +921,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	        	}
         	}
         	//}
-        //}
+        }
 
 		/**
 		 * Read the traversal Expression
@@ -1033,10 +1044,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		if (metaDataMap.isEmpty()) return true;
 		Expression e = jexlEngine.createExpression(jexl);
 		JexlContext context = new MapContext(metaDataMap.map());
-		logger.trace(e+" "+context);
+		logger.trace(e);
 		Object eval=e.evaluate(context);
 		if (eval instanceof Boolean && !(Boolean) eval)
-			logger.info("Skip Task "+getUniqueString()
+			logger.debug("Skip Task "+getUniqueString()
 					+" due to jexl condition: "+jexl
 					+" and context: "+mapToString(metaDataMap));
     	return e.evaluate(context);

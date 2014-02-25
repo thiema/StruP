@@ -145,19 +145,23 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 	        logger.debug(vertexFillColor);
 	        //baseStyle.put(mxConstants.STYLE_STROKECOLOR, vertexFillColor);
 	        //vertexStyle.put(mxConstants.STYLE_STROKECOLOR, vertexFillColor);
-	        vertexStyle.put(mxConstants.STYLE_FILLCOLOR, vertexFillColor);
+//	        vertexStyle.put(mxConstants.STYLE_FILLCOLOR, vertexFillColor);
+	        
 		}
         
-        //vertexStyle.put(mxConstants.STYLE_AUTOSIZE, 1);
-        //vertexStyle.put(mxConstants.STYLE_RESIZABLE, 0);
-        vertexStyle.put(mxConstants.STYLE_NOLABEL, 1);
-        vertexStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
+        //vertexStyle.put(mxConstants.STYLE_AUTOSIZE, "1");
+        //vertexStyle.put(mxConstants.STYLE_RESIZABLE, "1");
+        //vertexStyle.put(mxConstants., "5");
+        //vertexStyle.put(mxConstants.STYLE_NOLABEL, 1);
+        //vertexStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
         stylesheet.putCellStyle(GlobalVar.VERTEX_STYLE, vertexStyle);
 
         // custom edge style
         Map<String, Object> edgeStyle = new Hashtable<String, Object>(baseStyle);
         edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
         edgeStyle.put(mxConstants.STYLE_FILLCOLOR, "#000000");
+        edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
+        edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC);
         //edgeStyle.put(mxConstants.STYLE_FILLCOLOR, vertexFillColor);
         //edgeStyle.put(mxConstants.STYLE_NOLABEL, 1);
         //edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);

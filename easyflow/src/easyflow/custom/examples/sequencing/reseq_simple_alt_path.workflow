@@ -1,7 +1,7 @@
 #0		1		2				3			4			5					6					7
 #task	parent	implementation	formatIn	formatOut	groupingCriterion	traversalExpression	JEXL:process_task?
-BwtAlign		bwa_aln	Reads:FASTQ;Reference:FASTA	SAM		ReadEnd:split;seed:[1,2]	Platform=~["P1", "P2"]
-ProcessA		t1	SAM	SAM			size(InputFiles)>1
+BwtAlign		bwa_aln	Reads:FASTQ;Reference:FASTA	SAM		ReadEnd:split;seed:[1,2]	Platform=~["P1", "P2", "P3"]
+ProcessA		t1	SAM	SAM	Sample		size(InputFiles)>1
 ProcessB		t2	SAM	SAM			size(InputFiles)>2
 ProcessC		t3	SAM	SAM
 ######
