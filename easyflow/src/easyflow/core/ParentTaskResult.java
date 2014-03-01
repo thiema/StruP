@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.ParentTaskResult#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.core.ParentTaskResult#isGeneric <em>Generic</em>}</li>
  *   <li>{@link easyflow.core.ParentTaskResult#getRank <em>Rank</em>}</li>
+ *   <li>{@link easyflow.core.ParentTaskResult#getPotentialCircumventingTasks <em>Potential Circumventing Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -151,5 +152,21 @@ public interface ParentTaskResult extends EObject {
 	 * @generated
 	 */
 	void setRank(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Potential Circumventing Tasks</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Potential Circumventing Tasks</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Potential Circumventing Tasks</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getParentTaskResult_PotentialCircumventingTasks()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getPotentialCircumventingTasks();
 
 } // ParentTaskResult

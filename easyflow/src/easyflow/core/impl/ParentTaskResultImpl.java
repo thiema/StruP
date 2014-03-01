@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#isGeneric <em>Generic</em>}</li>
  *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#getRank <em>Rank</em>}</li>
+ *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#getPotentialCircumventingTasks <em>Potential Circumventing Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -122,6 +124,16 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 	 * @ordered
 	 */
 	protected int rank = RANK_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getPotentialCircumventingTasks() <em>Potential Circumventing Tasks</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPotentialCircumventingTasks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> potentialCircumventingTasks;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -260,6 +272,18 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getPotentialCircumventingTasks() {
+		if (potentialCircumventingTasks == null) {
+			potentialCircumventingTasks = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS);
+		}
+		return potentialCircumventingTasks;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -274,6 +298,8 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 				return isGeneric();
 			case CorePackage.PARENT_TASK_RESULT__RANK:
 				return getRank();
+			case CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS:
+				return getPotentialCircumventingTasks();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -303,6 +329,10 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 			case CorePackage.PARENT_TASK_RESULT__RANK:
 				setRank((Integer)newValue);
 				return;
+			case CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS:
+				getPotentialCircumventingTasks().clear();
+				getPotentialCircumventingTasks().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -330,6 +360,9 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 			case CorePackage.PARENT_TASK_RESULT__RANK:
 				setRank(RANK_EDEFAULT);
 				return;
+			case CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS:
+				getPotentialCircumventingTasks().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -352,6 +385,8 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 				return generic != GENERIC_EDEFAULT;
 			case CorePackage.PARENT_TASK_RESULT__RANK:
 				return rank != RANK_EDEFAULT;
+			case CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS:
+				return potentialCircumventingTasks != null && !potentialCircumventingTasks.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -372,6 +407,8 @@ public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResul
 		result.append(generic);
 		result.append(", rank: ");
 		result.append(rank);
+		result.append(", potentialCircumventingTasks: ");
+		result.append(potentialCircumventingTasks);
 		result.append(')');
 		return result.toString();
 	}

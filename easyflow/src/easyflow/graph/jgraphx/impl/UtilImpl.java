@@ -589,12 +589,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 	private mxICell cloneCell(mxICell cell)
 	{
-		//mxCell vertex = null;
 		try {
 			return (mxCell) cell.clone();
-			// logger.debug("cloned: "+vertex);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -682,7 +679,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						parentTraversalEvent.getMergeTask().add(task);
 
 						// remove parent from parents merge task and deprecate current te only in case an unconditional edge is observed 
-						if (dataLink.getNotPermittedConditions()==null || dataLink.getNotPermittedConditions().isEmpty())
+						if (dataLink.getCondition().isUnconditional())
 						{
 
 							if (parentTraversalEvent.getMergeTask().contains(parentTask))
@@ -690,7 +687,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 								debug+=" remove merge task:"+parentTaskString;
 								parentTraversalEvent.getMergeTask().remove(parentTask);
 							}
-						
 
 							EList<String> depricatedTEs = null;
 							if (deprecatedTraversalEvents.containsKey(taskString))
@@ -717,20 +713,16 @@ public class UtilImpl extends EObjectImpl implements Util {
 						}
 						else
 						{  
+							debug+=" parent="+parentTaskString+" ";
 							// known at the overall graph
-							/*if (!traversalEvent.getParentTask().contains(parentTask))
+							if (!traversalEvent.getParentTask().contains(parentTask))
 							{
-								traversalEvent.getParentTask().add(parentTask);
-								
+								traversalEvent.getParentTask().add(parentTask);								
 							}
 							else
 							{
 								debug+=" but known for whole graph ";
-								
-							}*/
-							
-							
-
+							}
 						}
 						// set the traversal events merge task
 						if (!traversalEvent.getMergeTask().contains(task))
@@ -997,6 +989,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 * apply the traversal criterion to the subgraph copy 
 	 * - stop when grouping is not a valid along an edge
 	 * - stop if task is not applicable to the grouping definition
+	 * - stop if condition does not fit the conditional edge
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException
 	 * @generated not
@@ -1005,9 +998,12 @@ public class UtilImpl extends EObjectImpl implements Util {
 			final TraversalEvent traversalEvent, 
 			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
 
-		final String  groupingStr=traversalEvent.getTraversalCriterion().getId();
+		final String               groupingStr         = traversalEvent.getTraversalCriterion().getId();
 		final EMap<String, String> taskPreviousTaskMap = new BasicEMap<String, String>();
-		final EList<mxICell> returnCell = new BasicEList<mxICell>();
+		final EList<mxICell>       returnCell          = new BasicEList<mxICell>();
+		final EList<String>        circumventingParentsCurrent= new BasicEList<String>();
+		final EList<String>        circumventingParentsLast= new BasicEList<String>();
+
 		EList<String> instances = new BasicEList<String>(); 
 		for (GroupingInstance groupingInstance : groupingInstances)
 			instances.add(groupingInstance.getName());
@@ -1025,6 +1021,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 					task = loadTask(vertex);
 					if (edge != null)
 						inDataLink = loadDataLink(edge);
+					else
+						circumventingParentsLast.clear();
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1040,17 +1038,37 @@ public class UtilImpl extends EObjectImpl implements Util {
 					return false;
 				if (!task.shallProcess(groupingInstances, groupingStr))
 					return false;
-				if (inDataLink != null && !task.shallProcess(groupingInstances, groupingStr, 
-						inDataLink.getNotPermittedConditions(),
-						true))
+				boolean shouldAddCircumventingParents = false;
+				if (inDataLink != null)
 				{
-					logger.debug("skip due to unpermitted conditions: "+inDataLink.getNotPermittedConditions());
-					return false;
+					if (!task.shallProcess(groupingInstances, groupingStr, 
+						inDataLink.getCondition().getForbidden(),
+						true))
+					{
+						logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
+						return false;
+					}
+					else if (!inDataLink.getCondition().isUnconditional())
+					{
+						//circumventingParentsCurrent.clear();
+						//circumventingParentsCurrent.addAll(inDataLink.getCircumventingParents());
+						//task.getCircumventingParents().addAll(inDataLink.getCircumventingParents());
+						shouldAddCircumventingParents=true;
+						//if (parentTask.get(0)!=null)
+							//getTasks().get(parentTask.get(0)).getCircumventingParents().addAll(inDataLink.getCircumventingParents());
+					}
+						
 				}
 				// create the new task/cell and add it to a map with key of 
-				// tasks unique string (without the current instance information resolved)
-				
+				// tasks unique string (without the current instance information resolved)				
 				Task copyTask = createTask(task, groupingStr, groupingInstances);
+				if (shouldAddCircumventingParents)
+				{
+					copyTask.getCircumventingParents().addAll(
+							inDataLink.getCondition().getCircumventingParents());
+					//circumventingParentsLast.clear();
+				}
+
 				taskPreviousTaskMap.put(taskString, copyTask.getUniqueString());
 				logger.trace("applyTraversalEventCopyGraph(): prevTaskStringMap put: "+taskString+" "+copyTask.getUniqueString());
 				mxICell cell = null;
@@ -1076,7 +1094,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 					try 
 					{
 						Task source = null;
-					
 						source = getSourceTask((mxCell) edge);
 						//DataLink oldDataLink=loadDataLink(edge);
 						logger.debug("applyTraversalEventCopyGraph(): try to insert edge:"
@@ -1115,8 +1132,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}						
-
+				}
+				//if (!circumventingParentsCurrent.isEmpty())
+					//circumventingParentsLast.addAll(circumventingParentsCurrent);
 				//getMostProcessedTasks().put(copyTask.getUniqueString(), task.getUniqueString());
 				return true;
 			}
@@ -1137,8 +1155,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 		DataLink newDataLink=CoreFactory.eINSTANCE.createDataLink();
 		newDataLink.setGroupingStr(groupingStr);
 		newDataLink.setDataPort(dataLink.getDataPort());
-		if (dataLink.getNotPermittedConditions()!=null && !dataLink.getNotPermittedConditions().isEmpty())
-			newDataLink.getNotPermittedConditions().addAll(dataLink.getNotPermittedConditions());
+		if (dataLink.getCondition()!=null && !dataLink.getCondition().isUnconditional())
+			newDataLink.setCondition(dataLink.getCondition());
 		if (parentGroupingStr != null)
 			newDataLink.setParentGroupingStr(parentGroupingStr);
 		int i=task.getChunks().indexOfKey(groupingStr);		
@@ -1409,8 +1427,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 					Object parentCell = getSource((mxCell) edgeIn);
 							//getGraph().getView().getVisibleTerminal(edgeIn, true);
 					try {
-						DataLink dl=loadDataLink(edgeIn);
-						if (dl.getNotPermittedConditions()==null || dl.getNotPermittedConditions().isEmpty())
+						DataLink dataLink=loadDataLink(edgeIn);
+						if (dataLink.isUnconditional())
 							applySplittingCriterion((mxICell) vertex,
 								(mxICell) parentCell, edgeIn, groupingStr);
 					} catch (TaskNotFoundException e) {
@@ -1629,24 +1647,41 @@ public class UtilImpl extends EObjectImpl implements Util {
 			@Override
 			public boolean visit(Object vertex, Object edge) {
 				// set the current task
-				Task task=null;;
+				Task     task     = null;
+				DataLink dataLink = null;
 				try {
 					task = loadTask(vertex);
+					if (edge != null)
+						dataLink = loadDataLink(edge);
+					
 				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
-				//if (task == null) return true;
+				if (task.getCircumventingParents()!=null && !task.getCircumventingParents().isEmpty())
+				{
+					logger.debug("getNewTravEvents(): "+task.getUniqueString()
+							+" circumvents "+task.getCircumventingParents());
+					logger.debug(traversalEvent.getParentTask());
+					for (Task parentTask:traversalEvent.getParentTask())
+						if (task.getCircumventingParents().contains(parentTask.getName()))
+							return false;
+				}
 				
 				// check splitting task
-				logger.trace("getNewTravEvents(): "+task.getUniqueString()+" vs "+traversalEvent.getSplitTask().getUniqueString());
+				logger.trace("getNewTravEvents(): "
+						+task.getUniqueString()+" vs "+traversalEvent.getSplitTask().getUniqueString());
+				
 				if (task.getName().equals(traversalEvent.getSplitTask().getName()))
 				{
 					
 					TraversalEvent newTraversalEvent =
 							getNewTraversalEventBySplittingTask(task, traversalEvent);
-					logger.debug("getNewTravEvents(): create new TraversalEvent with splitting task"
+					logger.debug("getNewTravEvents(): create new TraversalEvent with splitting task="
 							+task.getUniqueString());
 					newTraversalEvents.put(task.getUniqueString(), newTraversalEvent);
 					// set merging task as well, if it contains the splitting task
@@ -1693,6 +1728,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			}
 		};
 		logger.debug("getNewTravEvents():"
+				+" parentTasks=("+StringUtils.join(getTaskStringList(traversalEvent.getParentTask()), ", ")+")"
 				+" splitTask="+traversalEvent.getSplitTask().getUniqueString()
 				+" mergeTasks=("+StringUtils.join(getTaskStringList(traversalEvent.getMergeTask()), ", ")+")"
 				+" root="+loadTask(root).getUniqueString());

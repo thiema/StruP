@@ -476,13 +476,22 @@ public interface CorePackage extends EPackage {
 	int TASK__ANALYSIS_TYPES = 21;
 
 	/**
+	 * The feature id for the '<em><b>Circumventing Parents</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__CIRCUMVENTING_PARENTS = 22;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 22;
+	int TASK_FEATURE_COUNT = 23;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -1001,13 +1010,13 @@ public interface CorePackage extends EPackage {
 	int DATA_LINK__IDENTICAL_GROUPING = 6;
 
 	/**
-	 * The feature id for the '<em><b>Not Permitted Conditions</b></em>' attribute list.
+	 * The feature id for the '<em><b>Condition</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__NOT_PERMITTED_CONDITIONS = 7;
+	int DATA_LINK__CONDITION = 7;
 
 	/**
 	 * The number of structural features of the '<em>Data Link</em>' class.
@@ -1075,13 +1084,60 @@ public interface CorePackage extends EPackage {
 	int PARENT_TASK_RESULT__RANK = 4;
 
 	/**
+	 * The feature id for the '<em><b>Potential Circumventing Tasks</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS = 5;
+
+	/**
 	 * The number of structural features of the '<em>Parent Task Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARENT_TASK_RESULT_FEATURE_COUNT = 5;
+	int PARENT_TASK_RESULT_FEATURE_COUNT = 6;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.ConditionImpl <em>Condition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.ConditionImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getCondition()
+	 * @generated
+	 */
+	int CONDITION = 13;
+
+	/**
+	 * The feature id for the '<em><b>Forbidden</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION__FORBIDDEN = 0;
+
+	/**
+	 * The feature id for the '<em><b>Circumventing Parents</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION__CIRCUMVENTING_PARENTS = 1;
+
+	/**
+	 * The number of structural features of the '<em>Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_FEATURE_COUNT = 2;
 
 
 	/**
@@ -1578,6 +1634,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getTask_AnalysisTypes();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Circumventing Parents</em>'.
+	 * @see easyflow.core.Task#getCircumventingParents()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_CircumventingParents();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1899,15 +1966,15 @@ public interface CorePackage extends EPackage {
 	EAttribute getDataLink_IdenticalGrouping();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.core.DataLink#getNotPermittedConditions <em>Not Permitted Conditions</em>}'.
+	 * Returns the meta object for the reference '{@link easyflow.core.DataLink#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Not Permitted Conditions</em>'.
-	 * @see easyflow.core.DataLink#getNotPermittedConditions()
+	 * @return the meta object for the reference '<em>Condition</em>'.
+	 * @see easyflow.core.DataLink#getCondition()
 	 * @see #getDataLink()
 	 * @generated
 	 */
-	EAttribute getDataLink_NotPermittedConditions();
+	EReference getDataLink_Condition();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.ParentTaskResult <em>Parent Task Result</em>}'.
@@ -1973,6 +2040,49 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParentTaskResult_Rank();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.ParentTaskResult#getPotentialCircumventingTasks <em>Potential Circumventing Tasks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Potential Circumventing Tasks</em>'.
+	 * @see easyflow.core.ParentTaskResult#getPotentialCircumventingTasks()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EAttribute getParentTaskResult_PotentialCircumventingTasks();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.Condition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Condition</em>'.
+	 * @see easyflow.core.Condition
+	 * @generated
+	 */
+	EClass getCondition();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Condition#getForbidden <em>Forbidden</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Forbidden</em>'.
+	 * @see easyflow.core.Condition#getForbidden()
+	 * @see #getCondition()
+	 * @generated
+	 */
+	EAttribute getCondition_Forbidden();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.Condition#getCircumventingParents <em>Circumventing Parents</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Circumventing Parents</em>'.
+	 * @see easyflow.core.Condition#getCircumventingParents()
+	 * @see #getCondition()
+	 * @generated
+	 */
+	EAttribute getCondition_CircumventingParents();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.ToolMatch <em>Tool Match</em>}'.
@@ -2514,6 +2624,14 @@ public interface CorePackage extends EPackage {
 		EAttribute TASK__ANALYSIS_TYPES = eINSTANCE.getTask_AnalysisTypes();
 
 		/**
+		 * The meta object literal for the '<em><b>Circumventing Parents</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__CIRCUMVENTING_PARENTS = eINSTANCE.getTask_CircumventingParents();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2772,12 +2890,12 @@ public interface CorePackage extends EPackage {
 		EAttribute DATA_LINK__IDENTICAL_GROUPING = eINSTANCE.getDataLink_IdenticalGrouping();
 
 		/**
-		 * The meta object literal for the '<em><b>Not Permitted Conditions</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Condition</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DATA_LINK__NOT_PERMITTED_CONDITIONS = eINSTANCE.getDataLink_NotPermittedConditions();
+		EReference DATA_LINK__CONDITION = eINSTANCE.getDataLink_Condition();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ParentTaskResultImpl <em>Parent Task Result</em>}' class.
@@ -2828,6 +2946,40 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARENT_TASK_RESULT__RANK = eINSTANCE.getParentTaskResult_Rank();
+
+		/**
+		 * The meta object literal for the '<em><b>Potential Circumventing Tasks</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS = eINSTANCE.getParentTaskResult_PotentialCircumventingTasks();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.ConditionImpl <em>Condition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.ConditionImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getCondition()
+		 * @generated
+		 */
+		EClass CONDITION = eINSTANCE.getCondition();
+
+		/**
+		 * The meta object literal for the '<em><b>Forbidden</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONDITION__FORBIDDEN = eINSTANCE.getCondition_Forbidden();
+
+		/**
+		 * The meta object literal for the '<em><b>Circumventing Parents</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONDITION__CIRCUMVENTING_PARENTS = eINSTANCE.getCondition_CircumventingParents();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.

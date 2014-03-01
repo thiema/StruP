@@ -65,6 +65,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.Task#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.Task#getAnalysisTypes <em>Analysis Types</em>}</li>
+ *   <li>{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}</li>
  * </ul>
  * </p>
  *
@@ -504,6 +505,22 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EList<String> getAnalysisTypes();
+
+	/**
+	 * Returns the value of the '<em><b>Circumventing Parents</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Circumventing Parents</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Circumventing Parents</em>' attribute list.
+	 * @see easyflow.core.CorePackage#getTask_CircumventingParents()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getCircumventingParents();
 
 	/**
 	 * <!-- begin-user-doc -->

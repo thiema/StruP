@@ -6,6 +6,7 @@
  */
 package easyflow.core.impl;
 
+import easyflow.core.Condition;
 import easyflow.core.CorePackage;
 import easyflow.core.DataLink;
 import easyflow.core.DataPort;
@@ -43,7 +44,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
- *   <li>{@link easyflow.core.impl.DataLinkImpl#getNotPermittedConditions <em>Not Permitted Conditions</em>}</li>
+ *   <li>{@link easyflow.core.impl.DataLinkImpl#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
  *
@@ -171,14 +172,14 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	protected boolean identicalGrouping = IDENTICAL_GROUPING_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getNotPermittedConditions() <em>Not Permitted Conditions</em>}' attribute list.
+	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getNotPermittedConditions()
+	 * @see #getCondition()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> notPermittedConditions;
+	protected Condition condition;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -359,11 +360,46 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getNotPermittedConditions() {
-		if (notPermittedConditions == null) {
-			notPermittedConditions = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS);
+	public Condition getCondition() {
+		if (condition != null && condition.eIsProxy()) {
+			InternalEObject oldCondition = (InternalEObject)condition;
+			condition = (Condition)eResolveProxy(oldCondition);
+			if (condition != oldCondition) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.DATA_LINK__CONDITION, oldCondition, condition));
+			}
 		}
-		return notPermittedConditions;
+		return condition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Condition basicGetCondition() {
+		return condition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCondition(Condition newCondition) {
+		Condition oldCondition = condition;
+		condition = newCondition;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DATA_LINK__CONDITION, oldCondition, condition));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isUnconditional() {
+		return (getCondition()==null || getCondition().isUnconditional());
 	}
 
 	/**
@@ -389,8 +425,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return getParentGroupingStr();
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				return isIdenticalGrouping();
-			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
-				return getNotPermittedConditions();
+			case CorePackage.DATA_LINK__CONDITION:
+				if (resolve) return getCondition();
+				return basicGetCondition();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -426,9 +463,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping((Boolean)newValue);
 				return;
-			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
-				getNotPermittedConditions().clear();
-				getNotPermittedConditions().addAll((Collection<? extends String>)newValue);
+			case CorePackage.DATA_LINK__CONDITION:
+				setCondition((Condition)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -463,8 +499,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping(IDENTICAL_GROUPING_EDEFAULT);
 				return;
-			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
-				getNotPermittedConditions().clear();
+			case CorePackage.DATA_LINK__CONDITION:
+				setCondition((Condition)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -492,8 +528,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return PARENT_GROUPING_STR_EDEFAULT == null ? parentGroupingStr != null : !PARENT_GROUPING_STR_EDEFAULT.equals(parentGroupingStr);
 			case CorePackage.DATA_LINK__IDENTICAL_GROUPING:
 				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
-			case CorePackage.DATA_LINK__NOT_PERMITTED_CONDITIONS:
-				return notPermittedConditions != null && !notPermittedConditions.isEmpty();
+			case CorePackage.DATA_LINK__CONDITION:
+				return condition != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -518,8 +554,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		result.append(parentGroupingStr);
 		result.append(", identicalGrouping: ");
 		result.append(identicalGrouping);
-		result.append(", notPermittedConditions: ");
-		result.append(notPermittedConditions);
 		result.append(')');
 		return result.toString();
 	}

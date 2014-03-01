@@ -9,6 +9,7 @@ package easyflow.core.impl;
 import easyflow.EasyflowPackage;
 
 import easyflow.core.Catalog;
+import easyflow.core.Condition;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DataLink;
@@ -167,6 +168,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass parentTaskResultEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass conditionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -684,6 +692,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTask_CircumventingParents() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(22);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIWorkflowTemplate() {
 		return iWorkflowTemplateEClass;
 	}
@@ -954,8 +971,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDataLink_NotPermittedConditions() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(7);
+	public EReference getDataLink_Condition() {
+		return (EReference)dataLinkEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1010,6 +1027,42 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EAttribute getParentTaskResult_Rank() {
 		return (EAttribute)parentTaskResultEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParentTaskResult_PotentialCircumventingTasks() {
+		return (EAttribute)parentTaskResultEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCondition() {
+		return conditionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCondition_Forbidden() {
+		return (EAttribute)conditionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCondition_CircumventingParents() {
+		return (EAttribute)conditionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1212,6 +1265,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(taskEClass, TASK__INPUT_DATA_PORT_VALIDATOR);
 		createEAttribute(taskEClass, TASK__OUTPUT_DATA_PORT_VALIDATOR);
 		createEAttribute(taskEClass, TASK__ANALYSIS_TYPES);
+		createEAttribute(taskEClass, TASK__CIRCUMVENTING_PARENTS);
 
 		toolMatchEClass = createEClass(TOOL_MATCH);
 		createEAttribute(toolMatchEClass, TOOL_MATCH__LOGGER);
@@ -1266,7 +1320,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(dataLinkEClass, DATA_LINK__GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__PARENT_GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__IDENTICAL_GROUPING);
-		createEAttribute(dataLinkEClass, DATA_LINK__NOT_PERMITTED_CONDITIONS);
+		createEReference(dataLinkEClass, DATA_LINK__CONDITION);
 
 		parentTaskResultEClass = createEClass(PARENT_TASK_RESULT);
 		createEReference(parentTaskResultEClass, PARENT_TASK_RESULT__PARENT_TASK);
@@ -1274,6 +1328,11 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__CONDITION);
 		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__GENERIC);
 		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__RANK);
+		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS);
+
+		conditionEClass = createEClass(CONDITION);
+		createEAttribute(conditionEClass, CONDITION__FORBIDDEN);
+		createEAttribute(conditionEClass, CONDITION__CIRCUMVENTING_PARENTS);
 	}
 
 	/**
@@ -1468,6 +1527,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getTask_InputDataPortValidator(), theEasyflowPackage.getPattern(), "inputDataPortValidator", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_OutputDataPortValidator(), theEasyflowPackage.getPattern(), "outputDataPortValidator", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_AnalysisTypes(), ecorePackage.getEString(), "analysisTypes", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1679,7 +1739,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getDataLink_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_ParentGroupingStr(), ecorePackage.getEString(), "parentGroupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_IdenticalGrouping(), ecorePackage.getEBoolean(), "identicalGrouping", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataLink_NotPermittedConditions(), ecorePackage.getEString(), "notPermittedConditions", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataLink_Condition(), this.getCondition(), null, "condition", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(dataLinkEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(parentTaskResultEClass, ParentTaskResult.class, "ParentTaskResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParentTaskResult_ParentTask(), this.getTask(), null, "parentTask", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1687,6 +1749,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getParentTaskResult_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_Generic(), ecorePackage.getEBoolean(), "generic", "false", 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_Rank(), ecorePackage.getEInt(), "rank", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParentTaskResult_PotentialCircumventingTasks(), ecorePackage.getEString(), "potentialCircumventingTasks", null, 0, -1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCondition_Forbidden(), ecorePackage.getEString(), "forbidden", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCondition_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(conditionEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //CorePackageImpl

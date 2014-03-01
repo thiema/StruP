@@ -112,6 +112,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getAnalysisTypes <em>Analysis Types</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getCircumventingParents <em>Circumventing Parents</em>}</li>
  * </ul>
  * </p>
  *
@@ -417,6 +418,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EList<String> analysisTypes;
+
+	/**
+	 * The cached value of the '{@link #getCircumventingParents() <em>Circumventing Parents</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCircumventingParents()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> circumventingParents;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -760,6 +771,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 			analysisTypes = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.TASK__ANALYSIS_TYPES);
 		}
 		return analysisTypes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getCircumventingParents() {
+		if (circumventingParents == null) {
+			circumventingParents = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.TASK__CIRCUMVENTING_PARENTS);
+		}
+		return circumventingParents;
 	}
 
 	/*private EList<String> enumerateInstances(String regexp)
@@ -1784,6 +1807,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getOutputDataPortValidator();
 			case CorePackage.TASK__ANALYSIS_TYPES:
 				return getAnalysisTypes();
+			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
+				return getCircumventingParents();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1865,6 +1890,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getAnalysisTypes().clear();
 				getAnalysisTypes().addAll((Collection<? extends String>)newValue);
 				return;
+			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
+				getCircumventingParents().clear();
+				getCircumventingParents().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1940,6 +1969,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__ANALYSIS_TYPES:
 				getAnalysisTypes().clear();
 				return;
+			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
+				getCircumventingParents().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1996,6 +2028,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return outputDataPortValidator != null && !outputDataPortValidator.isEmpty();
 			case CorePackage.TASK__ANALYSIS_TYPES:
 				return analysisTypes != null && !analysisTypes.isEmpty();
+			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
+				return circumventingParents != null && !circumventingParents.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2032,6 +2066,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(outputDataPortValidator);
 		result.append(", analysisTypes: ");
 		result.append(analysisTypes);
+		result.append(", circumventingParents: ");
+		result.append(circumventingParents);
 		result.append(')');
 		return result.toString();
 	}

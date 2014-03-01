@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
- *   <li>{@link easyflow.core.DataLink#getNotPermittedConditions <em>Not Permitted Conditions</em>}</li>
+ *   <li>{@link easyflow.core.DataLink#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
  *
@@ -213,19 +213,37 @@ public interface DataLink extends EObject {
 	void setIdenticalGrouping(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Not Permitted Conditions</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Condition</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Not Permitted Conditions</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Condition</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Not Permitted Conditions</em>' attribute list.
-	 * @see easyflow.core.CorePackage#getDataLink_NotPermittedConditions()
+	 * @return the value of the '<em>Condition</em>' reference.
+	 * @see #setCondition(Condition)
+	 * @see easyflow.core.CorePackage#getDataLink_Condition()
 	 * @model
 	 * @generated
 	 */
-	EList<String> getNotPermittedConditions();
+	Condition getCondition();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.DataLink#getCondition <em>Condition</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Condition</em>' reference.
+	 * @see #getCondition()
+	 * @generated
+	 */
+	void setCondition(Condition value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isUnconditional();
 
 } // DataLink

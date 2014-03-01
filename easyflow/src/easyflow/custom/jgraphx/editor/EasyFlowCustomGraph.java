@@ -216,9 +216,8 @@ public class EasyFlowCustomGraph extends mxGraph
 						if (dataLink!=null && dataLink.getDataPort()!=null)
 						{
 							String label = "";//dataLink.getDataPort().getName(); 
-							if (dataLink.getNotPermittedConditions() != null && 
-									!dataLink.getNotPermittedConditions().isEmpty())
-								label+=" not ("+StringUtils.join(dataLink.getNotPermittedConditions(), " || ")+")";
+							if (dataLink.getCondition()!=null && !dataLink.getCondition().isUnconditional())
+								label+=" not ("+StringUtils.join(dataLink.getCondition().getForbidden(), " || ")+")";
 							//logger.debug(dataLink.hashCode());
 							return label;
 						}

@@ -360,7 +360,7 @@
           upperBound="-1" eType="#//Pattern"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="analysisTypes" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="notPermittedParents"
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="circumventingParents"
           upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ToolMatch">
@@ -484,6 +484,7 @@
           defaultValueLiteral="false"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DataLink">
+      <eOperations name="isUnconditional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="dataPort" eType="#//core/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="chunks" upperBound="-1"
           eType="#//traversal/TraversalChunk"/>
@@ -493,8 +494,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentGroupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="identicalGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="notPermittedConditions"
-          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//core/Condition"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ParentTaskResult">
       <eStructuralFeatures xsi:type="ecore:EReference" name="parentTask" eType="#//core/Task"/>
@@ -504,6 +504,15 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="generic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="potentialCircumventingTasks"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Condition">
+      <eOperations name="isUnconditional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="forbidden" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="circumventingParents"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
