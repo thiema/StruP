@@ -2,7 +2,9 @@ package easyflow.custom.jgraphx.editor;
 
 import java.awt.Point;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
@@ -56,7 +58,35 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		return getModel().setStyle(cell, "strokeColor=none;noLabel=1;textOpacity=0");
 	}
 	
+	public String getStyleForEdge(DataLink dataLink)
+	{
+		if (dataLink != null && dataLink.getCondition()!=null)
+		{
+			if (dataLink.getCondition().isUnconditional())
+				return GlobalVar.EDGE_STYLE;
+			else
+				return GlobalVar.TASK_CIRCUMVENTING_EDGE_STYLE;
+		}
+		return GlobalVar.EDGE_STYLE;
+	}
 	
+	public Object getStyleFor(Object cell)
+	{
+		Map<String, Object> style = new HashMap<String, Object>();
+		if (((mxICell) cell).isEdge())
+		{
+			style=stylesheet.getCellStyle(edgeStyle, GlobalVar.getDefaultEdgeStyle());
+			style.put("fillColor", "#808080");
+		}
+		else
+		{
+			style=stylesheet.getCellStyle(vertexStyle, GlobalVar.getDefaultVertexStyle());
+			//if (style.put(key, value))
+		}
+		stylesheet.putCellStyle("tmp", style);
+		((mxICell) cell).setStyle("tmp");
+		return "tmp";
+	}
 	
 	public Object createNewCell(Object object, mxGeometry geometry)
 	{
@@ -116,7 +146,10 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 				dataLink.setId(dataLink.hashCode());
 			if (!GlobalVar.getGraphUtil().getDataLinks().containsKey(Integer.toString(dataLink.getId())))
 				GlobalVar.getGraphUtil().getDataLinks().put(Integer.toString(dataLink.getId()), dataLink);
-			return insertEdge(parent, id, dataLink.getId(), source, target, edgeStyle);
+			Object cell=insertEdge(parent, id, dataLink.getId(), source, target, getStyleForEdge(dataLink));
+			//Object cell=insertEdge(parent, id, dataLink.getId(), source, target, edgeStyle);
+			
+			return cell;
 		}
 		else
 			return insertEdge(parent, id, "", source, target, edgeStyle);

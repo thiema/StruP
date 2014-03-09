@@ -405,7 +405,15 @@ public interface Util extends EObject {
 	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, String instanceStr) throws CellNotFoundException, TaskNotFoundException;
+	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, GroupingInstance instanceStr) throws CellNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell" instanceStrMany="true"
+	 * @generated
+	 */
+	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, EList<GroupingInstance> instanceStr) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->

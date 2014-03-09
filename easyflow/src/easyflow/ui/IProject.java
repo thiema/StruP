@@ -59,6 +59,14 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean delete();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
@@ -197,6 +205,14 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	String getCurWorkflowStep();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resetWorkflowStep();
 
 	/**
 	 * <!-- begin-user-doc -->

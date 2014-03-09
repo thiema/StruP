@@ -305,9 +305,9 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 					panel.setOpaque(true);
 					panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
 					panel.add(label);
-					if (dataLink.getNotPermittedConditions()!=null)
+					if (dataLink.getCondition().getForbidden()!=null)
 					{
-						JLabel perms = new JLabel(new Integer(dataLink.getNotPermittedConditions().size()).toString());
+						JLabel perms = new JLabel(new Integer(dataLink.getCondition().getForbidden().size()).toString());
 						panel.add(perms);
 					}
 					

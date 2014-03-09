@@ -879,13 +879,70 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		else if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
 				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
 			return GlobalVar.GENERATE_ABSTRACT_WORKFLOW;
-		else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
-				getProcessedStates().get(GlobalVar.FINISHED))
-			return GlobalVar.FINISHED;
+		//else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
+			//	getProcessedStates().get(GlobalVar.FINISHED))
+			//return GlobalVar.FINISHED;
 		else
 			return GlobalVar.START;		
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean delete() {
+		boolean rc = true;
+		
+		getGraph().getModel().beginUpdate();
+		try
+		{
+			//graph.removeCells(cells, true);
+			Object[] cells=getGraph().removeCells(getGraphUtil().getCells().keySet().toArray(), true);
+			logger.debug("removed "+cells.length+ " cells.");
+			//graph.getView().clear(defaultProject.getActiveWorkflow().getFirstNode(), true, true);
+			getGraph().removeCells(getGraph().getChildVertices(graph.getDefaultParent()));
+		}
+		finally
+		{
+			getGraphUtil().getCells().clear();
+			getGraphUtil().getTasks().clear();
+			getGraphUtil().getCopiedCells().clear();
+			getGraphUtil().getCurrentSubGraphs().clear();
+			getGraphUtil().setDefaultRootCell(null);
+			getGraphUtil().getDepricatedTasks().clear();
+			getGraphUtil().setMetaData(null);
+			getGraphUtil().getMostProcessedTasks().clear();
+			getGraphUtil().getNewTraversalEvents().clear();
+			getGraphUtil().getProcessedEdges().clear();
+			getGraphUtil().getProcessedEdgesCopyGraph().clear();
+			getGraphUtil().getTraversalEvents().clear();
+			
+		}
+		getGraph().getModel().endUpdate();
+		
+		Workflow w = this;
+		getTools().clear();
+		getLastTasks().clear();
+		setFirstNode(null);
+		
+		
+		
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resetWorkflowStep() {
+		boolean rc = true;
+		
+		getProcessedStates().clear();		
+		return rc;
+	}
+
 	public String getNextWorkflowStep()
 	{
 		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
@@ -903,6 +960,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		else if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
 				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
 			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS;
+		//else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
+				//getProcessedStates().get(GlobalVar.FINISHED))
+			//return GlobalVar.
 		else
 			return GlobalVar.GENERATE_ABSTRACT_WORKFLOW;
 	}
@@ -1137,14 +1197,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean generateGraphFromTemplate(EMap<String, Tool> tools) {
-		
-		//Iterator<Task> taskIterator=getWorkflowTemplate().getTasks().iterator();
-		//Object parent=graph.getDefaultParent();
-		//Object parent = null;
-		//Map<String,Object> map=new HashMap<String,Object>();
-		
+				
 		getGraph().getModel().beginUpdate();
-		// create styles
 		
 		logger.debug("got definition for tools: "+(tools!=null?tools.keySet():null));
         try {
@@ -2108,7 +2162,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						
 						getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 								traversalEvent.getTraversalCriterion().getId(),
-								groupingInstance.getName());
+								groupingInstance);
 						//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
 					}
 				}
@@ -2121,7 +2175,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
 					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 							traversalEvent.getTraversalCriterion().getId(),
-							"");
+							groupingInstances);
 					logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
 		
 				}

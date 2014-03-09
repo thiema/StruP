@@ -1504,6 +1504,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		addEOperation(workflowEClass, ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTask_InDataPorts(), this.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_OutDataPorts(), this.getDataPort(), null, "outDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

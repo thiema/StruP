@@ -764,4 +764,20 @@ public interface Workflow extends EObject {
 	 */
 	String getCurWorkflowStep();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean delete();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resetWorkflowStep();
+
 } // Workflow

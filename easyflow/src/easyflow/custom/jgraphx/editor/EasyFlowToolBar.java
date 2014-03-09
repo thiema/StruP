@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 
 import com.mxgraph.model.mxICell;
+import com.mxgraph.view.mxGraph;
 
 import easyflow.core.CorePackage;
 
@@ -71,33 +72,23 @@ public class EasyFlowToolBar extends JToolBar
 	private static final boolean		isFromJar	   = false;
 	private static final String         repositoryJar  = "/easyflow/custom/examples";
 	private static final String         repositoryFS   = "/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples";
-	private static       DefaultProject defaultProject = null;
 	private static final Logger         logger         = Logger.getLogger(EasyFlowToolBar.class);
-	private static       Examples       examples       = null;
-	private              Util           graphUtil      = JgraphxFactory.eINSTANCE.createUtil();
 	private final   Map<String, Object> objects        = new HashMap<String, Object>();
+	private final   EasyFlowGraphEditor editor         ;
+
+	private static       DefaultProject defaultProject = null;
+	private static       Examples       examples       = null;
+	
+	private              String         defaultProjectType = "sequencing";
+	private              Util           graphUtil      = JgraphxFactory.eINSTANCE.createUtil();
+	
 	private         DefaultMetaData     metaData;
 	private  ComposeWorkflowPanel composeWorkflowPanel = null;
 
 	//static int counter = 0, iteration = 1;
-	static String lastParent=null;
+	//static String lastParent=null;
 	
-	public enum State {
-		NONE,
-		COMPUTE_SUBGRAPH,
-		COPY_GRAPH, 
-		APPLY_TRAVERSAL_EVENT, 
-		REMOVE_SUBGRAPH;
-		
-	}
-	
-	public enum Event {
-		NONE,
-		NEXT;		
-	}
-	
-	
-	mxICell subGraphRoot;
+	//mxICell subGraphRoot;
 	TraversalEvent traversalEvent;
 	
 	
@@ -108,7 +99,7 @@ public class EasyFlowToolBar extends JToolBar
 	public EasyFlowToolBar(final EasyFlowGraphEditor editor, int orientation)
 	{
 		super(orientation);
-		
+		this.editor=editor;
 		register();
 		
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory
@@ -118,11 +109,11 @@ public class EasyFlowToolBar extends JToolBar
 		final Action calcAllProjectAction      = new CalcAllProjectAction();
 		//final Action applyGroupingCritAction   = new ApplyGroupingCritAction();
 		final Action configureProjectAction    = new ConfigureProjectAction();
-		final Action checkToolsAction          = new CheckToolsAction();
+		final Action initWorkflowAction        = new InitWorkflowAction();
 		final Action applyTraversalCritAction  = new ApplyTraversalCritAction();
 		final Action genAbstractWorkflowAction = new GenAbstractWorkflowAction();
 		final Action deleteGraphAction         = new DeleteGraphAction();
-		final Action drawGraphAction         = new DrawGraphAction();
+		final Action drawGraphAction           = new DrawGraphAction();
 		final Action validateGraphComponent    = new ValidateGraphComponentAction();
 		final Action anyGraphComponent         = new AnyGraphComponentAction();
 		final Action applyNextTraversalEvent   = new ApplyNextTraversalEventAction();
@@ -130,14 +121,14 @@ public class EasyFlowToolBar extends JToolBar
 
 
 		final JButton btnConfigureProject      = add(configureProjectAction);
+		final JButton btnInitWorkflow          = add(initWorkflowAction);
+		final JButton btnDeleteGraph           = add(deleteGraphAction);
 		final JButton btnCalcAll               = add(calcAllProjectAction);
 		final JButton btnGenAbstractWorkflow   = add(genAbstractWorkflowAction);
 		final JButton btnApplyTraversalCrit    = add(applyTraversalCritAction);
 		final JButton btnResolveUtilityTask    = add(resolveUtilityTasksAction);
 	  //final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
-		final JButton btnDeleteGraph           = add(deleteGraphAction);
 		final JButton btnDrawGraph             = add(drawGraphAction);
-		final JButton btnCheckTools            = add(checkToolsAction);
 		final JButton btnValidate              = add(validateGraphComponent);
 		final JButton btnAny                   = add(anyGraphComponent);
 		final JButton btnApplyNextTraversalEvent= add(applyNextTraversalEvent);
@@ -149,26 +140,23 @@ public class EasyFlowToolBar extends JToolBar
 		btnResolveUtilityTask.setEnabled(false);
 		
 		// init with a defaultproject
-		
-		GlobalVar.setDefaultProject(getExamples().getExamples().get("sequencing"));
-		setDefaultProject(GlobalVar.getDefaultProject());
-		
-		GlobalVar.getDefaultProject().setFromJar(isFromJar);
+		setProject();
 		getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
-		//GlobalVar.setEditor(editor);
 		GlobalVar.setUtil(getGraphUtil());
 		GlobalVar.getDefaultProject().setGraphUtil(getGraphUtil());
-		getDefaultProject().init();
-		editor.getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
-		setComposeWorkflowPanel(editor.getComposeWorkflowPanel());
+		logger.debug("graph hash="+getGraphUtil().getGraph().hashCode());
+		//getDefaultProject().init();
+		//editor.getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
+		//setComposeWorkflowPanel(editor.getComposeWorkflowPanel());
 		GlobalVar.setGuiMode(true);
 		GlobalVar.setComposeWorkflowPanel(getComposeWorkflowPanel());
 		
-		if (GlobalVar.getDefaultProject()!=null)
+		if (GlobalVar.getDefaultProject()!=null && getComposeWorkflowPanel()!=null)
 		{
 			getComposeWorkflowPanel().getRunButton().setEnabled(true);
 			getComposeWorkflowPanel().getNextButton().setEnabled(true);
 		}
+		
 		btnConfigureProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConfigureProjectDialog(editor);
@@ -204,7 +192,6 @@ public class EasyFlowToolBar extends JToolBar
 		});
 		
 		btnCalcAll.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				try {
 					logger.debug(defaultProject.getActiveWorkflow());
@@ -226,12 +213,13 @@ public class EasyFlowToolBar extends JToolBar
 				}
 			}
 		});
+		
 		btnGenAbstractWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 
 				if (defaultProject.generateAbstractGraph())
 				{
-					btnCheckTools.setEnabled(true);
+					btnInitWorkflow.setEnabled(true);
 					btnApplyTraversalCrit.setEnabled(true);
 				}
 				//objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
@@ -240,9 +228,23 @@ public class EasyFlowToolBar extends JToolBar
 			}
 		});
 
-		btnCheckTools.addActionListener(new ActionListener() {
+		btnInitWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				//setProject();
+				//GlobalVar.setDefaultProject(getExamples(true).getExamples().get(getDefaultProjectType()));
+				//setDefaultProject(GlobalVar.getDefaultProject());
+				//GlobalVar.getDefaultProject().setFromJar(isFromJar);
+
+				mxGraph g=getGraphUtil().getGraph();
+				logger.debug("graph hash="+g.hashCode());
+				getDefaultProject().init();
+				getEditor().getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
+				setComposeWorkflowPanel(getEditor().getComposeWorkflowPanel());
+				
+				getComposeWorkflowPanel().getRunButton().setEnabled(true);
+				getComposeWorkflowPanel().getNextButton().setEnabled(true);
+				btnDeleteGraph.setEnabled(true);
 			}
 		});
 		
@@ -266,7 +268,13 @@ public class EasyFlowToolBar extends JToolBar
 
 		btnDeleteGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if (defaultProject!=null)
+				{
+					if (defaultProject.getActiveWorkflow()!=null)
+						defaultProject.resetWorkflowStep();
+					defaultProject.delete();
+					setEnabled(false);
+				}
 			}
 		});
 		
@@ -291,7 +299,7 @@ public class EasyFlowToolBar extends JToolBar
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				EasyFlowGraph graph = (EasyFlowGraph) editor.getGraphComponent().getGraph();
+				EasyFlowGraph graph = (EasyFlowGraph) getEditor().getGraphComponent().getGraph();
 				Object parent = graph.getDefaultParent();
 				graph.getModel().beginUpdate();
 				try
@@ -350,11 +358,34 @@ public class EasyFlowToolBar extends JToolBar
 		
 	}
 	
-	public static DefaultProject getDefaultProject() {return defaultProject;}
-	public static void setDefaultProject(DefaultProject newDefaultProject) {defaultProject = newDefaultProject;}
-	private Examples getExamples()
+	public EasyFlowGraphEditor getEditor() {
+		return editor;
+	}
+
+	
+	private void setProject()
 	{
-		if (examples == null)
+		GlobalVar.setDefaultProject(getExamples(true).getExamples().get(getDefaultProjectType()));
+		setDefaultProject(GlobalVar.getDefaultProject());
+		GlobalVar.getDefaultProject().setFromJar(isFromJar);
+		//getDefaultProject().init();
+		//getEditor().getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
+	}
+	
+	public static DefaultProject getDefaultProject() 
+	{
+		return defaultProject;
+	}
+	
+	public static void setDefaultProject(DefaultProject newDefaultProject) 
+	{
+		defaultProject = newDefaultProject;
+	}
+	
+	private Examples getExamples(boolean refresh)
+	{
+		
+		if ((refresh) || examples == null)
 		{
 			examples = ExampleFactory.eINSTANCE.createExamples();
 			if (isFromJar)
@@ -364,6 +395,7 @@ public class EasyFlowToolBar extends JToolBar
 				
 			examples.readRepository();
 		}
+		
 		return examples;
 	}
 	
@@ -371,6 +403,7 @@ public class EasyFlowToolBar extends JToolBar
 	{
 		return graphUtil;
 	}
+	
 	private void setGraphUtil(Util util)
 	{
 		graphUtil = util;
@@ -401,10 +434,10 @@ public class EasyFlowToolBar extends JToolBar
 		public void actionPerformed(ActionEvent e) {}
 	}
 	
-	private class CheckToolsAction extends AbstractAction {
-		public CheckToolsAction() {
-			putValue(NAME, "CheckTools");
-			putValue(SHORT_DESCRIPTION, "Check Tools definitions.");	
+	private class InitWorkflowAction extends AbstractAction {
+		public InitWorkflowAction() {
+			putValue(NAME, "Init");
+			putValue(SHORT_DESCRIPTION, "Initialize Workflow.");	
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {}
@@ -436,6 +469,7 @@ public class EasyFlowToolBar extends JToolBar
 			putValue(NAME, "CalcAll");
 			putValue(SHORT_DESCRIPTION, "Perform whole analysis.");
 		}
+		@Override
 		public void actionPerformed(ActionEvent e) {}
 	}
 
@@ -544,7 +578,7 @@ public class EasyFlowToolBar extends JToolBar
 	        
 			// add the radio buttons to select predefined configs
 	        
-			for (final String exampleName : getExamples().getExamples().keySet())
+			for (final String exampleName : getExamples(true).getExamples().keySet())
 			{
 				//popup.add(newContentPane);
 				JRadioButton radioButton = new JRadioButton(exampleName);
@@ -666,8 +700,8 @@ public class EasyFlowToolBar extends JToolBar
 					e1.printStackTrace();
 				}
         	}
-        	else if (getExamples().getExamples().containsKey(group.getSelection().getActionCommand()))
-        		curProject = getExamples().getExamples().get(group.getSelection().getActionCommand());
+        	else if (getExamples(false).getExamples().containsKey(group.getSelection().getActionCommand()))
+        		curProject = getExamples(false).getExamples().get(group.getSelection().getActionCommand());
         	else
         		rc = false;
 			if (rc)
@@ -714,5 +748,13 @@ public class EasyFlowToolBar extends JToolBar
 
 	public void setComposeWorkflowPanel(ComposeWorkflowPanel composeWorkflowPanel) {
 		this.composeWorkflowPanel = composeWorkflowPanel;
+	}
+
+	public String getDefaultProjectType() {
+		return defaultProjectType;
+	}
+
+	public void setDefaultProjectType(String defaultProjectType) {
+		this.defaultProjectType = defaultProjectType;
 	}
 }

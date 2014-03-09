@@ -606,9 +606,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				is = source.toURL().openStream();
 			if (is != null)
 				setJsonObject(JSONObject.fromObject(IOUtils.toString(is)));
-		//} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			else
+				logger.warn("no Input stream found.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -681,8 +680,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		}
 		workflow.setMetaData(metaData);
 
-		
-		
 		// processing config
 		if (jsonObject.has("processing"))
 		{
@@ -695,6 +692,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				workflow.getProcessingConfig().put(key, processingCfg.getString(key));
 			}
 		}
+		
 		// catalog
 		if (jsonObject.has("catalog"))
 		{
@@ -711,6 +709,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			}
 
 		}
+		
 		// workflow config
 		JSONObject workflowCfg=jsonObject.getJSONObject("workflow");
 		workflow.setMode(workflowCfg.getString("defaultMode"));
@@ -744,9 +743,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
     	}
     	
     	workflow.setRootTask(rootTask);
-    	//rootTask.getO
-
-		//JSONArray tmp=workflowCfg.getJSONArray("defaultGroupingCriteria");
 
 		for (int i=0; i<workflowCfg.getJSONArray("defaultGroupingCriteria").size();i++)
 			workflow.getDefaultGroupingCriteria().add(workflowCfg.getJSONArray("defaultGroupingCriteria").getString(i));
@@ -784,7 +780,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			}
 		}		
 		
-		ToolSchemata toolSchemata = ToolFactory.eINSTANCE.createToolSchemata();
+		ToolSchemata    toolSchemata   = ToolFactory.eINSTANCE.createToolSchemata();
 		ToolDefinitions toolDefintions = ToolFactory.eINSTANCE.createToolDefinitions();
 		
 		/*
@@ -920,16 +916,13 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		if (getGraphUtil() == null)
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
-		// XML util depricated !! ... to be removed/refactored.
-		//XMLUtil.container.put("tasks", getGraphUtil().getTasks());
 		
         GlobalVar.setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
-		
+		logger.debug(getGraphUtil().getGraph().hashCode());
 		getActiveWorkflow().readWorkfowTemplate();
 		
-		//getActiveWorkflow().generateGraphFromTemplate(getTools());
 		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
 		
 		applyMetaData();
@@ -938,6 +931,32 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean delete() {
+
+		boolean rc = true;
+		
+		Workflow w = getActiveWorkflow();
+		if (w!=null)
+		{
+			if (!w.delete())
+			{
+				logger.warn("couldnt delete workflow.");
+				rc = false;
+			}
+			if (!getWorkflows().remove(getActiveWorkflow()))
+			{
+				logger.warn("couldnt remove workflow from list of workflows.");
+				rc = false;
+			}
+		}
+		return rc;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -998,7 +1017,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public boolean generateWorklowForExecutionSystem() {
-
 		return getActiveWorkflow().generateWorklowForExecutionSystem();
 	}
 
@@ -1094,6 +1112,15 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resetWorkflowStep() {
+		return getActiveWorkflow().resetWorkflowStep();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
 	 * @throws CellNotFoundException 
 	 * @generated not
@@ -1129,28 +1156,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		return getActiveWorkflow().runEntireWorkflow()==0;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	
-	/*
-	public void autoSetup() throws CellNotFoundException, TaskNotFoundException {
-		
-		Tool tool = ToolFactory.eINSTANCE.createTool();
-		//tool.writeModelToXML();
-		
-		clearWorkflows();
-		readProjectJson(getConfigSource());
-		
-		if (init())
-		{
-			
-			getActiveWorkflow().resolveTraversalEvents();
-		}
-	}
-	*/
 	
 	/**
 	 * <!-- begin-user-doc -->

@@ -1,6 +1,7 @@
 package easyflow.custom.jgraphx;
 
 import org.apache.log4j.Logger;
+import org.codehaus.groovy.tools.shell.commands.SetCommand;
 
 import easyflow.custom.util.GlobalVar;
 import easyflow.ui.DefaultProject;
@@ -9,16 +10,15 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 
 
 	
-	private static final Logger         logger = Logger.getLogger(EasyFlowOverallWorker.class);
-	private final ComposeWorkflowPanel composeWorkflowPanel;
+	private static final Logger          logger = Logger.getLogger(EasyFlowOverallWorker.class);
+	private final   ComposeWorkflowPanel composeWorkflowPanel;
 	
-	private boolean generateAbstractGraph   = true;
+	private boolean generateAbstractGraph     = true;
 	private boolean resolveTraversalCriterion = true;
-	private boolean applyGroupingCriterion  = true;
-	private boolean addUtilityTask          = true;
-	private boolean applyParameterCriterion = true;
-	
-	private boolean processNextStepOnly     = true;
+	private boolean applyGroupingCriterion    = true;
+	private boolean addUtilityTask            = true;
+	private boolean applyParameterCriterion   = true;
+	private boolean processNextStepOnly       = true;
 	
 	
 	public EasyFlowOverallWorker(DefaultProject defaultProject, 
@@ -118,7 +118,10 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 		{
 			logger.debug(getDefaultProject().getWorkflowStepLabelFor(getDefaultProject().getNextWorkflowStep()));
 			if (isCancelled())
+			{
+				logger.debug("workflow cancelled !");
 				break;
+			}
 			updateProgress(++i,numberOfTasks);
 			rc = getDefaultProject().runNextWorkflowStep();
 			GlobalVar.getGraphUtil().layoutGraph();
@@ -129,7 +132,10 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 		}
 		logger.debug(getProgress()+" "+getDefaultProject().hasNextWorkflowStep());
 		if (isProcessNextStepOnly() && getDefaultProject().hasNextWorkflowStep())
+		{
+			composeWorkflowPanel.getStopButton().setEnabled(true);
 			return 1;
+		}
 		logger.debug(isDone()+" "+isWorkflowDone());
 		if (rc == 0)
 		{
@@ -153,7 +159,6 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 			composeWorkflowPanel.getRunButton().setEnabled(false);
 			composeWorkflowPanel.getNextButton().setEnabled(false);
 		}
-
 		
 		return 1;
 		

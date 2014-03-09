@@ -56,11 +56,16 @@ public class GlobalVar {
 	
 	public static final String VERTEX_STYLE = "EASYFLOW_VERTEX_STYLE";
 	public static final String EDGE_STYLE   = "EASYFLOW_EDGE_STYLE";
+	public static final String TASK_CIRCUMVENTING_EDGE_STYLE = "EASYFLOW_TASK_CIRC_EDGE_STYLE";
+	
+	private static Map<String, Object> defaultEdgeStyle   = new HashMap<String, Object>();
+	private static Map<String, Object> defaultVertexStyle = new HashMap<String, Object>();
 	
 	public static final double defaultCellXPos   = 400;
 	public static final double defaultCellYPos   = 100;
 	public static final double defaultCellWidth  = 200;
 	public static final double defaultCellHeight =  40;
+	
 
 	
 	private static Util graphUtil = null;
@@ -139,6 +144,23 @@ public class GlobalVar {
 
 	public static void setTemplateLink(DataLink templateLink) {
 		GlobalVar.templateLink = templateLink;
+	}
+	public static Map<String, Object> getDefaultEdgeStyle() {
+		return defaultEdgeStyle;
+	}
+
+	public static void setDefaultEdgeStyle(Map<String, Object> defaultEdgeStyle)
+	{
+		GlobalVar.defaultEdgeStyle=defaultEdgeStyle;
+	}
+	
+	public static Map<String, Object> getDefaultVertexStyle() {
+		return defaultVertexStyle;
+	}
+
+	public static void setDefaultVertexStyle(Map<String, Object> defaultVertexStyle)
+	{
+		GlobalVar.defaultVertexStyle=defaultVertexStyle;
 	}
 
 }

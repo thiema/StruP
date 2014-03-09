@@ -970,6 +970,142 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, GroupingInstance groupingInstance) throws CellNotFoundException, TaskNotFoundException {
+		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
+		groupingInstances.add(groupingInstance);
+		applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstances);
+	}
+
+
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * apply the traversal event:
+	 * go along the "template" graph defined by the parent cell
+	 * and create a new cell for each chunk that is defined 
+	 * for associated traversal event and integrate it into the main graph 
+	 * (it can be seen as: copying the graph, one copy per chunklist)
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @generated not
+	 */
+	
+	public void applyTraversalEvent(mxICell root, 
+			final TraversalEvent traversalEvent,
+			final String groupingStr,
+			final EList<GroupingInstance> groupingInstances
+			//final String groupingInstance
+			) throws TaskNotFoundException 
+	{
+		
+		final EMap<String, mxICell> mergeCells = new BasicEMap<String, mxICell>();
+		mxICellVisitor visitor=new mxICellVisitor() {
+			
+			
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				// set the current task
+				Task task = null;
+				try {
+					task = loadTask(vertex);
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String taskString = task.getUniqueString();
+				logger.trace(
+						"applyTraversalEvent(): "+taskString 
+						+ " #mergeTasks="        +traversalEvent.getMergeTask().size()
+						+ " #incomingTasks("     +task.getPreviousTaskStr()+
+						                     ")="+getGraph().getIncomingEdges(getCells().get(task.getPreviousTaskStr())).length
+						+ " cell=("              +getCells().get(task.getPreviousTaskStr())+")"
+						+ " dataPort="           +traversalEvent.getTraversalCriterion().getDataPort()
+						);
+				// apply the splitting criterion, i.e. check for all old parents
+				// (task.getPreviousTask(), which doesn't have the te applied)
+				// get all parent cells
+				// logger.trace(task.getPreviousTaskStr()+" "+getCells().get(task.getPreviousTaskStr()));
+				for (Object edgeIn : getGraph().getIncomingEdges(
+						getCells().get(task.getPreviousTaskStr()))) 
+				{
+					
+					Object parentCell = getSource((mxCell) edgeIn);
+							//getGraph().getView().getVisibleTerminal(edgeIn, true);
+					try {
+						DataLink dataLink=loadDataLink(edgeIn);
+						boolean shallProcess=true;
+						if (dataLink.getCondition()!=null)
+							shallProcess=task.shallProcess(groupingInstances, groupingStr, 
+									dataLink.getCondition().getForbidden(), true);
+						logger.debug("applyTraversalEvent(): "
+								+dataLink.isUnconditional()+" "
+								+shallProcess+" "
+								+getSourceTask((mxCell) edgeIn).getUniqueString());
+						if (dataLink.isUnconditional() || shallProcess)
+							applySplittingCriterion((mxICell) vertex,
+								(mxICell) parentCell, edgeIn, groupingStr);
+					} catch (TaskNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (DataLinkNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (TraversalChunkNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				// if (traversalEvent.getMergeTask().contains(task))
+				logger.trace("applyTraversalEvent(): "
+						+"mergeTasks="      +getTaskStringList(traversalEvent.getMergeTask())
+						+" size="           +traversalEvent.getMergeTask().size()
+						+" previousTaskStr="+task.getPreviousTaskStr()
+						+" ("               +task.getUniqueString()+", "
+						                    +getTasks().get(task.getPreviousTaskStr()).getUniqueString()+")");
+				if (containsTask(traversalEvent.getMergeTask(),
+						getTasks().get(task.getPreviousTaskStr())))
+				{
+					mergeCells.put(taskString, (mxICell) vertex);
+					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged");
+				}
+				return true;
+			}
+		};		
+		graph.getModel().beginUpdate();try{
+		getGraph().traverse(root, true, visitor);
+		layoutGraph();
+		}		finally		{			graph.getModel().endUpdate();		}
+
+
+		
+
+		// apply the mergingTasks
+		for (String mergeTaskStr : mergeCells.keySet())
+		{
+			logger.debug("merge task:"+mergeTaskStr+" ("+getTasks().get(mergeTaskStr).getPreviousTaskStr()+")");
+			try {
+				applyMergingCriterion(mergeCells.get(mergeTaskStr), 
+						getCells().get(getTasks().get(mergeTaskStr).getPreviousTaskStr()), 
+						groupingStr);
+			} catch (DataLinkNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TraversalChunkNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+
+	}
+
+	
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -1373,119 +1509,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 	}
 	
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * apply the traversal event:
-	 * go along the "template" graph defined by the parent cell
-	 * and create a new cell for each chunk that is defined 
-	 * for associated traversal event and integrate it into the main graph 
-	 * (it can be seen as: copying the graph, one copy per chunklist)
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @generated not
-	 */
-	
-	public void applyTraversalEvent(mxICell root, 
-			final TraversalEvent traversalEvent,
-			final String groupingStr,
-			//final EList<GroupingInstance> groupingInstances
-			final String instanceStr
-			) throws TaskNotFoundException 
-	{
-		
-		final EMap<String, mxICell> mergeCells = new BasicEMap<String, mxICell>();
-		mxICellVisitor visitor=new mxICellVisitor() {
-			
-			
-			@Override
-			public boolean visit(Object vertex, Object edge) {
-				// set the current task
-				Task task = null;
-				try {
-					task = loadTask(vertex);
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				String taskString = task.getUniqueString();
-				logger.trace(
-						"applyTraversalEvent(): "+taskString 
-						+ " #mergeTasks="        +traversalEvent.getMergeTask().size()
-						+ " #incomingTasks("     +task.getPreviousTaskStr()+
-						                     ")="+getGraph().getIncomingEdges(getCells().get(task.getPreviousTaskStr())).length
-						+ " cell=("              +getCells().get(task.getPreviousTaskStr())+")"
-						+ " dataPort="           +traversalEvent.getTraversalCriterion().getDataPort()
-						);
-				// apply the splitting criterion, i.e. check for all old parents
-				// (task.getPreviousTask(), which doesn't have the te applied)
-				// get all parent cells
-				// logger.trace(task.getPreviousTaskStr()+" "+getCells().get(task.getPreviousTaskStr()));
-				for (Object edgeIn : getGraph().getIncomingEdges(
-						getCells().get(task.getPreviousTaskStr()))) 
-				{
-					
-					Object parentCell = getSource((mxCell) edgeIn);
-							//getGraph().getView().getVisibleTerminal(edgeIn, true);
-					try {
-						DataLink dataLink=loadDataLink(edgeIn);
-						if (dataLink.isUnconditional())
-							applySplittingCriterion((mxICell) vertex,
-								(mxICell) parentCell, edgeIn, groupingStr);
-					} catch (TaskNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (DataLinkNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (TraversalChunkNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-				// if (traversalEvent.getMergeTask().contains(task))
-				logger.trace("applyTraversalEvent(): "
-						+"mergeTasks="      +getTaskStringList(traversalEvent.getMergeTask())
-						+" size="           +traversalEvent.getMergeTask().size()
-						+" previousTaskStr="+task.getPreviousTaskStr()
-						+" ("               +task.getUniqueString()+", "
-						                    +getTasks().get(task.getPreviousTaskStr()).getUniqueString()+")");
-				if (containsTask(traversalEvent.getMergeTask(),
-						getTasks().get(task.getPreviousTaskStr())))
-				{
-					mergeCells.put(taskString, (mxICell) vertex);
-					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged");
-				}
-				return true;
-			}
-		};		
-		graph.getModel().beginUpdate();try{
-		getGraph().traverse(root, true, visitor);
-		layoutGraph();
-		}		finally		{			graph.getModel().endUpdate();		}
-
-
-		
-
-		// apply the mergingTasks
-		for (String mergeTaskStr : mergeCells.keySet())
-		{
-			logger.debug("merge task:"+mergeTaskStr+" ("+getTasks().get(mergeTaskStr).getPreviousTaskStr()+")");
-			try {
-				applyMergingCriterion(mergeCells.get(mergeTaskStr), 
-						getCells().get(getTasks().get(mergeTaskStr).getPreviousTaskStr()), 
-						groupingStr);
-			} catch (DataLinkNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TraversalChunkNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2044,8 +2067,10 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	public TraversalEvent getNextTraversalEvent() throws TaskNotFoundException {
 
+		logger.debug(""+getTraversalEvents().size()+" "+getNewTraversalEvents().size()+" "+getDefaultRootCell());
 		if (getTraversalEvents().isEmpty())
 		{
+			
 			getTraversalEvents().addAll(getTraversalEvents(getDefaultRootCell(), true));
 			getTraversalEvents().add(TraversalFactory.eINSTANCE.createTraversalEvent());
 		}
@@ -2053,7 +2078,10 @@ public class UtilImpl extends EObjectImpl implements Util {
 			!getTraversalEvents().isEmpty())
 		{
 			if (getTraversalEvents().get(0).getSplitTask() == null)
+			{
+				getTraversalEvents().remove(0);
 				return null;
+			}
 			
 			getNewTraversalEvents().addAll(
 					getNewTraversalEvents(

@@ -443,7 +443,15 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMetadataPackage.getGroupingInstance(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+
+		op = addEOperation(utilEClass, null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMetadataPackage.getGroupingInstance(), "instanceStr", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 

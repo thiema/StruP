@@ -416,6 +416,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveTraversalCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
@@ -485,6 +487,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEOperation(iProjectEClass, ecorePackage.getEString(), "getNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultProjectEClass, DefaultProject.class, "DefaultProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultProject_Workflows(), theCorePackage.getWorkflow(), null, "workflows", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

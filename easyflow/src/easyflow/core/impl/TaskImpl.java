@@ -842,11 +842,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 		/**
 		 * Parse the tools field. Check for multiple implementing tools
 		 */
-        tmp=wtplArray[toolField].split(",");
-        for (int i=0; i<tmp.length; i++) {
-        	getToolNames().put(tmp[i], new BasicEList<String>());
-        }
-
+		if (!wtplArray[toolField].isEmpty())
+		{
+	        tmp=wtplArray[toolField].split(",");
+	        for (int i=0; i<tmp.length; i++) {
+	        	getToolNames().put(tmp[i], new BasicEList<String>());
+	        }
+		}
         
         /**
          * Read DataFormatIn/Out. and set DataPorts

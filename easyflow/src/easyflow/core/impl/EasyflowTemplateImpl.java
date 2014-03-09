@@ -186,28 +186,26 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
         String strLine;
         try {
         	
-        	
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					String[] parentTaskNames=strLine.split("\t")[1].split(",");
 					if (!parentTaskNames[0].equals("")) {
-					String taskName=strLine.split("\t")[0];
-					if (!tmpMap.containsKey(taskName)) logger.error("task not found: "+taskName);
-					Task task=tmpMap.get(taskName);
-					logger.debug("curTask: "+task.getName()+" "+taskName);
-					for (String parentTaskName:parentTaskNames) {
-						boolean found=false;
-						if (task.getParents().containsKey(parentTaskName))
-							found=true;
-						logger.debug(found+" "+parentTaskName);
-						if (!found)
-							if (tmpMap.containsKey(parentTaskName)) {
-								task.getParents().put(parentTaskName, tmpMap.get(parentTaskName));
-							} else logger.warn("parent task not found: "+parentTaskName);
-						
+						String taskName=strLine.split("\t")[0];
+						if (!tmpMap.containsKey(taskName)) 
+							logger.error("task not found: "+taskName);
+						Task task=tmpMap.get(taskName);
+						logger.debug("curTask: "+task.getName()+" "+taskName);
+						for (String parentTaskName:parentTaskNames) {
+							boolean found=false;
+							if (task.getParents().containsKey(parentTaskName))
+								found=true;
+							logger.debug(found+" "+parentTaskName);
+							if (!found)
+								if (tmpMap.containsKey(parentTaskName)) {
+									task.getParents().put(parentTaskName, tmpMap.get(parentTaskName));
+								} else logger.warn("parent task not found: "+parentTaskName);
+						}
 					}
-					}
-						
 				}
 			}
         } catch (IOException e) {

@@ -226,10 +226,10 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 	public void readRepository()
 	{
 		URI uri;
-
+		getExamples().clear();
 		try {
-			uri = URIUtil.createURI(getLocator(), "examples.tsv");
-			InputStreamReader isReader= URIUtil.getInputStreamReader(uri, isFromJar());
+			uri                           = URIUtil.createURI(getLocator(), "examples.tsv");
+			InputStreamReader isReader    = URIUtil.getInputStreamReader(uri, isFromJar());
 			BufferedReader bufferedReader = new BufferedReader(isReader);
 			String strLine;
 			while ((strLine = bufferedReader.readLine()) != null)   {
