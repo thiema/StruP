@@ -65,6 +65,7 @@ public class GlobalVar {
 	public static final double defaultCellYPos   = 100;
 	public static final double defaultCellWidth  = 200;
 	public static final double defaultCellHeight =  40;
+	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
 	
 
 	

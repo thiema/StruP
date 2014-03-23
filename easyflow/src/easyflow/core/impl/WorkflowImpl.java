@@ -70,6 +70,7 @@ import java.util.Map.Entry;
 import java.util.Stack;
 
 
+import org.apache.commons.collections.iterators.ReverseListIterator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.groovy.util.StringUtil;
@@ -902,6 +903,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			logger.debug("removed "+cells.length+ " cells.");
 			//graph.getView().clear(defaultProject.getActiveWorkflow().getFirstNode(), true, true);
 			getGraph().removeCells(getGraph().getChildVertices(graph.getDefaultParent()));
+			getGraph().removeCells(getGraphUtil().getUtilityTaskCells().toArray());
 		}
 		finally
 		{
@@ -914,9 +916,11 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			getGraphUtil().setMetaData(null);
 			getGraphUtil().getMostProcessedTasks().clear();
 			getGraphUtil().getNewTraversalEvents().clear();
-			getGraphUtil().getProcessedEdges().clear();
-			getGraphUtil().getProcessedEdgesCopyGraph().clear();
+			//getGraphUtil().getProcessedEdges().clear();
+			//getGraphUtil().getProcessedEdgesCopyGraph().clear();
 			getGraphUtil().getTraversalEvents().clear();
+			getGraphUtil().getUtilityTaskCells().clear();
+			getGraphUtil().getUtilityTasks().clear();
 			
 		}
 		getGraph().getModel().endUpdate();
@@ -1949,23 +1953,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean resolveIncompatibleGroupings() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
-		
-		boolean rc=false;
-		for (Entry<mxICell, EList<mxICell>> e:getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet())
-		{
-			rc=getGraphUtil().resolveEdge(e);
-		}
-		if (rc)
-			getProcessedStates().put(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
-		return rc;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
 	public boolean applyParameterCriteria() {
 		boolean rc = true;
 		if (rc)
@@ -2113,18 +2100,29 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+		
 		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
-		//Task mostAdvancedMergeTask = traversalEvent.getMergeTask();
+		
 		while (traversalEvent != null)
 		{
-			logger.debug(getGraphUtil().traversalEventToString(traversalEvent)
-					+" "+traversalEvent.getTraversalCriterion().getId().isEmpty());
+			logger.debug("applyGroupingCriteria(): te="+getGraphUtil().traversalEventToString(traversalEvent)
+					+" empty id?="+traversalEvent.getTraversalCriterion().getId().isEmpty());
 			applyTraversalEvent(traversalEvent);
 			traversalEvent = getGraphUtil().getNextTraversalEvent();
+			
+			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
+			{
+				getGraphUtil().removeSubGraph(
+						subGraphRoot1, 
+						traversalEvent);
+			}
+			getGraphUtil().resetFlags();
+			getGraphUtil().getCurrentSubGraphs().clear();
+			
 		}
 		getProcessedStates().put(GlobalVar.GROUPING_APPLIED, true);
-		return true;
 		
+		return true;
 	}
 	
 	/**
@@ -2186,17 +2184,21 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			
 		}
 		
-		if (getGraphUtil().getNewTraversalEvents().isEmpty() && true)
+		//logger.debug("applyTraversalEvents(): check for new traversal events:");
+		if (getGraphUtil().getNewTraversalEvents().isEmpty() && false)
 		{
+			logger.debug("applyTraversalEvents(): no more dependent traversal events found. Subgraph can be safely removed.");
 			//getGraphUtil().fixOffTargetCells((mxICell) getFirstNode(), traversalEvent.getTraversalCriterion().getId());
 			// cleanup and reset
 			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
+			{
 				getGraphUtil().removeSubGraph(
 						subGraphRoot1, 
 						traversalEvent);
+			}
 			getGraphUtil().resetFlags();
 			getGraphUtil().getCurrentSubGraphs().clear();
-		}
+		}else{logger.debug("applyTraversalEvents(): ... more traversal events found.");		}
 
 	}	
 
@@ -2219,6 +2221,35 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	}
 
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveIncompatibleGroupings() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+		
+		boolean rc=false;
+		//Iterator<Entry<mxICell, EList<mxICell>>> it = getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet().iterator();
+		EMap<mxICell, EList<mxICell>> untranslatedDLs = getGraphUtil().findCellsWithUntranslatedDataLinks();
+		ListIterator<Entry<mxICell, EList<mxICell>>> it = untranslatedDLs.listIterator(untranslatedDLs.size()); 
+		while (it.hasPrevious())
+		{
+			Entry<mxICell, EList<mxICell>> entry = it.previous();
+			logger.debug("resolveIncompatibleGroupings(): resolve for task="+getGraphUtil().loadTask(entry.getKey()).getUniqueString());
+			for (mxICell cell:entry.getValue())
+			{
+				DataLink dataLink = getGraphUtil().loadDataLink(cell);
+				logger.debug("resolveIncompatibleGroupings(): "+dataLink.getParentGroupingStr()+"->"+dataLink.getGroupingStr());
+			}
+			rc=getGraphUtil().resolveEdge(entry);
+		}
+		getGraphUtil().layoutGraph();
+		if (rc)
+			getProcessedStates().put(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
+		return rc;
+	}
+
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

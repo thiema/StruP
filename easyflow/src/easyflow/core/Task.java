@@ -66,6 +66,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.Task#getAnalysisTypes <em>Analysis Types</em>}</li>
  *   <li>{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}</li>
+ *   <li>{@link easyflow.core.Task#getRecords <em>Records</em>}</li>
  * </ul>
  * </p>
  *
@@ -523,6 +524,22 @@ public interface Task extends EObject {
 	EList<String> getCircumventingParents();
 
 	/**
+	 * Returns the value of the '<em><b>Records</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.traversal.TraversalChunk}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Records</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Records</em>' reference list.
+	 * @see easyflow.core.CorePackage#getTask_Records()
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getRecords();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -760,6 +777,38 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	boolean canFilterInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getRecords(boolean intersect);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
+	 * @generated
+	 */
+	boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
+	 * @generated
+	 */
+	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -142,22 +142,22 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__DEFAULT_ROOT_CELL = 7;
 
 	/**
-	 * The feature id for the '<em><b>Processed Edges Copy Graph</b></em>' map.
+	 * The feature id for the '<em><b>Processed Edges Copy Graph DEPRECATED</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__PROCESSED_EDGES_COPY_GRAPH = 8;
+	int UTIL__PROCESSED_EDGES_COPY_GRAPH_DEPRECATED = 8;
 
 	/**
-	 * The feature id for the '<em><b>Processed Edges</b></em>' map.
+	 * The feature id for the '<em><b>Processed Edges DEPRICATED</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__PROCESSED_EDGES = 9;
+	int UTIL__PROCESSED_EDGES_DEPRICATED = 9;
 
 	/**
 	 * The feature id for the '<em><b>Add Edges</b></em>' map.
@@ -223,13 +223,22 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__UTILITY_TASKS = 16;
 
 	/**
+	 * The feature id for the '<em><b>Utility Task Cells</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UTIL__UTILITY_TASK_CELLS = 17;
+
+	/**
 	 * The number of structural features of the '<em>Util</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 17;
+	int UTIL_FEATURE_COUNT = 18;
 
 
 	/**
@@ -331,26 +340,26 @@ public interface JgraphxPackage extends EPackage {
 	EAttribute getUtil_DefaultRootCell();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph <em>Processed Edges Copy Graph</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph_DEPRECATED <em>Processed Edges Copy Graph DEPRECATED</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Processed Edges Copy Graph</em>'.
-	 * @see easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph()
+	 * @return the meta object for the map '<em>Processed Edges Copy Graph DEPRECATED</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph_DEPRECATED()
 	 * @see #getUtil()
 	 * @generated
 	 */
-	EReference getUtil_ProcessedEdgesCopyGraph();
+	EReference getUtil_ProcessedEdgesCopyGraph_DEPRECATED();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdges <em>Processed Edges</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdges_DEPRICATED <em>Processed Edges DEPRICATED</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Processed Edges</em>'.
-	 * @see easyflow.graph.jgraphx.Util#getProcessedEdges()
+	 * @return the meta object for the map '<em>Processed Edges DEPRICATED</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getProcessedEdges_DEPRICATED()
 	 * @see #getUtil()
 	 * @generated
 	 */
-	EReference getUtil_ProcessedEdges();
+	EReference getUtil_ProcessedEdges_DEPRICATED();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}'.
@@ -428,6 +437,17 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getUtil_UtilityTasks();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.graph.jgraphx.Util#getUtilityTaskCells <em>Utility Task Cells</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Utility Task Cells</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getUtilityTaskCells()
+	 * @see #getUtil()
+	 * @generated
+	 */
+	EAttribute getUtil_UtilityTaskCells();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -517,19 +537,19 @@ public interface JgraphxPackage extends EPackage {
 		 */
 		EAttribute UTIL__DEFAULT_ROOT_CELL = eINSTANCE.getUtil_DefaultRootCell();
 		/**
-		 * The meta object literal for the '<em><b>Processed Edges Copy Graph</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Processed Edges Copy Graph DEPRECATED</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UTIL__PROCESSED_EDGES_COPY_GRAPH = eINSTANCE.getUtil_ProcessedEdgesCopyGraph();
+		EReference UTIL__PROCESSED_EDGES_COPY_GRAPH_DEPRECATED = eINSTANCE.getUtil_ProcessedEdgesCopyGraph_DEPRECATED();
 		/**
-		 * The meta object literal for the '<em><b>Processed Edges</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Processed Edges DEPRICATED</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UTIL__PROCESSED_EDGES = eINSTANCE.getUtil_ProcessedEdges();
+		EReference UTIL__PROCESSED_EDGES_DEPRICATED = eINSTANCE.getUtil_ProcessedEdges_DEPRICATED();
 		/**
 		 * The meta object literal for the '<em><b>Add Edges</b></em>' map feature.
 		 * <!-- begin-user-doc -->
@@ -579,6 +599,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UTIL__UTILITY_TASKS = eINSTANCE.getUtil_UtilityTasks();
+		/**
+		 * The meta object literal for the '<em><b>Utility Task Cells</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UTIL__UTILITY_TASK_CELLS = eINSTANCE.getUtil_UtilityTaskCells();
 
 	}
 

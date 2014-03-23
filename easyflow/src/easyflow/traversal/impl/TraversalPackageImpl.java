@@ -457,6 +457,15 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTraversalChunk_Derived1by1() {
+		return (EAttribute)traversalChunkEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TraversalFactory getTraversalFactory() {
 		return (TraversalFactory)getEFactoryInstance();
 	}
@@ -511,6 +520,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		traversalChunkEClass = createEClass(TRAVERSAL_CHUNK);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__NAME);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__LOGGER);
+		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__DERIVED1BY1);
 	}
 
 	/**
@@ -592,6 +602,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEClass(traversalChunkEClass, TraversalChunk.class, "TraversalChunk", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTraversalChunk_Name(), ecorePackage.getEString(), "name", null, 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalChunk_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalChunk.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalChunk_Derived1by1(), ecorePackage.getEBoolean(), "derived1by1", "false", 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //TraversalPackageImpl

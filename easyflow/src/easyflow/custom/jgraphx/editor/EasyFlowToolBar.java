@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -119,14 +120,13 @@ public class EasyFlowToolBar extends JToolBar
 		final Action applyNextTraversalEvent   = new ApplyNextTraversalEventAction();
 		final Action resolveUtilityTasksAction = new ResolveUtilityTaskAction();
 
-
 		final JButton btnConfigureProject      = add(configureProjectAction);
 		final JButton btnInitWorkflow          = add(initWorkflowAction);
 		final JButton btnDeleteGraph           = add(deleteGraphAction);
 		final JButton btnCalcAll               = add(calcAllProjectAction);
 		final JButton btnGenAbstractWorkflow   = add(genAbstractWorkflowAction);
 		final JButton btnApplyTraversalCrit    = add(applyTraversalCritAction);
-		final JButton btnResolveUtilityTask    = add(resolveUtilityTasksAction);
+		final JButton btnResolveUtilityTasks   = add(resolveUtilityTasksAction);
 	  //final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
 		final JButton btnDrawGraph             = add(drawGraphAction);
 		final JButton btnValidate              = add(validateGraphComponent);
@@ -137,7 +137,7 @@ public class EasyFlowToolBar extends JToolBar
 		//btnGenAbstractW.setEnabled(false);
 		//btnApplyGroupingCrit.setEnabled(false);
 		btnApplyTraversalCrit.setEnabled(false);
-		btnResolveUtilityTask.setEnabled(false);
+		btnResolveUtilityTasks.setEnabled(false);
 		
 		// init with a defaultproject
 		setProject();
@@ -163,7 +163,7 @@ public class EasyFlowToolBar extends JToolBar
 			}
 		});
 		
-		btnResolveUtilityTask.addActionListener(new ActionListener() {
+		btnResolveUtilityTasks.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -195,11 +195,26 @@ public class EasyFlowToolBar extends JToolBar
 			public void actionPerformed(ActionEvent e) {
 				try {
 					logger.debug(defaultProject.getActiveWorkflow());
-					if (defaultProject.generateAbstractGraph()
-							&& defaultProject.resolveTraversalCriteria()
-							&& defaultProject.applyGroupingCriteria())
-					{
-						btnResolveUtilityTask.setEnabled(true);
+					try {
+						if (defaultProject.generateAbstractGraph()
+								&& defaultProject.resolveTraversalCriteria()
+								&& defaultProject.applyGroupingCriteria()
+								&& defaultProject.resolveUtilityTasks())
+						{
+							btnResolveUtilityTasks.setEnabled(true);
+						}
+					} catch (DataLinkNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (DataPortNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ToolNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (UtilityTaskNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				} catch (CellNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -214,20 +229,6 @@ public class EasyFlowToolBar extends JToolBar
 			}
 		});
 		
-		btnGenAbstractWorkflow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-
-				if (defaultProject.generateAbstractGraph())
-				{
-					btnInitWorkflow.setEnabled(true);
-					btnApplyTraversalCrit.setEnabled(true);
-				}
-				//objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
-				//objects.put("state", State.NONE);
-				//objects.put("event", Event.NONE);
-			}
-		});
-
 		btnInitWorkflow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -248,11 +249,36 @@ public class EasyFlowToolBar extends JToolBar
 			}
 		});
 		
+			btnGenAbstractWorkflow.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+
+					try {
+						if (defaultProject.generateAbstractGraph() && defaultProject.resolveTraversalCriteria())
+						{
+							btnDeleteGraph.setEnabled(false);
+							btnApplyTraversalCrit.setEnabled(true);
+						}
+					} catch (CellNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (TaskNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//objects.put("traversalEvents", getGraphUtil().getTraversalEvents((mxICell) getGraphUtil().getDefaultRootCell(), true));
+					//objects.put("state", State.NONE);
+					//objects.put("event", Event.NONE);
+				}
+			});
+
 		btnApplyTraversalCrit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				try {
 					if (defaultProject.applyGroupingCriteria())
-						btnResolveUtilityTask.setEnabled(true);
+					{
+						btnApplyTraversalCrit.setEnabled(false);
+						btnResolveUtilityTasks.setEnabled(true);
+					}
 				} catch (CellNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -266,6 +292,35 @@ public class EasyFlowToolBar extends JToolBar
 			}
 		});		
 
+		btnResolveUtilityTasks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt)
+			{
+				try {
+					if (defaultProject.resolveUtilityTasks())
+					{
+						btnResolveUtilityTasks.setEnabled(true);
+					}
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataPortNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ToolNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UtilityTaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+				);
+		
 		btnDeleteGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (defaultProject!=null)

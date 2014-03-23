@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link easyflow.traversal.TraversalChunk#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalChunk#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.traversal.TraversalChunk#isDerived1by1 <em>Derived1by1</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,5 +84,32 @@ public interface TraversalChunk extends EObject {
 	 * @generated
 	 */
 	void setLogger(Logger value);
+
+	/**
+	 * Returns the value of the '<em><b>Derived1by1</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Derived1by1</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Derived1by1</em>' attribute.
+	 * @see #setDerived1by1(boolean)
+	 * @see easyflow.traversal.TraversalPackage#getTraversalChunk_Derived1by1()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isDerived1by1();
+
+	/**
+	 * Sets the value of the '{@link easyflow.traversal.TraversalChunk#isDerived1by1 <em>Derived1by1</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Derived1by1</em>' attribute.
+	 * @see #isDerived1by1()
+	 * @generated
+	 */
+	void setDerived1by1(boolean value);
 
 } // TraversalChunk

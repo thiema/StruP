@@ -701,6 +701,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTask_Records() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(23);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIWorkflowTemplate() {
 		return iWorkflowTemplateEClass;
 	}
@@ -1266,6 +1275,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(taskEClass, TASK__OUTPUT_DATA_PORT_VALIDATOR);
 		createEAttribute(taskEClass, TASK__ANALYSIS_TYPES);
 		createEAttribute(taskEClass, TASK__CIRCUMVENTING_PARENTS);
+		createEReference(taskEClass, TASK__RECORDS);
 
 		toolMatchEClass = createEClass(TOOL_MATCH);
 		createEAttribute(toolMatchEClass, TOOL_MATCH__LOGGER);
@@ -1532,6 +1542,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getTask_OutputDataPortValidator(), theEasyflowPackage.getPattern(), "outputDataPortValidator", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_AnalysisTypes(), ecorePackage.getEString(), "analysisTypes", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_Records(), theTraversalPackage.getTraversalChunk(), null, "records", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1657,6 +1668,28 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canFilterInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+
+		op = addEOperation(taskEClass, theTraversalPackage.getTraversalChunk(), "getRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "intersect", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, theTraversalPackage.getTraversalChunk(), "getOverlappingRecordsProvidedBy", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getTask(), "testTask", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theTraversalPackage.getTraversalChunk(), "traverslChunks", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canComsumeDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theTraversalPackage.getTraversalChunk(), "traverslChunks", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 

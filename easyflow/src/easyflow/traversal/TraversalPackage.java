@@ -407,13 +407,22 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_CHUNK__LOGGER = 1;
 
 	/**
+	 * The feature id for the '<em><b>Derived1by1</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CHUNK__DERIVED1BY1 = 2;
+
+	/**
 	 * The number of structural features of the '<em>Chunk</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_CHUNK_FEATURE_COUNT = 2;
+	int TRAVERSAL_CHUNK_FEATURE_COUNT = 3;
 
 
 	/**
@@ -709,6 +718,17 @@ public interface TraversalPackage extends EPackage {
 	EAttribute getTraversalChunk_Logger();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.traversal.TraversalChunk#isDerived1by1 <em>Derived1by1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Derived1by1</em>'.
+	 * @see easyflow.traversal.TraversalChunk#isDerived1by1()
+	 * @see #getTraversalChunk()
+	 * @generated
+	 */
+	EAttribute getTraversalChunk_Derived1by1();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -955,6 +975,14 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRAVERSAL_CHUNK__LOGGER = eINSTANCE.getTraversalChunk_Logger();
+
+		/**
+		 * The meta object literal for the '<em><b>Derived1by1</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRAVERSAL_CHUNK__DERIVED1BY1 = eINSTANCE.getTraversalChunk_Derived1by1();
 
 	}
 

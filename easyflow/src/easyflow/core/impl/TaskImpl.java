@@ -113,6 +113,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getAnalysisTypes <em>Analysis Types</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getCircumventingParents <em>Circumventing Parents</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getRecords <em>Records</em>}</li>
  * </ul>
  * </p>
  *
@@ -428,6 +429,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EList<String> circumventingParents;
+
+	/**
+	 * The cached value of the '{@link #getRecords() <em>Records</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRecords()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<TraversalChunk> records;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -783,6 +794,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 			circumventingParents = new EDataTypeUniqueEList<String>(String.class, this, CorePackage.TASK__CIRCUMVENTING_PARENTS);
 		}
 		return circumventingParents;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<TraversalChunk> getRecords() {
+		if (records == null) {
+			records = new EObjectResolvingEList<TraversalChunk>(TraversalChunk.class, this, CorePackage.TASK__RECORDS);
+		}
+		return records;
 	}
 
 	/*private EList<String> enumerateInstances(String regexp)
@@ -1596,6 +1619,192 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<TraversalChunk> getRecords(boolean intersect) {
+		
+		boolean modeUnion = !intersect;
+		boolean firstTC   = true;
+		if (!getRecords().isEmpty())
+		{
+			logger.warn("getRecords(): record already processed. Return cached value.");
+			//return getRecords();
+			getRecords().clear();
+		}
+		EMap<String, TraversalChunk> chunks = new BasicEMap<String,TraversalChunk>();
+		for (String groupingStr:getChunks().keySet())
+		{
+			logger.trace("getRecords(): find records for grouping "+groupingStr+" of task"+getUniqueString());
+			if (!groupingStr.equals("Record"))
+			{
+				if (modeUnion || firstTC)
+				{
+					firstTC = false;
+					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
+					{
+						EList<String> recs=GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName());
+						for (String rec : recs)
+						{	
+							if (!chunks.containsKey(rec))
+							{
+								TraversalChunk newTC = TraversalFactory.eINSTANCE.createTraversalChunk();
+								newTC.setName(rec);
+								/**
+								 * criterion for a 1-1 mapping of a chunk
+								 */
+								if (recs.size()==1 && getChunks().size()==1)
+								{
+									newTC.setDerived1by1(true);
+								}
+								chunks.put(rec, newTC);
+								logger.trace("getRecords(): traversal chunk "+rec+" added. derived1by1="+newTC.isDerived1by1());
+							}
+						}
+					}
+				}
+				else
+				{
+					EList<String> missingChunks = new BasicEList<String>(chunks.keySet());
+					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
+					{
+						logger.trace("getRecords(): traversalChunk="+traversalChunk.getName()
+								+" resolved to records=("+StringUtils.join(GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName()).iterator(), ", ")+")");
+						for (String rec : GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName()))
+						{								
+							if (!chunks.containsKey(rec))
+							{
+							}
+							else if (missingChunks.contains(rec))
+							{
+								missingChunks.remove(rec);
+							}									
+
+						}
+					}
+					for (String rec:missingChunks) {
+						chunks.removeKey(rec);
+						logger.trace("getRecords(): remove traversal chunk "+
+								rec
+								+"because it doesnt intersect with a previous seen chunk.");
+						
+					}
+
+				}
+			}
+			else
+			{
+				if (modeUnion || firstTC)
+				{
+					firstTC = false;
+					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
+					{
+						if (!chunks.containsKey(traversalChunk.getName()))
+						{
+							chunks.put(traversalChunk.getName(), traversalChunk);
+						}
+					}
+				}
+				else
+				{
+					EList<String> missingChunks = new BasicEList<String>(chunks.keySet());
+					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
+					{
+						if (missingChunks.contains(traversalChunk.getName()))
+							missingChunks.remove(traversalChunk.getName());
+					}
+					for (String rec:missingChunks) {
+						chunks.removeKey(rec);
+						logger.trace("getRecords(): remove traversal chunk "+
+								rec
+								+"because it doesnt intersect with a previous seen chunk.");
+						
+					}
+				}
+			}
+		}
+		getRecords().addAll(new BasicEList<TraversalChunk>(chunks.values()));
+		return getRecords();
+
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask) {
+		
+		EList<TraversalChunk> overlappingTraversalChunks=new BasicEList<TraversalChunk>();
+		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "+testTask.getUniqueString());
+		EList<TraversalChunk> providedTraversalChunks=testTask.getRecords(true);
+		
+		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "+getUniqueString());
+		for (TraversalChunk traversalChunk:getRecords(true))
+		{
+			logger.debug("getOverlappingRecordsProvidedBy(): test required chunk "+traversalChunk.getName());
+			for (TraversalChunk providedTraversalChunk:providedTraversalChunks)
+			{
+				logger.debug("getOverlappingRecordsProvidedBy(): "+providedTraversalChunk.getName()+" match="+traversalChunk.getName().equals(providedTraversalChunk.getName()));
+				if (traversalChunk.getName().equals(providedTraversalChunk.getName()))
+				{
+					
+					overlappingTraversalChunks.add(traversalChunk);
+				}
+			}
+		}
+		return overlappingTraversalChunks;
+	}
+
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * Tell, if the task and its implementing tool is able to generate the outputs that 
+	 * match the given dataPort.
+	 * To refine the evaluation specify grouping string and, optional, a list of chunks
+	 * for the given grouping. Usually the most granular grouping is used (e.g. ID or records)
+	 * to precisely define which outputs are of interest.
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException {
+		if (grouping != null && grouping.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
+		{
+			EList<TraversalChunk> recs = getRecords(true);
+			if (recs.size()==traverslChunks.size())
+			{
+				for (TraversalChunk requiredChunk:traverslChunks)
+				{
+					TraversalChunk rec = null;
+					for (TraversalChunk provdiedChunk:recs)
+					{
+						if (requiredChunk.getName().equals(provdiedChunk.getName()))
+						{
+							rec = provdiedChunk;
+							break;
+						}
+					}
+					if (rec==null)
+						break;
+					recs.remove(rec);
+				}
+				return recs.isEmpty();
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException {
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @throws ToolNotFoundException 
 	 * @generated not
 	 */
@@ -1657,10 +1866,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
 	public boolean canProcessMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
-		return false;
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1811,6 +2022,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getAnalysisTypes();
 			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
 				return getCircumventingParents();
+			case CorePackage.TASK__RECORDS:
+				return getRecords();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1896,6 +2109,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getCircumventingParents().clear();
 				getCircumventingParents().addAll((Collection<? extends String>)newValue);
 				return;
+			case CorePackage.TASK__RECORDS:
+				getRecords().clear();
+				getRecords().addAll((Collection<? extends TraversalChunk>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1974,6 +2191,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
 				getCircumventingParents().clear();
 				return;
+			case CorePackage.TASK__RECORDS:
+				getRecords().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2032,6 +2252,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return analysisTypes != null && !analysisTypes.isEmpty();
 			case CorePackage.TASK__CIRCUMVENTING_PARENTS:
 				return circumventingParents != null && !circumventingParents.isEmpty();
+			case CorePackage.TASK__RECORDS:
+				return records != null && !records.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

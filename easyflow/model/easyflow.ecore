@@ -313,6 +313,26 @@
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//core/DataPort"/>
       </eOperations>
+      <eOperations name="getRecords" upperBound="-1" eType="#//traversal/TraversalChunk">
+        <eParameters name="intersect" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getOverlappingRecordsProvidedBy" upperBound="-1" eType="#//traversal/TraversalChunk">
+        <eParameters name="testTask" eType="#//core/Task"/>
+      </eOperations>
+      <eOperations name="canProvideDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="grouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="traverslChunks" upperBound="-1" eType="#//traversal/TraversalChunk"/>
+      </eOperations>
+      <eOperations name="canComsumeDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//core/DataPort"/>
+        <eParameters name="grouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="traverslChunks" upperBound="-1" eType="#//traversal/TraversalChunk"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPorts" upperBound="-1"
           eType="#//core/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="outDataPorts" upperBound="-1"
@@ -364,6 +384,8 @@
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="circumventingParents"
           upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+          eType="#//traversal/TraversalChunk"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ToolMatch">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -669,7 +691,7 @@
         </eOperations>
         <eOperations name="testSomething"/>
         <eOperations name="layoutGraph"/>
-        <eOperations name="fixOffTargetCells">
+        <eOperations name="fixOffTargetCells_DEPRECATED">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         </eOperations>
@@ -729,10 +751,10 @@
             upperBound="-1" eType="#//util/maps/StringToStringMap" containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="metaData" eType="#//metadata/DefaultMetaData"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultRootCell" eType="#//mxICell"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="processedEdgesCopyGraph"
+        <eStructuralFeatures xsi:type="ecore:EReference" name="processedEdgesCopyGraph_DEPRECATED"
             upperBound="-1" eType="#//util/maps/StringToStringMap" containment="true"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="processedEdges" upperBound="-1"
-            eType="#//util/maps/StringToStringMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="processedEdges_DEPRICATED"
+            upperBound="-1" eType="#//util/maps/StringToStringMap" containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="addEdges" upperBound="-1"
             eType="#//util/maps/StringToStringMap" containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="copiedCells" upperBound="-1"
@@ -747,6 +769,8 @@
             eType="#//util/maps/StringToDataLinkMap" containment="true"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="utilityTasks" upperBound="-1"
             eType="#//util/maps/StringToTaskMap" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilityTaskCells" upperBound="-1"
+            eType="#//mxICell"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>
@@ -1229,6 +1253,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="derived1by1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="util" nsURI="http:///de/thiema/easyflow/util/1.0.0" nsPrefix="easyflow">

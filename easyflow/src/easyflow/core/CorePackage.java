@@ -485,13 +485,22 @@ public interface CorePackage extends EPackage {
 	int TASK__CIRCUMVENTING_PARENTS = 22;
 
 	/**
+	 * The feature id for the '<em><b>Records</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__RECORDS = 23;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 23;
+	int TASK_FEATURE_COUNT = 24;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -1645,6 +1654,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getTask_CircumventingParents();
 
 	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.Task#getRecords <em>Records</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Records</em>'.
+	 * @see easyflow.core.Task#getRecords()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_Records();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2630,6 +2650,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK__CIRCUMVENTING_PARENTS = eINSTANCE.getTask_CircumventingParents();
+
+		/**
+		 * The meta object literal for the '<em><b>Records</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__RECORDS = eINSTANCE.getTask_Records();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.

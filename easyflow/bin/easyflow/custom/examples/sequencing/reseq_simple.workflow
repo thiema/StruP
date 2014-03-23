@@ -6,8 +6,9 @@ BwtAlignLong		bwasw	FASTQ	SAM			Platform=~["ROCHE", "454", "PACBIO", "CAPILLARY"
 Samse	BwtAlignShort	bwa_xampe	FASTQ;SAI	SAM			size(InputFiles)==1&&Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
 Sampe	BwtAlignShort	bwa_xampe	FASTQ;SAI	SAM		ReadEnd:merge	size(InputFiles)>1&&Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
 AddReadgroup		picard_ARRG	SAM	BAM	ReadGroup	Locus:split:chr1,chr2;ReadMappingFlag:split;Read:sort:Queryname
-RealignIndels		gatk2_indel_realigner	BAM	BAM	Group
-RemoveDuplicates		samtools:rmdup	Alignment:BAM	BAM	Library	Locus:merge	size(InputFiles)>1
+RealignIndels		gatk2_indel_realigner	BAM	BAM	Group:joint
+RmDup		samtools:rmdup	Alignment:BAM	BAM	Lib,Sample	Locus:merge
+#	size(InputFiles)>1
 #demonstrate situation with possibly multiple alternative paths due to JEXL (task requires certain metadata instances)
 #DemonstrateJEXL1		any	BAM	BAM	
 DetectVariants		gatk2_unified_genotyper	BAM	VCF	Group	Locus:merge;Read:sort:Coordinate

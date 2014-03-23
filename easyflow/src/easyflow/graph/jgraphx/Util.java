@@ -55,8 +55,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getMostProcessedTasks <em>Most Processed Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getMetaData <em>Meta Data</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getDefaultRootCell <em>Default Root Cell</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph <em>Processed Edges Copy Graph</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdges <em>Processed Edges</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph_DEPRECATED <em>Processed Edges Copy Graph DEPRECATED</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdges_DEPRICATED <em>Processed Edges DEPRICATED</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getCopiedCells <em>Copied Cells</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getCurrentSubGraphs <em>Current Sub Graphs</em>}</li>
@@ -64,6 +64,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getNewTraversalEvents <em>New Traversal Events</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getDataLinks <em>Data Links</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getUtilityTasks <em>Utility Tasks</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getUtilityTaskCells <em>Utility Task Cells</em>}</li>
  * </ul>
  * </p>
  *
@@ -234,38 +235,38 @@ public interface Util extends EObject {
 	void setDefaultRootCell(mxICell value);
 
 	/**
-	 * Returns the value of the '<em><b>Processed Edges Copy Graph</b></em>' map.
+	 * Returns the value of the '<em><b>Processed Edges Copy Graph DEPRECATED</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Processed Edges Copy Graph</em>' map isn't clear,
+	 * If the meaning of the '<em>Processed Edges Copy Graph DEPRECATED</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed Edges Copy Graph</em>' map.
-	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdgesCopyGraph()
+	 * @return the value of the '<em>Processed Edges Copy Graph DEPRECATED</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdgesCopyGraph_DEPRECATED()
 	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EMap<String, String> getProcessedEdgesCopyGraph();
+	EMap<String, String> getProcessedEdgesCopyGraph_DEPRECATED();
 
 	/**
-	 * Returns the value of the '<em><b>Processed Edges</b></em>' map.
+	 * Returns the value of the '<em><b>Processed Edges DEPRICATED</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Processed Edges</em>' map isn't clear,
+	 * If the meaning of the '<em>Processed Edges DEPRICATED</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed Edges</em>' map.
-	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdges()
+	 * @return the value of the '<em>Processed Edges DEPRICATED</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdges_DEPRICATED()
 	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EMap<String, String> getProcessedEdges();
+	EMap<String, String> getProcessedEdges_DEPRICATED();
 
 	/**
 	 * Returns the value of the '<em><b>Add Edges</b></em>' map.
@@ -384,6 +385,22 @@ public interface Util extends EObject {
 	EMap<String, Task> getUtilityTasks();
 
 	/**
+	 * Returns the value of the '<em><b>Utility Task Cells</b></em>' attribute list.
+	 * The list contents are of type {@link com.mxgraph.model.mxICell}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Utility Task Cells</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Utility Task Cells</em>' attribute list.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_UtilityTaskCells()
+	 * @model dataType="easyflow.mxICell"
+	 * @generated
+	 */
+	EList<mxICell> getUtilityTaskCells();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
@@ -405,15 +422,15 @@ public interface Util extends EObject {
 	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, GroupingInstance instanceStr) throws CellNotFoundException, TaskNotFoundException;
+	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, GroupingInstance groupingInstance) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell" instanceStrMany="true"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell" groupingInstancesMany="true"
 	 * @generated
 	 */
-	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, EList<GroupingInstance> instanceStr) throws CellNotFoundException, TaskNotFoundException;
+	void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, EList<GroupingInstance> groupingInstances) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -517,7 +534,7 @@ public interface Util extends EObject {
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	void fixOffTargetCells(mxICell root, String groupingStr);
+	void fixOffTargetCells_DEPRECATED(mxICell root, String groupingStr);
 
 	/**
 	 * <!-- begin-user-doc -->

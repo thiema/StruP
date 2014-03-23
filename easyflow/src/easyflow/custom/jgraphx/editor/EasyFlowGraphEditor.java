@@ -63,8 +63,8 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 
 		final EasyFlowGraph graph = (EasyFlowGraph) graphComponent.getGraph();
 		// logger.debug(((EasyFlowGraph)getGraphComponent().getGraph()).hashCode());
-		//setStyleSheet(graph.getStylesheet(), getGraphComponent().getViewport().getBackground());
-		setStyleSheet(graph.getStylesheet(), null);
+		setStyleSheet(graph.getStylesheet(), getGraphComponent().getViewport().getBackground());
+		//setStyleSheet(graph.getStylesheet(), null);
 		setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		// Creates a single shapes palette
 		EditorPalette shapesPalette = insertPalette("Editor");
@@ -138,6 +138,17 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		return baseStyle;
 	}
 	
+	private static String getRGB(Color color)
+	{
+		String vertexFillColor="";
+		vertexFillColor+=Integer.toHexString(color.getRed()).toUpperCase();
+		vertexFillColor+=Integer.toHexString(color.getGreen()).toUpperCase();
+		vertexFillColor+=Integer.toHexString(color.getBlue()).toUpperCase();
+		//logger.debug(vertexFillColor);
+		return vertexFillColor;
+
+	}
+	
 	private static Map<String, Object> getDefaultVertexStyle(Color color)
 	{
 		Map<String, Object> vertexStyle = new Hashtable<String, Object>();
@@ -146,41 +157,46 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
         //vertexStyle.put(mxConstants., "5");
         //vertexStyle.put(mxConstants.STYLE_NOLABEL, 1);
         //vertexStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
-		String vertexFillColor="";
+		
 		if (color != null)
 		{
-			vertexFillColor+=Integer.toHexString(color.getRed()).toUpperCase();
-			vertexFillColor+=Integer.toHexString(color.getGreen()).toUpperCase();
-			vertexFillColor+=Integer.toHexString(color.getBlue()).toUpperCase();
-	        logger.debug(vertexFillColor);
+	        
 	        //baseStyle.put(mxConstants.STYLE_STROKECOLOR, vertexFillColor);
 	        //vertexStyle.put(mxConstants.STYLE_STROKECOLOR, vertexFillColor);
-	        vertexStyle.put(mxConstants.STYLE_FILLCOLOR, vertexFillColor);
+	        vertexStyle.put(mxConstants.STYLE_FILLCOLOR, getRGB(color));
 	        
 		}
 		return vertexStyle;
 	}
 	
-	private static Map<String, Object> getDefaultEdgeStyle()
+	private static Map<String, Object> getDefaultEdgeStyle(Color color)
 	{
 		Map<String, Object> edgeStyle = new Hashtable<String, Object>();
 		edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
         edgeStyle.put(mxConstants.STYLE_FILLCOLOR, "#000000");
         edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
-        edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC);
-        edgeStyle.put(mxConstants.STYLE_FILLCOLOR, mxUtils.getHexColorString(Color.BLACK));
+        edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
+        
         //edgeStyle.put(mxConstants.STYLE_FILLCOLOR, vertexFillColor);
         //edgeStyle.put(mxConstants.STYLE_NOLABEL, 1);
         //edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
+        if (color != null)
+        	edgeStyle.put(mxConstants.STYLE_FILLCOLOR, getRGB(color));
+        else
+        	edgeStyle.put(mxConstants.STYLE_FILLCOLOR, mxUtils.getHexColorString(Color.BLACK));
         return edgeStyle;
 	}
 	
-	private static Map<String, Object> getTaskCircumventingEdgeStyle() {
+	private static Map<String, Object> getTaskCircumventingEdgeStyle(Color color) {
 		Map<String, Object> edgeStyle = new Hashtable<String, Object>();
 		edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
+		edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
         edgeStyle.put(mxConstants.STYLE_STROKECOLOR, mxUtils.getHexColorString(Color.RED));		
         //edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL);
-        edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC);
+        edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
+        //if (color != null)
+        	edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
+
         return edgeStyle;
 	}
 	
@@ -191,15 +207,16 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
         //Map<String, Object> baseStyle   = getBaseStyle();
 
         // custom vertex style
-        Map<String, Object> vertexStyle = getDefaultVertexStyle(color);
+        //Map<String, Object> vertexStyle = getDefaultVertexStyle(color);
+        Map<String, Object> vertexStyle = getDefaultVertexStyle(null);
         stylesheet.putCellStyle(GlobalVar.VERTEX_STYLE, vertexStyle);
 
         // custom edge style
-        Map<String, Object> edgeStyle = getDefaultEdgeStyle();        
+        Map<String, Object> edgeStyle = getDefaultEdgeStyle(color);        
         stylesheet.putCellStyle(GlobalVar.EDGE_STYLE, edgeStyle);
         
         // task circumventing edges
-        stylesheet.putCellStyle(GlobalVar.TASK_CIRCUMVENTING_EDGE_STYLE, getTaskCircumventingEdgeStyle());
+        stylesheet.putCellStyle(GlobalVar.TASK_CIRCUMVENTING_EDGE_STYLE, getTaskCircumventingEdgeStyle(color));
         
         
         //GlobalVar.setDefaultVertexStyle(vertexStyle);
