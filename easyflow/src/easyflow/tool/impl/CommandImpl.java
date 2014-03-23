@@ -346,12 +346,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 	public EList<String> getGroupingsForDataPort(DataPort dataPort, boolean isRequired) {
 		EList<String> groupings=new BasicEList<String>();
 		
-		Parameter parameter=getParameterForDataPort(dataPort);
-				
-		
+		//Parameter parameter=getParameterForDataPort(dataPort);		
 		for (TraversalCriterion tc:dataPort.getGroupingCriteria())
 		{
-			
 			for (String groupingStr:tc.getChunks().keySet())
 			{
 				if (getParameters().containsKey(groupingStr))

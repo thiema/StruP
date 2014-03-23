@@ -40,6 +40,7 @@
 	    	classpathref="classpath"
 	    	srcdir="${src.dir}"
 	    	target="1.6"
+	    	source="1.6"
 	    >
 			<exclude name="old/**"/>
 			
@@ -67,7 +68,7 @@ directory, flattening the directory structure. -->
 <!-- copy resources -->
 <copy todir="${build.dir}/classes">
     <fileset dir="${src.dir}"
-    includes="**/*.xml,**/*.xsd,**/*.xsl,**/*.json,**/*.tsv,**/*.csv,**/*.workflow"
+    includes="**/*.xml,**/*.xsd,**/*.xsl,**/*.json,**/*.tsv,**/*.csv,**/*.workflow,**/swing/images/*"
     />
 </copy>
 

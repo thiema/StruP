@@ -72,7 +72,10 @@ public class EasyFlowToolBar extends JToolBar
 	
 	private static final boolean		isFromJar	   = false;
 	private static final String         repositoryJar  = "/easyflow/custom/examples";
-	private static final String         repositoryFS   = "/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples";
+	private static String         repositoryFS   = "easyflow/custom/examples";
+	private static final String         repositoryFS_src   = "src/easyflow/custom/examples";
+	//when running from ../easyflow/build folder the path is 
+	private static final String         repositoryFS_bin   = "build/classes/easyflow/custom/examples";
 	private static final Logger         logger         = Logger.getLogger(EasyFlowToolBar.class);
 	private final   Map<String, Object> objects        = new HashMap<String, Object>();
 	private final   EasyFlowGraphEditor editor         ;
@@ -102,7 +105,17 @@ public class EasyFlowToolBar extends JToolBar
 		super(orientation);
 		this.editor=editor;
 		register();
-		
+	
+		File repoSrcFile = new File (repositoryFS_src);
+		File repoBinFile = new File (repositoryFS_bin);
+		File repoFile = new File(repositoryFS);
+		if (!repoFile.isAbsolute())
+		{
+			if (repoSrcFile.exists())
+				repositoryFS=repositoryFS_src;
+			else if (repoBinFile.exists())
+				repositoryFS=repositoryFS_bin;
+		}
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory
 				.createEmptyBorder(3, 3, 3, 3), getBorder()));
 		setFloatable(false);

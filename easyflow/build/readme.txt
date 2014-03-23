@@ -1,3 +1,12 @@
+# clone repository, e.g. using https
+git clone https://thiema@bitbucket.org/thiema/easyflow.git git/
+# using eclipse
+import->from git
+# resolve deps using ivy
+# 
+# fix build path (configure src dir, add external jars)
+# 
+
 git add -u
 git commit
 git push -u origin --all
@@ -7,12 +16,14 @@ git push -u origin --all
 #building
 ant -f build/build.xml jar
 
-#after doing the build, one can run the app as follows:
+#after doing the build, one can run the app from with folder
+#easyflow/build/ as follows:
 #output some info on loading/configureing the logger
 #add curdir (point) to cp because of log4j.prop 
 java -Dlog4j.debug -cp ".:build/jar/*" easyflow.custom.ui.Easyflow
 #the gui
-java -cp ".:build/jar/*" easyflow.custom.jgraphx.editor.SchemaEditor
+java -cp ".:build/jar/*" easyflow.custom.jgraphx.editor.EasyFlowGraphEditor
+
 
 # apply xsl
 java -cp "lib/saxon-8.7.jar" net.sf.saxon.Transform src/easyflow/custom/examples/sequencing/tool_definitions/depth_of_coverage.xml src/easyflow/custom/tool/schema/external/Galaxy.xsl

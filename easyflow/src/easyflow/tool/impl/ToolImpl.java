@@ -570,7 +570,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		for (Entry<String, Data> e:getData().entrySet())
 			if (!e.getValue().isOutput())
 				if (dataPort.isCompatible(e.getValue().getPort()))
-					groupings.addAll(getCommand().getGroupingsForInputPort(dataPort));
+					groupings.addAll(getCommand().getGroupingsForDataPort(dataPort, true));
+		
 		return groupings;
 	}
 
@@ -584,7 +585,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		for (Entry<String, Data> e:getData().entrySet())
 			if (e.getValue().isOutput())
 				if (dataPort.isCompatible(e.getValue().getPort()))
-					groupings.addAll(getCommand().getGroupingsForInputPort(dataPort));
+					groupings.addAll(getCommand().getGroupingsForDataPort(dataPort, true));
 				
 		return groupings;
 	}
