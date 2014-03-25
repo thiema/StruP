@@ -2679,7 +2679,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 					DataLink dataLink=loadDataLink(edge);
 					
 					DataPort dataPortIn=dataLink.getDataPort();
-					logger.debug("findCellsWithUntranslatedDataLinks(): "+task.getUniqueString()+"("+sourceTask.getUniqueString()+"): "+dataLink.getTraversalName()+" "
+					logger.debug("findCellsWithUntranslatedDataLinks(): test "+task.getUniqueString()+"("+sourceTask.getUniqueString()+"): "+dataLink.getTraversalName()+" "
 							+dataLink.getParentGroupingStr()+"->"+dataLink.getGroupingStr()+" "
 							+dataPortIn.getName()+" "
 							//+dataPortIn.getGroupingCriteria()+" "+sourceTask.getGroupingCriteria()
@@ -2695,7 +2695,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						{
 							logger.debug("findCellsWithUntranslatedDataLinks(): task can be configured to accepted grouping as provided by source task.");
 						}
-						// check if the grouping criterion is entirely provided by the parent, i.e.
+						// check if the required chunk is entirely provided by the parent, i.e.
 						// conversion: RG1 -> ID1
 						// in metadata a record is defined to be "ID1 RG1 ..." and data RG1 is the same as data ID1 
 						else if (sourceTask.canProvideDataPort(null, null, GlobalVar.TRAVERSAL_CRITERION_RECORD, task.getRecords(true)))
@@ -2706,6 +2706,24 @@ public class UtilImpl extends EObjectImpl implements Util {
 						{
 							logger.debug("findCellsWithUntranslatedDataLinks(): special conversion is required. track task in map.");
 							edges.put((mxICell) vertex, getInEdgesForDataPort(vertex, dataLink.getDataPort()));
+
+							// check if the parent output has to be filter
+							// - 1) filtering not necessary (because it just outputs the equivalent of a single record)
+							// - 2) extra filtering not necessary (because the parent can do it itself
+							if (sourceTask.getRecords().size()==1 || sourceTask.canProvideDataPort(null, null, GlobalVar.TRAVERSAL_CRITERION_RECORD, null))
+							{
+								logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip filtering.");
+								task.setFlags(task.getFlags() | 0x1000);
+							}
+							
+							// check if the parent output has to be merged
+							// - 1) merging not necessary, because the task require only the equivalent of a single record)
+							// - 2) merging not necessary, because the task can do merging itself
+							else if (task.getRecords().size()==1 || task.canComsumeDataPort(null, null, GlobalVar.TRAVERSAL_CRITERION_RECORD, null))
+							{
+								logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip merging.");
+								task.setFlags(task.getFlags() | 0x2000);
+							}
 						}
 					}
 				} catch (DataLinkNotFoundException e) {
@@ -2791,33 +2809,56 @@ public class UtilImpl extends EObjectImpl implements Util {
 					
 					for (Entry<mxICell, DataLink> e:cellMap.entrySet())
 					{
-						//Task t=loadTask(e.getKey());
-						
-						/**
-						 * here we find a task which has its records processed.
-						 * this is assumed to be the case when a non-utility task occurs at this point
-						 */
-						//if (!t.getRecords().isEmpty()) {traversalChunks.put("Record", t.getRecords());} else
-						for (Entry<String, EList<TraversalChunk>> e1:task.getChunks())
-							traversalChunks.put(e1.getKey(), new BasicEList(EcoreUtil.copyAll(e1.getValue())));
-						
-					}
-						//if (cellMap.size()==1)	{} else
+						Task t=loadTask(e.getKey());
+						if (t.getUniqueString().equals(task.getUniqueString()))
 						{
-							Task    newTask = createUtilityTask(traversalChunks, "merge", task.getName());
-							mxICell newCell = getCells().get(newTask.getUniqueString());
-	
-							for (Entry<mxICell, DataLink> e:cellMap.entrySet())
-							{
-								logger.debug("resolveEdge(): insert edge: (filter-merge)"+loadTask(e.getKey()).getUniqueString()+"->"+newTask.getUniqueString());
-								getGraph().insertEdgeEasyFlow(null, null, e.getKey(), newCell, e.getValue());
-							}
-							logger.debug("resolveEdge(): insert edge: (merge-task) "+newTask.getUniqueString()+"->"+task.getUniqueString());
-							getGraph().insertEdgeEasyFlow(null, null, newCell, entry.getKey(), 
-										createDataLink(firstEdge, task, "Record", "Record"));
-	
+							traversalChunks.put(GlobalVar.TRAVERSAL_CRITERION_RECORD, t.getRecords(true));
 						}
+						else
+						{
+							for (Entry<String, EList<TraversalChunk>> e1:task.getChunks())
+								traversalChunks.put(e1.getKey(), new BasicEList(EcoreUtil.copyAll(e1.getValue())));
+						}
+						
 					}
+					Task mergeTask = null;
+					if (((task.getFlags() >> 13) & 0x1) == 1)
+					{
+						mergeTask=task;
+					}
+					else
+					{
+						mergeTask = createUtilityTask(traversalChunks, "merge",
+							task.getName());
+					}
+					
+					mxICell mergeCell = getCells().get(mergeTask.getUniqueString());
+
+					for (Entry<mxICell, DataLink> e : cellMap.entrySet()) {
+						Task source = loadTask(e.getKey());
+						logger.debug("resolveEdge(): insert edge: (filter-merge)"
+								+ source.getUniqueString()
+								+ "->"
+								+ mergeTask.getUniqueString());
+						getGraph().insertEdgeEasyFlow(null, null, e.getKey(),
+								mergeCell, e.getValue());
+						
+					}
+					if (((task.getFlags() >> 13) & 0x1)!=1)
+					{
+					logger.debug("resolveEdge(): insert edge: (merge-task) "
+							+ mergeTask.getUniqueString() + "->"
+							+ task.getUniqueString());
+					getGraph()
+							.insertEdgeEasyFlow(
+									null,
+									null,
+									mergeCell,
+									entry.getKey(),
+									createDataLink(firstEdge, task, "Record",
+											"Record"));
+					}
+				}
 				
 			} finally {
 				layoutGraph();
@@ -2835,7 +2876,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 * @param edges
 	 * @param dataPort
 	 * @param constellation
-	 * @return Map filter task -> edge (the source and the edge toward the task, for which filtering/merging has to done)
+	 * @return Map: filter task (cell) -> edge (the source and the edge toward the task, for which filtering/merging has to done)
 	 * @throws TaskNotFoundException
 	 * @throws DataLinkNotFoundException
 	 * @throws ToolNotFoundException
@@ -2851,25 +2892,47 @@ public class UtilImpl extends EObjectImpl implements Util {
 	{
 		
 		boolean rc = false;
-		boolean modeUnion=false;
+		//boolean modeUnion=false;
 		Task task = loadTask(cell);
 		EMap<mxICell, DataLink> cells = new BasicEMap<mxICell, DataLink>();
 		EMap<String, EList<TraversalChunk>> coveredChunks = null;
 
 		logger.debug("createFilterTasks(): find filterTasks for "+task.getUniqueString()+" for criteria "+task.getChunks().keySet());
+		
 		for (mxICell edge:edges)
 		{
 			DataLink dataLink = loadDataLink(edge);
 			Task sourceTask = getSourceTask((mxCell) edge);
 			Task targetTask = getTargetTask((mxCell) edge);
 			
-			EMap<String, EList<TraversalChunk>> currentCoveredChunks = getCoveredChunks(
+			
+			
+			
+			logger.debug("createFilterTasks(): "+task.getFlags()+" 0x001="+0x001+" 0x01="+0x1+" "+(task.getFlags() >> 13));
+			if (((task.getFlags() >> 12) & 0x1) == 1)
+			{
+				logger.debug("createFilterTasks(): no filtering necessary");
+				cells.put(getSource((mxCell) edge), dataLink);
+				getGraph().removeCells(new Object[]{edge}, true);
+			}
+			else
+			{
+
+			
+			 EMap<String, EList<TraversalChunk>> currentCoveredChunks = getCoveredChunks(
 					targetTask,
 					sourceTask,
-					dataLink.getDataPort(), modeUnion
+					dataLink.getDataPort(),
+					true
 					);
-			logger.trace("createFilterTasks(): "+currentCoveredChunks.size()+" covered chunks found.");
-			if (!currentCoveredChunks.isEmpty())
+			
+			logger.trace("createFilterTasks(): "+currentCoveredChunks.size()+" covered chunks found. "+" filter chunks from "+sourceTask.getUniqueString());
+			if (currentCoveredChunks.isEmpty())
+			{
+				logger.debug("createFilterTasks(): no chunks found that can be translated.");	
+			}
+
+			else
 			{
 				if (coveredChunks==null)
 					coveredChunks=currentCoveredChunks;
@@ -2879,34 +2942,34 @@ public class UtilImpl extends EObjectImpl implements Util {
 						//if (coveredChunks.containsKey(e.getKey()))
 						coveredChunks.get(e.getKey()).addAll(e.getValue());
 					}
-
+				
 				Task newTask = createUtilityTask(currentCoveredChunks, "filter", task.getName());
-				if (newTask != null)
-				{
+				//if (newTask != null)
+				//{
 					mxICell newCell=getCells().get(newTask.getUniqueString());
 					logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()+"->"+newTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
 					
 					mxICell newEdge=(mxICell) getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), newCell, dataLink);
 					getGraph().removeCells(new Object[]{edge}, true);
-					//cells.put(newCell, newEdge);
-				}
-				cells.put(getSource((mxCell) edge), dataLink);
+					cells.put(newCell, dataLink);
+				//}
 						//createDataLink(edge, newTask, groupingStr, parentGroupingStr));
 			}
-			else
-			{
-				logger.debug("createFilterTasks(): no chunks found that can be translated.");	
-			}
+		}
 		}
 		return cells;
 	}
 
 	
-	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, DataPort dataPort, boolean modeUnion) throws ToolNotFoundException
+	
+	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, 
+			DataPort dataPort, boolean modeUnion) throws ToolNotFoundException
 	{
 		
-		
 		EMap<String, EList<TraversalChunk>> allCoveredChunks = new BasicEMap<String, EList<TraversalChunk>>();
+		
+		//boolean fullOverlap = true;
+		//EMap<String, EList<TraversalChunk>> allCoveredChunks = 
 		//EList<String> requiredGroupings=task.getRequiredGroupingsFor(null, dataPort);
 		//EList<String> providedGroupings=sourceTask.getProvidedGroupingsFor(null, dataPort);
 		logger.trace("getCoveredChunks(): sourceTask="+sourceTask.getUniqueString()+" task="+task.getUniqueString());
@@ -2917,6 +2980,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			if (!coveredChunks.isEmpty())
 				allCoveredChunks.put(groupingStr, coveredChunks);
 		}
+		
 		if (allCoveredChunks.isEmpty())
 		{
 			EList<TraversalChunk> traversalChunks = new BasicEList<TraversalChunk>();
@@ -2928,7 +2992,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						+getRecordsForChunks(task, modeUnion).size()
 						+" target chunks. modeUnion="+modeUnion);
 				
-				//boolean found = false;
+				boolean found = false;
 				for (TraversalChunk targetTC : getRecordsForChunks(task, modeUnion))
 				{
 					if (traversalChunk.getName().equals(targetTC.getName()))
@@ -2938,15 +3002,14 @@ public class UtilImpl extends EObjectImpl implements Util {
 							traversalChunk.setDerived1by1(targetTC.isDerived1by1());
 						traversalChunks.add(traversalChunk);
 						tcStrings.add(traversalChunk.getName());
-						//found=true;
+						found=true;
 					}
-							
 				}
-/*				if (!modeUnion && !found)
+				if (!modeUnion && !found)
 				{
 					allCoveredChunks.clear();
 					break;
-				}*/
+				}
 			}
 			if (!traversalChunks.isEmpty())
 			{

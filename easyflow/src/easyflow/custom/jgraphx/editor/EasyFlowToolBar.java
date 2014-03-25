@@ -70,14 +70,14 @@ public class EasyFlowToolBar extends JToolBar
 	 */
 	private static final long serialVersionUID = -4592403145874164000L;
 	
-	private static final boolean		isFromJar	   = false;
-	private static final String         repositoryJar  = "/easyflow/custom/examples";
-	private static String         repositoryFS   = "easyflow/custom/examples";
-	private static final String         repositoryFS_src   = "src/easyflow/custom/examples";
-	//when running from ../easyflow/build folder the path is 
-	private static final String         repositoryFS_bin   = "build/classes/easyflow/custom/examples";
-	private static final Logger         logger         = Logger.getLogger(EasyFlowToolBar.class);
-	private final   Map<String, Object> objects        = new HashMap<String, Object>();
+	private static final boolean		isFromJar	     = false;
+	private static final String         repositoryJar    = "/easyflow/custom/examples";
+	private static String               repositoryFS     = "easyflow/custom/examples";
+	private static final String         repositoryFS_src = "src/easyflow/custom/examples";
+	// when running from ../easyflow/build folder the path is 
+	private static final String         repositoryFS_bin = "build/classes/easyflow/custom/examples";
+	private static final Logger         logger           = Logger.getLogger(EasyFlowToolBar.class);
+	private final   Map<String, Object> objects          = new HashMap<String, Object>();
 	private final   EasyFlowGraphEditor editor         ;
 
 	private static       DefaultProject defaultProject = null;
@@ -115,6 +115,8 @@ public class EasyFlowToolBar extends JToolBar
 				repositoryFS=repositoryFS_src;
 			else if (repoBinFile.exists())
 				repositoryFS=repositoryFS_bin;
+			else
+				repositoryFS=null;
 		}
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory
 				.createEmptyBorder(3, 3, 3, 3), getBorder()));

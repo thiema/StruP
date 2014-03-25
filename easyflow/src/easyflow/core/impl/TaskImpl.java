@@ -1722,6 +1722,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				}
 			}
 		}
+		logger.debug("getRecords(): result="+chunks.values().size());
 		getRecords().addAll(new BasicEList<TraversalChunk>(chunks.values()));
 		return getRecords();
 
@@ -1766,13 +1767,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException {
-		if (grouping != null && grouping.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
+	public boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traversalChunks) throws DataPortNotFoundException, ToolNotFoundException {
+		
+		if (traversalChunks == null)
+		{
+			// todo: if the the chunks for the grouping criteria can be provided (-> check with tool definition)
+		}
+		else if (grouping != null && grouping.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
 		{
 			EList<TraversalChunk> recs = getRecords(true);
-			if (recs.size()==traverslChunks.size())
+			if (recs.size()==traversalChunks.size())
 			{
-				for (TraversalChunk requiredChunk:traverslChunks)
+				for (TraversalChunk requiredChunk:traversalChunks)
 				{
 					TraversalChunk rec = null;
 					for (TraversalChunk provdiedChunk:recs)
