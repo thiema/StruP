@@ -46,7 +46,7 @@ public class Easyflow {
 				defaultProject.applyParameterCriteria();
 				defaultProject.applyGroupingCriteria();
 				defaultProject.resolveUtilityTasks();
-				//defaultProject.resolveToolDependencies();
+				defaultProject.resolveToolDependencies();
 				//defaultProject.generateWorklowForExecutionSystem();
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block

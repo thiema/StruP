@@ -96,10 +96,10 @@ public interface Command extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model constaintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @model constraintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
 	 * @generated
 	 */
-	String generateCommandString(EMap<String, Object> constaints);
+	String generateCommandString(EMap<String, Object> constraints);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -175,7 +175,7 @@ public interface Command extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException"
+	 * @model
 	 * @generated
 	 */
 	Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException;
@@ -183,9 +183,17 @@ public interface Command extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model valueDataType="easyflow.URI"
 	 * @generated
 	 */
-	Parameter getParameterForDataPortAny(DataPort dataPort);
+	boolean setInputParameterValue(URI value, String parameterName, DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model valueDataType="easyflow.URI"
+	 * @generated
+	 */
+	boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort);
 
 } // Command

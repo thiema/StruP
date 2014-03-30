@@ -533,6 +533,12 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getGroupingInstance(), "recordInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToStringMap(), "getRow", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToStringMap(), "getColumn", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(defaultMetaDataEClass, DefaultMetaData.class, "DefaultMetaData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDefaultMetaData_Reader(), theEasyflowPackage.getBufferedReader(), "reader", null, 0, 1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultMetaData_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultMetaData.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

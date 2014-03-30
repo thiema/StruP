@@ -550,7 +550,7 @@ public interface Util extends EObject {
 	 * @model rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean generateWorklowForExecutionSystem(mxICell root, IExecutionSystem executionSystem);
+	boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem);
 
 	/**
 	 * <!-- begin-user-doc -->

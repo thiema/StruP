@@ -35,24 +35,25 @@ public class GlobalVar {
 	public static final String GENERATE_ABSTRACT_WORKFLOW        = "generateAbstractWorfklow";
 	
 	
-	public static final String GENERATE_ABSTRACT_GRAPH_DESCRIPTION  = "The abstract Workflow is computed based on the Workflow template.";
-	public static final String RESOLVE_TRAVERSAL_EVENTS_DESCRIPTION = "Defined parameter and grouping criteria are resolved.";
-	public static final String APPLY_GROUPING_DESCRIPTION           = "The metadata are applied to generate a concrete graph.";
-	public static final String APPLY_PARAMETER_DESCRIPTION          = "The paremeter definitions are applied to generate a concrete graph.";
+	public static final String GENERATE_ABSTRACT_GRAPH_DESCRIPTION        = "The abstract Workflow is computed based on the Workflow template.";
+	public static final String RESOLVE_TRAVERSAL_EVENTS_DESCRIPTION       = "Defined parameter and grouping criteria are resolved.";
+	public static final String APPLY_GROUPING_DESCRIPTION                 = "The metadata are applied to generate a concrete graph.";
+	public static final String APPLY_PARAMETER_DESCRIPTION                = "The paremeter definitions are applied to generate a concrete graph.";
 	public static final String RESOLVE_INCOMPATIBLE_GROUPINGS_DESCRIPTION = "Utility Tasks are included in case of incompatible groupings.";
 	
-	public static final String GENERATE_ABSTRACT_GRAPH_LABEL     = "Generate Abstract Graph";
-	public static final String RESOLVE_TRAVERSAL_EVENTS_LABEL    = "Resolve Traversal Criteria";
-	public static final String APPLY_GROUPING_LABEL              = "Apply Grouping Criteria";
-	public static final String APPLY_PARAMETER_LABEL             = "Apply Parameter Criteria";
-	public static final String RESOLVE_INCOMPATIBLE_GROUPINGS_LABEL = "Resolve incompatible Groupings";
-	public static final String FINISHED_LABEL                    = "finished";
-	public static final String START_LABEL                       = "start";
-	public static final String FINISHED_DESCRIPTION              = "Workflow composition finished";
-	public static final String START_DESCRIPTION                 = "Workflow composition not yet started";
+	public static final String GENERATE_ABSTRACT_GRAPH_LABEL         = "Generate Abstract Graph";
+	public static final String RESOLVE_TRAVERSAL_EVENTS_LABEL        = "Resolve Traversal Criteria";
+	public static final String APPLY_GROUPING_LABEL                  = "Apply Grouping Criteria";
+	public static final String APPLY_PARAMETER_LABEL                 = "Apply Parameter Criteria";
+	public static final String RESOLVE_INCOMPATIBLE_GROUPINGS_LABEL  = "Resolve incompatible Groupings";
+	public static final String FINISHED_LABEL                        = "finished";
+	public static final String START_LABEL                           = "start";
+	public static final String FINISHED_DESCRIPTION                  = "Workflow composition finished";
+	public static final String START_DESCRIPTION                     = "Workflow composition not yet started";
 	
-	public static final String templateTaskName = "_EasyFlowTemplateTask_";
-	public static final String templateDataPortName = "_EasyFlowTemplatePort_";
+	public static final String TEMPLATE_TASK_NAME       = "_EasyFlowTemplateTask_";
+	public static final String TEMPLATE_DATA_PORT_NAME  = "_EasyFlowTemplatePort_";
+	public static final String ROOT_TASK_NAME           = "_root_";
 	
 	public static final String VERTEX_STYLE = "EASYFLOW_VERTEX_STYLE";
 	public static final String EDGE_STYLE   = "EASYFLOW_EDGE_STYLE";
@@ -66,6 +67,7 @@ public class GlobalVar {
 	public static final double defaultCellWidth  = 200;
 	public static final double defaultCellHeight =  40;
 	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
+	public static final String METADATA_INPUT             = "InputFiles";
 	
 
 	
@@ -164,4 +166,8 @@ public class GlobalVar {
 		GlobalVar.defaultVertexStyle=defaultVertexStyle;
 	}
 
+	public static Task getRootTask()
+	{
+		return getGraphUtil().getTasks().get(ROOT_TASK_NAME);
+	}
 }

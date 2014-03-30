@@ -50,6 +50,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -612,10 +613,75 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 	}
 
+	
+	
+	private DataPort readInput(String dataPortName, String dataFormatName, short bitPos) 
+	{
+		DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+		dataFormat.setName(dataFormatName);
+		DataPort dataPort=CoreFactory.eINSTANCE.createDataPort();
+		dataPort.setBitPos(bitPos);
+		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+		dataPort.setName(dataPortName);
+		return dataPort;
+		
+	}
+	
+	
+	private boolean readInputsMap(JSONObject workflowCfg, Task rootTask, String key, boolean isStatic, EMap<String, String> processedFormats)
+	{
+		short bitPos = (short) rootTask.getOutDataPorts().size();
+		
+    	if (workflowCfg.has(key))
+    	{
+    		JSONObject inputs = workflowCfg.getJSONObject(key);
+    		Iterator<String> it = inputs.keys(); 
+	    	while (it.hasNext())
+	    	{
+	    		String name=it.next();
+	    		String format=inputs.getString(name);
+	    		processedFormats.put(name, format);
+	    		DataPort dataPort = readInput(name, format, bitPos++);
+	    		dataPort.setStatic(isStatic);
+	    		rootTask.getOutDataPorts().add(dataPort);
+	    	}
+	    	return true;
+    	}
+    	
+		return false;
+	}
+	
+	private boolean readInputs(JSONObject workflowCfg, Task rootTask)
+	{
+    	short bitPos=0;
+    	
+    	EMap<String, String> processedFormats = new BasicEMap<String, String>();
+    	readInputsMap(workflowCfg, rootTask, "inputs_map", false, processedFormats);
+    	readInputsMap(workflowCfg, rootTask, "static_inputs_map", true, processedFormats);
+    	
+    	for (int i=0; i<workflowCfg.getJSONArray("inputs").size();i++)
+    	{
+    		String name=workflowCfg.getJSONArray("inputs").getString(i);
+    		if (!processedFormats.containsValue(name))
+    			rootTask.getOutDataPorts().add(readInput(name, name, bitPos++));
+    	}
+    	
+    	for (int i=0; i<workflowCfg.getJSONArray("static_inputs").size();i++)
+    	{
+    		String name = workflowCfg.getJSONArray("inputs").getString(i);
+    		if (!processedFormats.containsValue(name))
+    		{
+    			DataPort dataPort = readInput(name, name, bitPos++);
+    			dataPort.setStatic(true);
+    			rootTask.getOutDataPorts().add(dataPort);
+    		}
+    	}
+    	return true;
+	}
+	
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -680,11 +746,16 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		}
 		workflow.setMetaData(metaData);
 
+		
+		
+		
+		
+		
 		// processing config
 		if (jsonObject.has("processing"))
 		{
 			JSONObject processingCfg=jsonObject.getJSONObject("processing");
-			Iterator<String> it =processingCfg.keys();
+			Iterator<String> it = processingCfg.keys();
 			while (it.hasNext())
 			{
 				String key = it.next();
@@ -692,6 +763,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				workflow.getProcessingConfig().put(key, processingCfg.getString(key));
 			}
 		}
+		
+		
 		
 		// catalog
 		if (jsonObject.has("catalog"))
@@ -708,10 +781,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				catalog.getEntries().put(key, catalogCfg.getString(key));
 			}
 
-		}
+		}		
 		
-		// workflow config
-		JSONObject workflowCfg=jsonObject.getJSONObject("workflow");
+		
+		// ####### READ WORKFLOW CONFIGURATION ########
+		JSONObject workflowCfg = jsonObject.getJSONObject("workflow");
 		workflow.setMode(workflowCfg.getString("defaultMode"));
     	// create the special root task/cell which is the root
     	// in all subsequent processed graphs, the root should link any
@@ -719,28 +793,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
     	Task rootTask = CoreFactory.eINSTANCE.createTask();
     	rootTask.setName("_root_");
     	rootTask.setRoot(true);
-    	short bitPos=0;
-    	for (int i=0; i<workflowCfg.getJSONArray("inputs").size();i++)
-    	{
-    		DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
-    		dataFormat.setName(workflowCfg.getJSONArray("inputs").getString(i));
-    		DataPort dataPort=CoreFactory.eINSTANCE.createDataPort();
-    		dataPort.setBitPos(bitPos++);
-    		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
-    		dataPort.setName(dataFormat.getName());
-    		rootTask.getOutDataPorts().add(dataPort);
-    	}
-    	for (int i=0; i<workflowCfg.getJSONArray("static_inputs").size();i++)
-    	{
-    		DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
-    		dataFormat.setName(workflowCfg.getJSONArray("static_inputs").getString(i));
-    		DataPort dataPort=CoreFactory.eINSTANCE.createDataPort();
-    		dataPort.setBitPos(bitPos++);
-    		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
-    		dataPort.setName(dataFormat.getName());
-    		dataPort.setStatic(true);
-    		rootTask.getOutDataPorts().add(dataPort);
-    	}
+
+    	readInputs(workflowCfg, rootTask);
     	
     	workflow.setRootTask(rootTask);
 
@@ -753,6 +807,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			workflow.getGenericAttributes().put((String) key, projectCfg.get(key));	
 		}
 
+		
+		// ####### READ TOOL CONFIGURATION ########
 		// tool config (dir, tools, schemata)
 		JSONObject toolCfg = jsonObject.getJSONObject("tool");
 		if (toolCfg.has("command_pattern"))
@@ -766,6 +822,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		//if (toolCfg.has(""))
 			//GlobalConfig.getToolConfig().put("", toolCfg.get(""));
 		
+		
+		
+		
+		
+		// ####### READ TOOL DEFINITIONS ########
 		JSONArray schemata = toolCfg.getJSONArray("schemata");
 		// String toolDefPath = basePath;
 		URI toolDefPath = getBaseURI();
@@ -782,27 +843,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		ToolSchemata    toolSchemata   = ToolFactory.eINSTANCE.createToolSchemata();
 		ToolDefinitions toolDefintions = ToolFactory.eINSTANCE.createToolDefinitions();
-		
-		/*
-		//read all schemata at once
-		EList<URI> schemaURIs = new BasicEList<URI>();
-		
-		for (int i=0; i<schemata.size(); i++)
-		{
-			try {
-				schemaURIs.add(URIUtil.addToURI(toolDefPath, schemata.getString(i)));
-				Schema schema = toolSchemata.readSchemata(schemaURIs, isFromJar());
-				toolSchemata.getSchemata().put("all", schema);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		*/
-		
 		
 		// read schemata one by one
 		for (int i=0; i<schemata.size(); i++)

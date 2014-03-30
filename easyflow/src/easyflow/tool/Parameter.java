@@ -41,6 +41,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getGrouping <em>Grouping</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isFixedArgValue <em>Fixed Arg Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -231,6 +232,33 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<Data> getData();
+
+	/**
+	 * Returns the value of the '<em><b>Fixed Arg Value</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Fixed Arg Value</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Fixed Arg Value</em>' attribute.
+	 * @see #setFixedArgValue(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_FixedArgValue()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isFixedArgValue();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isFixedArgValue <em>Fixed Arg Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Fixed Arg Value</em>' attribute.
+	 * @see #isFixedArgValue()
+	 * @generated
+	 */
+	void setFixedArgValue(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->

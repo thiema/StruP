@@ -72,6 +72,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGrouping <em>Grouping</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isFixedArgValue <em>Fixed Arg Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -529,6 +530,26 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected EList<Data> data;
 
 	/**
+	 * The default value of the '{@link #isFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isFixedArgValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean FIXED_ARG_VALUE_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isFixedArgValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean fixedArgValue = FIXED_ARG_VALUE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -728,6 +749,27 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			data = new EObjectResolvingEList<Data>(Data.class, this, ToolPackage.PARAMETER__DATA);
 		}
 		return data;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isFixedArgValue() {
+		return fixedArgValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFixedArgValue(boolean newFixedArgValue) {
+		boolean oldFixedArgValue = fixedArgValue;
+		fixedArgValue = newFixedArgValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__FIXED_ARG_VALUE, oldFixedArgValue, fixedArgValue));
 	}
 
 	/**
@@ -1090,17 +1132,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void readImplementation(Element element) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1169,6 +1200,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getGrouping();
 			case ToolPackage.PARAMETER__DATA:
 				return getData();
+			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
+				return isFixedArgValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1258,6 +1291,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				getData().clear();
 				getData().addAll((Collection<? extends Data>)newValue);
 				return;
+			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
+				setFixedArgValue((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1342,6 +1378,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__DATA:
 				getData().clear();
 				return;
+			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
+				setFixedArgValue(FIXED_ARG_VALUE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1404,6 +1443,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return grouping != null && !grouping.isEmpty();
 			case ToolPackage.PARAMETER__DATA:
 				return data != null && !data.isEmpty();
+			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
+				return fixedArgValue != FIXED_ARG_VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1496,6 +1537,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(positional);
 		result.append(", grouping: ");
 		result.append(grouping);
+		result.append(", fixedArgValue: ");
+		result.append(fixedArgValue);
 		result.append(')');
 		return result.toString();
 	}

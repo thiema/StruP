@@ -88,7 +88,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		graphOutline.setVisible(true);
 
 		Task templateTask=CoreFactory.eINSTANCE.createTask();
-		templateTask.setName(GlobalVar.templateTaskName);
+		templateTask.setName(GlobalVar.TEMPLATE_TASK_NAME);
 		GlobalVar.setTemplateTask(templateTask);
 		mxCell templateCell = (mxCell) graph.createNewCell(templateTask, null);
 		templateCell.getGeometry().setAlternateBounds(
@@ -101,7 +101,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		
 		DataLink templateDataLink=CoreFactory.eINSTANCE.createDataLink();
 		DataPort templateDataPort=CoreFactory.eINSTANCE.createDataPort();
-		templateDataPort.setName(GlobalVar.templateDataPortName);
+		templateDataPort.setName(GlobalVar.TEMPLATE_DATA_PORT_NAME);
 		templateDataLink.setDataPort(templateDataPort);
 		GlobalVar.setTemplateLink(templateDataLink);
 		mxGeometry geometry = new mxGeometry(0, 0, 120, 120);

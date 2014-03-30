@@ -21,12 +21,5 @@ import org.w3c.dom.Element;
  * @generated
  */
 public interface IToolElement extends EObject {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model elementDataType="easyflow.Element"
-	 * @generated
-	 */
-	void readImplementation(Element element);
 
 } // IToolElement

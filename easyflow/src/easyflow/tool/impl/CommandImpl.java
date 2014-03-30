@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import easyflow.tool.Command;
+import easyflow.tool.Data;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
@@ -262,16 +263,16 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String generateCommandString(EMap<String, Object> constaints) {
+	public String generateCommandString(EMap<String, Object> constraints) {
 		Iterator<Parameter> it = getParameters().values().iterator();
 		EList<String> tmp = new BasicEList<String>();
 		while (it.hasNext()) {
 			Parameter parameter = it.next();
 			//paramString+="name="+parameter.getName();
 			//paramString+=" cmd="+parameter.generateCommandString(null);
-			tmp.add(parameter.generateCommandString(constaints));
+			tmp.add(parameter.generateCommandString(constraints));
 		}
-		String commandString=StringUtils.join(tmp.toArray(), " ");
+		String commandString = StringUtils.join(tmp.toArray(), " ");
 		return commandString;
 	}
 
@@ -304,10 +305,20 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 */
 	public EMap<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks) {
 		EMap<String, URI> inputs = new BasicEMap<String, URI>();
+		
+		if (getParameters().containsKey("input"))
+		{
+			Parameter parameter = getParameters().get("input");
+			
+			logger.debug("create inputs for chunks="+chunks.keySet()+" with param="+parameter.getLabel()
+					+" "+parameter.getName()+" "+parameter.getArgValue());
+			
+		}
+		
 		for (Entry<String, Parameter> parameterEntry:getParameters())
 		{
 			//if (parameterEntry.getValue())
-			logger.debug(parameterEntry.getKey()+" "+parameterEntry.getValue().getName());
+			//logger.debug(parameterEntry.getKey()+" "+parameterEntry.getValue().getName());
 		}
 		return inputs;
 	}
@@ -381,23 +392,60 @@ public class CommandImpl extends EObjectImpl implements Command {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		
+		//boolean matchAll = false;
+		//boolean matchAllMandatoryPorts = true;
+		
+		for (Parameter parameter:getParameters().values())
+		{
+			
+			for (Data data:parameter.getData())
+			{
+				if (data.getPort().isCompatible(dataPort))
+					return parameter;
+			}
+		}
+		return null;
 	}
 
+	
+	private Parameter getParameterByName(String name)
+	{
+		if (getParameters().containsKey(name))
+			return getParameters().get(name);
+		return null;
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public Parameter getParameterForDataPortAny(DataPort dataPort) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public boolean setInputParameterValue(URI value, String parameterName, DataPort dataPort) {
+		boolean   rc        = false;
+		Parameter parameter = null;
+		if (dataPort != null)
+		{
+			try {
+				parameter = getParameterForDataPort(dataPort);
+			} catch (ParameterNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (parameterName != null && !parameterName.equals(""))
+		{
+			parameter = getParameterByName(parameterName);
+		}
+		
+		if (parameter != null)
+		{
+			parameter.getValue().add(value);
+			rc = true;
+		}
+		return rc;
 	}
 
 	/**
@@ -405,8 +453,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void readImplementation(Element element) {
-		logger.debug(element);
+	public boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort) {
+		return setInputParameterValue(value, parameterName, dataPort);
 	}
 
 	/**

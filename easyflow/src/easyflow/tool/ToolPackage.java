@@ -692,13 +692,22 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 24;
 
 	/**
+	 * The feature id for the '<em><b>Fixed Arg Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__FIXED_ARG_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 25;
+
+	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 25;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 26;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -934,6 +943,15 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int IN_OUT_PARAMETER__DATA = PARAMETER__DATA;
+
+	/**
+	 * The feature id for the '<em><b>Fixed Arg Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__FIXED_ARG_VALUE = PARAMETER__FIXED_ARG_VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Handles</b></em>' attribute list.
@@ -1898,6 +1916,17 @@ public interface ToolPackage extends EPackage {
 	EReference getParameter_Data();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isFixedArgValue <em>Fixed Arg Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Fixed Arg Value</em>'.
+	 * @see easyflow.tool.Parameter#isFixedArgValue()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_FixedArgValue();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2634,6 +2663,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PARAMETER__DATA = eINSTANCE.getParameter_Data();
+
+		/**
+		 * The meta object literal for the '<em><b>Fixed Arg Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__FIXED_ARG_VALUE = eINSTANCE.getParameter_FixedArgValue();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.

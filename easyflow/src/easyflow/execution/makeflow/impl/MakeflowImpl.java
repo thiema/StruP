@@ -11,7 +11,9 @@ import java.util.Iterator;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.Task;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
@@ -24,6 +26,7 @@ import easyflow.graph.jgraphx.Util;
 import easyflow.tool.Parameter;
 import easyflow.ui.DefaultProject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -183,12 +186,11 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		String cmdLine=commandPattern+" "+commandLineParts.keySet()+" "+StringUtils.join(commandLineParts.values(), " ");
+		return cmdLine;
 	}
 
 	/**
@@ -225,21 +227,28 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		
 			@Override
 			public boolean visit(Object vertex, Object edge) {
-				Task task=XMLUtil.loadTaskFromVertex(vertex);
+
+				Task task;
+				try {
+					task = GlobalVar.getGraphUtil().loadTask(vertex);
 				if (task.getTools().isEmpty())
-					logger.debug(task.getUniqueString());
+					logger.debug("no tool definition available for "+task.getUniqueString());
 				else
 				{
 					task.getInputs();
 					task.getOutputs();
 					task.getPreferredTool();
 					
-					createCommandLine(GlobalConfig.getToolConfig().
+					String cmd = createCommandLine(GlobalConfig.getToolConfig().
 							get("command_pattern"),
 							task.createCommandLineMap());
-					logger.debug(task.getUniqueString()+" "+task.getTools().keySet().toString());
+					logger.debug(task.getUniqueString()+" "+task.getTools().keySet().toString()+" "+cmd+" "+task.getInputs().keySet()+" "+task.getOutputs().keySet()+" ");
 				}
 				
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				return true;
 			}

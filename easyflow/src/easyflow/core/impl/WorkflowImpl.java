@@ -1313,7 +1313,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				Task task=it.next();
 				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
 					continue;
-				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil());
+				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" dataports1 grouping="+task.getInDataPorts().get(0).getGroupingCriteria().size());
 				if (!task.isUtil()) 
 				{
 					Object target=getGraphUtil().getCells().get(task.getUniqueString());
@@ -1903,7 +1903,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean generateWorklowForExecutionSystem() {
 		
 		Makeflow makeflow = MakeflowFactory.eINSTANCE.createMakeflow();
-		return getGraphUtil().generateWorklowForExecutionSystem((mxICell) getFirstNode(), makeflow);
+		return getGraphUtil().generateWorkflowForExecutionSystem((mxICell) getFirstNode(), makeflow);
 	}
 
 	/**

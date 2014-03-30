@@ -455,6 +455,17 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		return records;
 	}
 
+	public EMap<String, String> getRow(String key)
+	{
+		return new BasicEMap<String, String>(GlobalVarMetaData.getMetaDataTableRow(key));
+	}
+	
+	public EMap<String, String> getColumn(String key)
+	{
+		return new BasicEMap<String, String>(GlobalVarMetaData.getMetaDataTableColumn(key));
+	}
+	
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

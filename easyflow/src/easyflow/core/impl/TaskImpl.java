@@ -902,7 +902,6 @@ public class TaskImpl extends EObjectImpl implements Task {
         	dataPort.setBitPos(bitPos++);
         }
         
-        //EList<DataPort> x=getInDataPorts();
         /**
          * Read Data(Grouping)Criteria. 
          */
@@ -911,8 +910,7 @@ public class TaskImpl extends EObjectImpl implements Task {
         if ((wtplArray.length>5)) {
         	groupingStr=wtplArray[groupingCritField];
         }
-        	//if (!wtplArray[groupingCritField].equals(""))
-        	//{
+
         if (hasIndataPorts)
         {
         	short dataPortNo=0;
@@ -962,13 +960,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 			        	traversalEvent.setSplitTask(this);
 			        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalCriterion);
 			        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
-			        	
-			        	
 			        	getGroupingCriteria().put(traversalCriterion.getId(), traversalCriterion.getMode());
+			        	dataPort.getGroupingCriteria().add(traversalCriterion);
 			        }
 	        	}
         	}
-        	//}
         }
 
 		/**
@@ -1471,11 +1467,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public EMap<String, String> createCommandLineMap() {
+		
 		EMap<String, String> map = new BasicEMap<String, String>();
+		
 		if (getPreferredTool().getExecutables().containsKey("interpreter"))
 			map.put("interpreter", getPreferredTool().getExecutables().get("interpreter").getPath());
 		if (getPreferredTool().getExecutables().containsKey("executable"))
 			map.put("executable", getPreferredTool().getExecutables().get("executable").getPath());
+		
 		//set submodule
 		//set positional args
 		//if (getPreferredTool().getCommand().get)

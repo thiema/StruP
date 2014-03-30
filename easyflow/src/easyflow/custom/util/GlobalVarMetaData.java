@@ -87,4 +87,14 @@ public class GlobalVarMetaData {
 		return tableRow;
 	}
 
+	public static Map<String, String> getMetaDataTableColumn(String columnStr)
+	{
+		Map<String, String> tableCol = new HashMap<String, String>();
+		int col=colHeaderMap.get(columnStr);
+		for (String row:rowHeaderMap.keySet())
+		{
+			tableCol.put(row, metaDataTable[rowHeaderMap.get(row)][col]);
+		}
+		return tableCol;
+	}
 }

@@ -35,7 +35,7 @@
   },
 
   "catalog":{
-	"genome_reference" : "human.fa",
+	"reference"        : "human.fa",
 	"input_dir"        : "input_dir",
 	"work_dir"         : "analysis_dir",
 	"tmp_dir"          : "tmp",
@@ -47,8 +47,13 @@
   },
 
   "workflow": {
+    "metadata_input_field"    : ["InputFiles"],
     "inputs"                  : ["FASTQ"],
     "static_inputs"           : ["FASTA"],
+    "inputs_map"              : {"Reads" : "FASTQ"
+                                },
+    "static_inputs_map"       : {"Reference" : "FASTA"
+                                },         
     "workflows"               : ["w1", "w2"], 
     "w1"                      : ["MapReads", "AddReadGroup"],
     "w2"                      : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
