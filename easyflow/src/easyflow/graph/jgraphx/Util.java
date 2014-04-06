@@ -451,6 +451,22 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.TaskNotFoundException" vertexDataType="easyflow.mxICell" cellDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean resolvePreprocessingTask(mxICell vertex, mxICell cell) throws DataLinkNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
+	 * @generated
+	 */
+	EMap<mxICell, EList<mxICell>> findCellsWherePreprocessingIsRequired();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
@@ -467,10 +483,10 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation" exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	TraversalEvent getNextTraversalEvent() throws CellNotFoundException, TaskNotFoundException;
+	TraversalEvent getNextTraversalEvent(boolean isGrouping) throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -511,14 +527,6 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	String traversalEventToString(TraversalEvent traversalEvent);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	void testSomething();
 
 	/**
 	 * <!-- begin-user-doc -->

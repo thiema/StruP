@@ -449,13 +449,31 @@ public interface CorePackage extends EPackage {
 	int TASK__OUTPUTS = 18;
 
 	/**
+	 * The feature id for the '<em><b>Inputs By Data Port</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__INPUTS_BY_DATA_PORT = 19;
+
+	/**
+	 * The feature id for the '<em><b>Outputs By Data Port</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__OUTPUTS_BY_DATA_PORT = 20;
+
+	/**
 	 * The feature id for the '<em><b>Input Data Port Validator</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__INPUT_DATA_PORT_VALIDATOR = 19;
+	int TASK__INPUT_DATA_PORT_VALIDATOR = 21;
 
 	/**
 	 * The feature id for the '<em><b>Output Data Port Validator</b></em>' attribute list.
@@ -464,7 +482,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__OUTPUT_DATA_PORT_VALIDATOR = 20;
+	int TASK__OUTPUT_DATA_PORT_VALIDATOR = 22;
 
 	/**
 	 * The feature id for the '<em><b>Analysis Types</b></em>' attribute list.
@@ -473,7 +491,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__ANALYSIS_TYPES = 21;
+	int TASK__ANALYSIS_TYPES = 23;
 
 	/**
 	 * The feature id for the '<em><b>Circumventing Parents</b></em>' attribute list.
@@ -482,7 +500,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__CIRCUMVENTING_PARENTS = 22;
+	int TASK__CIRCUMVENTING_PARENTS = 24;
 
 	/**
 	 * The feature id for the '<em><b>Records</b></em>' reference list.
@@ -491,7 +509,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__RECORDS = 23;
+	int TASK__RECORDS = 25;
+
+	/**
+	 * The feature id for the '<em><b>Preprocessing Tasks</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__PREPROCESSING_TASKS = 26;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -500,7 +527,53 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 24;
+	int TASK_FEATURE_COUNT = 27;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.PreprocessingTaskImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getPreprocessingTask()
+	 * @generated
+	 */
+	int PREPROCESSING_TASK = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TASK__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TASK__TASK = 1;
+
+	/**
+	 * The feature id for the '<em><b>Expression</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TASK__EXPRESSION = 2;
+
+	/**
+	 * The number of structural features of the '<em>Preprocessing Task</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TASK_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -510,7 +583,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getIWorkflowTemplate()
 	 * @generated
 	 */
-	int IWORKFLOW_TEMPLATE = 3;
+	int IWORKFLOW_TEMPLATE = 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.DefaultWorkflowTemplateImpl <em>Default Workflow Template</em>}' class.
@@ -520,7 +593,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDefaultWorkflowTemplate()
 	 * @generated
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE = 4;
+	int DEFAULT_WORKFLOW_TEMPLATE = 5;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
@@ -530,7 +603,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getEasyflowTemplate()
 	 * @generated
 	 */
-	int EASYFLOW_TEMPLATE = 5;
+	int EASYFLOW_TEMPLATE = 6;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.ITaskReader <em>ITask Reader</em>}' class.
@@ -540,7 +613,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getITaskReader()
 	 * @generated
 	 */
-	int ITASK_READER = 6;
+	int ITASK_READER = 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.
@@ -550,7 +623,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getGalaxyTaskReader()
 	 * @generated
 	 */
-	int GALAXY_TASK_READER = 7;
+	int GALAXY_TASK_READER = 8;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.DefaultRecordImpl <em>Default Record</em>}' class.
@@ -560,7 +633,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDefaultRecord()
 	 * @generated
 	 */
-	int DEFAULT_RECORD = 8;
+	int DEFAULT_RECORD = 9;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
@@ -570,7 +643,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getCatalog()
 	 * @generated
 	 */
-	int CATALOG = 9;
+	int CATALOG = 10;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
@@ -580,7 +653,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getToolMatch()
 	 * @generated
 	 */
-	int TOOL_MATCH = 2;
+	int TOOL_MATCH = 3;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -861,7 +934,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDataPort()
 	 * @generated
 	 */
-	int DATA_PORT = 10;
+	int DATA_PORT = 11;
 
 	/**
 	 * The feature id for the '<em><b>Grouping Criteria</b></em>' reference list.
@@ -953,7 +1026,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getDataLink()
 	 * @generated
 	 */
-	int DATA_LINK = 11;
+	int DATA_LINK = 12;
 
 	/**
 	 * The feature id for the '<em><b>Data Port</b></em>' reference.
@@ -1028,13 +1101,22 @@ public interface CorePackage extends EPackage {
 	int DATA_LINK__CONDITION = 7;
 
 	/**
+	 * The feature id for the '<em><b>Intermediate Tasks</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__INTERMEDIATE_TASKS = 8;
+
+	/**
 	 * The number of structural features of the '<em>Data Link</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 8;
+	int DATA_LINK_FEATURE_COUNT = 9;
 
 
 	/**
@@ -1045,7 +1127,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getParentTaskResult()
 	 * @generated
 	 */
-	int PARENT_TASK_RESULT = 12;
+	int PARENT_TASK_RESULT = 13;
 
 	/**
 	 * The feature id for the '<em><b>Parent Task</b></em>' reference.
@@ -1119,7 +1201,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getCondition()
 	 * @generated
 	 */
-	int CONDITION = 13;
+	int CONDITION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Forbidden</b></em>' attribute list.
@@ -1610,6 +1692,17 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Outputs();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getInputsByDataPort <em>Inputs By Data Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Inputs By Data Port</em>'.
+	 * @see easyflow.core.Task#getInputsByDataPort()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_InputsByDataPort();
+
+	/**
 	 * Returns the meta object for the attribute list '{@link easyflow.core.Task#getInputDataPortValidator <em>Input Data Port Validator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1663,6 +1756,71 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTask_Records();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Preprocessing Tasks</em>'.
+	 * @see easyflow.core.Task#getPreprocessingTasks()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_PreprocessingTasks();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Preprocessing Task</em>'.
+	 * @see easyflow.core.PreprocessingTask
+	 * @generated
+	 */
+	EClass getPreprocessingTask();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.PreprocessingTask#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.core.PreprocessingTask#getName()
+	 * @see #getPreprocessingTask()
+	 * @generated
+	 */
+	EAttribute getPreprocessingTask_Name();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.PreprocessingTask#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Task</em>'.
+	 * @see easyflow.core.PreprocessingTask#getTask()
+	 * @see #getPreprocessingTask()
+	 * @generated
+	 */
+	EReference getPreprocessingTask_Task();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.PreprocessingTask#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expression</em>'.
+	 * @see easyflow.core.PreprocessingTask#getExpression()
+	 * @see #getPreprocessingTask()
+	 * @generated
+	 */
+	EAttribute getPreprocessingTask_Expression();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.core.Task#getOutputsByDataPort <em>Outputs By Data Port</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Outputs By Data Port</em>'.
+	 * @see easyflow.core.Task#getOutputsByDataPort()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_OutputsByDataPort();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
@@ -1995,6 +2153,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDataLink_Condition();
+
+	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.DataLink#getIntermediateTasks <em>Intermediate Tasks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Intermediate Tasks</em>'.
+	 * @see easyflow.core.DataLink#getIntermediateTasks()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EReference getDataLink_IntermediateTasks();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.ParentTaskResult <em>Parent Task Result</em>}'.
@@ -2620,6 +2789,14 @@ public interface CorePackage extends EPackage {
 		EReference TASK__OUTPUTS = eINSTANCE.getTask_Outputs();
 
 		/**
+		 * The meta object literal for the '<em><b>Inputs By Data Port</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__INPUTS_BY_DATA_PORT = eINSTANCE.getTask_InputsByDataPort();
+
+		/**
 		 * The meta object literal for the '<em><b>Input Data Port Validator</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2658,6 +2835,56 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK__RECORDS = eINSTANCE.getTask_Records();
+
+		/**
+		 * The meta object literal for the '<em><b>Preprocessing Tasks</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__PREPROCESSING_TASKS = eINSTANCE.getTask_PreprocessingTasks();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.PreprocessingTaskImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getPreprocessingTask()
+		 * @generated
+		 */
+		EClass PREPROCESSING_TASK = eINSTANCE.getPreprocessingTask();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_TASK__NAME = eINSTANCE.getPreprocessingTask_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREPROCESSING_TASK__TASK = eINSTANCE.getPreprocessingTask_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_TASK__EXPRESSION = eINSTANCE.getPreprocessingTask_Expression();
+
+		/**
+		 * The meta object literal for the '<em><b>Outputs By Data Port</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__OUTPUTS_BY_DATA_PORT = eINSTANCE.getTask_OutputsByDataPort();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
@@ -2924,6 +3151,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference DATA_LINK__CONDITION = eINSTANCE.getDataLink_Condition();
+
+		/**
+		 * The meta object literal for the '<em><b>Intermediate Tasks</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_LINK__INTERMEDIATE_TASKS = eINSTANCE.getDataLink_IntermediateTasks();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ParentTaskResultImpl <em>Parent Task Result</em>}' class.

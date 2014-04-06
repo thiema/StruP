@@ -329,13 +329,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
+	 * The feature id for the '<em><b>Filename Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__FILENAME_PREFIX = ITOOL_ELEMENT_FEATURE_COUNT + 11;
+
+	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 11;
+	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InterpreterImpl <em>Interpreter</em>}' class.
@@ -1578,6 +1587,17 @@ public interface ToolPackage extends EPackage {
 	EReference getTool_Data();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Tool#getFilenamePrefix <em>Filename Prefix</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Filename Prefix</em>'.
+	 * @see easyflow.tool.Tool#getFilenamePrefix()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EAttribute getTool_FilenamePrefix();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Interpreter <em>Interpreter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2409,6 +2429,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOOL__DATA = eINSTANCE.getTool_Data();
+
+		/**
+		 * The meta object literal for the '<em><b>Filename Prefix</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL__FILENAME_PREFIX = eINSTANCE.getTool_FilenamePrefix();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InterpreterImpl <em>Interpreter</em>}' class.

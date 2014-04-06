@@ -43,10 +43,13 @@ public class Easyflow {
 				defaultProject.init();
 				defaultProject.generateAbstractGraph();
 				defaultProject.resolveTraversalCriteria();
-				defaultProject.applyParameterCriteria();
+				//defaultProject.applyParameterCriteria();
 				defaultProject.applyGroupingCriteria();
 				defaultProject.resolveUtilityTasks();
-				defaultProject.resolveToolDependencies();
+				defaultProject.resolvePreprocessingTasks();
+				
+				//defaultProject.resolveToolDependencies();
+				
 				//defaultProject.generateWorklowForExecutionSystem();
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block

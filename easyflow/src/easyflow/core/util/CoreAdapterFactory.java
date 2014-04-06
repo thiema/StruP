@@ -80,6 +80,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createTaskAdapter();
 			}
 			@Override
+			public Adapter casePreprocessingTask(PreprocessingTask object) {
+				return createPreprocessingTaskAdapter();
+			}
+			@Override
 			public Adapter caseToolMatch(ToolMatch object) {
 				return createToolMatchAdapter();
 			}
@@ -172,6 +176,20 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTaskAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.core.PreprocessingTask
+	 * @generated
+	 */
+	public Adapter createPreprocessingTaskAdapter() {
 		return null;
 	}
 

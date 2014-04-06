@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getCondition <em>Condition</em>}</li>
+ *   <li>{@link easyflow.core.DataLink#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -237,6 +238,22 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setCondition(Condition value);
+
+	/**
+	 * Returns the value of the '<em><b>Intermediate Tasks</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.PreprocessingTask}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Intermediate Tasks</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Intermediate Tasks</em>' reference list.
+	 * @see easyflow.core.CorePackage#getDataLink_IntermediateTasks()
+	 * @model
+	 * @generated
+	 */
+	EList<PreprocessingTask> getIntermediateTasks();
 
 	/**
 	 * <!-- begin-user-doc -->

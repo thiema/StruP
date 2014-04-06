@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#getId <em>Id</em>}</li>
+ *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#getMode <em>Mode</em>}</li>
  *   <li>{@link easyflow.traversal.impl.GroupingCriterionImpl#isMultipleInstances <em>Multiple Instances</em>}</li>
@@ -59,6 +60,26 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 	 * @ordered
 	 */
 	protected String id = ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
@@ -215,6 +236,27 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TraversalPackage.GROUPING_CRITERION__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getDescription() {
 		return description;
 	}
@@ -351,6 +393,8 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 		switch (featureID) {
 			case TraversalPackage.GROUPING_CRITERION__ID:
 				return getId();
+			case TraversalPackage.GROUPING_CRITERION__NAME:
+				return getName();
 			case TraversalPackage.GROUPING_CRITERION__DESCRIPTION:
 				return getDescription();
 			case TraversalPackage.GROUPING_CRITERION__MODE:
@@ -378,6 +422,9 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 		switch (featureID) {
 			case TraversalPackage.GROUPING_CRITERION__ID:
 				setId((String)newValue);
+				return;
+			case TraversalPackage.GROUPING_CRITERION__NAME:
+				setName((String)newValue);
 				return;
 			case TraversalPackage.GROUPING_CRITERION__DESCRIPTION:
 				setDescription((String)newValue);
@@ -409,6 +456,9 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 			case TraversalPackage.GROUPING_CRITERION__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case TraversalPackage.GROUPING_CRITERION__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 			case TraversalPackage.GROUPING_CRITERION__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
@@ -438,6 +488,8 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 		switch (featureID) {
 			case TraversalPackage.GROUPING_CRITERION__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case TraversalPackage.GROUPING_CRITERION__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case TraversalPackage.GROUPING_CRITERION__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case TraversalPackage.GROUPING_CRITERION__MODE:
@@ -466,6 +518,8 @@ public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriter
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
+		result.append(", name: ");
+		result.append(name);
 		result.append(", description: ");
 		result.append(description);
 		result.append(", mode: ");

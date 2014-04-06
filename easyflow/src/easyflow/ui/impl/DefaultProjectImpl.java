@@ -1027,12 +1027,63 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
 	 * @generated not
 	 */
-	public boolean applyParameterCriteria() {
+	public boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		return getActiveWorkflow().applyParameterCriteria();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolveTraversalCriteria() throws CellNotFoundException, TaskNotFoundException {
+		return getActiveWorkflow().resolveTraversalEvents();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveToolDependencies() {
+		return getActiveWorkflow().resolveToolDependencies();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+		return getActiveWorkflow().resolveIncompatibleGroupings();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws DataLinkNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolvePreprocessingTasks() throws DataLinkNotFoundException, TaskNotFoundException {
+		return getActiveWorkflow().resolvePreprocessingTasks();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+		return getActiveWorkflow().runEntireWorkflow()==0;
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1158,43 +1209,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		return getActiveWorkflow().resetWorkflowStep();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
-	 * @generated not
-	 */
-	public boolean resolveTraversalCriteria() throws CellNotFoundException, TaskNotFoundException {
-		return getActiveWorkflow().resolveTraversalEvents();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean resolveToolDependencies() {
-		return getActiveWorkflow().resolveToolDependencies();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
-		return getActiveWorkflow().resolveIncompatibleGroupings();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
-		return getActiveWorkflow().runEntireWorkflow()==0;
-	}
 
 	
 	/**

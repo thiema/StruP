@@ -58,6 +58,11 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		return getModel().setStyle(cell, "strokeColor=none;noLabel=1;textOpacity=0");
 	}
 	
+	public String setStyleForCell(String style, Object cell)
+	{
+		return getModel().setStyle(cell, style);
+	}
+	
 	public String getStyleForEdge(DataLink dataLink)
 	{
 		if (dataLink != null && dataLink.getCondition()!=null)
@@ -76,7 +81,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		if (((mxICell) cell).isEdge())
 		{
 			style=stylesheet.getCellStyle(edgeStyle, GlobalVar.getDefaultEdgeStyle());
-			style.put("fillColor", "#808080");
+			//style.put("fillColor", "#808080");
 		}
 		else
 		{

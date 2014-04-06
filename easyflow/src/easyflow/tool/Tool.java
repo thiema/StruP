@@ -37,6 +37,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getFilenamePrefix <em>Filename Prefix</em>}</li>
  * </ul>
  * </p>
  *
@@ -239,6 +240,32 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EMap<String, Data> getData();
+
+	/**
+	 * Returns the value of the '<em><b>Filename Prefix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Filename Prefix</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Filename Prefix</em>' attribute.
+	 * @see #setFilenamePrefix(String)
+	 * @see easyflow.tool.ToolPackage#getTool_FilenamePrefix()
+	 * @model
+	 * @generated
+	 */
+	String getFilenamePrefix();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Tool#getFilenamePrefix <em>Filename Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Filename Prefix</em>' attribute.
+	 * @see #getFilenamePrefix()
+	 * @generated
+	 */
+	void setFilenamePrefix(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -11,6 +11,7 @@ import easyflow.core.CorePackage;
 import easyflow.core.DataLink;
 import easyflow.core.DataPort;
 
+import easyflow.core.PreprocessingTask;
 import easyflow.traversal.TraversalChunk;
 
 import java.util.Collection;
@@ -45,6 +46,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link easyflow.core.impl.DataLinkImpl#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -180,6 +182,16 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected Condition condition;
+
+	/**
+	 * The cached value of the '{@link #getIntermediateTasks() <em>Intermediate Tasks</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIntermediateTasks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<PreprocessingTask> intermediateTasks;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -396,6 +408,18 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<PreprocessingTask> getIntermediateTasks() {
+		if (intermediateTasks == null) {
+			intermediateTasks = new EObjectResolvingEList<PreprocessingTask>(PreprocessingTask.class, this, CorePackage.DATA_LINK__INTERMEDIATE_TASKS);
+		}
+		return intermediateTasks;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean isUnconditional() {
@@ -428,6 +452,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__CONDITION:
 				if (resolve) return getCondition();
 				return basicGetCondition();
+			case CorePackage.DATA_LINK__INTERMEDIATE_TASKS:
+				return getIntermediateTasks();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -466,6 +492,10 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__CONDITION:
 				setCondition((Condition)newValue);
 				return;
+			case CorePackage.DATA_LINK__INTERMEDIATE_TASKS:
+				getIntermediateTasks().clear();
+				getIntermediateTasks().addAll((Collection<? extends PreprocessingTask>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -502,6 +532,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__CONDITION:
 				setCondition((Condition)null);
 				return;
+			case CorePackage.DATA_LINK__INTERMEDIATE_TASKS:
+				getIntermediateTasks().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -530,6 +563,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
 			case CorePackage.DATA_LINK__CONDITION:
 				return condition != null;
+			case CorePackage.DATA_LINK__INTERMEDIATE_TASKS:
+				return intermediateTasks != null && !intermediateTasks.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

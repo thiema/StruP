@@ -68,6 +68,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getExecutables <em>Executables</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getFilenamePrefix <em>Filename Prefix</em>}</li>
  * </ul>
  * </p>
  *
@@ -233,6 +234,26 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @ordered
 	 */
 	protected EMap<String, Data> data;
+
+	/**
+	 * The default value of the '{@link #getFilenamePrefix() <em>Filename Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFilenamePrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FILENAME_PREFIX_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFilenamePrefix() <em>Filename Prefix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFilenamePrefix()
+	 * @generated
+	 * @ordered
+	 */
+	protected String filenamePrefix = FILENAME_PREFIX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -506,6 +527,27 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFilenamePrefix() {
+		return filenamePrefix;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFilenamePrefix(String newFilenamePrefix) {
+		String oldFilenamePrefix = filenamePrefix;
+		filenamePrefix = newFilenamePrefix;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__FILENAME_PREFIX, oldFilenamePrefix, filenamePrefix));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void writeModelToXML() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -642,6 +684,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__DATA:
 				if (coreType) return getData();
 				else return getData().map();
+			case ToolPackage.TOOL__FILENAME_PREFIX:
+				return getFilenamePrefix();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -686,6 +730,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__DATA:
 				((EStructuralFeature.Setting)getData()).set(newValue);
 				return;
+			case ToolPackage.TOOL__FILENAME_PREFIX:
+				setFilenamePrefix((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -728,6 +775,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__DATA:
 				getData().clear();
 				return;
+			case ToolPackage.TOOL__FILENAME_PREFIX:
+				setFilenamePrefix(FILENAME_PREFIX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -762,6 +812,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return executables != null && !executables.isEmpty();
 			case ToolPackage.TOOL__DATA:
 				return data != null && !data.isEmpty();
+			case ToolPackage.TOOL__FILENAME_PREFIX:
+				return FILENAME_PREFIX_EDEFAULT == null ? filenamePrefix != null : !FILENAME_PREFIX_EDEFAULT.equals(filenamePrefix);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -820,6 +872,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		result.append(id);
 		result.append(", version: ");
 		result.append(version);
+		result.append(", filenamePrefix: ");
+		result.append(filenamePrefix);
 		result.append(')');
 		return result.toString();
 	}

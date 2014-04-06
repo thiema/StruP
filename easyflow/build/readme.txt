@@ -11,7 +11,7 @@ git add -u
 git commit
 git push -u origin --all
 
-#push master branch -> head
+#push: source ref: head -> dest ref: refs/heads/master
 
 #building
 ant -f build/build.xml jar

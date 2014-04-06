@@ -102,7 +102,7 @@ Command: view        SAM<->BAM conversion
 		</command>
 		<!--  param name="aln" type="analysis_type" positional="true"/>-->
 		<param name="reference" type="data" format="fasta" positional="true"/>
-		<param name="input" type="data" format="fastq" positional="true"/>
+		<param name="input" type="data" label="ReadEnd" format="fastq" positional="true"/>
 		<param name="output" type="data" format="sai" output="true"/>
 		<param name="k" label="seed" type="integer"/>
 	</tool>

@@ -8,10 +8,10 @@
 	
 	"workflowTemplateFile2"       : "abstract_multiple_traversal_event.workflow",
 	"workflowTemplateFile1"       : "abstract1.workflow",
-	"workflowTemplateFile_"       : "abstract_simple1.workflow",
+	"#workflowTemplateFile"       : "abstract_simple1.workflow",
 	"workflowTemplateFile_"       : "abstract_simple2.workflow",
 	"metadataFile_"               : "metadata_abstract_simple2.tsv",
-    "metadataFile_"               : "metadata_abstract.tsv", 
+    "#metadataFile"               : "metadata_abstract.tsv", 
     
     "isContrast"                 : "true",
     "useIntervalList"            : "true",

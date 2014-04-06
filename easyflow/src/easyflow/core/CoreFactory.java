@@ -44,6 +44,15 @@ public interface CoreFactory extends EFactory {
 	Task createTask();
 
 	/**
+	 * Returns a new object of class '<em>Preprocessing Task</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Preprocessing Task</em>'.
+	 * @generated
+	 */
+	PreprocessingTask createPreprocessingTask();
+
+	/**
 	 * Returns a new object of class '<em>Default Workflow Template</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -62,6 +62,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 		switch (eClass.getClassifierID()) {
 			case CorePackage.WORKFLOW: return createWorkflow();
 			case CorePackage.TASK: return createTask();
+			case CorePackage.PREPROCESSING_TASK: return createPreprocessingTask();
 			case CorePackage.TOOL_MATCH: return createToolMatch();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE: return createDefaultWorkflowTemplate();
 			case CorePackage.EASYFLOW_TEMPLATE: return createEasyflowTemplate();
@@ -95,6 +96,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public Task createTask() {
 		TaskImpl task = new TaskImpl();
 		return task;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PreprocessingTask createPreprocessingTask() {
+		PreprocessingTaskImpl preprocessingTask = new PreprocessingTaskImpl();
+		return preprocessingTask;
 	}
 
 	/**

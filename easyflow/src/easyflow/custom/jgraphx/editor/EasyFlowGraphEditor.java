@@ -200,6 +200,19 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
         return edgeStyle;
 	}
 	
+	private static Map<String, Object> getMissingInOutDataPortEdgeStyle(Color color) {
+		Map<String, Object> edgeStyle = new Hashtable<String, Object>();
+		edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
+		edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
+        edgeStyle.put(mxConstants.STYLE_STROKECOLOR, mxUtils.getHexColorString(Color.PINK));		
+        //edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL);
+        edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
+        //if (color != null)
+        	edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
+
+        return edgeStyle;
+	}
+	
 	private static void setStyleSheet(mxStylesheet stylesheet, Color color) {
 
 		
@@ -218,6 +231,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
         // task circumventing edges
         stylesheet.putCellStyle(GlobalVar.TASK_CIRCUMVENTING_EDGE_STYLE, getTaskCircumventingEdgeStyle(color));
         
+        stylesheet.putCellStyle(GlobalVar.MISSING_IN_OUT_DATAPORT_EDGE_STYLE, getMissingInOutDataPortEdgeStyle(color));
         
         //GlobalVar.setDefaultVertexStyle(vertexStyle);
         //GlobalVar.setDefaultEdgeStyle(edgeStyle);

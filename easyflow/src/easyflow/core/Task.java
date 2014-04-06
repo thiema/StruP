@@ -62,11 +62,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.Task#getInputs <em>Inputs</em>}</li>
  *   <li>{@link easyflow.core.Task#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link easyflow.core.Task#getInputsByDataPort <em>Inputs By Data Port</em>}</li>
+ *   <li>{@link easyflow.core.Task#getOutputsByDataPort <em>Outputs By Data Port</em>}</li>
  *   <li>{@link easyflow.core.Task#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.Task#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.Task#getAnalysisTypes <em>Analysis Types</em>}</li>
  *   <li>{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}</li>
  *   <li>{@link easyflow.core.Task#getRecords <em>Records</em>}</li>
+ *   <li>{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -460,6 +463,23 @@ public interface Task extends EObject {
 	EMap<String, URI> getOutputs();
 
 	/**
+	 * Returns the value of the '<em><b>Inputs By Data Port</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inputs By Data Port</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inputs By Data Port</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_InputsByDataPort()
+	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, EList<String>> getInputsByDataPort();
+
+	/**
 	 * Returns the value of the '<em><b>Input Data Port Validator</b></em>' attribute list.
 	 * The list contents are of type {@link java.util.regex.Pattern}.
 	 * <!-- begin-user-doc -->
@@ -538,6 +558,39 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EList<TraversalChunk> getRecords();
+
+	/**
+	 * Returns the value of the '<em><b>Preprocessing Tasks</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.PreprocessingTask}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Preprocessing Tasks</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Preprocessing Tasks</em>' reference list.
+	 * @see easyflow.core.CorePackage#getTask_PreprocessingTasks()
+	 * @model
+	 * @generated
+	 */
+	EList<PreprocessingTask> getPreprocessingTasks();
+
+	/**
+	 * Returns the value of the '<em><b>Outputs By Data Port</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Outputs By Data Port</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Outputs By Data Port</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_OutputsByDataPort()
+	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, EList<String>> getOutputsByDataPort();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -809,6 +862,38 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model valueDataType="easyflow.Object"
+	 * @generated
+	 */
+	boolean setOutputForDataPort(String key, Object value, DataPort dataPort, String parameterName);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model valueDataType="easyflow.Object"
+	 * @generated
+	 */
+	boolean setInputForDataPort(String key, Object value, DataPort dataPort, String parameterName);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.URI"
+	 * @generated
+	 */
+	EList<URI> getOutputsForDataPort(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.URI"
+	 * @generated
+	 */
+	EList<URI> getInputsForDataPort(DataPort dataPort);
 
 	/**
 	 * <!-- begin-user-doc -->

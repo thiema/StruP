@@ -55,9 +55,12 @@ public class GlobalVar {
 	public static final String TEMPLATE_DATA_PORT_NAME  = "_EasyFlowTemplatePort_";
 	public static final String ROOT_TASK_NAME           = "_root_";
 	
+	public static final String TRAVERSAL_CHUNK_SOURCE_TYPE_METADATA = "metadata";
+	
 	public static final String VERTEX_STYLE = "EASYFLOW_VERTEX_STYLE";
 	public static final String EDGE_STYLE   = "EASYFLOW_EDGE_STYLE";
-	public static final String TASK_CIRCUMVENTING_EDGE_STYLE = "EASYFLOW_TASK_CIRC_EDGE_STYLE";
+	public static final String TASK_CIRCUMVENTING_EDGE_STYLE      = "EASYFLOW_TASK_CIRC_EDGE_STYLE";
+	public static final String MISSING_IN_OUT_DATAPORT_EDGE_STYLE = "EASYFLOW_MISSING_IN_OUT_DATAPORT_EDGE_STYLE";
 	
 	private static Map<String, Object> defaultEdgeStyle   = new HashMap<String, Object>();
 	private static Map<String, Object> defaultVertexStyle = new HashMap<String, Object>();
@@ -68,6 +71,7 @@ public class GlobalVar {
 	public static final double defaultCellHeight =  40;
 	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
 	public static final String METADATA_INPUT             = "InputFiles";
+	
 	
 
 	

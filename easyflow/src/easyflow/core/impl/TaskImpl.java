@@ -9,6 +9,7 @@ package easyflow.core.impl;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DataPort;
+import easyflow.core.PreprocessingTask;
 import easyflow.core.Task;
 
 import easyflow.core.ToolMatch;
@@ -39,6 +40,8 @@ import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.net.URI;
+import java.net.URISyntaxException;
+
 import easyflow.traversal.TraversalFactory;
 import easyflow.traversal.TraversalOperation;
 
@@ -109,11 +112,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getGroupingCriteria <em>Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getInputsByDataPort <em>Inputs By Data Port</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getOutputsByDataPort <em>Outputs By Data Port</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getInputDataPortValidator <em>Input Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getOutputDataPortValidator <em>Output Data Port Validator</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getAnalysisTypes <em>Analysis Types</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getCircumventingParents <em>Circumventing Parents</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getRecords <em>Records</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
  * </ul>
  * </p>
  *
@@ -391,6 +397,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, URI> outputs;
 
 	/**
+	 * The cached value of the '{@link #getInputsByDataPort() <em>Inputs By Data Port</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInputsByDataPort()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, EList<String>> inputsByDataPort;
+
+	/**
+	 * The cached value of the '{@link #getOutputsByDataPort() <em>Outputs By Data Port</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputsByDataPort()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, EList<String>> outputsByDataPort;
+
+	/**
 	 * The cached value of the '{@link #getInputDataPortValidator() <em>Input Data Port Validator</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -439,6 +465,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EList<TraversalChunk> records;
+
+	/**
+	 * The cached value of the '{@link #getPreprocessingTasks() <em>Preprocessing Tasks</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreprocessingTasks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<PreprocessingTask> preprocessingTasks;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -753,6 +789,30 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, EList<String>> getInputsByDataPort() {
+		if (inputsByDataPort == null) {
+			inputsByDataPort = new EcoreEMap<String,EList<String>>(MapsPackage.Literals.STRING_TO_STRING_LIST_MAP, StringToStringListMapImpl.class, this, CorePackage.TASK__INPUTS_BY_DATA_PORT);
+		}
+		return inputsByDataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, EList<String>> getOutputsByDataPort() {
+		if (outputsByDataPort == null) {
+			outputsByDataPort = new EcoreEMap<String,EList<String>>(MapsPackage.Literals.STRING_TO_STRING_LIST_MAP, StringToStringListMapImpl.class, this, CorePackage.TASK__OUTPUTS_BY_DATA_PORT);
+		}
+		return outputsByDataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<Pattern> getInputDataPortValidator() {
 		if (inputDataPortValidator == null) {
 			inputDataPortValidator = new EDataTypeUniqueEList<Pattern>(Pattern.class, this, CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR);
@@ -806,6 +866,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 			records = new EObjectResolvingEList<TraversalChunk>(TraversalChunk.class, this, CorePackage.TASK__RECORDS);
 		}
 		return records;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<PreprocessingTask> getPreprocessingTasks() {
+		if (preprocessingTasks == null) {
+			preprocessingTasks = new EObjectResolvingEList<PreprocessingTask>(PreprocessingTask.class, this, CorePackage.TASK__PREPROCESSING_TASKS);
+		}
+		return preprocessingTasks;
 	}
 
 	/*private EList<String> enumerateInstances(String regexp)
@@ -933,7 +1005,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	        			dataPort=getInDataPorts().get(dataPortNo++);
 	        		tmp=groupingString.split(",");
 	        	}
-	        	logger.trace("readTask(): "+getName()+" "+groupingString+" dataPort="+dataPort+" ("+getInDataPorts().size()+","+getOutDataPorts().size()+")");
+	        	logger.trace("readTask(): "+getName()+" "+groupingString+" dataPort="+dataPort.getName()+" ("+getInDataPorts().size()+","+getOutDataPorts().size()+")");
 	        	
 	        	if (tmp.length>0) {
 			        for (int i=0;i<tmp.length;i++) {
@@ -949,7 +1021,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			        	TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
 			        	//TraversalChunk traversalChunk=CoreFactory.eINSTANCE.createTraversalChunk();
 			        	traversalCriterion.setId(group[0]);
-			        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion);
+			        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion.getId());
 			        	//traversalEvent.setSplitTask(this);
 			        	TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
 			        	//traversalOperation.setName();
@@ -958,7 +1030,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			        	//traversalCriterion.setChunkSource();
 			        	traversalEvent.setTraversalCriterion(traversalCriterion);
 			        	traversalEvent.setSplitTask(this);
-			        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalCriterion);
+			        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" ");
 			        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
 			        	getGroupingCriteria().put(traversalCriterion.getId(), traversalCriterion.getMode());
 			        	dataPort.getGroupingCriteria().add(traversalCriterion);
@@ -978,58 +1050,122 @@ public class TaskImpl extends EObjectImpl implements Task {
 				tmp=wtplArray[6].split(";");
 				//logger.debug(tmp.length);
 				for (int i=0;i<tmp.length;i++) {
-					String[] tmp1=tmp[i].split(":");
+					// travParamExp, expected of the form: <TraversalName(ID)>:<Tools ParamName>:<instances enclosed in brackets or name of operation that produces/retrieves instances>
+					String[] travParamExp=tmp[i].split(":");
 					//logger.debug(tmp1.length);
-					if (!tmp1[0].equals("")) {
+					//if (!travParamExp[0].equals("")) {
 						
 						TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
-						traversalCriterion.setId(tmp1[0]);
+						traversalCriterion.setId(travParamExp[0]);
+						if (getInDataPorts().size()>i && getInDataPorts().get(i)!=null)
+						{
+							traversalCriterion.setDataPort(getInDataPorts().get(0));
+							
+						}
+						traversalCriterion.setName(travParamExp[1]);
 						traversalCriterion.setMode("batch");
 						TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
-						traversalOperation.setName(tmp1[1]);
-						traversalOperation.setType("traversal");
-						//if (traversalOperation.getName().equals("merge")) {	
-						//} else {
+						String[] operation=null;
+						if (travParamExp.length>2)
+						{
+							operation=travParamExp[2].split("=");
+							if (operation.length>1)
+							{
+								traversalOperation.setName(operation[0]);
+								traversalOperation.setType("split");
+							}
+							else
+							{
+								traversalOperation.setName(travParamExp[2]);
+								traversalOperation.setType("merge");
+							}
+						}
+						else
+						{
+							traversalOperation.setName("default");
+							traversalOperation.setType("merge");
+						}
+
 						TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
-						if (tmp1.length>2) {
-							String[] tmp2=tmp1[2].split(",");
-							if (tmp2.length==1) traversalCriterion.setChunkSource(tmp1[2]);
+						
+						// here we parse the 3rd part of the parameter traversal expression like TraversalName:ParamName:values=[a,b,c]
+						if (operation!=null && operation.length>1) {
+							if (!operation[1].startsWith("[")) 
+								traversalCriterion.setChunkSource(operation[1]);
 							else {
+								String noBrackets=operation[1].substring(1, operation[1].length()-1);
+								logger.debug("readTask(): parsed values for parameter traversal expression to '"+noBrackets+"' for name="+operation[0]);
+								String[] tmp2=noBrackets.split(",");
 								for (String tmp3:tmp2) {
 									TraversalChunk traversalChunk=TraversalFactory.eINSTANCE.createTraversalChunk();
 									traversalChunk.setName(tmp3);
 									traversalCriterion.getChunks().put(tmp3, traversalChunk);
 								}
 							}
-
-
 						}
-						//else traversalChunks.setName(value)
+						
 						traversalCriterion.setOperation(traversalOperation);
 						traversalEvent.setTraversalCriterion(traversalCriterion);
-						if (traversalOperation.getName().equals("split"))
+						if (traversalOperation.getType().equals("split"))
 							traversalEvent.setSplitTask(this);
-						else if (traversalOperation.getName().equals("merge"))
+						else if (traversalOperation.getType().equals("merge"))
 							traversalEvent.getMergeTask().add(this);
-						logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" "+traversalEvent);
+						logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" ");
 						getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
 						//}
-					}	
+					//}	
 				}
 			}
 		}
+		
+		/**
+		 * Read the preprocessing tasks
+		 */
+		if (wtplArray.length>7 && !wtplArray[7].equals("")) {
+			tmp=wtplArray[7].split(";");
+			for (String allPrepStr:tmp)
+			{
+				String[] allPreps = allPrepStr.split(",");
+				for (String prepTaskStr:allPreps)
+				{
+					String[] tmp2 = prepTaskStr.split(":");
+					PreprocessingTask prepTask = CoreFactory.eINSTANCE.createPreprocessingTask();
+					prepTask.setName(tmp2[0]);
+					if (tmp2.length>1)
+						prepTask.setExpression(tmp2[1]);
+					getPreprocessingTasks().add(prepTask);
+				}
+			}
+		}
+		
 		/**
 		 * Read JEXL
 		 */
-        if (wtplArray.length>7) {
-        	setJexlString(wtplArray[7]);
+        if (wtplArray.length>8) {
+        	setJexlString(wtplArray[8]);
         	//logger.debug(shallProcessJEXL);
         	
 		}
         setPreviousTaskStr(getUniqueString());
-        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet());
+        
+        String out="";
+        for (String key:getTraversalEvents().keySet())
+        {
+        	TraversalEvent te = getTraversalEvents().get(key);
+        	out+="key="+key+" split="+(te.getSplitTask()!=null?te.getSplitTask().getUniqueString():null)+" merge="+(te.getMergeTask()!=null?StringUtils.join(toStringList(te.getMergeTask()), ","):null)+"; ";
+        }
+        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet()+" ("+out+")");
 	}
 
+	private EList<String> toStringList(EList<Task> tasks)
+	{
+		EList<String> list = new BasicEList<String>();
+		for (Task t:tasks)
+			list.add(t.getUniqueString());
+		return list;
+			
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1807,6 +1943,134 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return false;
 	}
 
+	
+	private URI convertToURI(Object value)
+	{
+		URI uriValue = null;
+		if (value instanceof URI)
+			uriValue = (URI) value;
+		else if (value instanceof String)
+			try {
+				uriValue = new URI((String) value);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return uriValue;
+		
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean setOutputForDataPort(String key, Object value, DataPort dataPort, String parameterName) {
+		
+		URI uriValue = convertToURI(value);
+		boolean rc   = true;
+		Tool t = getPreferredTool();
+		
+		if (uriValue != null)
+		{
+			getOutputs().put(key, uriValue);
+			getPreferredTool().getCommand().setOutputParameterValue(uriValue, parameterName, dataPort);
+			
+			String dataPortKey = dataPort.getName();
+			EList<String> ports;
+			if (getOutputsByDataPort().containsKey(dataPortKey))
+			{
+				ports = getOutputsByDataPort().get(dataPortKey);
+			}
+			else
+			{
+				ports = new BasicEList<String>();
+				getOutputsByDataPort().put(dataPortKey, ports);	
+			}
+			ports.add(key);
+			
+		}
+		else
+		{
+			rc = false;
+		}
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean setInputForDataPort(String key, Object value, DataPort dataPort, String parameterName) {
+		
+		URI uriValue = convertToURI(value);
+		boolean rc   = true;
+		
+		if (uriValue != null)
+		{
+			getInputs().put(key, uriValue);
+			getPreferredTool().getCommand().setInputParameterValue(uriValue, parameterName, dataPort);
+			
+			String dataPortKey = dataPort.getName();
+			EList<String> ports;
+			if (getInputsByDataPort().containsKey(dataPortKey))
+			{
+				ports = getInputsByDataPort().get(dataPortKey);
+			}
+			else
+			{
+				ports = new BasicEList<String>();
+				getInputsByDataPort().put(dataPortKey, ports);	
+			}
+			ports.add(key);
+			
+		}
+		else
+		{
+			rc = false;
+		}
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<URI> getOutputsForDataPort(DataPort dataPort) {
+		String dataPortName = dataPort.getName();
+		EList<URI> outputs = new BasicEList<URI>();
+		if (getOutputsByDataPort().containsKey(dataPortName))
+		{
+			for (String key : getOutputsByDataPort().get(dataPortName))
+			{
+				outputs.add(getOutputs().get(key));
+			}
+			return outputs;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<URI> getInputsForDataPort(DataPort dataPort) {
+		String dataPortName = dataPort.getName();
+		EList<URI> inputs = new BasicEList<URI>();
+		if (getInputsByDataPort().containsKey(dataPortName))
+		{
+			for (String key : getInputsByDataPort().get(dataPortName))
+			{
+				inputs.add(getInputs().get(key));
+			}
+			return inputs;
+		}
+		return null;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1960,6 +2224,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__OUTPUTS:
 				return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__INPUTS_BY_DATA_PORT:
+				return ((InternalEList<?>)getInputsByDataPort()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__OUTPUTS_BY_DATA_PORT:
+				return ((InternalEList<?>)getOutputsByDataPort()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -2019,6 +2287,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUTS:
 				if (coreType) return getOutputs();
 				else return getOutputs().map();
+			case CorePackage.TASK__INPUTS_BY_DATA_PORT:
+				if (coreType) return getInputsByDataPort();
+				else return getInputsByDataPort().map();
+			case CorePackage.TASK__OUTPUTS_BY_DATA_PORT:
+				if (coreType) return getOutputsByDataPort();
+				else return getOutputsByDataPort().map();
 			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
 				return getInputDataPortValidator();
 			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
@@ -2029,6 +2303,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getCircumventingParents();
 			case CorePackage.TASK__RECORDS:
 				return getRecords();
+			case CorePackage.TASK__PREPROCESSING_TASKS:
+				return getPreprocessingTasks();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2098,6 +2374,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUTS:
 				((EStructuralFeature.Setting)getOutputs()).set(newValue);
 				return;
+			case CorePackage.TASK__INPUTS_BY_DATA_PORT:
+				((EStructuralFeature.Setting)getInputsByDataPort()).set(newValue);
+				return;
+			case CorePackage.TASK__OUTPUTS_BY_DATA_PORT:
+				((EStructuralFeature.Setting)getOutputsByDataPort()).set(newValue);
+				return;
 			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
 				getInputDataPortValidator().clear();
 				getInputDataPortValidator().addAll((Collection<? extends Pattern>)newValue);
@@ -2117,6 +2399,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__RECORDS:
 				getRecords().clear();
 				getRecords().addAll((Collection<? extends TraversalChunk>)newValue);
+				return;
+			case CorePackage.TASK__PREPROCESSING_TASKS:
+				getPreprocessingTasks().clear();
+				getPreprocessingTasks().addAll((Collection<? extends PreprocessingTask>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -2184,6 +2470,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__OUTPUTS:
 				getOutputs().clear();
 				return;
+			case CorePackage.TASK__INPUTS_BY_DATA_PORT:
+				getInputsByDataPort().clear();
+				return;
+			case CorePackage.TASK__OUTPUTS_BY_DATA_PORT:
+				getOutputsByDataPort().clear();
+				return;
 			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
 				getInputDataPortValidator().clear();
 				return;
@@ -2198,6 +2490,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return;
 			case CorePackage.TASK__RECORDS:
 				getRecords().clear();
+				return;
+			case CorePackage.TASK__PREPROCESSING_TASKS:
+				getPreprocessingTasks().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -2249,6 +2544,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return inputs != null && !inputs.isEmpty();
 			case CorePackage.TASK__OUTPUTS:
 				return outputs != null && !outputs.isEmpty();
+			case CorePackage.TASK__INPUTS_BY_DATA_PORT:
+				return inputsByDataPort != null && !inputsByDataPort.isEmpty();
+			case CorePackage.TASK__OUTPUTS_BY_DATA_PORT:
+				return outputsByDataPort != null && !outputsByDataPort.isEmpty();
 			case CorePackage.TASK__INPUT_DATA_PORT_VALIDATOR:
 				return inputDataPortValidator != null && !inputDataPortValidator.isEmpty();
 			case CorePackage.TASK__OUTPUT_DATA_PORT_VALIDATOR:
@@ -2259,6 +2558,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return circumventingParents != null && !circumventingParents.isEmpty();
 			case CorePackage.TASK__RECORDS:
 				return records != null && !records.isEmpty();
+			case CorePackage.TASK__PREPROCESSING_TASKS:
+				return preprocessingTasks != null && !preprocessingTasks.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2300,5 +2601,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(')');
 		return result.toString();
 	}
+
 
 } //TaskImpl

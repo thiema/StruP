@@ -304,7 +304,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGroupingCriterion_Description() {
+	public EAttribute getGroupingCriterion_Name() {
 		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -313,7 +313,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGroupingCriterion_Mode() {
+	public EAttribute getGroupingCriterion_Description() {
 		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -322,7 +322,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGroupingCriterion_MultipleInstances() {
+	public EAttribute getGroupingCriterion_Mode() {
 		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -331,7 +331,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGroupingCriterion_SeperateInputPorts() {
+	public EAttribute getGroupingCriterion_MultipleInstances() {
 		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -340,7 +340,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGroupingCriterion_Logger() {
+	public EAttribute getGroupingCriterion_SeperateInputPorts() {
 		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -349,8 +349,17 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getGroupingCriterion_Logger() {
+		return (EAttribute)groupingCriterionEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getGroupingCriterion_DataPort() {
-		return (EReference)groupingCriterionEClass.getEStructuralFeatures().get(6);
+		return (EReference)groupingCriterionEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -500,6 +509,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 
 		groupingCriterionEClass = createEClass(GROUPING_CRITERION);
 		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__ID);
+		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__NAME);
 		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__DESCRIPTION);
 		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__MODE);
 		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__MULTIPLE_INSTANCES);
@@ -582,6 +592,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 
 		initEClass(groupingCriterionEClass, GroupingCriterion.class, "GroupingCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroupingCriterion_Id(), ecorePackage.getEString(), "id", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroupingCriterion_Name(), ecorePackage.getEString(), "name", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingCriterion_Description(), ecorePackage.getEString(), "description", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingCriterion_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingCriterion_MultipleInstances(), ecorePackage.getEBoolean(), "multipleInstances", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

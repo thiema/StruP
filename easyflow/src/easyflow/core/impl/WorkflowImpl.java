@@ -46,6 +46,7 @@ import easyflow.graph.jgraphx.Util;
 
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
+import easyflow.tool.Command;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.tool.ToolFactory;
@@ -1174,23 +1175,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean generateAbstractWorkflow() {
-    	
+
     	boolean res=generateGraphFromTemplate(getTools());
+
     	if (res)
     	{
+    		getGraphUtil().getUtilityTasks().put("filter", findUtilityTaskForAnalysisType("filter"));
+    		getGraphUtil().getUtilityTasks().put("merge", findUtilityTaskForAnalysisType("merge"));
+    		getGraphUtil().getUtilityTasks().put("index", findUtilityTaskForAnalysisType("index"));
+    		getGraphUtil().getUtilityTasks().put("sort", findUtilityTaskForAnalysisType("sort"));
     		generateAbstractGraphEdges();
     	
-		getGraphUtil().getUtilityTasks().put("filter", findUtilityTaskForAnalysisType("filter"));
-		getGraphUtil().getUtilityTasks().put("merge", findUtilityTaskForAnalysisType("merge"));
 
-        Task tmp;
-		try {
-			tmp = getGraphUtil().loadTask(getFirstNode());
-			logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
-		} catch (TaskNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	        Task tmp;
+			try {
+				tmp = getGraphUtil().loadTask(getFirstNode());
+				logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
+			} catch (TaskNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     	return res;
 	}
@@ -1204,7 +1208,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				
 		getGraph().getModel().beginUpdate();
 		
-		logger.debug("got definition for tools: "+(tools!=null?tools.keySet():null));
+		logger.debug("generateGraphFromTemplate(): got definition for tools: "+(tools!=null?tools.keySet():null));
         try {
 
         	// iterate through tasks and do for each task:
@@ -1216,7 +1220,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         		if (tools!=null)
         			for (String toolName:task.getToolNames().keySet())
         			{
-        				logger.trace("trying to find tool implementation definition for "+toolName);
+        				logger.trace("generateGraphFromTemplate(): trying to find tool implementation definition for "+toolName);
         				// if tool name is separated by ":" -> assume package:tool and parse both entities
         				String tmp[] = toolName.split(":");
         				String packageName=null;
@@ -1230,7 +1234,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         					Tool tool=tools.get(toolName);
         					if (packageName!=null)
         						if (tool.getPackage() != null && !tool.getPackage().getName().equals(packageName))
-        							logger.warn("package name ("+packageName
+        							logger.warn("generateGraphFromTemplate(): package name ("+packageName
         									+") from workflow template for task "+task.getName()
         									+" differs from tool defintion ( "+tool.getPackage().getName()+") !");
         						else if(tool.getPackage()==null)
@@ -1243,7 +1247,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         					//logger.debug("validation result for tool="+toolName+" "+task.validateTool(tool));
         				}
         				else
-        					logger.warn("no tool matching name="+toolName+" found.");
+        					logger.warn("generateGraphFromTemplate(): no tool matching name="+toolName+" found.");
         			}
         		if (!task.isUtil())
         		{
@@ -1260,7 +1264,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         		}
         		if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
         		{
-        			Task t = getRootTask();
+        			/*Task t = getRootTask();
         			t.getInDataPorts().clear();
         			t.getInDataPorts().addAll(task.getInDataPorts());
         			t.getOutDataPorts().clear();
@@ -1270,13 +1274,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         			t.getGroupingCriteria().clear();
         			t.getGroupingCriteria().addAll(task.getGroupingCriteria());
         			logger.debug(t.getUniqueString()+" "+task.getUniqueString());
-        			t.setJexlString(task.getJexlString());
+        			t.setJexlString(task.getJexlString());*/
         			
         		}
         		else
         			getGraphUtil().getTasks().put(task.getUniqueString(), task);
         	}
-        	Task rt=getRootTask();
+        	
+        	Tool rootTool = ToolFactory.eINSTANCE.createTool();
+			Command rootCommand = ToolFactory.eINSTANCE.createCommand();
+			rootTool.setCommand(rootCommand);
+			getRootTask().getTools().put("rootTool", rootTool);
         	
         	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());
         	//logger.trace("insert dedicated root cell"+" "+rootTask.getUniqueString());
@@ -1292,6 +1300,13 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         return true;
 	}
 
+	private DataLink createDataLinkForRoot(Task parent, Task child, DataPort dataPort)
+	{
+		DataLink dataLink=CoreFactory.eINSTANCE.createDataLink();
+		dataLink.setDataPort(dataPort);
+		return dataLink;
+	}
+	
 	private void generateAbstractGraphEdges()
 	{
 		try {
@@ -1313,29 +1328,34 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				Task task=it.next();
 				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
 					continue;
-				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" dataports1 grouping="+task.getInDataPorts().get(0).getGroupingCriteria().size());
+				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" first dataport grouping="+task.getInDataPorts().get(0).getGroupingCriteria().size());
 				if (!task.isUtil()) 
 				{
 					Object target=getGraphUtil().getCells().get(task.getUniqueString());
 					EMap<Task, EList<DataLink>> parentTaskList=getParentTasksFor(task);
 					if (parentTaskList.isEmpty())
 					{
-						getGraph().insertEdgeEasyFlow(null, null, rootCell, target);
+						for (DataPort dataPort:task.getInDataPorts())
+						{
+							logger.debug("generateGraphFromTemplate(): no parent found. link task with root using data port="+dataPort.getName());
+							getGraph().insertEdgeEasyFlow(null, null, rootCell, target, createDataLinkForRoot(getRootTask(), task, dataPort));
+						}
 					}
 					else 
 					{
-						for (Task pTask:parentTaskList.keySet()) 
+						for (Task pTask:parentTaskList.keySet())
 						{
 							//Object source=map.get(pTask.getName());
 							Object source=getGraphUtil().getCells().get(pTask.getUniqueString());
-							if (parentTaskList.get(pTask)==null)
+							/*if (parentTaskList.get(pTask)==null)
 							{
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") (no edge label)");
+								
 								Object o=getGraph().insertEdgeEasyFlow(null, null, source, target);
 								if (pTask.isUtil())
 									getGraph().setCellUnvisible(o);
 							}
-							else
+							else*/
 							{
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 								for (DataLink dataLink:parentTaskList.get(pTask))
@@ -1360,6 +1380,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			}
 		} finally {
         	getGraph().getModel().endUpdate();
+        	getGraphUtil().layoutGraph();
         }
 		getProcessedStates().put(GlobalVar.ABSTRACT_WORKFLOW, true);
 
@@ -1675,146 +1696,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	
 	
 	
-	/*
-	public EMap<Task, EList<DataPort>> getParentTasksFor1(Task task) {
-		
-		EList<String> notPermittedConditions = new BasicEList<String>();
-		EList<String> notPermittedConditionsOfDirectParents = new BasicEList<String>();
-		
-		// data structure to track not yet resolved data ports
-		EList<DataPort> unresolvedDataPorts = new BasicEList<DataPort>();
-			
-		EMap<Task, EList<DataPort>> tasks = getFixedParentTasksFor(task, unresolvedDataPorts);
-		EList<Task> resolvedTasks = new BasicEList<Task>(tasks.keySet());
-		tasks.addAll(getParentTasksFor(task, notPermittedConditions, resolvedTasks, unresolvedDataPorts));
-		copyDPforTasks(tasks);
-		//logger.debug(tasks.get(0).getValue().get(0).getNotPermittedConditions());
-		for (String s:notPermittedConditions)
-			notPermittedConditionsOfDirectParents.add(s);
-		
-		if (!tasks.isEmpty() && !notPermittedConditions.isEmpty())
-		{
-			EList<EList<String>> powerSet = enumeratePowerSet1(notPermittedConditions);
-			for (EList<String> notPermittedConds:powerSet)
-			{
-				// todo: simplify filtration (find powerset where each element contains all 
-				// strings of notPermittedConditionsOfDirectParents)
-				
-				
-				
-				logger.trace("####find parents for perm:"+notPermittedConds);
-				int i=0;
-				while (true)
-				{
-					int nrOfNotPermittedConditions=notPermittedConds.size();
-					EMap<Task, EList<DataPort>> moreTasks = getParentTasksFor(task, notPermittedConds,
-							resolvedTasks, unresolvedDataPorts);
-					logger.debug("##iteration="+(i++)+" "+tasks2String(new BasicEList(moreTasks.keySet()))+"  ###");
-					if (moreTasks.isEmpty())
-						break;
 
-					for (Entry<Task, EList<DataPort>> ks:moreTasks.entrySet())
-					{
-						EList<DataPort> dps = ks.getValue();
-						for (DataPort dp: dps)
-						{
-							logger.debug("add parent task:"+ks.getKey().getUniqueString()+" dp:"+dp.getName()+" unperm:"+dp.getNotPermittedConditions());
-						}
-					}
-					tasks.addAll(moreTasks);
-					if (nrOfNotPermittedConditions==notPermittedConds.size())
-						break;
-				}
-			}
-		}
-		return tasks;
-	}
-
-	 */
-	/** 
-	 * Check all parents that provide unresolved ports. In case a conditional parent is found, 
-	 * add the condition to the notPermittedConditions list.
-	 * @param task
-	 * @param notPermittedConditions
-	 * @param resolvedTasks
-	 * @param unresolvedDataPorts
-	 * @return
-	 */
-	/*
-	public EMap<Task, EList<DataPort>> getParentTasksFor(Task task, 
-			EList<String> notPermittedConditions,
-			EList<Task> resolvedTasks,
-			EList<DataPort> unresolvedDataPorts) 
-	{
-		
-		EList<String> foundConditions = new BasicEList<String>();
-		EMap<Task, EList<DataPort>> tasks=new BasicEMap<Task, EList<DataPort>>();
-		
-		// find possible tasks compatible with the unresolved ports
-		// the tasks are to be ranked:
-		// providing more ports gets higher rank
-		EMap<String, EList<Task>> lastTasksByDataPort=new BasicEMap<String, EList<Task>>();
-		Map<String,Integer> rankMap = new HashMap<String,Integer>();
-		for (EList<DataPort> dataPorts:enumeratePowerSet(task.getInDataPorts()))
-		{
-			EList<Task> lastTasksForDataPort=getLastTasksForDataPort(
-					dataPorts, getLastTasks(), 
-					resolvedTasks,
-					notPermittedConditions,
-					foundConditions);
-			//EList<Task> lastTasksForDataPort=getLastTasksForDataPort(dataPorts, getLastTasks(), tasks);
-			String joinedName=joinDataPortNamesToString(dataPorts);
-			if (!lastTasksForDataPort.isEmpty())
-			{
-				lastTasksByDataPort.put(joinedName, lastTasksForDataPort);
-				rankMap.put(joinedName, dataPorts.size());
-			}
-		}
-		
-		// resolve incoming data ports for task beginning with highest rank
-		// i.e. prefer constellations where more ports can be resolved by less
-		// incoming tasks
-		Map<String,Integer> sortedRankMap = easyflow.custom.util.Util.sortByValue(rankMap);
-    	if (!unresolvedDataPorts.isEmpty())
-			for (Map.Entry<String, Integer> entry : sortedRankMap.entrySet()) {
-				
-				EList<Task> curTasks=lastTasksByDataPort.get(entry.getKey());
-				logger.trace("process lastTasks=("
-						+ tasks2String(curTasks)
-						+ ") with rank=" + entry.getValue());
-				curTasks=removeParentsFromLastTasks(curTasks);
-				logger.trace("after removing of distant parents the following parents remain: ("
-						+ tasks2String(curTasks)+")");
-
-				ListIterator<Task> it = curTasks.listIterator(curTasks.size());
-				while (it.hasPrevious()) {
-					if (unresolvedDataPorts.isEmpty())
-						break;
-
-					Task curTask = it.previous();
-					EList<DataPort> resolvedDataPorts = task
-							.getOverlappingDataPorts(unresolvedDataPorts, curTask.getOutDataPorts());
-					if (!(resolvedDataPorts.isEmpty() || tasks.contains(curTask)))
-					{
-						// add Task
-						if (!notPermittedConditions.isEmpty())
-							for (DataPort dp : resolvedDataPorts)
-							{
-								dp.getNotPermittedConditions().addAll(notPermittedConditions);
-								logger.debug("add unperm:"+notPermittedConditions+" for port="+dp.getName());
-							}
-						tasks.put(curTask, resolvedDataPorts);
-						// update tasks in-data port
-						//task.getInDataPorts().addAll(resolvedDataPorts);
-					}
-				}
-			}
-    	notPermittedConditions.addAll(foundConditions);
-    	logger.trace(tasks.size()+" parents ("+tasks2String(new BasicEList<Task>(tasks.keySet()))+") found.");
-
-    	return tasks;
-	}
-	*/
 	
 	
 	private EList<EList<Object>> enumerateObjectPowerSet(EList<Object> dataPorts)
@@ -1948,18 +1830,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return task.validateTools();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean applyParameterCriteria() {
-		boolean rc = true;
-		if (rc)
-			getProcessedStates().put(GlobalVar.PARAMETER_APPLIED, true);
-		return rc;
-	}
-
 	private String tasks2String(EList<Task> tasks)
 	{
 		String tmp[]=new String[tasks.size()];
@@ -2081,7 +1951,56 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	}
 	
 	
-	
+	public boolean applyTraversalCriteria(boolean isGrouping) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+		
+		boolean rc = true;
+		
+		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent(isGrouping);
+		logger.debug("applyTraversalCriteria(): found "+getGraphUtil().getTraversalEvents().size()+" traversal events. Grouping="+isGrouping);
+		
+		while (traversalEvent != null)
+		{
+			logger.debug("applyTraversalCriteria(): te="+getGraphUtil().traversalEventToString(traversalEvent)
+					+" empty id?="+traversalEvent.getTraversalCriterion().getId().isEmpty());
+			
+			boolean cont = false;
+			if (!applyTraversalEvent(traversalEvent))
+			{
+				cont = true;
+				rc = false;
+				logger.error("applyTraversalCriteria(): error occured for te="
+						+traversalEvent.getTraversalCriterion().getId()+" "
+						+traversalEvent.getTraversalCriterion().getName()+" split task="
+						+traversalEvent.getSplitTask().getUniqueString()
+						);
+			}
+			traversalEvent = getGraphUtil().getNextTraversalEvent(isGrouping);
+			
+			if (cont)
+				continue;
+			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
+			{
+				getGraphUtil().removeSubGraph(
+						subGraphRoot1, 
+						traversalEvent);
+			}
+			getGraphUtil().resetFlags();
+			getGraphUtil().getCurrentSubGraphs().clear();
+			
+		}
+		if (rc)
+		{
+			if (isGrouping)
+				getProcessedStates().put(GlobalVar.GROUPING_APPLIED, true);
+			else
+				getProcessedStates().put(GlobalVar.PARAMETER_APPLIED, true);
+		}
+		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
+		return rc;
+
+		
+
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * iterate over graph and do for each defined/resolved traversal event:
@@ -2100,29 +2019,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
-		
-		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent();
-		
-		while (traversalEvent != null)
-		{
-			logger.debug("applyGroupingCriteria(): te="+getGraphUtil().traversalEventToString(traversalEvent)
-					+" empty id?="+traversalEvent.getTraversalCriterion().getId().isEmpty());
-			applyTraversalEvent(traversalEvent);
-			traversalEvent = getGraphUtil().getNextTraversalEvent();
-			
-			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
-			{
-				getGraphUtil().removeSubGraph(
-						subGraphRoot1, 
-						traversalEvent);
-			}
-			getGraphUtil().resetFlags();
-			getGraphUtil().getCurrentSubGraphs().clear();
-			
-		}
-		getProcessedStates().put(GlobalVar.GROUPING_APPLIED, true);
-		
-		return true;
+		return applyTraversalCriteria(true);
 	}
 	
 	/**
@@ -2133,75 +2030,72 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @throws GroupingCriterionInstanceNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+		return applyTraversalCriteria(false);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @generated not
+	 */
+	public boolean applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		
-		mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
-		getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
+		boolean rc = true;
 		
-		if (subGraphRoot != null)
-		{
-			EList<GroupingInstance> groupingInstances;
-			try {
-				groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
-				if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
-				{
-					for (GroupingInstance groupingInstance : groupingInstances)
+		try {
+			
+			EList<GroupingInstance> groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
+			if (groupingInstances.isEmpty())
+				return false;
+			
+			mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+			getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
+			
+			if (subGraphRoot != null)
+			{				
+					if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
 					{
-						//String instanceStr = groupingInstance.getName();
-						logger.debug("applyTraversalEvents(): applying metadata "+groupingInstance.getName()+" with features="+
-								groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId());
-						
-						
+						for (GroupingInstance groupingInstance : groupingInstances)
+						{
+							logger.debug("applyTraversalEvents(): applying grouping instance="+groupingInstance.getName()+" with features="+
+									groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId());
+							
+							mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+									traversalEvent, 
+									groupingInstance);
+							
+							getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+									traversalEvent.getTraversalCriterion().getId(),
+									groupingInstance);
+						}
+					}
+					else
+					{
+						logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
 						mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
 								traversalEvent, 
-								groupingInstance);
-			
-						//logger.trace("applyTraversalEvents(): graphUtil: "+getGraphUtil().getTasks().keySet().size()+" "+getGraphUtil().getTasks().keySet());
-						
+								groupingInstances);
+						logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
 						getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 								traversalEvent.getTraversalCriterion().getId(),
-								groupingInstance);
-						//logger.trace("applyTraversalEvents(): XMLUtil:"+((EMap<String,Task>)XMLUtil.container.get("tasks")).size()+" "+((EMap<String,Task>)XMLUtil.container.get("tasks")).keySet());
+								groupingInstances);
+						logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
 					}
-				}
-				else
-				{
-					logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
-					mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
-							traversalEvent, 
-							groupingInstances);
-					logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
-					getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
-							traversalEvent.getTraversalCriterion().getId(),
-							groupingInstances);
-					logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
-		
-				}
-			} catch (GroupingCriterionNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			
+		} catch (GroupingCriterionNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		//logger.debug("applyTraversalEvents(): check for new traversal events:");
-		if (getGraphUtil().getNewTraversalEvents().isEmpty() && false)
-		{
-			logger.debug("applyTraversalEvents(): no more dependent traversal events found. Subgraph can be safely removed.");
-			//getGraphUtil().fixOffTargetCells((mxICell) getFirstNode(), traversalEvent.getTraversalCriterion().getId());
-			// cleanup and reset
-			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
-			{
-				getGraphUtil().removeSubGraph(
-						subGraphRoot1, 
-						traversalEvent);
-			}
-			getGraphUtil().resetFlags();
-			getGraphUtil().getCurrentSubGraphs().clear();
-		}else{logger.debug("applyTraversalEvents(): ... more traversal events found.");		}
-
+		return rc;
 	}	
 
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2250,6 +2144,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	}
 
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws DataLinkNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolvePreprocessingTasks() throws TaskNotFoundException, DataLinkNotFoundException {
+		boolean rc=false;
+		EMap<mxICell, EList<mxICell>> prepRequired = getGraphUtil().findCellsWherePreprocessingIsRequired();
+		logger.debug("resolvePreprocessingTasks(): found "+prepRequired.size()+" tasks with unresolved preprocessings");
+		Iterator<Entry<mxICell, EList<mxICell>>> it = prepRequired.iterator(); 
+		while (it.hasNext())
+		{
+			Entry<mxICell, EList<mxICell>> entry = it.next();
+			for (mxICell edge:entry.getValue())
+				rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), edge);
+		}
+		return rc;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

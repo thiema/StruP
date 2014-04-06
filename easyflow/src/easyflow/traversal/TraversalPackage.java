@@ -171,13 +171,22 @@ public interface TraversalPackage extends EPackage {
 	int GROUPING_CRITERION__ID = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_CRITERION__NAME = 1;
+
+	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION__DESCRIPTION = 1;
+	int GROUPING_CRITERION__DESCRIPTION = 2;
 
 	/**
 	 * The feature id for the '<em><b>Mode</b></em>' attribute.
@@ -186,7 +195,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION__MODE = 2;
+	int GROUPING_CRITERION__MODE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
@@ -195,7 +204,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION__MULTIPLE_INSTANCES = 3;
+	int GROUPING_CRITERION__MULTIPLE_INSTANCES = 4;
 
 	/**
 	 * The feature id for the '<em><b>Seperate Input Ports</b></em>' attribute.
@@ -204,7 +213,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION__SEPERATE_INPUT_PORTS = 4;
+	int GROUPING_CRITERION__SEPERATE_INPUT_PORTS = 5;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -213,7 +222,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION__LOGGER = 5;
+	int GROUPING_CRITERION__LOGGER = 6;
 
 	/**
 	 * The feature id for the '<em><b>Data Port</b></em>' reference.
@@ -222,7 +231,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION__DATA_PORT = 6;
+	int GROUPING_CRITERION__DATA_PORT = 7;
 
 	/**
 	 * The number of structural features of the '<em>Grouping Criterion</em>' class.
@@ -231,7 +240,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_CRITERION_FEATURE_COUNT = 7;
+	int GROUPING_CRITERION_FEATURE_COUNT = 8;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -241,6 +250,15 @@ public interface TraversalPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRAVERSAL_CRITERION__ID = GROUPING_CRITERION__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CRITERION__NAME = GROUPING_CRITERION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -445,6 +463,17 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getGroupingCriterion_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.traversal.GroupingCriterion#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.traversal.GroupingCriterion#getName()
+	 * @see #getGroupingCriterion()
+	 * @generated
+	 */
+	EAttribute getGroupingCriterion_Name();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.traversal.GroupingCriterion#getDescription <em>Description</em>}'.
@@ -767,6 +796,14 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GROUPING_CRITERION__ID = eINSTANCE.getGroupingCriterion_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GROUPING_CRITERION__NAME = eINSTANCE.getGroupingCriterion_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
