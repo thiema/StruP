@@ -103,4 +103,12 @@ public interface IMetaData extends EObject {
 	 */
 	EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model recordInstanceStrMany="true"
+	 * @generated
+	 */
+	EList<GroupingInstance> getInstancesForRecords(String groupingStr, EList<String> recordInstanceStr);
+
 } // IMetaData

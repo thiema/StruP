@@ -1156,6 +1156,10 @@
         <eParameters name="groupingStr2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="instanceStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
+      <eOperations name="getInstancesForRecords" upperBound="-1" eType="#//metadata/GroupingInstance">
+        <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="recordInstanceStr" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eOperations name="getValueForGroupingInstance">
         <eParameters name="groupingInstance" eType="#//metadata/GroupingInstance"/>
         <eParameters name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

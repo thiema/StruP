@@ -522,6 +522,10 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		addEParameter(op, ecorePackage.getEString(), "groupingStr2", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(iMetaDataEClass, this.getGroupingInstance(), "getInstancesForRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "recordInstanceStr", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		op = addEOperation(iMetaDataEClass, null, "getValueForGroupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "field", 0, 1, IS_UNIQUE, IS_ORDERED);

@@ -3325,9 +3325,19 @@ public class UtilImpl extends EObjectImpl implements Util {
 		boolean rc = true;
 		
 		int constellation = 0x00;
-		int processMultipleInputs    = 1;
-		int processMultipleGroupings = 2;
-		int processMultipleInstances = 4;
+		
+		// filter task can have multiple inputs
+		int filterSupportMultipleInputs            = 0x01;
+		// filter task can process multiple instances per single input
+		int filterSupportMultipleInstancesPerInput = 0x02;
+		// merge task can process multiple instances per single input
+		int mergeSupportMultipleInstancesPerInput  = 0x04;
+		
+		
+		//constellation|= filterSupportMultipleInputs;
+		//constellation|= mergeSupportMultipleInstancesPerInput;
+		//logger.debug("constellation: "+(constellation|filterSupportMultipleInputs)+" "+(constellation|filterSupportMultipleInstancesPerInput)+" ");
+		logger.debug("resolveEdge(): constellation="+constellation);
 		
 		Task task = loadTask(entry.getKey());
 		logger.debug("resolveEdge(): apply filter for "+task.getUniqueString()+" "+entry.getValue().size());
@@ -3343,8 +3353,11 @@ public class UtilImpl extends EObjectImpl implements Util {
 			graph.getModel().beginUpdate(); try {
 				
 				
+				String filterGroupingStr = "ReadGroup";
+				//String mergeGroupingStr  = "ReadGroup";
+				
 				// filter tasks can be the actual parent
-				EMap<mxICell, DataLink> cellMap = createFilterTasks(entry.getKey(), entry.getValue(), firstDataLink.getDataPort(), constellation);
+				EMap<mxICell, DataLink> cellMap = createFilterTasks(entry.getKey(), entry.getValue(), firstDataLink.getDataPort(), filterGroupingStr, constellation);
 				EMap<String, EList<TraversalChunk>> traversalChunks = new BasicEMap<String, EList<TraversalChunk>>();
 				
 				if (!cellMap.isEmpty())
@@ -3385,7 +3398,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 								+ mergeTask.getUniqueString());
 						getGraph().insertEdgeEasyFlow(null, null, e.getKey(),
 								mergeCell, e.getValue());
-						
 					}
 					if (((task.getFlags() >> 13) & 0x1)!=1)
 					{
@@ -3427,29 +3439,26 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 */
 	private EMap<mxICell, DataLink> createFilterTasks(
 											mxICell cell, EList<mxICell> edges, 
-											DataPort dataPort, int constellation) 
+											DataPort dataPort, String groupingStr, int constellation) 
 						throws TaskNotFoundException, 
 								DataLinkNotFoundException, 
 								ToolNotFoundException, 
 								UtilityTaskNotFoundException
 	{
 		
-		boolean rc = false;
+		//boolean rc = false;
 		//boolean modeUnion=false;
 		Task task = loadTask(cell);
 		EMap<mxICell, DataLink> cells = new BasicEMap<mxICell, DataLink>();
 		EMap<String, EList<TraversalChunk>> coveredChunks = null;
 
-		logger.debug("createFilterTasks(): find filterTasks for "+task.getUniqueString()+" for criteria "+task.getChunks().keySet());
+		logger.debug("createFilterTasks(): find filterTasks for "+task.getUniqueString()+" for criteria "+task.getChunks().keySet()+" "+dataPort);
 		
 		for (mxICell edge:edges)
 		{
 			DataLink dataLink = loadDataLink(edge);
-			Task sourceTask = getSourceTask((mxCell) edge);
-			Task targetTask = getTargetTask((mxCell) edge);
-			
-			
-			
+			Task sourceTask   = getSourceTask((mxCell) edge);
+			Task targetTask   = getTargetTask((mxCell) edge);
 			
 			logger.debug("createFilterTasks(): "+task.getFlags()+" 0x001="+0x001+" 0x01="+0x1+" "+(task.getFlags() >> 13));
 			if (((task.getFlags() >> 12) & 0x1) == 1)
@@ -3460,45 +3469,71 @@ public class UtilImpl extends EObjectImpl implements Util {
 			}
 			else
 			{
-
-			
-			 EMap<String, EList<TraversalChunk>> currentCoveredChunks = getCoveredChunks(
+				TraversalEvent te=task.getTraversalEvents().get(dataLink.getGroupingStr());
+				logger.debug("createFilterTasks(): "+dataLink.getGroupingStr()+" "+dataLink.getParentGroupingStr()
+						+" type of te="+te.getType()+" "+te.getTraversalCriterion().getMode()
+						+" source tes="+sourceTask.getTraversalEvents().keySet());
+				
+				EMap<String, EList<TraversalChunk>> currentCoveredChunks = getCoveredChunks(
 					targetTask,
 					sourceTask,
 					dataLink.getDataPort(),
+					groupingStr,
 					true
+					//!sourceTask.getTraversalEvents().keySet().contains("Group")
 					);
 			
-			logger.trace("createFilterTasks(): "+currentCoveredChunks.size()+" covered chunks found. "+" filter chunks from "+sourceTask.getUniqueString());
-			if (currentCoveredChunks.isEmpty())
-			{
-				logger.debug("createFilterTasks(): no chunks found that can be translated.");	
-			}
-
-			else
-			{
-				if (coveredChunks==null)
-					coveredChunks=currentCoveredChunks;
+				logger.trace("createFilterTasks(): "+currentCoveredChunks.size()+" covered chunks found. "+" filter chunks from "+sourceTask.getUniqueString());
+				if (currentCoveredChunks.isEmpty())
+				{
+					logger.debug("createFilterTasks(): no chunks found that can be translated.");	
+				}
+	
 				else
-					for (Entry<String, EList<TraversalChunk>> e:currentCoveredChunks.entrySet())
-					{
-						//if (coveredChunks.containsKey(e.getKey()))
-						coveredChunks.get(e.getKey()).addAll(e.getValue());
-					}
-				
-				Task newTask = createUtilityTask(currentCoveredChunks, "filter", task.getName());
-				//if (newTask != null)
-				//{
-					mxICell newCell=getCells().get(newTask.getUniqueString());
-					logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()+"->"+newTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
+				{
+					if (coveredChunks==null)
+						coveredChunks=currentCoveredChunks;
+					else
+						for (Entry<String, EList<TraversalChunk>> e:currentCoveredChunks.entrySet())
+						{
+							//if (coveredChunks.containsKey(e.getKey()))
+							coveredChunks.get(e.getKey()).addAll(e.getValue());
+						}
 					
-					mxICell newEdge=(mxICell) getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), newCell, dataLink);
+					logger.debug("createFilterTasks(): constallation="+(constellation & 0x04));
+					if ((constellation & 0x04)>0)
+					{
+						
+						Task newTask = createUtilityTask(currentCoveredChunks, "filter", task.getName());
+						mxICell newCell=getCells().get(newTask.getUniqueString());
+						logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()+"->"+newTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
+						
+						mxICell newEdge=(mxICell) getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), newCell, dataLink);
+						cells.put(newCell, dataLink);
+					}
+					else
+					{
+						for (Entry<String, EList<TraversalChunk>> e:currentCoveredChunks.entrySet())
+						{
+							for (TraversalChunk traversalChunk:e.getValue())
+							{
+								EList<TraversalChunk> chunks = new BasicEList<TraversalChunk>();
+								EMap<String, EList<TraversalChunk>> curCoveredChunks = new BasicEMap<String, EList<TraversalChunk>>();
+								chunks.add(traversalChunk);
+								curCoveredChunks.put(e.getKey(), chunks);
+								Task newTask = createUtilityTask(curCoveredChunks, "filter", task.getName());
+								logger.debug("createFilterTasks(): insert edge: (parent-filter)"
+										+sourceTask.getUniqueString()+"->"+newTask.getUniqueString()
+										+" coveredChunks="+curCoveredChunks.keySet());
+								mxICell newCell=getCells().get(newTask.getUniqueString());
+								mxICell newEdge=(mxICell) getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), newCell, dataLink);
+								cells.put(newCell, dataLink);
+							}
+						}
+					}
 					getGraph().removeCells(new Object[]{edge}, true);
-					cells.put(newCell, dataLink);
-				//}
-						//createDataLink(edge, newTask, groupingStr, parentGroupingStr));
+				}
 			}
-		}
 		}
 		return cells;
 	}
@@ -3506,7 +3541,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	
 	
 	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, 
-			DataPort dataPort, boolean modeUnion) throws ToolNotFoundException
+			DataPort dataPort, String groupingStr, boolean modeUnion) throws ToolNotFoundException
 	{
 		
 		EMap<String, EList<TraversalChunk>> allCoveredChunks = new BasicEMap<String, EList<TraversalChunk>>();
@@ -3516,27 +3551,27 @@ public class UtilImpl extends EObjectImpl implements Util {
 		//EList<String> requiredGroupings=task.getRequiredGroupingsFor(null, dataPort);
 		//EList<String> providedGroupings=sourceTask.getProvidedGroupingsFor(null, dataPort);
 		logger.trace("getCoveredChunks(): sourceTask="+sourceTask.getUniqueString()+" task="+task.getUniqueString());
-		for (String groupingStr:task.getChunks().keySet())
+		/*for (String groupingStr:task.getChunks().keySet())
 		{
 			EList<TraversalChunk> coveredChunks = task.getOverlappingChunksFor(sourceTask, groupingStr);
 			logger.trace("getCoveredChunks(): "+coveredChunks.size()+" overlapping chunks found for "+groupingStr+".");
 			if (!coveredChunks.isEmpty())
 				allCoveredChunks.put(groupingStr, coveredChunks);
-		}
+		}*/
 		
 		if (allCoveredChunks.isEmpty())
 		{
 			EList<TraversalChunk> traversalChunks = new BasicEList<TraversalChunk>();
 			EList<String>         tcStrings       = new BasicEList<String>();
 			
-			for (TraversalChunk traversalChunk : getRecordsForChunks(sourceTask, modeUnion))
+			for (TraversalChunk traversalChunk : getChunksFor(sourceTask, groupingStr, modeUnion))
 			{
 				logger.trace("getCoveredChunks(): check "+traversalChunk.getName()+" against "
 						+getRecordsForChunks(task, modeUnion).size()
 						+" target chunks. modeUnion="+modeUnion);
 				
 				boolean found = false;
-				for (TraversalChunk targetTC : getRecordsForChunks(task, modeUnion))
+				for (TraversalChunk targetTC : getChunksFor(task, groupingStr, modeUnion))
 				{
 					if (traversalChunk.getName().equals(targetTC.getName()))
 					{
@@ -3557,7 +3592,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			if (!traversalChunks.isEmpty())
 			{
 				logger.trace("getCoveredChunks(): add "+traversalChunks.size()+" traversal chunks for record. ("+StringUtils.join(tcStrings.iterator(), ", ")+")");
-				allCoveredChunks.put("Record", traversalChunks);
+				allCoveredChunks.put(groupingStr, traversalChunks);
 			}
 					
 		}
@@ -3565,6 +3600,64 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 	}	
 
+	
+	private EList<TraversalChunk> getChunksFor(Task task, String groupingStr, boolean intersect)
+	{
+		
+		EList<TraversalChunk> records = task.getRecords(intersect);
+		EList<String> recordStr = new BasicEList<String>();
+		EList<TraversalChunk> traversalChunks = new BasicEList<TraversalChunk>();
+		for (TraversalChunk record:records)
+		{
+			
+			recordStr.add(record.getName());
+		}
+		logger.debug("getChunksFor(): Found recs=("+StringUtils.join(recordStr, ",")+") ");
+		EList<GroupingInstance> groupingInstances = GlobalVar.getGraphUtil().getMetaData().getInstancesForRecords(groupingStr, recordStr);
+		for (GroupingInstance groupingInstance:groupingInstances)
+		{
+			TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
+			traversalChunk.setName(groupingInstance.getName());
+			traversalChunks.add(traversalChunk);
+		}
+		logger.debug("getChunksFor(): Found isntances=("+list2String(traversalChunks, ",")+") for group "+groupingStr);
+		return traversalChunks;
+		
+		/*
+		EMap<String, TraversalChunk> traversalChunks = new BasicEMap<String, TraversalChunk>();
+		boolean firstRound = true;
+		for (Entry<String, EList<TraversalChunk>> entry:task.getChunks())
+		{
+			for (TraversalChunk chunk:entry.getValue())
+			{
+				EList<GroupingInstance> groupingInstances = GlobalVar.getGraphUtil().getMetaData().getInstances(groupingStr, entry.getKey(), chunk.getName());
+				logger.debug("getChunksFor() got "+groupingInstances.size()+" chunks for transforming instance "+chunk.getName()+" from "+groupingStr+" to "+entry.getKey());
+				if (!groupingInstances.isEmpty())
+				{
+					for (GroupingInstance groupingInstance:groupingInstances)
+					{
+						String key = groupingInstance.getName();
+						
+						if (!traversalChunks.containsKey(key) || firstRound)
+						{
+							TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
+							traversalChunk.setName(key);
+							traversalChunks.put(key, traversalChunk);
+						}
+						else if (!firstRound && !traversalChunks.containsKey(key))
+						{
+							logger.debug("getChunksFor(): found non intersecting chunk "+key);
+						}
+					}
+				}
+			}
+			if (firstRound && intersect)
+				firstRound = false;
+		}
+		return new BasicEList<TraversalChunk>(traversalChunks.values());
+		*/
+	}
+	
 	private EList<TraversalChunk> getRecordsForChunks(Task task, boolean modeUnion)
 	{
 		return task.getRecords(!modeUnion);

@@ -2,16 +2,16 @@
 	
   "project" : {
 	"workflowTemplateFile_"       : "reseq_simple_alt_path.workflow",
-	"workflowTemplateFile"       : "reseq_simple.workflow",
+	"#workflowTemplateFile"       : "reseq_simple.workflow",
 	"workflowTemplateFile3"       : "reseq_full.workflow",
-	"metadataFile"               : "metadata_sequencing.tsv",
+	"#metadataFile"               : "metadata_sequencing.tsv",
 	
 	"workflowTemplateFile2"       : "abstract_multiple_traversal_event.workflow",
 	"workflowTemplateFile1"       : "abstract1.workflow",
 	"#workflowTemplateFile"       : "abstract_simple1.workflow",
-	"workflowTemplateFile_"       : "abstract_simple2.workflow",
+	"workflowTemplateFile"       : "abstract_simple2.workflow",
 	"metadataFile_"               : "metadata_abstract_simple2.tsv",
-    "#metadataFile"               : "metadata_abstract.tsv", 
+    "metadataFile"               : "metadata_abstract.tsv", 
     
     "isContrast"                 : "true",
     "useIntervalList"            : "true",

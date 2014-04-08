@@ -391,22 +391,20 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @generated not
 	 */
 	public EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr) {
-		//EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
-		//logger.debug(groupingStr1+" "+groupingStr2+" "+instanceStr);
+
 		EList<String> records=getRecordsBy(groupingStr1, instanceStr);
-		EList<GroupingInstance> groupingInstances = getInstances(groupingStr2, records);
-		//logger.debug(GlobalVar.getMetaDataTableRow(groupingStr1));
-		//logger.debug(GlobalVar.getMetaDataTableEntry(groupingInstance.getName(), col))
-		//logger.debug(getGroupings().keySet());
-		//logger.debug(getGroupingInstances().keySet());
-		String res="";
-		for (GroupingInstance groupingInstance:groupingInstances)
-			res+=","+groupingInstance.getName();
+		EList<GroupingInstance> groupingInstances = getInstancesForRecords(groupingStr2, records);
+		//String res=""; for (GroupingInstance groupingInstance:groupingInstances) res+=","+groupingInstance.getName();
 		//logger.debug(groupingStr1+" "+groupingStr2+" "+instanceStr+" "+res);
 		return groupingInstances;
 	}
-	
-	private EList<GroupingInstance> getInstances(String group, EList<String> records)
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<GroupingInstance> getInstancesForRecords(String group, EList<String> records)
 	{
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		for (GroupingInstance groupingInstance:getGroupingInstances().get(group).getInstances())
