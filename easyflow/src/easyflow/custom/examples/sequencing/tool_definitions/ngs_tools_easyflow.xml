@@ -172,6 +172,12 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 		 </help>
 	</tool>
 
+
+	<tool id="merge_sam" analysis_type="merge">
+		<description>merge sam files</description>
+		<param name="input" type="data" format="bam" multiple="true"></param>
+		<param name="output" type="data" format="bam"></param>
+	</tool>
 	<tool id="rmdup" name="rmdup" version="0.1" package="samtools">
 		<description>remove duplcates</description>
 		<param name="input" type="data" format="bam"></param>
@@ -182,7 +188,7 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 		<description>generate statistics on flags</description>
 	</tool>
 	
-	<tool id="index_sam" name="index_sam" version="0.1" package="samtools">
+	<tool id="index_sam" analysis_type="index" name="index_sam" version="0.1" package="samtools">
 		<description>generate sam index</description>
 		<command>samtools index</command>
 		<param name="input" type="data" format="bam"></param>

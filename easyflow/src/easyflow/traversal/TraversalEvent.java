@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.traversal.TraversalEvent#getMergeTask <em>Merge Task</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getSplitTask <em>Split Task</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getParentTask <em>Parent Task</em>}</li>
+ *   <li>{@link easyflow.traversal.TraversalEvent#getMergeTasksParamCrit <em>Merge Tasks Param Crit</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getParentCells <em>Parent Cells</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getLogger <em>Logger</em>}</li>
@@ -100,6 +101,22 @@ public interface TraversalEvent extends EObject {
 	 * @generated
 	 */
 	EList<Task> getParentTask();
+
+	/**
+	 * Returns the value of the '<em><b>Merge Tasks Param Crit</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.core.Task}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Merge Tasks Param Crit</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Merge Tasks Param Crit</em>' reference list.
+	 * @see easyflow.traversal.TraversalPackage#getTraversalEvent_MergeTasksParamCrit()
+	 * @model
+	 * @generated
+	 */
+	EList<Task> getMergeTasksParamCrit();
 
 	/**
 	 * Returns the value of the '<em><b>Parent Cells</b></em>' attribute list.

@@ -354,6 +354,8 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	 * @generated not
 	 */
 	public boolean isCompatible(DataPort dataPort) {
+		if (dataPort.getName().equals(getName()))
+			return true;
 		for (Entry<String, DataFormat> entryDataFormat:getDataFormats().entrySet())
 		{
 			for (Entry<String, DataFormat> entryDataFormat2:dataPort.getDataFormats().entrySet())

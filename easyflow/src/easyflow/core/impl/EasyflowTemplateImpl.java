@@ -233,13 +233,21 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 					task.readTask(strLine, mode, defaultGroupingCriteria);
 					tmpMap.put(task.getName(), task);
 					String[] rawParentTaskNames=strLine.split("\t")[1].split(",");
+					
 					for (String rawParentTaskName : rawParentTaskNames) {
+						if (rawParentTaskName.equals(""))
+							continue;
 						String[] tmp=rawParentTaskName.split(":");
 						String parentTaskName=tmp[0];
-						//if (tmp.length>1) 
-						if (tmpMap.containsKey(parentTaskName)) 
+						logger.debug("readTemplate(): process parent="+parentTaskName);
+						if (tmpMap.containsKey(parentTaskName))
+						{
 							task.getParents().put(parentTaskName, tmpMap.get(parentTaskName));
-						else if (task.isUtil()) task.getParents().put("Root", tmpMap.get("Root"));
+						}
+						else if (task.isUtil())
+						{
+							task.getParents().put("Root", tmpMap.get("Root"));
+						}
 					}
 					getTasks().add(task);
 					//if (!task.getParents().isEmpty())

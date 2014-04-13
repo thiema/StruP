@@ -196,9 +196,9 @@ public class EasyFlowToolBar extends JToolBar
 								&& defaultProject.applyGroupingCriteria()
 								&& defaultProject.applyParameterCriteria()
 								&& defaultProject.resolveUtilityTasks()
-								//&& defaultProject.resolvePreprocessingTasks()
-								//&& defaultProject.resolveToolDependencies()
-								)
+								&& defaultProject.resolvePreprocessingTasks()
+								&& defaultProject.resolveToolDependencies()
+							)
 						{
 							//btnResolveUtilityTasks.setEnabled(true);
 						}

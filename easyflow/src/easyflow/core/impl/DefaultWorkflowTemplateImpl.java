@@ -182,6 +182,7 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
         	while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					Task task = CoreFactoryImpl.eINSTANCE.createTask();
+					logger.debug("readTemplate(): parse line="+strLine+" to task.");
 					task.readTask(strLine, mode, defaultGroupingCriteria);
 					getTasks().add(task);
 					

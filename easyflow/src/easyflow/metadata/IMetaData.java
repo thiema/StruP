@@ -101,6 +101,22 @@ public interface IMetaData extends EObject {
 	 * @model
 	 * @generated
 	 */
+	boolean containsColumn(String column);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean containsRow(String row);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
 	EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr);
 
 	/**

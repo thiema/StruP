@@ -250,8 +250,17 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTraversalEvent_MergeTasksParamCrit() {
+		return (EReference)traversalEventEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getTraversalEvent_ParentCells() {
-		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -260,7 +269,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * @generated
 	 */
 	public EReference getTraversalEvent_TraversalCriterion() {
-		return (EReference)traversalEventEClass.getEStructuralFeatures().get(4);
+		return (EReference)traversalEventEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -269,7 +278,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * @generated
 	 */
 	public EAttribute getTraversalEvent_Logger() {
-		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -278,7 +287,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * @generated
 	 */
 	public EAttribute getTraversalEvent_MetaData() {
-		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)traversalEventEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -502,6 +511,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__MERGE_TASK);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__SPLIT_TASK);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__PARENT_TASK);
+		createEReference(traversalEventEClass, TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__PARENT_CELLS);
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__TRAVERSAL_CRITERION);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__LOGGER);
@@ -573,6 +583,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEReference(getTraversalEvent_MergeTask(), theCorePackage.getTask(), null, "mergeTask", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_SplitTask(), theCorePackage.getTask(), null, "splitTask", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_ParentTask(), theCorePackage.getTask(), null, "parentTask", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTraversalEvent_MergeTasksParamCrit(), theCorePackage.getTask(), null, "mergeTasksParamCrit", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_ParentCells(), theEasyflowPackage.getmxICell(), "parentCells", null, 0, -1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_TraversalCriterion(), this.getTraversalCriterion(), null, "traversalCriterion", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

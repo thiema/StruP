@@ -106,22 +106,13 @@ public interface JgraphxPackage extends EPackage {
 	int UTIL__CELLS = 3;
 
 	/**
-	 * The feature id for the '<em><b>Depricated Tasks</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UTIL__DEPRICATED_TASKS = 4;
-
-	/**
 	 * The feature id for the '<em><b>Most Processed Tasks</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__MOST_PROCESSED_TASKS = 5;
+	int UTIL__MOST_PROCESSED_TASKS = 4;
 
 	/**
 	 * The feature id for the '<em><b>Meta Data</b></em>' reference.
@@ -130,7 +121,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__META_DATA = 6;
+	int UTIL__META_DATA = 5;
 
 	/**
 	 * The feature id for the '<em><b>Default Root Cell</b></em>' attribute.
@@ -139,25 +130,25 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__DEFAULT_ROOT_CELL = 7;
+	int UTIL__DEFAULT_ROOT_CELL = 6;
 
 	/**
-	 * The feature id for the '<em><b>Processed Edges Copy Graph DEPRECATED</b></em>' map.
+	 * The feature id for the '<em><b>Processed Edges Copy Graph</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__PROCESSED_EDGES_COPY_GRAPH_DEPRECATED = 8;
+	int UTIL__PROCESSED_EDGES_COPY_GRAPH = 7;
 
 	/**
-	 * The feature id for the '<em><b>Processed Edges DEPRICATED</b></em>' map.
+	 * The feature id for the '<em><b>Deprecated Edges</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__PROCESSED_EDGES_DEPRICATED = 9;
+	int UTIL__DEPRECATED_EDGES = 8;
 
 	/**
 	 * The feature id for the '<em><b>Add Edges</b></em>' map.
@@ -166,7 +157,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__ADD_EDGES = 10;
+	int UTIL__ADD_EDGES = 9;
 
 	/**
 	 * The feature id for the '<em><b>Copied Cells</b></em>' map.
@@ -175,7 +166,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__COPIED_CELLS = 11;
+	int UTIL__COPIED_CELLS = 10;
 
 	/**
 	 * The feature id for the '<em><b>Current Sub Graphs</b></em>' attribute list.
@@ -184,7 +175,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__CURRENT_SUB_GRAPHS = 12;
+	int UTIL__CURRENT_SUB_GRAPHS = 11;
 
 	/**
 	 * The feature id for the '<em><b>Traversal Events</b></em>' reference list.
@@ -193,7 +184,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__TRAVERSAL_EVENTS = 13;
+	int UTIL__TRAVERSAL_EVENTS = 12;
 
 	/**
 	 * The feature id for the '<em><b>New Traversal Events</b></em>' reference list.
@@ -202,7 +193,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__NEW_TRAVERSAL_EVENTS = 14;
+	int UTIL__NEW_TRAVERSAL_EVENTS = 13;
 
 	/**
 	 * The feature id for the '<em><b>Data Links</b></em>' map.
@@ -211,7 +202,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__DATA_LINKS = 15;
+	int UTIL__DATA_LINKS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Utility Tasks</b></em>' map.
@@ -220,7 +211,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__UTILITY_TASKS = 16;
+	int UTIL__UTILITY_TASKS = 15;
 
 	/**
 	 * The feature id for the '<em><b>Utility Task Cells</b></em>' attribute list.
@@ -229,7 +220,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL__UTILITY_TASK_CELLS = 17;
+	int UTIL__UTILITY_TASK_CELLS = 16;
 
 	/**
 	 * The number of structural features of the '<em>Util</em>' class.
@@ -238,7 +229,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UTIL_FEATURE_COUNT = 18;
+	int UTIL_FEATURE_COUNT = 17;
 
 
 	/**
@@ -296,17 +287,6 @@ public interface JgraphxPackage extends EPackage {
 	EReference getUtil_Cells();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getDepricatedTasks <em>Depricated Tasks</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Depricated Tasks</em>'.
-	 * @see easyflow.graph.jgraphx.Util#getDepricatedTasks()
-	 * @see #getUtil()
-	 * @generated
-	 */
-	EReference getUtil_DepricatedTasks();
-
-	/**
 	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getMostProcessedTasks <em>Most Processed Tasks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -340,26 +320,26 @@ public interface JgraphxPackage extends EPackage {
 	EAttribute getUtil_DefaultRootCell();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph_DEPRECATED <em>Processed Edges Copy Graph DEPRECATED</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph <em>Processed Edges Copy Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Processed Edges Copy Graph DEPRECATED</em>'.
-	 * @see easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph_DEPRECATED()
+	 * @return the meta object for the map '<em>Processed Edges Copy Graph</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph()
 	 * @see #getUtil()
 	 * @generated
 	 */
-	EReference getUtil_ProcessedEdgesCopyGraph_DEPRECATED();
+	EReference getUtil_ProcessedEdgesCopyGraph();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getProcessedEdges_DEPRICATED <em>Processed Edges DEPRICATED</em>}'.
+	 * Returns the meta object for the attribute list '{@link easyflow.graph.jgraphx.Util#getDeprecatedEdges <em>Deprecated Edges</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Processed Edges DEPRICATED</em>'.
-	 * @see easyflow.graph.jgraphx.Util#getProcessedEdges_DEPRICATED()
+	 * @return the meta object for the attribute list '<em>Deprecated Edges</em>'.
+	 * @see easyflow.graph.jgraphx.Util#getDeprecatedEdges()
 	 * @see #getUtil()
 	 * @generated
 	 */
-	EReference getUtil_ProcessedEdges_DEPRICATED();
+	EAttribute getUtil_DeprecatedEdges();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}'.
@@ -509,13 +489,6 @@ public interface JgraphxPackage extends EPackage {
 		 */
 		EReference UTIL__CELLS = eINSTANCE.getUtil_Cells();
 		/**
-		 * The meta object literal for the '<em><b>Depricated Tasks</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference UTIL__DEPRICATED_TASKS = eINSTANCE.getUtil_DepricatedTasks();
-		/**
 		 * The meta object literal for the '<em><b>Most Processed Tasks</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -537,19 +510,19 @@ public interface JgraphxPackage extends EPackage {
 		 */
 		EAttribute UTIL__DEFAULT_ROOT_CELL = eINSTANCE.getUtil_DefaultRootCell();
 		/**
-		 * The meta object literal for the '<em><b>Processed Edges Copy Graph DEPRECATED</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Processed Edges Copy Graph</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UTIL__PROCESSED_EDGES_COPY_GRAPH_DEPRECATED = eINSTANCE.getUtil_ProcessedEdgesCopyGraph_DEPRECATED();
+		EReference UTIL__PROCESSED_EDGES_COPY_GRAPH = eINSTANCE.getUtil_ProcessedEdgesCopyGraph();
 		/**
-		 * The meta object literal for the '<em><b>Processed Edges DEPRICATED</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Deprecated Edges</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UTIL__PROCESSED_EDGES_DEPRICATED = eINSTANCE.getUtil_ProcessedEdges_DEPRICATED();
+		EAttribute UTIL__DEPRECATED_EDGES = eINSTANCE.getUtil_DeprecatedEdges();
 		/**
 		 * The meta object literal for the '<em><b>Add Edges</b></em>' map feature.
 		 * <!-- begin-user-doc -->

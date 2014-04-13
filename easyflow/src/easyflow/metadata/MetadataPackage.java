@@ -125,13 +125,22 @@ public interface MetadataPackage extends EPackage {
 	int DEFAULT_META_DATA__GROUPING_INSTANCES = IMETA_DATA_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Aliases</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA__ALIASES = IMETA_DATA_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Default Meta Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 4;
+	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.
@@ -384,6 +393,17 @@ public interface MetadataPackage extends EPackage {
 	EReference getDefaultMetaData_GroupingInstances();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.metadata.DefaultMetaData#getAliases <em>Aliases</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Aliases</em>'.
+	 * @see easyflow.metadata.DefaultMetaData#getAliases()
+	 * @see #getDefaultMetaData()
+	 * @generated
+	 */
+	EReference getDefaultMetaData_Aliases();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -616,6 +636,14 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEFAULT_META_DATA__GROUPING_INSTANCES = eINSTANCE.getDefaultMetaData_GroupingInstances();
+
+		/**
+		 * The meta object literal for the '<em><b>Aliases</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_META_DATA__ALIASES = eINSTANCE.getDefaultMetaData_Aliases();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.

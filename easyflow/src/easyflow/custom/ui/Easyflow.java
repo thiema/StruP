@@ -43,12 +43,13 @@ public class Easyflow {
 				defaultProject.init();
 				defaultProject.generateAbstractGraph();
 				defaultProject.resolveTraversalCriteria();
-				//defaultProject.applyParameterCriteria();
 				defaultProject.applyGroupingCriteria();
+				defaultProject.applyParameterCriteria();
+				
 				defaultProject.resolveUtilityTasks();
 				defaultProject.resolvePreprocessingTasks();
 				
-				//defaultProject.resolveToolDependencies();
+				defaultProject.resolveToolDependencies();
 				
 				//defaultProject.generateWorklowForExecutionSystem();
 			} catch (CellNotFoundException e) {
@@ -60,19 +61,11 @@ public class Easyflow {
 			} catch (GroupingCriterionInstanceNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (DataLinkNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DataPortNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ToolNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UtilityTaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			catch (DataLinkNotFoundException e) {	e.printStackTrace();}
+			catch (DataPortNotFoundException e) {e.printStackTrace();}
+			catch (ToolNotFoundException e) {e.printStackTrace();}
+			catch (UtilityTaskNotFoundException e) {e.printStackTrace();}
 
 			
 		}

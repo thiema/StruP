@@ -51,12 +51,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.graph.jgraphx.Util#getGraph <em>Graph</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getTasks <em>Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getCells <em>Cells</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.Util#getDepricatedTasks <em>Depricated Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getMostProcessedTasks <em>Most Processed Tasks</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getMetaData <em>Meta Data</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getDefaultRootCell <em>Default Root Cell</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph_DEPRECATED <em>Processed Edges Copy Graph DEPRECATED</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdges_DEPRICATED <em>Processed Edges DEPRICATED</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getProcessedEdgesCopyGraph <em>Processed Edges Copy Graph</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.Util#getDeprecatedEdges <em>Deprecated Edges</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getAddEdges <em>Add Edges</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getCopiedCells <em>Copied Cells</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.Util#getCurrentSubGraphs <em>Current Sub Graphs</em>}</li>
@@ -149,23 +148,6 @@ public interface Util extends EObject {
 	EMap<String, mxICell> getCells();
 
 	/**
-	 * Returns the value of the '<em><b>Depricated Tasks</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link java.lang.String},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Depricated Tasks</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Depricated Tasks</em>' map.
-	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_DepricatedTasks()
-	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
-	 * @generated
-	 */
-	EMap<String, String> getDepricatedTasks();
-
-	/**
 	 * Returns the value of the '<em><b>Most Processed Tasks</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link java.lang.String},
@@ -235,38 +217,37 @@ public interface Util extends EObject {
 	void setDefaultRootCell(mxICell value);
 
 	/**
-	 * Returns the value of the '<em><b>Processed Edges Copy Graph DEPRECATED</b></em>' map.
+	 * Returns the value of the '<em><b>Processed Edges Copy Graph</b></em>' map.
 	 * The key is of type {@link java.lang.String},
 	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Processed Edges Copy Graph DEPRECATED</em>' map isn't clear,
+	 * If the meaning of the '<em>Processed Edges Copy Graph</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed Edges Copy Graph DEPRECATED</em>' map.
-	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdgesCopyGraph_DEPRECATED()
+	 * @return the value of the '<em>Processed Edges Copy Graph</em>' map.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdgesCopyGraph()
 	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EMap<String, String> getProcessedEdgesCopyGraph_DEPRECATED();
+	EMap<String, String> getProcessedEdgesCopyGraph();
 
 	/**
-	 * Returns the value of the '<em><b>Processed Edges DEPRICATED</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link java.lang.String},
+	 * Returns the value of the '<em><b>Deprecated Edges</b></em>' attribute list.
+	 * The list contents are of type {@link com.mxgraph.model.mxICell}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Processed Edges DEPRICATED</em>' map isn't clear,
+	 * If the meaning of the '<em>Deprecated Edges</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processed Edges DEPRICATED</em>' map.
-	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_ProcessedEdges_DEPRICATED()
-	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @return the value of the '<em>Deprecated Edges</em>' attribute list.
+	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_DeprecatedEdges()
+	 * @model dataType="easyflow.mxICell"
 	 * @generated
 	 */
-	EMap<String, String> getProcessedEdges_DEPRICATED();
+	EList<mxICell> getDeprecatedEdges();
 
 	/**
 	 * Returns the value of the '<em><b>Add Edges</b></em>' map.
@@ -535,14 +516,6 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	void layoutGraph();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	void fixOffTargetCells_DEPRECATED(mxICell root, String groupingStr);
 
 	/**
 	 * <!-- begin-user-doc -->

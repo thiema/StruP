@@ -1038,7 +1038,7 @@ public interface CorePackage extends EPackage {
 	int DATA_LINK__DATA_PORT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Chunks</b></em>' reference list.
+	 * The feature id for the '<em><b>Chunks</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1056,22 +1056,13 @@ public interface CorePackage extends EPackage {
 	int DATA_LINK__ID = 2;
 
 	/**
-	 * The feature id for the '<em><b>Traversal Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_LINK__TRAVERSAL_NAME = 3;
-
-	/**
 	 * The feature id for the '<em><b>Grouping Str</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__GROUPING_STR = 4;
+	int DATA_LINK__GROUPING_STR = 3;
 
 	/**
 	 * The feature id for the '<em><b>Parent Grouping Str</b></em>' attribute.
@@ -1080,7 +1071,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__PARENT_GROUPING_STR = 5;
+	int DATA_LINK__PARENT_GROUPING_STR = 4;
 
 	/**
 	 * The feature id for the '<em><b>Identical Grouping</b></em>' attribute.
@@ -1089,7 +1080,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__IDENTICAL_GROUPING = 6;
+	int DATA_LINK__IDENTICAL_GROUPING = 5;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' reference.
@@ -1098,7 +1089,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__CONDITION = 7;
+	int DATA_LINK__CONDITION = 6;
 
 	/**
 	 * The feature id for the '<em><b>Intermediate Tasks</b></em>' reference list.
@@ -1107,7 +1098,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__INTERMEDIATE_TASKS = 8;
+	int DATA_LINK__INTERMEDIATE_TASKS = 7;
 
 	/**
 	 * The number of structural features of the '<em>Data Link</em>' class.
@@ -1116,7 +1107,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 9;
+	int DATA_LINK_FEATURE_COUNT = 8;
 
 
 	/**
@@ -2078,10 +2069,10 @@ public interface CorePackage extends EPackage {
 	EReference getDataLink_DataPort();
 
 	/**
-	 * Returns the meta object for the reference list '{@link easyflow.core.DataLink#getChunks <em>Chunks</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.core.DataLink#getChunks <em>Chunks</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Chunks</em>'.
+	 * @return the meta object for the map '<em>Chunks</em>'.
 	 * @see easyflow.core.DataLink#getChunks()
 	 * @see #getDataLink()
 	 * @generated
@@ -2098,17 +2089,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDataLink_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#getTraversalName <em>Traversal Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Traversal Name</em>'.
-	 * @see easyflow.core.DataLink#getTraversalName()
-	 * @see #getDataLink()
-	 * @generated
-	 */
-	EAttribute getDataLink_TraversalName();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}'.
@@ -3097,7 +3077,7 @@ public interface CorePackage extends EPackage {
 		EReference DATA_LINK__DATA_PORT = eINSTANCE.getDataLink_DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Chunks</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Chunks</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -3111,14 +3091,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_LINK__ID = eINSTANCE.getDataLink_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Traversal Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DATA_LINK__TRAVERSAL_NAME = eINSTANCE.getDataLink_TraversalName();
 
 		/**
 		 * The meta object literal for the '<em><b>Grouping Str</b></em>' attribute feature.

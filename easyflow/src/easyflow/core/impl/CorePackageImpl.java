@@ -1015,7 +1015,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDataLink_TraversalName() {
+	public EAttribute getDataLink_GroupingStr() {
 		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1024,7 +1024,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDataLink_GroupingStr() {
+	public EAttribute getDataLink_ParentGroupingStr() {
 		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1033,7 +1033,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDataLink_ParentGroupingStr() {
+	public EAttribute getDataLink_IdenticalGrouping() {
 		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -1042,17 +1042,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDataLink_IdenticalGrouping() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getDataLink_Condition() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(7);
+		return (EReference)dataLinkEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1061,7 +1052,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getDataLink_IntermediateTasks() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(8);
+		return (EReference)dataLinkEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1414,7 +1405,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(dataLinkEClass, DATA_LINK__DATA_PORT);
 		createEReference(dataLinkEClass, DATA_LINK__CHUNKS);
 		createEAttribute(dataLinkEClass, DATA_LINK__ID);
-		createEAttribute(dataLinkEClass, DATA_LINK__TRAVERSAL_NAME);
 		createEAttribute(dataLinkEClass, DATA_LINK__GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__PARENT_GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__IDENTICAL_GROUPING);
@@ -1892,9 +1882,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		initEClass(dataLinkEClass, DataLink.class, "DataLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataLink_DataPort(), this.getDataPort(), null, "dataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataLink_Chunks(), theTraversalPackage.getTraversalChunk(), null, "chunks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataLink_Chunks(), theMapsPackage.getStringToChunksMap(), null, "chunks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_Id(), ecorePackage.getEInt(), "id", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataLink_TraversalName(), ecorePackage.getEString(), "traversalName", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_ParentGroupingStr(), ecorePackage.getEString(), "parentGroupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_IdenticalGrouping(), ecorePackage.getEBoolean(), "identicalGrouping", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

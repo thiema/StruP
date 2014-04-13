@@ -211,7 +211,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUtil_DepricatedTasks() {
+	public EReference getUtil_MostProcessedTasks() {
 		return (EReference)utilEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -220,7 +220,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUtil_MostProcessedTasks() {
+	public EReference getUtil_MetaData() {
 		return (EReference)utilEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -229,17 +229,8 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUtil_MetaData() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getUtil_DefaultRootCell() {
-		return (EAttribute)utilEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)utilEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -247,8 +238,8 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUtil_ProcessedEdgesCopyGraph_DEPRECATED() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(8);
+	public EReference getUtil_ProcessedEdgesCopyGraph() {
+		return (EReference)utilEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -256,8 +247,8 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUtil_ProcessedEdges_DEPRICATED() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(9);
+	public EAttribute getUtil_DeprecatedEdges() {
+		return (EAttribute)utilEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -266,7 +257,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EReference getUtil_AddEdges() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(10);
+		return (EReference)utilEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -275,7 +266,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EReference getUtil_CopiedCells() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(11);
+		return (EReference)utilEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -284,7 +275,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EAttribute getUtil_CurrentSubGraphs() {
-		return (EAttribute)utilEClass.getEStructuralFeatures().get(12);
+		return (EAttribute)utilEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -293,7 +284,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EReference getUtil_TraversalEvents() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(13);
+		return (EReference)utilEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -302,7 +293,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EReference getUtil_NewTraversalEvents() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(14);
+		return (EReference)utilEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -311,7 +302,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EReference getUtil_DataLinks() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(15);
+		return (EReference)utilEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -320,7 +311,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EReference getUtil_UtilityTasks() {
-		return (EReference)utilEClass.getEStructuralFeatures().get(16);
+		return (EReference)utilEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -329,7 +320,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	public EAttribute getUtil_UtilityTaskCells() {
-		return (EAttribute)utilEClass.getEStructuralFeatures().get(17);
+		return (EAttribute)utilEClass.getEStructuralFeatures().get(16);
 	}
 
 	/**
@@ -365,12 +356,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEAttribute(utilEClass, UTIL__GRAPH);
 		createEReference(utilEClass, UTIL__TASKS);
 		createEReference(utilEClass, UTIL__CELLS);
-		createEReference(utilEClass, UTIL__DEPRICATED_TASKS);
 		createEReference(utilEClass, UTIL__MOST_PROCESSED_TASKS);
 		createEReference(utilEClass, UTIL__META_DATA);
 		createEAttribute(utilEClass, UTIL__DEFAULT_ROOT_CELL);
-		createEReference(utilEClass, UTIL__PROCESSED_EDGES_COPY_GRAPH_DEPRECATED);
-		createEReference(utilEClass, UTIL__PROCESSED_EDGES_DEPRICATED);
+		createEReference(utilEClass, UTIL__PROCESSED_EDGES_COPY_GRAPH);
+		createEAttribute(utilEClass, UTIL__DEPRECATED_EDGES);
 		createEReference(utilEClass, UTIL__ADD_EDGES);
 		createEReference(utilEClass, UTIL__COPIED_CELLS);
 		createEAttribute(utilEClass, UTIL__CURRENT_SUB_GRAPHS);
@@ -424,12 +414,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		initEAttribute(getUtil_Graph(), theEasyflowPackage.getEasyFlowGraph(), "graph", null, 0, 1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_Tasks(), theMapsPackage.getStringToTaskMap(), null, "tasks", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_Cells(), theMapsPackage.getStringToGraphCellMap(), null, "cells", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUtil_DepricatedTasks(), theMapsPackage.getStringToStringMap(), null, "depricatedTasks", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_MostProcessedTasks(), theMapsPackage.getStringToStringMap(), null, "mostProcessedTasks", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_MetaData(), theMetadataPackage.getDefaultMetaData(), null, "metaData", null, 0, 1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUtil_DefaultRootCell(), theEasyflowPackage.getmxICell(), "defaultRootCell", null, 0, 1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUtil_ProcessedEdgesCopyGraph_DEPRECATED(), theMapsPackage.getStringToStringMap(), null, "processedEdgesCopyGraph_DEPRECATED", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUtil_ProcessedEdges_DEPRICATED(), theMapsPackage.getStringToStringMap(), null, "processedEdges_DEPRICATED", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUtil_ProcessedEdgesCopyGraph(), theMapsPackage.getStringToStringMap(), null, "processedEdgesCopyGraph", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUtil_DeprecatedEdges(), theEasyflowPackage.getmxICell(), "deprecatedEdges", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_AddEdges(), theMapsPackage.getStringToStringMap(), null, "addEdges", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUtil_CopiedCells(), theMapsPackage.getStringToGraphCellMap(), null, "copiedCells", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUtil_CurrentSubGraphs(), theEasyflowPackage.getmxICell(), "currentSubGraphs", null, 0, -1, Util.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -540,10 +529,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(utilEClass, null, "layoutGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(utilEClass, null, "fixOffTargetCells_DEPRECATED", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(utilEClass, ecorePackage.getEBoolean(), "isChildOf", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getTask(), "parent", 0, 1, IS_UNIQUE, IS_ORDERED);

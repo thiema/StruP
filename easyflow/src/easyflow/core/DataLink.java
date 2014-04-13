@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.DataLink#getDataPort <em>Data Port</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getId <em>Id</em>}</li>
- *   <li>{@link easyflow.core.DataLink#getTraversalName <em>Traversal Name</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
@@ -67,20 +66,21 @@ public interface DataLink extends EObject {
 	void setDataPort(DataPort value);
 
 	/**
-	 * Returns the value of the '<em><b>Chunks</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.traversal.TraversalChunk}.
+	 * Returns the value of the '<em><b>Chunks</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link easyflow.traversal.TraversalChunk},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Chunks</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Chunks</em>' reference list.
+	 * @return the value of the '<em>Chunks</em>' map.
 	 * @see easyflow.core.CorePackage#getDataLink_Chunks()
-	 * @model
+	 * @model mapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
 	 * @generated
 	 */
-	EList<TraversalChunk> getChunks();
+	EMap<String, EList<TraversalChunk>> getChunks();
 
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
@@ -107,32 +107,6 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setId(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Traversal Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Traversal Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Traversal Name</em>' attribute.
-	 * @see #setTraversalName(String)
-	 * @see easyflow.core.CorePackage#getDataLink_TraversalName()
-	 * @model
-	 * @generated
-	 */
-	String getTraversalName();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.DataLink#getTraversalName <em>Traversal Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Traversal Name</em>' attribute.
-	 * @see #getTraversalName()
-	 * @generated
-	 */
-	void setTraversalName(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Grouping Str</b></em>' attribute.

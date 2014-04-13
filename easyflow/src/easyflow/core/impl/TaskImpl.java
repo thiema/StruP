@@ -948,6 +948,7 @@ public class TaskImpl extends EObjectImpl implements Task {
         /**
          * Read DataFormatIn/Out. and set DataPorts
          */
+		String debugDataPort = "in=(";
         short bitPos=0;
         boolean hasIndataPorts=false;
         for (String dataPortField:wtplArray[inDataPortField].split(";"))
@@ -959,8 +960,9 @@ public class TaskImpl extends EObjectImpl implements Task {
         		hasIndataPorts=true;
         	getInDataPorts().add(dataPort);
         	dataPort.setBitPos(bitPos++);
+        	debugDataPort+=dataPort.getName()+", ";
         }
-        
+        debugDataPort+=") out=(";
         bitPos=0;
         boolean hasOutdataPorts=false;
         for (String dataPortField:wtplArray[outDataPortField].split(";"))
@@ -972,8 +974,9 @@ public class TaskImpl extends EObjectImpl implements Task {
         		hasOutdataPorts=true;
         	getOutDataPorts().add(dataPort);
         	dataPort.setBitPos(bitPos++);
+        	debugDataPort+=dataPort.getName()+", ";
         }
-        
+        debugDataPort+=") ";
         /**
          * Read Data(Grouping)Criteria. 
          */
@@ -986,6 +989,8 @@ public class TaskImpl extends EObjectImpl implements Task {
         if (hasIndataPorts)
         {
         	short dataPortNo=0;
+        	
+        	//String[] groupingStrA=groupingStr.split(";");
         	for (String groupingString:groupingStr.split(";"))
         	{
 	        	DataPort dataPort=null;
@@ -1154,7 +1159,7 @@ public class TaskImpl extends EObjectImpl implements Task {
         	TraversalEvent te = getTraversalEvents().get(key);
         	out+="key="+key+" split="+(te.getSplitTask()!=null?te.getSplitTask().getUniqueString():null)+" merge="+(te.getMergeTask()!=null?StringUtils.join(toStringList(te.getMergeTask()), ","):null)+"; ";
         }
-        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet()+" ("+out+")");
+        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet()+" ("+out+") "+debugDataPort);
 	}
 
 	private EList<String> toStringList(EList<Task> tasks)
@@ -1579,8 +1584,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 		EList<DataPort> dataPorts=new BasicEList<DataPort>();
 		for (DataPort dataPort1:dataPorts1)
 			for (DataPort dataPort2:dataPorts2)
+			{
+				logger.trace("getOverlappingDataPorts(): check "+dataPort1.getName()+" vs "+dataPort2.getName());
 				if (dataPort2.isCompatible(dataPort1))
 					dataPorts.add(dataPort1);
+			}
 		return dataPorts;
 					
 	}
@@ -1760,16 +1768,19 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		boolean modeUnion = !intersect;
 		boolean firstTC   = true;
-		if (!getRecords().isEmpty())
-		{
-			logger.warn("getRecords(): record already processed. Return cached value.");
+		//if (!getRecords().isEmpty())
+		//{
+			//logger.warn("getRecords(): record already processed. Return cached value.");
 			//return getRecords();
 			getRecords().clear();
-		}
+		//}
 		EMap<String, TraversalChunk> chunks = new BasicEMap<String,TraversalChunk>();
 		for (String groupingStr:getChunks().keySet())
 		{
-			logger.trace("getRecords(): find records for grouping "+groupingStr+" of task"+getUniqueString());
+			logger.trace("getRecords(): find records for grouping "+groupingStr+" of task"+getUniqueString()
+					+" (is contained="+GlobalVar.getGraphUtil().getMetaData().containsColumn(groupingStr)+")");
+			if (GlobalVar.getGraphUtil().getMetaData().containsColumn(groupingStr))
+			{
 			if (!groupingStr.equals("Record"))
 			{
 				if (modeUnion || firstTC)
@@ -1777,6 +1788,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 					firstTC = false;
 					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
 					{
+						
 						EList<String> recs=GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName());
 						for (String rec : recs)
 						{	
@@ -1855,6 +1867,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 						
 					}
 				}
+			}
+			}
+			else
+			{
+				logger.info("getRecords(): no records can be retrieved for grouping="+groupingStr+", because it is not contained in metadata table.");
 			}
 		}
 		logger.debug("getRecords(): result="+chunks.values().size());

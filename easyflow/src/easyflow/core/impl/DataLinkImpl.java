@@ -14,6 +14,8 @@ import easyflow.core.DataPort;
 import easyflow.core.PreprocessingTask;
 import easyflow.traversal.TraversalChunk;
 
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToChunksMapImpl;
 import java.util.Collection;
 import java.util.Map;
 
@@ -24,12 +26,15 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,7 +46,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getDataPort <em>Data Port</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getId <em>Id</em>}</li>
- *   <li>{@link easyflow.core.impl.DataLinkImpl#getTraversalName <em>Traversal Name</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.core.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
@@ -64,14 +68,14 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	protected DataPort dataPort;
 
 	/**
-	 * The cached value of the '{@link #getChunks() <em>Chunks</em>}' reference list.
+	 * The cached value of the '{@link #getChunks() <em>Chunks</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getChunks()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<TraversalChunk> chunks;
+	protected EMap<String, EList<TraversalChunk>> chunks;
 
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -92,26 +96,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected int id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getTraversalName() <em>Traversal Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTraversalName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TRAVERSAL_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getTraversalName() <em>Traversal Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTraversalName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String traversalName = TRAVERSAL_NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getGroupingStr() <em>Grouping Str</em>}' attribute.
@@ -255,9 +239,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TraversalChunk> getChunks() {
+	public EMap<String, EList<TraversalChunk>> getChunks() {
 		if (chunks == null) {
-			chunks = new EObjectResolvingEList<TraversalChunk>(TraversalChunk.class, this, CorePackage.DATA_LINK__CHUNKS);
+			chunks = new EcoreEMap<String,EList<TraversalChunk>>(MapsPackage.Literals.STRING_TO_CHUNKS_MAP, StringToChunksMapImpl.class, this, CorePackage.DATA_LINK__CHUNKS);
 		}
 		return chunks;
 	}
@@ -281,27 +265,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		id = newId;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DATA_LINK__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getTraversalName() {
-		return traversalName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTraversalName(String newTraversalName) {
-		String oldTraversalName = traversalName;
-		traversalName = newTraversalName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DATA_LINK__TRAVERSAL_NAME, oldTraversalName, traversalName));
 	}
 
 	/**
@@ -432,17 +395,30 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case CorePackage.DATA_LINK__CHUNKS:
+				return ((InternalEList<?>)getChunks()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CorePackage.DATA_LINK__DATA_PORT:
 				if (resolve) return getDataPort();
 				return basicGetDataPort();
 			case CorePackage.DATA_LINK__CHUNKS:
-				return getChunks();
+				if (coreType) return getChunks();
+				else return getChunks().map();
 			case CorePackage.DATA_LINK__ID:
 				return getId();
-			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
-				return getTraversalName();
 			case CorePackage.DATA_LINK__GROUPING_STR:
 				return getGroupingStr();
 			case CorePackage.DATA_LINK__PARENT_GROUPING_STR:
@@ -471,14 +447,10 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				setDataPort((DataPort)newValue);
 				return;
 			case CorePackage.DATA_LINK__CHUNKS:
-				getChunks().clear();
-				getChunks().addAll((Collection<? extends TraversalChunk>)newValue);
+				((EStructuralFeature.Setting)getChunks()).set(newValue);
 				return;
 			case CorePackage.DATA_LINK__ID:
 				setId((Integer)newValue);
-				return;
-			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
-				setTraversalName((String)newValue);
 				return;
 			case CorePackage.DATA_LINK__GROUPING_STR:
 				setGroupingStr((String)newValue);
@@ -517,9 +489,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case CorePackage.DATA_LINK__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
-				setTraversalName(TRAVERSAL_NAME_EDEFAULT);
-				return;
 			case CorePackage.DATA_LINK__GROUPING_STR:
 				setGroupingStr(GROUPING_STR_EDEFAULT);
 				return;
@@ -553,8 +522,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return chunks != null && !chunks.isEmpty();
 			case CorePackage.DATA_LINK__ID:
 				return id != ID_EDEFAULT;
-			case CorePackage.DATA_LINK__TRAVERSAL_NAME:
-				return TRAVERSAL_NAME_EDEFAULT == null ? traversalName != null : !TRAVERSAL_NAME_EDEFAULT.equals(traversalName);
 			case CorePackage.DATA_LINK__GROUPING_STR:
 				return GROUPING_STR_EDEFAULT == null ? groupingStr != null : !GROUPING_STR_EDEFAULT.equals(groupingStr);
 			case CorePackage.DATA_LINK__PARENT_GROUPING_STR:
@@ -581,8 +548,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
-		result.append(", traversalName: ");
-		result.append(traversalName);
 		result.append(", groupingStr: ");
 		result.append(groupingStr);
 		result.append(", parentGroupingStr: ");

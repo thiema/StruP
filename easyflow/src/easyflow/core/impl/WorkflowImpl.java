@@ -913,11 +913,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			getGraphUtil().getCopiedCells().clear();
 			getGraphUtil().getCurrentSubGraphs().clear();
 			getGraphUtil().setDefaultRootCell(null);
-			getGraphUtil().getDepricatedTasks().clear();
 			getGraphUtil().setMetaData(null);
 			getGraphUtil().getMostProcessedTasks().clear();
 			getGraphUtil().getNewTraversalEvents().clear();
-			//getGraphUtil().getProcessedEdges().clear();
+			getGraphUtil().getDeprecatedEdges().clear();
 			//getGraphUtil().getProcessedEdgesCopyGraph().clear();
 			getGraphUtil().getTraversalEvents().clear();
 			getGraphUtil().getUtilityTaskCells().clear();
@@ -1328,7 +1327,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				Task task=it.next();
 				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
 					continue;
-				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" first dataport grouping="+task.getInDataPorts().get(0).getGroupingCriteria().size());
+					
+				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" #in="+(task.getInDataPorts().size())+" "
+						+" first dataports first grouping="+task.getInDataPorts().get(0).getGroupingCriteria().get(0).getId());
 				if (!task.isUtil()) 
 				{
 					Object target=getGraphUtil().getCells().get(task.getUniqueString());
@@ -1459,12 +1460,13 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		// get parents as defined in the workflow template
 		EList<ParentTaskResult> results = getFixedParentTasksFor(task);
+		logger.debug("getParentTasksFor(): obtained "+results.size()+" fixed parents");
 		if (allowGenericParents)
 		{
 			// get parents which cover at least one port
 			results.addAll(getParentTasksFor(task, getTasksFromParentTaskList(results)));
 		}
-
+		logger.trace("getParentTasksFor(): obtained "+results.size()+" fixed/generic parents");
 		for (ParentTaskResult result:results)
 		{
 			logger.debug(result.getParentTask().getUniqueString()
@@ -1626,6 +1628,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		EList<Task> tasks = new BasicEList<Task>();
 		for (ParentTaskResult parentTaskResult:results)
 			tasks.add(parentTaskResult.getParentTask());
+		logger.trace("getTasksFromParentTaskList(): "+tasks.size()+" parents found in parent task list.");
 		return tasks;
 	}
 	
@@ -1637,11 +1640,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		while (it.hasNext())
 		{
+			
 			Task parent = it.next();
 			EList<DataPort> overlappingDataPorts = task
 					.getOverlappingDataPorts(task.getInDataPorts(),
 							parent.getOutDataPorts());
-			
+			logger.debug("getFixedParentTasksFor(): check fixed parent "+parent.getUniqueString()+" with overlap="+overlappingDataPorts.size());
 			if (!overlappingDataPorts.isEmpty()) {
 				ParentTaskResult parentTaskResult = CoreFactory.eINSTANCE.createParentTaskResult();
 				parentTaskResult.setParentTask(parent);
@@ -1659,18 +1663,22 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	private EList<ParentTaskResult> getParentTasksFor(Task task, EList<Task> resolvedTasks)
 	{
 		EList<ParentTaskResult> results = new BasicEList<ParentTaskResult>();
+		logger.trace("getParentTasksFor(): check last tasks list of size="+getLastTasks().size());
 		ListIterator<Task> it = getLastTasks().listIterator(getLastTasks().size());
 		ParentTaskResult lastResult = null;
 		while (it.hasPrevious())
 		{
 			Task lastTask = it.previous();
+			logger.trace("getParentTasksFor(): test last task="+lastTask.getUniqueString());
 			if ((resolvedTasks == null || resolvedTasks.isEmpty())  || 
 					(resolvedTasks != null && !resolvedTasks.contains(lastTask)))
 			{
+				logger.trace("getParentTasksFor(): unresolved task detected out="+lastTask.getOutDataPorts().size()+" in="+task.getInDataPorts().size()); 
 				EList<DataPort> overlappingDataPorts = task
 						.getOverlappingDataPorts(task.getInDataPorts(), lastTask.getOutDataPorts());
 				if (!overlappingDataPorts.isEmpty())
 				{
+					logger.trace("getParentTasksFor(): "+overlappingDataPorts.size()+" overlapping ports found");
 					ParentTaskResult parentTaskResult = CoreFactory.eINSTANCE.createParentTaskResult();
 					parentTaskResult.setParentTask(lastTask);
 					if (lastTask.getJexlString()!=null && !lastTask.getJexlString().equals(""))
@@ -1687,6 +1695,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				}
 			}
 		}
+		
 		if (lastResult != null && (lastResult.getCondition() != null && !lastResult.getCondition().equals("")))
 			lastResult.setCondition(null);
 		

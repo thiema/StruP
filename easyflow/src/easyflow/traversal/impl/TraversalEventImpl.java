@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getMergeTask <em>Merge Task</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getSplitTask <em>Split Task</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getParentTask <em>Parent Task</em>}</li>
+ *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getMergeTasksParamCrit <em>Merge Tasks Param Crit</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getParentCells <em>Parent Cells</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getLogger <em>Logger</em>}</li>
@@ -78,6 +79,16 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 	 * @ordered
 	 */
 	protected EList<Task> parentTask;
+
+	/**
+	 * The cached value of the '{@link #getMergeTasksParamCrit() <em>Merge Tasks Param Crit</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMergeTasksParamCrit()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Task> mergeTasksParamCrit;
 
 	/**
 	 * The cached value of the '{@link #getParentCells() <em>Parent Cells</em>}' attribute list.
@@ -218,6 +229,18 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 			parentTask = new EObjectResolvingEList<Task>(Task.class, this, TraversalPackage.TRAVERSAL_EVENT__PARENT_TASK);
 		}
 		return parentTask;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Task> getMergeTasksParamCrit() {
+		if (mergeTasksParamCrit == null) {
+			mergeTasksParamCrit = new EObjectResolvingEList<Task>(Task.class, this, TraversalPackage.TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT);
+		}
+		return mergeTasksParamCrit;
 	}
 
 	/**
@@ -410,6 +433,8 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 				return basicGetSplitTask();
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_TASK:
 				return getParentTask();
+			case TraversalPackage.TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT:
+				return getMergeTasksParamCrit();
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_CELLS:
 				return getParentCells();
 			case TraversalPackage.TRAVERSAL_EVENT__TRAVERSAL_CRITERION:
@@ -442,6 +467,10 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_TASK:
 				getParentTask().clear();
 				getParentTask().addAll((Collection<? extends Task>)newValue);
+				return;
+			case TraversalPackage.TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT:
+				getMergeTasksParamCrit().clear();
+				getMergeTasksParamCrit().addAll((Collection<? extends Task>)newValue);
 				return;
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_CELLS:
 				getParentCells().clear();
@@ -477,6 +506,9 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_TASK:
 				getParentTask().clear();
 				return;
+			case TraversalPackage.TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT:
+				getMergeTasksParamCrit().clear();
+				return;
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_CELLS:
 				getParentCells().clear();
 				return;
@@ -507,6 +539,8 @@ public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 				return splitTask != null;
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_TASK:
 				return parentTask != null && !parentTask.isEmpty();
+			case TraversalPackage.TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT:
+				return mergeTasksParamCrit != null && !mergeTasksParamCrit.isEmpty();
 			case TraversalPackage.TRAVERSAL_EVENT__PARENT_CELLS:
 				return parentCells != null && !parentCells.isEmpty();
 			case TraversalPackage.TRAVERSAL_EVENT__TRAVERSAL_CRITERION:

@@ -117,13 +117,22 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_EVENT__PARENT_TASK = 2;
 
 	/**
+	 * The feature id for the '<em><b>Merge Tasks Param Crit</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT = 3;
+
+	/**
 	 * The feature id for the '<em><b>Parent Cells</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT__PARENT_CELLS = 3;
+	int TRAVERSAL_EVENT__PARENT_CELLS = 4;
 
 	/**
 	 * The feature id for the '<em><b>Traversal Criterion</b></em>' reference.
@@ -132,7 +141,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT__TRAVERSAL_CRITERION = 4;
+	int TRAVERSAL_EVENT__TRAVERSAL_CRITERION = 5;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -141,7 +150,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT__LOGGER = 5;
+	int TRAVERSAL_EVENT__LOGGER = 6;
 
 	/**
 	 * The feature id for the '<em><b>Meta Data</b></em>' attribute.
@@ -150,7 +159,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT__META_DATA = 6;
+	int TRAVERSAL_EVENT__META_DATA = 7;
 
 	/**
 	 * The number of structural features of the '<em>Event</em>' class.
@@ -159,7 +168,7 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_FEATURE_COUNT = 7;
+	int TRAVERSAL_EVENT_FEATURE_COUNT = 8;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -628,6 +637,17 @@ public interface TraversalPackage extends EPackage {
 	EReference getTraversalEvent_ParentTask();
 
 	/**
+	 * Returns the meta object for the reference list '{@link easyflow.traversal.TraversalEvent#getMergeTasksParamCrit <em>Merge Tasks Param Crit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Merge Tasks Param Crit</em>'.
+	 * @see easyflow.traversal.TraversalEvent#getMergeTasksParamCrit()
+	 * @see #getTraversalEvent()
+	 * @generated
+	 */
+	EReference getTraversalEvent_MergeTasksParamCrit();
+
+	/**
 	 * Returns the meta object for the attribute list '{@link easyflow.traversal.TraversalEvent#getParentCells <em>Parent Cells</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -920,6 +940,14 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TRAVERSAL_EVENT__PARENT_TASK = eINSTANCE.getTraversalEvent_ParentTask();
+
+		/**
+		 * The meta object literal for the '<em><b>Merge Tasks Param Crit</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRAVERSAL_EVENT__MERGE_TASKS_PARAM_CRIT = eINSTANCE.getTraversalEvent_MergeTasksParamCrit();
 
 		/**
 		 * The meta object literal for the '<em><b>Parent Cells</b></em>' attribute list feature.

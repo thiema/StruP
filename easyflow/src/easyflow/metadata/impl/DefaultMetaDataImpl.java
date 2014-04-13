@@ -12,31 +12,21 @@ import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.GroupingInstanceList;
 import easyflow.metadata.MetadataFactory;
 import easyflow.metadata.MetadataPackage;
-import easyflow.traversal.GroupingCriterion;
+
 import easyflow.util.maps.MapsPackage;
-import easyflow.core.CoreFactory;
-import easyflow.core.CorePackage;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GlobalVarMetaData;
-
-import java.util.Collection;
-import easyflow.ui.DefaultProject;
 import easyflow.util.maps.impl.StringToGroupingInstanceListMapImpl;
-import easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl;
 import easyflow.util.maps.impl.StringToGroupingMapImpl;
 
+import easyflow.util.maps.impl.StringToStringMapImpl;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
@@ -44,7 +34,6 @@ import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
@@ -57,7 +46,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -72,6 +60,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
+ *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getAliases <em>Aliases</em>}</li>
  * </ul>
  * </p>
  *
@@ -137,6 +126,16 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @ordered
 	 */
 	protected EMap<String, GroupingInstanceList> groupingInstances;
+
+	/**
+	 * The cached value of the '{@link #getAliases() <em>Aliases</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAliases()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> aliases;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -216,6 +215,18 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, String> getAliases() {
+		if (aliases == null) {
+			aliases = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__ALIASES);
+		}
+		return aliases;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMap<String, Grouping> getGroupings() {
 		if (groupings == null) {
 			groupings = new EcoreEMap<String,Grouping>(MapsPackage.Literals.STRING_TO_GROUPING_MAP, StringToGroupingMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__GROUPINGS);
@@ -274,8 +285,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 */
 	public void readMetaData() {
 
-		Map<String, String> aliases = new HashMap<String, String>();
-		aliases.put("ID", "Record");
+		//Map<String, String> aliases = new HashMap<String, String>();
+		getAliases().put("ID", "Record");
 		
         //Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
         BufferedReader bufferedReader = getReader();
@@ -309,7 +320,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			        {
 			        	if (lina.length>colNames.get(colName1))
 			        	{
-			        	String alias1 = aliases.containsKey(colName1) ? aliases.get(colName1) : colName1;
+			        	String alias1 = getAliases().containsKey(colName1) ? getAliases().get(colName1) : colName1;
 			        	// fill groupingInsances map
 			        	GroupingInstanceList groupingInstanceList = null;
 			        	if (getGroupingInstances().containsKey(alias1))
@@ -436,7 +447,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 */
 	public EList<String> getRecordsBy(String groupingStr, String instanceStr) {
 		EList<String> records = new BasicEList<String>();
-		if (groupingStr.equals("Record"))
+		if (groupingStr.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
 		{
 			if(!GlobalVarMetaData.getMetaDataTableRow(instanceStr).isEmpty())
 				records.add(instanceStr);
@@ -464,6 +475,38 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	}
 	
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean containsColumn(String column) {
+		//logger.trace(getAliases()+" "+column+" "+getAliases().containsValue(column)+" "+GlobalVarMetaData.getMetaDataColHeader().keySet());
+		// special case for record
+		if (column.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
+			return true;
+		
+		// check the aliases
+		if (getAliases().containsValue(column))
+			for (String alias : getAliases().keySet())
+			{
+				//logger.trace(getAliases().get(alias)+" vs "+column);
+				if (getAliases().get(alias).equals(column))
+					return GlobalVarMetaData.getMetaDataColHeader().containsKey(alias);
+			}
+		// otherwise check the "pure" column header
+		return GlobalVarMetaData.getMetaDataColHeader().containsKey(column);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean containsRow(String row) {
+		return GlobalVarMetaData.getMetaDataRowHeader().containsKey(row);
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -518,6 +561,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return ((InternalEList<?>)getGroupings()).basicRemove(otherEnd, msgs);
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				return ((InternalEList<?>)getGroupingInstances()).basicRemove(otherEnd, msgs);
+			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
+				return ((InternalEList<?>)getAliases()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -540,6 +585,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				if (coreType) return getGroupingInstances();
 				else return getGroupingInstances().map();
+			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
+				if (coreType) return getAliases();
+				else return getAliases().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -565,6 +613,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				((EStructuralFeature.Setting)getGroupingInstances()).set(newValue);
 				return;
+			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
+				((EStructuralFeature.Setting)getAliases()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -589,6 +640,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				getGroupingInstances().clear();
 				return;
+			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
+				getAliases().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -609,6 +663,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return groupings != null && !groupings.isEmpty();
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_INSTANCES:
 				return groupingInstances != null && !groupingInstances.isEmpty();
+			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
+				return aliases != null && !aliases.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
