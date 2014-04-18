@@ -626,7 +626,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
 		dataPort.setName(dataPortName);
 		return dataPort;
-		
 	}
 	
 	
@@ -747,10 +746,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		workflow.setMetaData(metaData);
 
 		
-		
-		
-		
-		
 		// processing config
 		if (jsonObject.has("processing"))
 		{
@@ -763,7 +758,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				workflow.getProcessingConfig().put(key, processingCfg.getString(key));
 			}
 		}
-		
 		
 		
 		// catalog
@@ -821,9 +815,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			GlobalConfig.getToolConfig().put("write_default_value_to_command_line", "0");
 		//if (toolCfg.has(""))
 			//GlobalConfig.getToolConfig().put("", toolCfg.get(""));
-		
-		
-		
 		
 		
 		// ####### READ TOOL DEFINITIONS ########
@@ -1117,6 +1108,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public void setWorker(EasyFlowOverallWorker worker) {
+		logger.debug(getActiveWorkflow()+" "+worker);
 		getActiveWorkflow().setWorker(worker);
 	}
 

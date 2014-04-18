@@ -234,6 +234,7 @@ public class ComposeWorkflowPanel extends JPanel {
 
 	public void setDefaultProject(DefaultProject defaultProject) {
 		this.defaultProject = defaultProject;
+		logger.debug(defaultProject.getActiveWorkflow());
 		getWorker().setDefaultProject(defaultProject);
 		getDefaultProject().setWorker(getWorker());
 	}

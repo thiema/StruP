@@ -1,5 +1,5 @@
-Record	ReadGroup	Sample	Group	Library	InputFiles	Platform
-ID1	RG1	S1	G1	L1	fileA_1,fileA_2,fileA_3	P1
-#ID2	RG2	S1	G1	L1	fileB_1,fileB_2,fileB_3	P2
-ID3	RG1	S2	G2	L2	[fileC]	P3
+Record	ReadGroup	Sample	Group	Library	InputFiles	Platform	Cond
+ID1	RG1	S1	G1	L1	fileA_1,fileA_2,fileA_3	P1	C1
+ID2	RG2	S1	G1	L1	fileB_1,fileB_2,fileB_3	P2
+#ID3	RG1	S2	G2	L2	[fileC]	P3
 #ID4	RG2	S2	G1	L3	file4

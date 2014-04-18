@@ -111,8 +111,10 @@ public class EasyFlowToolBar extends JToolBar
 		File repoFile = new File(repositoryFS);
 		if (!repoFile.isAbsolute())
 		{
+			// this should be the case when started from within eclipse
 			if (repoSrcFile.exists())
 				repositoryFS=repositoryFS_src;
+			// from command line
 			else if (repoBinFile.exists())
 				repositoryFS=repositoryFS_bin;
 			else
@@ -165,7 +167,7 @@ public class EasyFlowToolBar extends JToolBar
 		getGraphUtil().setGraph((EasyFlowGraph) editor.getGraphComponent().getGraph());
 		GlobalVar.setUtil(getGraphUtil());
 		GlobalVar.getDefaultProject().setGraphUtil(getGraphUtil());
-		logger.debug("graph hash="+getGraphUtil().getGraph().hashCode());
+		//logger.debug("graph hash="+getGraphUtil().getGraph().hashCode());
 		//getDefaultProject().init();
 		//editor.getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
 		//setComposeWorkflowPanel(editor.getComposeWorkflowPanel());
@@ -177,10 +179,11 @@ public class EasyFlowToolBar extends JToolBar
 			getComposeWorkflowPanel().getRunButton().setEnabled(true);
 			getComposeWorkflowPanel().getNextButton().setEnabled(true);
 		}
-		
+		logger.debug(editor.hashCode()+" "+this.editor.hashCode());
 		btnConfigureProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ConfigureProjectDialog(editor);
+				logger.debug("configure dialog isFromJar="+isFromJar);
 			}
 		});
 		
@@ -237,10 +240,13 @@ public class EasyFlowToolBar extends JToolBar
 				//setDefaultProject(GlobalVar.getDefaultProject());
 				//GlobalVar.getDefaultProject().setFromJar(isFromJar);
 
+				
 				mxGraph g=getGraphUtil().getGraph();
-				logger.debug("graph hash="+g.hashCode());
+				
 				getDefaultProject().init();
-				getEditor().getComposeWorkflowPanel().setDefaultProject(GlobalVar.getDefaultProject());
+				//logger.debug(getDefaultProject().getActiveWorkflow().hashCode()+" "+GlobalVar.getDefaultProject()+" "+getDefaultProject());
+				
+				getEditor().getComposeWorkflowPanel().setDefaultProject(getDefaultProject());
 				setComposeWorkflowPanel(getEditor().getComposeWorkflowPanel());
 				
 				getComposeWorkflowPanel().getRunButton().setEnabled(true);
@@ -777,6 +783,7 @@ public class EasyFlowToolBar extends JToolBar
 			dialog.setModal(true);
 			dialog.setVisible(true);
 		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			logger.debug("action performed");

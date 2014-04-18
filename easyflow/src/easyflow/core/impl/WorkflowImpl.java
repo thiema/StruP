@@ -1472,7 +1472,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			logger.debug(result.getParentTask().getUniqueString()
 					+" condition="+result.getCondition()
 					+" potential circuments="+result.getPotentialCircumventingTasks()
-					+" ports="    +result.getCoveredPorts()
+					+" #ports="    +result.getCoveredPorts().size()
 					+" ");
 		}
 		
@@ -1506,21 +1506,20 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		}
 		if (i>0)
 		{
-		EList<Integer[]> powerSet = enumerateIntPowerSet(i);
-		
-		for (Integer[] conditions: powerSet)
-		{
-			EList<String> conditionSet = new BasicEList<String>();
-			EList<String> taskSet = new BasicEList<String>();
-			for (int j:conditions)
-			{
-				conditionSet.add(uconds[j]);
-				taskSet.add(ctasks[j]);
-			}
-			// find parents which circumvent the given set of conditions
-			tasks.addAll(getBestFittingParentSet(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet));
+			EList<Integer[]> powerSet = enumerateIntPowerSet(i);
 			
-		}
+			for (Integer[] conditions: powerSet)
+			{
+				EList<String> conditionSet = new BasicEList<String>();
+				EList<String> taskSet = new BasicEList<String>();
+				for (int j:conditions)
+				{
+					conditionSet.add(uconds[j]);
+					taskSet.add(ctasks[j]);
+				}
+				// find parents which circumvent the given set of conditions
+				tasks.addAll(getBestFittingParentSet(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet));
+			}
 		}
 		return tasks;
 	}

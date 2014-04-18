@@ -1017,22 +1017,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 			        	
 			        	TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
 			        	traversalCriterion.setDataPort(dataPort);
-			        	//dataPort.getGroupingCriteria().add(traversalCriterion);
-			        	//GroupingCriterion traversalCriterion=TraversalFactory.eINSTANCE.createGroupingCriterion();
 			        	String[] group=tmp[i].split(":");
 			        	if (group.length>1)	traversalCriterion.setMode(group[1]);
 			        	else traversalCriterion.setMode(defaultMode); 
-			        	//GroupingCriterion groupingCriterion=CoreFactory.eINSTANCE.createGroupingCriterion();
+
 			        	TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
-			        	//TraversalChunk traversalChunk=CoreFactory.eINSTANCE.createTraversalChunk();
 			        	traversalCriterion.setId(group[0]);
 			        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion.getId());
-			        	//traversalEvent.setSplitTask(this);
+
 			        	TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
-			        	//traversalOperation.setName();
 			        	traversalOperation.setType("grouping");
 			        	traversalCriterion.setOperation(traversalOperation);
-			        	//traversalCriterion.setChunkSource();
+
 			        	traversalEvent.setTraversalCriterion(traversalCriterion);
 			        	traversalEvent.setSplitTask(this);
 			        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" ");
@@ -1159,7 +1155,7 @@ public class TaskImpl extends EObjectImpl implements Task {
         	TraversalEvent te = getTraversalEvents().get(key);
         	out+="key="+key+" split="+(te.getSplitTask()!=null?te.getSplitTask().getUniqueString():null)+" merge="+(te.getMergeTask()!=null?StringUtils.join(toStringList(te.getMergeTask()), ","):null)+"; ";
         }
-        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet()+" ("+out+") "+debugDataPort);
+        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet()+" ("+out+") "+debugDataPort+" jexl exp='"+getJexlString()+"'");
 	}
 
 	private EList<String> toStringList(EList<Task> tasks)
@@ -1192,7 +1188,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			EList<String> jexlStrings, boolean isInverse) {
 		
 		EMap<String, Object> map=createMetaDataMapForJexl(groupingInstances, forGrouping);
-		
+		if (jexlString!=null)
 		for (String jexlString:jexlStrings)
 		{
 			boolean shallProcess=shallProcess(evaluateJexl(map, jexlString));
@@ -1277,7 +1273,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		DefaultMetaData metaData=GlobalVar.getGraphUtil().getMetaData();
 		for (GroupingInstance groupingInstance:groupingInstances)
 		{
-			EList<GroupingInstance> recordInstances=metaData.getInstances(groupingInstance, "Record");
+			EList<GroupingInstance> recordInstances = metaData.getInstances(groupingInstance, 
+					GlobalVar.TRAVERSAL_CRITERION_RECORD);
 			for (GroupingInstance recordInstance:recordInstances)
 				for (Entry<String, Object> entry:metaData.getRecord(recordInstance).entrySet())
 				{
@@ -1964,6 +1961,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	private URI convertToURI(Object value)
 	{
 		URI uriValue = null;
+		if (value instanceof TraversalChunk)
+			value = ((TraversalChunk)value).getName();
+		
 		if (value instanceof URI)
 			uriValue = (URI) value;
 		else if (value instanceof String)
