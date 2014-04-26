@@ -1,7 +1,7 @@
 # clone repository, e.g. using https
 git clone https://thiema@bitbucket.org/thiema/easyflow.git git/
 # using eclipse
-import->from git
+import->from git with "as new java project wizard"
 # resolve deps using ivy
 # 
 # fix build path (configure src dir, add external jars)

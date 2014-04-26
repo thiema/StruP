@@ -684,15 +684,15 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws FileNotFoundException 
 	 * @generated not
 	 */
 	public boolean readConfiguration() {
 		boolean rc = true;
 		// general (project) config
-		
+		logger.debug(jsonObject);
+		logger.debug(jsonObject.entrySet());
 		JSONObject projectCfg=jsonObject.getJSONObject("project");
-		//logger.debug(jsonObject.entrySet());
+		
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
@@ -921,7 +921,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			String baseName = URIUtil.getDirname(path);
 			if (baseName != null)
 				setBaseURI(URIUtil.createURI(baseName, null));
-			String fileName = URIUtil.getFilename(path);  
+			String fileName = URIUtil.getFilename(path);
+			logger.debug("Filename="+fileName+" dir="+baseName);
 			if (fileName == null)
 				setConfigSource(URIUtil.addToURI(getBaseURI(), DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT));
 			else
@@ -935,9 +936,20 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 
+	public boolean init(EasyFlowGraph graph) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+	*/
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean init() {
+	public boolean init(EasyFlowGraph graph) {
 
 		
 		clearWorkflows();
@@ -947,11 +959,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		if (getGraphUtil() == null)
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
-		
+		if (graph != null) //&& getGraphUtil().getGraph() == null)
+			getGraphUtil().setGraph(graph);
         GlobalVar.setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraphUtil(getGraphUtil());
 		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
-		logger.debug(getGraphUtil().getGraph().hashCode());
 		getActiveWorkflow().readWorkfowTemplate();
 		
 		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());

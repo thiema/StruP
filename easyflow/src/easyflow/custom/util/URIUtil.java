@@ -177,10 +177,14 @@ public class URIUtil {
 	public static String getDirname(String path)
 	{
 		File file = new File(path);
+		//file = file.getAbsoluteFile();
 		if (file.isDirectory())
 			return path;
-		else 
+		else
+		{
+			logger.debug(file.getAbsolutePath()+" "+file.getParent());
 			return file.getParent();
+		}
 	}
 	
 	public static String getFilename(String path)

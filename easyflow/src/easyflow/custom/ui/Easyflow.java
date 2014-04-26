@@ -40,7 +40,7 @@ public class Easyflow {
 			if (!isFromJar)
 				defaultProject.setFromJar(false);
 			try {
-				defaultProject.init();
+				defaultProject.init(null);
 				defaultProject.generateAbstractGraph();
 				defaultProject.resolveTraversalCriteria();
 				defaultProject.applyGroupingCriteria();

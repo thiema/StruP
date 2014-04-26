@@ -63,6 +63,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 
 		final EasyFlowGraph graph = (EasyFlowGraph) graphComponent.getGraph();
 		// logger.debug(((EasyFlowGraph)getGraphComponent().getGraph()).hashCode());
+		
 		setStyleSheet(graph.getStylesheet(), getGraphComponent().getViewport().getBackground());
 		//setStyleSheet(graph.getStylesheet(), null);
 		setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));

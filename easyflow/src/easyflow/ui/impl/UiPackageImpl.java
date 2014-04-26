@@ -414,7 +414,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		addEOperation(iProjectEClass, null, "applyMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getEasyFlowGraph(), "graph", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
 

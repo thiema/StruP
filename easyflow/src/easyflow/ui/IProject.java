@@ -16,6 +16,7 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
+import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import javax.xml.validation.Schema;
@@ -48,17 +49,6 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean init();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
@@ -85,6 +75,17 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	void applyMetaData();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model graphDataType="easyflow.EasyFlowGraph"
+	 * @generated
+	 */
+	boolean init(EasyFlowGraph graph);
 
 	/**
 	 * <!-- begin-user-doc -->
