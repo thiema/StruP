@@ -1218,19 +1218,34 @@ public class UtilImpl extends EObjectImpl implements Util {
 							//getGraph().getView().getVisibleTerminal(edgeIn, true);
 					try {
 						DataLink dataLink=loadDataLink(edgeIn);
-						logger.debug("applyTraversalEvent(): chkdatalink for "
+						logger.debug("applyTraversalEvent(): check datalink for "
 								+"parent="+getSourceTask((mxCell) edgeIn).getUniqueString()
 								+" child="+getTargetTask((mxCell) edgeIn).getUniqueString()
-								+" link:  group="+dataLink.getGroupingStr()+" port="+dataLink.getDataPort().getName());
+								+" link: group="+dataLink.getGroupingStr()
+								+" port="+dataLink.getDataPort().getName()
+								+" conditional="+!dataLink.isUnconditional()
+								+" te parents="+getTaskStringList(traversalEvent.getParentTask())
+								);
 						boolean shallProcess=true;
-						if (traversalEvent.isGrouping() && dataLink.getCondition()!=null)
-							shallProcess=task.shallProcess(groupingInstances, groupingStr, 
-									dataLink.getCondition().getForbidden(), true);
+						if (traversalEvent.isGrouping() && !dataLink.isUnconditional())
+							shallProcess=
+								(task.shallProcess(groupingInstances, groupingStr, 
+									dataLink.getCondition().getForbidden(), true)
+									
+								/*&& shallProcess(getTaskStringList(traversalEvent.getParentTask()), 
+									groupingInstances, groupingStr, 
+									dataLink.getCondition().getForbidden(), true)*/
+									&& !dataLink.getCondition().getCircumventingParents().
+										containsAll(getTaskStringList(traversalEvent.getParentTask()))
+									);
+						
 						logger.debug("applyTraversalEvent(): check creation ("
-								+dataLink.isUnconditional()+", "
-								+shallProcess+") of edge (to parent="
+								+" conditional="+!dataLink.isUnconditional()
+								+", shallProcess="+shallProcess+" "
+								+") of edge (to parent="
 								+getSourceTask((mxCell) edgeIn).getUniqueString()+") mode="
 								+traversalEvent.getTraversalCriterion().getMode());
+						
 						if (dataLink.isUnconditional() || shallProcess)
 							applySplittingCriterion((mxICell) vertex,
 								(mxICell) parentCell, edgeIn, groupingStr, 
@@ -1248,18 +1263,19 @@ public class UtilImpl extends EObjectImpl implements Util {
 					}
 				}
 
-				// if (traversalEvent.getMergeTask().contains(task))
 				logger.trace("applyTraversalEvent():"
 						+" mergeTasks="     +getTaskStringList(traversalEvent.getMergeTask())
 						+" size="           +traversalEvent.getMergeTask().size()
 						+" previousTaskStr="+task.getPreviousTaskStr()
 						+" ("               +task.getUniqueString()+", "
 						                    +getTasks().get(task.getPreviousTaskStr()).getUniqueString()+")");
+
 				if (containsTask(traversalEvent.getMergeTask(),
-						getTasks().get(task.getPreviousTaskStr())))
+						getTasks().get(task.getPreviousTaskStr()))
+					)
 				{
 					mergeCells.put(taskString, (mxICell) vertex);
-					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged");
+					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged (for "+task.getUniqueString()+")");
 				}
 				return true;
 			}
@@ -1321,6 +1337,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	
 								if (!getDeprecatedEdges().contains(edge))
 									getDeprecatedEdges().add((mxICell) edge);
+								logger.debug("applyTraversalEvent(): insert edge "+getSourceTask((mxCell) edge).getUniqueString()+"->"+loadTask(cell).getUniqueString());
 								getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), cell, newDataLink);
 							}
 						}
@@ -1438,6 +1455,201 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return returnCell.size() > 0 ? returnCell.get(0) : null;
 	}
 
+	
+	private void applySplittingCriterion(mxICell cell, mxICell parentCell,
+			Object edgeIn, final String groupingStr, String mode,
+			boolean isGrouping) throws TaskNotFoundException,
+			DataLinkNotFoundException, TraversalChunkNotFoundException {
+		
+		boolean modeRequireAll = true;
+		// boolean modeUseFirstMatchingGroupingStr = true;
+
+		boolean requireAllChunks = false;
+		boolean requireAllInstances = true;
+
+		if (mode.equals("batch")) {
+			// batch
+			requireAllChunks = true;
+			requireAllInstances = false;
+			modeRequireAll = false;
+		} else {
+			// when task is in joint mode
+			requireAllChunks = false;
+			requireAllInstances = true;
+			modeRequireAll = true;
+		}
+
+		// String currentParentGroupingStr = "";
+		DataLink dataLink = null;
+
+		// setup the chunks
+		Task parentTask = loadTask((parentCell));
+		Task task = loadTask(cell);
+
+		logger.trace("applySplittingCriterion(): test parentTask="
+				+ parentTask.getUniqueString() + " for "
+				+ task.getUniqueString() + " #(parents chunks)="
+				+ parentTask.getChunks().size());
+
+		if (parentTask.isRoot()) {
+			logger.debug("applySplittingCriterion(): insert edge: "
+					+ parentTask.getUniqueString() + " ->"
+					+ task.getUniqueString()+" case=root");
+
+			getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
+					createDataLink(edgeIn, task, groupingStr, null));
+		} else {
+			if (!isGrouping
+					|| !task.getOverlappingRecordsProvidedBy(parentTask)
+							.isEmpty())
+			{
+				logger.debug("applySplittingCriterion(): insert edge: "
+						+ parentTask.getUniqueString() + " ->"
+						+ task.getUniqueString()+" case=non root");
+				getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
+						createDataLink(edgeIn, task, groupingStr, null));
+			}
+		}
+	}
+
+	private void applyMergingCriterion(mxICell cell, mxICell previousCell,
+			String groupingStr, EList<GroupingInstance> groupingInstances
+
+	) throws TaskNotFoundException, DataLinkNotFoundException,
+			TraversalChunkNotFoundException {
+		logger.trace("applyMergingCriterion(): "
+				+ getGraph().getOutgoingEdges(cell).length + " "
+				+ getGraph().getVertices(cell).size());
+
+		Task task = loadTask(cell);
+		// TraversalEvent traversalEvent =
+		// task.getTraversalEvents().get(groupingStr);
+		// get all child cells
+		for (Object edgeOut : getGraph().getOutgoingEdges(previousCell)) {
+			Object childCell = getTarget((mxCell) edgeOut);
+
+			Task childTask = loadTask(((mxICell) childCell));
+			DataLink outDataLink = loadDataLink(edgeOut);
+			logger.trace("applyMergingCriterion(): " + "test edge: "
+					+ task.getUniqueString()
+					// +" (cell:"+cell+") "
+					+ "->" + childTask.getUniqueString()
+			// +"(cell"+childCell+")"
+			);
+			// logger.debug(childTask.getCircumventingParents());
+
+			if (outDataLink != null) {
+				logger.debug("applyMergingCriterion(): " 
+						+ groupingStr + " instances=(" + list2String(groupingInstances, "")+")"
+						+ " shallProcess1="+((!outDataLink.isUnconditional()) ?
+										(
+										getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))
+										.shallProcess(groupingInstances, groupingStr, 
+												outDataLink.getCondition().getForbidden(),
+												true)
+										+"/"+
+										childTask
+										.shallProcess(
+												groupingInstances,groupingStr,
+												(outDataLink.getCondition() != null ? outDataLink
+														.getCondition().getForbidden()
+														: null), true)
+										+"/"+
+											shallProcess(outDataLink.getCondition().getCircumventingParents(), 
+													groupingInstances, groupingStr, 
+													outDataLink.getCondition().getForbidden(), 
+													true)
+										)
+									: "NA"
+									
+									)
+									
+						//+ " shallProcess="+task.shallProcess(groupingInstances, groupingStr)
+						+ " shallProcess (child)="+childTask.shallProcess(groupingInstances,
+								groupingStr)
+						+ " metadata="+!getMetaData().containsColumn(groupingStr)
+						+ " cond="+outDataLink.getCondition()
+						);
+				if (
+				// test for conditional edges
+						(outDataLink.isUnconditional() ||
+						(outDataLink.getCondition() != null &&
+						
+							(!outDataLink.getCondition().getCircumventingParents().isEmpty() &&
+									shallProcess(outDataLink.getCondition().getCircumventingParents(), 
+											groupingInstances, groupingStr, 
+											outDataLink.getCondition().getForbidden(), 
+											true) 
+									&&
+
+/*							getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))
+								.shallProcess(groupingInstances, groupingStr, 
+										outDataLink.getCondition().getForbidden(),
+										true)
+								&&*/
+							childTask
+								.shallProcess(
+										groupingInstances,groupingStr,
+										(outDataLink.getCondition() != null ? outDataLink
+												.getCondition().getForbidden()
+												: null), true)
+							)
+						))
+						//&& !getMetaData().containsColumn(groupingStr)
+						//&& task.shallProcess(groupingInstances, groupingStr)
+						&& childTask.shallProcess(groupingInstances, groupingStr)
+				) {
+					DataLink dataLink = createDataLink(edgeOut, childTask,
+							groupingStr, null);
+					if (
+					// getProcessedEdgesCopyGraph().keySet().contains(task.getUniqueString())
+					isEdgeInGraph(task, childTask, dataLink))
+						logger.trace("applyMergingCriterion(): skip inserting edge (already processed)");
+
+					// insert edge from cell to its child cell
+					else {
+						logger.debug("applyMergingCriterion(): "
+								+ "insert edge: " + task.getUniqueString()
+								+ "->" + childTask.getUniqueString() + ")");
+
+						getGraph().insertEdgeEasyFlow(null, null, cell,
+								childCell, dataLink);
+						// getProcessedEdges().put(task.getUniqueString(),
+						// childTask.getUniqueString());
+					}
+				}
+				else
+					logger.debug("applyMergingCriterion(): skip inserting edge due unmatched condition.");
+			} else
+				logger.debug("applyMergingCriterion(): skip inserting edge due datalink null pointer.");
+		}
+	}
+	
+	private boolean shallProcess(EList<String> tasks,
+								EList<GroupingInstance> groupingInstances,
+								String groupingStr,
+								EList<String> jexl,
+								boolean inverse)
+	{
+		
+		boolean rc = false;
+		
+		boolean requireAll = false;
+		//return true if at least one task indicates a valid processing
+		for (String taskStr:tasks)
+		{
+			Task task = getTasks().get(taskStr);
+			rc = task.shallProcess(groupingInstances, groupingStr, 
+				jexl,
+				inverse);
+			logger.trace("shallProcess(): test "+task.getUniqueString()+" groupingStr="+groupingStr+" jexl="+jexl+" inverse="+inverse);
+			if (requireAll && !rc)
+				break;
+		}
+		
+		return rc;
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * apply the traversal criterion to the subgraph copy 
@@ -1484,9 +1696,11 @@ public class UtilImpl extends EObjectImpl implements Util {
 					e.printStackTrace();
 				}
 				String taskString = task.getUniqueString();
-				logger.trace("applyTraversalEventCopyGraph(): check task="+task.getUniqueString()+
-						" group="+groupingStr+
-						" valid="+isValidConversion(task.getChunks(), groupingStr, groupingInstances));
+				logger.trace("applyTraversalEventCopyGraph(): check task="+task.getUniqueString()
+						+" group="+groupingStr
+						+" valid="+isValidConversion(task.getChunks(), groupingStr, groupingInstances)
+						+" inDataLink is uncond="+(inDataLink!=null?inDataLink.isUnconditional():null)
+						);
 				
 				boolean shouldAddCircumventingParents = false;
 				
@@ -1500,6 +1714,14 @@ public class UtilImpl extends EObjectImpl implements Util {
 				
 				if (inDataLink != null && !inDataLink.isUnconditional())
 				{
+					logger.debug("applyTraversalEventCopyGraph(): check conditional edge.  "
+							+" circumventing parents="+inDataLink.getCondition().getCircumventingParents()
+							+" shall process="+getTasks().get(inDataLink.getCondition().getCircumventingParents().get(0)).
+							shallProcess(groupingInstances, groupingStr, 
+									inDataLink.getCondition().getForbidden(),
+									true)
+									);
+					// skip, because this processing is not permitted
 					if (!task.shallProcess(groupingInstances, groupingStr, 
 						inDataLink.getCondition().getForbidden(),
 						true))
@@ -1507,6 +1729,19 @@ public class UtilImpl extends EObjectImpl implements Util {
 						logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
 						return false;
 					}
+					// skip, because the circumventing parent
+					else if (
+							!shallProcess(inDataLink.getCondition().getCircumventingParents(),
+										groupingInstances, groupingStr, 
+										inDataLink.getCondition().getForbidden(),
+										true
+									)
+						)
+					{
+							logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
+							return false;
+					}
+					//
 					else if (!inDataLink.getCondition().isUnconditional())
 					{
 						shouldAddCircumventingParents=true;
@@ -1574,6 +1809,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 							try {
 								DataLink dataLink = createDataLink(edge, copyTask, groupingStr, groupingStr);
 								
+								logger.debug("applyTraversalEventCopyGraph(): insert edge (inserted!)");
 								getGraph().insertEdgeEasyFlow(null, null, 
 										getCells().get(taskStr),
 										cell,
@@ -1585,7 +1821,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 								//getProcessedEdges().put(
 									//	taskPreviousTaskMap.get(source.getUniqueString()),
 										//copyTask.getUniqueString());
-								logger.debug("applyTraversalEventCopyGraph(): edge inserted!");
+								
 							} catch (DataLinkNotFoundException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -1905,134 +2141,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 		traversalChunk.setName(groupingInstance.getName());
 		traversalChunks.add(traversalChunk);
 		return true;
-	}
-	
-	private void applySplittingCriterion(mxICell cell, 
-										mxICell parentCell,
-										Object edgeIn,
-										final String groupingStr,
-										String mode,
-										boolean isGrouping) 
-				throws TaskNotFoundException, DataLinkNotFoundException, TraversalChunkNotFoundException
-	{
-		boolean modeRequireAll                  = true;
-		//boolean modeUseFirstMatchingGroupingStr = true;
-		
-		boolean requireAllChunks    = false;
-		boolean requireAllInstances = true;
-		
-		if (mode.equals("batch"))
-		{
-			// batch
-			requireAllChunks    = true;
-			requireAllInstances = false;
-			modeRequireAll      = false;
-		}
-		else
-		{
-			// when task is in joint mode
-			requireAllChunks    = false;
-			requireAllInstances = true;
-			modeRequireAll      = true;
-		}
-		
-		//String  currentParentGroupingStr        = "";
-		DataLink dataLink = null;
-		
-		// setup the chunks
-		Task parentTask = loadTask((parentCell));
-		Task task = loadTask(cell);
-		
-		
-		logger.trace("applySplittingCriterion(): test parentTask="+parentTask.getUniqueString() 
-				+ " for " + task.getUniqueString()
-				+ " #(parents chunks)="+parentTask.getChunks().size());
-		
-		if (parentTask.isRoot())
-		{
-			logger.debug("applySplittingCriterion(): insert edge: "+parentTask.getUniqueString()
-					+" ->"+task.getUniqueString());
-			
-			getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
-					createDataLink(edgeIn, task, groupingStr, null)
-					);
-		}
-		else 
-		{
-			if (!isGrouping || !task.getOverlappingRecordsProvidedBy(parentTask).isEmpty())
-				getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
-						createDataLink(edgeIn, task, groupingStr, null)
-						);
-		}
-	}
-	
-	private void applyMergingCriterion(mxICell cell, 
-			mxICell previousCell,
-			String groupingStr,
-			EList<GroupingInstance> groupingInstances
-			
-			) throws TaskNotFoundException, DataLinkNotFoundException, TraversalChunkNotFoundException
-	{
-		logger.trace("applyMergingCriterion(): "
-				+getGraph().getOutgoingEdges(cell).length+" "
-				+getGraph().getVertices(cell).size());
-		
-		Task task = loadTask(cell);
-		//TraversalEvent traversalEvent = task.getTraversalEvents().get(groupingStr);
-		// get all child cells
-		for (Object edgeOut:getGraph().getOutgoingEdges(previousCell))
-		{
-			Object childCell = getTarget((mxCell) edgeOut);
-
-			Task childTask = loadTask(((mxICell) childCell));
-			DataLink outDataLink = loadDataLink(edgeOut);
-			logger.trace("applyMergingCriterion(): "+"test edge: "
-					+task.getUniqueString()
-					//+" (cell:"+cell+") "
-					+"->"
-					+childTask.getUniqueString()
-					//+"(cell"+childCell+")"
-					);
-			//logger.debug(childTask.getCircumventingParents());
-
-			if (outDataLink!=null)
-			{
-					logger.debug(groupingStr+" "+groupingInstances);
-				if (
-						//true ||
-						!getMetaData().containsColumn(groupingStr) ||
-						task.shallProcess(groupingInstances, groupingStr) &&
-						childTask.shallProcess(groupingInstances, groupingStr) &&
-						childTask.shallProcess(groupingInstances, groupingStr, 
-							(outDataLink.getCondition()!=null?
-									outDataLink.getCondition().getForbidden():null),
-						true)
-					)
-				{
-					DataLink dataLink = createDataLink(edgeOut, childTask, groupingStr, null);
-					if (
-							//getProcessedEdgesCopyGraph().keySet().contains(task.getUniqueString())
-							isEdgeInGraph(task, childTask, dataLink)
-						)
-						logger.trace("applyMergingCriterion(): skip inserting edge (already processed)");
-					
-					// insert edge from cell to its child cell
-					else
-					{
-						logger.debug("applyMergingCriterion(): "+"insert edge: "
-								+task.getUniqueString()+"->"
-								+childTask.getUniqueString()+")");
-						
-						getGraph().insertEdgeEasyFlow(null, null, cell, childCell,
-								dataLink
-								);
-						//getProcessedEdges().put(task.getUniqueString(), childTask.getUniqueString());
-					}
-				}
-			}
-			else
-				logger.debug("applyMergingCriterion(): skip inserting edge due datalink null pointer.");
-		}
 	}
 	
 	private TraversalEvent getNewTraversalEventBySplittingTask(Task task, TraversalEvent traversalEvent)
@@ -3081,6 +3189,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 					cs.add(((TraversalChunk)chunk).getName());
 				else if (chunk instanceof TraversalCriterion)
 					cs.add(((TraversalCriterion)chunk).getId());
+				else if (chunk instanceof GroupingInstance)
+					cs.add(((GroupingInstance)chunk).getName());
 				else
 					cs.add(chunk.toString());
 				

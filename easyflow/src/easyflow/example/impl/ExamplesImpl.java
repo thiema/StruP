@@ -236,7 +236,7 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 				if (!strLine.startsWith("#")) {
 					String[] lina=strLine.split("\t");
 					DefaultProject defaultProject = UiFactory.eINSTANCE.createDefaultProject();
-					URI baseURI = URIUtil.createURI(getLocator(), lina[0]);
+					URI baseURI = lina.length > 2 ? URIUtil.createURI(getLocator(), lina[2]) : URIUtil.createURI(getLocator(), lina[0]);
 					defaultProject.setBaseURI(baseURI);
 					
 					if (lina.length > 1)

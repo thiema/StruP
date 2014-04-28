@@ -1,2 +1,4 @@
-#example	config
+#example	config (override default config (main.json))	folder (override default folder (1.column))
 sequencing	
+abstract	main_abstract1.json	sequencing
+abstract_simple	main_abstract_simple.json	sequencing

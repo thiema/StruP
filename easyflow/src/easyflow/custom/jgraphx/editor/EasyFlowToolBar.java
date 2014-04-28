@@ -12,11 +12,17 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 
 import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.util.GlobalVar;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 import easyflow.ui.DefaultProject;
+import easyflow.ui.IProject;
 
 
 public class EasyFlowToolBar extends JToolBar
@@ -38,7 +44,7 @@ public class EasyFlowToolBar extends JToolBar
 	final Action deleteGraphAction         = new DeleteGraphAction();
 	
 	final Action genAbstractWorkflowAction = new GenAbstractWorkflowAction();
-	final Action applyTraversalCritAction  = new ApplyTraversalCritAction();
+	final Action applyGroupingCritAction  = new ApplyGroupingCritAction();
 	final Action applyParameterCritAction  = new ApplyParameterCritAction();
 	final Action resolveUtilityTasksAction = new ResolveUtilityTaskAction();
 	final Action resolveToolDepsAction     = new ResolveToolDepsAction();
@@ -54,7 +60,7 @@ public class EasyFlowToolBar extends JToolBar
 	final JButton btnDeleteGraph           = add(deleteGraphAction);
 
 	final JButton btnGenAbstractWorkflow   = add(genAbstractWorkflowAction);
-	final JButton btnApplyTraversalCrit    = add(applyTraversalCritAction);
+	final JButton btnApplyGroupingCrit    = add(applyGroupingCritAction);
 	final JButton btnApplyParameterCrit    = add(applyParameterCritAction);
 	final JButton btnResolveUtilityTasks   = add(resolveUtilityTasksAction);
 	final JButton btnResolveToolDeps         = add(resolveToolDepsAction);
@@ -64,9 +70,31 @@ public class EasyFlowToolBar extends JToolBar
 	final JButton btnApplyNextTraversalEvent = add(applyNextTraversalEvent);
 
 	
+	private void initButtons()
+	{
+		
+		btnConfigureProject.setEnabled(true);
+		if (GlobalVar.getDefaultProject()!=null)
+			btnInitWorkflow.setEnabled(true);
+		else
+			btnInitWorkflow.setEnabled(false);
+		
+		
+		btnGenAbstractWorkflow.setEnabled(false);
+		btnApplyParameterCrit.setEnabled(false);
+		btnApplyGroupingCrit.setEnabled(false);
+		btnResolveUtilityTasks.setEnabled(false);
+		btnResolveToolDeps.setEnabled(false);
+		
+		btnCalcAll.setEnabled(false);
+		btnDeleteGraph.setEnabled(false);
+	}
+	
 	public EasyFlowToolBar(EasyFlowGraphEditor easyFlowGraphEditor,
 			int horizontal) {
 		editor = easyFlowGraphEditor;
+		
+		initButtons();
 		
 		File repoSrcFile = new File (repositoryFS_src);
 		File repoBinFile = new File (repositoryFS_bin);
@@ -92,7 +120,10 @@ public class EasyFlowToolBar extends JToolBar
 			btnInitWorkflow.setEnabled(false);
 		}
 		else
+		{
 			GlobalVar.setDefaultProject(defaultProject);
+			btnInitWorkflow.setEnabled(true);
+		}
 		
 	}
 
@@ -159,7 +190,16 @@ public class EasyFlowToolBar extends JToolBar
 			
 		}
 		@Override
-		public void actionPerformed(ActionEvent ae) {}
+		public void actionPerformed(ActionEvent ae) {
+			
+			IProject defaultProject = GlobalVar.getDefaultProject();
+			if (defaultProject .getActiveWorkflow()!=null)
+				defaultProject.resetWorkflowStep();
+			defaultProject.delete();
+			//btnDeleteGraph.setEnabled(false);
+			//btnInitWorkflow.setEnabled(true);
+			initButtons();
+		}
 	}
 	
 	private class CalcAllProjectAction extends AbstractAction {
@@ -168,7 +208,47 @@ public class EasyFlowToolBar extends JToolBar
 			putValue(SHORT_DESCRIPTION, "Perform whole analysis.");
 		}
 		@Override
-		public void actionPerformed(ActionEvent ae) {}
+		public void actionPerformed(ActionEvent ae) {
+			try {
+				DefaultProject defaultProject = GlobalVar.getDefaultProject();
+				logger.debug(defaultProject.getActiveWorkflow());
+				
+					if (defaultProject.generateAbstractGraph()
+							&& defaultProject.resolveTraversalCriteria()
+							&& defaultProject.applyGroupingCriteria()
+							&& defaultProject.applyParameterCriteria()
+							&& defaultProject.resolveUtilityTasks()
+							&& defaultProject.resolvePreprocessingTasks()
+							&& defaultProject.resolveToolDependencies()
+						)
+					{
+						//btnResolveUtilityTasks.setEnabled(true);
+					}
+					
+				} catch (DataLinkNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DataPortNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ToolNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UtilityTaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+
+				} catch (CellNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (GroupingCriterionInstanceNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		}
 	}
 
 	private class GenAbstractWorkflowAction extends AbstractAction {
@@ -182,7 +262,7 @@ public class EasyFlowToolBar extends JToolBar
 				if (GlobalVar.getDefaultProject().generateAbstractGraph() && 
 					GlobalVar.getDefaultProject().resolveTraversalCriteria())
 				{
-					btnApplyTraversalCrit.setEnabled(true);
+					btnApplyGroupingCrit.setEnabled(true);
 					btnApplyParameterCrit.setEnabled(true);
 				}
 			} catch (CellNotFoundException e) {
@@ -203,6 +283,22 @@ public class EasyFlowToolBar extends JToolBar
 		}
 		public void actionPerformed(ActionEvent ae) {
 			System.out.println("ApplyGroupingCrit");
+			try {
+				if (GlobalVar.getDefaultProject().applyGroupingCriteria())
+				{
+					btnApplyGroupingCrit.setEnabled(false);
+					btnResolveUtilityTasks.setEnabled(true);
+				}
+			} catch (CellNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TaskNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (GroupingCriterionInstanceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -215,22 +311,89 @@ public class EasyFlowToolBar extends JToolBar
 		}
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			// TODO Auto-generated method stub
+			try {
+				if (GlobalVar.getDefaultProject().applyParameterCriteria())
+				{
+					btnApplyParameterCrit.setEnabled(false);
+					//btnResolveUtilityTasks.setEnabled(true);
+				}
+			} catch (CellNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TaskNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (GroupingCriterionInstanceNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		
 	}
 	
-	private class ApplyTraversalCritAction extends AbstractAction {
-		public ApplyTraversalCritAction() {
-			putValue(NAME, "travCrit");
-			putValue(SHORT_DESCRIPTION, "apply all defined splitting criterion");
+	private class ResolveUtilityTaskAction extends AbstractAction
+	{
+		public ResolveUtilityTaskAction()
+		{
+			putValue(NAME, "util");
 		}
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("ApplySplitCrit");
+		public void actionPerformed(ActionEvent ae) {
+			try {
+				if (GlobalVar.getDefaultProject().resolveUtilityTasks())
+				{
+					btnResolveToolDeps.setEnabled(true);
+					btnResolveUtilityTasks.setEnabled(false);
+				}
+			} catch (DataLinkNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DataPortNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ToolNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UtilityTaskNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TaskNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private class ResolveToolDepsAction extends AbstractAction {
+		public ResolveToolDepsAction() {
+			putValue(NAME, "resovleTool");
+		}
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (GlobalVar.getDefaultProject().resolveToolDependencies())
+			{
+				btnResolveToolDeps.setEnabled(false);
+				btnGenAbstractWorkflow.setEnabled(true);
+			}
 		}
 	}
+	
+	private class GenerateExecWorkflowAction extends AbstractAction {
+		public GenerateExecWorkflowAction() {
+			putValue(NAME, "genExecWorkflow");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (GlobalVar.getDefaultProject().generateWorklowForExecutionSystem())
+			{
+				btnGenerateExecWorkflow.setEnabled(false);
+			}
+		}
+	}
+	
 	private class ValidateGraphComponentAction extends AbstractAction {
 		public ValidateGraphComponentAction() {
 			putValue(NAME, "validate");
@@ -257,42 +420,6 @@ public class EasyFlowToolBar extends JToolBar
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-		}
-	}
-	
-	private class ResolveUtilityTaskAction extends AbstractAction
-	{
-		public ResolveUtilityTaskAction()
-		{
-			putValue(NAME, "util");
-		}
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-		
-	}
-	
-	private class ResolveToolDepsAction extends AbstractAction {
-		public ResolveToolDepsAction() {
-			putValue(NAME, "resovleTool");
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-	
-	private class GenerateExecWorkflowAction extends AbstractAction {
-		public GenerateExecWorkflowAction() {
-			putValue(NAME, "genExecWorkflow");
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 	}
 
