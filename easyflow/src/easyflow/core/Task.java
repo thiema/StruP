@@ -6,19 +6,23 @@
  */
 package easyflow.core;
 
+import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
+
+import easyflow.data.DataFormat;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
+
 import easyflow.metadata.GroupingInstance;
-import easyflow.tool.DataFormat;
+
+import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
 import easyflow.traversal.TraversalChunk;
-import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 
 import java.net.URI;
-
-import java.util.Map;
 
 import java.util.regex.Pattern;
 
@@ -70,6 +74,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}</li>
  *   <li>{@link easyflow.core.Task#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
+ *   <li>{@link easyflow.core.Task#getParameters <em>Parameters</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,7 +85,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Task extends EObject {
 	/**
 	 * Returns the value of the '<em><b>In Data Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>In Data Ports</em>' reference list isn't clear,
@@ -96,7 +101,7 @@ public interface Task extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Out Data Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Out Data Ports</em>' reference list isn't clear,
@@ -431,7 +436,7 @@ public interface Task extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Inputs</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link java.net.URI},
+	 * and the value is of type {@link easyflow.data.DataLink},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Inputs</em>' map isn't clear,
@@ -440,15 +445,15 @@ public interface Task extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Inputs</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_Inputs()
-	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @model mapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.data.DataLink>"
 	 * @generated
 	 */
-	EMap<String, URI> getInputs();
+	EMap<String, DataLink> getInputs();
 
 	/**
 	 * Returns the value of the '<em><b>Outputs</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link java.net.URI},
+	 * and the value is of type {@link easyflow.data.DataLink},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Outputs</em>' map isn't clear,
@@ -457,10 +462,10 @@ public interface Task extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Outputs</em>' map.
 	 * @see easyflow.core.CorePackage#getTask_Outputs()
-	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @model mapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.data.DataLink>"
 	 * @generated
 	 */
-	EMap<String, URI> getOutputs();
+	EMap<String, DataLink> getOutputs();
 
 	/**
 	 * Returns the value of the '<em><b>Inputs By Data Port</b></em>' map.
@@ -478,6 +483,23 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EMap<String, EList<String>> getInputsByDataPort();
+
+	/**
+	 * Returns the value of the '<em><b>Outputs By Data Port</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Outputs By Data Port</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Outputs By Data Port</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_OutputsByDataPort()
+	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, EList<String>> getOutputsByDataPort();
 
 	/**
 	 * Returns the value of the '<em><b>Input Data Port Validator</b></em>' attribute list.
@@ -576,21 +598,21 @@ public interface Task extends EObject {
 	EList<PreprocessingTask> getPreprocessingTasks();
 
 	/**
-	 * Returns the value of the '<em><b>Outputs By Data Port</b></em>' map.
+	 * Returns the value of the '<em><b>Parameters</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type list of {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.Parameter},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Outputs By Data Port</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Parameters</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Outputs By Data Port</em>' map.
-	 * @see easyflow.core.CorePackage#getTask_OutputsByDataPort()
-	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @return the value of the '<em>Parameters</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Parameters()
+	 * @model mapType="easyflow.util.maps.StringToParameterMap<org.eclipse.emf.ecore.EString, easyflow.tool.Parameter>"
 	 * @generated
 	 */
-	EMap<String, EList<String>> getOutputsByDataPort();
+	EMap<String, Parameter> getParameters();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -746,10 +768,18 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EMap<String, String> createCommandLineMap();
+	EMap<String, EList<String>> createCommandLineMap();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model commandLinePartsMapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -794,7 +824,7 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>" tasksMany="true"
+	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.data.DataPort>" tasksMany="true"
 	 * @generated
 	 */
 	EMap<Task, EList<DataPort>> resolveMissingDataPortsByTool(EList<Task> tasks);
@@ -822,78 +852,6 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
-	 * @generated
-	 */
-	boolean canFilterInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	EList<TraversalChunk> getRecords(boolean intersect);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
-	 * @generated
-	 */
-	boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
-	 * @generated
-	 */
-	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model valueDataType="easyflow.Object"
-	 * @generated
-	 */
-	boolean setOutputForDataPort(String key, Object value, DataPort dataPort, String parameterName);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model valueDataType="easyflow.Object"
-	 * @generated
-	 */
-	boolean setInputForDataPort(String key, Object value, DataPort dataPort, String parameterName);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.URI"
-	 * @generated
-	 */
-	EList<URI> getOutputsForDataPort(DataPort dataPort);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.URI"
-	 * @generated
-	 */
-	EList<URI> getInputsForDataPort(DataPort dataPort);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -942,5 +900,85 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canFilterInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getRecords(boolean intersect);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
+	 * @generated
+	 */
+	boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
+	 * @generated
+	 */
+	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.URI"
+	 * @generated
+	 */
+	EList<URI> getOutputsForDataPort(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.URI"
+	 * @generated
+	 */
+	EList<URI> getInputsForDataPort(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataLinkNotFoundException"
+	 * @generated
+	 */
+	void resolveInputs() throws DataLinkNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataLinkNotFoundException"
+	 * @generated
+	 */
+	void resolveOutputs() throws DataLinkNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void resolveParameters();
 
 } // Task

@@ -43,14 +43,14 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 
 import easyflow.core.CorePackage;
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
 
 public class EasyFlowGraphComponent extends mxGraphComponent
 {
@@ -305,14 +305,14 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 					panel.setOpaque(true);
 					panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
 					panel.add(label);
-					if (dataLink.getCondition().getForbidden()!=null)
+					if (!dataLink.isUnconditional())
 					{
 						JLabel perms = new JLabel(new Integer(dataLink.getCondition().getForbidden().size()).toString());
 						panel.add(perms);
 					}
 					
 					add(panel);
-					logger.debug("label renderer: set label="+label.getText());
+					logger.debug("LinkRenderer(): set label="+label.getText());
 				}
 			} catch (DataLinkNotFoundException e) {
 				// TODO Auto-generated catch block

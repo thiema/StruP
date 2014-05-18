@@ -6,6 +6,7 @@
  */
 package easyflow.core;
 
+import easyflow.data.DataPort;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -60,7 +61,7 @@ public interface ParentTaskResult extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Covered Ports</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Covered Ports</em>' reference list isn't clear,

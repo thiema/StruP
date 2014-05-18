@@ -12,6 +12,8 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.data.DataPackage;
+import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExampleFactory;
 import easyflow.example.ExamplePackage;
 import easyflow.example.Examples;
@@ -123,6 +125,7 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theExamplePackage.createPackageContents();
@@ -138,6 +141,7 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
+		theDataPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theExamplePackage.initializePackageContents();
@@ -153,6 +157,7 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
+		theDataPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theExamplePackage.freeze();

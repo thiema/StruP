@@ -76,8 +76,8 @@ public class PegasusSwitch<T> extends Switch<T> {
 			case PegasusPackage.PEGASUS: {
 				Pegasus pegasus = (Pegasus)theEObject;
 				T result = casePegasus(pegasus);
-				if (result == null) result = caseIExecutionSystem(pegasus);
 				if (result == null) result = caseDefaultExecutionSystem(pegasus);
+				if (result == null) result = caseIExecutionSystem(pegasus);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

@@ -107,24 +107,6 @@ public interface ToolFactory extends EFactory {
 	Package createPackage();
 
 	/**
-	 * Returns a new object of class '<em>Data</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Data</em>'.
-	 * @generated
-	 */
-	Data createData();
-
-	/**
-	 * Returns a new object of class '<em>Data Format</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Data Format</em>'.
-	 * @generated
-	 */
-	DataFormat createDataFormat();
-
-	/**
 	 * Returns a new object of class '<em>Key</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

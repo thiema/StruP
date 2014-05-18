@@ -23,11 +23,12 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import easyflow.core.CoreFactory;
-import easyflow.core.DataPort;
 import easyflow.custom.util.URIUtil;
+import easyflow.data.Data;
+import easyflow.data.DataFactory;
+import easyflow.data.DataFormat;
+import easyflow.data.DataPort;
 import easyflow.tool.Command;
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
@@ -173,7 +174,7 @@ public class ToolContentHandler implements ContentHandler {
 			}
 			else
 			{
-				dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+				dataFormat = DataFactory.eINSTANCE.createDataFormat();
 				dataFormat.setName(format);
 			}
 			dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
@@ -220,7 +221,7 @@ public class ToolContentHandler implements ContentHandler {
 		}
 		if (atts.getValue("type").equals("data"))
 		{
-			Data data = ToolFactory.eINSTANCE.createData();
+			Data data = DataFactory.eINSTANCE.createData();
 			
 			data.setName(parameter.getName());
 			if (atts.getValue("output")!=null)
@@ -242,7 +243,7 @@ public class ToolContentHandler implements ContentHandler {
 			if (atts.getValue("handle")!=null)
 				for (String handle:atts.getValue("handle").split(","))
 					((InOutParameter)parameter).getHandles().add(handle);
-			dataPort = CoreFactory.eINSTANCE.createDataPort();
+			dataPort = DataFactory.eINSTANCE.createDataPort();
 			dataPort.setName(parameter.getName());
 			dataPort.getTools().put(tool.getName(), tool);
 			data.setPort(dataPort);
@@ -273,7 +274,7 @@ public class ToolContentHandler implements ContentHandler {
 		
 		switch (tag) {
 			case TOOLS:
-				break;
+				break;				
 			case PACKAGE:
 				pkg = ToolFactory.eINSTANCE.createPackage();
 				pkg.setDescription(atts.getValue("description"));
@@ -283,7 +284,7 @@ public class ToolContentHandler implements ContentHandler {
 				else
 					pkg.setId(atts.getValue("id"));
 				pkg.setVersion(atts.getValue("version"));
-				packages.put(pkg.getName(), pkg);
+				packages.put(pkg.getId(), pkg);
 			case TOOL:
 				dataStrings.clear();
 				tool=ToolFactory.eINSTANCE.createTool();
@@ -296,6 +297,8 @@ public class ToolContentHandler implements ContentHandler {
 				else
 					tool.setId(atts.getValue("id"));
 				tool.setVersion(atts.getValue("version"));
+				if (atts.getValue("package")!=null && packages.containsKey(atts.getValue("package")))
+					tool.setPackage(packages.get(atts.getValue("package")));
 				break;
 			case MACROS:
 				break;
@@ -324,7 +327,13 @@ public class ToolContentHandler implements ContentHandler {
 				break;
 			case REQUIREMENTS:
 				break;
+			case EXE:
+				if (Tag.PACKAGE.equals(parentTag))
+					pkg.setExe(atts.getValue("name"));
+				break;
 			case INTERPRETER:
+				if (Tag.PACKAGE.equals(parentTag))
+					pkg.setInterpreter(atts.getValue("exe"));
 				break;
 			case PARAM:
 				withinParam = true;
@@ -400,7 +409,8 @@ public class ToolContentHandler implements ContentHandler {
 				break;
 			case DATA:
 				withinData = true;
-				data = ToolFactory.eINSTANCE.createData();
+				data = DataFactory.eINSTANCE.createData();
+				DataFormat dataFormat = null;
 				if (atts.getValue("description") !=null)
 					data.setDescription(atts.getValue("description"));
 				if (atts.getValue("name") !=null)
@@ -408,14 +418,20 @@ public class ToolContentHandler implements ContentHandler {
 				if (atts.getValue("label") !=null)
 					data.setLabel(atts.getValue("label"));
 				if (atts.getValue("format") != null)
-					data.setFormat(atts.getValue("format"));
+				{
+					dataFormat = DataFactory.eINSTANCE.createDataFormat();
+					dataFormat.setName(atts.getValue("format"));
+					
+				}
 				data.setOutput(atts.getValue("output")==null?
 						false:atts.getValue("output").equals("true"));
 				if (tool.getData().containsKey(data.getName()))
 					logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
 				tool.getData().put(data.getName(), data);
-				dataPort = CoreFactory.eINSTANCE.createDataPort();
+				dataPort = DataFactory.eINSTANCE.createDataPort();
 				dataPort.setName(data.getName());
+				if (dataFormat!=null)
+					dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
 				data.setPort(dataPort);
 				break;
 			default: 
@@ -444,7 +460,7 @@ public class ToolContentHandler implements ContentHandler {
 				withinData = false;
 				if (data.getPort().getDataFormats() == null || data.getPort().getDataFormats().isEmpty())
 				{
-					String format = data.getFormat();
+					String format = data.getFormat().getName();
 					setDataPort(format);
 				}
 				data = null;

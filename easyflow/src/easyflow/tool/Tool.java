@@ -6,8 +6,11 @@
  */
 package easyflow.tool;
 
-import easyflow.core.DataPort;
 import easyflow.custom.exception.DataPortNotFoundException;
+
+import easyflow.data.Data;
+import easyflow.data.DataPort;
+
 import java.net.URI;
 
 import org.apache.log4j.Logger;
@@ -227,7 +230,7 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * Returns the value of the '<em><b>Data</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.tool.Data},
+	 * and the value is of type {@link easyflow.data.Data},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Data</em>' map isn't clear,
@@ -236,7 +239,7 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Data</em>' map.
 	 * @see easyflow.tool.ToolPackage#getTool_Data()
-	 * @model mapType="easyflow.util.maps.StringToDataMap<org.eclipse.emf.ecore.EString, easyflow.tool.Data>"
+	 * @model mapType="easyflow.util.maps.StringToDataMap<org.eclipse.emf.ecore.EString, easyflow.data.Data>"
 	 * @generated
 	 */
 	EMap<String, Data> getData();

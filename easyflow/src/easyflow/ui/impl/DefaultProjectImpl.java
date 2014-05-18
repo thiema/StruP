@@ -10,6 +10,7 @@ import easyflow.EasyflowFactory;
 import easyflow.EasyflowPackage;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -77,7 +78,6 @@ import com.mxgraph.model.mxCell;
 import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.core.EasyflowTemplate;
@@ -88,7 +88,6 @@ import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
@@ -105,12 +104,19 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
+import easyflow.execution.DefaultExecutionSystem;
+import easyflow.execution.ExecutionFactory;
+import easyflow.execution.IExecutionSystem;
+import easyflow.execution.makeflow.MakeflowFactory;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
+import easyflow.data.DataFactory;
+import easyflow.data.DataFormat;
+import easyflow.data.DataPort;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
@@ -533,6 +539,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public IExecutionSystem getExecutionSystem() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public JSONObject getJsonObject() {
 		return jsonObject;
 	}
@@ -619,9 +636,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	
 	private DataPort readInput(String dataPortName, String dataFormatName, short bitPos) 
 	{
-		DataFormat dataFormat = ToolFactory.eINSTANCE.createDataFormat();
+		DataFormat dataFormat = DataFactory.eINSTANCE.createDataFormat();
 		dataFormat.setName(dataFormatName);
-		DataPort dataPort=CoreFactory.eINSTANCE.createDataPort();
+		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
 		dataPort.setBitPos(bitPos);
 		dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
 		dataPort.setName(dataPortName);
@@ -746,7 +763,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		workflow.setMetaData(metaData);
 
 		
-		// processing config
+		// ####### READ PROECESSING CONFIGURATION ########
 		if (jsonObject.has("processing"))
 		{
 			JSONObject processingCfg=jsonObject.getJSONObject("processing");
@@ -757,10 +774,42 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				logger.trace("read processing config key="+key);
 				workflow.getProcessingConfig().put(key, processingCfg.getString(key));
 			}
+			DefaultExecutionSystem executionSystem = null;
+			
+			if (workflow.getProcessingConfig().containsKey("execution_system"))
+			{
+				
+				if ("makeflow".equalsIgnoreCase(workflow.getProcessingConfig().get("execution_system")))
+				{
+					executionSystem = MakeflowFactory.eINSTANCE.createMakeflow();
+					if (workflow.getProcessingConfig().containsKey("execution_system_output_file"))
+						GlobalVar.setExecutionSystemOutputFileName(workflow.
+								getProcessingConfig().get("execution_system_output_file"));
+				}
+				else
+				{
+					executionSystem = ExecutionFactory.eINSTANCE.createDefaultExecutionSystem();
+					GlobalVar.setExecutionSystemOutputFileName("exec_rules.txt");
+				}
+				
+			}
+			else
+			{
+				executionSystem = ExecutionFactory.eINSTANCE.createDefaultExecutionSystem();
+				GlobalVar.setExecutionSystemOutputFileName("exec_rules.txt");
+			}
+			if (GlobalVar.getExecutionSystemOutputFileName() == null || GlobalVar.getExecutionSystemOutputFileName().equals(""))
+				logger.warn("couldnt set output file for execution system.");
+			logger.debug(GlobalVar.getExecutionSystemOutputFileName());
+			logger.debug(GlobalVar.getExecutionSystemOutputFile());
+			executionSystem.setWriter(GlobalVar.getExecutionSystemOutputWriter());
+			logger.debug(executionSystem.getWriter());
+			workflow.setExecutionSystem(executionSystem);
+			
 		}
 		
 		
-		// catalog
+		// ####### READ CATALOG CONFIGURATION ########
 		if (jsonObject.has("catalog"))
 		{
 			JSONObject catalogCfg=jsonObject.getJSONObject("catalog");
@@ -871,7 +920,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 						//ToolContentHandler toolContentHandler = new ToolContentHandler();
 						for (Tool tool : ToolContentHandler.parse(source, documentProperties, null, null))
 						{
-							logger.debug("SAX parser returned tool: "+tool.getId()+" pkg="+(tool.getPackage()==null?null:tool.getPackage().getId())+" params="+tool.getCommand().getParameters().keySet());
+							logger.debug("SAX parser returned tool: "+tool.getId()
+									+" pkg="+(tool.getPackage()==null?null:tool.getPackage().getId())
+									+" params="+tool.getCommand().getParameters().keySet());
 							getTools().put(tool.getId(), tool);
 						}
 					}

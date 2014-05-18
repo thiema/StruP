@@ -12,6 +12,8 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.data.DataPackage;
+import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
 
 import easyflow.example.impl.ExamplePackageImpl;
@@ -186,6 +188,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theMetadataPackage.createPackageContents();
@@ -201,6 +204,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		theToolPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
+		theDataPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theMetadataPackage.initializePackageContents();
@@ -216,6 +220,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		theToolPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
+		theDataPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theMetadataPackage.freeze();

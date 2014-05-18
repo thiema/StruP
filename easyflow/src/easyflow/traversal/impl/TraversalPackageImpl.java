@@ -12,6 +12,8 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.data.DataPackage;
+import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
 
 import easyflow.example.impl.ExamplePackageImpl;
@@ -169,6 +171,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theTraversalPackage.createPackageContents();
@@ -184,6 +187,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
+		theDataPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theTraversalPackage.initializePackageContents();
@@ -199,6 +203,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
+		theDataPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theTraversalPackage.freeze();
@@ -569,6 +574,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		// Obtain other dependent packages
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
+		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 
 		// Create type parameters
@@ -609,7 +615,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEAttribute(getGroupingCriterion_MultipleInstances(), ecorePackage.getEBoolean(), "multipleInstances", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingCriterion_SeperateInputPorts(), ecorePackage.getEBoolean(), "seperateInputPorts", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingCriterion_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, GroupingCriterion.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGroupingCriterion_DataPort(), theCorePackage.getDataPort(), null, "dataPort", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGroupingCriterion_DataPort(), theDataPackage.getDataPort(), null, "dataPort", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(traversalCriterionEClass, TraversalCriterion.class, "TraversalCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraversalCriterion_Operation(), this.getTraversalOperation(), null, "operation", null, 0, 1, TraversalCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

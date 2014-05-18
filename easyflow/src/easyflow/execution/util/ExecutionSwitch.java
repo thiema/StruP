@@ -73,6 +73,7 @@ public class ExecutionSwitch<T> extends Switch<T> {
 			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM: {
 				DefaultExecutionSystem defaultExecutionSystem = (DefaultExecutionSystem)theEObject;
 				T result = caseDefaultExecutionSystem(defaultExecutionSystem);
+				if (result == null) result = caseIExecutionSystem(defaultExecutionSystem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

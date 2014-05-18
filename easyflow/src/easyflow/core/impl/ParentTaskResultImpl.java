@@ -7,10 +7,10 @@
 package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
-import easyflow.core.DataPort;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.Task;
 
+import easyflow.data.DataPort;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;

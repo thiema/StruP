@@ -9,20 +9,20 @@ package easyflow.graph.jgraphx;
 import com.mxgraph.model.mxICell;
 
 import easyflow.core.Catalog;
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
 
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
-import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingCriterionNotFoundException;
+import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
 
 import easyflow.execution.IExecutionSystem;
 
@@ -32,6 +32,7 @@ import easyflow.metadata.GroupingInstance;
 import easyflow.traversal.TraversalEvent;
 
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -334,7 +335,7 @@ public interface Util extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Data Links</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.core.DataLink},
+	 * and the value is of type {@link easyflow.data.DataLink},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Data Links</em>' map isn't clear,
@@ -343,7 +344,7 @@ public interface Util extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Data Links</em>' map.
 	 * @see easyflow.graph.jgraphx.JgraphxPackage#getUtil_DataLinks()
-	 * @model mapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.core.DataLink>"
+	 * @model mapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.data.DataLink>"
 	 * @generated
 	 */
 	EMap<String, DataLink> getDataLinks();
@@ -448,6 +449,38 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean resolveToolDependencies(mxICell root, Catalog catalog);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
+	 * @generated
+	 */
+	EMap<mxICell, EList<mxICell>> findCellsWithUntranslatedDataLinks();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException" entryMapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
+	 * @generated
+	 */
+	boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
@@ -491,7 +524,7 @@ public interface Util extends EObject {
 	 * @model exceptions="easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingCriterionNotFoundException, GroupingCriterionInstanceNotFoundException;
+	EList<GroupingInstance> getGroupingInstances(TraversalEvent traversalEvent) throws GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -523,23 +556,7 @@ public interface Util extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean isChildOf(Task parent, Task child) throws TaskNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	boolean resolveToolDependencies(mxICell root, Catalog catalog);
+	boolean isChildOf(Task parent, Task child);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -596,21 +613,5 @@ public interface Util extends EObject {
 	 * @generated
 	 */
 	EList<Task> getParentTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
-	 * @generated
-	 */
-	EMap<mxICell, EList<mxICell>> findCellsWithUntranslatedDataLinks();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException" entryMapType="easyflow.util.maps.CellToCellListMap<easyflow.mxICell, easyflow.mxICell>"
-	 * @generated
-	 */
-	boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException;
 
 } // Util

@@ -6,6 +6,7 @@
  */
 package easyflow.tool;
 
+import easyflow.data.Data;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -219,7 +220,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Data</b></em>' reference list.
-	 * The list contents are of type {@link easyflow.tool.Data}.
+	 * The list contents are of type {@link easyflow.data.Data}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Data</em>' reference list isn't clear,
@@ -282,7 +283,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @model kind="operation"
 	 * @generated
 	 */
-	String getArgValue();
+	EList<String> getArgValue();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -299,6 +300,14 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	String getArgValueDelimiter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isOutput();
 
 	/**
 	 * Returns the value of the '<em><b>Value Type</b></em>' attribute.

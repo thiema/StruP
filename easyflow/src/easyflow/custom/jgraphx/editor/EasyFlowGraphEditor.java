@@ -33,8 +33,9 @@ import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxStylesheet;
 
 import easyflow.core.CoreFactory;
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
+import easyflow.data.DataFactory;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.util.GlobalVar;
@@ -64,8 +65,9 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		final EasyFlowGraph graph = (EasyFlowGraph) graphComponent.getGraph();
 		// logger.debug(((EasyFlowGraph)getGraphComponent().getGraph()).hashCode());
 		
-		setStyleSheet(graph.getStylesheet(), getGraphComponent().getViewport().getBackground());
-		//setStyleSheet(graph.getStylesheet(), null);
+		//setStyleSheet(graph.getStylesheet(), getGraphComponent().getViewport().getBackground());
+		setStyleSheet(graph.getStylesheet(), null);
+		
 		setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		// Creates a single shapes palette
 		EditorPalette shapesPalette = insertPalette("Editor");
@@ -100,8 +102,8 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 										.getResource("/com/mxgraph/examples/swing/images/rectangle.png")),
 										templateCell);
 		
-		DataLink templateDataLink=CoreFactory.eINSTANCE.createDataLink();
-		DataPort templateDataPort=CoreFactory.eINSTANCE.createDataPort();
+		DataLink templateDataLink=DataFactory.eINSTANCE.createDataLink();
+		DataPort templateDataPort=DataFactory.eINSTANCE.createDataPort();
 		templateDataPort.setName(GlobalVar.TEMPLATE_DATA_PORT_NAME);
 		templateDataLink.setDataPort(templateDataPort);
 		GlobalVar.setTemplateLink(templateDataLink);

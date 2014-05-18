@@ -6,6 +6,7 @@
  */
 package easyflow.core;
 
+import easyflow.data.DataPort;
 import easyflow.tool.Tool;
 
 import java.util.regex.Pattern;
@@ -212,7 +213,7 @@ public interface ToolMatch extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Missing In Data Ports</b></em>' containment reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Missing In Data Ports</em>' containment reference list isn't clear,
@@ -228,7 +229,7 @@ public interface ToolMatch extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Missing Out Data Ports</b></em>' containment reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Missing Out Data Ports</em>' containment reference list isn't clear,
@@ -261,7 +262,7 @@ public interface ToolMatch extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Reverse Missing In Data Ports</b></em>' containment reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Reverse Missing In Data Ports</em>' containment reference list isn't clear,
@@ -277,7 +278,7 @@ public interface ToolMatch extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Reverse Missing Out Data Ports</b></em>' containment reference list.
-	 * The list contents are of type {@link easyflow.core.DataPort}.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Reverse Missing Out Data Ports</em>' containment reference list isn't clear,
@@ -362,7 +363,7 @@ public interface ToolMatch extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>" tasksMany="true"
+	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.data.DataPort>" tasksMany="true"
 	 * @generated
 	 */
 	EMap<Task, EList<DataPort>> resolveReverseMissingInDataPorts(EList<Task> tasks);
@@ -370,7 +371,7 @@ public interface ToolMatch extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>" tasksMany="true"
+	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.data.DataPort>" tasksMany="true"
 	 * @generated
 	 */
 	EMap<Task, EList<DataPort>> resolveReverseMissingOutDataPorts(EList<Task> tasks);
@@ -378,7 +379,7 @@ public interface ToolMatch extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.core.DataPort>" tasksMany="true" dataPortsMany="true"
+	 * @model mapType="easyflow.util.maps.TaskToDataPortsMap<easyflow.core.Task, easyflow.data.DataPort>" tasksMany="true" dataPortsMany="true"
 	 * @generated
 	 */
 	EMap<Task, EList<DataPort>> getDataPortProvidingTasks(EList<Task> tasks, EList<DataPort> dataPorts);

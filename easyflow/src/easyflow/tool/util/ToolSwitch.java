@@ -7,8 +7,6 @@
 package easyflow.tool.util;
 
 import easyflow.tool.Command;
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.IToolElement;
@@ -154,20 +152,6 @@ public class ToolSwitch<T> extends Switch<T> {
 				T result = casePackage(package_);
 				if (result == null) result = caseIToolElement(package_);
 				if (result == null) result = caseDefaultToolElement(package_);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ToolPackage.DATA: {
-				Data data = (Data)theEObject;
-				T result = caseData(data);
-				if (result == null) result = caseDefaultToolElement(data);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ToolPackage.DATA_FORMAT: {
-				DataFormat dataFormat = (DataFormat)theEObject;
-				T result = caseDataFormat(dataFormat);
-				if (result == null) result = caseDefaultToolElement(dataFormat);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -342,36 +326,6 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T casePackage(easyflow.tool.Package object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseData(Data object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data Format</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data Format</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDataFormat(DataFormat object) {
 		return null;
 	}
 

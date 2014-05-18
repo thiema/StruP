@@ -8,17 +8,18 @@ package easyflow.util.maps.impl;
 
 import com.mxgraph.model.mxICell;
 
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
-
 import easyflow.core.ToolMatch;
+
+import easyflow.data.Data;
+import easyflow.data.DataFormat;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
+
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -38,8 +39,8 @@ import java.util.Map;
 import javax.xml.validation.Schema;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -360,19 +361,9 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<Task, EList<DataPort>> createTaskToDataPortsMap() {
-		TaskToDataPortsMapImpl taskToDataPortsMap = new TaskToDataPortsMapImpl();
-		return taskToDataPortsMap;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Map.Entry<Task, EList<DataLink>> createTaskToDataLinksMap() {
-		TaskToDataLinksMapImpl taskToDataLinksMap = new TaskToDataLinksMapImpl();
-		return taskToDataLinksMap;
+	public Map.Entry<String, Boolean> createStringToBooleanMap() {
+		StringToBooleanMapImpl stringToBooleanMap = new StringToBooleanMapImpl();
+		return stringToBooleanMap;
 	}
 
 	/**
@@ -400,9 +391,19 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<String, Boolean> createStringToBooleanMap() {
-		StringToBooleanMapImpl stringToBooleanMap = new StringToBooleanMapImpl();
-		return stringToBooleanMap;
+	public Map.Entry<Task, EList<DataPort>> createTaskToDataPortsMap() {
+		TaskToDataPortsMapImpl taskToDataPortsMap = new TaskToDataPortsMapImpl();
+		return taskToDataPortsMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<Task, EList<DataLink>> createTaskToDataLinksMap() {
+		TaskToDataLinksMapImpl taskToDataLinksMap = new TaskToDataLinksMapImpl();
+		return taskToDataLinksMap;
 	}
 
 	/**

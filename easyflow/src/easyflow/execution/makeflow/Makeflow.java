@@ -43,8 +43,8 @@ public interface Makeflow extends IExecutionSystem, DefaultExecutionSystem {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @model
 	 * @generated
 	 */
-	EMap<String, Object> getResourceMap(Tool tool);
+	String createRule();
 } // Makeflow

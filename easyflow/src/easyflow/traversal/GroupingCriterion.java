@@ -6,7 +6,8 @@
  */
 package easyflow.traversal;
 
-import easyflow.core.DataPort;
+import easyflow.data.DataPort;
+
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.ecore.EObject;

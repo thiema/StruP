@@ -6,13 +6,15 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.core.DataPort;
+import easyflow.data.Data;
+import easyflow.data.DataPort;
+
 import easyflow.custom.exception.ParameterNotFoundException;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import easyflow.tool.Command;
-import easyflow.tool.Data;
+
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
@@ -455,6 +457,43 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 */
 	public boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort) {
 		return setInputParameterValue(value, parameterName, dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getPositionalParameterNames() {
+		
+		EList<String> paramNames = new BasicEList<String>();
+		for (Entry<String, Parameter> e:getParameters())
+		{
+			Parameter parameter = e.getValue();
+			if (parameter.isPositional())
+				if (!parameter.getValue().isEmpty())
+					paramNames.add(e.getKey());
+		}
+		return paramNames;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getOptionalParameterNames() {
+
+		EList<String> paramNames = new BasicEList<String>();
+		for (Entry<String, Parameter> e:getParameters())
+		{
+			Parameter parameter = e.getValue();
+			if (parameter.isOptional())
+				if (!parameter.getValue().isEmpty())
+					paramNames.add(e.getKey());
+		}
+		return paramNames;
+
 	}
 
 	/**

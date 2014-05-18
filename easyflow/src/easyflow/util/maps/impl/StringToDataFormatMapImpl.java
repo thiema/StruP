@@ -6,7 +6,7 @@
  */
 package easyflow.util.maps.impl;
 
-import easyflow.tool.DataFormat;
+import easyflow.data.DataFormat;
 
 import easyflow.util.maps.MapsPackage;
 

@@ -418,6 +418,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	public EList<GroupingInstance> getInstancesForRecords(String group, EList<String> records)
 	{
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
+		if (containsColumn(group))
 		for (GroupingInstance groupingInstance:getGroupingInstances().get(group).getInstances())
 		{
 			EList<String> recs=groupingInstance.getOverlappingRecords(records);

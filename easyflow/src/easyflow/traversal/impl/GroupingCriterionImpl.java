@@ -6,7 +6,7 @@
  */
 package easyflow.traversal.impl;
 
-import easyflow.core.DataPort;
+import easyflow.data.DataPort;
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalPackage;
 

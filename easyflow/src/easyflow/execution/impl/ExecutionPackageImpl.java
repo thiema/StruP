@@ -12,6 +12,8 @@ import easyflow.core.CorePackage;
 
 import easyflow.core.impl.CorePackageImpl;
 
+import easyflow.data.DataPackage;
+import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
 
 import easyflow.example.impl.ExamplePackageImpl;
@@ -137,6 +139,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theExecutionPackage.createPackageContents();
@@ -152,6 +155,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
+		theDataPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theExecutionPackage.initializePackageContents();
@@ -167,6 +171,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
+		theDataPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theExecutionPackage.freeze();
@@ -209,6 +214,15 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDefaultExecutionSystem_Writer() {
+		return (EAttribute)defaultExecutionSystemEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIExecutionSystem() {
 		return iExecutionSystemEClass;
 	}
@@ -244,6 +258,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		defaultExecutionSystemEClass = createEClass(DEFAULT_EXECUTION_SYSTEM);
 		createEReference(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__PROJECT);
 		createEAttribute(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__LOGGER);
+		createEAttribute(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__WRITER);
 
 		iExecutionSystemEClass = createEClass(IEXECUTION_SYSTEM);
 	}
@@ -278,6 +293,8 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(thePegasusPackage);
@@ -289,27 +306,29 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		defaultExecutionSystemEClass.getESuperTypes().add(this.getIExecutionSystem());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(defaultExecutionSystemEClass, DefaultExecutionSystem.class, "DefaultExecutionSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultExecutionSystem_Project(), theUiPackage.getDefaultProject(), null, "project", null, 0, 1, DefaultExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultExecutionSystem_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultExecutionSystem.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		EOperation op = addEOperation(defaultExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getStringToStringMap(), "commandLineParts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		initEAttribute(getDefaultExecutionSystem_Writer(), theEasyflowPackage.getBufferedWriter(), "writer", null, 0, 1, DefaultExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(iExecutionSystemEClass, IExecutionSystem.class, "IExecutionSystem", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		addEOperation(iExecutionSystemEClass, null, "createWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		addEOperation(iExecutionSystemEClass, null, "executeWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
-
 		addEOperation(iExecutionSystemEClass, theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		EOperation op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToStringListMap(), "commandLineParts", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getStringToStringMap(), "commandLineParts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //ExecutionPackageImpl

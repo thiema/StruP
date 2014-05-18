@@ -6,8 +6,8 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
-import easyflow.tool.Data;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Key;
 import easyflow.tool.Parameter;
@@ -15,6 +15,8 @@ import easyflow.tool.ToolPackage;
 
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterMapImpl;
+
+import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -23,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.common.util.EMap;
@@ -778,7 +781,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated not
 	 */
 	public String generateCommandString(EMap<String, Object> constaints) {
-		return getArgKey()+getArgDelimiter()+getArgValue();
+		return getArgKey()
+				+getArgDelimiter()
+				+StringUtils.join(getArgValue(), getValueDelimiter());
 	}
 
 	/**
@@ -798,22 +803,27 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String getArgValue() {
+	public EList<String> getArgValue() {
+		
 		Iterator<Object> it = getValue().iterator();
-		String values[] = new String[getValue().size()];
+		EList<String> values = new BasicEList<String>();
 		int i=0;
 		while (it.hasNext())
 		{
 			Object v=it.next();
-			logger.debug(v.getClass().getCanonicalName());
-			if (v.getClass().getCanonicalName().endsWith("java.lang.String"))
-				values[i++]=(String) v;
+			if (v instanceof String)
+			//logger.debug(v.getClass().getCanonicalName());
+			//if (v.getClass().getCanonicalName().endsWith("java.lang.String"))
+				values.add((String) v);
+			else if (v instanceof URI)
+				values.add(((URI)v).getPath());
 		}
 		if (i==0 && getDefaultValue() != null && !getDefaultValue().equals("") 
 				&& GlobalConfig.getToolConfig().containsKey("write_default_value_to_command_line")
 				&& GlobalConfig.getToolConfig().get("write_default_value_to_command_line").equals("1"))
-			return getDefaultValue();
-		return StringUtils.join(values, getValueDelimiter());
+			value.add(getDefaultValue());
+		
+		return values;
 	}
 
 	/**
@@ -840,6 +850,17 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			return GlobalConfig.getToolConfig().get("default_value_delimiter");
 		else
 			return ",";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isOutput() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**

@@ -76,8 +76,8 @@ public class MakeflowSwitch<T> extends Switch<T> {
 			case MakeflowPackage.MAKEFLOW: {
 				Makeflow makeflow = (Makeflow)theEObject;
 				T result = caseMakeflow(makeflow);
-				if (result == null) result = caseIExecutionSystem(makeflow);
 				if (result == null) result = caseDefaultExecutionSystem(makeflow);
+				if (result == null) result = caseIExecutionSystem(makeflow);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

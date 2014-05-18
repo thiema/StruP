@@ -14,8 +14,10 @@ import easyflow.execution.ExecutionPackage;
 import easyflow.execution.shell.Shell;
 import easyflow.execution.shell.ShellPackage;
 
+import easyflow.tool.Tool;
 import easyflow.ui.DefaultProject;
 
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -36,6 +38,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link easyflow.execution.shell.impl.ShellImpl#getProject <em>Project</em>}</li>
  *   <li>{@link easyflow.execution.shell.impl.ShellImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.execution.shell.impl.ShellImpl#getWriter <em>Writer</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,6 +73,26 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BufferedWriter WRITER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected BufferedWriter writer = WRITER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -142,6 +165,27 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BufferedWriter getWriter() {
+		return writer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWriter(BufferedWriter newWriter) {
+		BufferedWriter oldWriter = writer;
+		writer = newWriter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ShellPackage.SHELL__WRITER, oldWriter, writer));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String generateCommandLine(Task task) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -153,7 +197,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -164,7 +208,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void createWorkflow() {
+	public String createCommandLine(String commandPattern, Task task) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -175,7 +219,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void executeWorkflow() {
+	public String createCommandLine(String commandPattern, Tool tool) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -205,6 +249,8 @@ public class ShellImpl extends EObjectImpl implements Shell {
 				return basicGetProject();
 			case ShellPackage.SHELL__LOGGER:
 				return getLogger();
+			case ShellPackage.SHELL__WRITER:
+				return getWriter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -220,6 +266,9 @@ public class ShellImpl extends EObjectImpl implements Shell {
 			case ShellPackage.SHELL__PROJECT:
 				setProject((DefaultProject)newValue);
 				return;
+			case ShellPackage.SHELL__WRITER:
+				setWriter((BufferedWriter)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -234,6 +283,9 @@ public class ShellImpl extends EObjectImpl implements Shell {
 		switch (featureID) {
 			case ShellPackage.SHELL__PROJECT:
 				setProject((DefaultProject)null);
+				return;
+			case ShellPackage.SHELL__WRITER:
+				setWriter(WRITER_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -251,6 +303,8 @@ public class ShellImpl extends EObjectImpl implements Shell {
 				return project != null;
 			case ShellPackage.SHELL__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case ShellPackage.SHELL__WRITER:
+				return WRITER_EDEFAULT == null ? writer != null : !WRITER_EDEFAULT.equals(writer);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -266,6 +320,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 			switch (derivedFeatureID) {
 				case ShellPackage.SHELL__PROJECT: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT;
 				case ShellPackage.SHELL__LOGGER: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER;
+				case ShellPackage.SHELL__WRITER: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER;
 				default: return -1;
 			}
 		}
@@ -283,6 +338,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 			switch (baseFeatureID) {
 				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT: return ShellPackage.SHELL__PROJECT;
 				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER: return ShellPackage.SHELL__LOGGER;
+				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER: return ShellPackage.SHELL__WRITER;
 				default: return -1;
 			}
 		}
@@ -301,6 +357,8 @@ public class ShellImpl extends EObjectImpl implements Shell {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (logger: ");
 		result.append(logger);
+		result.append(", writer: ");
+		result.append(writer);
 		result.append(')');
 		return result.toString();
 	}

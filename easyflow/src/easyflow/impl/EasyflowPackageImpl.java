@@ -32,6 +32,8 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
+import easyflow.data.DataPackage;
+import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
 import easyflow.example.impl.ExamplePackageImpl;
 import easyflow.execution.ExecutionPackage;
@@ -59,6 +61,7 @@ import easyflow.ui.impl.UiPackageImpl;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.MapsPackageImpl;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.util.Stack;
 
@@ -182,6 +185,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType bufferedReaderEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType bufferedWriterEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -347,6 +357,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theEasyflowPackage.createPackageContents();
@@ -362,6 +373,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
+		theDataPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theEasyflowPackage.initializePackageContents();
@@ -377,6 +389,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
+		theDataPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theEasyflowPackage.freeze();
@@ -511,6 +524,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 */
 	public EDataType getBufferedReader() {
 		return bufferedReaderEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getBufferedWriter() {
+		return bufferedWriterEDataType;
 	}
 
 	/**
@@ -691,6 +713,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		schemaEDataType = createEDataType(SCHEMA);
 		jsonObjectEDataType = createEDataType(JSON_OBJECT);
 		bufferedReaderEDataType = createEDataType(BUFFERED_READER);
+		bufferedWriterEDataType = createEDataType(BUFFERED_WRITER);
 		patternEDataType = createEDataType(PATTERN);
 		cellNotFoundExceptionEDataType = createEDataType(CELL_NOT_FOUND_EXCEPTION);
 		fileNotFoundExceptionEDataType = createEDataType(FILE_NOT_FOUND_EXCEPTION);
@@ -740,6 +763,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theCorePackage);
@@ -751,6 +775,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		getESubpackages().add(theMetadataPackage);
 		getESubpackages().add(theTraversalPackage);
 		getESubpackages().add(theMapsPackage);
+		getESubpackages().add(theDataPackage);
 
 		// Initialize data types
 		initEDataType(mxGraphEDataType, mxGraph.class, "mxGraph", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
@@ -768,6 +793,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(schemaEDataType, Schema.class, "Schema", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(jsonObjectEDataType, JSONObject.class, "JSONObject", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(bufferedReaderEDataType, BufferedReader.class, "BufferedReader", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(bufferedWriterEDataType, BufferedWriter.class, "BufferedWriter", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(patternEDataType, Pattern.class, "Pattern", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(cellNotFoundExceptionEDataType, CellNotFoundException.class, "CellNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(fileNotFoundExceptionEDataType, FileNotFoundException.class, "FileNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

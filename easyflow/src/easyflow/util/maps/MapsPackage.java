@@ -1787,7 +1787,7 @@ public interface MapsPackage extends EPackage {
 	 * @return the meta object for class '<em>String To Data Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueType="easyflow.tool.Data"
+	 *        valueType="easyflow.data.Data"
 	 * @generated
 	 */
 	EClass getStringToDataMap();
@@ -1821,7 +1821,7 @@ public interface MapsPackage extends EPackage {
 	 * @return the meta object for class '<em>String To Data Format Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueType="easyflow.tool.DataFormat"
+	 *        valueType="easyflow.data.DataFormat"
 	 * @generated
 	 */
 	EClass getStringToDataFormatMap();
@@ -1889,7 +1889,7 @@ public interface MapsPackage extends EPackage {
 	 * @return the meta object for class '<em>Task To Data Ports Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyType="easyflow.core.Task"
-	 *        valueType="easyflow.core.DataPort" valueMany="true"
+	 *        valueType="easyflow.data.DataPort" valueMany="true"
 	 * @generated
 	 */
 	EClass getTaskToDataPortsMap();
@@ -1923,7 +1923,7 @@ public interface MapsPackage extends EPackage {
 	 * @return the meta object for class '<em>Task To Data Links Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyType="easyflow.core.Task"
-	 *        valueType="easyflow.core.DataLink" valueMany="true"
+	 *        valueType="easyflow.data.DataLink" valueMany="true"
 	 * @generated
 	 */
 	EClass getTaskToDataLinksMap();
@@ -1957,7 +1957,7 @@ public interface MapsPackage extends EPackage {
 	 * @return the meta object for class '<em>String To Data Link Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueType="easyflow.core.DataLink"
+	 *        valueType="easyflow.data.DataLink"
 	 * @generated
 	 */
 	EClass getStringToDataLinkMap();

@@ -8,17 +8,18 @@ package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
 
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
-
 import easyflow.core.ToolMatch;
+
+import easyflow.data.Data;
+import easyflow.data.DataFormat;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
+
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -38,8 +39,8 @@ import java.util.Map;
 import javax.xml.validation.Schema;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -620,32 +621,17 @@ public class MapsSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Ports Map</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>String To Boolean Map</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Task To Data Ports Map</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>String To Boolean Map</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTaskToDataLinksMap(Map.Entry<Task, EList<DataLink>> object) {
+	public T caseStringToBooleanMap(Map.Entry<String, Boolean> object) {
 		return null;
 	}
 
@@ -680,17 +666,32 @@ public class MapsSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>String To Boolean Map</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Ports Map</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>String To Boolean Map</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Task To Data Ports Map</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStringToBooleanMap(Map.Entry<String, Boolean> object) {
+	public T caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTaskToDataLinksMap(Map.Entry<Task, EList<DataLink>> object) {
 		return null;
 	}
 

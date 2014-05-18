@@ -12,8 +12,6 @@ import easyflow.core.Catalog;
 import easyflow.core.Condition;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.DefaultRecord;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
@@ -26,6 +24,10 @@ import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.core.Workflow;
 
+import easyflow.data.DataPackage;
+
+import easyflow.data.impl.DataPackageImpl;
+
 import easyflow.example.ExamplePackage;
 
 import easyflow.example.impl.ExamplePackageImpl;
@@ -35,7 +37,9 @@ import easyflow.execution.ExecutionPackage;
 import easyflow.execution.impl.ExecutionPackageImpl;
 
 import easyflow.execution.makeflow.MakeflowPackage;
+
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
+
 import easyflow.execution.pegasus.PegasusPackage;
 
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
@@ -112,6 +116,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass toolMatchEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass iWorkflowTemplateEClass = null;
 
 	/**
@@ -161,20 +172,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass dataPortEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass dataLinkEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass parentTaskResultEClass = null;
 
 	/**
@@ -183,13 +180,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass conditionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass toolMatchEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -250,6 +240,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
+		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theCorePackage.createPackageContents();
@@ -265,6 +256,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
+		theDataPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theCorePackage.initializePackageContents();
@@ -280,6 +272,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
+		theDataPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theCorePackage.freeze();
@@ -403,33 +396,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_PreviousTaskName() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(18);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getWorkflow_Worker() {
-		return (EAttribute)workflowEClass.getEStructuralFeatures().get(19);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWorkflow_Tools() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(20);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getWorkflow_GenericAttributes() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(11);
 	}
@@ -486,6 +452,42 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EReference getWorkflow_ProcessedStates() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(17);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWorkflow_PreviousTaskName() {
+		return (EReference)workflowEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWorkflow_Worker() {
+		return (EAttribute)workflowEClass.getEStructuralFeatures().get(19);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWorkflow_Tools() {
+		return (EReference)workflowEClass.getEStructuralFeatures().get(20);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWorkflow_ExecutionSystem() {
+		return (EReference)workflowEClass.getEStructuralFeatures().get(21);
 	}
 
 	/**
@@ -682,6 +684,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTask_OutputsByDataPort() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(20);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getTask_InputDataPortValidator() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(21);
 	}
@@ -736,6 +747,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTask_Parameters() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(27);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPreprocessingTask() {
 		return preprocessingTaskEClass;
 	}
@@ -772,8 +792,125 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTask_OutputsByDataPort() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(20);
+	public EClass getToolMatch() {
+		return toolMatchEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_Logger() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_Task() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_Tool() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_Score() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_ExpectedScore() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_ExpectedToolScore() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_MissingInDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_MissingOutDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_MissingGroupingCriteria() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_ReverseMissingInDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_ReverseMissingOutDataPorts() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getToolMatch_ReverseMissingGroupingCriteria() {
+		return (EReference)toolMatchEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getToolMatch_Valid() {
+		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -898,168 +1035,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDataPort() {
-		return dataPortEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataPort_GroupingCriteria() {
-		return (EReference)dataPortEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataPort_Cardinality() {
-		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataPort_DataFormats() {
-		return (EReference)dataPortEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataPort_Optional() {
-		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataPort_BitPos() {
-		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataPort_Name() {
-		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataPort_Tools() {
-		return (EReference)dataPortEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataPort_Static() {
-		return (EAttribute)dataPortEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getDataLink() {
-		return dataLinkEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataLink_DataPort() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataLink_Chunks() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataLink_Id() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataLink_GroupingStr() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataLink_ParentGroupingStr() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDataLink_IdenticalGrouping() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataLink_Condition() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataLink_IntermediateTasks() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getParentTaskResult() {
 		return parentTaskResultEClass;
 	}
@@ -1150,132 +1125,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getToolMatch() {
-		return toolMatchEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_Task() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_Tool() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getToolMatch_Score() {
-		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getToolMatch_ExpectedScore() {
-		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getToolMatch_ExpectedToolScore() {
-		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_MissingInDataPorts() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_MissingOutDataPorts() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_MissingGroupingCriteria() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getToolMatch_Logger() {
-		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_ReverseMissingInDataPorts() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_ReverseMissingOutDataPorts() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getToolMatch_ReverseMissingGroupingCriteria() {
-		return (EReference)toolMatchEClass.getEStructuralFeatures().get(11);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getToolMatch_Valid() {
-		return (EAttribute)toolMatchEClass.getEStructuralFeatures().get(12);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -1321,6 +1170,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(workflowEClass, WORKFLOW__PREVIOUS_TASK_NAME);
 		createEAttribute(workflowEClass, WORKFLOW__WORKER);
 		createEReference(workflowEClass, WORKFLOW__TOOLS);
+		createEReference(workflowEClass, WORKFLOW__EXECUTION_SYSTEM);
 
 		taskEClass = createEClass(TASK);
 		createEReference(taskEClass, TASK__IN_DATA_PORTS);
@@ -1350,6 +1200,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(taskEClass, TASK__CIRCUMVENTING_PARENTS);
 		createEReference(taskEClass, TASK__RECORDS);
 		createEReference(taskEClass, TASK__PREPROCESSING_TASKS);
+		createEReference(taskEClass, TASK__PARAMETERS);
 
 		preprocessingTaskEClass = createEClass(PREPROCESSING_TASK);
 		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__NAME);
@@ -1391,26 +1242,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		catalogEClass = createEClass(CATALOG);
 		createEReference(catalogEClass, CATALOG__ENTRIES);
 
-		dataPortEClass = createEClass(DATA_PORT);
-		createEReference(dataPortEClass, DATA_PORT__GROUPING_CRITERIA);
-		createEAttribute(dataPortEClass, DATA_PORT__CARDINALITY);
-		createEReference(dataPortEClass, DATA_PORT__DATA_FORMATS);
-		createEAttribute(dataPortEClass, DATA_PORT__OPTIONAL);
-		createEAttribute(dataPortEClass, DATA_PORT__BIT_POS);
-		createEAttribute(dataPortEClass, DATA_PORT__NAME);
-		createEReference(dataPortEClass, DATA_PORT__TOOLS);
-		createEAttribute(dataPortEClass, DATA_PORT__STATIC);
-
-		dataLinkEClass = createEClass(DATA_LINK);
-		createEReference(dataLinkEClass, DATA_LINK__DATA_PORT);
-		createEReference(dataLinkEClass, DATA_LINK__CHUNKS);
-		createEAttribute(dataLinkEClass, DATA_LINK__ID);
-		createEAttribute(dataLinkEClass, DATA_LINK__GROUPING_STR);
-		createEAttribute(dataLinkEClass, DATA_LINK__PARENT_GROUPING_STR);
-		createEAttribute(dataLinkEClass, DATA_LINK__IDENTICAL_GROUPING);
-		createEReference(dataLinkEClass, DATA_LINK__CONDITION);
-		createEReference(dataLinkEClass, DATA_LINK__INTERMEDIATE_TASKS);
-
 		parentTaskResultEClass = createEClass(PARENT_TASK_RESULT);
 		createEReference(parentTaskResultEClass, PARENT_TASK_RESULT__PARENT_TASK);
 		createEReference(parentTaskResultEClass, PARENT_TASK_RESULT__COVERED_PORTS);
@@ -1451,6 +1282,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
+		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
+		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
@@ -1488,27 +1321,28 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getWorkflow_PreviousTaskName(), theMapsPackage.getStringToStringMap(), null, "previousTaskName", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkflow_Worker(), theEasyflowPackage.getEasyFlowOverallWorker(), "worker", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_Tools(), theMapsPackage.getStringToToolMap(), null, "tools", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_ExecutionSystem(), theExecutionPackage.getIExecutionSystem(), null, "executionSystem", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToToolMap(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(workflowEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(workflowEClass, null, "getParentTasksByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		EGenericType g1 = createEGenericType(ecorePackage.getEEList());
 		EGenericType g2 = createEGenericType(this.getTask());
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
 		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "validateParentTaskOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "validateLastTaskOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(workflowEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1605,8 +1439,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTask_InDataPorts(), this.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTask_OutDataPorts(), this.getDataPort(), null, "outDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_InDataPorts(), theDataPackage.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_OutDataPorts(), theDataPackage.getDataPort(), null, "outDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_JexlString(), ecorePackage.getEString(), "jexlString", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Util(), ecorePackage.getEBoolean(), "util", "false", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1622,8 +1456,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getTask_Root(), ecorePackage.getEBoolean(), "root", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Flags(), ecorePackage.getEInt(), "flags", "0", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_GroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "groupingCriteria", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTask_Inputs(), theMapsPackage.getStringToURIMap(), null, "inputs", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTask_Outputs(), theMapsPackage.getStringToURIMap(), null, "outputs", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_Inputs(), theMapsPackage.getStringToDataLinkMap(), null, "inputs", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_Outputs(), theMapsPackage.getStringToDataLinkMap(), null, "outputs", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_InputsByDataPort(), theMapsPackage.getStringToStringListMap(), null, "inputsByDataPort", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_OutputsByDataPort(), theMapsPackage.getStringToStringListMap(), null, "outputsByDataPort", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_InputDataPortValidator(), theEasyflowPackage.getPattern(), "inputDataPortValidator", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1632,6 +1466,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getTask_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Records(), theTraversalPackage.getTraversalChunk(), null, "records", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_PreprocessingTasks(), this.getPreprocessingTask(), null, "preprocessingTasks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_Parameters(), theMapsPackage.getStringToParameterMap(), null, "parameters", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1660,20 +1495,20 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, ecorePackage.getEString(), "dataFormatString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getPattern(), "pattern", 0, -1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEEList());
-		g2 = createEGenericType(theToolPackage.getDataFormat());
+		g2 = createEGenericType(theDataPackage.getDataFormat());
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
 		addEOperation(taskEClass, ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "isCompatibleWithOutDataPortFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "isCompatibleWithInDataPortFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, theMapsPackage.getStringToChunksMap(), "getNonOveralppingTraversalChunksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1683,28 +1518,32 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		addEOperation(taskEClass, theToolPackage.getTool(), "getPreferredTool", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(taskEClass, this.getDataPort(), "getOverlappingDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPorts1", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPorts2", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getOverlappingDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPorts1", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPorts2", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(taskEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(taskEClass, theMapsPackage.getStringToStringMap(), "createCommandLineMap", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(taskEClass, theMapsPackage.getStringToStringListMap(), "createCommandLineMap", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToStringListMap(), "commandLineParts", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "validateTool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(taskEClass, ecorePackage.getEBoolean(), "validateTools", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(taskEClass, this.getDataPort(), "getDataPortByDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "testDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getDataPortByDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "testDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(taskEClass, this.getDataPort(), "getDataPortByNameOfFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getDataPortByNameOfFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(taskEClass, this.getDataPort(), "getDataPortByName", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getDataPortByName", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "dataPortName", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1717,46 +1556,46 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = addEOperation(taskEClass, ecorePackage.getEString(), "getRequiredGroupingsFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
 		op = addEOperation(taskEClass, ecorePackage.getEString(), "getProvidedGroupingsFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "hasMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "hasMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "hasMultipleGroupingsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProcessMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProcessMultipleGroupingsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canFilterInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
@@ -1768,7 +1607,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalChunk(), "traverslChunks", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
@@ -1776,29 +1615,25 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canComsumeDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalChunk(), "traverslChunks", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "setOutputForDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getObject(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "parameterName", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "setInputForDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theEasyflowPackage.getObject(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "parameterName", 0, 1, IS_UNIQUE, IS_ORDERED);
-
 		op = addEOperation(taskEClass, theEasyflowPackage.getURI(), "getOutputsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, theEasyflowPackage.getURI(), "getInputsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, null, "resolveInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+
+		op = addEOperation(taskEClass, null, "resolveOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+
+		addEOperation(taskEClass, null, "resolveParameters", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(preprocessingTaskEClass, PreprocessingTask.class, "PreprocessingTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPreprocessingTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1812,11 +1647,11 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getToolMatch_Score(), ecorePackage.getELong(), "score", "0", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getToolMatch_ExpectedScore(), ecorePackage.getELong(), "expectedScore", "0", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getToolMatch_ExpectedToolScore(), ecorePackage.getELong(), "expectedToolScore", "0", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getToolMatch_MissingInDataPorts(), this.getDataPort(), null, "missingInDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getToolMatch_MissingOutDataPorts(), this.getDataPort(), null, "missingOutDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_MissingInDataPorts(), theDataPackage.getDataPort(), null, "missingInDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_MissingOutDataPorts(), theDataPackage.getDataPort(), null, "missingOutDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getToolMatch_MissingGroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "missingGroupingCriteria", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getToolMatch_ReverseMissingInDataPorts(), this.getDataPort(), null, "reverseMissingInDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getToolMatch_ReverseMissingOutDataPorts(), this.getDataPort(), null, "reverseMissingOutDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_ReverseMissingInDataPorts(), theDataPackage.getDataPort(), null, "reverseMissingInDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getToolMatch_ReverseMissingOutDataPorts(), theDataPackage.getDataPort(), null, "reverseMissingOutDataPorts", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getToolMatch_ReverseMissingGroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "reverseMissingGroupingCriteria", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getToolMatch_Valid(), ecorePackage.getEBoolean(), "valid", "false", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1825,7 +1660,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeExpectedScore", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(toolMatchEClass, ecorePackage.getEBoolean(), "validateDataPorts", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getPattern(), "pattern", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(toolMatchEClass, theMapsPackage.getTaskToDataPortsMap(), "resolveReverseMissingInDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -1836,7 +1671,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = addEOperation(toolMatchEClass, theMapsPackage.getTaskToDataPortsMap(), "getDataPortProvidingTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "tasks", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(iWorkflowTemplateEClass, IWorkflowTemplate.class, "IWorkflowTemplate", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1864,37 +1699,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(catalogEClass, Catalog.class, "Catalog", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCatalog_Entries(), theMapsPackage.getStringToObjectMap(), null, "entries", null, 0, -1, Catalog.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(dataPortEClass, DataPort.class, "DataPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDataPort_GroupingCriteria(), theTraversalPackage.getTraversalCriterion(), null, "groupingCriteria", null, 0, -1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataPort_Cardinality(), ecorePackage.getEShort(), "cardinality", null, 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataPort_DataFormats(), theMapsPackage.getStringToDataFormatMap(), null, "dataFormats", null, 0, -1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataPort_Optional(), ecorePackage.getEBoolean(), "optional", "false", 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataPort_BitPos(), ecorePackage.getEShort(), "bitPos", "-1", 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataPort_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataPort_Tools(), theMapsPackage.getStringToToolMap(), null, "tools", null, 0, -1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataPort_Static(), ecorePackage.getEBoolean(), "static", "false", 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "removeDataPortFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getDataPort(), "dataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(dataLinkEClass, DataLink.class, "DataLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDataLink_DataPort(), this.getDataPort(), null, "dataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataLink_Chunks(), theMapsPackage.getStringToChunksMap(), null, "chunks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataLink_Id(), ecorePackage.getEInt(), "id", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataLink_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataLink_ParentGroupingStr(), ecorePackage.getEString(), "parentGroupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataLink_IdenticalGrouping(), ecorePackage.getEBoolean(), "identicalGrouping", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataLink_Condition(), this.getCondition(), null, "condition", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataLink_IntermediateTasks(), this.getPreprocessingTask(), null, "intermediateTasks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		addEOperation(dataLinkEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
-
 		initEClass(parentTaskResultEClass, ParentTaskResult.class, "ParentTaskResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParentTaskResult_ParentTask(), this.getTask(), null, "parentTask", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getParentTaskResult_CoveredPorts(), this.getDataPort(), null, "coveredPorts", null, 0, -1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getParentTaskResult_CoveredPorts(), theDataPackage.getDataPort(), null, "coveredPorts", null, 0, -1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_Generic(), ecorePackage.getEBoolean(), "generic", "false", 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_Rank(), ecorePackage.getEInt(), "rank", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -6,11 +6,13 @@
  */
 package easyflow.tool;
 
-import easyflow.core.DataPort;
 import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.data.DataPort;
+
 import easyflow.traversal.TraversalChunk;
+
 import java.net.URI;
-import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -175,7 +177,7 @@ public interface Command extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.ParameterNotFoundException"
 	 * @generated
 	 */
 	Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException;
@@ -195,5 +197,21 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<String> getPositionalParameterNames();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<String> getOptionalParameterNames();
 
 } // Command

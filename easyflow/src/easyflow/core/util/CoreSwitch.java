@@ -140,18 +140,6 @@ public class CoreSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CorePackage.DATA_PORT: {
-				DataPort dataPort = (DataPort)theEObject;
-				T result = caseDataPort(dataPort);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CorePackage.DATA_LINK: {
-				DataLink dataLink = (DataLink)theEObject;
-				T result = caseDataLink(dataLink);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CorePackage.PARENT_TASK_RESULT: {
 				ParentTaskResult parentTaskResult = (ParentTaskResult)theEObject;
 				T result = caseParentTaskResult(parentTaskResult);
@@ -315,36 +303,6 @@ public class CoreSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCatalog(Catalog object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data Port</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data Port</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDataPort(DataPort object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Data Link</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Data Link</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDataLink(DataLink object) {
 		return null;
 	}
 

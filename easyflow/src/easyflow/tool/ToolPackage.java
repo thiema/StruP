@@ -1045,123 +1045,31 @@ public interface ToolPackage extends EPackage {
 	int PACKAGE__VERSION = ITOOL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Exe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__EXE = ITOOL_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Interpreter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__INTERPRETER = ITOOL_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Package</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 5;
-
-	/**
-	 * The meta object id for the '{@link easyflow.tool.impl.DataImpl <em>Data</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.tool.impl.DataImpl
-	 * @see easyflow.tool.impl.ToolPackageImpl#getData()
-	 * @generated
-	 */
-	int DATA = 10;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__NAME = DEFAULT_TOOL_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__LABEL = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Port</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__PORT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Output</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__OUTPUT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Format</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__FORMAT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of structural features of the '<em>Data</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The meta object id for the '{@link easyflow.tool.impl.DataFormatImpl <em>Data Format</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.tool.impl.DataFormatImpl
-	 * @see easyflow.tool.impl.ToolPackageImpl#getDataFormat()
-	 * @generated
-	 */
-	int DATA_FORMAT = 11;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_FORMAT__NAME = DEFAULT_TOOL_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_FORMAT__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
-
-	/**
-	 * The number of structural features of the '<em>Data Format</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_FORMAT_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
+	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.KeyImpl <em>Key</em>}' class.
@@ -1171,7 +1079,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getKey()
 	 * @generated
 	 */
-	int KEY = 12;
+	int KEY = 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1244,7 +1152,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getRequirement()
 	 * @generated
 	 */
-	int REQUIREMENT = 13;
+	int REQUIREMENT = 11;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1308,7 +1216,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getDocumentProperties()
 	 * @generated
 	 */
-	int DOCUMENT_PROPERTIES = 14;
+	int DOCUMENT_PROPERTIES = 12;
 
 	/**
 	 * The feature id for the '<em><b>Source URI</b></em>' attribute.
@@ -2022,68 +1930,26 @@ public interface ToolPackage extends EPackage {
 	EAttribute getPackage_Version();
 
 	/**
-	 * Returns the meta object for class '{@link easyflow.tool.Data <em>Data</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Package#getExe <em>Exe</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Data</em>'.
-	 * @see easyflow.tool.Data
+	 * @return the meta object for the attribute '<em>Exe</em>'.
+	 * @see easyflow.tool.Package#getExe()
+	 * @see #getPackage()
 	 * @generated
 	 */
-	EClass getData();
+	EAttribute getPackage_Exe();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Data#getLabel <em>Label</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Package#getInterpreter <em>Interpreter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Label</em>'.
-	 * @see easyflow.tool.Data#getLabel()
-	 * @see #getData()
+	 * @return the meta object for the attribute '<em>Interpreter</em>'.
+	 * @see easyflow.tool.Package#getInterpreter()
+	 * @see #getPackage()
 	 * @generated
 	 */
-	EAttribute getData_Label();
-
-	/**
-	 * Returns the meta object for the reference '{@link easyflow.tool.Data#getPort <em>Port</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Port</em>'.
-	 * @see easyflow.tool.Data#getPort()
-	 * @see #getData()
-	 * @generated
-	 */
-	EReference getData_Port();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Data#isOutput <em>Output</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Output</em>'.
-	 * @see easyflow.tool.Data#isOutput()
-	 * @see #getData()
-	 * @generated
-	 */
-	EAttribute getData_Output();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Data#getFormat <em>Format</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Format</em>'.
-	 * @see easyflow.tool.Data#getFormat()
-	 * @see #getData()
-	 * @generated
-	 */
-	EAttribute getData_Format();
-
-	/**
-	 * Returns the meta object for class '{@link easyflow.tool.DataFormat <em>Data Format</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Data Format</em>'.
-	 * @see easyflow.tool.DataFormat
-	 * @generated
-	 */
-	EClass getDataFormat();
+	EAttribute getPackage_Interpreter();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Key <em>Key</em>}'.
@@ -2761,56 +2627,20 @@ public interface ToolPackage extends EPackage {
 		EAttribute PACKAGE__VERSION = eINSTANCE.getPackage_Version();
 
 		/**
-		 * The meta object literal for the '{@link easyflow.tool.impl.DataImpl <em>Data</em>}' class.
+		 * The meta object literal for the '<em><b>Exe</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see easyflow.tool.impl.DataImpl
-		 * @see easyflow.tool.impl.ToolPackageImpl#getData()
 		 * @generated
 		 */
-		EClass DATA = eINSTANCE.getData();
+		EAttribute PACKAGE__EXE = eINSTANCE.getPackage_Exe();
 
 		/**
-		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Interpreter</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DATA__LABEL = eINSTANCE.getData_Label();
-
-		/**
-		 * The meta object literal for the '<em><b>Port</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DATA__PORT = eINSTANCE.getData_Port();
-
-		/**
-		 * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DATA__OUTPUT = eINSTANCE.getData_Output();
-
-		/**
-		 * The meta object literal for the '<em><b>Format</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DATA__FORMAT = eINSTANCE.getData_Format();
-
-		/**
-		 * The meta object literal for the '{@link easyflow.tool.impl.DataFormatImpl <em>Data Format</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.tool.impl.DataFormatImpl
-		 * @see easyflow.tool.impl.ToolPackageImpl#getDataFormat()
-		 * @generated
-		 */
-		EClass DATA_FORMAT = eINSTANCE.getDataFormat();
+		EAttribute PACKAGE__INTERPRETER = eINSTANCE.getPackage_Interpreter();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.KeyImpl <em>Key</em>}' class.

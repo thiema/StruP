@@ -7,14 +7,17 @@
 package easyflow.execution.pegasus.impl;
 
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+import easyflow.core.Task;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
 
 import easyflow.execution.pegasus.Pegasus;
 import easyflow.execution.pegasus.PegasusPackage;
 
+import easyflow.tool.Tool;
 import easyflow.ui.DefaultProject;
 
+import java.io.BufferedWriter;
 import java.net.URI;
 
 import org.apache.log4j.Logger;
@@ -37,6 +40,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getProject <em>Project</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getWriter <em>Writer</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getSiteCatalog <em>Site Catalog</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getReplicaCatalog <em>Replica Catalog</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getTransformationCatalog <em>Transformation Catalog</em>}</li>
@@ -75,6 +79,26 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BufferedWriter WRITER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected BufferedWriter writer = WRITER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getSiteCatalog() <em>Site Catalog</em>}' attribute.
@@ -207,6 +231,27 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BufferedWriter getWriter() {
+		return writer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWriter(BufferedWriter newWriter) {
+		BufferedWriter oldWriter = writer;
+		writer = newWriter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PegasusPackage.PEGASUS__WRITER, oldWriter, writer));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public URI getSiteCatalog() {
 		return siteCatalog;
 	}
@@ -314,7 +359,7 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -325,7 +370,7 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void createWorkflow() {
+	public String createCommandLine(String commandPattern, Task task) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -336,7 +381,7 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void executeWorkflow() {
+	public String createCommandLine(String commandPattern, Tool tool) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -366,6 +411,8 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 				return basicGetProject();
 			case PegasusPackage.PEGASUS__LOGGER:
 				return getLogger();
+			case PegasusPackage.PEGASUS__WRITER:
+				return getWriter();
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				return getSiteCatalog();
 			case PegasusPackage.PEGASUS__REPLICA_CATALOG:
@@ -386,6 +433,9 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 		switch (featureID) {
 			case PegasusPackage.PEGASUS__PROJECT:
 				setProject((DefaultProject)newValue);
+				return;
+			case PegasusPackage.PEGASUS__WRITER:
+				setWriter((BufferedWriter)newValue);
 				return;
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				setSiteCatalog((URI)newValue);
@@ -410,6 +460,9 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 		switch (featureID) {
 			case PegasusPackage.PEGASUS__PROJECT:
 				setProject((DefaultProject)null);
+				return;
+			case PegasusPackage.PEGASUS__WRITER:
+				setWriter(WRITER_EDEFAULT);
 				return;
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				setSiteCatalog(SITE_CATALOG_EDEFAULT);
@@ -436,6 +489,8 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 				return project != null;
 			case PegasusPackage.PEGASUS__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case PegasusPackage.PEGASUS__WRITER:
+				return WRITER_EDEFAULT == null ? writer != null : !WRITER_EDEFAULT.equals(writer);
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				return SITE_CATALOG_EDEFAULT == null ? siteCatalog != null : !SITE_CATALOG_EDEFAULT.equals(siteCatalog);
 			case PegasusPackage.PEGASUS__REPLICA_CATALOG:
@@ -457,6 +512,7 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 			switch (derivedFeatureID) {
 				case PegasusPackage.PEGASUS__PROJECT: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT;
 				case PegasusPackage.PEGASUS__LOGGER: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER;
+				case PegasusPackage.PEGASUS__WRITER: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER;
 				default: return -1;
 			}
 		}
@@ -474,6 +530,7 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 			switch (baseFeatureID) {
 				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT: return PegasusPackage.PEGASUS__PROJECT;
 				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER: return PegasusPackage.PEGASUS__LOGGER;
+				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER: return PegasusPackage.PEGASUS__WRITER;
 				default: return -1;
 			}
 		}
@@ -492,6 +549,8 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (logger: ");
 		result.append(logger);
+		result.append(", writer: ");
+		result.append(writer);
 		result.append(", siteCatalog: ");
 		result.append(siteCatalog);
 		result.append(", replicaCatalog: ");

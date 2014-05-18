@@ -51,7 +51,7 @@ public class Easyflow {
 				
 				defaultProject.resolveToolDependencies();
 				
-				//defaultProject.generateWorklowForExecutionSystem();
+				defaultProject.generateWorklowForExecutionSystem();
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -15,6 +15,7 @@
 		<xs:sequence>
 			<xs:element minOccurs="0" name="description" type="xs:string"/>
 			<xs:element minOccurs="0" name="exe" type="Exe"/>
+			<xs:element minOccurs="0" name="interpreter" type="Interpreter"/>
 			<xs:element minOccurs="0" name="command" type="Command"/>
 			<xs:group maxOccurs="unbounded" minOccurs="0" ref="InputElement"/>
 			<xs:element minOccurs="0" name="help" type="xs:string"/>

@@ -78,6 +78,26 @@ public interface EasyflowPackage extends EPackage {
 	int MX_ICELL = 1;
 
 	/**
+	 * The meta object id for the '<em>mx ICell Visitor</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see com.mxgraph.view.mxGraph.mxICellVisitor
+	 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
+	 * @generated
+	 */
+	int MX_ICELL_VISITOR = 2;
+
+	/**
+	 * The meta object id for the '<em>Easy Flow Graph</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.jgraphx.editor.EasyFlowGraph
+	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowGraph()
+	 * @generated
+	 */
+	int EASY_FLOW_GRAPH = 3;
+
+	/**
 	 * The meta object id for the '<em>Logger</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -128,16 +148,6 @@ public interface EasyflowPackage extends EPackage {
 	int URI = 8;
 
 	/**
-	 * The meta object id for the '<em>Easy Flow Graph</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.custom.jgraphx.editor.EasyFlowGraph
-	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowGraph()
-	 * @generated
-	 */
-	int EASY_FLOW_GRAPH = 3;
-
-	/**
 	 * The meta object id for the '<em>EObject</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -167,7 +177,6 @@ public interface EasyflowPackage extends EPackage {
 	 */
 	int ELEMENT = 11;
 
-
 	/**
 	 * The meta object id for the '<em>Schema</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -177,7 +186,6 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	int SCHEMA = 12;
-
 
 	/**
 	 * The meta object id for the '<em>JSON Object</em>' data type.
@@ -189,7 +197,6 @@ public interface EasyflowPackage extends EPackage {
 	 */
 	int JSON_OBJECT = 13;
 
-
 	/**
 	 * The meta object id for the '<em>Buffered Reader</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -200,27 +207,15 @@ public interface EasyflowPackage extends EPackage {
 	 */
 	int BUFFERED_READER = 14;
 
-
 	/**
-	 * The meta object id for the '<em>File Not Found Exception</em>' data type.
+	 * The meta object id for the '<em>Buffered Writer</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see java.io.FileNotFoundException
-	 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
+	 * @see java.io.BufferedWriter
+	 * @see easyflow.impl.EasyflowPackageImpl#getBufferedWriter()
 	 * @generated
 	 */
-	int FILE_NOT_FOUND_EXCEPTION = 17;
-
-
-	/**
-	 * The meta object id for the '<em>mx ICell Visitor</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see com.mxgraph.view.mxGraph.mxICellVisitor
-	 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
-	 * @generated
-	 */
-	int MX_ICELL_VISITOR = 2;
+	int BUFFERED_WRITER = 15;
 
 	/**
 	 * The meta object id for the '<em>Pattern</em>' data type.
@@ -230,7 +225,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getPattern()
 	 * @generated
 	 */
-	int PATTERN = 15;
+	int PATTERN = 16;
 
 	/**
 	 * The meta object id for the '<em>Cell Not Found Exception</em>' data type.
@@ -240,7 +235,17 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getCellNotFoundException()
 	 * @generated
 	 */
-	int CELL_NOT_FOUND_EXCEPTION = 16;
+	int CELL_NOT_FOUND_EXCEPTION = 17;
+
+	/**
+	 * The meta object id for the '<em>File Not Found Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.io.FileNotFoundException
+	 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
+	 * @generated
+	 */
+	int FILE_NOT_FOUND_EXCEPTION = 18;
 
 	/**
 	 * The meta object id for the '<em>Task Not Found Exception</em>' data type.
@@ -250,7 +255,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getTaskNotFoundException()
 	 * @generated
 	 */
-	int TASK_NOT_FOUND_EXCEPTION = 18;
+	int TASK_NOT_FOUND_EXCEPTION = 19;
 
 	/**
 	 * The meta object id for the '<em>Data Port Not Found Exception</em>' data type.
@@ -260,7 +265,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataPortNotFoundException()
 	 * @generated
 	 */
-	int DATA_PORT_NOT_FOUND_EXCEPTION = 19;
+	int DATA_PORT_NOT_FOUND_EXCEPTION = 20;
 
 	/**
 	 * The meta object id for the '<em>Data Link Not Found Exception</em>' data type.
@@ -270,7 +275,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataLinkNotFoundException()
 	 * @generated
 	 */
-	int DATA_LINK_NOT_FOUND_EXCEPTION = 20;
+	int DATA_LINK_NOT_FOUND_EXCEPTION = 21;
 
 	/**
 	 * The meta object id for the '<em>Tool Not Found Exception</em>' data type.
@@ -280,7 +285,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getToolNotFoundException()
 	 * @generated
 	 */
-	int TOOL_NOT_FOUND_EXCEPTION = 21;
+	int TOOL_NOT_FOUND_EXCEPTION = 22;
 
 	/**
 	 * The meta object id for the '<em>Grouping Criterion Not Found Exception</em>' data type.
@@ -290,7 +295,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionNotFoundException()
 	 * @generated
 	 */
-	int GROUPING_CRITERION_NOT_FOUND_EXCEPTION = 22;
+	int GROUPING_CRITERION_NOT_FOUND_EXCEPTION = 23;
 
 	/**
 	 * The meta object id for the '<em>Grouping Criterion Instance Not Found Exception</em>' data type.
@@ -300,7 +305,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionInstanceNotFoundException()
 	 * @generated
 	 */
-	int GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 23;
+	int GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 24;
 
 	/**
 	 * The meta object id for the '<em>Parameter Criterion Not Found Exception</em>' data type.
@@ -310,7 +315,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionNotFoundException()
 	 * @generated
 	 */
-	int PARAMETER_CRITERION_NOT_FOUND_EXCEPTION = 24;
+	int PARAMETER_CRITERION_NOT_FOUND_EXCEPTION = 25;
 
 	/**
 	 * The meta object id for the '<em>Parameter Criterion Instance Not Found Exception</em>' data type.
@@ -320,7 +325,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionInstanceNotFoundException()
 	 * @generated
 	 */
-	int PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 25;
+	int PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 26;
 
 	/**
 	 * The meta object id for the '<em>Parameter Not Found Exception</em>' data type.
@@ -330,7 +335,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getParameterNotFoundException()
 	 * @generated
 	 */
-	int PARAMETER_NOT_FOUND_EXCEPTION = 26;
+	int PARAMETER_NOT_FOUND_EXCEPTION = 27;
 
 	/**
 	 * The meta object id for the '<em>Utility Task Not Found Exception</em>' data type.
@@ -340,7 +345,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getUtilityTaskNotFoundException()
 	 * @generated
 	 */
-	int UTILITY_TASK_NOT_FOUND_EXCEPTION = 27;
+	int UTILITY_TASK_NOT_FOUND_EXCEPTION = 28;
 
 	/**
 	 * The meta object id for the '<em>Easy Flow Overall Worker</em>' data type.
@@ -350,7 +355,8 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowOverallWorker()
 	 * @generated
 	 */
-	int EASY_FLOW_OVERALL_WORKER = 28;
+	int EASY_FLOW_OVERALL_WORKER = 29;
+
 
 	/**
 	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph <em>mx Graph</em>}'.
@@ -373,6 +379,28 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getmxICell();
+
+	/**
+	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph.mxICellVisitor <em>mx ICell Visitor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>mx ICell Visitor</em>'.
+	 * @see com.mxgraph.view.mxGraph.mxICellVisitor
+	 * @model instanceClass="com.mxgraph.view.mxGraph.mxICellVisitor"
+	 * @generated
+	 */
+	EDataType getmxICellVisitor();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.jgraphx.editor.EasyFlowGraph <em>Easy Flow Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Easy Flow Graph</em>'.
+	 * @see easyflow.custom.jgraphx.editor.EasyFlowGraph
+	 * @model instanceClass="easyflow.custom.jgraphx.editor.EasyFlowGraph"
+	 * @generated
+	 */
+	EDataType getEasyFlowGraph();
 
 	/**
 	 * Returns the meta object for data type '{@link org.apache.log4j.Logger <em>Logger</em>}'.
@@ -428,17 +456,6 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getURI();
-
-	/**
-	 * Returns the meta object for data type '{@link easyflow.custom.jgraphx.editor.EasyFlowGraph <em>Easy Flow Graph</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Easy Flow Graph</em>'.
-	 * @see easyflow.custom.jgraphx.editor.EasyFlowGraph
-	 * @model instanceClass="easyflow.custom.jgraphx.editor.EasyFlowGraph"
-	 * @generated
-	 */
-	EDataType getEasyFlowGraph();
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.ecore.EObject <em>EObject</em>}'.
@@ -507,26 +524,15 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getBufferedReader();
 
 	/**
-	 * Returns the meta object for data type '{@link java.io.FileNotFoundException <em>File Not Found Exception</em>}'.
+	 * Returns the meta object for data type '{@link java.io.BufferedWriter <em>Buffered Writer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>File Not Found Exception</em>'.
-	 * @see java.io.FileNotFoundException
-	 * @model instanceClass="java.io.FileNotFoundException"
+	 * @return the meta object for data type '<em>Buffered Writer</em>'.
+	 * @see java.io.BufferedWriter
+	 * @model instanceClass="java.io.BufferedWriter"
 	 * @generated
 	 */
-	EDataType getFileNotFoundException();
-
-	/**
-	 * Returns the meta object for data type '{@link com.mxgraph.view.mxGraph.mxICellVisitor <em>mx ICell Visitor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>mx ICell Visitor</em>'.
-	 * @see com.mxgraph.view.mxGraph.mxICellVisitor
-	 * @model instanceClass="com.mxgraph.view.mxGraph.mxICellVisitor"
-	 * @generated
-	 */
-	EDataType getmxICellVisitor();
+	EDataType getBufferedWriter();
 
 	/**
 	 * Returns the meta object for data type '{@link java.util.regex.Pattern <em>Pattern</em>}'.
@@ -549,6 +555,17 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getCellNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link java.io.FileNotFoundException <em>File Not Found Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>File Not Found Exception</em>'.
+	 * @see java.io.FileNotFoundException
+	 * @model instanceClass="java.io.FileNotFoundException"
+	 * @generated
+	 */
+	EDataType getFileNotFoundException();
 
 	/**
 	 * Returns the meta object for data type '{@link easyflow.custom.exception.TaskNotFoundException <em>Task Not Found Exception</em>}'.
@@ -714,6 +731,26 @@ public interface EasyflowPackage extends EPackage {
 		EDataType MX_ICELL = eINSTANCE.getmxICell();
 
 		/**
+		 * The meta object literal for the '<em>mx ICell Visitor</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see com.mxgraph.view.mxGraph.mxICellVisitor
+		 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
+		 * @generated
+		 */
+		EDataType MX_ICELL_VISITOR = eINSTANCE.getmxICellVisitor();
+
+		/**
+		 * The meta object literal for the '<em>Easy Flow Graph</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.jgraphx.editor.EasyFlowGraph
+		 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowGraph()
+		 * @generated
+		 */
+		EDataType EASY_FLOW_GRAPH = eINSTANCE.getEasyFlowGraph();
+
+		/**
 		 * The meta object literal for the '<em>Logger</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -762,16 +799,6 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType URI = eINSTANCE.getURI();
-
-		/**
-		 * The meta object literal for the '<em>Easy Flow Graph</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.custom.jgraphx.editor.EasyFlowGraph
-		 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowGraph()
-		 * @generated
-		 */
-		EDataType EASY_FLOW_GRAPH = eINSTANCE.getEasyFlowGraph();
 
 		/**
 		 * The meta object literal for the '<em>EObject</em>' data type.
@@ -834,24 +861,14 @@ public interface EasyflowPackage extends EPackage {
 		EDataType BUFFERED_READER = eINSTANCE.getBufferedReader();
 
 		/**
-		 * The meta object literal for the '<em>File Not Found Exception</em>' data type.
+		 * The meta object literal for the '<em>Buffered Writer</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.io.FileNotFoundException
-		 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
+		 * @see java.io.BufferedWriter
+		 * @see easyflow.impl.EasyflowPackageImpl#getBufferedWriter()
 		 * @generated
 		 */
-		EDataType FILE_NOT_FOUND_EXCEPTION = eINSTANCE.getFileNotFoundException();
-
-		/**
-		 * The meta object literal for the '<em>mx ICell Visitor</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see com.mxgraph.view.mxGraph.mxICellVisitor
-		 * @see easyflow.impl.EasyflowPackageImpl#getmxICellVisitor()
-		 * @generated
-		 */
-		EDataType MX_ICELL_VISITOR = eINSTANCE.getmxICellVisitor();
+		EDataType BUFFERED_WRITER = eINSTANCE.getBufferedWriter();
 
 		/**
 		 * The meta object literal for the '<em>Pattern</em>' data type.
@@ -872,6 +889,16 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType CELL_NOT_FOUND_EXCEPTION = eINSTANCE.getCellNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>File Not Found Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.io.FileNotFoundException
+		 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
+		 * @generated
+		 */
+		EDataType FILE_NOT_FOUND_EXCEPTION = eINSTANCE.getFileNotFoundException();
 
 		/**
 		 * The meta object literal for the '<em>Task Not Found Exception</em>' data type.

@@ -6,7 +6,7 @@
  */
 package easyflow.util.maps.impl;
 
-import easyflow.core.DataLink;
+import easyflow.data.DataLink;
 
 import easyflow.util.maps.MapsPackage;
 

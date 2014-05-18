@@ -38,6 +38,8 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.PackageImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link easyflow.tool.impl.PackageImpl#getExe <em>Exe</em>}</li>
+ *   <li>{@link easyflow.tool.impl.PackageImpl#getInterpreter <em>Interpreter</em>}</li>
  * </ul>
  * </p>
  *
@@ -127,6 +129,43 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 * @ordered
 	 */
 	protected String version = VERSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getExe() <em>Exe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExe()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EXE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getExe() <em>Exe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExe()
+	 * @generated
+	 * @ordered
+	 */
+	protected String exe = EXE_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getInterpreter() <em>Interpreter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInterpreter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INTERPRETER_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getInterpreter() <em>Interpreter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInterpreter()
+	 * @generated
+	 * @ordered
+	 */
+	protected String interpreter = INTERPRETER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -248,6 +287,48 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getExe() {
+		return exe;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExe(String newExe) {
+		String oldExe = exe;
+		exe = newExe;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PACKAGE__EXE, oldExe, exe));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getInterpreter() {
+		return interpreter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInterpreter(String newInterpreter) {
+		String oldInterpreter = interpreter;
+		interpreter = newInterpreter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PACKAGE__INTERPRETER, oldInterpreter, interpreter));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -276,6 +357,10 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return getId();
 			case ToolPackage.PACKAGE__VERSION:
 				return getVersion();
+			case ToolPackage.PACKAGE__EXE:
+				return getExe();
+			case ToolPackage.PACKAGE__INTERPRETER:
+				return getInterpreter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -302,6 +387,12 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return;
 			case ToolPackage.PACKAGE__VERSION:
 				setVersion((String)newValue);
+				return;
+			case ToolPackage.PACKAGE__EXE:
+				setExe((String)newValue);
+				return;
+			case ToolPackage.PACKAGE__INTERPRETER:
+				setInterpreter((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -330,6 +421,12 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 			case ToolPackage.PACKAGE__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
+			case ToolPackage.PACKAGE__EXE:
+				setExe(EXE_EDEFAULT);
+				return;
+			case ToolPackage.PACKAGE__INTERPRETER:
+				setInterpreter(INTERPRETER_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -352,6 +449,10 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case ToolPackage.PACKAGE__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
+			case ToolPackage.PACKAGE__EXE:
+				return EXE_EDEFAULT == null ? exe != null : !EXE_EDEFAULT.equals(exe);
+			case ToolPackage.PACKAGE__INTERPRETER:
+				return INTERPRETER_EDEFAULT == null ? interpreter != null : !INTERPRETER_EDEFAULT.equals(interpreter);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -408,6 +509,10 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 		result.append(id);
 		result.append(", version: ");
 		result.append(version);
+		result.append(", exe: ");
+		result.append(exe);
+		result.append(", interpreter: ");
+		result.append(interpreter);
 		result.append(')');
 		return result.toString();
 	}

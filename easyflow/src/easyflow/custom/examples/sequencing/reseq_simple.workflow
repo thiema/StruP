@@ -20,12 +20,12 @@ DetectVariants		gatk2_unified_genotyper	BAM	VCF	Group
 ##Helper Functions/Tasks which helps to (pre)process/prepare (e.g. indexing, sorting, splitting, ...) data 
 ## which are then processed further by the actual >>main<< task
 ######
-SortSam	STATIC:sort	samtools:sort	BAM	BAM
-IndexSam	STATIC:index	samtools:index	BAM	BAI		Read:sort:Coordinate	
-MergeSam	STATIC:merge	samtools:merge	BAM,SAM	BAM,SAM	ReadGroup	
+SortSam	STATIC:sort	samtools:sort_sam	BAM	BAM
+IndexSam	STATIC:index	samtools:index_sam	BAM	BAI		Read:sort:Coordinate	
+MergeSam	STATIC:merge	samtools:merge_sam	BAM,SAM	BAM,SAM	ReadGroup
 #SplitSam	STATIC	samtools:split	BAM,SAM	BAM,SAM	ReadGroup	
 PrintSam	STATIC:filter	samtools:view	(SAM | BAM)	SAM || BAM
 #ReadMappingFlag,Contig,IntervalList	
-#IndexFasta	STATIC	samtools:indexFasta	FASTA	FAI		Read:Coordinate	
+#IndexFasta	STATIC	samtools:index_fasta	FASTA	FAI		Read:Coordinate	
 #BwtFasta	STATIC	bwa:index	FASTA	SAI		
 #DictFasta	STATIC	picard:index	FASTA	DICT	

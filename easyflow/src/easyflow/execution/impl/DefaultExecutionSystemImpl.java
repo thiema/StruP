@@ -6,10 +6,19 @@
  */
 package easyflow.execution.impl;
 
+import com.mxgraph.view.mxGraph.mxICellVisitor;
+
+import easyflow.core.Task;
+import easyflow.core.Workflow;
+import easyflow.custom.util.GlobalVar;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
 
+import easyflow.tool.Tool;
 import easyflow.ui.DefaultProject;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -31,6 +40,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link easyflow.execution.impl.DefaultExecutionSystemImpl#getProject <em>Project</em>}</li>
  *   <li>{@link easyflow.execution.impl.DefaultExecutionSystemImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.execution.impl.DefaultExecutionSystemImpl#getWriter <em>Writer</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,7 +65,7 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = null;
+	protected static final Logger LOGGER_EDEFAULT = null;;
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -65,6 +75,26 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BufferedWriter WRITER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected BufferedWriter writer = WRITER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -137,7 +167,61 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
+	public BufferedWriter getWriter() {
+		return writer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWriter(BufferedWriter newWriter) {
+		BufferedWriter oldWriter = writer;
+		writer = newWriter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER, oldWriter, writer));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public mxICellVisitor getJgraphxVisitor() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(String commandPattern, Task task) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(String commandPattern, Tool tool) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -156,6 +240,8 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 				return basicGetProject();
 			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER:
 				return getLogger();
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER:
+				return getWriter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -171,6 +257,9 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT:
 				setProject((DefaultProject)newValue);
 				return;
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER:
+				setWriter((BufferedWriter)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -185,6 +274,9 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 		switch (featureID) {
 			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT:
 				setProject((DefaultProject)null);
+				return;
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER:
+				setWriter(WRITER_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -202,6 +294,8 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 				return project != null;
 			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER:
+				return WRITER_EDEFAULT == null ? writer != null : !WRITER_EDEFAULT.equals(writer);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -218,6 +312,8 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (logger: ");
 		result.append(logger);
+		result.append(", writer: ");
+		result.append(writer);
 		result.append(')');
 		return result.toString();
 	}

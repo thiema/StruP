@@ -51,19 +51,15 @@ import org.xml.sax.SAXException;
 
 import easyflow.EasyflowPackage;
 import easyflow.core.CorePackage;
-
-import easyflow.core.DataLink;
 import easyflow.core.Task;
-import easyflow.core.DataPort;
-
-import easyflow.tool.Data;
+import easyflow.data.Data;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
-
-
 
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxCell;

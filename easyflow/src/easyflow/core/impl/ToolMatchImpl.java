@@ -7,16 +7,10 @@
 package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
-import easyflow.custom.exception.CellNotFoundException;
-import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.util.GlobalVar;
-
-import easyflow.graph.jgraphx.Util;
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
+import easyflow.data.Data;
+import easyflow.data.DataPort;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -608,12 +602,19 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 					Data data = getTool().getData().get(parameterEntry.getKey());
 					logger.trace(parameter.getName()+" "+((InOutParameter)parameter).getFormats()+" "
 							+parameter.isOptional());
+					
 					if (data.isOutput())
 					{
-						DataPort dataPort = isDataPortMatching(parameterEntry.getValue(), getTask().getOutDataPorts(), data.getPort());
+						DataPort dataPort = isDataPortMatching(
+								parameterEntry.getValue(), 
+								getTask().getOutDataPorts(), 
+								data.getPort());
+						
 						if (dataPort != null)
 						{
 							score|=1<<(outputOffset+dataPort.getBitPos());
+							dataPort.setParameterName(parameter.getName());
+							logger.debug("computeScore(): output parameter="+parameter.getName());
 							taskMissingOutDataPorts.remove(dataPort);
 						}
 						else if (!parameter.isOptional())
@@ -624,11 +625,16 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 					}
 					else
 					{
-						DataPort dataPort = isDataPortMatching(parameterEntry.getValue(), getTask().getInDataPorts(), data.getPort());
+						DataPort dataPort = isDataPortMatching(
+								parameterEntry.getValue(), 
+								getTask().getInDataPorts(), 
+								data.getPort());
 						if (dataPort != null)
 						{
 							//logger.debug("match input. shift="+inputOffset+" "+dataPort.getBitPos());
 							score|=1<<(inputOffset+dataPort.getBitPos());
+							dataPort.setParameterName(parameter.getName());
+							logger.debug("computeScore(): input parameter="+parameter.getName());
 							taskMissingInDataPorts.remove(dataPort);
 						}
 						else if (!parameter.isOptional())
@@ -730,7 +736,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	 * @generated not
 	 */
 	public boolean validateDataPorts(EList<DataPort> dataPorts, EList<Pattern> patterns) {
-		List<String> dataPortStrings = new ArrayList<String>();
+		
+		List<String> dataPortStrings    = new ArrayList<String>();
 		List<String> allDataPortStrings = new ArrayList<String>();
 		//List<List<String>> dataPortStringsList = new ArrayList<List<String>>();
 		char formatSymbol='A';
@@ -769,8 +776,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			EMap<Task, EList<DataPort>> taskDataPortsMap, 
 			EList<DataPort> dataPorts)
 	{
-		EList<Task> adequateTasks=new BasicEList<Task>();
-		EMap<Task, Long> taskScores= new BasicEMap<Task, Long>();
+		EList<Task> adequateTasks   = new BasicEList<Task>();
+		EMap<Task, Long> taskScores = new BasicEMap<Task, Long>();
 		for (Task task:taskDataPortsMap.keySet())
 		{
 			//           #matching ports
@@ -778,16 +785,18 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			//           ||
 			//           |||
 			//           ||||
-			long score=0x0000;
-			score|=1<<(matchingPortOffset+taskDataPortsMap.get(task).size());
+			long score = 0x0000;
+			score |= 1<<(matchingPortOffset+taskDataPortsMap.get(task).size());
 			taskScores.put(task, score);
 		}
+		outerloop:
 		for (int i=0; i<dataPorts.size()||!dataPorts.isEmpty(); i++)
 		{
 			Task t=getMostAdequateTask(taskScores);
 			adequateTasks.add(t);
 			for (DataPort dataPort:taskDataPortsMap.get(t))
-				dataPort.removeDataPortFrom(dataPorts);
+				if (!dataPort.removeDataPortFrom(dataPorts))
+					break outerloop;
 		}
 		return adequateTasks;
 		
@@ -835,9 +844,9 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		EList<Task> adequateTasks=null; 
 		if (tasks != null && !tasks.isEmpty())
 		{
-			taskDataPortsMap=getDataPortProvidingTasks(tasks, getReverseMissingInDataPorts());
+			taskDataPortsMap = getDataPortProvidingTasks(tasks, getReverseMissingInDataPorts());
 			if (!taskDataPortsMap.isEmpty())
-				adequateTasks=getMostAdequateTasks(taskDataPortsMap, getReverseMissingInDataPorts());
+				adequateTasks = getMostAdequateTasks(taskDataPortsMap, getReverseMissingInDataPorts());
 		}
 		
 		if (!getReverseMissingInDataPorts().isEmpty())

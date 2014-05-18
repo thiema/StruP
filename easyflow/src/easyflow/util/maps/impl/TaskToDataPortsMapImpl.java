@@ -6,8 +6,9 @@
  */
 package easyflow.util.maps.impl;
 
-import easyflow.core.DataPort;
 import easyflow.core.Task;
+
+import easyflow.data.DataPort;
 
 import easyflow.util.maps.MapsPackage;
 

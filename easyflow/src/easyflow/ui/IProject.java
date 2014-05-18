@@ -17,6 +17,7 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.execution.IExecutionSystem;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import javax.xml.validation.Schema;
@@ -214,6 +215,14 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	boolean resetWorkflowStep();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	IExecutionSystem getExecutionSystem();
 
 	/**
 	 * <!-- begin-user-doc -->

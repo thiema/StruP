@@ -18,11 +18,11 @@ import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 
-import easyflow.core.DataLink;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.util.GlobalVar;
+import easyflow.data.DataLink;
 
 
 /**
@@ -198,7 +198,7 @@ public class EasyFlowCustomGraph extends mxGraph
 						
 						if (task != null)
 						{
-							//logger.debug(" "+task.getUniqueString()+" autosize="+isAutoSizeCell(o)+" resize="+isCellResizable(o));
+							//logger.trace(" "+task.getUniqueString()+" autosize="+isAutoSizeCell(o)+" resize="+isCellResizable(o));
 							return task.getUniqueString();
 						}
 					}
@@ -215,11 +215,18 @@ public class EasyFlowCustomGraph extends mxGraph
 						DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(cell);
 						if (dataLink!=null && dataLink.getDataPort()!=null)
 						{
-							String label = "";//dataLink.getDataPort().getName(); 
-							if (dataLink.getCondition()!=null && !dataLink.getCondition().isUnconditional())
-								label+=" not ("+StringUtils.join(dataLink.getCondition().getForbidden(), " || ")+")";
-							//logger.debug(dataLink.hashCode());
-							return label;
+							String labelName = dataLink.getDataPort().getName();
+							
+							String uniqueString = dataLink.getUniqueString(true);
+							
+							String condition = ""; 
+							if (!dataLink.isUnconditional())
+								condition+=" not ("+StringUtils.join(dataLink.getCondition().getForbidden(), " || ")+")";
+							
+
+
+							logger.trace("getLabel(): "+labelName+"_"+uniqueString+" cond="+condition);
+							return labelName;
 						}
 					}
 				} catch (DataLinkNotFoundException e) {

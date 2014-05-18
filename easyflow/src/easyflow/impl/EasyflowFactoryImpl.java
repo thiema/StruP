@@ -28,6 +28,7 @@ import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.Stack;
@@ -132,6 +133,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createJSONObjectFromString(eDataType, initialValue);
 			case EasyflowPackage.BUFFERED_READER:
 				return createBufferedReaderFromString(eDataType, initialValue);
+			case EasyflowPackage.BUFFERED_WRITER:
+				return createBufferedWriterFromString(eDataType, initialValue);
 			case EasyflowPackage.PATTERN:
 				return createPatternFromString(eDataType, initialValue);
 			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
@@ -201,6 +204,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertJSONObjectToString(eDataType, instanceValue);
 			case EasyflowPackage.BUFFERED_READER:
 				return convertBufferedReaderToString(eDataType, instanceValue);
+			case EasyflowPackage.BUFFERED_WRITER:
+				return convertBufferedWriterToString(eDataType, instanceValue);
 			case EasyflowPackage.PATTERN:
 				return convertPatternToString(eDataType, instanceValue);
 			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
@@ -465,6 +470,24 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertBufferedReaderToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BufferedWriter createBufferedWriterFromString(EDataType eDataType, String initialValue) {
+		return (BufferedWriter)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertBufferedWriterToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

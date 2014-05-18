@@ -69,8 +69,6 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.GALAXY_TASK_READER: return createGalaxyTaskReader();
 			case CorePackage.DEFAULT_RECORD: return createDefaultRecord();
 			case CorePackage.CATALOG: return createCatalog();
-			case CorePackage.DATA_PORT: return createDataPort();
-			case CorePackage.DATA_LINK: return createDataLink();
 			case CorePackage.PARENT_TASK_RESULT: return createParentTaskResult();
 			case CorePackage.CONDITION: return createCondition();
 			default:
@@ -156,26 +154,6 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	public Catalog createCatalog() {
 		CatalogImpl catalog = new CatalogImpl();
 		return catalog;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DataPort createDataPort() {
-		DataPortImpl dataPort = new DataPortImpl();
-		return dataPort;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DataLink createDataLink() {
-		DataLinkImpl dataLink = new DataLinkImpl();
-		return dataLink;
 	}
 
 	/**

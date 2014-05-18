@@ -20,6 +20,8 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Package#getParameters <em>Parameters</em>}</li>
  *   <li>{@link easyflow.tool.Package#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.Package#getVersion <em>Version</em>}</li>
+ *   <li>{@link easyflow.tool.Package#getExe <em>Exe</em>}</li>
+ *   <li>{@link easyflow.tool.Package#getInterpreter <em>Interpreter</em>}</li>
  * </ul>
  * </p>
  *
@@ -97,4 +99,56 @@ public interface Package extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setVersion(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Exe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Exe</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Exe</em>' attribute.
+	 * @see #setExe(String)
+	 * @see easyflow.tool.ToolPackage#getPackage_Exe()
+	 * @model
+	 * @generated
+	 */
+	String getExe();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Package#getExe <em>Exe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Exe</em>' attribute.
+	 * @see #getExe()
+	 * @generated
+	 */
+	void setExe(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Interpreter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Interpreter</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Interpreter</em>' attribute.
+	 * @see #setInterpreter(String)
+	 * @see easyflow.tool.ToolPackage#getPackage_Interpreter()
+	 * @model
+	 * @generated
+	 */
+	String getInterpreter();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Package#getInterpreter <em>Interpreter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Interpreter</em>' attribute.
+	 * @see #getInterpreter()
+	 * @generated
+	 */
+	void setInterpreter(String value);
 } // Package

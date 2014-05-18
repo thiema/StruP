@@ -88,13 +88,22 @@ public interface ShellPackage extends EPackage {
 	int SHELL__LOGGER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Writer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHELL__WRITER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Shell</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHELL_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+	int SHELL_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
 
 
 	/**

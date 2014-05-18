@@ -7,8 +7,6 @@
 package easyflow.tool.util;
 
 import easyflow.tool.Command;
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.IToolElement;
@@ -124,14 +122,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter casePackage(easyflow.tool.Package object) {
 				return createPackageAdapter();
-			}
-			@Override
-			public Adapter caseData(Data object) {
-				return createDataAdapter();
-			}
-			@Override
-			public Adapter caseDataFormat(DataFormat object) {
-				return createDataFormatAdapter();
 			}
 			@Override
 			public Adapter caseKey(Key object) {
@@ -302,34 +292,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPackageAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.tool.Data <em>Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.tool.Data
-	 * @generated
-	 */
-	public Adapter createDataAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.tool.DataFormat <em>Data Format</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.tool.DataFormat
-	 * @generated
-	 */
-	public Adapter createDataFormatAdapter() {
 		return null;
 	}
 

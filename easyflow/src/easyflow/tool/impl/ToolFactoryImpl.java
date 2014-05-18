@@ -7,8 +7,6 @@
 package easyflow.tool.impl;
 
 import easyflow.tool.Command;
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
@@ -83,8 +81,6 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.PARAMETER: return createParameter();
 			case ToolPackage.IN_OUT_PARAMETER: return createInOutParameter();
 			case ToolPackage.PACKAGE: return createPackage();
-			case ToolPackage.DATA: return createData();
-			case ToolPackage.DATA_FORMAT: return createDataFormat();
 			case ToolPackage.KEY: return createKey();
 			case ToolPackage.REQUIREMENT: return createRequirement();
 			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
@@ -181,26 +177,6 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public easyflow.tool.Package createPackage() {
 		PackageImpl package_ = new PackageImpl();
 		return package_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Data createData() {
-		DataImpl data = new DataImpl();
-		return data;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DataFormat createDataFormat() {
-		DataFormatImpl dataFormat = new DataFormatImpl();
-		return dataFormat;
 	}
 
 	/**

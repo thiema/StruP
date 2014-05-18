@@ -6,10 +6,10 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.core.DataPort;
 import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.data.Data;
+import easyflow.data.DataPort;
 import easyflow.tool.Command;
-import easyflow.tool.Data;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Parameter;

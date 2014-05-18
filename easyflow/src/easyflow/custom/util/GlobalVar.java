@@ -1,11 +1,16 @@
 package easyflow.custom.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import easyflow.core.DataLink;
+import easyflow.data.DataLink;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
@@ -73,6 +78,9 @@ public class GlobalVar {
 	public static final String METADATA_INPUT             = "InputFiles";
 	
 	
+	public static String executionSystemFileName = null;
+	public static File   executionSystemFile     = null;
+	public static BufferedWriter executionSystemWriter   = null;
 
 	
 	private static Util graphUtil = null;
@@ -173,5 +181,33 @@ public class GlobalVar {
 	public static Task getRootTask()
 	{
 		return getGraphUtil().getTasks().get(ROOT_TASK_NAME);
+	}
+
+	public static String getExecutionSystemOutputFileName() {
+		return executionSystemFileName;
+	}
+	public static File getExecutionSystemOutputFile() {
+		return executionSystemFile;
+	}
+	
+	public static void setExecutionSystemOutputFileName(String filename) {
+		executionSystemFileName = filename;
+		if (executionSystemFile == null 
+				|| !executionSystemFile.getAbsolutePath().equalsIgnoreCase(filename))
+			executionSystemFile = new File(filename);
+	}
+
+	public static BufferedWriter getExecutionSystemOutputWriter() {
+
+		if (executionSystemWriter == null)
+		{
+			try {
+				executionSystemWriter = new BufferedWriter(new FileWriter(getExecutionSystemOutputFile()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return executionSystemWriter;
 	}
 }

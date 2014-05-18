@@ -4,6 +4,12 @@
 	xmlns="urn:de.thiema.easyflow/types" 
 	xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd">
 
+	<package id="gatk" version="2.3">
+		<exe name="GenomeAnalysisTK.jar"></exe>
+		<interpreter exe="java"></interpreter>
+	</package>
+
+	<!-- if no name for exe is defined assume the package name as the callable binary name-->
 	<package id="bwa" name="bwa" version="0.5.9">
 		<description>
 			bwa package to map short reads.
@@ -173,7 +179,7 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 	</tool>
 
 
-	<tool id="merge_sam" analysis_type="merge">
+	<tool id="merge_sam" name="merge_sam" version="0.1" package="samtools" analysis_type="merge"> 
 		<description>merge sam files</description>
 		<param name="input" type="data" format="bam" multiple="true"></param>
 		<param name="output" type="data" format="bam"></param>

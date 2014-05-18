@@ -6,90 +6,75 @@
  */
 package easyflow.core.impl;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
+
+import org.apache.commons.jexl2.Expression;
+import org.apache.commons.jexl2.JexlContext;
+import org.apache.commons.jexl2.JexlEngine;
+import org.apache.commons.jexl2.MapContext;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DataPort;
 import easyflow.core.PreprocessingTask;
 import easyflow.core.Task;
-
 import easyflow.core.ToolMatch;
+import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.util.GlobalVar;
-import easyflow.custom.util.XMLUtil;
+import easyflow.data.DataFactory;
+import easyflow.data.DataFormat;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
 import easyflow.metadata.DefaultMetaData;
-import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingInstance;
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
+import easyflow.tool.Command;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
-
-import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
+import easyflow.traversal.TraversalFactory;
+import easyflow.traversal.TraversalOperation;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
+import easyflow.util.maps.impl.StringToDataLinkMapImpl;
+import easyflow.util.maps.impl.StringToParameterMapImpl;
 import easyflow.util.maps.impl.StringToStringListMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
-import easyflow.util.maps.impl.StringToURIMapImpl;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import easyflow.traversal.TraversalFactory;
-import easyflow.traversal.TraversalOperation;
-
-import java.lang.Object;
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import java.util.regex.Pattern;
-import java.util.Map.Entry;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
-import org.apache.commons.jexl2.JexlEngine;
-import org.apache.log4j.Logger;
-
-import org.apache.commons.jexl2.Expression;
-import org.apache.commons.jexl2.JexlContext;
-import org.apache.commons.jexl2.MapContext;
-import org.apache.commons.lang.StringUtils;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EClass;
-
-
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Task</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Task</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -120,6 +105,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.TaskImpl#getCircumventingParents <em>Circumventing Parents</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  * </p>
  *
@@ -128,8 +114,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * The cached value of the '{@link #getInDataPorts() <em>In Data Ports</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getInDataPorts()
 	 * @generated
 	 * @ordered
@@ -138,8 +123,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getOutDataPorts() <em>Out Data Ports</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getOutDataPorts()
 	 * @generated
 	 * @ordered
@@ -148,8 +133,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -158,8 +142,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -168,8 +151,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The default value of the '{@link #getJexlString() <em>Jexl String</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getJexlString()
 	 * @generated
 	 * @ordered
@@ -178,8 +160,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getJexlString() <em>Jexl String</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getJexlString()
 	 * @generated
 	 * @ordered
@@ -188,8 +169,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The default value of the '{@link #isUtil() <em>Util</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isUtil()
 	 * @generated
 	 * @ordered
@@ -197,9 +177,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected static final boolean UTIL_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isUtil() <em>Util</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #isUtil() <em>Util</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isUtil()
 	 * @generated
 	 * @ordered
@@ -207,9 +187,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected boolean util = UTIL_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getJexlEngine() <em>Jexl Engine</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getJexlEngine() <em>Jexl Engine</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getJexlEngine()
 	 * @generated not
 	 * @ordered
@@ -218,8 +198,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getJexlEngine() <em>Jexl Engine</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getJexlEngine()
 	 * @generated
 	 * @ordered
@@ -227,19 +206,19 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected JexlEngine jexlEngine = JEXL_ENGINE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getLogger() <em>Logger</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getLogger()
 	 * @generated not
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(Task.class);
+	protected static final Logger LOGGER_EDEFAULT = Logger
+			.getLogger(Task.class);
 
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getLogger()
 	 * @generated
 	 * @ordered
@@ -248,8 +227,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getTraversalEvents() <em>Traversal Events</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getTraversalEvents()
 	 * @generated
 	 * @ordered
@@ -258,8 +237,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getParents() <em>Parents</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getParents()
 	 * @generated
 	 * @ordered
@@ -267,9 +245,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, Task> parents;
 
 	/**
-	 * The cached value of the '{@link #getChunks() <em>Chunks</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getChunks() <em>Chunks</em>}' map. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getChunks()
 	 * @generated
 	 * @ordered
@@ -278,8 +256,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getToolNames() <em>Tool Names</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getToolNames()
 	 * @generated
 	 * @ordered
@@ -287,9 +264,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, EList<String>> toolNames;
 
 	/**
-	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getTools()
 	 * @generated
 	 * @ordered
@@ -298,8 +275,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getToolMatches() <em>Tool Matches</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getToolMatches()
 	 * @generated
 	 * @ordered
@@ -308,8 +284,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The default value of the '{@link #getPreviousTaskStr() <em>Previous Task Str</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getPreviousTaskStr()
 	 * @generated
 	 * @ordered
@@ -318,8 +294,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getPreviousTaskStr() <em>Previous Task Str</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getPreviousTaskStr()
 	 * @generated
 	 * @ordered
@@ -328,8 +304,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The default value of the '{@link #isRoot() <em>Root</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #isRoot()
 	 * @generated
 	 * @ordered
@@ -337,9 +312,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected static final boolean ROOT_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isRoot() <em>Root</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #isRoot() <em>Root</em>}' attribute. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #isRoot()
 	 * @generated
 	 * @ordered
@@ -348,8 +323,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The default value of the '{@link #getFlags() <em>Flags</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getFlags()
 	 * @generated
 	 * @ordered
@@ -358,8 +332,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getFlags() <em>Flags</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getFlags()
 	 * @generated
 	 * @ordered
@@ -368,8 +341,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getGroupingCriteria() <em>Grouping Criteria</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getGroupingCriteria()
 	 * @generated
 	 * @ordered
@@ -377,29 +350,28 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EMap<String, String> groupingCriteria;
 
 	/**
-	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getInputs() <em>Inputs</em>}' map. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getInputs()
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<String, URI> inputs;
+	protected EMap<String, DataLink> inputs;
 
 	/**
 	 * The cached value of the '{@link #getOutputs() <em>Outputs</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getOutputs()
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<String, URI> outputs;
+	protected EMap<String, DataLink> outputs;
 
 	/**
 	 * The cached value of the '{@link #getInputsByDataPort() <em>Inputs By Data Port</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getInputsByDataPort()
 	 * @generated
 	 * @ordered
@@ -408,8 +380,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getOutputsByDataPort() <em>Outputs By Data Port</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getOutputsByDataPort()
 	 * @generated
 	 * @ordered
@@ -418,8 +390,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getInputDataPortValidator() <em>Input Data Port Validator</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getInputDataPortValidator()
 	 * @generated
 	 * @ordered
@@ -428,8 +400,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getOutputDataPortValidator() <em>Output Data Port Validator</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc
+	 * --> <!-- end-user-doc -->
 	 * @see #getOutputDataPortValidator()
 	 * @generated
 	 * @ordered
@@ -438,8 +410,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getAnalysisTypes() <em>Analysis Types</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
 	 * @see #getAnalysisTypes()
 	 * @generated
 	 * @ordered
@@ -458,8 +430,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * The cached value of the '{@link #getRecords() <em>Records</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @see #getRecords()
 	 * @generated
 	 * @ordered
@@ -477,8 +448,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	protected EList<PreprocessingTask> preprocessingTasks;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' map.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Parameter> parameters;
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected TaskImpl() {
@@ -486,8 +465,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -496,8 +474,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<DataPort> getInDataPorts() {
@@ -508,8 +485,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<DataPort> getOutDataPorts() {
@@ -520,8 +496,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getName() {
@@ -529,8 +504,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -541,8 +515,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getJexlString() {
@@ -550,8 +523,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setJexlString(String newJexlString) {
@@ -562,8 +534,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isUtil() {
@@ -571,8 +542,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setUtil(boolean newUtil) {
@@ -583,8 +553,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public JexlEngine getJexlEngine() {
@@ -592,8 +561,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Logger getLogger() {
@@ -601,8 +569,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setLogger(Logger newLogger) {
@@ -613,8 +580,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, TraversalEvent> getTraversalEvents() {
@@ -625,8 +591,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, Task> getParents() {
@@ -637,8 +602,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, EList<TraversalChunk>> getChunks() {
@@ -649,8 +613,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, EList<String>> getToolNames() {
@@ -660,10 +623,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return toolNames;
 	}
 
-
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, Tool> getTools() {
@@ -674,8 +635,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, ToolMatch> getToolMatches() {
@@ -686,8 +646,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getPreviousTaskStr() {
@@ -695,8 +654,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setPreviousTaskStr(String newPreviousTaskStr) {
@@ -707,8 +665,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean isRoot() {
@@ -716,8 +673,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setRoot(boolean newRoot) {
@@ -728,8 +684,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getFlags() {
@@ -737,8 +692,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setFlags(int newFlags) {
@@ -749,8 +703,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, String> getGroupingCriteria() {
@@ -761,32 +714,29 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, URI> getInputs() {
+	public EMap<String, DataLink> getInputs() {
 		if (inputs == null) {
-			inputs = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, CorePackage.TASK__INPUTS);
+			inputs = new EcoreEMap<String,DataLink>(MapsPackage.Literals.STRING_TO_DATA_LINK_MAP, StringToDataLinkMapImpl.class, this, CorePackage.TASK__INPUTS);
 		}
 		return inputs;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, URI> getOutputs() {
+	public EMap<String, DataLink> getOutputs() {
 		if (outputs == null) {
-			outputs = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, CorePackage.TASK__OUTPUTS);
+			outputs = new EcoreEMap<String,DataLink>(MapsPackage.Literals.STRING_TO_DATA_LINK_MAP, StringToDataLinkMapImpl.class, this, CorePackage.TASK__OUTPUTS);
 		}
 		return outputs;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, EList<String>> getInputsByDataPort() {
@@ -797,8 +747,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EMap<String, EList<String>> getOutputsByDataPort() {
@@ -809,8 +758,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Pattern> getInputDataPortValidator() {
@@ -821,8 +769,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<Pattern> getOutputDataPortValidator() {
@@ -833,8 +780,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getAnalysisTypes() {
@@ -845,8 +791,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> getCircumventingParents() {
@@ -857,8 +802,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<TraversalChunk> getRecords() {
@@ -869,8 +813,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<PreprocessingTask> getPreprocessingTasks() {
@@ -880,720 +823,729 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return preprocessingTasks;
 	}
 
-	/*private EList<String> enumerateInstances(String regexp)
-	{
-		regexp = "ab(c|d){2,3}";
-		RegExp r = new RegExp(regexp);
-		Automaton a = r.toAutomaton();
-		String s = "abcccdc";
-		System.out.println("Match: " + a.run(s)); // prints: true
-		
-		logger.debug(regexp+": "+a.getFiniteStrings());
-		
-		return null;
-	}*/
-	
-	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	public EMap<String, Parameter> getParameters() {
+		if (parameters == null) {
+			parameters = new EcoreEMap<String,Parameter>(MapsPackage.Literals.STRING_TO_PARAMETER_MAP, StringToParameterMapImpl.class, this, CorePackage.TASK__PARAMETERS);
+		}
+		return parameters;
+	}
+
+	/*
+	 * private EList<String> enumerateInstances(String regexp) { regexp =
+	 * "ab(c|d){2,3}"; RegExp r = new RegExp(regexp); Automaton a =
+	 * r.toAutomaton(); String s = "abcccdc"; System.out.println("Match: " +
+	 * a.run(s)); // prints: true
+	 * 
+	 * logger.debug(regexp+": "+a.getFiniteStrings());
+	 * 
+	 * return null; }
+	 */
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public void readTask(String wtplLine, String defaultMode, EList<String> defaultGroupingCriteria) {
-		
-		short taskField          = 0;
-		short taskType           = 1;
-		short toolField          = 2;
-		short inDataPortField    = 3;
-		short outDataPortField   = 4;
-		short groupingCritField  = 5;
+	public void readTask(String wtplLine, String defaultMode,
+			EList<String> defaultGroupingCriteria) {
+
+		short taskField = 0;
+		short taskType = 1;
+		short toolField = 2;
+		short inDataPortField = 3;
+		short outDataPortField = 4;
+		short groupingCritField = 5;
 		short traversalCritField = 6;
-		short jexlField          = 7;
-		//String[] defaultGroupingCriteria={};
-		//defaultGroupingCriteria=new String[] {"Sample"};
+		short jexlField = 7;
+		// String[] defaultGroupingCriteria={};
+		// defaultGroupingCriteria=new String[] {"Sample"};
 		/**
-		 * Read string into an array of strings.
-		 * Process array and set  task attributes
-		 * appropriately.
+		 * Read string into an array of strings. Process array and set task
+		 * attributes appropriately.
 		 */
-		String[] wtplArray=wtplLine.split("\t");
-		
+		String[] wtplArray = wtplLine.split("\t");
+
 		String[] tmp;
-		//logger.debug(wtplArray[0]);
+		// logger.debug(wtplArray[0]);
 		setName(wtplArray[taskField]);
-		for (String parent:wtplArray[taskType].split(","))
-		{
-			tmp=parent.split(":");
-			if (tmp[0].equals("STATIC"))
-			{
+		for (String parent : wtplArray[taskType].split(",")) {
+			tmp = parent.split(":");
+			if (tmp[0].equals("STATIC")) {
 				setUtil(true);
-				if (tmp.length>1)
+				if (tmp.length > 1)
 					getAnalysisTypes().add(tmp[1]);
 			}
-			// the actual parents are resolved by class EasyflowTemplate 
-			//else
-				//getParents().put(tmp[0], null);	
+			// the actual parents are resolved by class EasyflowTemplate
+			// else
+			// getParents().put(tmp[0], null);
 		}
 		/**
 		 * Parse the tools field. Check for multiple implementing tools
 		 */
-		if (!wtplArray[toolField].isEmpty())
-		{
-	        tmp=wtplArray[toolField].split(",");
-	        for (int i=0; i<tmp.length; i++) {
-	        	getToolNames().put(tmp[i], new BasicEList<String>());
-	        }
+		if (!wtplArray[toolField].isEmpty()) {
+			tmp = wtplArray[toolField].split(",");
+			for (int i = 0; i < tmp.length; i++) {
+				getToolNames().put(tmp[i], new BasicEList<String>());
+			}
 		}
-        
-        /**
-         * Read DataFormatIn/Out. and set DataPorts
-         */
+
+		/**
+		 * Read DataFormatIn/Out. and set DataPorts
+		 */
 		String debugDataPort = "in=(";
-        short bitPos=0;
-        boolean hasIndataPorts=false;
-        for (String dataPortField:wtplArray[inDataPortField].split(";"))
-        {
-        	DataPort dataPort=parseDataPortField(dataPortField, inputDataPortValidator);
-        	if (dataPort == null || dataPort.getName().equals(""))
-        		break;
-        	else
-        		hasIndataPorts=true;
-        	getInDataPorts().add(dataPort);
-        	dataPort.setBitPos(bitPos++);
-        	debugDataPort+=dataPort.getName()+", ";
-        }
-        debugDataPort+=") out=(";
-        bitPos=0;
-        boolean hasOutdataPorts=false;
-        for (String dataPortField:wtplArray[outDataPortField].split(";"))
-        {
-        	DataPort dataPort=parseDataPortField(dataPortField, outputDataPortValidator);
-        	if (dataPort == null || dataPort.getName().equals(""))
-        		break;
-        	else
-        		hasOutdataPorts=true;
-        	getOutDataPorts().add(dataPort);
-        	dataPort.setBitPos(bitPos++);
-        	debugDataPort+=dataPort.getName()+", ";
-        }
-        debugDataPort+=") ";
-        /**
-         * Read Data(Grouping)Criteria. 
-         */
-        //skip if line ended or record empty
-        String groupingStr="";
-        if ((wtplArray.length>5)) {
-        	groupingStr=wtplArray[groupingCritField];
-        }
+		short bitPos = 0;
+		boolean hasIndataPorts = false;
+		for (String dataPortField : wtplArray[inDataPortField].split(";")) {
+			DataPort dataPort = parseDataPortField(dataPortField,
+					inputDataPortValidator);
+			if (dataPort == null || dataPort.getName().equals(""))
+				break;
+			else
+				hasIndataPorts = true;
+			getInDataPorts().add(dataPort);
+			dataPort.setBitPos(bitPos++);
+			debugDataPort += dataPort.getName() + ", ";
+		}
+		debugDataPort += ") out=(";
+		bitPos = 0;
+		boolean hasOutdataPorts = false;
+		for (String dataPortField : wtplArray[outDataPortField].split(";")) {
+			DataPort dataPort = parseDataPortField(dataPortField,
+					outputDataPortValidator);
+			if (dataPort == null || dataPort.getName().equals(""))
+				break;
+			else
+				hasOutdataPorts = true;
+			getOutDataPorts().add(dataPort);
+			dataPort.setBitPos(bitPos++);
+			debugDataPort += dataPort.getName() + ", ";
+		}
+		debugDataPort += ") ";
+		/**
+		 * Read Data(Grouping)Criteria.
+		 */
+		// skip if line ended or record empty
+		String groupingStr = "";
+		if ((wtplArray.length > 5)) {
+			groupingStr = wtplArray[groupingCritField];
+		}
 
-        if (hasIndataPorts)
-        {
-        	short dataPortNo=0;
-        	
-        	//String[] groupingStrA=groupingStr.split(";");
-        	for (String groupingString:groupingStr.split(";"))
-        	{
-	        	DataPort dataPort=null;
-	        	if (groupingString.equals(""))
-	        	{
-	        		tmp=(String[])defaultGroupingCriteria.toArray();
-	        		dataPort=getInDataPorts().get(dataPortNo++);
-	        	}
-	        	else
-	        	{	tmp=groupingString.split(";");
-	        		if (tmp.length>1)
-	        		{
-	        			dataPort=getDataPortByName(tmp[0], false);
-	        			groupingString=tmp[1];
-	        		}
-	        		else
-	        			dataPort=getInDataPorts().get(dataPortNo++);
-	        		tmp=groupingString.split(",");
-	        	}
-	        	logger.trace("readTask(): "+getName()+" "+groupingString+" dataPort="+dataPort.getName()+" ("+getInDataPorts().size()+","+getOutDataPorts().size()+")");
-	        	
-	        	if (tmp.length>0) {
-			        for (int i=0;i<tmp.length;i++) {
-			        	
-			        	TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
-			        	traversalCriterion.setDataPort(dataPort);
-			        	String[] group=tmp[i].split(":");
-			        	if (group.length>1)	traversalCriterion.setMode(group[1]);
-			        	else traversalCriterion.setMode(defaultMode); 
+		if (hasIndataPorts) {
+			short dataPortNo = 0;
 
-			        	TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
-			        	traversalCriterion.setId(group[0]);
-			        	logger.trace("readTask(): "+" set traversal criterion="+traversalCriterion.getId());
+			// String[] groupingStrA=groupingStr.split(";");
+			for (String groupingString : groupingStr.split(";")) {
+				DataPort dataPort = null;
+				if (groupingString.equals("")) {
+					tmp = (String[]) defaultGroupingCriteria.toArray();
+					dataPort = getInDataPorts().get(dataPortNo++);
+				} else {
+					tmp = groupingString.split(";");
+					if (tmp.length > 1) {
+						dataPort = getDataPortByName(tmp[0], false);
+						groupingString = tmp[1];
+					} else
+						dataPort = getInDataPorts().get(dataPortNo++);
+					tmp = groupingString.split(",");
+				}
+				logger.trace("readTask(): " + getName() + " " + groupingString
+						+ " dataPort=" + dataPort.getName() + " ("
+						+ getInDataPorts().size() + ","
+						+ getOutDataPorts().size() + ")");
 
-			        	TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
-			        	traversalOperation.setType("grouping");
-			        	traversalCriterion.setOperation(traversalOperation);
+				if (tmp.length > 0) {
+					for (int i = 0; i < tmp.length; i++) {
 
-			        	traversalEvent.setTraversalCriterion(traversalCriterion);
-			        	traversalEvent.setSplitTask(this);
-			        	logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" ");
-			        	getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
-			        	getGroupingCriteria().put(traversalCriterion.getId(), traversalCriterion.getMode());
-			        	dataPort.getGroupingCriteria().add(traversalCriterion);
-			        }
-	        	}
-        	}
-        }
+						TraversalCriterion traversalCriterion = TraversalFactory.eINSTANCE
+								.createTraversalCriterion();
+						traversalCriterion.setDataPort(dataPort);
+						String[] group = tmp[i].split(":");
+						if (group.length > 1)
+							traversalCriterion.setMode(group[1]);
+						else
+							traversalCriterion.setMode(defaultMode);
+
+						TraversalEvent traversalEvent = TraversalFactory.eINSTANCE
+								.createTraversalEvent();
+						traversalCriterion.setId(group[0]);
+						logger.trace("readTask(): "
+								+ " set traversal criterion="
+								+ traversalCriterion.getId());
+
+						TraversalOperation traversalOperation = TraversalFactory.eINSTANCE
+								.createTraversalOperation();
+						traversalOperation.setType("grouping");
+						traversalCriterion.setOperation(traversalOperation);
+
+						traversalEvent
+								.setTraversalCriterion(traversalCriterion);
+						traversalEvent.setSplitTask(this);
+						logger.trace("readTask(): " + "adding travcrit: "
+								+ traversalCriterion.getId() + " ");
+						getTraversalEvents().put(traversalCriterion.getId(),
+								traversalEvent);
+						getGroupingCriteria().put(traversalCriterion.getId(),
+								traversalCriterion.getMode());
+						dataPort.getGroupingCriteria().add(traversalCriterion);
+					}
+				}
+			}
+		}
 
 		/**
 		 * Read the traversal Expression
 		 * 
 		 * for example: splitting and merging criteria
 		 */
-        
-		if ((wtplArray.length>6)) {
+
+		if (wtplArray.length > 6) {
 			if (!wtplArray[6].equals("")) {
-				tmp=wtplArray[6].split(";");
-				//logger.debug(tmp.length);
-				for (int i=0;i<tmp.length;i++) {
-					// travParamExp, expected of the form: <TraversalName(ID)>:<Tools ParamName>:<instances enclosed in brackets or name of operation that produces/retrieves instances>
-					String[] travParamExp=tmp[i].split(":");
-					//logger.debug(tmp1.length);
-					//if (!travParamExp[0].equals("")) {
-						
-						TraversalCriterion traversalCriterion=TraversalFactory.eINSTANCE.createTraversalCriterion();
-						traversalCriterion.setId(travParamExp[0]);
-						if (getInDataPorts().size()>i && getInDataPorts().get(i)!=null)
-						{
-							traversalCriterion.setDataPort(getInDataPorts().get(0));
-							
-						}
-						traversalCriterion.setName(travParamExp[1]);
-						traversalCriterion.setMode("batch");
-						TraversalOperation traversalOperation=TraversalFactory.eINSTANCE.createTraversalOperation();
-						String[] operation=null;
-						if (travParamExp.length>2)
-						{
-							operation=travParamExp[2].split("=");
-							if (operation.length>1)
-							{
-								traversalOperation.setName(operation[0]);
-								traversalOperation.setType("split");
-							}
-							else
-							{
-								traversalOperation.setName(travParamExp[2]);
-								traversalOperation.setType("merge");
-							}
-						}
-						else
-						{
-							traversalOperation.setName("default");
+				tmp = wtplArray[6].split(";");
+				// logger.debug(tmp.length);
+				for (int i = 0; i < tmp.length; i++) {
+					// travParamExp, expected of the form:
+					// <TraversalName(ID)>:<Tools ParamName>:<instances enclosed
+					// in brackets or name of operation that produces/retrieves
+					// instances>
+					String[] travParamExp = tmp[i].split(":");
+					// logger.debug(tmp1.length);
+					// if (!travParamExp[0].equals("")) {
+
+					TraversalCriterion traversalCriterion = TraversalFactory.eINSTANCE
+							.createTraversalCriterion();
+					traversalCriterion.setId(travParamExp[0]);
+					if (getInDataPorts().size() > i
+							&& getInDataPorts().get(i) != null) {
+						traversalCriterion.setDataPort(getInDataPorts().get(0));
+
+					}
+					traversalCriterion.setName(travParamExp[1]);
+					traversalCriterion.setMode("batch");
+					TraversalOperation traversalOperation = TraversalFactory.eINSTANCE
+							.createTraversalOperation();
+					String[] operation = null;
+					if (travParamExp.length > 2) {
+						operation = travParamExp[2].split("=");
+						if (operation.length > 1) {
+							traversalOperation.setName(operation[0]);
+							traversalOperation.setType("split");
+						} else {
+							traversalOperation.setName(travParamExp[2]);
 							traversalOperation.setType("merge");
 						}
+					} else {
+						traversalOperation.setName("default");
+						traversalOperation.setType("merge");
+					}
 
-						TraversalEvent traversalEvent=TraversalFactory.eINSTANCE.createTraversalEvent();
-						
-						// here we parse the 3rd part of the parameter traversal expression like TraversalName:ParamName:values=[a,b,c]
-						if (operation!=null && operation.length>1) {
-							if (!operation[1].startsWith("[")) 
-								traversalCriterion.setChunkSource(operation[1]);
-							else {
-								String noBrackets=operation[1].substring(1, operation[1].length()-1);
-								logger.debug("readTask(): parsed values for parameter traversal expression to '"+noBrackets+"' for name="+operation[0]);
-								String[] tmp2=noBrackets.split(",");
-								for (String tmp3:tmp2) {
-									TraversalChunk traversalChunk=TraversalFactory.eINSTANCE.createTraversalChunk();
-									traversalChunk.setName(tmp3);
-									traversalCriterion.getChunks().put(tmp3, traversalChunk);
-								}
+					TraversalEvent traversalEvent = TraversalFactory.eINSTANCE
+							.createTraversalEvent();
+
+					// here we parse the 3rd part of the parameter traversal
+					// expression like TraversalName:ParamName:values=[a,b,c]
+					if (operation != null && operation.length > 1) {
+						if (!operation[1].startsWith("["))
+							traversalCriterion.setChunkSource(operation[1]);
+						else {
+							String noBrackets = operation[1].substring(1,
+									operation[1].length() - 1);
+							logger.debug("readTask(): parsed values for parameter traversal expression to '"
+									+ noBrackets + "' for name=" + operation[0]);
+							String[] tmp2 = noBrackets.split(",");
+							for (String tmp3 : tmp2) {
+								TraversalChunk traversalChunk = TraversalFactory.eINSTANCE
+										.createTraversalChunk();
+								traversalChunk.setName(tmp3);
+								traversalCriterion.getChunks().put(tmp3,
+										traversalChunk);
 							}
 						}
-						
-						traversalCriterion.setOperation(traversalOperation);
-						traversalEvent.setTraversalCriterion(traversalCriterion);
-						if (traversalOperation.getType().equals("split"))
-							traversalEvent.setSplitTask(this);
-						else if (traversalOperation.getType().equals("merge"))
-							traversalEvent.getMergeTask().add(this);
-						logger.trace("readTask(): "+"adding travcrit: "+traversalCriterion.getId()+" ");
-						getTraversalEvents().put(traversalCriterion.getId(), traversalEvent);
-						//}
-					//}	
+					}
+
+					traversalCriterion.setOperation(traversalOperation);
+					traversalEvent.setTraversalCriterion(traversalCriterion);
+					if (traversalOperation.getType().equals("split"))
+						traversalEvent.setSplitTask(this);
+					else if (traversalOperation.getType().equals("merge"))
+						traversalEvent.getMergeTask().add(this);
+					logger.trace("readTask(): " + "adding travcrit: "
+							+ traversalCriterion.getId() + " ");
+					getTraversalEvents().put(traversalCriterion.getId(),
+							traversalEvent);
+					// }
+					// }
 				}
 			}
 		}
-		
+
 		/**
 		 * Read the preprocessing tasks
 		 */
-		if (wtplArray.length>7 && !wtplArray[7].equals("")) {
-			tmp=wtplArray[7].split(";");
-			for (String allPrepStr:tmp)
-			{
+		if (wtplArray.length > 7 && !wtplArray[7].equals("")) {
+			tmp = wtplArray[7].split(";");
+			for (String allPrepStr : tmp) {
 				String[] allPreps = allPrepStr.split(",");
-				for (String prepTaskStr:allPreps)
-				{
+				for (String prepTaskStr : allPreps) {
 					String[] tmp2 = prepTaskStr.split(":");
-					PreprocessingTask prepTask = CoreFactory.eINSTANCE.createPreprocessingTask();
+					PreprocessingTask prepTask = CoreFactory.eINSTANCE
+							.createPreprocessingTask();
 					prepTask.setName(tmp2[0]);
-					if (tmp2.length>1)
+					if (tmp2.length > 1)
 						prepTask.setExpression(tmp2[1]);
 					getPreprocessingTasks().add(prepTask);
 				}
 			}
 		}
-		
+
 		/**
 		 * Read JEXL
 		 */
-        if (wtplArray.length>8) {
-        	setJexlString(wtplArray[8]);
-        	//logger.debug(shallProcessJEXL);
-        	
+		if (wtplArray.length > 8) {
+			setJexlString(wtplArray[8]);
+			// logger.debug(shallProcessJEXL);
+
 		}
-        setPreviousTaskStr(getUniqueString());
-        
-        String out="";
-        for (String key:getTraversalEvents().keySet())
-        {
-        	TraversalEvent te = getTraversalEvents().get(key);
-        	out+="key="+key+" split="+(te.getSplitTask()!=null?te.getSplitTask().getUniqueString():null)+" merge="+(te.getMergeTask()!=null?StringUtils.join(toStringList(te.getMergeTask()), ","):null)+"; ";
-        }
-        logger.debug("readTask(): "+getUniqueString()+" traversalEvents="+getTraversalEvents().keySet()+" ("+out+") "+debugDataPort+" jexl exp='"+getJexlString()+"'");
+		setPreviousTaskStr(getUniqueString());
+
+		String out = "";
+		for (String key : getTraversalEvents().keySet()) {
+			TraversalEvent te = getTraversalEvents().get(key);
+			out += "key="
+					+ key
+					+ " split="
+					+ (te.getSplitTask() != null ? te.getSplitTask()
+							.getUniqueString() : null)
+					+ " merge="
+					+ (te.getMergeTask() != null ? StringUtils.join(
+							toStringList(te.getMergeTask()), ",") : null)
+					+ "; ";
+		}
+		logger.debug("readTask(): " + getUniqueString() + " traversalEvents="
+				+ getTraversalEvents().keySet() + " (" + out + ") "
+				+ debugDataPort + " jexl exp='" + getJexlString() + "'");
 	}
 
-	private EList<String> toStringList(EList<Task> tasks)
-	{
+	private EList<String> toStringList(EList<Task> tasks) {
 		EList<String> list = new BasicEList<String>();
-		for (Task t:tasks)
+		for (Task t : tasks)
 			list.add(t.getUniqueString());
 		return list;
-			
+
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping) {
-		
-		Object evalObject=evaluateJexl(createMetaDataMapForJexl(groupingInstances, forGrouping), null);
+	public boolean shallProcess(EList<GroupingInstance> groupingInstances,
+			String forGrouping) {
+
+		Object evalObject = evaluateJexl(
+				createMetaDataMapForJexl(groupingInstances, forGrouping), null);
 		return shallProcess(evalObject);
 	}
 
-	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping, 
-			EList<String> jexlStrings, boolean isInverse) {
-		
-		EMap<String, Object> map=createMetaDataMapForJexl(groupingInstances, forGrouping);
-		if (jexlString!=null)
-		for (String jexlString:jexlStrings)
-		{
-			boolean shallProcess=shallProcess(evaluateJexl(map, jexlString));
-			if (isInverse)
-				shallProcess=!shallProcess;
-			if (!shallProcess)
-				return false;
-		}
+	public boolean shallProcess(EList<GroupingInstance> groupingInstances,
+			String forGrouping, EList<String> jexlStrings, boolean isInverse) {
+
+		EMap<String, Object> map = createMetaDataMapForJexl(groupingInstances,
+				forGrouping);
+		if (jexlString != null)
+			for (String jexlString : jexlStrings) {
+				boolean shallProcess = shallProcess(evaluateJexl(map,
+						jexlString));
+				if (isInverse)
+					shallProcess = !shallProcess;
+				if (!shallProcess)
+					return false;
+			}
 		return true;
 	}
 
-	private boolean shallProcess(Object evalObject)
-	{
-		if (evalObject instanceof Boolean)
-		{
+	private boolean shallProcess(Object evalObject) {
+		if (evalObject instanceof Boolean) {
 			return (Boolean) evalObject;
-			//return true;
+			// return true;
 		}
 		return true;
 
 	}
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public Object evaluateJexl(EMap<String, Object> metaDataMap, String jexl) {
-		
-		//evaluate the tasks jexl expression against metaDataMap
-		if (jexl==null || jexl.equals(""))
-			jexl=getJexlString();
-		logger.trace(getUniqueString()+" shallProcessJEXL: "+jexl+" map:"+metaDataMap);
-		if (jexl==null || jexl.equals("")) return true;
-		if (metaDataMap.isEmpty()) return true;
+
+		// evaluate the tasks jexl expression against metaDataMap
+		if (jexl == null || jexl.equals(""))
+			jexl = getJexlString();
+		logger.trace(getUniqueString() + " shallProcessJEXL: " + jexl + " map:"
+				+ metaDataMap);
+		if (jexl == null || jexl.equals(""))
+			return true;
+		if (metaDataMap.isEmpty())
+			return true;
 		Expression e = jexlEngine.createExpression(jexl);
 		JexlContext context = new MapContext(metaDataMap.map());
 		logger.trace(e);
-		Object eval=e.evaluate(context);
+		Object eval = e.evaluate(context);
 		if (eval instanceof Boolean && !(Boolean) eval)
-			logger.debug("Skip Task "+getUniqueString()
-					+" due to jexl condition: "+jexl
-					+" and context: "+mapToString(metaDataMap));
-    	return e.evaluate(context);
+			logger.debug("Skip Task " + getUniqueString()
+					+ " due to jexl condition: " + jexl + " and context: "
+					+ mapToString(metaDataMap));
+		return e.evaluate(context);
 	}
 
-	private String mapToString(EMap<String, Object> map)
-	{
-		String res="";
-		for (Entry<String, Object> e:map.entrySet())
-		{
-			if (e.getValue() instanceof String[])
-			{
-				res+=e.getKey()+"->[";
-				for (String v:(String[])e.getValue())
-					res+=v+", ";
-				res+="]; ";
-			}
-			else
-				res+=e.getKey()+"->"+e.getValue()+"; ";
+	private String mapToString(EMap<String, Object> map) {
+		String res = "";
+		for (Entry<String, Object> e : map.entrySet()) {
+			if (e.getValue() instanceof String[]) {
+				res += e.getKey() + "->[";
+				for (String v : (String[]) e.getValue())
+					res += v + ", ";
+				res += "]; ";
+			} else
+				res += e.getKey() + "->" + e.getValue() + "; ";
 		}
 		return res;
 	}
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * we need to create a map of the kind:
-	 * Platform -> "Illumina"
-	 * InputFiles -> ["a","b","c"]
-	 * Group -> "g1"
-	 * ReadGroup -> ["rg1"," rg2"]
-	 * Records -> ["rec1", "rec2, "rec3"]
+	 * <!-- begin-user-doc --> we need to create a map of the kind: Platform ->
+	 * "Illumina" InputFiles -> ["a","b","c"] Group -> "g1" ReadGroup ->
+	 * ["rg1"," rg2"] Records -> ["rec1", "rec2, "rec3"]
 	 * 
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public EMap<String, Object> createMetaDataMapForJexl(EList<GroupingInstance> groupingInstances, String forGrouping) {
-		
-		EMap<String, Object> metaDataMap=new BasicEMap<String, Object>();
-		//logger.debug(forGrouping);
-		//for (GroupingInstance groupingInstance:groupingInstances)
-			//logger.debug(groupingInstance.getName());
-		
-		DefaultMetaData metaData=GlobalVar.getGraphUtil().getMetaData();
-		for (GroupingInstance groupingInstance:groupingInstances)
-		{
-			EList<GroupingInstance> recordInstances = metaData.getInstances(groupingInstance, 
-					GlobalVar.TRAVERSAL_CRITERION_RECORD);
-			for (GroupingInstance recordInstance:recordInstances)
-				for (Entry<String, Object> entry:metaData.getRecord(recordInstance).entrySet())
-				{
-					Object value=entry.getValue();
-					if (metaDataMap.containsKey(entry.getKey()))
-					{
+	public EMap<String, Object> createMetaDataMapForJexl(
+			EList<GroupingInstance> groupingInstances, String forGrouping) {
+
+		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
+		// logger.debug(forGrouping);
+		// for (GroupingInstance groupingInstance:groupingInstances)
+		// logger.debug(groupingInstance.getName());
+
+		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+		for (GroupingInstance groupingInstance : groupingInstances) {
+			EList<GroupingInstance> recordInstances = metaData.getInstances(
+					groupingInstance, GlobalVar.TRAVERSAL_CRITERION_RECORD);
+			for (GroupingInstance recordInstance : recordInstances)
+				for (Entry<String, Object> entry : metaData.getRecord(
+						recordInstance).entrySet()) {
+					Object value = entry.getValue();
+					if (metaDataMap.containsKey(entry.getKey())) {
 						mergeValue(metaDataMap.get(entry.getKey()), value);
 					}
 					metaDataMap.put(entry.getKey(), value);
 				}
 		}
-		//for (Entry<String, Grouping> entry:metaData.getGroupings().entrySet())
-		//{			metaData.g		}
+		// for (Entry<String, Grouping>
+		// entry:metaData.getGroupings().entrySet())
+		// { metaData.g }
 		return metaDataMap;
 	}
 
-	private Object mergeValue(Object o1, Object o2)
-	{
-		Object ret=null;
-		if (o1 instanceof List)
-		{
+	private Object mergeValue(Object o1, Object o2) {
+		Object ret = null;
+		if (o1 instanceof List) {
 			if (o2 instanceof List)
-				((List)o1).addAll((List)o2);
+				((List) o1).addAll((List) o2);
 			else
-				((List)o1).add(o2);
-			ret=o1;
-		}
-		else
-		{
-			if (o2 instanceof List)
-			{
-				((List)o2).add(o2);
-				ret=o2;
-			}
-			else
-			{
-				Object[] o={o1, o2};
+				((List) o1).add(o2);
+			ret = o1;
+		} else {
+			if (o2 instanceof List) {
+				((List) o2).add(o2);
+				ret = o2;
+			} else {
+				Object[] o = { o1, o2 };
 				ret = o;
 			}
 		}
 		return ret;
 	}
-	
-	private DataPort parseDataPortField(String field, EList<Pattern> pattern)
-	{
-		DataPort dataPort = CoreFactory.eINSTANCE.createDataPort();
-		String[] tmp=field.split(":");
+
+	private DataPort parseDataPortField(String field, EList<Pattern> pattern) {
+		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
+		String[] tmp = field.split(":");
 		String dataPortString = tmp[0];
 		String dataFormatString;
-		if (tmp.length>1)
-		{
+		if (tmp.length > 1) {
 			dataPort.setName(dataPortString);
 			dataFormatString = tmp[1];
-			if (tmp.length>2)
+			if (tmp.length > 2)
 				logger.warn("unexpected format detected: multiple occurance of ':'.");
-		}
-		else
+		} else
 			dataFormatString = dataPortString;
-		
-		Iterator<DataFormat> it=parseDataFormatField(dataFormatString, pattern).iterator();
-        
-        while (it.hasNext()) {
-        	
-        	DataFormat dataFormat = it.next();
-        	//enumerateInstances(dataFormat.getName());
-        	dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
-        	if (dataPort.getName()==null || dataPort.getName().equals(""))
-        		dataPort.setName(dataFormat.getName());
-        }
-		
+
+		Iterator<DataFormat> it = parseDataFormatField(dataFormatString,
+				pattern).iterator();
+
+		while (it.hasNext()) {
+
+			DataFormat dataFormat = it.next();
+			// enumerateInstances(dataFormat.getName());
+			dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+			if (dataPort.getName() == null || dataPort.getName().equals(""))
+				dataPort.setName(dataFormat.getName());
+		}
+
 		return dataPort;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public EList<DataFormat> parseDataFormatField(String dataFormatString, EList<Pattern> pattern) {
-		String[] overall=dataFormatString.split(";");
-		if (overall.length>1)
-		{
-			//String[] tmp=overall[1].split(regex)
-			int i=1;
-			while (i<overall.length)
+	public EList<DataFormat> parseDataFormatField(String dataFormatString,
+			EList<Pattern> pattern) {
+		String[] overall = dataFormatString.split(";");
+		if (overall.length > 1) {
+			// String[] tmp=overall[1].split(regex)
+			int i = 1;
+			while (i < overall.length)
 				pattern.add(Pattern.compile(overall[i++]));
 		}
-		String[] tmp=overall[0].split(",");
-		EList<DataFormat> list=new BasicEList<DataFormat>();
-		for (int i=0;i<tmp.length;i++) {
-			//System.out.println(tmp[i]);
-			DataFormat dataFormat=ToolFactory.eINSTANCE.createDataFormat();
+		String[] tmp = overall[0].split(",");
+		EList<DataFormat> list = new BasicEList<DataFormat>();
+		for (int i = 0; i < tmp.length; i++) {
+			// System.out.println(tmp[i]);
+			DataFormat dataFormat = DataFactory.eINSTANCE.createDataFormat();
 			dataFormat.setName(tmp[i]);
 			list.add(dataFormat);
 		}
 		return list;
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	private void shallProcess(Map<String, Object> metaDataMap) {
-			/* =====EXAMPLES====
-			 * 
-			 */
-			/*
-			String jexlStr = "((G1 + G2 + G3) * 0.1) + G4=='9.541'";
-		    Expression e1 = jexl.createExpression( jexlStr );
-
-		    // populate the context
-		    JexlContext context = new MapContext();
-		    context.set("G1", 10);
-		    context.set("G2", 5.4);
-		    context.set("G3", 0.01);
-		    context.set("G4", 8);
-		    // ...
-		 // work it out
-		    System.out.println(""+e1.evaluate(context));
-		    e1 = jexl.createExpression("Platform =~ [\"Illumina\",'b',\"c\",\"d\",\"e\",\"f\"]");
-		    context = new MapContext();
-		    context.set("Platform", "Illumina");
-		    System.out.println(""+e1.evaluate(context));
-		    
-		    jexlStr = "Platform =~ [ 3,4]";
-		    //e1 = jexl.createExpression(StringParser.buildString(jexlStr, true));
-		    e1 = jexl.createExpression(jexlStr);
-		    context = new MapContext();
-		    context.set("Platform", 3);
-		    System.out.println(""+e1.evaluate(context));
-		    
-		    */
+		/*
+		 * =====EXAMPLES====
+		 */
+		/*
+		 * String jexlStr = "((G1 + G2 + G3) * 0.1) + G4=='9.541'"; Expression
+		 * e1 = jexl.createExpression( jexlStr );
+		 * 
+		 * // populate the context JexlContext context = new MapContext();
+		 * context.set("G1", 10); context.set("G2", 5.4); context.set("G3",
+		 * 0.01); context.set("G4", 8); // ... // work it out
+		 * System.out.println(""+e1.evaluate(context)); e1 =
+		 * jexl.createExpression
+		 * ("Platform =~ [\"Illumina\",'b',\"c\",\"d\",\"e\",\"f\"]"); context =
+		 * new MapContext(); context.set("Platform", "Illumina");
+		 * System.out.println(""+e1.evaluate(context));
+		 * 
+		 * jexlStr = "Platform =~ [ 3,4]"; //e1 =
+		 * jexl.createExpression(StringParser.buildString(jexlStr, true)); e1 =
+		 * jexl.createExpression(jexlStr); context = new MapContext();
+		 * context.set("Platform", 3);
+		 * System.out.println(""+e1.evaluate(context));
+		 */
 	}
 
-	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public String getUniqueString() {
-		String uniq=getName();
-		//Iterator<?,?> it = (Iterator<Map.Entry<String,?>>)(Iterator<?>)delegateEList.iterator()
-		Iterator<Entry<String, EList<TraversalChunk>>> it = getChunks().iterator();
-		//for (String key:getChunks().keySet())
-		while (it.hasNext())
-		{
-			String key=it.next().getKey();
-			//logger.debug();
-			
+		String uniq = getName();
+		// Iterator<?,?> it =
+		// (Iterator<Map.Entry<String,?>>)(Iterator<?>)delegateEList.iterator()
+		Iterator<Entry<String, EList<TraversalChunk>>> it = getChunks()
+				.iterator();
+		// for (String key:getChunks().keySet())
+		while (it.hasNext()) {
+			String key = it.next().getKey();
+			// logger.debug();
 
-			uniq+="_"+key+":";
-			String[] tmp=new String[getChunks().get(key).size()];
-			//logger.debug("getUniqueString(): "+key+" "+tmp.length+" "+getChunks().get(key));
-			for (int i=0; i<tmp.length; i++) {
-				tmp[i]=getChunks().get(key).get(i).getName();
-				//logger.debug(tmp[i]);
+			uniq += "_" + key + ":";
+			String[] tmp = new String[getChunks().get(key).size()];
+			// logger.debug("getUniqueString(): "+key+" "+tmp.length+" "+getChunks().get(key));
+			for (int i = 0; i < tmp.length; i++) {
+				tmp[i] = getChunks().get(key).get(i).getName();
+				// logger.debug(tmp[i]);
 			}
-			uniq+=StringUtils.join(tmp, "-");
+			uniq += StringUtils.join(tmp, "-");
 		}
 		/*
-        Iterator<DataPort> it1=getInDataPorts().iterator();
-        
-        while (it1.hasNext()) {
-        	Iterator<GroupingCriterion> it2=it1.next().getGroupingCriteria().iterator();
-        	while (it2.hasNext()) {
-        		GroupingCriterion groupingCriterion=it2.next();
-        		uniq+="_"+groupingCriterion.getName();
-        		//groupingCriterion.g
-        	}
-        }*/
+		 * Iterator<DataPort> it1=getInDataPorts().iterator();
+		 * 
+		 * while (it1.hasNext()) { Iterator<GroupingCriterion>
+		 * it2=it1.next().getGroupingCriteria().iterator(); while
+		 * (it2.hasNext()) { GroupingCriterion groupingCriterion=it2.next();
+		 * uniq+="_"+groupingCriterion.getName(); //groupingCriterion.g } }
+		 */
 		return uniq;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public boolean isCompatibleWithOutDataPortFor(DataPort dataPort) {
-		Iterator<DataPort> it1=getInDataPorts().iterator();
+		Iterator<DataPort> it1 = getInDataPorts().iterator();
 		while (it1.hasNext()) {
-			DataPort parentDataPort=it1.next();
-			if (parentDataPort.isCompatible(dataPort)) return true;
+			DataPort parentDataPort = it1.next();
+			if (parentDataPort.isCompatible(dataPort))
+				return true;
 		}
 
 		return false;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public boolean isCompatibleWithInDataPortFor(DataPort dataPort) {
-		Iterator<DataPort> it1=getOutDataPorts().iterator();
+		Iterator<DataPort> it1 = getOutDataPorts().iterator();
 		while (it1.hasNext()) {
-			DataPort parentDataPort=it1.next();
-			if (parentDataPort.isCompatible(dataPort)) return true;
+			DataPort parentDataPort = it1.next();
+			if (parentDataPort.isCompatible(dataPort))
+				return true;
 		}
 
 		return false;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public Task getParentTaskByOutDataPort(DataPort dataPort) {
-		Iterator<Task> it=getParents().values().iterator();
-		EList<Task> tasks=new BasicEList<Task>();
+		Iterator<Task> it = getParents().values().iterator();
+		EList<Task> tasks = new BasicEList<Task>();
 		while (it.hasNext()) {
-			Task parentTask=it.next();
+			Task parentTask = it.next();
 			logger.trace("getParentTaskByOutDataPort(): is task="
-					+parentTask.getUniqueString()+" compatible with dataPort=" 
-					+dataPort.getName()+" :"+(parentTask.isCompatibleWithInDataPortFor(dataPort)?"yes":"no"));
+					+ parentTask.getUniqueString()
+					+ " compatible with dataPort="
+					+ dataPort.getName()
+					+ " :"
+					+ (parentTask.isCompatibleWithInDataPortFor(dataPort) ? "yes"
+							: "no"));
 			if (parentTask.isCompatibleWithInDataPortFor(dataPort))
 				tasks.add(parentTask);
 		}
-		if (tasks.size()>1) 
-			logger.debug("getParentTaskByOutDataPort(): "+"More than one compatible parents found with DataPort="+
-				dataPort.getName()+". Return only first.");
-		else if (tasks.isEmpty()) 
-			logger.debug("getParentTaskByOutDataPort(): "+"No compatible parent with DataPort="+
-				dataPort.getName()+" found. Returning null.");
-		return (tasks.size()>0) ? tasks.get(0):null;
+		if (tasks.size() > 1)
+			logger.debug("getParentTaskByOutDataPort(): "
+					+ "More than one compatible parents found with DataPort="
+					+ dataPort.getName() + ". Return only first.");
+		else if (tasks.isEmpty())
+			logger.debug("getParentTaskByOutDataPort(): "
+					+ "No compatible parent with DataPort="
+					+ dataPort.getName() + " found. Returning null.");
+		return (tasks.size() > 0) ? tasks.get(0) : null;
 	}
 
-	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public EMap<String, EList<TraversalChunk>> getNonOveralppingTraversalChunksFor(Task task) {
+	public EMap<String, EList<TraversalChunk>> getNonOveralppingTraversalChunksFor(
+			Task task) {
 		EMap<String, EList<TraversalChunk>> nonOverlappingChunks = new BasicEMap<String, EList<TraversalChunk>>();
-		for (String key : task.getChunks().keySet())
-		{
-			logger.trace("getNonOveralppingTraversalChunksFor(): "+key+" add:"+!getChunks().containsKey(key));
-			if (!getChunks().containsKey(key))
-			{
-				int i=0;
+		for (String key : task.getChunks().keySet()) {
+			logger.trace("getNonOveralppingTraversalChunksFor(): " + key
+					+ " add:" + !getChunks().containsKey(key));
+			if (!getChunks().containsKey(key)) {
+				int i = 0;
 				String tmp[] = new String[task.getChunks().get(key).size()];
 				for (TraversalChunk traversalChunk : task.getChunks().get(key))
-					tmp[i++]=traversalChunk.getName();
-				nonOverlappingChunks.put(StringUtils.join(tmp, "-"), task.getChunks().get(key));
-				logger.trace("getNonOveralppingTraversalChunksFor(): "+StringUtils.join(tmp, "-"));
+					tmp[i++] = traversalChunk.getName();
+				nonOverlappingChunks.put(StringUtils.join(tmp, "-"), task
+						.getChunks().get(key));
+				logger.trace("getNonOveralppingTraversalChunksFor(): "
+						+ StringUtils.join(tmp, "-"));
 			}
-		}		
+		}
 		return nonOverlappingChunks;
-		
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public void readTools(EList<Tool> tools) {
-		for (Tool tool : tools)
-		{
-			if (getToolNames().containsKey(tool.getName()))
-			{
-				logger.debug("found tool with name:"+tool.getName());
+		for (Tool tool : tools) {
+			if (getToolNames().containsKey(tool.getName())) {
+				logger.debug("found tool with name:" + tool.getName());
 				if (getTools().containsKey(tool.getId()))
-					logger.warn("override tool:"+tool.getId());
+					logger.warn("override tool:" + tool.getId());
 				getTools().put(tool.getId(), tool);
 			}
-		}	
+		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public Tool getPreferredTool() {
 		if (getTools().isEmpty())
 			return null;
-		else
-		{
-			Iterator<Entry<String, Tool>> it=getTools().iterator();
-			while(it.hasNext())
-			{
-				Entry<String,Tool> entry=it.next();
+		else {
+			Iterator<Entry<String, Tool>> it = getTools().iterator();
+			while (it.hasNext()) {
+				Entry<String, Tool> entry = it.next();
 				if (getToolMatches().containsKey(entry.getKey()))
 					if (getToolMatches().get(entry.getKey()).isValid())
 						return entry.getValue();
 			}
 		}
-			
+
 		return getTools().get(0).getValue();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public EList<DataPort> getOverlappingDataPorts(EList<DataPort> dataPorts1,
 			EList<DataPort> dataPorts2) {
-		EList<DataPort> dataPorts=new BasicEList<DataPort>();
-		for (DataPort dataPort1:dataPorts1)
-			for (DataPort dataPort2:dataPorts2)
-			{
-				logger.trace("getOverlappingDataPorts(): check "+dataPort1.getName()+" vs "+dataPort2.getName());
+		EList<DataPort> dataPorts = new BasicEList<DataPort>();
+		for (DataPort dataPort1 : dataPorts1)
+			for (DataPort dataPort2 : dataPorts2) {
+				logger.trace("getOverlappingDataPorts(): check "
+						+ dataPort1.getName() + " vs " + dataPort2.getName());
 				if (dataPort2.isCompatible(dataPort1))
 					dataPorts.add(dataPort1);
 			}
 		return dataPorts;
-					
+
 	}
 
-
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean resolveToolDependencies() {
@@ -1603,34 +1555,123 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public EMap<String, String> createCommandLineMap() {
+	public EMap<String, EList<String>> createCommandLineMap() {
+
+		EMap<String, EList<String>> map  = new BasicEMap<String, EList<String>>();
+		EList<String>               exe  = new BasicEList<String>();
+		Tool                        tool = getPreferredTool();
+
+		if (tool.getExecutables().containsKey("interpreter"))
+			exe.add(getPreferredTool().getExecutables().get("interpreter")
+					.getPath());
+		else if (tool.getPackage() != null && tool.getPackage().getInterpreter() != null)
+			exe.add(tool.getPackage().getInterpreter());
 		
-		EMap<String, String> map = new BasicEMap<String, String>();
+		if (tool.getExecutables().containsKey("executable"))
+			exe.add(tool.getExecutables().get("executable").getPath());
+		else if (tool.getPackage() != null && tool.getPackage().getExe() != null)
+		{
+			if (tool.getPackage().getExe()!=null)
+				exe.add(tool.getPackage().getExe());
+			else
+				exe.add(tool.getPackage().getId());
+		}
 		
-		if (getPreferredTool().getExecutables().containsKey("interpreter"))
-			map.put("interpreter", getPreferredTool().getExecutables().get("interpreter").getPath());
-		if (getPreferredTool().getExecutables().containsKey("executable"))
-			map.put("executable", getPreferredTool().getExecutables().get("executable").getPath());
+		if (exe.isEmpty())
+			logger.error("createCommandLineMap(): no executables found");
 		
-		//set submodule
-		//set positional args
-		//if (getPreferredTool().getCommand().get)
-		if (getPreferredTool().getCommand().getParameters() != null)
-			map.put("optional_args", getPreferredTool().getCommand().generateCommandString(null));
+		map.put("executable", exe);
+
 		if (getInputs() != null)
-			map.put("input", list2String(getInputs()));
+			map.put("input", dataPorts2ParamStringList(getInputs(), tool.getCommand(), false));
+		
 		if (getOutputs() != null)
-			map.put("output", list2String(getOutputs()));
+			map.put("output", dataPorts2ParamStringList(getOutputs(), tool.getCommand(), true));
+
+		
+		// set submodule
+		// set positional args
+		// if (getPreferredTool().getCommand().get)
+		logger.debug("createCommandLineMap(): task=" + getUniqueString()
+				+ " tool=" + tool.getName() + " #in="
+				+ getInputs().size() + " #out=" + getOutputs().size());
+		
+		if (getPreferredTool().getCommand().getParameters() != null)
+		{
+			map.put("positional_arg", tool.getCommand().getPositionalParameterNames());
+			map.put("optional_arg", tool.getCommand().getOptionalParameterNames());
+		}
+		
 		return map;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String createCommandLine(String commandPattern,
+			EMap<String, EList<String>> commandLineParts) {
+
+		Tool   tool        = getPreferredTool();
+		String commandLine = "";
+		
+		for (String commandLinePart : commandPattern.split(" "))
+		{
+			logger.trace("createCommandLine(): "+commandLinePart);
+			if (commandLineParts.containsKey(commandLinePart))
+			{
+				EList<String> keys = commandLineParts.get(commandLinePart);
+				
+				if ("executable".equals(commandLinePart))
+				{
+					commandLine += StringUtils.join(keys, " ");
+				}
+				else
+				{
+					for (String key : keys)
+					{
+						commandLine += " "+tool.getCommand().getParameters().
+								get(key).generateCommandString(null);
+					}
+				}
+			}
+		}
+		return commandLine;
+	}
+
+	private EList<String> dataPorts2ParamStringList(EMap<String, DataLink> map, Command cmd, boolean isOutput) {
+		
+		EList<String> list = new BasicEList<String>();
+		
+		Iterator<Entry<String, DataLink>> it = map.iterator();
+		while (it.hasNext()) {
+			Entry<String, DataLink> e = it.next();
+			DataLink dataLink = e.getValue();
+			logger.debug(dataLink.getUniqueString(true) + " "
+					+ dataLink.getData().getDataResourceName().toString());
+			String paramName;
+			if (isOutput)
+				paramName = dataLink.getOutDataPort().getParameterName();
+			else
+				paramName = dataLink.getDataPort().getParameterName();
+			
+			//dataLink.getData().getDataResourceName().getPath();
+			
+			Parameter parameter = cmd.getParameters().get(paramName);
+			parameter.getValue().add(dataLink.getData().getDataResourceName());
+			//list.add(paramName);
+
+		}
+		return list;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public boolean validateTool(Tool tool) {
@@ -1638,77 +1679,77 @@ public class TaskImpl extends EObjectImpl implements Task {
 		ToolMatch toolMatch = CoreFactory.eINSTANCE.createToolMatch();
 		toolMatch.setTask(this);
 		toolMatch.setTool(tool);
-		
+
 		getToolMatches().put(tool.getName(), toolMatch);
-		long score=toolMatch.computeScore();
-		long expectedScore=toolMatch.computeExpectedScore();
-		logger.trace(Long.toBinaryString(score)+" ");
-		logger.trace(Long.toBinaryString(expectedScore)+" (exp)");
-		//logger.debug(Long.toHexString(score)+" vs "+Long.toHexString(expectedScore));
-		if (score==expectedScore)
-		{
-			rc=true;
+		long score = toolMatch.computeScore();
+		long expectedScore = toolMatch.computeExpectedScore();
+		logger.trace(Long.toBinaryString(score) + " ");
+		logger.trace(Long.toBinaryString(expectedScore) + " (exp)");
+		// logger.debug(Long.toHexString(score)+" vs "+Long.toHexString(expectedScore));
+		if (score == expectedScore) {
+			rc = true;
 			toolMatch.setValid(true);
 		}
 		return rc;
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public boolean validateTools() {
 		boolean rc = false;
-		for (Entry<String, Tool> toolEntry:getTools())
-		{
-			logger.trace("validate tool="+toolEntry.getKey());
-			if (validateTool(toolEntry.getValue()))
-			{
+		for (Entry<String, Tool> toolEntry : getTools()) {
+			logger.trace("validate tool=" + toolEntry.getKey());
+			if (validateTool(toolEntry.getValue())) {
 				rc = true;
 			}
 		}
 		return rc;
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public DataPort getDataPortByDataPort(DataPort testDataPort, boolean isOutDataPort) {
-		EList<DataPort> dataPorts=isOutDataPort?getOutDataPorts():getInDataPorts();
-		for (DataPort dataPort:dataPorts)
+	public DataPort getDataPortByDataPort(DataPort testDataPort,
+			boolean isOutDataPort) {
+		EList<DataPort> dataPorts = isOutDataPort ? getOutDataPorts()
+				: getInDataPorts();
+		for (DataPort dataPort : dataPorts)
 			if (dataPort.isCompatible(testDataPort))
 				return dataPort;
 		return null;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public DataPort getDataPortByNameOfFormat(String formatName, boolean isOutDataPort) {
-		EList<DataPort> dataPorts=isOutDataPort?getOutDataPorts():getInDataPorts();
-		for (DataPort dataPort:dataPorts)
-		{
-			for (DataFormat dataFormat:dataPort.getDataFormats().values())
+	public DataPort getDataPortByNameOfFormat(String formatName,
+			boolean isOutDataPort) {
+		EList<DataPort> dataPorts = isOutDataPort ? getOutDataPorts()
+				: getInDataPorts();
+		for (DataPort dataPort : dataPorts) {
+			for (DataFormat dataFormat : dataPort.getDataFormats().values())
 				if (dataFormat.getName().equals(formatName))
 					return dataPort;
 		}
 		return null;
 	}
-	
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public DataPort getDataPortByName(String dataPortName, boolean isOutDataPort) {
-		EList<DataPort> dataPorts=isOutDataPort?getOutDataPorts():getInDataPorts();
-		for (DataPort dataPort:dataPorts)
-		{
+		EList<DataPort> dataPorts = isOutDataPort ? getOutDataPorts()
+				: getInDataPorts();
+		for (DataPort dataPort : dataPorts) {
 			if (dataPort.getName().equals(dataPortName))
 				return dataPort;
 		}
@@ -1716,188 +1757,209 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public EMap<Task, EList<DataPort>> resolveMissingDataPortsByTool(EList<Task> tasks) {
-		for (ToolMatch toolMatch:getToolMatches().values())
-		{
+	public EMap<Task, EList<DataPort>> resolveMissingDataPortsByTool(
+			EList<Task> tasks) {
+		for (ToolMatch toolMatch : getToolMatches().values()) {
 			if (!toolMatch.isValid())
 				return toolMatch.resolveReverseMissingInDataPorts(tasks);
 		}
-		return null;	
+		return null;
 	}
 
-
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean canProcessMultiplesInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canProcessMultiplesInstancesFor(Tool tool, DataPort dataPort)
+			throws DataPortNotFoundException, ToolNotFoundException {
 		if (tool == null)
-			tool=getPreferredTool();
+			tool = getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
 		return tool.canProcessMultiplesInstancesFor(dataPort);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean canFilterInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canFilterInstancesFor(Tool tool, DataPort dataPort)
+			throws DataPortNotFoundException, ToolNotFoundException {
 		if (tool == null)
-			tool=getPreferredTool();
+			tool = getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
 		return tool.canFilterInstancesFor(dataPort);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public EList<TraversalChunk> getRecords(boolean intersect) {
-		
+
 		boolean modeUnion = !intersect;
-		boolean firstTC   = true;
-		//if (!getRecords().isEmpty())
-		//{
-			//logger.warn("getRecords(): record already processed. Return cached value.");
-			//return getRecords();
-			getRecords().clear();
-		//}
-		EMap<String, TraversalChunk> chunks = new BasicEMap<String,TraversalChunk>();
-		for (String groupingStr:getChunks().keySet())
-		{
-			logger.trace("getRecords(): find records for grouping "+groupingStr+" of task"+getUniqueString()
-					+" (is contained="+GlobalVar.getGraphUtil().getMetaData().containsColumn(groupingStr)+")");
-			if (GlobalVar.getGraphUtil().getMetaData().containsColumn(groupingStr))
-			{
-			if (!groupingStr.equals("Record"))
-			{
-				if (modeUnion || firstTC)
-				{
-					firstTC = false;
-					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
-					{
-						
-						EList<String> recs=GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName());
-						for (String rec : recs)
-						{	
-							if (!chunks.containsKey(rec))
-							{
-								TraversalChunk newTC = TraversalFactory.eINSTANCE.createTraversalChunk();
-								newTC.setName(rec);
-								/**
-								 * criterion for a 1-1 mapping of a chunk
-								 */
-								if (recs.size()==1 && getChunks().size()==1)
-								{
-									newTC.setDerived1by1(true);
+		boolean firstTC = true;
+		// if (!getRecords().isEmpty())
+		// {
+		// logger.warn("getRecords(): record already processed. Return cached value.");
+		// return getRecords();
+		getRecords().clear();
+		// }
+		EMap<String, TraversalChunk> chunks = new BasicEMap<String, TraversalChunk>();
+		for (String groupingStr : getChunks().keySet()) {
+			logger.trace("getRecords(): find records for grouping "
+					+ groupingStr
+					+ " of task"
+					+ getUniqueString()
+					+ " (is contained="
+					+ GlobalVar.getGraphUtil().getMetaData()
+							.containsColumn(groupingStr) + ")");
+			if (GlobalVar.getGraphUtil().getMetaData()
+					.containsColumn(groupingStr)) {
+				if (!groupingStr.equals("Record")) {
+					if (modeUnion || firstTC) {
+						firstTC = false;
+						for (TraversalChunk traversalChunk : getChunks().get(
+								groupingStr)) {
+
+							EList<String> recs = GlobalVar
+									.getGraphUtil()
+									.getMetaData()
+									.getRecordsBy(groupingStr,
+											traversalChunk.getName());
+							for (String rec : recs) {
+								if (!chunks.containsKey(rec)) {
+									TraversalChunk newTC = TraversalFactory.eINSTANCE
+											.createTraversalChunk();
+									newTC.setName(rec);
+									/**
+									 * criterion for a 1-1 mapping of a chunk
+									 */
+									if (recs.size() == 1
+											&& getChunks().size() == 1) {
+										newTC.setDerived1by1(true);
+									}
+									chunks.put(rec, newTC);
+									logger.trace("getRecords(): traversal chunk "
+											+ rec
+											+ " added. derived1by1="
+											+ newTC.isDerived1by1());
 								}
-								chunks.put(rec, newTC);
-								logger.trace("getRecords(): traversal chunk "+rec+" added. derived1by1="+newTC.isDerived1by1());
 							}
 						}
-					}
-				}
-				else
-				{
-					EList<String> missingChunks = new BasicEList<String>(chunks.keySet());
-					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
-					{
-						logger.trace("getRecords(): traversalChunk="+traversalChunk.getName()
-								+" resolved to records=("+StringUtils.join(GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName()).iterator(), ", ")+")");
-						for (String rec : GlobalVar.getGraphUtil().getMetaData().getRecordsBy(groupingStr, traversalChunk.getName()))
-						{								
-							if (!chunks.containsKey(rec))
-							{
+					} else {
+						EList<String> missingChunks = new BasicEList<String>(
+								chunks.keySet());
+						for (TraversalChunk traversalChunk : getChunks().get(
+								groupingStr)) {
+							logger.trace("getRecords(): traversalChunk="
+									+ traversalChunk.getName()
+									+ " resolved to records=("
+									+ StringUtils.join(
+											GlobalVar
+													.getGraphUtil()
+													.getMetaData()
+													.getRecordsBy(
+															groupingStr,
+															traversalChunk
+																	.getName())
+													.iterator(), ", ") + ")");
+							for (String rec : GlobalVar
+									.getGraphUtil()
+									.getMetaData()
+									.getRecordsBy(groupingStr,
+											traversalChunk.getName())) {
+								if (!chunks.containsKey(rec)) {
+								} else if (missingChunks.contains(rec)) {
+									missingChunks.remove(rec);
+								}
+
 							}
-							else if (missingChunks.contains(rec))
-							{
-								missingChunks.remove(rec);
-							}									
+						}
+						for (String rec : missingChunks) {
+							chunks.removeKey(rec);
+							logger.trace("getRecords(): remove traversal chunk "
+									+ rec
+									+ "because it doesnt intersect with a previous seen chunk.");
+
+						}
+
+					}
+				} else {
+					if (modeUnion || firstTC) {
+						firstTC = false;
+						for (TraversalChunk traversalChunk : getChunks().get(
+								groupingStr)) {
+							if (!chunks.containsKey(traversalChunk.getName())) {
+								chunks.put(traversalChunk.getName(),
+										traversalChunk);
+							}
+						}
+					} else {
+						EList<String> missingChunks = new BasicEList<String>(
+								chunks.keySet());
+						for (TraversalChunk traversalChunk : getChunks().get(
+								groupingStr)) {
+							if (missingChunks
+									.contains(traversalChunk.getName()))
+								missingChunks.remove(traversalChunk.getName());
+						}
+						for (String rec : missingChunks) {
+							chunks.removeKey(rec);
+							logger.trace("getRecords(): remove traversal chunk "
+									+ rec
+									+ "because it doesnt intersect with a previous seen chunk.");
 
 						}
 					}
-					for (String rec:missingChunks) {
-						chunks.removeKey(rec);
-						logger.trace("getRecords(): remove traversal chunk "+
-								rec
-								+"because it doesnt intersect with a previous seen chunk.");
-						
-					}
-
 				}
-			}
-			else
-			{
-				if (modeUnion || firstTC)
-				{
-					firstTC = false;
-					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
-					{
-						if (!chunks.containsKey(traversalChunk.getName()))
-						{
-							chunks.put(traversalChunk.getName(), traversalChunk);
-						}
-					}
-				}
-				else
-				{
-					EList<String> missingChunks = new BasicEList<String>(chunks.keySet());
-					for (TraversalChunk traversalChunk:getChunks().get(groupingStr))
-					{
-						if (missingChunks.contains(traversalChunk.getName()))
-							missingChunks.remove(traversalChunk.getName());
-					}
-					for (String rec:missingChunks) {
-						chunks.removeKey(rec);
-						logger.trace("getRecords(): remove traversal chunk "+
-								rec
-								+"because it doesnt intersect with a previous seen chunk.");
-						
-					}
-				}
-			}
-			}
-			else
-			{
-				logger.info("getRecords(): no records can be retrieved for grouping="+groupingStr+", because it is not contained in metadata table.");
+			} else {
+				logger.info("getRecords(): no records can be retrieved for grouping="
+						+ groupingStr
+						+ ", because it is not contained in metadata table.");
 			}
 		}
-		logger.debug("getRecords(): result="+chunks.values().size());
+		logger.debug("getRecords(): result=" + chunks.values().size());
 		getRecords().addAll(new BasicEList<TraversalChunk>(chunks.values()));
 		return getRecords();
 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask) {
-		
-		EList<TraversalChunk> overlappingTraversalChunks=new BasicEList<TraversalChunk>();
-		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "+testTask.getUniqueString());
-		EList<TraversalChunk> providedTraversalChunks=testTask.getRecords(true);
-		
-		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "+getUniqueString());
-		for (TraversalChunk traversalChunk:getRecords(true))
-		{
-			logger.debug("getOverlappingRecordsProvidedBy(): test required chunk "+traversalChunk.getName());
-			for (TraversalChunk providedTraversalChunk:providedTraversalChunks)
-			{
-				logger.debug("getOverlappingRecordsProvidedBy(): "+providedTraversalChunk.getName()+" match="+traversalChunk.getName().equals(providedTraversalChunk.getName()));
-				if (traversalChunk.getName().equals(providedTraversalChunk.getName()))
-				{
-					
+
+		EList<TraversalChunk> overlappingTraversalChunks = new BasicEList<TraversalChunk>();
+		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "
+				+ testTask.getUniqueString());
+		EList<TraversalChunk> providedTraversalChunks = testTask
+				.getRecords(true);
+
+		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "
+				+ getUniqueString());
+		for (TraversalChunk traversalChunk : getRecords(true)) {
+			logger.debug("getOverlappingRecordsProvidedBy(): test required chunk "
+					+ traversalChunk.getName());
+			for (TraversalChunk providedTraversalChunk : providedTraversalChunks) {
+				logger.debug("getOverlappingRecordsProvidedBy(): "
+						+ providedTraversalChunk.getName()
+						+ " match="
+						+ traversalChunk.getName().equals(
+								providedTraversalChunk.getName()));
+				if (traversalChunk.getName().equals(
+						providedTraversalChunk.getName())) {
+
 					overlappingTraversalChunks.add(traversalChunk);
 				}
 			}
@@ -1905,40 +1967,37 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return overlappingTraversalChunks;
 	}
 
-	
 	/**
-	 * <!-- begin-user-doc -->
-	 * Tell, if the task and its implementing tool is able to generate the outputs that 
-	 * match the given dataPort.
-	 * To refine the evaluation specify grouping string and, optional, a list of chunks
-	 * for the given grouping. Usually the most granular grouping is used (e.g. ID or records)
-	 * to precisely define which outputs are of interest.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> Tell, if the task and its implementing tool is
+	 * able to generate the outputs that match the given dataPort. To refine the
+	 * evaluation specify grouping string and, optional, a list of chunks for
+	 * the given grouping. Usually the most granular grouping is used (e.g. ID
+	 * or records) to precisely define which outputs are of interest. <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traversalChunks) throws DataPortNotFoundException, ToolNotFoundException {
-		
-		if (traversalChunks == null)
-		{
-			// todo: if the the chunks for the grouping criteria can be provided (-> check with tool definition)
-		}
-		else if (grouping != null && grouping.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
-		{
+	public boolean canProvideDataPort(Tool tool, DataPort dataPort,
+			String grouping, EList<TraversalChunk> traversalChunks)
+			throws DataPortNotFoundException, ToolNotFoundException {
+
+		if (traversalChunks == null) {
+			// todo: if the the chunks for the grouping criteria can be provided
+			// (-> check with tool definition)
+		} else if (grouping != null
+				&& grouping.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD)) {
 			EList<TraversalChunk> recs = getRecords(true);
-			if (recs.size()==traversalChunks.size())
-			{
-				for (TraversalChunk requiredChunk:traversalChunks)
-				{
+			if (recs.size() == traversalChunks.size()) {
+				for (TraversalChunk requiredChunk : traversalChunks) {
 					TraversalChunk rec = null;
-					for (TraversalChunk provdiedChunk:recs)
-					{
-						if (requiredChunk.getName().equals(provdiedChunk.getName()))
-						{
+					for (TraversalChunk provdiedChunk : recs) {
+						if (requiredChunk.getName().equals(
+								provdiedChunk.getName())) {
 							rec = provdiedChunk;
 							break;
 						}
 					}
-					if (rec==null)
+					if (rec == null)
 						break;
 					recs.remove(rec);
 				}
@@ -1949,21 +2008,21 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canComsumeDataPort(Tool tool, DataPort dataPort,
+			String grouping, EList<TraversalChunk> traverslChunks)
+			throws DataPortNotFoundException, ToolNotFoundException {
 		return false;
 	}
 
-	
-	private URI convertToURI(Object value)
-	{
+	private URI convertToURI(Object value) {
 		URI uriValue = null;
 		if (value instanceof TraversalChunk)
-			value = ((TraversalChunk)value).getName();
-		
+			value = ((TraversalChunk) value).getName();
+
 		if (value instanceof URI)
 			uriValue = (URI) value;
 		else if (value instanceof String)
@@ -1974,95 +2033,76 @@ public class TaskImpl extends EObjectImpl implements Task {
 				e.printStackTrace();
 			}
 		return uriValue;
-		
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean setOutputForDataPort(String key, Object value, DataPort dataPort, String parameterName) {
-		
-		URI uriValue = convertToURI(value);
-		boolean rc   = true;
-		Tool t = getPreferredTool();
-		
-		if (uriValue != null)
-		{
-			getOutputs().put(key, uriValue);
-			getPreferredTool().getCommand().setOutputParameterValue(uriValue, parameterName, dataPort);
-			
-			String dataPortKey = dataPort.getName();
-			EList<String> ports;
-			if (getOutputsByDataPort().containsKey(dataPortKey))
-			{
-				ports = getOutputsByDataPort().get(dataPortKey);
-			}
-			else
-			{
-				ports = new BasicEList<String>();
-				getOutputsByDataPort().put(dataPortKey, ports);	
-			}
-			ports.add(key);
-			
-		}
-		else
-		{
-			rc = false;
-		}
-		return rc;
+
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public boolean setInputForDataPort(String key, Object value, DataPort dataPort, String parameterName) {
-		
-		URI uriValue = convertToURI(value);
-		boolean rc   = true;
-		
-		if (uriValue != null)
-		{
-			getInputs().put(key, uriValue);
-			getPreferredTool().getCommand().setInputParameterValue(uriValue, parameterName, dataPort);
-			
-			String dataPortKey = dataPort.getName();
-			EList<String> ports;
-			if (getInputsByDataPort().containsKey(dataPortKey))
-			{
-				ports = getInputsByDataPort().get(dataPortKey);
-			}
-			else
-			{
-				ports = new BasicEList<String>();
-				getInputsByDataPort().put(dataPortKey, ports);	
-			}
-			ports.add(key);
-			
-		}
-		else
-		{
-			rc = false;
-		}
-		return rc;
+	public boolean setOutputForDataPort(String key, Object value,
+			DataPort dataPort, String parameterName) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+		/*
+		 * URI uriValue = convertToURI(value); boolean rc = true; Tool t =
+		 * getPreferredTool();
+		 * 
+		 * if (uriValue != null) { getOutputs().put(key, uriValue);
+		 * getPreferredTool().getCommand().setOutputParameterValue(uriValue,
+		 * parameterName, dataPort);
+		 * 
+		 * String dataPortKey = dataPort.getName(); EList<String> ports; if
+		 * (getOutputsByDataPort().containsKey(dataPortKey)) { ports =
+		 * getOutputsByDataPort().get(dataPortKey); } else { ports = new
+		 * BasicEList<String>(); getOutputsByDataPort().put(dataPortKey, ports);
+		 * } ports.add(key);
+		 * 
+		 * } else { rc = false; } return rc;
+		 */
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public boolean setInputForDataPort(String key, Object value,
+			DataPort dataPort, String parameterName) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+		/*
+		 * URI uriValue = convertToURI(value); boolean rc = true;
+		 * 
+		 * if (uriValue != null) { getInputs().put(key, uriValue);
+		 * getPreferredTool().getCommand().setInputParameterValue(uriValue,
+		 * parameterName, dataPort);
+		 * 
+		 * String dataPortKey = dataPort.getName(); EList<String> ports; if
+		 * (getInputsByDataPort().containsKey(dataPortKey)) { ports =
+		 * getInputsByDataPort().get(dataPortKey); } else { ports = new
+		 * BasicEList<String>(); getInputsByDataPort().put(dataPortKey, ports);
+		 * } ports.add(key);
+		 * 
+		 * } else { rc = false; } return rc;
+		 */
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public EList<URI> getOutputsForDataPort(DataPort dataPort) {
 		String dataPortName = dataPort.getName();
 		EList<URI> outputs = new BasicEList<URI>();
-		if (getOutputsByDataPort().containsKey(dataPortName))
-		{
-			for (String key : getOutputsByDataPort().get(dataPortName))
-			{
-				outputs.add(getOutputs().get(key));
+		if (getOutputsByDataPort().containsKey(dataPortName)) {
+			for (String key : getOutputsByDataPort().get(dataPortName)) {
+				outputs.add(getOutputs().get(key).getData()
+						.getDataResourceName());
 			}
 			return outputs;
 		}
@@ -2070,18 +2110,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
 	public EList<URI> getInputsForDataPort(DataPort dataPort) {
 		String dataPortName = dataPort.getName();
 		EList<URI> inputs = new BasicEList<URI>();
-		if (getInputsByDataPort().containsKey(dataPortName))
-		{
-			for (String key : getInputsByDataPort().get(dataPortName))
-			{
-				inputs.add(getInputs().get(key));
+		if (getInputsByDataPort().containsKey(dataPortName)) {
+			for (String key : getInputsByDataPort().get(dataPortName)) {
+				inputs.add(getInputs().get(key).getData().getDataResourceName());
 			}
 			return inputs;
 		}
@@ -2089,36 +2127,119 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws ToolNotFoundException 
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @throws DataLinkNotFoundException
 	 * @generated not
 	 */
-	public EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException {
+	public void resolveInputs() throws DataLinkNotFoundException {
+		for (Object edge : GlobalVar
+				.getGraphUtil()
+				.getGraph()
+				.getIncomingEdges(
+						GlobalVar.getGraphUtil().getCells()
+								.get(getUniqueString()))) {
+			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+
+			// getInputs().put(dataLink.getUniqueString(null, null, null),
+			// dataLink);
+			getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public void resolveOutputs() throws DataLinkNotFoundException {
+		for (Object edge : GlobalVar
+				.getGraphUtil()
+				.getGraph()
+				.getOutgoingEdges(
+						GlobalVar.getGraphUtil().getCells()
+								.get(getUniqueString()))) {
+			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+
+			// getOutputs().put(dataLink.getUniqueString(null, null, null),
+			// dataLink);
+			getOutputs()
+					.put(new Integer(dataLink.getId()).toString(), dataLink);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc --> set the parameter values, i.e. assign the input and output data 
+	 * as values to its corresponding parameters <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public void resolveParameters() {
+
+		EMap<String, EList<String>> cmdMap = createCommandLineMap();
+		
+		for (String cmdPart:cmdMap.keySet())
+		{
+			Iterator<String> it1 = cmdMap.get(cmdPart).iterator();
+			while (it1.hasNext())
+			{
+				if ("output".equals(cmdPart) || "input".equals(cmdPart))
+				{
+					String key = it1.next();
+					if (getPreferredTool().getCommand().getParameters().containsKey(key))
+					{
+						Parameter param = getPreferredTool().getCommand().getParameters().get(key);
+						param.getValue().add(getInputs());
+					}
+				}
+			}
+		}
+		
+/*			Iterator<Entry<String, Parameter>> it = getPreferredTool().getCommand()
+					.getParameters().iterator();
+		
+		while (it.hasNext())
+		{
+			Entry<String, Parameter> e = it.next();
+			if (e.getValue().isOutput())
+
+			getParameters().put(e.getKey(), e.getValue());
+		}
+		*/
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @throws ToolNotFoundException
+	 * @generated not
+	 */
+	public EList<String> getRequiredGroupingsFor(Tool tool, DataPort dataPort,
+			boolean required) throws ToolNotFoundException {
 		if (tool == null)
-			tool=getPreferredTool();
+			tool = getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
 		return tool.getGroupingsForInputPort(dataPort, required);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws ToolNotFoundException 
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @throws ToolNotFoundException
 	 * @generated not
 	 */
-	public EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort, boolean required) throws ToolNotFoundException {
+	public EList<String> getProvidedGroupingsFor(Tool tool, DataPort dataPort,
+			boolean required) throws ToolNotFoundException {
 		if (tool == null)
-			tool=getPreferredTool();
+			tool = getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
 		return tool.getGroupingsForOutputPort(dataPort, required);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean hasMultipleInputsFor(DataPort dataPort) {
@@ -2128,8 +2249,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean hasMultipleInstancesFor(DataPort dataPort) {
@@ -2139,8 +2259,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean hasMultipleGroupingsFor(DataPort dataPort) {
@@ -2150,78 +2269,69 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean canProcessMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canProcessMultipleInputsFor(Tool tool, DataPort dataPort)
+			throws DataPortNotFoundException, ToolNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean canProcessMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canProcessMultipleInstancesFor(Tool tool, DataPort dataPort)
+			throws DataPortNotFoundException, ToolNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort)
+			throws DataPortNotFoundException, ToolNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated not
 	 */
-	public EList<TraversalChunk> getOverlappingChunksFor(Task parentTask, String groupingStr) {
-		EList<TraversalChunk> tc=new BasicEList<TraversalChunk>();
+	public EList<TraversalChunk> getOverlappingChunksFor(Task parentTask,
+			String groupingStr) {
+
+		EList<TraversalChunk> tc = new BasicEList<TraversalChunk>();
 		if (getChunks().containsKey(groupingStr))
-			for (TraversalChunk traversalChunk: getChunks().get(groupingStr))
-			{
-				if (parentTask.getChunks().containsKey(groupingStr))
-				{
-					for (TraversalChunk parentTraversalChunk:parentTask.getChunks().get(groupingStr))		
-					{
-						if (traversalChunk.getName().equals(parentTraversalChunk.getName()))
+			for (TraversalChunk traversalChunk : getChunks().get(groupingStr)) {
+				if (parentTask.getChunks().containsKey(groupingStr)) {
+					for (TraversalChunk parentTraversalChunk : parentTask
+							.getChunks().get(groupingStr)) {
+						if (traversalChunk.getName().equals(
+								parentTraversalChunk.getName()))
 							tc.add(traversalChunk);
 					}
-							
+
 				}
 			}
 		return tc;
 	}
 
-	private String list2String(EMap<String, URI> map)
-	{
-		Iterator<Entry<String, URI>> it = map.iterator();
-		String array[] = new String[getOutputs().size()];
-		int i=0;
-		while (it.hasNext())
-			array[i++]=it.next().getValue().getPath();
-		return StringUtils.join(array, " ");
-	}
-	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case CorePackage.TASK__TRAVERSAL_EVENTS:
 				return ((InternalEList<?>)getTraversalEvents()).basicRemove(otherEnd, msgs);
@@ -2245,13 +2355,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getInputsByDataPort()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__OUTPUTS_BY_DATA_PORT:
 				return ((InternalEList<?>)getOutputsByDataPort()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__PARAMETERS:
+				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -2322,13 +2433,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getRecords();
 			case CorePackage.TASK__PREPROCESSING_TASKS:
 				return getPreprocessingTasks();
+			case CorePackage.TASK__PARAMETERS:
+				if (coreType) return getParameters();
+				else return getParameters().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -2421,13 +2534,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getPreprocessingTasks().clear();
 				getPreprocessingTasks().addAll((Collection<? extends PreprocessingTask>)newValue);
 				return;
+			case CorePackage.TASK__PARAMETERS:
+				((EStructuralFeature.Setting)getParameters()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -2511,13 +2626,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__PREPROCESSING_TASKS:
 				getPreprocessingTasks().clear();
 				return;
+			case CorePackage.TASK__PARAMETERS:
+				getParameters().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -2577,13 +2694,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return records != null && !records.isEmpty();
 			case CorePackage.TASK__PREPROCESSING_TASKS:
 				return preprocessingTasks != null && !preprocessingTasks.isEmpty();
+			case CorePackage.TASK__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -2619,5 +2737,4 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return result.toString();
 	}
 
-
-} //TaskImpl
+} // TaskImpl

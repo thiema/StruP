@@ -6,15 +6,22 @@
  */
 package easyflow.execution.makeflow.impl;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.Task;
+import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
+import easyflow.data.DataLink;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
 
@@ -31,6 +38,7 @@ import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -48,6 +56,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link easyflow.execution.makeflow.impl.MakeflowImpl#getProject <em>Project</em>}</li>
  *   <li>{@link easyflow.execution.makeflow.impl.MakeflowImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.execution.makeflow.impl.MakeflowImpl#getWriter <em>Writer</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,6 +92,26 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BufferedWriter WRITER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getWriter() <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getWriter()
+	 * @generated
+	 * @ordered
+	 */
+	protected BufferedWriter writer = WRITER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -155,6 +184,27 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BufferedWriter getWriter() {
+		return writer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWriter(BufferedWriter newWriter) {
+		BufferedWriter oldWriter = writer;
+		writer = newWriter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MakeflowPackage.MAKEFLOW__WRITER, oldWriter, writer));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<String> getDependencies(Tool tool) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -177,20 +227,31 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Object> getResourceMap(Tool tool) {
+	public String createRule() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String createCommandLine(String commandPattern, EMap<String, String> commandLineParts) {
-		String cmdLine=commandPattern+" "+commandLineParts.keySet()+" "+StringUtils.join(commandLineParts.values(), " ");
-		return cmdLine;
+	public String createCommandLine(String commandPattern, Task task) {
+		return task.createCommandLine(commandPattern, task.createCommandLineMap());
 	}
 
 	/**
@@ -198,23 +259,60 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void createWorkflow() {
+	public String createCommandLine(String commandPattern, Tool tool) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	private EList<String> getFiles(EMap<String, DataLink> data)
+	{
+		EList<String> files = new BasicEList<String>();
+		Iterator<Entry<String, DataLink>> it = data.iterator();
+		while (it.hasNext())
+		{
+			Entry<String, DataLink> e = it.next();
+			files.add(e.getValue().getData().getDataResourceName().getPath());
+		}
+		return files;
+	}
+	
+	/*
+	 * a makeflow rule is of the form:
+	 * 
+	 *  targetA targetB: dep1 dep2 dep3
+	 *  	command arg1 arg2 optX optY input1 input2 input3 targetA targetB
 	 */
-	public void executeWorkflow() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
+	public String createRule(Task task)
+	{
 
+		logger.trace("createRule(): task="+task.getUniqueString()+" preferredTool="+task.getPreferredTool().getName()
+				+" (all: "+task.getTools().keySet().toString()+") "
+				);
+		// iterate over incoming cells (-> datalinks) and set the inputs member attribute
+		try {
+			task.resolveInputs();
+			task.resolveOutputs();
+		} catch (DataLinkNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//task.resolveParameters();
+		
+		String targets = StringUtils.join(getFiles(task.getInputs()), ' ');
+		String deps    = StringUtils.join(getFiles(task.getOutputs()), ' ');
+		String rule    = targets+": "+deps;
+
+		String cmd = createCommandLine(
+				GlobalConfig.getToolConfig().get("command_pattern"),
+				task);
+		
+		logger.debug(cmd+" ("+deps+":"+targets+")");
+		rule+="\n\t"+cmd+"\n\n";
+		
+		return rule;
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -227,7 +325,11 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		
 			@Override
 			public boolean visit(Object vertex, Object edge) {
-
+				
+				// skip root node, since there is no processing task
+				if (edge == null)
+					return true;
+				
 				Task task;
 				try {
 					task = GlobalVar.getGraphUtil().loadTask(vertex);
@@ -235,14 +337,16 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 					logger.debug("no tool definition available for "+task.getUniqueString());
 				else
 				{
-					task.getInputs();
-					task.getOutputs();
-					task.getPreferredTool();
 					
-					String cmd = createCommandLine(GlobalConfig.getToolConfig().
-							get("command_pattern"),
-							task.createCommandLineMap());
-					logger.debug(task.getUniqueString()+" "+task.getTools().keySet().toString()+" "+cmd+" "+task.getInputs().keySet()+" "+task.getOutputs().keySet()+" ");
+					String cmd = createRule(task);
+					try {
+						logger.trace("write rule:"+cmd);
+						getWriter().write(cmd);
+						getWriter().flush();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				
 				} catch (TaskNotFoundException e) {
@@ -269,6 +373,8 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 				return basicGetProject();
 			case MakeflowPackage.MAKEFLOW__LOGGER:
 				return getLogger();
+			case MakeflowPackage.MAKEFLOW__WRITER:
+				return getWriter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -284,6 +390,9 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 			case MakeflowPackage.MAKEFLOW__PROJECT:
 				setProject((DefaultProject)newValue);
 				return;
+			case MakeflowPackage.MAKEFLOW__WRITER:
+				setWriter((BufferedWriter)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -298,6 +407,9 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		switch (featureID) {
 			case MakeflowPackage.MAKEFLOW__PROJECT:
 				setProject((DefaultProject)null);
+				return;
+			case MakeflowPackage.MAKEFLOW__WRITER:
+				setWriter(WRITER_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -315,6 +427,8 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 				return project != null;
 			case MakeflowPackage.MAKEFLOW__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case MakeflowPackage.MAKEFLOW__WRITER:
+				return WRITER_EDEFAULT == null ? writer != null : !WRITER_EDEFAULT.equals(writer);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -330,6 +444,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 			switch (derivedFeatureID) {
 				case MakeflowPackage.MAKEFLOW__PROJECT: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT;
 				case MakeflowPackage.MAKEFLOW__LOGGER: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER;
+				case MakeflowPackage.MAKEFLOW__WRITER: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER;
 				default: return -1;
 			}
 		}
@@ -347,6 +462,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 			switch (baseFeatureID) {
 				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__PROJECT: return MakeflowPackage.MAKEFLOW__PROJECT;
 				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__LOGGER: return MakeflowPackage.MAKEFLOW__LOGGER;
+				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__WRITER: return MakeflowPackage.MAKEFLOW__WRITER;
 				default: return -1;
 			}
 		}
@@ -365,6 +481,8 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (logger: ");
 		result.append(logger);
+		result.append(", writer: ");
+		result.append(writer);
 		result.append(')');
 		return result.toString();
 	}

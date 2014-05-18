@@ -13,6 +13,9 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
+import easyflow.execution.IExecutionSystem;
 import easyflow.graph.jgraphx.Util;
 
 import easyflow.tool.Tool;
@@ -61,6 +64,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getWorker <em>Worker</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getTools <em>Tools</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}</li>
  * </ul>
  * </p>
  *
@@ -520,6 +524,32 @@ public interface Workflow extends EObject {
 	EMap<String, Tool> getTools();
 
 	/**
+	 * Returns the value of the '<em><b>Execution System</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Execution System</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Execution System</em>' reference.
+	 * @see #setExecutionSystem(IExecutionSystem)
+	 * @see easyflow.core.CorePackage#getWorkflow_ExecutionSystem()
+	 * @model
+	 * @generated
+	 */
+	IExecutionSystem getExecutionSystem();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Execution System</em>' reference.
+	 * @see #getExecutionSystem()
+	 * @generated
+	 */
+	void setExecutionSystem(IExecutionSystem value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -639,7 +669,7 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataLinksMap<easyflow.core.Task, easyflow.core.DataLink>"
+	 * @model mapType="easyflow.util.maps.TaskToDataLinksMap<easyflow.core.Task, easyflow.data.DataLink>"
 	 * @generated
 	 */
 	EMap<Task, EList<DataLink>> getParentTasksFor(Task task);

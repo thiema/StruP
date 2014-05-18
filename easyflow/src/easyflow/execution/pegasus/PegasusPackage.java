@@ -89,13 +89,22 @@ public interface PegasusPackage extends EPackage {
 	int PEGASUS__LOGGER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Writer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS__WRITER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Site Catalog</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PEGASUS__SITE_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+	int PEGASUS__SITE_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Replica Catalog</b></em>' attribute.
@@ -104,7 +113,7 @@ public interface PegasusPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PEGASUS__REPLICA_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
+	int PEGASUS__REPLICA_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Transformation Catalog</b></em>' attribute.
@@ -113,7 +122,7 @@ public interface PegasusPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PEGASUS__TRANSFORMATION_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 4;
+	int PEGASUS__TRANSFORMATION_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Pegasus</em>' class.
@@ -122,7 +131,7 @@ public interface PegasusPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PEGASUS_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 5;
+	int PEGASUS_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 6;
 
 
 	/**

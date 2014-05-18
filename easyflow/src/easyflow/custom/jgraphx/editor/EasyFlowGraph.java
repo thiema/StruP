@@ -23,12 +23,10 @@ import com.mxgraph.model.mxICell;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 
-
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
+import easyflow.data.DataLink;
 
 
 public class EasyFlowGraph extends EasyFlowCustomGraph

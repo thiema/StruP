@@ -8,17 +8,18 @@ package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
 
-import easyflow.core.DataLink;
-import easyflow.core.DataPort;
 import easyflow.core.Task;
-
 import easyflow.core.ToolMatch;
+
+import easyflow.data.Data;
+import easyflow.data.DataFormat;
+import easyflow.data.DataLink;
+import easyflow.data.DataPort;
+
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
-import easyflow.tool.Data;
-import easyflow.tool.DataFormat;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
@@ -43,8 +44,8 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -558,7 +559,7 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Ports Map</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Boolean Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -567,21 +568,7 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter createTaskToDataPortsMapAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Links Map</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see java.util.Map.Entry
-	 * @generated
-	 */
-	public Adapter createTaskToDataLinksMapAdapter() {
+	public Adapter createStringToBooleanMapAdapter() {
 		return null;
 	}
 
@@ -614,7 +601,7 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Boolean Map</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Ports Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -623,7 +610,21 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter createStringToBooleanMapAdapter() {
+	public Adapter createTaskToDataPortsMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Links Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createTaskToDataLinksMapAdapter() {
 		return null;
 	}
 

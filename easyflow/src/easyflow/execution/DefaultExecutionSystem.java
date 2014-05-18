@@ -8,6 +8,7 @@ package easyflow.execution;
 
 import easyflow.ui.DefaultProject;
 
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link easyflow.execution.DefaultExecutionSystem#getProject <em>Project</em>}</li>
  *   <li>{@link easyflow.execution.DefaultExecutionSystem#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.execution.DefaultExecutionSystem#getWriter <em>Writer</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,7 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface DefaultExecutionSystem extends EObject {
+public interface DefaultExecutionSystem extends IExecutionSystem {
 	/**
 	 * Returns the value of the '<em><b>Project</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -73,11 +75,29 @@ public interface DefaultExecutionSystem extends EObject {
 	Logger getLogger();
 
 	/**
+	 * Returns the value of the '<em><b>Writer</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Writer</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @model commandLinePartsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @return the value of the '<em>Writer</em>' attribute.
+	 * @see #setWriter(BufferedWriter)
+	 * @see easyflow.execution.ExecutionPackage#getDefaultExecutionSystem_Writer()
+	 * @model dataType="easyflow.BufferedWriter"
 	 * @generated
 	 */
-	String createCommandLine(String commandPattern, EMap<String, String> commandLineParts);
+	BufferedWriter getWriter();
+
+	/**
+	 * Sets the value of the '{@link easyflow.execution.DefaultExecutionSystem#getWriter <em>Writer</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Writer</em>' attribute.
+	 * @see #getWriter()
+	 * @generated
+	 */
+	void setWriter(BufferedWriter value);
 
 } // DefaultExecutionSystem

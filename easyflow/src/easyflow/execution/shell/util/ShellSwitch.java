@@ -76,8 +76,8 @@ public class ShellSwitch<T> extends Switch<T> {
 			case ShellPackage.SHELL: {
 				Shell shell = (Shell)theEObject;
 				T result = caseShell(shell);
-				if (result == null) result = caseIExecutionSystem(shell);
 				if (result == null) result = caseDefaultExecutionSystem(shell);
+				if (result == null) result = caseIExecutionSystem(shell);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
