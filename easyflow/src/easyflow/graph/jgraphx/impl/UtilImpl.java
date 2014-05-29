@@ -2971,7 +2971,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		return isStatic;
 	}
 	
-	public boolean resolveToolDependencies(mxICell root, final Catalog catalog)
+	public boolean resolveToolDependencies(mxICell root, final Catalog catalog, EMap<String, String> constraints)
 	{
 		boolean rc = true;
 		final EMap<String, DataPort> staticInputs = new BasicEMap<String, DataPort>();

@@ -22,6 +22,7 @@ import easyflow.util.maps.impl.StringToStringMapImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -593,28 +594,41 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		}
 		logger.trace("name="+getTool().getId()+" toolData="+(getTool().getData()==null ? null:getTool().getData().keySet())
 				+" commandParams="+getTool().getCommand().getParameters().keySet());
-		for (Entry<String, Parameter> parameterEntry:getTool().getCommand().getParameters().entrySet())
+		//for (Entry<String, Parameter> parameterEntry:getTool().getCommand().getParameters().entrySet())
+		Iterator<EList<Data>> it = tool.getData().values().iterator();
+		while (it.hasNext())
 		{			
-			Parameter parameter = parameterEntry.getValue();
+			EList<Data> dataList = it.next(); 
+			//Parameter parameter = parameterEntry.getValue();
 			
-			if (parameter.getType().equals("data"))
+			//if (parameter.getType().equals("data"))
+			Iterator<Data> itData = dataList.iterator();
+			while (itData.hasNext())
 			{
+				Data data = itData.next();
 				// get all data that conform to the given constraints (constraints map)
 				// parameter can have multiple data
 				// how to cope with alternating data ? e.g. the BAM in/outport is defined twice: as pipe from stdout/stdin and file,
 				// when no constraints like, prefer/avoid pipes are defined.
+				Parameter parameter = data.getParameter();
+				if (parameter == null)
+				{
+					logger.warn("computeScore(): no parameter associated with input data="+data.getName());
+				}
+				else
+				{		
+				logger.trace("computeScore(): "+parameter != null ? (parameter.getName()+" "+((InOutParameter)parameter).getFormats()+" "
+						+parameter.isOptional()):null);
 				
-				if (getTool().getData().containsKey(parameterEntry.getKey()))
-				{	
-					Data data = getTool().getData().get(parameterEntry.getKey());
-					logger.trace(parameter.getName()+" "+((InOutParameter)parameter).getFormats()+" "
-							+parameter.isOptional());
+				//if (getTool().getData().containsKey(parameterEntry.getKey()))
+				
+					//Data data = getTool().getData().get(parameterEntry.getKey());
 					
 					if (data.isOutput())
 					{
 						
 						DataPort dataPort = isDataPortMatching(
-								parameterEntry.getValue(), 
+								data.getParameter(), 
 								getTask().getOutDataPorts(), 
 								data.getPort());
 						if (dataPort != null)
@@ -624,7 +638,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 							logger.debug("computeScore(): output parameter="+parameter.getName());
 							taskMissingOutDataPorts.remove(dataPort);
 						}
-						else if (!parameter.isOptional())
+						else if (parameter != null && !parameter.isOptional())
 						{
 							getReverseMissingOutDataPorts().add(data.getPort());
 							expectedToolScore|=1<<(outputOffset+getTask().getOutDataPorts().size());
@@ -633,7 +647,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 					else
 					{
 						DataPort dataPort = isDataPortMatching(
-								parameterEntry.getValue(), 
+								data.getParameter(), 
 								getTask().getInDataPorts(), 
 								data.getPort());
 						if (dataPort != null)
@@ -643,7 +657,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 							dataPort.setParameterName(parameter.getName());
 							logger.debug("computeScore(): input parameter="+parameter.getName());
 							taskMissingInDataPorts.remove(dataPort);
-						}
+						} 
 						else if (!parameter.isOptional())
 						{
 							getReverseMissingInDataPorts().add(data.getPort());
@@ -652,18 +666,19 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 					}
 					
 				}
-				else
-				{
-					logger.warn("could not found data(port) for "+parameterEntry.getKey()+".");
-				}
+				//else
+				//{
+				//	logger.warn("could not found data(port) for "+parameterEntry.getKey()+".");
+				//}
 			}
-			else if (!parameter.getGrouping().isEmpty())
+/*			else if (!parameter.getGrouping().isEmpty())
 			{
 				logger.trace("set grouping"+" "+parameter.getGrouping()+" "
 						+getTask().getGroupingCriteria().keySet()+" "
 						+getTask().getGroupingCriteria().values());
 				//getTask().getGroupingCriteria().containsKey()
 			}
+			*/
 			//else if (!parameter.getTraversal().isEmpty())
 				//logger.debug("set traversal");
 				

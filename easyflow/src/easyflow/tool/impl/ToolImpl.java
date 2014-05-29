@@ -240,7 +240,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<String, Data> data;
+	protected EMap<String, EList<Data>> data;
 
 	/**
 	 * The default value of the '{@link #getFilenamePrefix() <em>Filename Prefix</em>}' attribute.
@@ -542,9 +542,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Data> getData() {
+	public EMap<String, EList<Data>> getData() {
 		if (data == null) {
-			data = new EcoreEMap<String,Data>(MapsPackage.Literals.STRING_TO_DATA_MAP, StringToDataMapImpl.class, this, ToolPackage.TOOL__DATA);
+			data = new EcoreEMap<String,EList<Data>>(MapsPackage.Literals.STRING_TO_DATA_LIST_MAP, StringToDataListMapImpl.class, this, ToolPackage.TOOL__DATA);
 		}
 		return data;
 	}
@@ -748,7 +748,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Data> getDataForParam(String param, Map.Entry<String, String> constraints) {
+	public EList<Data> getDataForParam(Parameter parameter, Map.Entry<String, String> constraints) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();

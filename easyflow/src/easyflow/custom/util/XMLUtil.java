@@ -401,11 +401,14 @@ public class XMLUtil {
 				resource.getContents().addAll(tool.getRequirements());
 			if (tool.getPackage() != null)
 				resource.getContents().add(tool.getPackage());
-			for (Data data:tool.getData().values())
+			for (EList<Data> dataList:tool.getData().values())
 			{
+				for (Data data:dataList)
+				{
 				resource.getContents().add(data);
 				resource.getContents().add(data.getPort());
 				resource.getContents().addAll(data.getPort().getDataFormats().values());
+				}
 			}
 			
 		}

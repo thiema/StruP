@@ -234,7 +234,7 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * Returns the value of the '<em><b>Data</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.data.Data},
+	 * and the value is of type list of {@link easyflow.data.Data},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Data</em>' map isn't clear,
@@ -243,10 +243,10 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Data</em>' map.
 	 * @see easyflow.tool.ToolPackage#getTool_Data()
-	 * @model mapType="easyflow.util.maps.StringToDataMap<org.eclipse.emf.ecore.EString, easyflow.data.Data>"
+	 * @model mapType="easyflow.util.maps.StringToDataListMap<org.eclipse.emf.ecore.EString, easyflow.data.Data>"
 	 * @generated
 	 */
-	EMap<String, Data> getData();
+	EMap<String, EList<Data>> getData();
 
 	/**
 	 * Returns the value of the '<em><b>Filename Prefix</b></em>' attribute.
@@ -370,6 +370,6 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @model constraintsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EList<Data> getDataForParam(String param, Map.Entry<String, String> constraints);
+	EList<Data> getDataForParam(Parameter parameter, Map.Entry<String, String> constraints);
 
 } // Tool

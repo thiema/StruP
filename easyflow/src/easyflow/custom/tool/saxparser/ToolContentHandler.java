@@ -277,18 +277,10 @@ public class ToolContentHandler implements ContentHandler {
 				logger.warn("overiding data="+data.getName()+" of tool="+tool.getId());
 			else
 				logger.debug("adding data="+data.getName()+ " for tool="+tool.getId());
-			if (curParam.getParent()==null)
-			{
-				tool.getData().put(data.getName(), data);
-				
-			}
-			else
-			{
-				if (!tool.getData().containsKey(curParam.getParent().getName()))
-				{					
-					tool.getData().put(curParam.getParent().getName(), null);
-				}
-			}
+			
+			
+			addToToolData(getParamParent(curParam), data, tool);
+
 			if (atts.getValue("format")!=null)
 				for (String format:atts.getValue("format").split(","))
 					((InOutParameter)curParam).getFormats().add(format);
@@ -304,6 +296,28 @@ public class ToolContentHandler implements ContentHandler {
 			setDataPort(((InOutParameter)curParam).getFormats());
 			
 		}
+	}
+	
+	Parameter getParamParent(Parameter curParam)
+	{
+		if (curParam.getParent()==null)
+			return curParam;
+		
+		return curParam.getParent();
+	}
+	
+	void addToToolData(Parameter param, Data data, Tool tool)
+	{
+		EList<Data> dataList = tool.getData().get(param.getName());
+		if (dataList == null)
+		{
+			dataList = new BasicEList<Data>();
+			
+		}
+		dataList.add(data);
+		tool.getData().put(param.getName(), dataList);
+		logger.debug(dataList.size()+" "+tool.getData().get(param.getName()).size());
+		
 	}
 	
 	@Override
@@ -505,15 +519,27 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				data.setOutput(atts.getValue("output")==null?
 						false:atts.getValue("output").equals("true"));
+				EList<Data> dataList = null;
 				if (tool.getData().containsKey(data.getName()))
-					logger.warn("overiding data="+data.getName()+ "of tool="+tool.getId());
-				tool.getData().put(data.getName(), data);
+				{
+					logger.warn("data with name="+data.getName()+ "of tool="+tool.getId()+" already known");
+					dataList = tool.getData().get(data.getName());
+				}
+				else
+				{
+					dataList = new BasicEList<Data>();
+					tool.getData().put(data.getName(), dataList);
+				}
+				dataList.add(data);
 				
 				dataPort = DataFactory.eINSTANCE.createDataPort();
 				dataPort.setName(data.getName());
 				if (dataFormat!=null)
 					dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
 				data.setPort(dataPort);
+				//if (tool.getCommand().getParameters().containsKey(data.getName()))
+					//data.setParameter(tool.getCommand().getParameters().get(data.getName()));
+				
 				break;
 			default: 
 				break;
@@ -588,9 +614,12 @@ public class ToolContentHandler implements ContentHandler {
 						{
 							if (tool.getData().containsKey(dataString))
 							{
-								Data d=tool.getData().get(dataString);
-								logger.debug("add data="+d.getName()+" to param="+p.getName());
-								p.getData().add(d);
+								for (Data d:tool.getData().get(dataString))
+								{
+								//Data d=tool.getData().get(dataString);
+									logger.debug("add data="+d.getName()+" to param="+p.getName());
+									p.getData().add(d);
+								}
 							}
 							else
 							{

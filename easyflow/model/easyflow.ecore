@@ -663,6 +663,7 @@
         <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="catalog" eType="#//core/Catalog"/>
+          <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToStringMap"/>
         </eOperations>
         <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//util/maps/CellToCellListMap"/>
         <eOperations name="resolveEdge" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -931,7 +932,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="executables" upperBound="-1"
           eType="#//util/maps/StringToURIMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="data" upperBound="-1"
-          eType="#//util/maps/StringToDataMap" containment="true"/>
+          eType="#//util/maps/StringToDataListMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="filenamePrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="analysisType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
