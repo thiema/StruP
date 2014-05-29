@@ -332,22 +332,13 @@ public interface CorePackage extends EPackage {
 	int TASK__UTIL = 4;
 
 	/**
-	 * The feature id for the '<em><b>Jexl Engine</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK__JEXL_ENGINE = 5;
-
-	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__LOGGER = 6;
+	int TASK__LOGGER = 5;
 
 	/**
 	 * The feature id for the '<em><b>Traversal Events</b></em>' map.
@@ -356,7 +347,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__TRAVERSAL_EVENTS = 7;
+	int TASK__TRAVERSAL_EVENTS = 6;
 
 	/**
 	 * The feature id for the '<em><b>Parents</b></em>' map.
@@ -365,7 +356,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PARENTS = 8;
+	int TASK__PARENTS = 7;
 
 	/**
 	 * The feature id for the '<em><b>Chunks</b></em>' map.
@@ -374,7 +365,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__CHUNKS = 9;
+	int TASK__CHUNKS = 8;
 
 	/**
 	 * The feature id for the '<em><b>Tool Names</b></em>' map.
@@ -383,7 +374,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__TOOL_NAMES = 10;
+	int TASK__TOOL_NAMES = 9;
 
 	/**
 	 * The feature id for the '<em><b>Tools</b></em>' map.
@@ -392,7 +383,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__TOOLS = 11;
+	int TASK__TOOLS = 10;
 
 	/**
 	 * The feature id for the '<em><b>Tool Matches</b></em>' map.
@@ -401,7 +392,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__TOOL_MATCHES = 12;
+	int TASK__TOOL_MATCHES = 11;
 
 	/**
 	 * The feature id for the '<em><b>Previous Task Str</b></em>' attribute.
@@ -410,7 +401,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PREVIOUS_TASK_STR = 13;
+	int TASK__PREVIOUS_TASK_STR = 12;
 
 	/**
 	 * The feature id for the '<em><b>Root</b></em>' attribute.
@@ -419,7 +410,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__ROOT = 14;
+	int TASK__ROOT = 13;
 
 	/**
 	 * The feature id for the '<em><b>Flags</b></em>' attribute.
@@ -428,7 +419,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__FLAGS = 15;
+	int TASK__FLAGS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Grouping Criteria</b></em>' map.
@@ -437,7 +428,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__GROUPING_CRITERIA = 16;
+	int TASK__GROUPING_CRITERIA = 15;
 
 	/**
 	 * The feature id for the '<em><b>Inputs</b></em>' map.
@@ -446,7 +437,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__INPUTS = 17;
+	int TASK__INPUTS = 16;
 
 	/**
 	 * The feature id for the '<em><b>Outputs</b></em>' map.
@@ -455,7 +446,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__OUTPUTS = 18;
+	int TASK__OUTPUTS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Inputs By Data Port</b></em>' map.
@@ -464,7 +455,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__INPUTS_BY_DATA_PORT = 19;
+	int TASK__INPUTS_BY_DATA_PORT = 18;
 
 	/**
 	 * The feature id for the '<em><b>Outputs By Data Port</b></em>' map.
@@ -473,7 +464,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__OUTPUTS_BY_DATA_PORT = 20;
+	int TASK__OUTPUTS_BY_DATA_PORT = 19;
 
 	/**
 	 * The feature id for the '<em><b>Input Data Port Validator</b></em>' attribute list.
@@ -482,7 +473,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__INPUT_DATA_PORT_VALIDATOR = 21;
+	int TASK__INPUT_DATA_PORT_VALIDATOR = 20;
 
 	/**
 	 * The feature id for the '<em><b>Output Data Port Validator</b></em>' attribute list.
@@ -491,7 +482,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__OUTPUT_DATA_PORT_VALIDATOR = 22;
+	int TASK__OUTPUT_DATA_PORT_VALIDATOR = 21;
 
 	/**
 	 * The feature id for the '<em><b>Analysis Types</b></em>' attribute list.
@@ -500,7 +491,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__ANALYSIS_TYPES = 23;
+	int TASK__ANALYSIS_TYPES = 22;
 
 	/**
 	 * The feature id for the '<em><b>Circumventing Parents</b></em>' attribute list.
@@ -509,7 +500,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__CIRCUMVENTING_PARENTS = 24;
+	int TASK__CIRCUMVENTING_PARENTS = 23;
 
 	/**
 	 * The feature id for the '<em><b>Records</b></em>' reference list.
@@ -518,7 +509,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__RECORDS = 25;
+	int TASK__RECORDS = 24;
 
 	/**
 	 * The feature id for the '<em><b>Preprocessing Tasks</b></em>' reference list.
@@ -527,7 +518,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PREPROCESSING_TASKS = 26;
+	int TASK__PREPROCESSING_TASKS = 25;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' map.
@@ -536,7 +527,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PARAMETERS = 27;
+	int TASK__PARAMETERS = 26;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -545,7 +536,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 28;
+	int TASK_FEATURE_COUNT = 27;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
@@ -1370,17 +1361,6 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTask_Util();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getJexlEngine <em>Jexl Engine</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Jexl Engine</em>'.
-	 * @see easyflow.core.Task#getJexlEngine()
-	 * @see #getTask()
-	 * @generated
-	 */
-	EAttribute getTask_JexlEngine();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getLogger <em>Logger</em>}'.
@@ -2321,14 +2301,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TASK__UTIL = eINSTANCE.getTask_Util();
-
-		/**
-		 * The meta object literal for the '<em><b>Jexl Engine</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TASK__JEXL_ENGINE = eINSTANCE.getTask_JexlEngine();
 
 		/**
 		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.

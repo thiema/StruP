@@ -406,7 +406,6 @@ public class XMLUtil {
 				resource.getContents().add(data);
 				resource.getContents().add(data.getPort());
 				resource.getContents().addAll(data.getPort().getDataFormats().values());
-				
 			}
 			
 		}

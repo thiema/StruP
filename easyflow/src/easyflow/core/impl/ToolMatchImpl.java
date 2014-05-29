@@ -22,6 +22,7 @@ import easyflow.util.maps.impl.StringToStringMapImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.Map.Entry;
@@ -572,7 +573,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public long computeScore() {
+	public long computeScore(EMap<String, String> constraints) {
 
 		int    inputCount  = 0;
 		int   outputCount  = 0;
@@ -590,13 +591,19 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 		{
 			taskMissingOutDataPorts.add(dataPort);
 		}
-		logger.trace("name="+getTool().getId()+" "+(getTool().getData()==null ? null:getTool().getData().keySet()));
+		logger.trace("name="+getTool().getId()+" toolData="+(getTool().getData()==null ? null:getTool().getData().keySet())
+				+" commandParams="+getTool().getCommand().getParameters().keySet());
 		for (Entry<String, Parameter> parameterEntry:getTool().getCommand().getParameters().entrySet())
-		{
+		{			
 			Parameter parameter = parameterEntry.getValue();
 			
 			if (parameter.getType().equals("data"))
 			{
+				// get all data that conform to the given constraints (constraints map)
+				// parameter can have multiple data
+				// how to cope with alternating data ? e.g. the BAM in/outport is defined twice: as pipe from stdout/stdin and file,
+				// when no constraints like, prefer/avoid pipes are defined.
+				
 				if (getTool().getData().containsKey(parameterEntry.getKey()))
 				{	
 					Data data = getTool().getData().get(parameterEntry.getKey());
@@ -605,11 +612,11 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 					
 					if (data.isOutput())
 					{
+						
 						DataPort dataPort = isDataPortMatching(
 								parameterEntry.getValue(), 
 								getTask().getOutDataPorts(), 
 								data.getPort());
-						
 						if (dataPort != null)
 						{
 							score|=1<<(outputOffset+dataPort.getBitPos());
@@ -725,7 +732,6 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 			expectedScore|=1<<(outputOffset+dataPort.getBitPos());
 		}
 		expectedScore|=expectedToolScore;
-		//for (getTask().getChunks())
 		
 		return expectedScore;
 	}

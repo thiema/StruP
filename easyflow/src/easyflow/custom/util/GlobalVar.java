@@ -6,8 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.lang.StringUtils;
 
 import easyflow.data.DataLink;
@@ -83,8 +85,12 @@ public class GlobalVar {
 	public static BufferedWriter executionSystemWriter   = null;
 
 	
+	private static final JexlEngine jexlEngine = new JexlEngine();
+	
 	private static Util graphUtil = null;
 	private static Util util      = null;
+	
+	private static Map<String, easyflow.tool.Package> packages = new HashMap<String, easyflow.tool.Package>();
 	private static EasyFlowGraphEditor  editor               = null;
 	private static ComposeWorkflowPanel composeWorkflowPanel = null;
 	private static DefaultProject       defaultProject       = null;
@@ -210,4 +216,13 @@ public class GlobalVar {
 		}
 		return executionSystemWriter;
 	}
+
+	public static Map<String, easyflow.tool.Package> getPackages() {
+		return packages;
+	}
+
+	public static JexlEngine getJexlengine() {
+		return jexlEngine;
+	}
+
 }

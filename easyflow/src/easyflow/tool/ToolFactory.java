@@ -134,6 +134,15 @@ public interface ToolFactory extends EFactory {
 	DocumentProperties createDocumentProperties();
 
 	/**
+	 * Returns a new object of class '<em>Option Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Option Value</em>'.
+	 * @generated
+	 */
+	OptionValue createOptionValue();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -13,6 +13,7 @@ import easyflow.metadata.GroupingInstanceList;
 import easyflow.metadata.MetadataFactory;
 import easyflow.metadata.MetadataPackage;
 
+import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GlobalVarMetaData;
@@ -525,6 +526,25 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 		emap.put("Record", recordInstance.getName());
 		return emap;
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, Object> getRecord(TraversalChunk record) {
+		Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(record.getName());
+		EMap<String, Object> emap=new BasicEMap<String, Object>();
+		//logger.debug(map.values());
+		for (Entry<String, String> e:map.entrySet())
+		{
+			if (e.getValue()!=null)
+				emap.put(e.getKey(), parseString(e.getKey(), e.getValue()));
+		}
+		emap.put("Record", record.getName());
+		return emap;
+	}
+	
 
 	private Object parseString(String field, String value)
 	{

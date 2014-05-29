@@ -6,7 +6,10 @@
  */
 package easyflow.tool;
 
+import easyflow.core.Task;
 import easyflow.data.Data;
+import easyflow.traversal.TraversalChunk;
+import easyflow.metadata.GroupingInstance;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -20,8 +23,10 @@ import org.eclipse.emf.common.util.EMap;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.tool.Parameter#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getValue <em>Value</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getType <em>Type</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getValue <em>Value</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getOptionValues <em>Option Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isOptional <em>Optional</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isMultiple <em>Multiple</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isMultipleValue <em>Multiple Value</em>}</li>
@@ -38,11 +43,11 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getMinOcc <em>Min Occ</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getMaxOcc <em>Max Occ</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getGrouping <em>Grouping</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isFixedArgValue <em>Fixed Arg Value</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -161,7 +166,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	/**
 	 * Returns the value of the '<em><b>Values</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.tool.Parameter},
+	 * and the value is of type list of {@link easyflow.tool.Parameter},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Values</em>' attribute list isn't clear,
@@ -170,10 +175,26 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Values</em>' map.
 	 * @see easyflow.tool.ToolPackage#getParameter_Values()
-	 * @model mapType="easyflow.util.maps.StringToParameterMap<org.eclipse.emf.ecore.EString, easyflow.tool.Parameter>"
+	 * @model mapType="easyflow.util.maps.StringToParameterListMap<org.eclipse.emf.ecore.EString, easyflow.tool.Parameter>"
 	 * @generated
 	 */
-	EMap<String, Parameter> getValues();
+	EMap<String, EList<Parameter>> getValues();
+
+	/**
+	 * Returns the value of the '<em><b>Option Values</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.tool.OptionValue}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Option Values</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Option Values</em>' reference list.
+	 * @see easyflow.tool.ToolPackage#getParameter_OptionValues()
+	 * @model
+	 * @generated
+	 */
+	EList<OptionValue> getOptionValues();
 
 	/**
 	 * Returns the value of the '<em><b>Positional</b></em>' attribute.
@@ -262,6 +283,32 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setFixedArgValue(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' reference.
+	 * @see #setParent(Parameter)
+	 * @see easyflow.tool.ToolPackage#getParameter_Parent()
+	 * @model
+	 * @generated
+	 */
+	Parameter getParent();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getParent <em>Parent</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(Parameter value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model constaintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
@@ -308,6 +355,22 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	boolean isOutput();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model recordsMany="true"
+	 * @generated
+	 */
+	Parameter getParameterForAnalysisType(EList<TraversalChunk> records);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isAnalysisType();
 
 	/**
 	 * Returns the value of the '<em><b>Value Type</b></em>' attribute.

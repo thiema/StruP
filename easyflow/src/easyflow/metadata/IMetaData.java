@@ -6,6 +6,7 @@
  */
 package easyflow.metadata;
 
+import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.GroupingCriterion;
 
 import org.eclipse.emf.common.util.EList;
@@ -78,6 +79,14 @@ public interface IMetaData extends EObject {
 	 * @generated
 	 */
 	EMap<String, Object> getRecord(GroupingInstance recordInstance);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model mapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @generated
+	 */
+	EMap<String, Object> getRecord(TraversalChunk record);
 
 	/**
 	 * <!-- begin-user-doc -->

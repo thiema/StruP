@@ -9,6 +9,7 @@ package easyflow.core;
 import easyflow.data.DataPort;
 import easyflow.tool.Tool;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -339,10 +340,10 @@ public interface ToolMatch extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model constraintsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	long computeScore();
+	long computeScore(EMap<String, String> constraints);
 
 	/**
 	 * <!-- begin-user-doc -->

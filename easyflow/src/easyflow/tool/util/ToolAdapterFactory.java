@@ -13,6 +13,7 @@ import easyflow.tool.IToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
+import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
@@ -134,6 +135,10 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseDocumentProperties(DocumentProperties object) {
 				return createDocumentPropertiesAdapter();
+			}
+			@Override
+			public Adapter caseOptionValue(OptionValue object) {
+				return createOptionValueAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -334,6 +339,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDocumentPropertiesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.OptionValue <em>Option Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.OptionValue
+	 * @generated
+	 */
+	public Adapter createOptionValueAdapter() {
 		return null;
 	}
 

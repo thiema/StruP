@@ -11,8 +11,11 @@ import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.data.Data;
 import easyflow.data.DataPort;
 
+import easyflow.traversal.TraversalChunk;
+import easyflow.metadata.GroupingInstance;
 import java.net.URI;
 
+import java.util.Map;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -41,6 +44,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getFilenamePrefix <em>Filename Prefix</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getAnalysisType <em>Analysis Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -271,6 +275,32 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	void setFilenamePrefix(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Analysis Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Analysis Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Analysis Type</em>' attribute.
+	 * @see #setAnalysisType(String)
+	 * @see easyflow.tool.ToolPackage#getTool_AnalysisType()
+	 * @model
+	 * @generated
+	 */
+	String getAnalysisType();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Tool#getAnalysisType <em>Analysis Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Analysis Type</em>' attribute.
+	 * @see #getAnalysisType()
+	 * @generated
+	 */
+	void setAnalysisType(String value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -325,5 +355,21 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<String> getGroupingsForOutputPort(DataPort dataPort, boolean required);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model recordsMany="true"
+	 * @generated
+	 */
+	String getAnalysisTypeOfPackage(EList<TraversalChunk> records);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model constraintsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EList<Data> getDataForParam(String param, Map.Entry<String, String> constraints);
 
 } // Tool

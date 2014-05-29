@@ -67,34 +67,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToTaskMap()
 	 * @generated
 	 */
-	int STRING_TO_TASK_MAP = 0;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TASK_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TASK_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Task Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TASK_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_TASK_MAP = 22;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToTraversalEventMapImpl <em>String To Traversal Event Map</em>}' class.
@@ -104,34 +77,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToTraversalEventMap()
 	 * @generated
 	 */
-	int STRING_TO_TRAVERSAL_EVENT_MAP = 1;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_EVENT_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_EVENT_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Traversal Event Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_EVENT_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_TRAVERSAL_EVENT_MAP = 24;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGraphCellMapImpl <em>String To Graph Cell Map</em>}' class.
@@ -141,34 +87,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToGraphCellMap()
 	 * @generated
 	 */
-	int STRING_TO_GRAPH_CELL_MAP = 2;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GRAPH_CELL_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GRAPH_CELL_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Graph Cell Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GRAPH_CELL_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_GRAPH_CELL_MAP = 13;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToTraversalCriterionMapImpl <em>String To Traversal Criterion Map</em>}' class.
@@ -178,34 +97,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToTraversalCriterionMap()
 	 * @generated
 	 */
-	int STRING_TO_TRAVERSAL_CRITERION_MAP = 3;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_CRITERION_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_CRITERION_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Traversal Criterion Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_CRITERION_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_TRAVERSAL_CRITERION_MAP = 25;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToObjectMapImpl <em>String To Object Map</em>}' class.
@@ -215,34 +107,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToObjectMap()
 	 * @generated
 	 */
-	int STRING_TO_OBJECT_MAP = 4;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_OBJECT_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_OBJECT_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Object Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_OBJECT_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_OBJECT_MAP = 15;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToChunksMapImpl <em>String To Chunks Map</em>}' class.
@@ -252,34 +117,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToChunksMap()
 	 * @generated
 	 */
-	int STRING_TO_CHUNKS_MAP = 5;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNKS_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNKS_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Chunks Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNKS_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_CHUNKS_MAP = 3;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToChunkMapImpl <em>String To Chunk Map</em>}' class.
@@ -289,34 +127,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToChunkMap()
 	 * @generated
 	 */
-	int STRING_TO_CHUNK_MAP = 6;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNK_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNK_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Chunk Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNK_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_CHUNK_MAP = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToToolMapImpl <em>String To Tool Map</em>}' class.
@@ -326,34 +137,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMap()
 	 * @generated
 	 */
-	int STRING_TO_TOOL_MAP = 7;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Tool Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_TOOL_MAP = 23;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
@@ -363,34 +147,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToStringMap()
 	 * @generated
 	 */
-	int STRING_TO_STRING_MAP = 8;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To String Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_STRING_MAP = 21;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGroupingMapImpl <em>String To Grouping Map</em>}' class.
@@ -400,34 +157,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToGroupingMap()
 	 * @generated
 	 */
-	int STRING_TO_GROUPING_MAP = 9;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Grouping Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_GROUPING_MAP = 12;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGroupingFeatureMapImpl <em>String To Grouping Feature Map</em>}' class.
@@ -437,34 +167,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToGroupingFeatureMap()
 	 * @generated
 	 */
-	int STRING_TO_GROUPING_FEATURE_MAP = 10;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_FEATURE_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_FEATURE_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Grouping Feature Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_FEATURE_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_GROUPING_FEATURE_MAP = 9;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGroupingInstanceListMapImpl <em>String To Grouping Instance List Map</em>}' class.
@@ -477,33 +180,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_GROUPING_INSTANCE_LIST_MAP = 11;
 
 	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_LIST_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Grouping Instance List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_LIST_MAP_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGroupingInstanceMapMapImpl <em>String To Grouping Instance Map Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -511,34 +187,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToGroupingInstanceMapMap()
 	 * @generated
 	 */
-	int STRING_TO_GROUPING_INSTANCE_MAP_MAP = 12;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Grouping Instance Map Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_MAP_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP = 10;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToStringListMapImpl <em>String To String List Map</em>}' class.
@@ -548,34 +197,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToStringListMap()
 	 * @generated
 	 */
-	int STRING_TO_STRING_LIST_MAP = 13;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_LIST_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_LIST_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To String List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_LIST_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_STRING_LIST_MAP = 20;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToURIMapImpl <em>String To URI Map</em>}' class.
@@ -585,34 +207,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToURIMap()
 	 * @generated
 	 */
-	int STRING_TO_URI_MAP = 14;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_URI_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_URI_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To URI Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_URI_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_URI_MAP = 26;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToSchemaMapImpl <em>String To Schema Map</em>}' class.
@@ -622,34 +217,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToSchemaMap()
 	 * @generated
 	 */
-	int STRING_TO_SCHEMA_MAP = 15;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_SCHEMA_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_SCHEMA_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Schema Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_SCHEMA_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_SCHEMA_MAP = 14;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToProjectMapImpl <em>String To Project Map</em>}' class.
@@ -659,34 +227,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToProjectMap()
 	 * @generated
 	 */
-	int STRING_TO_PROJECT_MAP = 16;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PROJECT_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PROJECT_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Project Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PROJECT_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_PROJECT_MAP = 19;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToParameterMapImpl <em>String To Parameter Map</em>}' class.
@@ -699,34 +240,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_PARAMETER_MAP = 17;
 
 	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PARAMETER_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PARAMETER_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Parameter Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PARAMETER_MAP_FEATURE_COUNT = 2;
-
-
-	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl <em>String To Document Properties Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -734,35 +247,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDocumentPropertiesMap()
 	 * @generated
 	 */
-	int STRING_TO_DOCUMENT_PROPERTIES_MAP = 18;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Document Properties Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DOCUMENT_PROPERTIES_MAP_FEATURE_COUNT = 2;
-
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP = 8;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToPackageMapImpl <em>String To Package Map</em>}' class.
@@ -772,35 +257,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToPackageMap()
 	 * @generated
 	 */
-	int STRING_TO_PACKAGE_MAP = 19;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PACKAGE_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PACKAGE_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Package Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PACKAGE_MAP_FEATURE_COUNT = 2;
-
+	int STRING_TO_PACKAGE_MAP = 16;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataMapImpl <em>String To Data Map</em>}' class.
@@ -810,34 +267,17 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataMap()
 	 * @generated
 	 */
-	int STRING_TO_DATA_MAP = 20;
+	int STRING_TO_DATA_MAP = 4;
 
 	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataListMapImpl <em>String To Data List Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToDataListMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataListMap()
 	 * @generated
-	 * @ordered
 	 */
-	int STRING_TO_DATA_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Data Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_DATA_LIST_MAP = 5;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataFormatMapImpl <em>String To Data Format Map</em>}' class.
@@ -847,35 +287,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataFormatMap()
 	 * @generated
 	 */
-	int STRING_TO_DATA_FORMAT_MAP = 21;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_FORMAT_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_FORMAT_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Data Format Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_FORMAT_MAP_FEATURE_COUNT = 2;
-
+	int STRING_TO_DATA_FORMAT_MAP = 6;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToToolMatchMapImpl <em>String To Tool Match Map</em>}' class.
@@ -885,35 +297,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMatchMap()
 	 * @generated
 	 */
-	int STRING_TO_TOOL_MATCH_MAP = 22;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MATCH_MAP__KEY = 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MATCH_MAP__VALUE = 1;
-
-	/**
-	 * The number of structural features of the '<em>String To Tool Match Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MATCH_MAP_FEATURE_COUNT = 2;
-
+	int STRING_TO_TOOL_MATCH_MAP = 27;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.TaskToDataPortsMapImpl <em>Task To Data Ports Map</em>}' class.
@@ -923,17 +307,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataPortsMap()
 	 * @generated
 	 */
-	int TASK_TO_DATA_PORTS_MAP = 26;
-
-	/**
-	 * The meta object id for the '{@link easyflow.util.maps.impl.TaskToDataLinksMapImpl <em>Task To Data Links Map</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see easyflow.util.maps.impl.TaskToDataLinksMapImpl
-	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataLinksMap()
-	 * @generated
-	 */
-	int TASK_TO_DATA_LINKS_MAP = 27;
+	int TASK_TO_DATA_PORTS_MAP = 28;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataLinkMapImpl <em>String To Data Link Map</em>}' class.
@@ -943,7 +317,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataLinkMap()
 	 * @generated
 	 */
-	int STRING_TO_DATA_LINK_MAP = 24;
+	int STRING_TO_DATA_LINK_MAP = 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.CellToCellListMapImpl <em>Cell To Cell List Map</em>}' class.
@@ -953,7 +327,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getCellToCellListMap()
 	 * @generated
 	 */
-	int CELL_TO_CELL_LIST_MAP = 25;
+	int CELL_TO_CELL_LIST_MAP = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToBooleanMapImpl <em>String To Boolean Map</em>}' class.
@@ -963,7 +337,34 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToBooleanMap()
 	 * @generated
 	 */
-	int STRING_TO_BOOLEAN_MAP = 23;
+	int STRING_TO_BOOLEAN_MAP = 1;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CELL_TO_CELL_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CELL_TO_CELL_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Cell To Cell List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CELL_TO_CELL_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -999,6 +400,141 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
+	int STRING_TO_CHUNK_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CHUNK_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Chunk Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CHUNK_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CHUNKS_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CHUNKS_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Chunks Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CHUNKS_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Data Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Data List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_FORMAT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_FORMAT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Data Format Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DATA_FORMAT_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
 	int STRING_TO_DATA_LINK_MAP__KEY = 0;
 
 	/**
@@ -1026,7 +562,351 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CELL_TO_CELL_LIST_MAP__KEY = 0;
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Document Properties Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_DOCUMENT_PROPERTIES_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_FEATURE_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_FEATURE_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Grouping Feature Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_FEATURE_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Grouping Instance Map Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_MAP_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Grouping Instance List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_INSTANCE_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Grouping Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GROUPING_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GRAPH_CELL_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GRAPH_CELL_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Graph Cell Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_GRAPH_CELL_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_SCHEMA_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_SCHEMA_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Schema Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_SCHEMA_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_OBJECT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_OBJECT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Object Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_OBJECT_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PACKAGE_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PACKAGE_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Package Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PACKAGE_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PARAMETER_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PARAMETER_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Parameter Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PARAMETER_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.TaskToDataLinkListMapImpl <em>Task To Data Link List Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.TaskToDataLinkListMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataLinkListMap()
+	 * @generated
+	 */
+	int TASK_TO_DATA_LINK_LIST_MAP = 29;
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToParameterListMapImpl <em>String To Parameter List Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToParameterListMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToParameterListMap()
+	 * @generated
+	 */
+	int STRING_TO_PARAMETER_LIST_MAP = 18;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PARAMETER_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PARAMETER_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Parameter List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PARAMETER_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PROJECT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PROJECT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Project Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_PROJECT_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_LIST_MAP__KEY = 0;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute list.
@@ -1035,16 +915,205 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CELL_TO_CELL_LIST_MAP__VALUE = 1;
+	int STRING_TO_STRING_LIST_MAP__VALUE = 1;
 
 	/**
-	 * The number of structural features of the '<em>Cell To Cell List Map</em>' class.
+	 * The number of structural features of the '<em>String To String List Map</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CELL_TO_CELL_LIST_MAP_FEATURE_COUNT = 2;
+	int STRING_TO_STRING_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To String Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TASK_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TASK_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Task Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TASK_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Tool Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TRAVERSAL_EVENT_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TRAVERSAL_EVENT_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Traversal Event Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TRAVERSAL_EVENT_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TRAVERSAL_CRITERION_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TRAVERSAL_CRITERION_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Traversal Criterion Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TRAVERSAL_CRITERION_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_URI_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_URI_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To URI Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_URI_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MATCH_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MATCH_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Tool Match Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_TOOL_MATCH_MAP_FEATURE_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
@@ -1080,7 +1149,7 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TO_DATA_LINKS_MAP__KEY = 0;
+	int TASK_TO_DATA_LINK_LIST_MAP__KEY = 0;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' reference list.
@@ -1089,16 +1158,16 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TO_DATA_LINKS_MAP__VALUE = 1;
+	int TASK_TO_DATA_LINK_LIST_MAP__VALUE = 1;
 
 	/**
-	 * The number of structural features of the '<em>Task To Data Links Map</em>' class.
+	 * The number of structural features of the '<em>Task To Data Link List Map</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TO_DATA_LINKS_MAP_FEATURE_COUNT = 2;
+	int TASK_TO_DATA_LINK_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
@@ -1815,6 +1884,40 @@ public interface MapsPackage extends EPackage {
 	EReference getStringToDataMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Data List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Data List Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.data.Data" valueMany="true"
+	 * @generated
+	 */
+	EClass getStringToDataListMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataListMap()
+	 * @generated
+	 */
+	EAttribute getStringToDataListMap_Key();
+
+	/**
+	 * Returns the meta object for the reference list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToDataListMap()
+	 * @generated
+	 */
+	EReference getStringToDataListMap_Value();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Data Format Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1917,16 +2020,16 @@ public interface MapsPackage extends EPackage {
 	EReference getTaskToDataPortsMap_Value();
 
 	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Task To Data Links Map</em>}'.
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Task To Data Link List Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Task To Data Links Map</em>'.
+	 * @return the meta object for class '<em>Task To Data Link List Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyType="easyflow.core.Task"
 	 *        valueType="easyflow.data.DataLink" valueMany="true"
 	 * @generated
 	 */
-	EClass getTaskToDataLinksMap();
+	EClass getTaskToDataLinkListMap();
 
 	/**
 	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
@@ -1934,10 +2037,10 @@ public interface MapsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Key</em>'.
 	 * @see java.util.Map.Entry
-	 * @see #getTaskToDataLinksMap()
+	 * @see #getTaskToDataLinkListMap()
 	 * @generated
 	 */
-	EReference getTaskToDataLinksMap_Key();
+	EReference getTaskToDataLinkListMap_Key();
 
 	/**
 	 * Returns the meta object for the reference list '{@link java.util.Map.Entry <em>Value</em>}'.
@@ -1945,10 +2048,44 @@ public interface MapsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Value</em>'.
 	 * @see java.util.Map.Entry
-	 * @see #getTaskToDataLinksMap()
+	 * @see #getTaskToDataLinkListMap()
 	 * @generated
 	 */
-	EReference getTaskToDataLinksMap_Value();
+	EReference getTaskToDataLinkListMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Parameter List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Parameter List Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.Parameter" valueMany="true"
+	 * @generated
+	 */
+	EClass getStringToParameterListMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToParameterListMap()
+	 * @generated
+	 */
+	EAttribute getStringToParameterListMap_Key();
+
+	/**
+	 * Returns the meta object for the reference list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToParameterListMap()
+	 * @generated
+	 */
+	EReference getStringToParameterListMap_Value();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Data Link Map</em>}'.
@@ -2621,6 +2758,32 @@ public interface MapsPackage extends EPackage {
 		EReference STRING_TO_DATA_MAP__VALUE = eINSTANCE.getStringToDataMap_Value();
 
 		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDataListMapImpl <em>String To Data List Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToDataListMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToDataListMap()
+		 * @generated
+		 */
+		EClass STRING_TO_DATA_LIST_MAP = eINSTANCE.getStringToDataListMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_DATA_LIST_MAP__KEY = eINSTANCE.getStringToDataListMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_DATA_LIST_MAP__VALUE = eINSTANCE.getStringToDataListMap_Value();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDataFormatMapImpl <em>String To Data Format Map</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2699,14 +2862,14 @@ public interface MapsPackage extends EPackage {
 		EReference TASK_TO_DATA_PORTS_MAP__VALUE = eINSTANCE.getTaskToDataPortsMap_Value();
 
 		/**
-		 * The meta object literal for the '{@link easyflow.util.maps.impl.TaskToDataLinksMapImpl <em>Task To Data Links Map</em>}' class.
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.TaskToDataLinkListMapImpl <em>Task To Data Link List Map</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see easyflow.util.maps.impl.TaskToDataLinksMapImpl
-		 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataLinksMap()
+		 * @see easyflow.util.maps.impl.TaskToDataLinkListMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataLinkListMap()
 		 * @generated
 		 */
-		EClass TASK_TO_DATA_LINKS_MAP = eINSTANCE.getTaskToDataLinksMap();
+		EClass TASK_TO_DATA_LINK_LIST_MAP = eINSTANCE.getTaskToDataLinkListMap();
 
 		/**
 		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
@@ -2714,7 +2877,7 @@ public interface MapsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TASK_TO_DATA_LINKS_MAP__KEY = eINSTANCE.getTaskToDataLinksMap_Key();
+		EReference TASK_TO_DATA_LINK_LIST_MAP__KEY = eINSTANCE.getTaskToDataLinkListMap_Key();
 
 		/**
 		 * The meta object literal for the '<em><b>Value</b></em>' reference list feature.
@@ -2722,7 +2885,33 @@ public interface MapsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TASK_TO_DATA_LINKS_MAP__VALUE = eINSTANCE.getTaskToDataLinksMap_Value();
+		EReference TASK_TO_DATA_LINK_LIST_MAP__VALUE = eINSTANCE.getTaskToDataLinkListMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToParameterListMapImpl <em>String To Parameter List Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToParameterListMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToParameterListMap()
+		 * @generated
+		 */
+		EClass STRING_TO_PARAMETER_LIST_MAP = eINSTANCE.getStringToParameterListMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_PARAMETER_LIST_MAP__KEY = eINSTANCE.getStringToParameterListMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_PARAMETER_LIST_MAP__VALUE = eINSTANCE.getStringToParameterListMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToDataLinkMapImpl <em>String To Data Link Map</em>}' class.

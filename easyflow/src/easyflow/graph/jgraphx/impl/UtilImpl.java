@@ -3873,8 +3873,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 * @throws ToolNotFoundException
 	 * @throws UtilityTaskNotFoundException
 	 */
-	private EMap<mxICell, DataLink> createFilterTasks(
-											mxICell cell, EList<mxICell> edges, 
+	private EMap<mxICell, DataLink> createFilterTasks(mxICell cell, EList<mxICell> edges, 
 											DataPort dataPort, String groupingStr, int constellation) 
 						throws TaskNotFoundException, 
 								DataLinkNotFoundException, 

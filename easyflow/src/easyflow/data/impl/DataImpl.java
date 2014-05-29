@@ -11,6 +11,7 @@ import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
 
+import easyflow.tool.Parameter;
 import java.net.URI;
 import java.util.Iterator;
 
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link easyflow.data.impl.DataImpl#getDataResourceName <em>Data Resource Name</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataImpl#getParameter <em>Parameter</em>}</li>
  * </ul>
  * </p>
  *
@@ -150,6 +152,16 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getParameter() <em>Parameter</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParameter()
+	 * @generated
+	 * @ordered
+	 */
+	protected Parameter parameter;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -341,6 +353,44 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Parameter getParameter() {
+		if (parameter != null && parameter.eIsProxy()) {
+			InternalEObject oldParameter = (InternalEObject)parameter;
+			parameter = (Parameter)eResolveProxy(oldParameter);
+			if (parameter != oldParameter) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataPackage.DATA__PARAMETER, oldParameter, parameter));
+			}
+		}
+		return parameter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Parameter basicGetParameter() {
+		return parameter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParameter(Parameter newParameter) {
+		Parameter oldParameter = parameter;
+		parameter = newParameter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA__PARAMETER, oldParameter, parameter));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -357,6 +407,9 @@ public class DataImpl extends EObjectImpl implements Data {
 				return getName();
 			case DataPackage.DATA__DESCRIPTION:
 				return getDescription();
+			case DataPackage.DATA__PARAMETER:
+				if (resolve) return getParameter();
+				return basicGetParameter();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -386,6 +439,9 @@ public class DataImpl extends EObjectImpl implements Data {
 				return;
 			case DataPackage.DATA__DESCRIPTION:
 				setDescription((String)newValue);
+				return;
+			case DataPackage.DATA__PARAMETER:
+				setParameter((Parameter)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -417,6 +473,9 @@ public class DataImpl extends EObjectImpl implements Data {
 			case DataPackage.DATA__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
+			case DataPackage.DATA__PARAMETER:
+				setParameter((Parameter)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -441,6 +500,8 @@ public class DataImpl extends EObjectImpl implements Data {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case DataPackage.DATA__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case DataPackage.DATA__PARAMETER:
+				return parameter != null;
 		}
 		return super.eIsSet(featureID);
 	}

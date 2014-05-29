@@ -93,34 +93,36 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case MapsPackage.STRING_TO_TASK_MAP: return (EObject)createStringToTaskMap();
-			case MapsPackage.STRING_TO_TRAVERSAL_EVENT_MAP: return (EObject)createStringToTraversalEventMap();
-			case MapsPackage.STRING_TO_GRAPH_CELL_MAP: return (EObject)createStringToGraphCellMap();
-			case MapsPackage.STRING_TO_TRAVERSAL_CRITERION_MAP: return (EObject)createStringToTraversalCriterionMap();
-			case MapsPackage.STRING_TO_OBJECT_MAP: return (EObject)createStringToObjectMap();
-			case MapsPackage.STRING_TO_CHUNKS_MAP: return (EObject)createStringToChunksMap();
-			case MapsPackage.STRING_TO_CHUNK_MAP: return (EObject)createStringToChunkMap();
-			case MapsPackage.STRING_TO_TOOL_MAP: return (EObject)createStringToToolMap();
-			case MapsPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
-			case MapsPackage.STRING_TO_GROUPING_MAP: return (EObject)createStringToGroupingMap();
-			case MapsPackage.STRING_TO_GROUPING_FEATURE_MAP: return (EObject)createStringToGroupingFeatureMap();
-			case MapsPackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: return (EObject)createStringToGroupingInstanceListMap();
-			case MapsPackage.STRING_TO_GROUPING_INSTANCE_MAP_MAP: return (EObject)createStringToGroupingInstanceMapMap();
-			case MapsPackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
-			case MapsPackage.STRING_TO_URI_MAP: return (EObject)createStringToURIMap();
-			case MapsPackage.STRING_TO_SCHEMA_MAP: return (EObject)createStringToSchemaMap();
-			case MapsPackage.STRING_TO_PROJECT_MAP: return (EObject)createStringToProjectMap();
-			case MapsPackage.STRING_TO_PARAMETER_MAP: return (EObject)createStringToParameterMap();
-			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: return (EObject)createStringToDocumentPropertiesMap();
-			case MapsPackage.STRING_TO_PACKAGE_MAP: return (EObject)createStringToPackageMap();
-			case MapsPackage.STRING_TO_DATA_MAP: return (EObject)createStringToDataMap();
-			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: return (EObject)createStringToDataFormatMap();
-			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
-			case MapsPackage.STRING_TO_BOOLEAN_MAP: return (EObject)createStringToBooleanMap();
-			case MapsPackage.STRING_TO_DATA_LINK_MAP: return (EObject)createStringToDataLinkMap();
 			case MapsPackage.CELL_TO_CELL_LIST_MAP: return (EObject)createCellToCellListMap();
+			case MapsPackage.STRING_TO_BOOLEAN_MAP: return (EObject)createStringToBooleanMap();
+			case MapsPackage.STRING_TO_CHUNK_MAP: return (EObject)createStringToChunkMap();
+			case MapsPackage.STRING_TO_CHUNKS_MAP: return (EObject)createStringToChunksMap();
+			case MapsPackage.STRING_TO_DATA_MAP: return (EObject)createStringToDataMap();
+			case MapsPackage.STRING_TO_DATA_LIST_MAP: return (EObject)createStringToDataListMap();
+			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: return (EObject)createStringToDataFormatMap();
+			case MapsPackage.STRING_TO_DATA_LINK_MAP: return (EObject)createStringToDataLinkMap();
+			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: return (EObject)createStringToDocumentPropertiesMap();
+			case MapsPackage.STRING_TO_GROUPING_FEATURE_MAP: return (EObject)createStringToGroupingFeatureMap();
+			case MapsPackage.STRING_TO_GROUPING_INSTANCE_MAP_MAP: return (EObject)createStringToGroupingInstanceMapMap();
+			case MapsPackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: return (EObject)createStringToGroupingInstanceListMap();
+			case MapsPackage.STRING_TO_GROUPING_MAP: return (EObject)createStringToGroupingMap();
+			case MapsPackage.STRING_TO_GRAPH_CELL_MAP: return (EObject)createStringToGraphCellMap();
+			case MapsPackage.STRING_TO_SCHEMA_MAP: return (EObject)createStringToSchemaMap();
+			case MapsPackage.STRING_TO_OBJECT_MAP: return (EObject)createStringToObjectMap();
+			case MapsPackage.STRING_TO_PACKAGE_MAP: return (EObject)createStringToPackageMap();
+			case MapsPackage.STRING_TO_PARAMETER_MAP: return (EObject)createStringToParameterMap();
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP: return (EObject)createStringToParameterListMap();
+			case MapsPackage.STRING_TO_PROJECT_MAP: return (EObject)createStringToProjectMap();
+			case MapsPackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
+			case MapsPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
+			case MapsPackage.STRING_TO_TASK_MAP: return (EObject)createStringToTaskMap();
+			case MapsPackage.STRING_TO_TOOL_MAP: return (EObject)createStringToToolMap();
+			case MapsPackage.STRING_TO_TRAVERSAL_EVENT_MAP: return (EObject)createStringToTraversalEventMap();
+			case MapsPackage.STRING_TO_TRAVERSAL_CRITERION_MAP: return (EObject)createStringToTraversalCriterionMap();
+			case MapsPackage.STRING_TO_URI_MAP: return (EObject)createStringToURIMap();
+			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
 			case MapsPackage.TASK_TO_DATA_PORTS_MAP: return (EObject)createTaskToDataPortsMap();
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP: return (EObject)createTaskToDataLinksMap();
+			case MapsPackage.TASK_TO_DATA_LINK_LIST_MAP: return (EObject)createTaskToDataLinkListMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -341,6 +343,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Map.Entry<String, EList<Data>> createStringToDataListMap() {
+		StringToDataListMapImpl stringToDataListMap = new StringToDataListMapImpl();
+		return stringToDataListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Map.Entry<String, DataFormat> createStringToDataFormatMap() {
 		StringToDataFormatMapImpl stringToDataFormatMap = new StringToDataFormatMapImpl();
 		return stringToDataFormatMap;
@@ -401,9 +413,19 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<Task, EList<DataLink>> createTaskToDataLinksMap() {
-		TaskToDataLinksMapImpl taskToDataLinksMap = new TaskToDataLinksMapImpl();
-		return taskToDataLinksMap;
+	public Map.Entry<Task, EList<DataLink>> createTaskToDataLinkListMap() {
+		TaskToDataLinkListMapImpl taskToDataLinkListMap = new TaskToDataLinkListMapImpl();
+		return taskToDataLinkListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, EList<Parameter>> createStringToParameterListMap() {
+		StringToParameterListMapImpl stringToParameterListMap = new StringToParameterListMapImpl();
+		return stringToParameterListMap;
 	}
 
 	/**

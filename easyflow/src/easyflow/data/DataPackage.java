@@ -342,13 +342,22 @@ public interface DataPackage extends EPackage {
 	int DATA__DESCRIPTION = 5;
 
 	/**
+	 * The feature id for the '<em><b>Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__PARAMETER = 6;
+
+	/**
 	 * The number of structural features of the '<em>Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_FEATURE_COUNT = 6;
+	int DATA_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.
@@ -705,6 +714,17 @@ public interface DataPackage extends EPackage {
 	EAttribute getData_Description();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.data.Data#getParameter <em>Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parameter</em>'.
+	 * @see easyflow.data.Data#getParameter()
+	 * @see #getData()
+	 * @generated
+	 */
+	EReference getData_Parameter();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataFormat <em>Format</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -995,6 +1015,14 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA__DESCRIPTION = eINSTANCE.getData_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA__PARAMETER = eINSTANCE.getData_Parameter();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.

@@ -669,7 +669,7 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataLinksMap<easyflow.core.Task, easyflow.data.DataLink>"
+	 * @model mapType="easyflow.util.maps.TaskToDataLinkListMap<easyflow.core.Task, easyflow.data.DataLink>"
 	 * @generated
 	 */
 	EMap<Task, EList<DataLink>> getParentTasksFor(Task task);

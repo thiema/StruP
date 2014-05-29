@@ -225,6 +225,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToDataListMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToDataFormatMapEClass = null;
 
 	/**
@@ -246,7 +253,14 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass taskToDataLinksMapEClass = null;
+	private EClass taskToDataLinkListMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToParameterListMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -943,6 +957,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToDataListMap() {
+		return stringToDataListMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToDataListMap_Key() {
+		return (EAttribute)stringToDataListMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToDataListMap_Value() {
+		return (EReference)stringToDataListMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToDataFormatMap() {
 		return stringToDataFormatMapEClass;
 	}
@@ -1024,8 +1065,8 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTaskToDataLinksMap() {
-		return taskToDataLinksMapEClass;
+	public EClass getTaskToDataLinkListMap() {
+		return taskToDataLinkListMapEClass;
 	}
 
 	/**
@@ -1033,8 +1074,8 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskToDataLinksMap_Key() {
-		return (EReference)taskToDataLinksMapEClass.getEStructuralFeatures().get(0);
+	public EReference getTaskToDataLinkListMap_Key() {
+		return (EReference)taskToDataLinkListMapEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1042,8 +1083,35 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskToDataLinksMap_Value() {
-		return (EReference)taskToDataLinksMapEClass.getEStructuralFeatures().get(1);
+	public EReference getTaskToDataLinkListMap_Value() {
+		return (EReference)taskToDataLinkListMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringToParameterListMap() {
+		return stringToParameterListMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToParameterListMap_Key() {
+		return (EAttribute)stringToParameterListMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToParameterListMap_Value() {
+		return (EReference)stringToParameterListMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1155,117 +1223,125 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		stringToTaskMapEClass = createEClass(STRING_TO_TASK_MAP);
-		createEAttribute(stringToTaskMapEClass, STRING_TO_TASK_MAP__KEY);
-		createEReference(stringToTaskMapEClass, STRING_TO_TASK_MAP__VALUE);
-
-		stringToTraversalEventMapEClass = createEClass(STRING_TO_TRAVERSAL_EVENT_MAP);
-		createEAttribute(stringToTraversalEventMapEClass, STRING_TO_TRAVERSAL_EVENT_MAP__KEY);
-		createEReference(stringToTraversalEventMapEClass, STRING_TO_TRAVERSAL_EVENT_MAP__VALUE);
-
-		stringToGraphCellMapEClass = createEClass(STRING_TO_GRAPH_CELL_MAP);
-		createEAttribute(stringToGraphCellMapEClass, STRING_TO_GRAPH_CELL_MAP__KEY);
-		createEAttribute(stringToGraphCellMapEClass, STRING_TO_GRAPH_CELL_MAP__VALUE);
-
-		stringToTraversalCriterionMapEClass = createEClass(STRING_TO_TRAVERSAL_CRITERION_MAP);
-		createEAttribute(stringToTraversalCriterionMapEClass, STRING_TO_TRAVERSAL_CRITERION_MAP__KEY);
-		createEReference(stringToTraversalCriterionMapEClass, STRING_TO_TRAVERSAL_CRITERION_MAP__VALUE);
-
-		stringToObjectMapEClass = createEClass(STRING_TO_OBJECT_MAP);
-		createEAttribute(stringToObjectMapEClass, STRING_TO_OBJECT_MAP__KEY);
-		createEAttribute(stringToObjectMapEClass, STRING_TO_OBJECT_MAP__VALUE);
-
-		stringToChunksMapEClass = createEClass(STRING_TO_CHUNKS_MAP);
-		createEAttribute(stringToChunksMapEClass, STRING_TO_CHUNKS_MAP__KEY);
-		createEReference(stringToChunksMapEClass, STRING_TO_CHUNKS_MAP__VALUE);
-
-		stringToChunkMapEClass = createEClass(STRING_TO_CHUNK_MAP);
-		createEAttribute(stringToChunkMapEClass, STRING_TO_CHUNK_MAP__KEY);
-		createEReference(stringToChunkMapEClass, STRING_TO_CHUNK_MAP__VALUE);
-
-		stringToToolMapEClass = createEClass(STRING_TO_TOOL_MAP);
-		createEAttribute(stringToToolMapEClass, STRING_TO_TOOL_MAP__KEY);
-		createEReference(stringToToolMapEClass, STRING_TO_TOOL_MAP__VALUE);
-
-		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
-		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
-		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__VALUE);
-
-		stringToGroupingMapEClass = createEClass(STRING_TO_GROUPING_MAP);
-		createEAttribute(stringToGroupingMapEClass, STRING_TO_GROUPING_MAP__KEY);
-		createEReference(stringToGroupingMapEClass, STRING_TO_GROUPING_MAP__VALUE);
-
-		stringToGroupingFeatureMapEClass = createEClass(STRING_TO_GROUPING_FEATURE_MAP);
-		createEAttribute(stringToGroupingFeatureMapEClass, STRING_TO_GROUPING_FEATURE_MAP__KEY);
-		createEReference(stringToGroupingFeatureMapEClass, STRING_TO_GROUPING_FEATURE_MAP__VALUE);
-
-		stringToGroupingInstanceListMapEClass = createEClass(STRING_TO_GROUPING_INSTANCE_LIST_MAP);
-		createEAttribute(stringToGroupingInstanceListMapEClass, STRING_TO_GROUPING_INSTANCE_LIST_MAP__KEY);
-		createEReference(stringToGroupingInstanceListMapEClass, STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE);
-
-		stringToGroupingInstanceMapMapEClass = createEClass(STRING_TO_GROUPING_INSTANCE_MAP_MAP);
-		createEAttribute(stringToGroupingInstanceMapMapEClass, STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY);
-		createEReference(stringToGroupingInstanceMapMapEClass, STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE);
-
-		stringToStringListMapEClass = createEClass(STRING_TO_STRING_LIST_MAP);
-		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__KEY);
-		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__VALUE);
-
-		stringToURIMapEClass = createEClass(STRING_TO_URI_MAP);
-		createEAttribute(stringToURIMapEClass, STRING_TO_URI_MAP__KEY);
-		createEAttribute(stringToURIMapEClass, STRING_TO_URI_MAP__VALUE);
-
-		stringToSchemaMapEClass = createEClass(STRING_TO_SCHEMA_MAP);
-		createEAttribute(stringToSchemaMapEClass, STRING_TO_SCHEMA_MAP__KEY);
-		createEAttribute(stringToSchemaMapEClass, STRING_TO_SCHEMA_MAP__VALUE);
-
-		stringToProjectMapEClass = createEClass(STRING_TO_PROJECT_MAP);
-		createEAttribute(stringToProjectMapEClass, STRING_TO_PROJECT_MAP__KEY);
-		createEReference(stringToProjectMapEClass, STRING_TO_PROJECT_MAP__VALUE);
-
-		stringToParameterMapEClass = createEClass(STRING_TO_PARAMETER_MAP);
-		createEAttribute(stringToParameterMapEClass, STRING_TO_PARAMETER_MAP__KEY);
-		createEReference(stringToParameterMapEClass, STRING_TO_PARAMETER_MAP__VALUE);
-
-		stringToDocumentPropertiesMapEClass = createEClass(STRING_TO_DOCUMENT_PROPERTIES_MAP);
-		createEAttribute(stringToDocumentPropertiesMapEClass, STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY);
-		createEReference(stringToDocumentPropertiesMapEClass, STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE);
-
-		stringToPackageMapEClass = createEClass(STRING_TO_PACKAGE_MAP);
-		createEAttribute(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__KEY);
-		createEReference(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__VALUE);
-
-		stringToDataMapEClass = createEClass(STRING_TO_DATA_MAP);
-		createEAttribute(stringToDataMapEClass, STRING_TO_DATA_MAP__KEY);
-		createEReference(stringToDataMapEClass, STRING_TO_DATA_MAP__VALUE);
-
-		stringToDataFormatMapEClass = createEClass(STRING_TO_DATA_FORMAT_MAP);
-		createEAttribute(stringToDataFormatMapEClass, STRING_TO_DATA_FORMAT_MAP__KEY);
-		createEReference(stringToDataFormatMapEClass, STRING_TO_DATA_FORMAT_MAP__VALUE);
-
-		stringToToolMatchMapEClass = createEClass(STRING_TO_TOOL_MATCH_MAP);
-		createEAttribute(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__KEY);
-		createEReference(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__VALUE);
+		cellToCellListMapEClass = createEClass(CELL_TO_CELL_LIST_MAP);
+		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__KEY);
+		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__VALUE);
 
 		stringToBooleanMapEClass = createEClass(STRING_TO_BOOLEAN_MAP);
 		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__KEY);
 		createEAttribute(stringToBooleanMapEClass, STRING_TO_BOOLEAN_MAP__VALUE);
 
+		stringToChunkMapEClass = createEClass(STRING_TO_CHUNK_MAP);
+		createEAttribute(stringToChunkMapEClass, STRING_TO_CHUNK_MAP__KEY);
+		createEReference(stringToChunkMapEClass, STRING_TO_CHUNK_MAP__VALUE);
+
+		stringToChunksMapEClass = createEClass(STRING_TO_CHUNKS_MAP);
+		createEAttribute(stringToChunksMapEClass, STRING_TO_CHUNKS_MAP__KEY);
+		createEReference(stringToChunksMapEClass, STRING_TO_CHUNKS_MAP__VALUE);
+
+		stringToDataMapEClass = createEClass(STRING_TO_DATA_MAP);
+		createEAttribute(stringToDataMapEClass, STRING_TO_DATA_MAP__KEY);
+		createEReference(stringToDataMapEClass, STRING_TO_DATA_MAP__VALUE);
+
+		stringToDataListMapEClass = createEClass(STRING_TO_DATA_LIST_MAP);
+		createEAttribute(stringToDataListMapEClass, STRING_TO_DATA_LIST_MAP__KEY);
+		createEReference(stringToDataListMapEClass, STRING_TO_DATA_LIST_MAP__VALUE);
+
+		stringToDataFormatMapEClass = createEClass(STRING_TO_DATA_FORMAT_MAP);
+		createEAttribute(stringToDataFormatMapEClass, STRING_TO_DATA_FORMAT_MAP__KEY);
+		createEReference(stringToDataFormatMapEClass, STRING_TO_DATA_FORMAT_MAP__VALUE);
+
 		stringToDataLinkMapEClass = createEClass(STRING_TO_DATA_LINK_MAP);
 		createEAttribute(stringToDataLinkMapEClass, STRING_TO_DATA_LINK_MAP__KEY);
 		createEReference(stringToDataLinkMapEClass, STRING_TO_DATA_LINK_MAP__VALUE);
 
-		cellToCellListMapEClass = createEClass(CELL_TO_CELL_LIST_MAP);
-		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__KEY);
-		createEAttribute(cellToCellListMapEClass, CELL_TO_CELL_LIST_MAP__VALUE);
+		stringToDocumentPropertiesMapEClass = createEClass(STRING_TO_DOCUMENT_PROPERTIES_MAP);
+		createEAttribute(stringToDocumentPropertiesMapEClass, STRING_TO_DOCUMENT_PROPERTIES_MAP__KEY);
+		createEReference(stringToDocumentPropertiesMapEClass, STRING_TO_DOCUMENT_PROPERTIES_MAP__VALUE);
+
+		stringToGroupingFeatureMapEClass = createEClass(STRING_TO_GROUPING_FEATURE_MAP);
+		createEAttribute(stringToGroupingFeatureMapEClass, STRING_TO_GROUPING_FEATURE_MAP__KEY);
+		createEReference(stringToGroupingFeatureMapEClass, STRING_TO_GROUPING_FEATURE_MAP__VALUE);
+
+		stringToGroupingInstanceMapMapEClass = createEClass(STRING_TO_GROUPING_INSTANCE_MAP_MAP);
+		createEAttribute(stringToGroupingInstanceMapMapEClass, STRING_TO_GROUPING_INSTANCE_MAP_MAP__KEY);
+		createEReference(stringToGroupingInstanceMapMapEClass, STRING_TO_GROUPING_INSTANCE_MAP_MAP__VALUE);
+
+		stringToGroupingInstanceListMapEClass = createEClass(STRING_TO_GROUPING_INSTANCE_LIST_MAP);
+		createEAttribute(stringToGroupingInstanceListMapEClass, STRING_TO_GROUPING_INSTANCE_LIST_MAP__KEY);
+		createEReference(stringToGroupingInstanceListMapEClass, STRING_TO_GROUPING_INSTANCE_LIST_MAP__VALUE);
+
+		stringToGroupingMapEClass = createEClass(STRING_TO_GROUPING_MAP);
+		createEAttribute(stringToGroupingMapEClass, STRING_TO_GROUPING_MAP__KEY);
+		createEReference(stringToGroupingMapEClass, STRING_TO_GROUPING_MAP__VALUE);
+
+		stringToGraphCellMapEClass = createEClass(STRING_TO_GRAPH_CELL_MAP);
+		createEAttribute(stringToGraphCellMapEClass, STRING_TO_GRAPH_CELL_MAP__KEY);
+		createEAttribute(stringToGraphCellMapEClass, STRING_TO_GRAPH_CELL_MAP__VALUE);
+
+		stringToSchemaMapEClass = createEClass(STRING_TO_SCHEMA_MAP);
+		createEAttribute(stringToSchemaMapEClass, STRING_TO_SCHEMA_MAP__KEY);
+		createEAttribute(stringToSchemaMapEClass, STRING_TO_SCHEMA_MAP__VALUE);
+
+		stringToObjectMapEClass = createEClass(STRING_TO_OBJECT_MAP);
+		createEAttribute(stringToObjectMapEClass, STRING_TO_OBJECT_MAP__KEY);
+		createEAttribute(stringToObjectMapEClass, STRING_TO_OBJECT_MAP__VALUE);
+
+		stringToPackageMapEClass = createEClass(STRING_TO_PACKAGE_MAP);
+		createEAttribute(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__KEY);
+		createEReference(stringToPackageMapEClass, STRING_TO_PACKAGE_MAP__VALUE);
+
+		stringToParameterMapEClass = createEClass(STRING_TO_PARAMETER_MAP);
+		createEAttribute(stringToParameterMapEClass, STRING_TO_PARAMETER_MAP__KEY);
+		createEReference(stringToParameterMapEClass, STRING_TO_PARAMETER_MAP__VALUE);
+
+		stringToParameterListMapEClass = createEClass(STRING_TO_PARAMETER_LIST_MAP);
+		createEAttribute(stringToParameterListMapEClass, STRING_TO_PARAMETER_LIST_MAP__KEY);
+		createEReference(stringToParameterListMapEClass, STRING_TO_PARAMETER_LIST_MAP__VALUE);
+
+		stringToProjectMapEClass = createEClass(STRING_TO_PROJECT_MAP);
+		createEAttribute(stringToProjectMapEClass, STRING_TO_PROJECT_MAP__KEY);
+		createEReference(stringToProjectMapEClass, STRING_TO_PROJECT_MAP__VALUE);
+
+		stringToStringListMapEClass = createEClass(STRING_TO_STRING_LIST_MAP);
+		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__KEY);
+		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__VALUE);
+
+		stringToStringMapEClass = createEClass(STRING_TO_STRING_MAP);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__KEY);
+		createEAttribute(stringToStringMapEClass, STRING_TO_STRING_MAP__VALUE);
+
+		stringToTaskMapEClass = createEClass(STRING_TO_TASK_MAP);
+		createEAttribute(stringToTaskMapEClass, STRING_TO_TASK_MAP__KEY);
+		createEReference(stringToTaskMapEClass, STRING_TO_TASK_MAP__VALUE);
+
+		stringToToolMapEClass = createEClass(STRING_TO_TOOL_MAP);
+		createEAttribute(stringToToolMapEClass, STRING_TO_TOOL_MAP__KEY);
+		createEReference(stringToToolMapEClass, STRING_TO_TOOL_MAP__VALUE);
+
+		stringToTraversalEventMapEClass = createEClass(STRING_TO_TRAVERSAL_EVENT_MAP);
+		createEAttribute(stringToTraversalEventMapEClass, STRING_TO_TRAVERSAL_EVENT_MAP__KEY);
+		createEReference(stringToTraversalEventMapEClass, STRING_TO_TRAVERSAL_EVENT_MAP__VALUE);
+
+		stringToTraversalCriterionMapEClass = createEClass(STRING_TO_TRAVERSAL_CRITERION_MAP);
+		createEAttribute(stringToTraversalCriterionMapEClass, STRING_TO_TRAVERSAL_CRITERION_MAP__KEY);
+		createEReference(stringToTraversalCriterionMapEClass, STRING_TO_TRAVERSAL_CRITERION_MAP__VALUE);
+
+		stringToURIMapEClass = createEClass(STRING_TO_URI_MAP);
+		createEAttribute(stringToURIMapEClass, STRING_TO_URI_MAP__KEY);
+		createEAttribute(stringToURIMapEClass, STRING_TO_URI_MAP__VALUE);
+
+		stringToToolMatchMapEClass = createEClass(STRING_TO_TOOL_MATCH_MAP);
+		createEAttribute(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__KEY);
+		createEReference(stringToToolMatchMapEClass, STRING_TO_TOOL_MATCH_MAP__VALUE);
 
 		taskToDataPortsMapEClass = createEClass(TASK_TO_DATA_PORTS_MAP);
 		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__KEY);
 		createEReference(taskToDataPortsMapEClass, TASK_TO_DATA_PORTS_MAP__VALUE);
 
-		taskToDataLinksMapEClass = createEClass(TASK_TO_DATA_LINKS_MAP);
-		createEReference(taskToDataLinksMapEClass, TASK_TO_DATA_LINKS_MAP__KEY);
-		createEReference(taskToDataLinksMapEClass, TASK_TO_DATA_LINKS_MAP__VALUE);
+		taskToDataLinkListMapEClass = createEClass(TASK_TO_DATA_LINK_LIST_MAP);
+		createEReference(taskToDataLinkListMapEClass, TASK_TO_DATA_LINK_LIST_MAP__KEY);
+		createEReference(taskToDataLinkListMapEClass, TASK_TO_DATA_LINK_LIST_MAP__VALUE);
 	}
 
 	/**
@@ -1292,13 +1368,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
-		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
+		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
+		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
-		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -1307,117 +1383,125 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(stringToTaskMapEClass, Map.Entry.class, "StringToTaskMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToTaskMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToTaskMap_Value(), theCorePackage.getTask(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToTraversalEventMapEClass, Map.Entry.class, "StringToTraversalEventMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToTraversalEventMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToTraversalEventMap_Value(), theTraversalPackage.getTraversalEvent(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToGraphCellMapEClass, Map.Entry.class, "StringToGraphCellMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToGraphCellMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToGraphCellMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToTraversalCriterionMapEClass, Map.Entry.class, "StringToTraversalCriterionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToTraversalCriterionMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToTraversalCriterionMap_Value(), theTraversalPackage.getTraversalCriterion(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToObjectMapEClass, Map.Entry.class, "StringToObjectMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToObjectMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToObjectMap_Value(), theEasyflowPackage.getObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToChunksMapEClass, Map.Entry.class, "StringToChunksMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToChunksMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToChunksMap_Value(), theTraversalPackage.getTraversalChunk(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToChunkMapEClass, Map.Entry.class, "StringToChunkMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToChunkMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToChunkMap_Value(), theTraversalPackage.getTraversalChunk(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToToolMapEClass, Map.Entry.class, "StringToToolMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToToolMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToToolMap_Value(), theToolPackage.getTool(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToGroupingMapEClass, Map.Entry.class, "StringToGroupingMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToGroupingMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToGroupingMap_Value(), theMetadataPackage.getGrouping(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToGroupingFeatureMapEClass, Map.Entry.class, "StringToGroupingFeatureMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToGroupingFeatureMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToGroupingFeatureMap_Value(), theMetadataPackage.getGroupingFeature(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToGroupingInstanceListMapEClass, Map.Entry.class, "StringToGroupingInstanceListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToGroupingInstanceListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToGroupingInstanceListMap_Value(), theMetadataPackage.getGroupingInstanceList(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToGroupingInstanceMapMapEClass, Map.Entry.class, "StringToGroupingInstanceMapMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToGroupingInstanceMapMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToGroupingInstanceMapMap_Value(), this.getStringToGroupingInstanceListMap(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToStringListMapEClass, Map.Entry.class, "StringToStringListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToStringListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToStringListMap_Value(), ecorePackage.getEString(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToURIMapEClass, Map.Entry.class, "StringToURIMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToURIMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToURIMap_Value(), theEasyflowPackage.getURI(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToSchemaMapEClass, Map.Entry.class, "StringToSchemaMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToSchemaMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToSchemaMap_Value(), theEasyflowPackage.getSchema(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToProjectMapEClass, Map.Entry.class, "StringToProjectMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToProjectMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToProjectMap_Value(), theUiPackage.getDefaultProject(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToParameterMapEClass, Map.Entry.class, "StringToParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToParameterMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToParameterMap_Value(), theToolPackage.getParameter(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToDocumentPropertiesMapEClass, Map.Entry.class, "StringToDocumentPropertiesMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToDocumentPropertiesMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToDocumentPropertiesMap_Value(), theToolPackage.getDocumentProperties(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToPackageMapEClass, Map.Entry.class, "StringToPackageMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToPackageMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToPackageMap_Value(), theToolPackage.getPackage(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToDataMapEClass, Map.Entry.class, "StringToDataMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToDataMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToDataMap_Value(), theDataPackage.getData(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToDataFormatMapEClass, Map.Entry.class, "StringToDataFormatMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToDataFormatMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToDataFormatMap_Value(), theDataPackage.getDataFormat(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(stringToToolMatchMapEClass, Map.Entry.class, "StringToToolMatchMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToToolMatchMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStringToToolMatchMap_Value(), theCorePackage.getToolMatch(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(cellToCellListMapEClass, Map.Entry.class, "CellToCellListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCellToCellListMap_Key(), theEasyflowPackage.getmxICell(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCellToCellListMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stringToBooleanMapEClass, Map.Entry.class, "StringToBooleanMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToBooleanMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStringToBooleanMap_Value(), ecorePackage.getEBooleanObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(stringToChunkMapEClass, Map.Entry.class, "StringToChunkMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToChunkMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToChunkMap_Value(), theTraversalPackage.getTraversalChunk(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToChunksMapEClass, Map.Entry.class, "StringToChunksMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToChunksMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToChunksMap_Value(), theTraversalPackage.getTraversalChunk(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDataMapEClass, Map.Entry.class, "StringToDataMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDataMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDataMap_Value(), theDataPackage.getData(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDataListMapEClass, Map.Entry.class, "StringToDataListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDataListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDataListMap_Value(), theDataPackage.getData(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToDataFormatMapEClass, Map.Entry.class, "StringToDataFormatMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDataFormatMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDataFormatMap_Value(), theDataPackage.getDataFormat(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(stringToDataLinkMapEClass, Map.Entry.class, "StringToDataLinkMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToDataLinkMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToDataLinkMap_Value(), theDataPackage.getDataLink(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(cellToCellListMapEClass, Map.Entry.class, "CellToCellListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCellToCellListMap_Key(), theEasyflowPackage.getmxICell(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCellToCellListMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(stringToDocumentPropertiesMapEClass, Map.Entry.class, "StringToDocumentPropertiesMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToDocumentPropertiesMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToDocumentPropertiesMap_Value(), theToolPackage.getDocumentProperties(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToGroupingFeatureMapEClass, Map.Entry.class, "StringToGroupingFeatureMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToGroupingFeatureMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToGroupingFeatureMap_Value(), theMetadataPackage.getGroupingFeature(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToGroupingInstanceMapMapEClass, Map.Entry.class, "StringToGroupingInstanceMapMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToGroupingInstanceMapMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToGroupingInstanceMapMap_Value(), this.getStringToGroupingInstanceListMap(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToGroupingInstanceListMapEClass, Map.Entry.class, "StringToGroupingInstanceListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToGroupingInstanceListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToGroupingInstanceListMap_Value(), theMetadataPackage.getGroupingInstanceList(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToGroupingMapEClass, Map.Entry.class, "StringToGroupingMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToGroupingMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToGroupingMap_Value(), theMetadataPackage.getGrouping(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToGraphCellMapEClass, Map.Entry.class, "StringToGraphCellMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToGraphCellMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToGraphCellMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToSchemaMapEClass, Map.Entry.class, "StringToSchemaMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToSchemaMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToSchemaMap_Value(), theEasyflowPackage.getSchema(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToObjectMapEClass, Map.Entry.class, "StringToObjectMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToObjectMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToObjectMap_Value(), theEasyflowPackage.getObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToPackageMapEClass, Map.Entry.class, "StringToPackageMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToPackageMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToPackageMap_Value(), theToolPackage.getPackage(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToParameterMapEClass, Map.Entry.class, "StringToParameterMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToParameterMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToParameterMap_Value(), theToolPackage.getParameter(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToParameterListMapEClass, Map.Entry.class, "StringToParameterListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToParameterListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToParameterListMap_Value(), theToolPackage.getParameter(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToProjectMapEClass, Map.Entry.class, "StringToProjectMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToProjectMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToProjectMap_Value(), theUiPackage.getDefaultProject(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToStringListMapEClass, Map.Entry.class, "StringToStringListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToStringListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToStringListMap_Value(), ecorePackage.getEString(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToStringMapEClass, Map.Entry.class, "StringToStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToStringMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToTaskMapEClass, Map.Entry.class, "StringToTaskMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToTaskMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToTaskMap_Value(), theCorePackage.getTask(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToToolMapEClass, Map.Entry.class, "StringToToolMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToToolMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToToolMap_Value(), theToolPackage.getTool(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToTraversalEventMapEClass, Map.Entry.class, "StringToTraversalEventMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToTraversalEventMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToTraversalEventMap_Value(), theTraversalPackage.getTraversalEvent(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToTraversalCriterionMapEClass, Map.Entry.class, "StringToTraversalCriterionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToTraversalCriterionMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToTraversalCriterionMap_Value(), theTraversalPackage.getTraversalCriterion(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToURIMapEClass, Map.Entry.class, "StringToURIMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToURIMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToURIMap_Value(), theEasyflowPackage.getURI(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToToolMatchMapEClass, Map.Entry.class, "StringToToolMatchMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToToolMatchMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToToolMatchMap_Value(), theCorePackage.getToolMatch(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(taskToDataPortsMapEClass, Map.Entry.class, "TaskToDataPortsMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTaskToDataPortsMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTaskToDataPortsMap_Value(), theDataPackage.getDataPort(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(taskToDataLinksMapEClass, Map.Entry.class, "TaskToDataLinksMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTaskToDataLinksMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTaskToDataLinksMap_Value(), theDataPackage.getDataLink(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(taskToDataLinkListMapEClass, Map.Entry.class, "TaskToDataLinkListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTaskToDataLinkListMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTaskToDataLinkListMap_Value(), theDataPackage.getDataLink(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

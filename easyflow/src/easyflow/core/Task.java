@@ -52,7 +52,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.core.Task#getJexlString <em>Jexl String</em>}</li>
  *   <li>{@link easyflow.core.Task#isUtil <em>Util</em>}</li>
- *   <li>{@link easyflow.core.Task#getJexlEngine <em>Jexl Engine</em>}</li>
  *   <li>{@link easyflow.core.Task#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.Task#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.core.Task#getParents <em>Parents</em>}</li>
@@ -193,21 +192,6 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void setUtil(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Jexl Engine</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Jexl Engine</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Jexl Engine</em>' attribute.
-	 * @see easyflow.core.CorePackage#getTask_JexlEngine()
-	 * @model dataType="easyflow.JexlEngine" transient="true" changeable="false"
-	 * @generated
-	 */
-	JexlEngine getJexlEngine();
 
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
@@ -646,22 +630,6 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	boolean shallProcess(EList<GroupingInstance> groupingInstances, String forGrouping, EList<String> jexlStrings, boolean isInverse);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Object" metaDataMapMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
-	 * @generated
-	 */
-	Object evaluateJexl(EMap<String, Object> metaDataMap, String jexlString);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>" groupingInstancesMany="true"
-	 * @generated
-	 */
-	EMap<String, Object> createMetaDataMapForJexl(EList<GroupingInstance> groupingInstances, String forGrouping);
 
 	/**
 	 * <!-- begin-user-doc -->

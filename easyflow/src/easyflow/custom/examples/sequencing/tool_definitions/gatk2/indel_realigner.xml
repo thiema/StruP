@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
       id="gatk2_indel_realigner"
-      name="Indel Realigner"
+      name="IndelRealigner"
       version="0.0.7">
   <description>- perform local realignment</description>
   <requirements>

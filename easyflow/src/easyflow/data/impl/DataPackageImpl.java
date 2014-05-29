@@ -475,6 +475,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getData_Parameter() {
+		return (EReference)dataEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDataFormat() {
 		return dataFormatEClass;
 	}
@@ -556,6 +565,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(dataEClass, DATA__DATA_RESOURCE_NAME);
 		createEAttribute(dataEClass, DATA__NAME);
 		createEAttribute(dataEClass, DATA__DESCRIPTION);
+		createEReference(dataEClass, DATA__PARAMETER);
 
 		dataFormatEClass = createEClass(DATA_FORMAT);
 		createEAttribute(dataFormatEClass, DATA_FORMAT__NAME);
@@ -590,6 +600,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
+		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -651,6 +662,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEAttribute(getData_DataResourceName(), theEasyflowPackage.getURI(), "dataResourceName", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getData_Name(), ecorePackage.getEString(), "name", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getData_Description(), ecorePackage.getEString(), "description", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getData_Parameter(), theToolPackage.getParameter(), null, "parameter", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(dataEClass, this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 

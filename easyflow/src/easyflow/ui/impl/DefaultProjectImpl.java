@@ -924,6 +924,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 									+" pkg="+(tool.getPackage()==null?null:tool.getPackage().getId())
 									+" params="+tool.getCommand().getParameters().keySet());
 							getTools().put(tool.getId(), tool);
+							
 						}
 					}
 				}

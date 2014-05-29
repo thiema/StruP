@@ -8,7 +8,7 @@ package easyflow.util.maps.impl;
 
 import easyflow.core.Task;
 
-import easyflow.data.DataLink;
+import easyflow.tool.Parameter;
 
 import easyflow.util.maps.MapsPackage;
 
@@ -31,28 +31,38 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Task To Data Links Map</b></em>'.
+ * An implementation of the model object '<em><b>String To Parameter List Map</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link easyflow.util.maps.impl.TaskToDataLinksMapImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link easyflow.util.maps.impl.TaskToDataLinksMapImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link easyflow.util.maps.impl.StringToParameterListMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link easyflow.util.maps.impl.StringToParameterListMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Entry<Task,EList<DataLink>> {
+public class StringToParameterListMapImpl extends EObjectImpl implements BasicEMap.Entry<String,EList<Parameter>> {
 	/**
-	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
+	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
 	 */
-	protected Task key;
+	protected static final String KEY_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTypedKey()
+	 * @generated
+	 * @ordered
+	 */
+	protected String key = KEY_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference list.
@@ -62,14 +72,14 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<DataLink> value;
+	protected EList<Parameter> value;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TaskToDataLinksMapImpl() {
+	protected StringToParameterListMapImpl() {
 		super();
 	}
 
@@ -80,7 +90,7 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return MapsPackage.Literals.TASK_TO_DATA_LINKS_MAP;
+		return MapsPackage.Literals.STRING_TO_PARAMETER_LIST_MAP;
 	}
 
 	/**
@@ -88,15 +98,7 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Task getTypedKey() {
-		if (key != null && key.eIsProxy()) {
-			InternalEObject oldKey = (InternalEObject)key;
-			key = (Task)eResolveProxy(oldKey);
-			if (key != oldKey) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MapsPackage.TASK_TO_DATA_LINKS_MAP__KEY, oldKey, key));
-			}
-		}
+	public String getTypedKey() {
 		return key;
 	}
 
@@ -105,20 +107,11 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Task basicGetTypedKey() {
-		return key;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTypedKey(Task newKey) {
-		Task oldKey = key;
+	public void setTypedKey(String newKey) {
+		String oldKey = key;
 		key = newKey;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, MapsPackage.TASK_TO_DATA_LINKS_MAP__KEY, oldKey, key));
+			eNotify(new ENotificationImpl(this, Notification.SET, MapsPackage.STRING_TO_PARAMETER_LIST_MAP__KEY, oldKey, key));
 	}
 
 	/**
@@ -126,9 +119,9 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<DataLink> getTypedValue() {
+	public EList<Parameter> getTypedValue() {
 		if (value == null) {
-			value = new EObjectResolvingEList<DataLink>(DataLink.class, this, MapsPackage.TASK_TO_DATA_LINKS_MAP__VALUE);
+			value = new EObjectResolvingEList<Parameter>(Parameter.class, this, MapsPackage.STRING_TO_PARAMETER_LIST_MAP__VALUE);
 		}
 		return value;
 	}
@@ -141,10 +134,9 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__KEY:
-				if (resolve) return getTypedKey();
-				return basicGetTypedKey();
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__VALUE:
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__KEY:
+				return getTypedKey();
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__VALUE:
 				return getTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -159,12 +151,12 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__KEY:
-				setTypedKey((Task)newValue);
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__KEY:
+				setTypedKey((String)newValue);
 				return;
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__VALUE:
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__VALUE:
 				getTypedValue().clear();
-				getTypedValue().addAll((Collection<? extends DataLink>)newValue);
+				getTypedValue().addAll((Collection<? extends Parameter>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -178,10 +170,10 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__KEY:
-				setTypedKey((Task)null);
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__KEY:
+				setTypedKey(KEY_EDEFAULT);
 				return;
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__VALUE:
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__VALUE:
 				getTypedValue().clear();
 				return;
 		}
@@ -196,12 +188,28 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__KEY:
-				return key != null;
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP__VALUE:
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__KEY:
+				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP__VALUE:
 				return value != null && !value.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (key: ");
+		result.append(key);
+		result.append(')');
+		return result.toString();
 	}
 
 	/**
@@ -238,7 +246,7 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Task getKey() {
+	public String getKey() {
 		return getTypedKey();
 	}
 
@@ -247,7 +255,7 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setKey(Task key) {
+	public void setKey(String key) {
 		setTypedKey(key);
 	}
 
@@ -256,7 +264,7 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<DataLink> getValue() {
+	public EList<Parameter> getValue() {
 		return getTypedValue();
 	}
 
@@ -265,8 +273,8 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<DataLink> setValue(EList<DataLink> value) {
-		EList<DataLink> oldValue = getValue();
+	public EList<Parameter> setValue(EList<Parameter> value) {
+		EList<Parameter> oldValue = getValue();
 		getTypedValue().clear();
 		getTypedValue().addAll(value);
 		return oldValue;
@@ -278,9 +286,9 @@ public class TaskToDataLinksMapImpl extends EObjectImpl implements BasicEMap.Ent
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public EMap<Task, EList<DataLink>> getEMap() {
+	public EMap<String, EList<Parameter>> getEMap() {
 		EObject container = eContainer();
-		return container == null ? null : (EMap<Task, EList<DataLink>>)container.eGet(eContainmentFeature());
+		return container == null ? null : (EMap<String, EList<Parameter>>)container.eGet(eContainmentFeature());
 	}
 
-} //TaskToDataLinksMapImpl
+} //StringToParameterListMapImpl

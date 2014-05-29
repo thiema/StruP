@@ -3,7 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
       id="gatk2_depth_of_coverage"
-      name="Depth of Coverage"
+      name="DepthOfCoverage"
       version="0.0.7">
   <description>on BAM files</description>
   <requirements>

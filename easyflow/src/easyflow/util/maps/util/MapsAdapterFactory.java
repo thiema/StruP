@@ -105,116 +105,124 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	protected MapsSwitch<Adapter> modelSwitch =
 		new MapsSwitch<Adapter>() {
 			@Override
-			public Adapter caseStringToTaskMap(Map.Entry<String, Task> object) {
-				return createStringToTaskMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToTraversalEventMap(Map.Entry<String, TraversalEvent> object) {
-				return createStringToTraversalEventMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToGraphCellMap(Map.Entry<String, mxICell> object) {
-				return createStringToGraphCellMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToTraversalCriterionMap(Map.Entry<String, TraversalCriterion> object) {
-				return createStringToTraversalCriterionMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToObjectMap(Map.Entry<String, Object> object) {
-				return createStringToObjectMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToChunksMap(Map.Entry<String, EList<TraversalChunk>> object) {
-				return createStringToChunksMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToChunkMap(Map.Entry<String, TraversalChunk> object) {
-				return createStringToChunkMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToToolMap(Map.Entry<String, Tool> object) {
-				return createStringToToolMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToStringMap(Map.Entry<String, String> object) {
-				return createStringToStringMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToGroupingMap(Map.Entry<String, Grouping> object) {
-				return createStringToGroupingMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToGroupingFeatureMap(Map.Entry<String, GroupingFeature> object) {
-				return createStringToGroupingFeatureMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToGroupingInstanceListMap(Map.Entry<String, GroupingInstanceList> object) {
-				return createStringToGroupingInstanceListMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToGroupingInstanceMapMap(Map.Entry<String, EMap<String, GroupingInstanceList>> object) {
-				return createStringToGroupingInstanceMapMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
-				return createStringToStringListMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToURIMap(Map.Entry<String, URI> object) {
-				return createStringToURIMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToSchemaMap(Map.Entry<String, Schema> object) {
-				return createStringToSchemaMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToProjectMap(Map.Entry<String, DefaultProject> object) {
-				return createStringToProjectMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToParameterMap(Map.Entry<String, Parameter> object) {
-				return createStringToParameterMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToDocumentPropertiesMap(Map.Entry<String, DocumentProperties> object) {
-				return createStringToDocumentPropertiesMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToPackageMap(Map.Entry<String, easyflow.tool.Package> object) {
-				return createStringToPackageMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToDataMap(Map.Entry<String, Data> object) {
-				return createStringToDataMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToDataFormatMap(Map.Entry<String, DataFormat> object) {
-				return createStringToDataFormatMapAdapter();
-			}
-			@Override
-			public Adapter caseStringToToolMatchMap(Map.Entry<String, ToolMatch> object) {
-				return createStringToToolMatchMapAdapter();
+			public Adapter caseCellToCellListMap(Map.Entry<mxICell, EList<mxICell>> object) {
+				return createCellToCellListMapAdapter();
 			}
 			@Override
 			public Adapter caseStringToBooleanMap(Map.Entry<String, Boolean> object) {
 				return createStringToBooleanMapAdapter();
 			}
 			@Override
+			public Adapter caseStringToChunkMap(Map.Entry<String, TraversalChunk> object) {
+				return createStringToChunkMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToChunksMap(Map.Entry<String, EList<TraversalChunk>> object) {
+				return createStringToChunksMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDataMap(Map.Entry<String, Data> object) {
+				return createStringToDataMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDataListMap(Map.Entry<String, EList<Data>> object) {
+				return createStringToDataListMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToDataFormatMap(Map.Entry<String, DataFormat> object) {
+				return createStringToDataFormatMapAdapter();
+			}
+			@Override
 			public Adapter caseStringToDataLinkMap(Map.Entry<String, DataLink> object) {
 				return createStringToDataLinkMapAdapter();
 			}
 			@Override
-			public Adapter caseCellToCellListMap(Map.Entry<mxICell, EList<mxICell>> object) {
-				return createCellToCellListMapAdapter();
+			public Adapter caseStringToDocumentPropertiesMap(Map.Entry<String, DocumentProperties> object) {
+				return createStringToDocumentPropertiesMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToGroupingFeatureMap(Map.Entry<String, GroupingFeature> object) {
+				return createStringToGroupingFeatureMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToGroupingInstanceMapMap(Map.Entry<String, EMap<String, GroupingInstanceList>> object) {
+				return createStringToGroupingInstanceMapMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToGroupingInstanceListMap(Map.Entry<String, GroupingInstanceList> object) {
+				return createStringToGroupingInstanceListMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToGroupingMap(Map.Entry<String, Grouping> object) {
+				return createStringToGroupingMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToGraphCellMap(Map.Entry<String, mxICell> object) {
+				return createStringToGraphCellMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToSchemaMap(Map.Entry<String, Schema> object) {
+				return createStringToSchemaMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToObjectMap(Map.Entry<String, Object> object) {
+				return createStringToObjectMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToPackageMap(Map.Entry<String, easyflow.tool.Package> object) {
+				return createStringToPackageMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToParameterMap(Map.Entry<String, Parameter> object) {
+				return createStringToParameterMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToParameterListMap(Map.Entry<String, EList<Parameter>> object) {
+				return createStringToParameterListMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToProjectMap(Map.Entry<String, DefaultProject> object) {
+				return createStringToProjectMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
+				return createStringToStringListMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToStringMap(Map.Entry<String, String> object) {
+				return createStringToStringMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToTaskMap(Map.Entry<String, Task> object) {
+				return createStringToTaskMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToToolMap(Map.Entry<String, Tool> object) {
+				return createStringToToolMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToTraversalEventMap(Map.Entry<String, TraversalEvent> object) {
+				return createStringToTraversalEventMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToTraversalCriterionMap(Map.Entry<String, TraversalCriterion> object) {
+				return createStringToTraversalCriterionMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToURIMap(Map.Entry<String, URI> object) {
+				return createStringToURIMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToToolMatchMap(Map.Entry<String, ToolMatch> object) {
+				return createStringToToolMatchMapAdapter();
 			}
 			@Override
 			public Adapter caseTaskToDataPortsMap(Map.Entry<Task, EList<DataPort>> object) {
 				return createTaskToDataPortsMapAdapter();
 			}
 			@Override
-			public Adapter caseTaskToDataLinksMap(Map.Entry<Task, EList<DataLink>> object) {
-				return createTaskToDataLinksMapAdapter();
+			public Adapter caseTaskToDataLinkListMap(Map.Entry<Task, EList<DataLink>> object) {
+				return createTaskToDataLinkListMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -531,6 +539,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Data List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToDataListMapAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Data Format Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -615,7 +637,7 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Links Map</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Task To Data Link List Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -624,7 +646,21 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter createTaskToDataLinksMapAdapter() {
+	public Adapter createTaskToDataLinkListMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Parameter List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToParameterListMapAdapter() {
 		return null;
 	}
 

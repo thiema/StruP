@@ -83,7 +83,6 @@ import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
  *   <li>{@link easyflow.core.impl.TaskImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getJexlString <em>Jexl String</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#isUtil <em>Util</em>}</li>
- *   <li>{@link easyflow.core.impl.TaskImpl#getJexlEngine <em>Jexl Engine</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getTraversalEvents <em>Traversal Events</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getParents <em>Parents</em>}</li>
@@ -185,25 +184,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected boolean util = UTIL_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getJexlEngine() <em>Jexl Engine</em>}'
-	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getJexlEngine()
-	 * @generated not
-	 * @ordered
-	 */
-	protected static final JexlEngine JEXL_ENGINE_EDEFAULT = new JexlEngine();
-
-	/**
-	 * The cached value of the '{@link #getJexlEngine() <em>Jexl Engine</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getJexlEngine()
-	 * @generated
-	 * @ordered
-	 */
-	protected JexlEngine jexlEngine = JEXL_ENGINE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}'
@@ -550,14 +530,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		util = newUtil;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__UTIL, oldUtil, util));
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public JexlEngine getJexlEngine() {
-		return jexlEngine;
 	}
 
 	/**
@@ -1146,8 +1118,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public boolean shallProcess(EList<GroupingInstance> groupingInstances,
 			String forGrouping) {
 
-		Object evalObject = evaluateJexl(
-				createMetaDataMapForJexl(groupingInstances, forGrouping), null);
+		Object evalObject = easyflow.custom.util.Util.evaluateJexl(
+				easyflow.custom.util.Util.createMetaDataMapForJexl(
+						groupingInstances, forGrouping), getJexlString());
 		return shallProcess(evalObject);
 	}
 
@@ -1159,12 +1132,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public boolean shallProcess(EList<GroupingInstance> groupingInstances,
 			String forGrouping, EList<String> jexlStrings, boolean isInverse) {
 
-		EMap<String, Object> map = createMetaDataMapForJexl(groupingInstances,
-				forGrouping);
+		EMap<String, Object> map = easyflow.custom.util.Util.
+				createMetaDataMapForJexl
+					(groupingInstances,	forGrouping);
 		if (jexlString != null)
 			for (String jexlString : jexlStrings) {
-				boolean shallProcess = shallProcess(evaluateJexl(map,
-						jexlString));
+				boolean shallProcess = shallProcess(
+						easyflow.custom.util.Util.
+							evaluateJexl(map, jexlString));
 				if (isInverse)
 					shallProcess = !shallProcess;
 				if (!shallProcess)
@@ -1182,103 +1157,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	}
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated not
-	 */
-	public Object evaluateJexl(EMap<String, Object> metaDataMap, String jexl) {
-
-		// evaluate the tasks jexl expression against metaDataMap
-		if (jexl == null || jexl.equals(""))
-			jexl = getJexlString();
-		logger.trace(getUniqueString() + " shallProcessJEXL: " + jexl + " map:"
-				+ metaDataMap);
-		if (jexl == null || jexl.equals(""))
-			return true;
-		if (metaDataMap.isEmpty())
-			return true;
-		Expression e = jexlEngine.createExpression(jexl);
-		JexlContext context = new MapContext(metaDataMap.map());
-		logger.trace(e);
-		Object eval = e.evaluate(context);
-		if (eval instanceof Boolean && !(Boolean) eval)
-			logger.debug("Skip Task " + getUniqueString()
-					+ " due to jexl condition: " + jexl + " and context: "
-					+ mapToString(metaDataMap));
-		return e.evaluate(context);
-	}
-
-	private String mapToString(EMap<String, Object> map) {
-		String res = "";
-		for (Entry<String, Object> e : map.entrySet()) {
-			if (e.getValue() instanceof String[]) {
-				res += e.getKey() + "->[";
-				for (String v : (String[]) e.getValue())
-					res += v + ", ";
-				res += "]; ";
-			} else
-				res += e.getKey() + "->" + e.getValue() + "; ";
-		}
-		return res;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> we need to create a map of the kind: Platform ->
-	 * "Illumina" InputFiles -> ["a","b","c"] Group -> "g1" ReadGroup ->
-	 * ["rg1"," rg2"] Records -> ["rec1", "rec2, "rec3"]
-	 * 
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated not
-	 */
-	public EMap<String, Object> createMetaDataMapForJexl(
-			EList<GroupingInstance> groupingInstances, String forGrouping) {
-
-		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
-		// logger.debug(forGrouping);
-		// for (GroupingInstance groupingInstance:groupingInstances)
-		// logger.debug(groupingInstance.getName());
-
-		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
-		for (GroupingInstance groupingInstance : groupingInstances) {
-			EList<GroupingInstance> recordInstances = metaData.getInstances(
-					groupingInstance, GlobalVar.TRAVERSAL_CRITERION_RECORD);
-			for (GroupingInstance recordInstance : recordInstances)
-				for (Entry<String, Object> entry : metaData.getRecord(
-						recordInstance).entrySet()) {
-					Object value = entry.getValue();
-					if (metaDataMap.containsKey(entry.getKey())) {
-						mergeValue(metaDataMap.get(entry.getKey()), value);
-					}
-					metaDataMap.put(entry.getKey(), value);
-				}
-		}
-		// for (Entry<String, Grouping>
-		// entry:metaData.getGroupings().entrySet())
-		// { metaData.g }
-		return metaDataMap;
-	}
-
-	private Object mergeValue(Object o1, Object o2) {
-		Object ret = null;
-		if (o1 instanceof List) {
-			if (o2 instanceof List)
-				((List) o1).addAll((List) o2);
-			else
-				((List) o1).add(o2);
-			ret = o1;
-		} else {
-			if (o2 instanceof List) {
-				((List) o2).add(o2);
-				ret = o2;
-			} else {
-				Object[] o = { o1, o2 };
-				ret = o;
-			}
-		}
-		return ret;
-	}
 
 	private DataPort parseDataPortField(String field, EList<Pattern> pattern) {
 		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
@@ -1333,12 +1211,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return list;
 	}
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated not
-	 */
-	private void shallProcess(Map<String, Object> metaDataMap) {
+	
+	//private void shallProcess(Map<String, Object> metaDataMap) {
 		/*
 		 * =====EXAMPLES====
 		 */
@@ -1361,7 +1235,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 * context.set("Platform", 3);
 		 * System.out.println(""+e1.evaluate(context));
 		 */
-	}
+	//}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1563,6 +1437,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 		EMap<String, EList<String>> map  = new BasicEMap<String, EList<String>>();
 		EList<String>               exe  = new BasicEList<String>();
+		EList<String>          submodule = new BasicEList<String>();
 		Tool                        tool = getPreferredTool();
 
 		if (tool.getExecutables().containsKey("interpreter"))
@@ -1573,19 +1448,28 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		if (tool.getExecutables().containsKey("executable"))
 			exe.add(tool.getExecutables().get("executable").getPath());
-		else if (tool.getPackage() != null && tool.getPackage().getExe() != null)
-		{
+		else if (tool.getPackage() != null)
 			if (tool.getPackage().getExe()!=null)
+			{
 				exe.add(tool.getPackage().getExe());
-			else
+			} else
 				exe.add(tool.getPackage().getId());
-		}
 		
 		if (exe.isEmpty())
 			logger.error("createCommandLineMap(): no executables found");
 		
 		map.put("executable", exe);
 
+		
+		// check submodule
+		String anaType = tool.getAnalysisTypeOfPackage(getRecords());
+		if (anaType!=null)
+		{
+			logger.debug("add submodule="+anaType+" for tool="+tool.getName()+" ("+tool.getId()+")");
+			submodule.add(anaType);
+			map.put("submodule", submodule);
+		}
+		
 		if (getInputs() != null)
 			map.put("input", dataPorts2ParamStringList(getInputs(), tool.getCommand(), false));
 		
@@ -1618,6 +1502,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 		Tool   tool        = getPreferredTool();
 		String commandLine = "";
+		EMap<String, Object> constraints = new BasicEMap<String, Object>();
 		
 		for (String commandLinePart : commandPattern.split(" "))
 		{
@@ -1634,8 +1519,19 @@ public class TaskImpl extends EObjectImpl implements Task {
 				{
 					for (String key : keys)
 					{
-						commandLine += " "+tool.getCommand().getParameters().
+					
+						if ("submodule".equals(commandLinePart))
+						{
+							Parameter param = tool.getPackage().getParameters().get("analysis_type");
+							constraints.put("value", key);
+							commandLine += param.generateCommandString(constraints);
+						}
+						else
+						{
+						
+							commandLine += " "+tool.getCommand().getParameters().
 								get(key).generateCommandString(null);
+						}
 					}
 				}
 			}
@@ -1681,7 +1577,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		toolMatch.setTool(tool);
 
 		getToolMatches().put(tool.getName(), toolMatch);
-		long score = toolMatch.computeScore();
+		long score = toolMatch.computeScore(null);
 		long expectedScore = toolMatch.computeExpectedScore();
 		logger.trace(Long.toBinaryString(score) + " ");
 		logger.trace(Long.toBinaryString(expectedScore) + " (exp)");
@@ -2378,8 +2274,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getJexlString();
 			case CorePackage.TASK__UTIL:
 				return isUtil();
-			case CorePackage.TASK__JEXL_ENGINE:
-				return getJexlEngine();
 			case CorePackage.TASK__LOGGER:
 				return getLogger();
 			case CorePackage.TASK__TRAVERSAL_EVENTS:
@@ -2650,8 +2544,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return JEXL_STRING_EDEFAULT == null ? jexlString != null : !JEXL_STRING_EDEFAULT.equals(jexlString);
 			case CorePackage.TASK__UTIL:
 				return util != UTIL_EDEFAULT;
-			case CorePackage.TASK__JEXL_ENGINE:
-				return JEXL_ENGINE_EDEFAULT == null ? jexlEngine != null : !JEXL_ENGINE_EDEFAULT.equals(jexlEngine);
 			case CorePackage.TASK__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.TASK__TRAVERSAL_EVENTS:
@@ -2715,8 +2607,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		result.append(jexlString);
 		result.append(", util: ");
 		result.append(util);
-		result.append(", jexlEngine: ");
-		result.append(jexlEngine);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(", previousTaskStr: ");

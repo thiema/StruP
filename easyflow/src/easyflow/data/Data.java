@@ -6,6 +6,7 @@
  */
 package easyflow.data;
 
+import easyflow.tool.Parameter;
 import java.net.URI;
 
 import org.eclipse.emf.ecore.EObject;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.Data#getDataResourceName <em>Data Resource Name</em>}</li>
  *   <li>{@link easyflow.data.Data#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.data.Data#getDescription <em>Description</em>}</li>
+ *   <li>{@link easyflow.data.Data#getParameter <em>Parameter</em>}</li>
  * </ul>
  * </p>
  *
@@ -208,5 +210,31 @@ public interface Data extends EObject {
 	 * @generated
 	 */
 	void setDescription(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parameter</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parameter</em>' reference.
+	 * @see #setParameter(Parameter)
+	 * @see easyflow.data.DataPackage#getData_Parameter()
+	 * @model
+	 * @generated
+	 */
+	Parameter getParameter();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.Data#getParameter <em>Parameter</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parameter</em>' reference.
+	 * @see #getParameter()
+	 * @generated
+	 */
+	void setParameter(Parameter value);
 
 } // Data

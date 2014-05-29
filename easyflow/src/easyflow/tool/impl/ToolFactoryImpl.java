@@ -12,6 +12,7 @@ import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
+import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
@@ -84,6 +85,7 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.KEY: return createKey();
 			case ToolPackage.REQUIREMENT: return createRequirement();
 			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
+			case ToolPackage.OPTION_VALUE: return createOptionValue();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -207,6 +209,16 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public DocumentProperties createDocumentProperties() {
 		DocumentPropertiesImpl documentProperties = new DocumentPropertiesImpl();
 		return documentProperties;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OptionValue createOptionValue() {
+		OptionValueImpl optionValue = new OptionValueImpl();
+		return optionValue;
 	}
 
 	/**

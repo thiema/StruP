@@ -9,23 +9,29 @@ package easyflow.tool.impl;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.data.Data;
 import easyflow.data.DataPort;
+import easyflow.execution.makeflow.Makeflow;
+import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
+import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
+import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 
 import easyflow.util.maps.MapsPackage;
 
+import easyflow.util.maps.impl.StringToDataListMapImpl;
 import easyflow.util.maps.impl.StringToDataMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
 
 import java.net.URI;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
@@ -69,6 +75,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getExecutables <em>Executables</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getFilenamePrefix <em>Filename Prefix</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getAnalysisType <em>Analysis Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -120,10 +127,10 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLogger()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = null;
+	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(Tool.class);
 
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -254,6 +261,26 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @ordered
 	 */
 	protected String filenamePrefix = FILENAME_PREFIX_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getAnalysisType() <em>Analysis Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAnalysisType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ANALYSIS_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAnalysisType() <em>Analysis Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAnalysisType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String analysisType = ANALYSIS_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -548,6 +575,27 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getAnalysisType() {
+		return analysisType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAnalysisType(String newAnalysisType) {
+		String oldAnalysisType = analysisType;
+		analysisType = newAnalysisType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__ANALYSIS_TYPE, oldAnalysisType, analysisType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void writeModelToXML() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -634,6 +682,80 @@ public class ToolImpl extends EObjectImpl implements Tool {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * return 
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getAnalysisTypeOfPackage(EList<TraversalChunk> records) {
+		
+		// Example: 
+		//   jexlString=
+		//   
+		
+		// get package and check whether parameter analysis type
+		// matches the tools analysis type and/or if condition set, if condition matches the metadata
+		
+		// Example1: package=gatk with parameter analysisType and option values contain UnifiedGenotyper;
+		//          tool=UnifiedGenotyper;
+		// Example2: package=bwa, with parameter analysisType and option values contain 
+		//              sampe with cond="size(InputFiles)==2" and samse with cond="size(InputFiles)==1"
+		
+		if (getPackage()!=null)
+		{
+			for (Parameter parameter : getPackage().getParameters().values())
+			{
+				if (parameter.isAnalysisType())
+				{
+					String matchByNameStr = null;
+					String matchByCondStr = null;
+					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName());
+					for (OptionValue optionValue:parameter.getOptionValues())
+					{
+						logger.debug("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
+						if (getAnalysisType()!=null && optionValue.getName().equals(getAnalysisType()))
+							matchByNameStr = getAnalysisType();
+						else if (optionValue.getName().equals(getId()))
+							matchByNameStr = getId();
+						else if (optionValue.getName().equals(getName()))
+							matchByNameStr = getName();
+							
+						else if (optionValue.getCondition()!=null)
+						{
+							Object evalObject = easyflow.custom.util.Util.evaluateJexl(
+									easyflow.custom.util.Util.createMetaDataMapForJexl(
+											records), optionValue.getCondition());
+							if (evalObject instanceof Boolean) {
+								if (((Boolean) evalObject).booleanValue())
+								{
+									matchByCondStr = optionValue.getName();
+								}
+							}
+						}
+					}
+					if (matchByNameStr != null)
+						return matchByNameStr;
+					else if (matchByCondStr != null)
+						return matchByCondStr;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Data> getDataForParam(String param, Map.Entry<String, String> constraints) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -686,6 +808,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				else return getData().map();
 			case ToolPackage.TOOL__FILENAME_PREFIX:
 				return getFilenamePrefix();
+			case ToolPackage.TOOL__ANALYSIS_TYPE:
+				return getAnalysisType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -733,6 +857,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__FILENAME_PREFIX:
 				setFilenamePrefix((String)newValue);
 				return;
+			case ToolPackage.TOOL__ANALYSIS_TYPE:
+				setAnalysisType((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -778,6 +905,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__FILENAME_PREFIX:
 				setFilenamePrefix(FILENAME_PREFIX_EDEFAULT);
 				return;
+			case ToolPackage.TOOL__ANALYSIS_TYPE:
+				setAnalysisType(ANALYSIS_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -814,6 +944,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return data != null && !data.isEmpty();
 			case ToolPackage.TOOL__FILENAME_PREFIX:
 				return FILENAME_PREFIX_EDEFAULT == null ? filenamePrefix != null : !FILENAME_PREFIX_EDEFAULT.equals(filenamePrefix);
+			case ToolPackage.TOOL__ANALYSIS_TYPE:
+				return ANALYSIS_TYPE_EDEFAULT == null ? analysisType != null : !ANALYSIS_TYPE_EDEFAULT.equals(analysisType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -874,6 +1006,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		result.append(version);
 		result.append(", filenamePrefix: ");
 		result.append(filenamePrefix);
+		result.append(", analysisType: ");
+		result.append(analysisType);
 		result.append(')');
 		return result.toString();
 	}

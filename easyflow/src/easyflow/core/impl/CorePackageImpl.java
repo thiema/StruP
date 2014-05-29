@@ -549,7 +549,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTask_JexlEngine() {
+	public EAttribute getTask_Logger() {
 		return (EAttribute)taskEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -558,17 +558,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTask_Logger() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getTask_TraversalEvents() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(7);
+		return (EReference)taskEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -577,7 +568,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Parents() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(8);
+		return (EReference)taskEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -586,7 +577,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Chunks() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(9);
+		return (EReference)taskEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -595,7 +586,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_ToolNames() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(10);
+		return (EReference)taskEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -604,7 +595,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Tools() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(11);
+		return (EReference)taskEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -613,7 +604,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_ToolMatches() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(12);
+		return (EReference)taskEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -622,7 +613,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_PreviousTaskStr() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(13);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -631,7 +622,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_Root() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(14);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -640,7 +631,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_Flags() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(15);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -649,7 +640,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_GroupingCriteria() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(16);
+		return (EReference)taskEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -658,7 +649,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Inputs() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(17);
+		return (EReference)taskEClass.getEStructuralFeatures().get(16);
 	}
 
 	/**
@@ -667,7 +658,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Outputs() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(18);
+		return (EReference)taskEClass.getEStructuralFeatures().get(17);
 	}
 
 	/**
@@ -676,7 +667,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_InputsByDataPort() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(19);
+		return (EReference)taskEClass.getEStructuralFeatures().get(18);
 	}
 
 	/**
@@ -685,7 +676,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_OutputsByDataPort() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(20);
+		return (EReference)taskEClass.getEStructuralFeatures().get(19);
 	}
 
 	/**
@@ -694,7 +685,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_InputDataPortValidator() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(21);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(20);
 	}
 
 	/**
@@ -703,7 +694,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_OutputDataPortValidator() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(22);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(21);
 	}
 
 	/**
@@ -712,7 +703,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_AnalysisTypes() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(23);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(22);
 	}
 
 	/**
@@ -721,7 +712,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EAttribute getTask_CircumventingParents() {
-		return (EAttribute)taskEClass.getEStructuralFeatures().get(24);
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(23);
 	}
 
 	/**
@@ -730,7 +721,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Records() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(25);
+		return (EReference)taskEClass.getEStructuralFeatures().get(24);
 	}
 
 	/**
@@ -739,7 +730,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_PreprocessingTasks() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(26);
+		return (EReference)taskEClass.getEStructuralFeatures().get(25);
 	}
 
 	/**
@@ -748,7 +739,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getTask_Parameters() {
-		return (EReference)taskEClass.getEStructuralFeatures().get(27);
+		return (EReference)taskEClass.getEStructuralFeatures().get(26);
 	}
 
 	/**
@@ -1178,7 +1169,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(taskEClass, TASK__NAME);
 		createEAttribute(taskEClass, TASK__JEXL_STRING);
 		createEAttribute(taskEClass, TASK__UTIL);
-		createEAttribute(taskEClass, TASK__JEXL_ENGINE);
 		createEAttribute(taskEClass, TASK__LOGGER);
 		createEReference(taskEClass, TASK__TRAVERSAL_EVENTS);
 		createEReference(taskEClass, TASK__PARENTS);
@@ -1346,7 +1336,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		addEOperation(workflowEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(workflowEClass, theMapsPackage.getTaskToDataLinksMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, theMapsPackage.getTaskToDataLinkListMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveMissingDataPortsByToolFor", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1444,7 +1434,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_JexlString(), ecorePackage.getEString(), "jexlString", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Util(), ecorePackage.getEBoolean(), "util", "false", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTask_JexlEngine(), theEasyflowPackage.getJexlEngine(), "jexlEngine", null, 0, 1, Task.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Task.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_TraversalEvents(), theMapsPackage.getStringToTraversalEventMap(), null, "traversalEvents", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Parents(), theMapsPackage.getStringToTaskMap(), null, "parents", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1482,14 +1471,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "jexlStrings", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isInverse", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(taskEClass, theEasyflowPackage.getObject(), "evaluateJexl", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getStringToObjectMap(), "metaDataMap", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "jexlString", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(taskEClass, theMapsPackage.getStringToObjectMap(), "createMetaDataMapForJexl", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, null, "parseDataFormatField", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "dataFormatString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1655,7 +1636,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getToolMatch_ReverseMissingGroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "reverseMissingGroupingCriteria", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getToolMatch_Valid(), ecorePackage.getEBoolean(), "valid", "false", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeScore", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeScore", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToStringMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeExpectedScore", 0, 1, IS_UNIQUE, IS_ORDERED);
 

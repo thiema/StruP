@@ -120,11 +120,16 @@
 		<xs:attribute name="name" type="xs:string"/>
 		<xs:attribute name="format" type="xs:string"/>
 		<xs:attribute name="output" type="xs:boolean"/>
-		<xs:attribute name="named" type="xs:boolean"/>
+
 		<xs:attribute name="min_occur" type="xs:int"/>
 		<xs:attribute name="max_occur" type="xs:int"/>
-		<xs:attribute name="prefix" type="xs:string"/>
+		
+ 		<xs:attribute name="named" type="xs:boolean"/>
+<!--		<xs:attribute name="key" type="xs:string"/>
+		<xs:attribute name="keyType" type="ParamKeyType"/> -->
 		<xs:attribute name="separator" type="xs:string"/>
+		<xs:attribute name="prefix" type="xs:string"/>
+	
 		<xs:attribute name="positional" type="xs:boolean"/>
 		<xs:attribute name="type" type="ParamType" use="required"/>
 		<xs:attribute name="label" type="xs:string"/>
@@ -152,7 +157,7 @@
 	      <xs:enumeration value="file"/>
 	      <xs:enumeration value="data"/>
 	      <xs:enumeration value="drill_down"/>
-	      <xs:enumeration value="processing_mode"/>
+	      <xs:enumeration value="analysis_type"/>
 	    </xs:restriction>
   </xs:simpleType>
 	

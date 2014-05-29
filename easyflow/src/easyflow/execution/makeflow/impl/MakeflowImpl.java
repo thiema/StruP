@@ -340,7 +340,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 					
 					String cmd = createRule(task);
 					try {
-						logger.trace("write rule:"+cmd);
+						logger.trace("write rule:\n"+cmd);
 						getWriter().write(cmd);
 						getWriter().flush();
 					} catch (IOException e) {

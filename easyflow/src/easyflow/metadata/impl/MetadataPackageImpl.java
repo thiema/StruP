@@ -512,6 +512,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 
 		// Obtain other dependent packages
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 
 		// Create type parameters
@@ -551,6 +552,9 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 
 		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getGroupingInstance(), "recordInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theTraversalPackage.getTraversalChunk(), "record", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToStringMap(), "getRow", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);

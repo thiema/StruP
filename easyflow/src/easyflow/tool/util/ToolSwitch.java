@@ -13,6 +13,7 @@ import easyflow.tool.IToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
+import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
@@ -172,6 +173,13 @@ public class ToolSwitch<T> extends Switch<T> {
 			case ToolPackage.DOCUMENT_PROPERTIES: {
 				DocumentProperties documentProperties = (DocumentProperties)theEObject;
 				T result = caseDocumentProperties(documentProperties);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ToolPackage.OPTION_VALUE: {
+				OptionValue optionValue = (OptionValue)theEObject;
+				T result = caseOptionValue(optionValue);
+				if (result == null) result = caseDefaultToolElement(optionValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -371,6 +379,21 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDocumentProperties(DocumentProperties object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Option Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Option Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseOptionValue(OptionValue object) {
 		return null;
 	}
 

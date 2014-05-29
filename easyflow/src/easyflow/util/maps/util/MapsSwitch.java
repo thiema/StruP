@@ -103,141 +103,9 @@ public class MapsSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case MapsPackage.STRING_TO_TASK_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Task> stringToTaskMap = (Map.Entry<String, Task>)theEObject;
-				T result = caseStringToTaskMap(stringToTaskMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_TRAVERSAL_EVENT_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, TraversalEvent> stringToTraversalEventMap = (Map.Entry<String, TraversalEvent>)theEObject;
-				T result = caseStringToTraversalEventMap(stringToTraversalEventMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_GRAPH_CELL_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, mxICell> stringToGraphCellMap = (Map.Entry<String, mxICell>)theEObject;
-				T result = caseStringToGraphCellMap(stringToGraphCellMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_TRAVERSAL_CRITERION_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, TraversalCriterion> stringToTraversalCriterionMap = (Map.Entry<String, TraversalCriterion>)theEObject;
-				T result = caseStringToTraversalCriterionMap(stringToTraversalCriterionMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_OBJECT_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Object> stringToObjectMap = (Map.Entry<String, Object>)theEObject;
-				T result = caseStringToObjectMap(stringToObjectMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_CHUNKS_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, EList<TraversalChunk>> stringToChunksMap = (Map.Entry<String, EList<TraversalChunk>>)theEObject;
-				T result = caseStringToChunksMap(stringToChunksMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_CHUNK_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, TraversalChunk> stringToChunkMap = (Map.Entry<String, TraversalChunk>)theEObject;
-				T result = caseStringToChunkMap(stringToChunkMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_TOOL_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Tool> stringToToolMap = (Map.Entry<String, Tool>)theEObject;
-				T result = caseStringToToolMap(stringToToolMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_STRING_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, String> stringToStringMap = (Map.Entry<String, String>)theEObject;
-				T result = caseStringToStringMap(stringToStringMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_GROUPING_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Grouping> stringToGroupingMap = (Map.Entry<String, Grouping>)theEObject;
-				T result = caseStringToGroupingMap(stringToGroupingMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_GROUPING_FEATURE_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, GroupingFeature> stringToGroupingFeatureMap = (Map.Entry<String, GroupingFeature>)theEObject;
-				T result = caseStringToGroupingFeatureMap(stringToGroupingFeatureMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, GroupingInstanceList> stringToGroupingInstanceListMap = (Map.Entry<String, GroupingInstanceList>)theEObject;
-				T result = caseStringToGroupingInstanceListMap(stringToGroupingInstanceListMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_GROUPING_INSTANCE_MAP_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, EMap<String, GroupingInstanceList>> stringToGroupingInstanceMapMap = (Map.Entry<String, EMap<String, GroupingInstanceList>>)theEObject;
-				T result = caseStringToGroupingInstanceMapMap(stringToGroupingInstanceMapMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_STRING_LIST_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, EList<String>> stringToStringListMap = (Map.Entry<String, EList<String>>)theEObject;
-				T result = caseStringToStringListMap(stringToStringListMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_URI_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, URI> stringToURIMap = (Map.Entry<String, URI>)theEObject;
-				T result = caseStringToURIMap(stringToURIMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_SCHEMA_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Schema> stringToSchemaMap = (Map.Entry<String, Schema>)theEObject;
-				T result = caseStringToSchemaMap(stringToSchemaMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_PROJECT_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, DefaultProject> stringToProjectMap = (Map.Entry<String, DefaultProject>)theEObject;
-				T result = caseStringToProjectMap(stringToProjectMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_PARAMETER_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Parameter> stringToParameterMap = (Map.Entry<String, Parameter>)theEObject;
-				T result = caseStringToParameterMap(stringToParameterMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, DocumentProperties> stringToDocumentPropertiesMap = (Map.Entry<String, DocumentProperties>)theEObject;
-				T result = caseStringToDocumentPropertiesMap(stringToDocumentPropertiesMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_PACKAGE_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, easyflow.tool.Package> stringToPackageMap = (Map.Entry<String, easyflow.tool.Package>)theEObject;
-				T result = caseStringToPackageMap(stringToPackageMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_DATA_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Data> stringToDataMap = (Map.Entry<String, Data>)theEObject;
-				T result = caseStringToDataMap(stringToDataMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, DataFormat> stringToDataFormatMap = (Map.Entry<String, DataFormat>)theEObject;
-				T result = caseStringToDataFormatMap(stringToDataFormatMap);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, ToolMatch> stringToToolMatchMap = (Map.Entry<String, ToolMatch>)theEObject;
-				T result = caseStringToToolMatchMap(stringToToolMatchMap);
+			case MapsPackage.CELL_TO_CELL_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<mxICell, EList<mxICell>> cellToCellListMap = (Map.Entry<mxICell, EList<mxICell>>)theEObject;
+				T result = caseCellToCellListMap(cellToCellListMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -247,15 +115,159 @@ public class MapsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case MapsPackage.STRING_TO_CHUNK_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, TraversalChunk> stringToChunkMap = (Map.Entry<String, TraversalChunk>)theEObject;
+				T result = caseStringToChunkMap(stringToChunkMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_CHUNKS_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<TraversalChunk>> stringToChunksMap = (Map.Entry<String, EList<TraversalChunk>>)theEObject;
+				T result = caseStringToChunksMap(stringToChunksMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DATA_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Data> stringToDataMap = (Map.Entry<String, Data>)theEObject;
+				T result = caseStringToDataMap(stringToDataMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DATA_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<Data>> stringToDataListMap = (Map.Entry<String, EList<Data>>)theEObject;
+				T result = caseStringToDataListMap(stringToDataListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_DATA_FORMAT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DataFormat> stringToDataFormatMap = (Map.Entry<String, DataFormat>)theEObject;
+				T result = caseStringToDataFormatMap(stringToDataFormatMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case MapsPackage.STRING_TO_DATA_LINK_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, DataLink> stringToDataLinkMap = (Map.Entry<String, DataLink>)theEObject;
 				T result = caseStringToDataLinkMap(stringToDataLinkMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MapsPackage.CELL_TO_CELL_LIST_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<mxICell, EList<mxICell>> cellToCellListMap = (Map.Entry<mxICell, EList<mxICell>>)theEObject;
-				T result = caseCellToCellListMap(cellToCellListMap);
+			case MapsPackage.STRING_TO_DOCUMENT_PROPERTIES_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DocumentProperties> stringToDocumentPropertiesMap = (Map.Entry<String, DocumentProperties>)theEObject;
+				T result = caseStringToDocumentPropertiesMap(stringToDocumentPropertiesMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_GROUPING_FEATURE_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, GroupingFeature> stringToGroupingFeatureMap = (Map.Entry<String, GroupingFeature>)theEObject;
+				T result = caseStringToGroupingFeatureMap(stringToGroupingFeatureMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_GROUPING_INSTANCE_MAP_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EMap<String, GroupingInstanceList>> stringToGroupingInstanceMapMap = (Map.Entry<String, EMap<String, GroupingInstanceList>>)theEObject;
+				T result = caseStringToGroupingInstanceMapMap(stringToGroupingInstanceMapMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_GROUPING_INSTANCE_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, GroupingInstanceList> stringToGroupingInstanceListMap = (Map.Entry<String, GroupingInstanceList>)theEObject;
+				T result = caseStringToGroupingInstanceListMap(stringToGroupingInstanceListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_GROUPING_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Grouping> stringToGroupingMap = (Map.Entry<String, Grouping>)theEObject;
+				T result = caseStringToGroupingMap(stringToGroupingMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_GRAPH_CELL_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, mxICell> stringToGraphCellMap = (Map.Entry<String, mxICell>)theEObject;
+				T result = caseStringToGraphCellMap(stringToGraphCellMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_SCHEMA_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Schema> stringToSchemaMap = (Map.Entry<String, Schema>)theEObject;
+				T result = caseStringToSchemaMap(stringToSchemaMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_OBJECT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Object> stringToObjectMap = (Map.Entry<String, Object>)theEObject;
+				T result = caseStringToObjectMap(stringToObjectMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_PACKAGE_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, easyflow.tool.Package> stringToPackageMap = (Map.Entry<String, easyflow.tool.Package>)theEObject;
+				T result = caseStringToPackageMap(stringToPackageMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_PARAMETER_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Parameter> stringToParameterMap = (Map.Entry<String, Parameter>)theEObject;
+				T result = caseStringToParameterMap(stringToParameterMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<Parameter>> stringToParameterListMap = (Map.Entry<String, EList<Parameter>>)theEObject;
+				T result = caseStringToParameterListMap(stringToParameterListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_PROJECT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, DefaultProject> stringToProjectMap = (Map.Entry<String, DefaultProject>)theEObject;
+				T result = caseStringToProjectMap(stringToProjectMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_STRING_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<String>> stringToStringListMap = (Map.Entry<String, EList<String>>)theEObject;
+				T result = caseStringToStringListMap(stringToStringListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_STRING_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, String> stringToStringMap = (Map.Entry<String, String>)theEObject;
+				T result = caseStringToStringMap(stringToStringMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_TASK_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Task> stringToTaskMap = (Map.Entry<String, Task>)theEObject;
+				T result = caseStringToTaskMap(stringToTaskMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_TOOL_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Tool> stringToToolMap = (Map.Entry<String, Tool>)theEObject;
+				T result = caseStringToToolMap(stringToToolMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_TRAVERSAL_EVENT_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, TraversalEvent> stringToTraversalEventMap = (Map.Entry<String, TraversalEvent>)theEObject;
+				T result = caseStringToTraversalEventMap(stringToTraversalEventMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_TRAVERSAL_CRITERION_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, TraversalCriterion> stringToTraversalCriterionMap = (Map.Entry<String, TraversalCriterion>)theEObject;
+				T result = caseStringToTraversalCriterionMap(stringToTraversalCriterionMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_URI_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, URI> stringToURIMap = (Map.Entry<String, URI>)theEObject;
+				T result = caseStringToURIMap(stringToURIMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, ToolMatch> stringToToolMatchMap = (Map.Entry<String, ToolMatch>)theEObject;
+				T result = caseStringToToolMatchMap(stringToToolMatchMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -265,9 +277,9 @@ public class MapsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case MapsPackage.TASK_TO_DATA_LINKS_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataLink>> taskToDataLinksMap = (Map.Entry<Task, EList<DataLink>>)theEObject;
-				T result = caseTaskToDataLinksMap(taskToDataLinksMap);
+			case MapsPackage.TASK_TO_DATA_LINK_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataLink>> taskToDataLinkListMap = (Map.Entry<Task, EList<DataLink>>)theEObject;
+				T result = caseTaskToDataLinkListMap(taskToDataLinkListMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -591,6 +603,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Data List Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Data List Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToDataListMap(Map.Entry<String, EList<Data>> object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>String To Data Format Map</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -681,17 +708,32 @@ public class MapsSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Task To Data Link List Map</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Task To Data Links Map</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Task To Data Link List Map</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTaskToDataLinksMap(Map.Entry<Task, EList<DataLink>> object) {
+	public T caseTaskToDataLinkListMap(Map.Entry<Task, EList<DataLink>> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Parameter List Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Parameter List Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToParameterListMap(Map.Entry<String, EList<Parameter>> object) {
 		return null;
 	}
 
