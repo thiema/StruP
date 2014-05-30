@@ -312,11 +312,13 @@ public class ToolContentHandler implements ContentHandler {
 		if (dataList == null)
 		{
 			dataList = new BasicEList<Data>();
+			tool.getData().put(param.getName(), dataList);
 			
 		}
-		dataList.add(data);
-		tool.getData().put(param.getName(), dataList);
+		tool.getData().get(param.getName()).add(data);
+		
 		logger.debug(dataList.size()+" "+tool.getData().get(param.getName()).size());
+		logger.debug("");
 		
 	}
 	

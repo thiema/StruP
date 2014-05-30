@@ -130,10 +130,10 @@ Command: view        SAM<->BAM conversion
 		<conditional name="output_file">
 			<param name="output_file" type="select"/>
 			<when value="file">
-				<param name="o" label="output" type="data" output="true" format="bam" named="true"/>
+				<param name="out_file" label="output" type="data" output="true" format="sai" named="true"/>
 			</when>
 			<when value="pipe">
-				<param name="output" type="data" output="true" format="bam" handle="stdout"/>
+				<param name="out_pipe" type="data" output="true" format="sai" handle="stdout"/>
 			</when>
 		</conditional>
 		<param name="k" label="seed" type="integer"/>

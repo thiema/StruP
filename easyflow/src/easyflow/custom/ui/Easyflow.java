@@ -26,7 +26,8 @@ public class Easyflow {
 			examples.setLocator("/easyflow/custom/examples");
 		else
 		{
-			examples.setLocator("/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples");
+			//examples.setLocator("/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples");
+			examples.setLocator("./src/easyflow/custom/examples");
 			examples.setFromJar(false);
 		}
 		

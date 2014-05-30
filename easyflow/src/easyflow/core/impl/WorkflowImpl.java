@@ -1,105 +1,65 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+
 import com.mxgraph.model.mxICell;
-import com.mxgraph.shape.mxBasicShape;
-import com.mxgraph.shape.mxDefaultTextShape;
-import com.mxgraph.shape.mxIShape;
-
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-import com.mxgraph.view.mxStylesheet;
-import com.mxgraph.view.mxCellState;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
-import easyflow.EasyflowFactory;
-import easyflow.core.Condition;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.DefaultRecord;
 import easyflow.core.ParentTaskResult;
-
-
 import easyflow.core.DefaultWorkflowTemplate;
-
 import easyflow.core.Task;
-
 import easyflow.core.Workflow;
-
 import easyflow.custom.exception.CellNotFoundException;
-
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
-import easyflow.custom.exception.GroupingCriterionNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
-import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.data.DataFactory;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
-import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.graph.jgraphx.Util;
-
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.Command;
 import easyflow.tool.Tool;
-import easyflow.traversal.TraversalCriterion;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
-import easyflow.execution.makeflow.Makeflow;
-import easyflow.execution.makeflow.MakeflowFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Map.Entry;
-
 import java.util.Stack;
 
-
-import org.apache.commons.collections.iterators.ReverseListIterator;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.groovy.util.StringUtil;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import org.eclipse.emf.ecore.util.InternalEList;
 
 
@@ -137,7 +97,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class WorkflowImpl extends EObjectImpl implements Workflow {
+public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workflow {
 	
 	protected static int totSteps = 5;
 	/**
@@ -917,26 +877,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	
 	public String getCurWorkflowStep()
 	{
-		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
-				getProcessedStates().get(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED))
-			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS;
-		else if (getProcessedStates().containsKey(GlobalVar.GROUPING_APPLIED) &&
-				getProcessedStates().get(GlobalVar.GROUPING_APPLIED))
-			return GlobalVar.APPLY_GROUPINGS;
-		else if (getProcessedStates().containsKey(GlobalVar.PARAMETER_APPLIED) &&
-				getProcessedStates().get(GlobalVar.PARAMETER_APPLIED))
-			return GlobalVar.APPLY_PARAMETERS;
-		else if (getProcessedStates().containsKey(GlobalVar.TRAVERSAL_EVENTS_RESOLVED) &&
-				getProcessedStates().get(GlobalVar.TRAVERSAL_EVENTS_RESOLVED))
-			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS;
-		else if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
-				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
-			return GlobalVar.GENERATE_ABSTRACT_WORKFLOW;
-		//else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
-			//	getProcessedStates().get(GlobalVar.FINISHED))
-			//return GlobalVar.FINISHED;
+		if (getProcessedStates().containsKey(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
+				getProcessedStates().get(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED))
+			return GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalConstants.GROUPING_APPLIED) &&
+				getProcessedStates().get(GlobalConstants.GROUPING_APPLIED))
+			return GlobalConstants.APPLY_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalConstants.PARAMETER_APPLIED) &&
+				getProcessedStates().get(GlobalConstants.PARAMETER_APPLIED))
+			return GlobalConstants.APPLY_PARAMETERS;
+		else if (getProcessedStates().containsKey(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED) &&
+				getProcessedStates().get(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED))
+			return GlobalConstants.RESOLVE_TRAVERSAL_EVENTS;
+		else if (getProcessedStates().containsKey(GlobalConstants.ABSTRACT_WORKFLOW) &&
+				getProcessedStates().get(GlobalConstants.ABSTRACT_WORKFLOW))
+			return GlobalConstants.GENERATE_ABSTRACT_WORKFLOW;
+		//else if (getProcessedStates().containsKey(GlobalConstants.FINISHED) &&
+			//	getProcessedStates().get(GlobalConstants.FINISHED))
+			//return GlobalConstants.FINISHED;
 		else
-			return GlobalVar.START;		
+			return GlobalConstants.START;		
 	}
 	
 	/**
@@ -1000,26 +960,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 
 	public String getNextWorkflowStep()
 	{
-		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
-				getProcessedStates().get(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED))
-			return GlobalVar.FINISHED;
-		else if (getProcessedStates().containsKey(GlobalVar.GROUPING_APPLIED) &&
-				getProcessedStates().get(GlobalVar.GROUPING_APPLIED))
-			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS;
-		else if (getProcessedStates().containsKey(GlobalVar.PARAMETER_APPLIED) &&
-				getProcessedStates().get(GlobalVar.PARAMETER_APPLIED))
-			return GlobalVar.APPLY_GROUPINGS;
-		else if (getProcessedStates().containsKey(GlobalVar.TRAVERSAL_EVENTS_RESOLVED) &&
-				getProcessedStates().get(GlobalVar.TRAVERSAL_EVENTS_RESOLVED))
-			return GlobalVar.APPLY_PARAMETERS;
-		else if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
-				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
-			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS;
-		//else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
-				//getProcessedStates().get(GlobalVar.FINISHED))
-			//return GlobalVar.
+		if (getProcessedStates().containsKey(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
+				getProcessedStates().get(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED))
+			return GlobalConstants.FINISHED;
+		else if (getProcessedStates().containsKey(GlobalConstants.GROUPING_APPLIED) &&
+				getProcessedStates().get(GlobalConstants.GROUPING_APPLIED))
+			return GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalConstants.PARAMETER_APPLIED) &&
+				getProcessedStates().get(GlobalConstants.PARAMETER_APPLIED))
+			return GlobalConstants.APPLY_GROUPINGS;
+		else if (getProcessedStates().containsKey(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED) &&
+				getProcessedStates().get(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED))
+			return GlobalConstants.APPLY_PARAMETERS;
+		else if (getProcessedStates().containsKey(GlobalConstants.ABSTRACT_WORKFLOW) &&
+				getProcessedStates().get(GlobalConstants.ABSTRACT_WORKFLOW))
+			return GlobalConstants.RESOLVE_TRAVERSAL_EVENTS;
+		//else if (getProcessedStates().containsKey(GlobalConstants.FINISHED) &&
+				//getProcessedStates().get(GlobalConstants.FINISHED))
+			//return GlobalConstants.
 		else
-			return GlobalVar.GENERATE_ABSTRACT_WORKFLOW;
+			return GlobalConstants.GENERATE_ABSTRACT_WORKFLOW;
 	}
 	
 	/**
@@ -1035,16 +995,16 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public int runNextWorkflowStep() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
-		if (getNextWorkflowStep().equals(GlobalVar.START) || 
-				getNextWorkflowStep().equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
+		if (getNextWorkflowStep().equals(GlobalConstants.START) || 
+				getNextWorkflowStep().equals(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW))
 			return generateAbstractWorkflow()     ?  0:1;
-		else if (getNextWorkflowStep().equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
+		else if (getNextWorkflowStep().equals(GlobalConstants.RESOLVE_TRAVERSAL_EVENTS))
 			return resolveTraversalEvents()       ?  0:1;
-		else if (getNextWorkflowStep().equals(GlobalVar.APPLY_PARAMETERS))
+		else if (getNextWorkflowStep().equals(GlobalConstants.APPLY_PARAMETERS))
 			return applyParameterCriteria()       ?  0:1;
-		else if (getNextWorkflowStep().equals(GlobalVar.APPLY_GROUPINGS))
+		else if (getNextWorkflowStep().equals(GlobalConstants.APPLY_GROUPINGS))
 			return applyGroupingCriteria()        ?  0:1;
-		else if (getNextWorkflowStep().equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
+		else if (getNextWorkflowStep().equals(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS))
 			return resolveIncompatibleGroupings() ?  0:1;
 		return 2;
 	}
@@ -1074,18 +1034,18 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public int runEntireWorkflow() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
 		int rc = 0;
-		if (getNextWorkflowStep().equals(GlobalVar.START) || 
-				getNextWorkflowStep().equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
+		if (getNextWorkflowStep().equals(GlobalConstants.START) || 
+				getNextWorkflowStep().equals(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW))
 			rc = generateAbstractWorkflow()     ? 0:1;
-		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalConstants.RESOLVE_TRAVERSAL_EVENTS))
 			rc = resolveTraversalEvents()       ? 0:1;
-		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.APPLY_PARAMETERS))
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalConstants.APPLY_PARAMETERS))
 			rc = applyParameterCriteria()       ? 0:1;
-		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.APPLY_GROUPINGS))
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalConstants.APPLY_GROUPINGS))
 			rc = applyGroupingCriteria()        ? 0:1;
-		if (rc == 0 && getNextWorkflowStep().equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
+		if (rc == 0 && getNextWorkflowStep().equals(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS))
 			rc = resolveIncompatibleGroupings() ? 0:1;
-		if (getNextWorkflowStep().equals(GlobalVar.FINISHED))
+		if (getNextWorkflowStep().equals(GlobalConstants.FINISHED))
 			return 0;
 		return rc;
  
@@ -1097,7 +1057,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean hasNextWorkflowStep() {
-		return !(getNextWorkflowStep().equals(GlobalVar.FINISHED));
+		return !(getNextWorkflowStep().equals(GlobalConstants.FINISHED));
 	}
 
 	/**
@@ -1108,20 +1068,20 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public String getWorkflowStepLabelFor(String step) {
 		if (step==null)
 			step=getCurWorkflowStep();
-		if (step.equals(GlobalVar.FINISHED))
-			return GlobalVar.FINISHED_LABEL;
-		else if (step.equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
-			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS_LABEL;
-		else if (step.equals(GlobalVar.APPLY_PARAMETERS))
-			return GlobalVar.APPLY_PARAMETER_LABEL;
-		else if (step.equals(GlobalVar.APPLY_GROUPINGS))
-			return GlobalVar.APPLY_GROUPING_LABEL;
-		else if (step.equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
-			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS_LABEL;
-		else if (step.equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
-			return GlobalVar.GENERATE_ABSTRACT_GRAPH_LABEL;
-		else if (step.equals(GlobalVar.START))
-			return GlobalVar.START_LABEL;
+		if (step.equals(GlobalConstants.FINISHED))
+			return GlobalConstants.FINISHED_LABEL;
+		else if (step.equals(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS))
+			return GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS_LABEL;
+		else if (step.equals(GlobalConstants.APPLY_PARAMETERS))
+			return GlobalConstants.APPLY_PARAMETER_LABEL;
+		else if (step.equals(GlobalConstants.APPLY_GROUPINGS))
+			return GlobalConstants.APPLY_GROUPING_LABEL;
+		else if (step.equals(GlobalConstants.RESOLVE_TRAVERSAL_EVENTS))
+			return GlobalConstants.RESOLVE_TRAVERSAL_EVENTS_LABEL;
+		else if (step.equals(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW))
+			return GlobalConstants.GENERATE_ABSTRACT_GRAPH_LABEL;
+		else if (step.equals(GlobalConstants.START))
+			return GlobalConstants.START_LABEL;
 		return "Unkown";
 	}
 
@@ -1133,20 +1093,20 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public String getWorkflowStepDescFor(String step) {
 		if (step==null)
 			step=getCurWorkflowStep();
-		if (step.equals(GlobalVar.FINISHED))
-			return GlobalVar.FINISHED_DESCRIPTION;
-		else if (step.equals(GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS))
-			return GlobalVar.RESOLVE_INCOMPATIBLE_GROUPINGS_DESCRIPTION;
-		else if (step.equals(GlobalVar.APPLY_PARAMETERS))
-			return GlobalVar.APPLY_PARAMETER_DESCRIPTION;
-		else if (step.equals(GlobalVar.APPLY_GROUPINGS))
-			return GlobalVar.APPLY_GROUPING_DESCRIPTION;
-		else if (step.equals(GlobalVar.RESOLVE_TRAVERSAL_EVENTS))
-			return GlobalVar.RESOLVE_TRAVERSAL_EVENTS_DESCRIPTION;
-		else if (step.equals(GlobalVar.GENERATE_ABSTRACT_WORKFLOW))
-			return GlobalVar.GENERATE_ABSTRACT_GRAPH_DESCRIPTION;
-		else if (step.equals(GlobalVar.START))
-			return GlobalVar.START_DESCRIPTION;
+		if (step.equals(GlobalConstants.FINISHED))
+			return GlobalConstants.FINISHED_DESCRIPTION;
+		else if (step.equals(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS))
+			return GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS_DESCRIPTION;
+		else if (step.equals(GlobalConstants.APPLY_PARAMETERS))
+			return GlobalConstants.APPLY_PARAMETER_DESCRIPTION;
+		else if (step.equals(GlobalConstants.APPLY_GROUPINGS))
+			return GlobalConstants.APPLY_GROUPING_DESCRIPTION;
+		else if (step.equals(GlobalConstants.RESOLVE_TRAVERSAL_EVENTS))
+			return GlobalConstants.RESOLVE_TRAVERSAL_EVENTS_DESCRIPTION;
+		else if (step.equals(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW))
+			return GlobalConstants.GENERATE_ABSTRACT_GRAPH_DESCRIPTION;
+		else if (step.equals(GlobalConstants.START))
+			return GlobalConstants.START_DESCRIPTION;
 		return "Unkown";
 
 	}
@@ -1159,23 +1119,23 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public int getNumberOfCurrentWorkflowStep() {
 		//String step=getCurWorkflowStep();
 		int curStep=0;
-		if (getProcessedStates().containsKey(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
-				getProcessedStates().get(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED))
+		if (getProcessedStates().containsKey(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED) && 
+				getProcessedStates().get(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED))
 			curStep++;
-		if (getProcessedStates().containsKey(GlobalVar.GROUPING_APPLIED) &&
-				getProcessedStates().get(GlobalVar.GROUPING_APPLIED))
+		if (getProcessedStates().containsKey(GlobalConstants.GROUPING_APPLIED) &&
+				getProcessedStates().get(GlobalConstants.GROUPING_APPLIED))
 			curStep++;
-		if (getProcessedStates().containsKey(GlobalVar.PARAMETER_APPLIED) &&
-				getProcessedStates().get(GlobalVar.PARAMETER_APPLIED))
+		if (getProcessedStates().containsKey(GlobalConstants.PARAMETER_APPLIED) &&
+				getProcessedStates().get(GlobalConstants.PARAMETER_APPLIED))
 			curStep++;
-		if (getProcessedStates().containsKey(GlobalVar.TRAVERSAL_EVENTS_RESOLVED) &&
-				getProcessedStates().get(GlobalVar.TRAVERSAL_EVENTS_RESOLVED))
+		if (getProcessedStates().containsKey(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED) &&
+				getProcessedStates().get(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED))
 			curStep++;
-		if (getProcessedStates().containsKey(GlobalVar.ABSTRACT_WORKFLOW) &&
-				getProcessedStates().get(GlobalVar.ABSTRACT_WORKFLOW))
+		if (getProcessedStates().containsKey(GlobalConstants.ABSTRACT_WORKFLOW) &&
+				getProcessedStates().get(GlobalConstants.ABSTRACT_WORKFLOW))
 			curStep++;
-		//else if (getProcessedStates().containsKey(GlobalVar.FINISHED) &&
-			//	getProcessedStates().get(GlobalVar.FINISHED))
+		//else if (getProcessedStates().containsKey(GlobalConstants.FINISHED) &&
+			//	getProcessedStates().get(GlobalConstants.FINISHED))
 			//curStep++;
 		return curStep;
 
@@ -1341,7 +1301,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	
         	//logger.debug(getGraph().getLabel(rootCell));
         	
-        	getProcessedStates().put(GlobalVar.ABSTRACT_NODES, true);
+        	getProcessedStates().put(GlobalConstants.ABSTRACT_NODES, true);
 
         } finally {
         	getGraph().getModel().endUpdate();
@@ -1435,7 +1395,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	getGraph().getModel().endUpdate();
         	getGraphUtil().layoutGraph();
         }
-		getProcessedStates().put(GlobalVar.ABSTRACT_WORKFLOW, true);
+		getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW, true);
 
 	}
 
@@ -1818,8 +1778,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean resolveToolDependencies() {
-		return getGraphUtil().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
+	public boolean resolveToolDependencies(EMap<String, String> constraints) {
+		return getGraphUtil().resolveToolDependencies((mxICell) getFirstNode(), getCatalog(), null);
 	}
 
 	/**
@@ -2073,7 +2033,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		boolean rc = applyTraversalCriteria(true); 
 		if (rc)
-			getProcessedStates().put(GlobalVar.GROUPING_APPLIED, true);
+			getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, true);
 
 		return rc;
 	}
@@ -2090,7 +2050,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		boolean rc = applyTraversalCriteria(false);
 		if (rc)
-			getProcessedStates().put(GlobalVar.PARAMETER_APPLIED, true);
+			getProcessedStates().put(GlobalConstants.PARAMETER_APPLIED, true);
 		
 		return rc;
 	}
@@ -2168,7 +2128,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
 		{
-			getProcessedStates().put(GlobalVar.TRAVERSAL_EVENTS_RESOLVED, true);
+			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
 			return true;
 		}
 		return false;
@@ -2200,7 +2160,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		}
 		getGraphUtil().layoutGraph();
 		if (rc)
-			getProcessedStates().put(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
+			getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
 		return rc;
 	}
 
@@ -2522,6 +2482,125 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return executionSystem != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP:
+				return generateGraphFromTemplate((EMap<String, Tool>)arguments.get(0));
+			case CorePackage.WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK:
+				return getParentTaskByOutDataPort((DataPort)arguments.get(0), (Task)arguments.get(1));
+			case CorePackage.WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT:
+				return getParentTasksByOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.WORKFLOW___VALIDATE_PARENT_TASK_OUT_DATA_PORT__DATAPORT_TASK:
+				return validateParentTaskOutDataPort((DataPort)arguments.get(0), (Task)arguments.get(1));
+			case CorePackage.WORKFLOW___VALIDATE_LAST_TASK_OUT_DATA_PORT__DATAPORT:
+				return validateLastTaskOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.WORKFLOW___READ_META_DATA:
+				readMetaData();
+				return null;
+			case CorePackage.WORKFLOW___GET_PARENT_TASKS_FOR__TASK:
+				return getParentTasksFor((Task)arguments.get(0));
+			case CorePackage.WORKFLOW___RESOLVE_MISSING_DATA_PORTS_BY_TOOL_FOR__TASK:
+				return resolveMissingDataPortsByToolFor((Task)arguments.get(0));
+			case CorePackage.WORKFLOW___READ_WORKFOW_TEMPLATE:
+				return readWorkfowTemplate();
+			case CorePackage.WORKFLOW___GENERATE_ABSTRACT_WORKFLOW:
+				return generateAbstractWorkflow();
+			case CorePackage.WORKFLOW___APPLY_GROUPING_CRITERIA:
+				try {
+					return applyGroupingCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___APPLY_PARAMETER_CRITERIA:
+				try {
+					return applyParameterCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT:
+				try {
+					return applyTraversalEvent((TraversalEvent)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_TRAVERSAL_EVENTS:
+				try {
+					return resolveTraversalEvents();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS:
+				try {
+					return resolveIncompatibleGroupings();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_PREPROCESSING_TASKS:
+				try {
+					return resolvePreprocessingTasks();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_TOOL_DEPENDENCIES__EMAP:
+				return resolveToolDependencies((EMap<String, String>)arguments.get(0));
+			case CorePackage.WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
+				return generateWorklowForExecutionSystem();
+			case CorePackage.WORKFLOW___RUN_NEXT_WORKFLOW_STEP:
+				try {
+					return runNextWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RUN_PREV_WORKFLOW_STEP:
+				try {
+					return runPrevWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RUN_ENTIRE_WORKFLOW:
+				try {
+					return runEntireWorkflow();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___HAS_NEXT_WORKFLOW_STEP:
+				return hasNextWorkflowStep();
+			case CorePackage.WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:
+				return getTotalNumberOfWorkflowSteps();
+			case CorePackage.WORKFLOW___GET_WORKFLOW_STEP_LABEL_FOR__STRING:
+				return getWorkflowStepLabelFor((String)arguments.get(0));
+			case CorePackage.WORKFLOW___GET_WORKFLOW_STEP_DESC_FOR__STRING:
+				return getWorkflowStepDescFor((String)arguments.get(0));
+			case CorePackage.WORKFLOW___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP:
+				return getNumberOfCurrentWorkflowStep();
+			case CorePackage.WORKFLOW___GET_NEXT_WORKFLOW_STEP:
+				return getNextWorkflowStep();
+			case CorePackage.WORKFLOW___GET_CUR_WORKFLOW_STEP:
+				return getCurWorkflowStep();
+			case CorePackage.WORKFLOW___DELETE:
+				return delete();
+			case CorePackage.WORKFLOW___RESET_WORKFLOW_STEP:
+				return resetWorkflowStep();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

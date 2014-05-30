@@ -6,22 +6,27 @@
  */
 package easyflow.data.impl;
 
+import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
-
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
+
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,7 +47,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class DataImpl extends EObjectImpl implements Data {
+public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -288,6 +293,23 @@ public class DataImpl extends EObjectImpl implements Data {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isAllowed(EMap<String, String> constraints) {
+
+		
+		for (String handle:((InOutParameter)getParameter()).getHandles())
+		{
+			if (GlobalConfig.getAllowedHandles().contains(handle))
+				return true;
+		}
+		return false;
+			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public URI getDataResourceName() {
@@ -504,6 +526,25 @@ public class DataImpl extends EObjectImpl implements Data {
 				return parameter != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA___GET_FORMAT:
+				return getFormat();
+			case DataPackage.DATA___GET_FORMAT_STR:
+				return getFormatStr();
+			case DataPackage.DATA___IS_ALLOWED__EMAP:
+				return isAllowed((EMap<String, String>)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

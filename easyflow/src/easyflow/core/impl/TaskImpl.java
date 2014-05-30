@@ -10,15 +10,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.apache.commons.jexl2.Expression;
-import org.apache.commons.jexl2.JexlContext;
-import org.apache.commons.jexl2.JexlEngine;
-import org.apache.commons.jexl2.MapContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -31,12 +24,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.PreprocessingTask;
@@ -50,12 +42,10 @@ import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
-import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
-import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
@@ -71,6 +61,7 @@ import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -110,7 +101,7 @@ import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
  *
  * @generated
  */
-public class TaskImpl extends EObjectImpl implements Task {
+public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	/**
 	 * The cached value of the '{@link #getInDataPorts() <em>In Data Ports</em>}' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2590,6 +2581,154 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.TASK___READ_TASK__STRING_STRING_ELIST:
+				readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
+				return null;
+			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING:
+				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN:
+				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2), (Boolean)arguments.get(3));
+			case CorePackage.TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST:
+				return parseDataFormatField((String)arguments.get(0), (EList<Pattern>)arguments.get(1));
+			case CorePackage.TASK___GET_UNIQUE_STRING:
+				return getUniqueString();
+			case CorePackage.TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT:
+				return isCompatibleWithOutDataPortFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT:
+				return isCompatibleWithInDataPortFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT:
+				return getParentTaskByOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK:
+				return getNonOveralppingTraversalChunksFor((Task)arguments.get(0));
+			case CorePackage.TASK___READ_TOOLS__ELIST:
+				readTools((EList<Tool>)arguments.get(0));
+				return null;
+			case CorePackage.TASK___GET_PREFERRED_TOOL:
+				return getPreferredTool();
+			case CorePackage.TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST:
+				return getOverlappingDataPorts((EList<DataPort>)arguments.get(0), (EList<DataPort>)arguments.get(1));
+			case CorePackage.TASK___RESOLVE_TOOL_DEPENDENCIES:
+				return resolveToolDependencies();
+			case CorePackage.TASK___CREATE_COMMAND_LINE_MAP:
+				return createCommandLineMap();
+			case CorePackage.TASK___CREATE_COMMAND_LINE__STRING_EMAP:
+				return createCommandLine((String)arguments.get(0), (EMap<String, EList<String>>)arguments.get(1));
+			case CorePackage.TASK___VALIDATE_TOOL__TOOL:
+				return validateTool((Tool)arguments.get(0));
+			case CorePackage.TASK___VALIDATE_TOOLS:
+				return validateTools();
+			case CorePackage.TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN:
+				return getDataPortByDataPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN:
+				return getDataPortByNameOfFormat((String)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN:
+				return getDataPortByName((String)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST:
+				return resolveMissingDataPortsByTool((EList<Task>)arguments.get(0));
+			case CorePackage.TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING:
+				return getOverlappingChunksFor((Task)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
+				try {
+					return getRequiredGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
+				try {
+					return getProvidedGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___HAS_MULTIPLE_INPUTS_FOR__DATAPORT:
+				return hasMultipleInputsFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___HAS_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				return hasMultipleInstancesFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___HAS_MULTIPLE_GROUPINGS_FOR__DATAPORT:
+				return hasMultipleGroupingsFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canFilterInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_RECORDS__BOOLEAN:
+				return getRecords((Boolean)arguments.get(0));
+			case CorePackage.TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK:
+				return getOverlappingRecordsProvidedBy((Task)arguments.get(0));
+			case CorePackage.TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
+				try {
+					return canProvideDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
+				try {
+					return canComsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT:
+				return getOutputsForDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT:
+				return getInputsForDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___RESOLVE_INPUTS:
+				try {
+					resolveInputs();
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_OUTPUTS:
+				try {
+					resolveOutputs();
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_PARAMETERS:
+				resolveParameters();
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

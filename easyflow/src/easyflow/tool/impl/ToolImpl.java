@@ -9,8 +9,6 @@ package easyflow.tool.impl;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.data.Data;
 import easyflow.data.DataPort;
-import easyflow.execution.makeflow.Makeflow;
-import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
@@ -20,41 +18,28 @@ import easyflow.tool.Requirement;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
-import easyflow.traversal.TraversalCriterion;
-
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.StringToDataListMapImpl;
-import easyflow.util.maps.impl.StringToDataMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
-
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.w3c.dom.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -81,7 +66,7 @@ import org.w3c.dom.Element;
  *
  * @generated
  */
-public class ToolImpl extends EObjectImpl implements Tool {
+public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -982,6 +967,48 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.TOOL___WRITE_MODEL_TO_XML:
+				writeModelToXML();
+				return null;
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLES_INSTANCES_FOR__DATAPORT:
+				try {
+					return canProcessMultiplesInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT:
+				try {
+					return canFilterInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___REQUIRES_GROUPING__STRING_DATAPORT:
+				return requiresGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
+			case ToolPackage.TOOL___PROVIDES_GROUPING__STRING_DATAPORT:
+				return providesGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
+			case ToolPackage.TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN:
+				return getGroupingsForInputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN:
+				return getGroupingsForOutputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST:
+				return getAnalysisTypeOfPackage((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.TOOL___GET_DATA_FOR_PARAM__PARAMETER_EMAP:
+				return getDataForParam((Parameter)arguments.get(0), (Map.Entry<String, String>)arguments.get(1));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

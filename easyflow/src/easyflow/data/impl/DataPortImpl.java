@@ -9,32 +9,23 @@ package easyflow.data.impl;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
-
 import easyflow.tool.Tool;
-
 import easyflow.traversal.TraversalCriterion;
-
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.StringToDataFormatMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Map.Entry;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -60,7 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DataPortImpl extends EObjectImpl implements DataPort {
+public class DataPortImpl extends MinimalEObjectImpl.Container implements DataPort {
 	/**
 	 * The cached value of the '{@link #getGroupingCriteria() <em>Grouping Criteria</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -595,6 +586,25 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 				return PARAMETER_NAME_EDEFAULT == null ? parameterName != null : !PARAMETER_NAME_EDEFAULT.equals(parameterName);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA_PORT___IS_COMPATIBLE__DATAPORT:
+				return isCompatible((DataPort)arguments.get(0));
+			case DataPackage.DATA_PORT___REMOVE_DATA_PORT_FROM__ELIST:
+				return removeDataPortFrom((EList<DataPort>)arguments.get(0));
+			case DataPackage.DATA_PORT___GET_FORMAT:
+				return getFormat();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
