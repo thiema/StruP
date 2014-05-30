@@ -6,51 +6,26 @@
  */
 package easyflow.ui.impl;
 
-import easyflow.EasyflowFactory;
-import easyflow.EasyflowPackage;
-
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -58,32 +33,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.mxgraph.model.mxCell;
 
 import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
-import easyflow.core.CorePackage;
 import easyflow.core.Task;
-
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.Workflow;
-import easyflow.example.ExampleFactory;
-import easyflow.example.Examples;
 import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
@@ -91,10 +50,7 @@ import easyflow.metadata.MetadataFactory;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
-import easyflow.tool.Definitions;
-import easyflow.tool.Schemata;
 import easyflow.tool.ToolFactory;
-import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -111,9 +67,9 @@ import easyflow.execution.makeflow.MakeflowFactory;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
-import easyflow.custom.util.XMLUtil;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPort;
@@ -122,7 +78,6 @@ import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToPackageMapImpl;
-import easyflow.util.maps.impl.StringToSchemaMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 
 /**
@@ -149,7 +104,7 @@ import easyflow.util.maps.impl.StringToToolMapImpl;
  *
  * @generated
  */
-public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
+public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements DefaultProject {
 	/**
 	 * The cached value of the '{@link #getWorkflows() <em>Workflows</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -709,16 +664,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		logger.debug(jsonObject);
 		logger.debug(jsonObject.entrySet());
 		JSONObject projectCfg=jsonObject.getJSONObject("project");
+		GlobalConfig.setJsonCfg(jsonObject);
 		
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
-		workflow.getProcessedStates().put(GlobalVar.ABSTRACT_NODES, false);
-		workflow.getProcessedStates().put(GlobalVar.ABSTRACT_WORKFLOW, false);
-		workflow.getProcessedStates().put(GlobalVar.TRAVERSAL_EVENTS_RESOLVED, false);
-		workflow.getProcessedStates().put(GlobalVar.GROUPING_APPLIED, false);
-		workflow.getProcessedStates().put(GlobalVar.PARAMETER_APPLIED, false);
-		workflow.getProcessedStates().put(GlobalVar.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
+		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_NODES, false);
+		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW, false);
+		workflow.getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, false);
+		workflow.getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, false);
+		workflow.getProcessedStates().put(GlobalConstants.PARAMETER_APPLIED, false);
+		workflow.getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
 		
 		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
 		
@@ -749,6 +705,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 					, isFromJar());
 			metaData.setReader(new BufferedReader(isReader));
 			metaData.initMetaData();
+			
 			isReader = URIUtil.getInputStreamReader(
 					URIUtil.addToURI(getBaseURI(), projectCfg.getString("metadataFile"))
 					, isFromJar());
@@ -772,18 +729,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			{
 				String key = it.next();
 				logger.trace("read processing config key="+key);
-				workflow.getProcessingConfig().put(key, processingCfg.getString(key));
+				GlobalConfig.getProcessingConfig().put(key, processingCfg.getString(key));
 			}
 			DefaultExecutionSystem executionSystem = null;
 			
-			if (workflow.getProcessingConfig().containsKey("execution_system"))
+			if (GlobalConfig.getProcessingConfig().containsKey("execution_system"))
 			{
-				
-				if ("makeflow".equalsIgnoreCase(workflow.getProcessingConfig().get("execution_system")))
+				if ("makeflow".equalsIgnoreCase(GlobalConfig.getProcessingConfig().get("execution_system")))
 				{
 					executionSystem = MakeflowFactory.eINSTANCE.createMakeflow();
-					if (workflow.getProcessingConfig().containsKey("execution_system_output_file"))
-						GlobalVar.setExecutionSystemOutputFileName(workflow.
+					if (GlobalConfig.getProcessingConfig().containsKey("execution_system_output_file"))
+						GlobalVar.setExecutionSystemOutputFileName(GlobalConfig.
 								getProcessingConfig().get("execution_system_output_file"));
 				}
 				else
@@ -791,7 +747,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 					executionSystem = ExecutionFactory.eINSTANCE.createDefaultExecutionSystem();
 					GlobalVar.setExecutionSystemOutputFileName("exec_rules.txt");
 				}
-				
 			}
 			else
 			{
@@ -1108,7 +1063,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public boolean resolveToolDependencies() {
-		return getActiveWorkflow().resolveToolDependencies();
+		//GlobalConfig.getToolConfig()
+		EMap<String, String> constraints = new BasicEMap<String, String>();
+		return getActiveWorkflow().resolveToolDependencies(constraints);
 	}
 
 	/**
@@ -1444,6 +1401,128 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return packages != null && !packages.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case UiPackage.DEFAULT_PROJECT___VALIDATE:
+				return validate();
+			case UiPackage.DEFAULT_PROJECT___GET_ACTIVE_WORKFLOW:
+				return getActiveWorkflow();
+			case UiPackage.DEFAULT_PROJECT___CLEAR_WORKFLOWS:
+				clearWorkflows();
+				return null;
+			case UiPackage.DEFAULT_PROJECT___READ_CONFIGURATION:
+				return readConfiguration();
+			case UiPackage.DEFAULT_PROJECT___READ_PROJECT_JSON__URI:
+				try {
+					readProjectJson((URI)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___SET_CONFIG_AND_BASE_PATH__STRING:
+				setConfigAndBasePath((String)arguments.get(0));
+				return null;
+			case UiPackage.DEFAULT_PROJECT___APPLY_META_DATA:
+				applyMetaData();
+				return null;
+			case UiPackage.DEFAULT_PROJECT___INIT__EASYFLOWGRAPH:
+				return init((EasyFlowGraph)arguments.get(0));
+			case UiPackage.DEFAULT_PROJECT___DELETE:
+				return delete();
+			case UiPackage.DEFAULT_PROJECT___RUN_ENTIRE_WORKFLOW:
+				try {
+					return runEntireWorkflow();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_TRAVERSAL_CRITERIA:
+				try {
+					return resolveTraversalCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___GENERATE_ABSTRACT_GRAPH:
+				return generateAbstractGraph();
+			case UiPackage.DEFAULT_PROJECT___APPLY_GROUPING_CRITERIA:
+				try {
+					return applyGroupingCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___APPLY_PARAMETER_CRITERIA:
+				try {
+					return applyParameterCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_UTILITY_TASKS:
+				try {
+					return resolveUtilityTasks();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_PREPROCESSING_TASKS:
+				try {
+					return resolvePreprocessingTasks();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_TOOL_DEPENDENCIES:
+				return resolveToolDependencies();
+			case UiPackage.DEFAULT_PROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
+				return generateWorklowForExecutionSystem();
+			case UiPackage.DEFAULT_PROJECT___SET_WORKER__EASYFLOWOVERALLWORKER:
+				setWorker((EasyFlowOverallWorker)arguments.get(0));
+				return null;
+			case UiPackage.DEFAULT_PROJECT___RUN_NEXT_WORKFLOW_STEP:
+				try {
+					return runNextWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RUN_PREV_WORKFLOW_STEP:
+				try {
+					return runPrevWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___HAS_NEXT_WORKFLOW_STEP:
+				return hasNextWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING:
+				return getWorkflowStepLabelFor((String)arguments.get(0));
+			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING:
+				return getWorkflowStepDescFor((String)arguments.get(0));
+			case UiPackage.DEFAULT_PROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:
+				return getTotalNumberOfWorkflowSteps();
+			case UiPackage.DEFAULT_PROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP:
+				return getNumberOfCurrentWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_NEXT_WORKFLOW_STEP:
+				return getNextWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_CUR_WORKFLOW_STEP:
+				return getCurWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___RESET_WORKFLOW_STEP:
+				return resetWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_EXECUTION_SYSTEM:
+				return getExecutionSystem();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

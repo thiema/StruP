@@ -156,8 +156,6 @@
           eType="#//util/maps/StringToObjectMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="graphUtil" eType="#//graph/jgraphx/Util"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="catalog" eType="#//core/Catalog"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="processingConfig" upperBound="-1"
-          eType="#//util/maps/StringToStringMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="rootTask" eType="#//core/Task"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="staticTasks" upperBound="-1"
           eType="#//core/Task"/>

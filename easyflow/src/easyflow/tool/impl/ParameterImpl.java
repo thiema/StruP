@@ -6,50 +6,36 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.core.Task;
 import easyflow.data.Data;
-import easyflow.metadata.GroupingInstance;
-import easyflow.execution.makeflow.Makeflow;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
-
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterListMapImpl;
-import easyflow.util.maps.impl.StringToParameterMapImpl;
-
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
-
-import javax.swing.SpringLayout.Constraints;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.w3c.dom.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,7 +77,7 @@ import org.w3c.dom.Element;
  *
  * @generated
  */
-public class ParameterImpl extends EObjectImpl implements Parameter {
+public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -1652,6 +1638,35 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP:
+				return generateCommandString((EMap<String, Object>)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_ARG_KEY:
+				return getArgKey();
+			case ToolPackage.PARAMETER___GET_ARG_VALUE:
+				return getArgValue();
+			case ToolPackage.PARAMETER___GET_ARG_DELIMITER:
+				return getArgDelimiter();
+			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER:
+				return getArgValueDelimiter();
+			case ToolPackage.PARAMETER___IS_OUTPUT:
+				return isOutput();
+			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
+				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
+				return isAnalysisType();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
