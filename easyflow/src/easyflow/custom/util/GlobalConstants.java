@@ -2,6 +2,13 @@ package easyflow.custom.util;
 
 public class GlobalConstants {
 
+	public static final double defaultCellXPos   = 400;
+	public static final double defaultCellYPos   = 100;
+	public static final double defaultCellWidth  = 200;
+	public static final double defaultCellHeight =  40;
+	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
+	public static final String METADATA_INPUT             = "InputFiles";
+
 	
 	//
 	public static final String ABSTRACT_NODES                    = "abstractNodes";
@@ -60,6 +67,9 @@ public class GlobalConstants {
 	public static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE  = CONFIG_PROCESSING_HANDLE_FILE;
 	public static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE      = true;
 	public static final String[] CONFIG_PROCESSING_HANDLES               = {CONFIG_PROCESSING_HANDLE_FILE, CONFIG_PROCESSING_HANDLE_FILE};
+	
+	public static final String   ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL   = "No valid data handle found for tool.";
+	public static final String   ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG = "No valid data handle found due to configuration.";
 	
 
 }

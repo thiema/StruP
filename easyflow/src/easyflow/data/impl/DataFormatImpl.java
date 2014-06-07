@@ -135,6 +135,15 @@ public class DataFormatImpl extends EObjectImpl implements DataFormat {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean match(DataFormat testDataFormat) {
+		return testDataFormat.getName().equalsIgnoreCase(getName());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

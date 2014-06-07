@@ -15,6 +15,7 @@ import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
@@ -78,7 +79,6 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.DEFAULT_TOOL_ELEMENT: return createDefaultToolElement();
 			case ToolPackage.TOOL: return createTool();
 			case ToolPackage.INTERPRETER: return createInterpreter();
-			case ToolPackage.COMMAND: return createCommand();
 			case ToolPackage.PARAMETER: return createParameter();
 			case ToolPackage.IN_OUT_PARAMETER: return createInOutParameter();
 			case ToolPackage.PACKAGE: return createPackage();
@@ -86,6 +86,8 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.REQUIREMENT: return createRequirement();
 			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
 			case ToolPackage.OPTION_VALUE: return createOptionValue();
+			case ToolPackage.COMMAND: return createCommand();
+			case ToolPackage.RESOLVED_PARAM: return createResolvedParam();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -149,6 +151,16 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public Command createCommand() {
 		CommandImpl command = new CommandImpl();
 		return command;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ResolvedParam createResolvedParam() {
+		ResolvedParamImpl resolvedParam = new ResolvedParamImpl();
+		return resolvedParam;
 	}
 
 	/**

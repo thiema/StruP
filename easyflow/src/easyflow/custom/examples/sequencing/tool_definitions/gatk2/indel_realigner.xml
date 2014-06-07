@@ -392,7 +392,5 @@
   
     <data name="output_bam" format="bam" label="${tool.name} on ${on_string} (BAM)"/>
     <data name="output_log" format="txt" label="${tool.name} on ${on_string} (log)"/>
-  
-  
-  
+
 </tool>

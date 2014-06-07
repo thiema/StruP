@@ -15,6 +15,7 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -449,10 +450,10 @@ public interface Util extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
+	 * @model exceptions="easyflow.NoValidInOutDataException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean resolveToolDependencies(mxICell root, Catalog catalog);
+	boolean resolveToolDependencies(mxICell root, Catalog catalog) throws NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->

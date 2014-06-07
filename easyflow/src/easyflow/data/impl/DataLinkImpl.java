@@ -51,7 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getDataPort <em>Data Port</em>}</li>
- *   <li>{@link easyflow.data.impl.DataLinkImpl#getOutDataPort <em>Out Data Port</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getInDataPort <em>In Data Port</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
@@ -78,14 +78,14 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	protected DataPort dataPort;
 
 	/**
-	 * The cached value of the '{@link #getOutDataPort() <em>Out Data Port</em>}' reference.
+	 * The cached value of the '{@link #getInDataPort() <em>In Data Port</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOutDataPort()
+	 * @see #getInDataPort()
 	 * @generated
 	 * @ordered
 	 */
-	protected DataPort outDataPort;
+	protected DataPort inDataPort;
 
 	/**
 	 * The cached value of the '{@link #getChunks() <em>Chunks</em>}' map.
@@ -289,16 +289,16 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DataPort getOutDataPort() {
-		if (outDataPort != null && outDataPort.eIsProxy()) {
-			InternalEObject oldOutDataPort = (InternalEObject)outDataPort;
-			outDataPort = (DataPort)eResolveProxy(oldOutDataPort);
-			if (outDataPort != oldOutDataPort) {
+	public DataPort getInDataPort() {
+		if (inDataPort != null && inDataPort.eIsProxy()) {
+			InternalEObject oldInDataPort = (InternalEObject)inDataPort;
+			inDataPort = (DataPort)eResolveProxy(oldInDataPort);
+			if (inDataPort != oldInDataPort) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataPackage.DATA_LINK__OUT_DATA_PORT, oldOutDataPort, outDataPort));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataPackage.DATA_LINK__IN_DATA_PORT, oldInDataPort, inDataPort));
 			}
 		}
-		return outDataPort;
+		return inDataPort;
 	}
 
 	/**
@@ -306,8 +306,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DataPort basicGetOutDataPort() {
-		return outDataPort;
+	public DataPort basicGetInDataPort() {
+		return inDataPort;
 	}
 
 	/**
@@ -315,11 +315,11 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setOutDataPort(DataPort newOutDataPort) {
-		DataPort oldOutDataPort = outDataPort;
-		outDataPort = newOutDataPort;
+	public void setInDataPort(DataPort newInDataPort) {
+		DataPort oldInDataPort = inDataPort;
+		inDataPort = newInDataPort;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__OUT_DATA_PORT, oldOutDataPort, outDataPort));
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__IN_DATA_PORT, oldInDataPort, inDataPort));
 	}
 
 	/**
@@ -678,9 +678,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA_PORT:
 				if (resolve) return getDataPort();
 				return basicGetDataPort();
-			case DataPackage.DATA_LINK__OUT_DATA_PORT:
-				if (resolve) return getOutDataPort();
-				return basicGetOutDataPort();
+			case DataPackage.DATA_LINK__IN_DATA_PORT:
+				if (resolve) return getInDataPort();
+				return basicGetInDataPort();
 			case DataPackage.DATA_LINK__CHUNKS:
 				if (coreType) return getChunks();
 				else return getChunks().map();
@@ -718,8 +718,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA_PORT:
 				setDataPort((DataPort)newValue);
 				return;
-			case DataPackage.DATA_LINK__OUT_DATA_PORT:
-				setOutDataPort((DataPort)newValue);
+			case DataPackage.DATA_LINK__IN_DATA_PORT:
+				setInDataPort((DataPort)newValue);
 				return;
 			case DataPackage.DATA_LINK__CHUNKS:
 				((EStructuralFeature.Setting)getChunks()).set(newValue);
@@ -764,8 +764,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA_PORT:
 				setDataPort((DataPort)null);
 				return;
-			case DataPackage.DATA_LINK__OUT_DATA_PORT:
-				setOutDataPort((DataPort)null);
+			case DataPackage.DATA_LINK__IN_DATA_PORT:
+				setInDataPort((DataPort)null);
 				return;
 			case DataPackage.DATA_LINK__CHUNKS:
 				getChunks().clear();
@@ -808,8 +808,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		switch (featureID) {
 			case DataPackage.DATA_LINK__DATA_PORT:
 				return dataPort != null;
-			case DataPackage.DATA_LINK__OUT_DATA_PORT:
-				return outDataPort != null;
+			case DataPackage.DATA_LINK__IN_DATA_PORT:
+				return inDataPort != null;
 			case DataPackage.DATA_LINK__CHUNKS:
 				return chunks != null && !chunks.isEmpty();
 			case DataPackage.DATA_LINK__ID:

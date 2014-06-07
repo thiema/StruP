@@ -82,4 +82,12 @@ public interface DataFormat extends EObject {
 	 */
 	void setDescription(String value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean match(DataFormat testDataFormat);
+
 } // DataFormat

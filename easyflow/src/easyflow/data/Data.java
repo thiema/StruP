@@ -9,6 +9,8 @@ package easyflow.data;
 import easyflow.tool.Parameter;
 import java.net.URI;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.Data#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.data.Data#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.data.Data#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link easyflow.data.Data#getPreferredHandle <em>Preferred Handle</em>}</li>
  * </ul>
  * </p>
  *
@@ -134,6 +137,38 @@ public interface Data extends EObject {
 	String getFormatStr();
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isAllowed();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getSupportedHandles(boolean applyConfig);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean match(Data testData, boolean applyConfig);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean matchFormat(DataFormat testDataFormat);
+
+	/**
 	 * Returns the value of the '<em><b>Data Resource Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -236,5 +271,31 @@ public interface Data extends EObject {
 	 * @generated
 	 */
 	void setParameter(Parameter value);
+
+	/**
+	 * Returns the value of the '<em><b>Preferred Handle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Preferred Handle</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Preferred Handle</em>' attribute.
+	 * @see #setPreferredHandle(String)
+	 * @see easyflow.data.DataPackage#getData_PreferredHandle()
+	 * @model
+	 * @generated
+	 */
+	String getPreferredHandle();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.Data#getPreferredHandle <em>Preferred Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Preferred Handle</em>' attribute.
+	 * @see #getPreferredHandle()
+	 * @generated
+	 */
+	void setPreferredHandle(String value);
 
 } // Data

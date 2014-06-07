@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.EMap;
  * <ul>
  *   <li>{@link easyflow.tool.Parameter#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getType <em>Type</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getValue <em>Value</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getOptionValues <em>Option Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isOptional <em>Optional</em>}</li>
@@ -48,6 +47,8 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isFixedArgValue <em>Fixed Arg Value</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getParent <em>Parent</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getHandles <em>Handles</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getGeneralValue <em>General Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -309,12 +310,36 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setParent(Parameter value);
 
 	/**
+	 * Returns the value of the '<em><b>Handles</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Handles</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @model constaintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @return the value of the '<em>Handles</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_Handles()
+	 * @model
 	 * @generated
 	 */
-	String generateCommandString(EMap<String, Object> constaints);
+	EList<String> getHandles();
+
+	/**
+	 * Returns the value of the '<em><b>General Value</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Object}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The actual argument value. If it is a string its used as is. If it is an Iteratable the 
+	 * individual values are enumerated and joined to a string with delimiter.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>General Value</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_GeneralValue()
+	 * @model dataType="easyflow.Object"
+	 * @generated
+	 */
+	EList<Object> getGeneralValue();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -323,14 +348,6 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	String getArgKey();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation"
-	 * @generated
-	 */
-	EList<String> getArgValue();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -371,6 +388,22 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	boolean isAnalysisType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> getSupportedHandles(boolean applyConfig);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Parameter getEffectiveParentParameter(boolean first);
 
 	/**
 	 * Returns the value of the '<em><b>Value Type</b></em>' attribute.
@@ -543,22 +576,6 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	Logger getLogger();
-
-	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.Object}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * The actual argument value. If it is a string its used as is. If it is an Iteratable the 
-	 * individual values are enumerated and joined to a string with delimiter.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Value</em>' attribute list.
-	 * @see easyflow.tool.ToolPackage#getParameter_Value()
-	 * @model dataType="easyflow.Object"
-	 * @generated
-	 */
-	EList<Object> getValue();
 
 	/**
 	 * Returns the value of the '<em><b>Keys</b></em>' reference list.

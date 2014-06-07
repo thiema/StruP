@@ -38,13 +38,13 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getVersion <em>Version</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getInterpreter <em>Interpreter</em>}</li>
- *   <li>{@link easyflow.tool.Tool#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getPackage <em>Package</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getFilenamePrefix <em>Filename Prefix</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getAnalysisType <em>Analysis Type</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getCommand <em>Command</em>}</li>
  * </ul>
  * </p>
  *
@@ -145,32 +145,6 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setInterpreter(Interpreter value);
-
-	/**
-	 * Returns the value of the '<em><b>Command</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Command</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Command</em>' containment reference.
-	 * @see #setCommand(Command)
-	 * @see easyflow.tool.ToolPackage#getTool_Command()
-	 * @model containment="true"
-	 * @generated
-	 */
-	Command getCommand();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.Tool#getCommand <em>Command</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Command</em>' containment reference.
-	 * @see #getCommand()
-	 * @generated
-	 */
-	void setCommand(Command value);
 
 	/**
 	 * Returns the value of the '<em><b>Package</b></em>' reference.
@@ -299,6 +273,32 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setAnalysisType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Command</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Command</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Command</em>' reference.
+	 * @see #setCommand(Command)
+	 * @see easyflow.tool.ToolPackage#getTool_Command()
+	 * @model
+	 * @generated
+	 */
+	Command getCommand();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Tool#getCommand <em>Command</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Command</em>' reference.
+	 * @see #getCommand()
+	 * @generated
+	 */
+	void setCommand(Command value);
 
 	/**
 	 * <!-- begin-user-doc -->

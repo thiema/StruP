@@ -56,6 +56,7 @@ import easyflow.data.Data;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.tool.Parameter;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
@@ -384,15 +385,15 @@ public class XMLUtil {
 		while (it2.hasNext())
 		{
 			Tool tool = it2.next();
-			if (tool.getCommand() != null)
+			if (task.getCommand() != null)
 			{
-				if (tool.getCommand().getParameters() != null)
+				if (task.getCommand().getResolvedParams() != null)
 				{
-					resource.getContents().addAll(tool.getCommand().getParameters().values());
-					for (Parameter param:tool.getCommand().getParameters().values())
+					resource.getContents().addAll(task.getCommand().getResolvedParams().values());
+					for (ResolvedParam param:task.getCommand().getResolvedParams().values())
 					{
-						if (param.getKeys()!=null)
-							resource.getContents().addAll(param.getKeys());
+						if (param.getParameter().getKeys()!=null)
+							resource.getContents().addAll(param.getParameter().getKeys());
 					}
 				}
 				

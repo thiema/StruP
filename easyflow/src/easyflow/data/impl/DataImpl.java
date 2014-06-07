@@ -6,27 +6,24 @@
  */
 package easyflow.data.impl;
 
-import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
-import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,12 +39,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link easyflow.data.impl.DataImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataImpl#getPreferredHandle <em>Preferred Handle</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DataImpl extends MinimalEObjectImpl.Container implements Data {
+public class DataImpl extends EObjectImpl implements Data {
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -167,6 +165,26 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 	 * @ordered
 	 */
 	protected Parameter parameter;
+
+	/**
+	 * The default value of the '{@link #getPreferredHandle() <em>Preferred Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreferredHandle()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PREFERRED_HANDLE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPreferredHandle() <em>Preferred Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreferredHandle()
+	 * @generated
+	 * @ordered
+	 */
+	protected String preferredHandle = PREFERRED_HANDLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -292,19 +310,99 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * assume GlobalConfigs allowed handles to be sorted according priority/preference
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean isAllowed(EMap<String, String> constraints) {
+	public boolean isAllowed() {
 
+		//InOutParameter iop = ((InOutParameter)getParameter());
 		
-		for (String handle:((InOutParameter)getParameter()).getHandles())
+		// check handles
+		if (getSupportedHandles(true).isEmpty())
 		{
-			if (GlobalConfig.getAllowedHandles().contains(handle))
+			if (getSupportedHandles(false).isEmpty())
+				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL);
+			else
+				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG);
+			return false;
+		}
+		return true;
+			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getSupportedHandles(boolean applyConfig) {
+		Parameter tmp = getParameter();
+		//logger.debug(getParameter());
+		return getParameter().getSupportedHandles(applyConfig);
+	}
+
+	/**
+	 * TODO check formats defined by parameter
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean match(Data testData, boolean applyConfig) {
+
+		boolean match = false;
+		//check formats defined by parameter
+		
+		
+		// check handles
+		EList<String>  handles1 = getSupportedHandles(true);
+		EList<String>  handles2 = testData.getSupportedHandles(true);
+		if (getParameter() != null && testData.getParameter()!=null)
+		{
+			if (handles1.isEmpty() && handles2.isEmpty())
+			{
+				
+			}
+			else if (!handles1.isEmpty() && !handles2.isEmpty())
+			{
+				for (String handle:handles1)
+					if (handles2.contains(handle))
+					{
+						match = true;
+						setPreferredHandle(handle);
+						testData.setPreferredHandle(handle);
+					}
+			}
+			else
+			{
+				
+			}
+		}
+		if (match)
+		{
+			match = false;
+			for (Entry<String, DataFormat> testDataFormat:testData.getPort().getDataFormats())
+			{
+				if (matchFormat(testDataFormat.getValue()))
+					match = true;
+			}
+		}
+		return match;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean matchFormat(DataFormat testDataFormat) {
+		
+		for (Entry<String, DataFormat> dataFormat:getPort().getDataFormats())
+		{
+			if (testDataFormat.match(dataFormat.getValue()))
 				return true;
 		}
 		return false;
-			
 	}
 
 	/**
@@ -413,6 +511,27 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getPreferredHandle() {
+		return preferredHandle;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPreferredHandle(String newPreferredHandle) {
+		String oldPreferredHandle = preferredHandle;
+		preferredHandle = newPreferredHandle;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA__PREFERRED_HANDLE, oldPreferredHandle, preferredHandle));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -432,6 +551,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 			case DataPackage.DATA__PARAMETER:
 				if (resolve) return getParameter();
 				return basicGetParameter();
+			case DataPackage.DATA__PREFERRED_HANDLE:
+				return getPreferredHandle();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -464,6 +585,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 				return;
 			case DataPackage.DATA__PARAMETER:
 				setParameter((Parameter)newValue);
+				return;
+			case DataPackage.DATA__PREFERRED_HANDLE:
+				setPreferredHandle((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -498,6 +622,9 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 			case DataPackage.DATA__PARAMETER:
 				setParameter((Parameter)null);
 				return;
+			case DataPackage.DATA__PREFERRED_HANDLE:
+				setPreferredHandle(PREFERRED_HANDLE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -524,27 +651,10 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case DataPackage.DATA__PARAMETER:
 				return parameter != null;
+			case DataPackage.DATA__PREFERRED_HANDLE:
+				return PREFERRED_HANDLE_EDEFAULT == null ? preferredHandle != null : !PREFERRED_HANDLE_EDEFAULT.equals(preferredHandle);
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case DataPackage.DATA___GET_FORMAT:
-				return getFormat();
-			case DataPackage.DATA___GET_FORMAT_STR:
-				return getFormatStr();
-			case DataPackage.DATA___IS_ALLOWED__EMAP:
-				return isAllowed((EMap<String, String>)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -567,6 +677,8 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 		result.append(name);
 		result.append(", description: ");
 		result.append(description);
+		result.append(", preferredHandle: ");
+		result.append(preferredHandle);
 		result.append(')');
 		return result.toString();
 	}

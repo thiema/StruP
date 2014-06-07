@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EMap;
  * <ul>
  *   <li>{@link easyflow.tool.Command#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.Command#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.tool.Command#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link easyflow.tool.Command#getResolvedParams <em>Resolved Params</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,21 +79,21 @@ public interface Command extends IToolElement, DefaultToolElement {
 	Logger getLogger();
 
 	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' map.
+	 * Returns the value of the '<em><b>Resolved Params</b></em>' map.
 	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.tool.Parameter},
+	 * and the value is of type {@link easyflow.tool.ResolvedParam},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Parameters</em>' map isn't clear,
+	 * If the meaning of the '<em>Resolved Params</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' map.
-	 * @see easyflow.tool.ToolPackage#getCommand_Parameters()
-	 * @model mapType="easyflow.util.maps.StringToParameterMap<org.eclipse.emf.ecore.EString, easyflow.tool.Parameter>"
+	 * @return the value of the '<em>Resolved Params</em>' map.
+	 * @see easyflow.tool.ToolPackage#getCommand_ResolvedParams()
+	 * @model mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
 	 * @generated
 	 */
-	EMap<String, Parameter> getParameters();
+	EMap<String, ResolvedParam> getResolvedParams();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -106,97 +106,10 @@ public interface Command extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Generates the input/output files (e.g. the file name), that correspond to the 
-	 * inputs/output ports, as provided the parent tasks and are consumed by the childs.
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean resolvePorts();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Finds the static input files (e.g. the file name), that are not dependant on the previous task.
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean resolveStaticPorts();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Returns the concrete input ports (e.g. file names) and with respect to the given 
-	 * chunks. The returned keys correspond to the name of data format.
-	 * <!-- end-model-doc -->
-	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
-	 * @generated
-	 */
-	EMap<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
-	 * @generated
-	 */
-	EMap<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Returns the concrete input ports (e.g. file names). The keys correspond to the
-	 * name of data format.
-	 * <!-- end-model-doc -->
-	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>" chunksMapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
-	 * @generated
-	 */
-	EMap<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	EList<String> getGroupingsForDataPort(DataPort dataPort, boolean required);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	EList<String> getGroupingsForDataPortAny(DataPort dataPort, boolean required, boolean isOutput);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.ParameterNotFoundException"
 	 * @generated
 	 */
 	Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model valueDataType="easyflow.URI"
-	 * @generated
-	 */
-	boolean setInputParameterValue(URI value, String parameterName, DataPort dataPort);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model valueDataType="easyflow.URI"
-	 * @generated
-	 */
-	boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort);
 
 	/**
 	 * <!-- begin-user-doc -->

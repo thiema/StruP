@@ -7,26 +7,18 @@
 package easyflow.core.impl;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
-import easyflow.tool.Tool;
-import easyflow.custom.util.XMLUtil;
 
 import java.util.Collection;
-
-import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -228,7 +220,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					
-					Task task=CoreFactoryImpl.eINSTANCE.createTask();
+					Task task = CoreFactory.eINSTANCE.createTask();
 					
 					task.readTask(strLine, mode, defaultGroupingCriteria);
 					tmpMap.put(task.getName(), task);

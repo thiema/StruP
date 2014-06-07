@@ -16,6 +16,8 @@ import java.util.Map.Entry;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.Task;
+import easyflow.custom.exception.NoValidInOutDataException;
+import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
@@ -227,7 +229,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createRule() {
+	public String createRule() throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -238,7 +240,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) {
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -248,9 +250,11 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
+	 * @throws ParameterNotFoundException 
 	 * @generated not
 	 */
-	public String createCommandLine(String commandPattern, Task task) {
+	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException {
 		return task.createCommandLine(commandPattern, task.createCommandLineMap());
 	}
 
@@ -259,7 +263,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Tool tool) {
+	public String createCommandLine(String commandPattern, Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -283,7 +287,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 *  targetA targetB: dep1 dep2 dep3
 	 *  	command arg1 arg2 optX optY input1 input2 input3 targetA targetB
 	 */
-	public String createRule(Task task)
+	public String createRule(Task task) throws ParameterNotFoundException, NoValidInOutDataException
 	{
 
 		logger.trace("createRule(): task="+task.getUniqueString()+" preferredTool="+task.getPreferredTool().getName()
@@ -299,17 +303,19 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		}
 		//task.resolveParameters();
 		
-		String targets = StringUtils.join(getFiles(task.getInputs()), ' ');
-		String deps    = StringUtils.join(getFiles(task.getOutputs()), ' ');
+		String targets = StringUtils.join(getFiles(task.getOutputs()), ' ');
+		String deps    = StringUtils.join(getFiles(task.getInputs()), ' ');
 		String rule    = targets+": "+deps;
 
-		String cmd = createCommandLine(
+		String cmd;
+
+		cmd = createCommandLine(
 				GlobalConfig.getToolConfig().get("command_pattern"),
 				task);
-		
-		logger.debug(cmd+" ("+deps+":"+targets+")");
+		logger.debug(cmd+" ("+targets+":"+deps+")");
 		rule+="\n\t"+cmd+"\n\n";
-		
+
+				
 		return rule;
 	}
 	
@@ -350,6 +356,12 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 				}
 				
 				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParameterNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoValidInOutDataException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

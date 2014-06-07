@@ -18,6 +18,7 @@ import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
 import easyflow.custom.exception.GroupingCriterionNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterCriterionInstanceNotFoundException;
 import easyflow.custom.exception.ParameterCriterionNotFoundException;
 import easyflow.custom.exception.ParameterNotFoundException;
@@ -137,6 +138,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createBufferedWriterFromString(eDataType, initialValue);
 			case EasyflowPackage.PATTERN:
 				return createPatternFromString(eDataType, initialValue);
+			case EasyflowPackage.EASY_FLOW_OVERALL_WORKER:
+				return createEasyFlowOverallWorkerFromString(eDataType, initialValue);
 			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
 				return createCellNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
@@ -161,8 +164,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createParameterNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.UTILITY_TASK_NOT_FOUND_EXCEPTION:
 				return createUtilityTaskNotFoundExceptionFromString(eDataType, initialValue);
-			case EasyflowPackage.EASY_FLOW_OVERALL_WORKER:
-				return createEasyFlowOverallWorkerFromString(eDataType, initialValue);
+			case EasyflowPackage.NO_VALID_IN_OUT_DATA_EXCEPTION:
+				return createNoValidInOutDataExceptionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -208,6 +211,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertBufferedWriterToString(eDataType, instanceValue);
 			case EasyflowPackage.PATTERN:
 				return convertPatternToString(eDataType, instanceValue);
+			case EasyflowPackage.EASY_FLOW_OVERALL_WORKER:
+				return convertEasyFlowOverallWorkerToString(eDataType, instanceValue);
 			case EasyflowPackage.CELL_NOT_FOUND_EXCEPTION:
 				return convertCellNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.FILE_NOT_FOUND_EXCEPTION:
@@ -232,8 +237,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertParameterNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.UTILITY_TASK_NOT_FOUND_EXCEPTION:
 				return convertUtilityTaskNotFoundExceptionToString(eDataType, instanceValue);
-			case EasyflowPackage.EASY_FLOW_OVERALL_WORKER:
-				return convertEasyFlowOverallWorkerToString(eDataType, instanceValue);
+			case EasyflowPackage.NO_VALID_IN_OUT_DATA_EXCEPTION:
+				return convertNoValidInOutDataExceptionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -740,6 +745,24 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertUtilityTaskNotFoundExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NoValidInOutDataException createNoValidInOutDataExceptionFromString(EDataType eDataType, String initialValue) {
+		return (NoValidInOutDataException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertNoValidInOutDataExceptionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

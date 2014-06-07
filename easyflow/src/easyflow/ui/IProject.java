@@ -12,6 +12,7 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -235,10 +236,10 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	boolean resolveToolDependencies();
+	boolean resolveToolDependencies() throws NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -11,10 +11,12 @@ import easyflow.tool.ToolPackage;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
@@ -24,7 +26,6 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getHandles <em>Handles</em>}</li>
  *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getFormats <em>Formats</em>}</li>
  * </ul>
  * </p>
@@ -32,16 +33,6 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * @generated
  */
 public class InOutParameterImpl extends ParameterImpl implements InOutParameter {
-	/**
-	 * The cached value of the '{@link #getHandles() <em>Handles</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getHandles()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> handles;
-
 	/**
 	 * The cached value of the '{@link #getFormats() <em>Formats</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -76,18 +67,6 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getHandles() {
-		if (handles == null) {
-			handles = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.IN_OUT_PARAMETER__HANDLES);
-		}
-		return handles;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<String> getFormats() {
 		if (formats == null) {
 			formats = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.IN_OUT_PARAMETER__FORMATS);
@@ -103,8 +82,6 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ToolPackage.IN_OUT_PARAMETER__HANDLES:
-				return getHandles();
 			case ToolPackage.IN_OUT_PARAMETER__FORMATS:
 				return getFormats();
 		}
@@ -120,10 +97,6 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ToolPackage.IN_OUT_PARAMETER__HANDLES:
-				getHandles().clear();
-				getHandles().addAll((Collection<? extends String>)newValue);
-				return;
 			case ToolPackage.IN_OUT_PARAMETER__FORMATS:
 				getFormats().clear();
 				getFormats().addAll((Collection<? extends String>)newValue);
@@ -140,9 +113,6 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ToolPackage.IN_OUT_PARAMETER__HANDLES:
-				getHandles().clear();
-				return;
 			case ToolPackage.IN_OUT_PARAMETER__FORMATS:
 				getFormats().clear();
 				return;
@@ -158,8 +128,6 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ToolPackage.IN_OUT_PARAMETER__HANDLES:
-				return handles != null && !handles.isEmpty();
 			case ToolPackage.IN_OUT_PARAMETER__FORMATS:
 				return formats != null && !formats.isEmpty();
 		}
@@ -176,9 +144,7 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (handles: ");
-		result.append(handles);
-		result.append(", formats: ");
+		result.append(" (formats: ");
 		result.append(formats);
 		result.append(')');
 		return result.toString();

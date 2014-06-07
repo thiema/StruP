@@ -45,6 +45,7 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -229,6 +230,9 @@ public class EasyFlowToolBar_old extends JToolBar
 					} catch (GroupingCriterionInstanceNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch (NoValidInOutDataException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 			}
 		});
@@ -361,10 +365,15 @@ public class EasyFlowToolBar_old extends JToolBar
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (defaultProject.resolveToolDependencies())
-				{
-					btnResolveToolDeps.setEnabled(false);
-					btnGenAbstractWorkflow.setEnabled(true);
+				try {
+					if (defaultProject.resolveToolDependencies())
+					{
+						btnResolveToolDeps.setEnabled(false);
+						btnGenAbstractWorkflow.setEnabled(true);
+					}
+				} catch (NoValidInOutDataException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 				
 			}

@@ -15,6 +15,7 @@ import easyflow.metadata.MetadataPackage;
 
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GlobalVarMetaData;
 import easyflow.util.maps.impl.StringToGroupingInstanceListMapImpl;
@@ -449,7 +450,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 */
 	public EList<String> getRecordsBy(String groupingStr, String instanceStr) {
 		EList<String> records = new BasicEList<String>();
-		if (groupingStr.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
+		if (groupingStr.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
 		{
 			if(!GlobalVarMetaData.getMetaDataTableRow(instanceStr).isEmpty())
 				records.add(instanceStr);
@@ -485,7 +486,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	public boolean containsColumn(String column) {
 		//logger.trace(getAliases()+" "+column+" "+getAliases().containsValue(column)+" "+GlobalVarMetaData.getMetaDataColHeader().keySet());
 		// special case for record
-		if (column.equals(GlobalVar.TRAVERSAL_CRITERION_RECORD))
+		if (column.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
 			return true;
 		
 		// check the aliases

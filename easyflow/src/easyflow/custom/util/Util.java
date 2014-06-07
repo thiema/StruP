@@ -91,7 +91,7 @@ public class Util {
 		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
 		for (GroupingInstance groupingInstance : groupingInstances) {
 			EList<GroupingInstance> recordInstances = metaData.getInstances(
-					groupingInstance, GlobalVar.TRAVERSAL_CRITERION_RECORD);
+					groupingInstance, GlobalConstants.TRAVERSAL_CRITERION_RECORD);
 			for (GroupingInstance recordInstance : recordInstances)
 				for (Entry<String, Object> entry : metaData.getRecord(
 						recordInstance).entrySet()) {

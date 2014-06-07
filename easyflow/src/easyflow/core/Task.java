@@ -8,6 +8,8 @@ package easyflow.core;
 
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
+import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 
 import easyflow.data.DataFormat;
@@ -16,6 +18,7 @@ import easyflow.data.DataPort;
 
 import easyflow.metadata.GroupingInstance;
 
+import easyflow.tool.Command;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
@@ -73,7 +76,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}</li>
  *   <li>{@link easyflow.core.Task#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
- *   <li>{@link easyflow.core.Task#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link easyflow.core.Task#getCommand <em>Command</em>}</li>
  * </ul>
  * </p>
  *
@@ -582,21 +585,30 @@ public interface Task extends EObject {
 	EList<PreprocessingTask> getPreprocessingTasks();
 
 	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.tool.Parameter},
+	 * Returns the value of the '<em><b>Command</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Parameters</em>' map isn't clear,
+	 * If the meaning of the '<em>Command</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' map.
-	 * @see easyflow.core.CorePackage#getTask_Parameters()
-	 * @model mapType="easyflow.util.maps.StringToParameterMap<org.eclipse.emf.ecore.EString, easyflow.tool.Parameter>"
+	 * @return the value of the '<em>Command</em>' containment reference.
+	 * @see #setCommand(Command)
+	 * @see easyflow.core.CorePackage#getTask_Command()
+	 * @model containment="true"
 	 * @generated
 	 */
-	EMap<String, Parameter> getParameters();
+	Command getCommand();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getCommand <em>Command</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Command</em>' containment reference.
+	 * @see #getCommand()
+	 * @generated
+	 */
+	void setCommand(Command value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -652,6 +664,14 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	String getUniqueString();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getUniqueURIString();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -718,36 +738,22 @@ public interface Task extends EObject {
 	 */
 	EList<DataPort> getOverlappingDataPorts(EList<DataPort> dataPorts1, EList<DataPort> dataPorts2);
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Fill inputs and outputs with its concrete sources/targets (e.g. file names).
-	 * Resolve the executables (i.e. interpreter and/or executable (script) name).
-	 * Depending on configuration the whole path is used or only the 'dirname'. In 
-	 * the latter case resolving of path is done by execution system. (Which could 
-	 * also mean, that the name can be resolved e.g. using PATH environment variable)
-	 * <!-- end-model-doc -->
-	 * @model
-	 * @generated
-	 */
-	boolean resolveToolDependencies();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	EMap<String, EList<String>> createCommandLineMap();
+	EMap<String, EList<String>> createCommandLineMap() throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model commandLinePartsMapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException" commandLinePartsMapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts);
+	String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -944,9 +950,9 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	void resolveParameters();
+	void resolveParameters() throws ParameterNotFoundException, NoValidInOutDataException;
 
 } // Task

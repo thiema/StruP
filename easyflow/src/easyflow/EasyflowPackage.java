@@ -235,7 +235,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getCellNotFoundException()
 	 * @generated
 	 */
-	int CELL_NOT_FOUND_EXCEPTION = 17;
+	int CELL_NOT_FOUND_EXCEPTION = 18;
 
 	/**
 	 * The meta object id for the '<em>File Not Found Exception</em>' data type.
@@ -245,7 +245,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getFileNotFoundException()
 	 * @generated
 	 */
-	int FILE_NOT_FOUND_EXCEPTION = 18;
+	int FILE_NOT_FOUND_EXCEPTION = 19;
 
 	/**
 	 * The meta object id for the '<em>Task Not Found Exception</em>' data type.
@@ -255,7 +255,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getTaskNotFoundException()
 	 * @generated
 	 */
-	int TASK_NOT_FOUND_EXCEPTION = 19;
+	int TASK_NOT_FOUND_EXCEPTION = 20;
 
 	/**
 	 * The meta object id for the '<em>Data Port Not Found Exception</em>' data type.
@@ -265,7 +265,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataPortNotFoundException()
 	 * @generated
 	 */
-	int DATA_PORT_NOT_FOUND_EXCEPTION = 20;
+	int DATA_PORT_NOT_FOUND_EXCEPTION = 21;
 
 	/**
 	 * The meta object id for the '<em>Data Link Not Found Exception</em>' data type.
@@ -275,7 +275,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getDataLinkNotFoundException()
 	 * @generated
 	 */
-	int DATA_LINK_NOT_FOUND_EXCEPTION = 21;
+	int DATA_LINK_NOT_FOUND_EXCEPTION = 22;
 
 	/**
 	 * The meta object id for the '<em>Tool Not Found Exception</em>' data type.
@@ -285,7 +285,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getToolNotFoundException()
 	 * @generated
 	 */
-	int TOOL_NOT_FOUND_EXCEPTION = 22;
+	int TOOL_NOT_FOUND_EXCEPTION = 23;
 
 	/**
 	 * The meta object id for the '<em>Grouping Criterion Not Found Exception</em>' data type.
@@ -295,7 +295,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionNotFoundException()
 	 * @generated
 	 */
-	int GROUPING_CRITERION_NOT_FOUND_EXCEPTION = 23;
+	int GROUPING_CRITERION_NOT_FOUND_EXCEPTION = 24;
 
 	/**
 	 * The meta object id for the '<em>Grouping Criterion Instance Not Found Exception</em>' data type.
@@ -305,7 +305,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getGroupingCriterionInstanceNotFoundException()
 	 * @generated
 	 */
-	int GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 24;
+	int GROUPING_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 25;
 
 	/**
 	 * The meta object id for the '<em>Parameter Criterion Not Found Exception</em>' data type.
@@ -315,7 +315,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionNotFoundException()
 	 * @generated
 	 */
-	int PARAMETER_CRITERION_NOT_FOUND_EXCEPTION = 25;
+	int PARAMETER_CRITERION_NOT_FOUND_EXCEPTION = 26;
 
 	/**
 	 * The meta object id for the '<em>Parameter Criterion Instance Not Found Exception</em>' data type.
@@ -325,7 +325,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getParameterCriterionInstanceNotFoundException()
 	 * @generated
 	 */
-	int PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 26;
+	int PARAMETER_CRITERION_INSTANCE_NOT_FOUND_EXCEPTION = 27;
 
 	/**
 	 * The meta object id for the '<em>Parameter Not Found Exception</em>' data type.
@@ -335,7 +335,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getParameterNotFoundException()
 	 * @generated
 	 */
-	int PARAMETER_NOT_FOUND_EXCEPTION = 27;
+	int PARAMETER_NOT_FOUND_EXCEPTION = 28;
 
 	/**
 	 * The meta object id for the '<em>Utility Task Not Found Exception</em>' data type.
@@ -345,7 +345,17 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getUtilityTaskNotFoundException()
 	 * @generated
 	 */
-	int UTILITY_TASK_NOT_FOUND_EXCEPTION = 28;
+	int UTILITY_TASK_NOT_FOUND_EXCEPTION = 29;
+
+	/**
+	 * The meta object id for the '<em>No Valid In Out Data Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.exception.NoValidInOutDataException
+	 * @see easyflow.impl.EasyflowPackageImpl#getNoValidInOutDataException()
+	 * @generated
+	 */
+	int NO_VALID_IN_OUT_DATA_EXCEPTION = 30;
 
 	/**
 	 * The meta object id for the '<em>Easy Flow Overall Worker</em>' data type.
@@ -355,7 +365,7 @@ public interface EasyflowPackage extends EPackage {
 	 * @see easyflow.impl.EasyflowPackageImpl#getEasyFlowOverallWorker()
 	 * @generated
 	 */
-	int EASY_FLOW_OVERALL_WORKER = 29;
+	int EASY_FLOW_OVERALL_WORKER = 17;
 
 
 	/**
@@ -676,6 +686,17 @@ public interface EasyflowPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getUtilityTaskNotFoundException();
+
+	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.exception.NoValidInOutDataException <em>No Valid In Out Data Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>No Valid In Out Data Exception</em>'.
+	 * @see easyflow.custom.exception.NoValidInOutDataException
+	 * @model instanceClass="easyflow.custom.exception.NoValidInOutDataException"
+	 * @generated
+	 */
+	EDataType getNoValidInOutDataException();
 
 	/**
 	 * Returns the meta object for data type '{@link easyflow.custom.jgraphx.EasyFlowOverallWorker <em>Easy Flow Overall Worker</em>}'.
@@ -999,6 +1020,16 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType UTILITY_TASK_NOT_FOUND_EXCEPTION = eINSTANCE.getUtilityTaskNotFoundException();
+
+		/**
+		 * The meta object literal for the '<em>No Valid In Out Data Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.exception.NoValidInOutDataException
+		 * @see easyflow.impl.EasyflowPackageImpl#getNoValidInOutDataException()
+		 * @generated
+		 */
+		EDataType NO_VALID_IN_OUT_DATA_EXCEPTION = eINSTANCE.getNoValidInOutDataException();
 
 		/**
 		 * The meta object literal for the '<em>Easy Flow Overall Worker</em>' data type.

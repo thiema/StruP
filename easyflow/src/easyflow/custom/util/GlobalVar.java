@@ -28,13 +28,7 @@ public class GlobalVar {
 	private static Map<String, Object> defaultEdgeStyle   = new HashMap<String, Object>();
 	private static Map<String, Object> defaultVertexStyle = new HashMap<String, Object>();
 	
-	public static final double defaultCellXPos   = 400;
-	public static final double defaultCellYPos   = 100;
-	public static final double defaultCellWidth  = 200;
-	public static final double defaultCellHeight =  40;
-	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
-	public static final String METADATA_INPUT             = "InputFiles";
-	
+	private static String lastErrorString = null;
 	
 	public static String executionSystemFileName = null;
 	public static File   executionSystemFile     = null;
@@ -179,6 +173,14 @@ public class GlobalVar {
 
 	public static JexlEngine getJexlengine() {
 		return jexlEngine;
+	}
+
+	public static String getLastErrorString() {
+		return lastErrorString;
+	}
+
+	public static void setLastErrorString(String lastErrorString) {
+		GlobalVar.lastErrorString = lastErrorString;
 	}
 
 }

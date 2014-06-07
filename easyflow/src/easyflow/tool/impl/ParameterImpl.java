@@ -8,7 +8,9 @@ package easyflow.tool.impl;
 
 import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -48,7 +51,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getType <em>Type</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getValue <em>Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOptionValues <em>Option Values</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isOptional <em>Optional</em>}</li>
@@ -72,12 +74,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isFixedArgValue <em>Fixed Arg Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getHandles <em>Handles</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getGeneralValue <em>General Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
+public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -157,16 +161,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * @ordered
 	 */
 	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Object> value;
 
 	/**
 	 * The cached value of the '{@link #getValues() <em>Values</em>}' map.
@@ -569,6 +563,26 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected Parameter parent;
 
 	/**
+	 * The cached value of the '{@link #getHandles() <em>Handles</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandles()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> handles;
+
+	/**
+	 * The cached value of the '{@link #getGeneralValue() <em>General Value</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGeneralValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Object> generalValue;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -844,21 +858,25 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
-	public String generateCommandString(EMap<String, Object> constraints) {
+	public EList<String> getHandles() {
+		if (handles == null) {
+			handles = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__HANDLES);
+		}
+		return handles;
+	}
 
-		String cmd = getArgKey() + getArgDelimiter();
-		if (constraints != null && constraints.containsKey("value"))
-			// if (constraints.get("value") )
-			cmd += constraints.get("value");
-		else if (getArgValue().isEmpty()) {
-			cmd = "";
-			logger.error("generateCommandString(): no argument set.");
-		} else
-			cmd += StringUtils.join(getArgValue(), getValueDelimiter());
-
-		return cmd;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Object> getGeneralValue() {
+		if (generalValue == null) {
+			generalValue = new EDataTypeUniqueEList<Object>(Object.class, this, ToolPackage.PARAMETER__GENERAL_VALUE);
+		}
+		return generalValue;
 	}
 
 	/**
@@ -877,33 +895,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			return "";
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public EList<String> getArgValue() {
-		
-		Iterator<Object> it = getValue().iterator();
-		EList<String> values = new BasicEList<String>();
-		int i=0;
-		while (it.hasNext())
-		{
-			Object v=it.next();
-			if (v instanceof String)
-			//logger.debug(v.getClass().getCanonicalName());
-			//if (v.getClass().getCanonicalName().endsWith("java.lang.String"))
-				values.add((String) v);
-			else if (v instanceof URI)
-				values.add(((URI)v).getPath());
-		}
-		if (i==0 && getDefaultValue() != null && !getDefaultValue().equals("") 
-				&& GlobalConfig.getToolConfig().containsKey("write_default_value_to_command_line")
-				&& GlobalConfig.getToolConfig().get("write_default_value_to_command_line").equals("1"))
-			value.add(getDefaultValue());
-		
-		return values;
-	}
+	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -941,11 +933,14 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * @generated not
 	 */
 	public boolean isOutput() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		for (Data data:getData())
+		{
+			if (data.isOutput())
+				return true;
+		}
+		return false;
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -975,6 +970,55 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		return false;
 		
 			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getSupportedHandles(boolean applyConfig) {
+
+		EList<String> handles = new BasicEList<String>();
+		
+		if (getHandles()==null || getHandles().isEmpty())
+		{
+			handles.add(GlobalConstants.CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE);
+			return handles;
+		}
+
+		else if (applyConfig)
+		{
+			for (String handle:GlobalConfig.getAllowedHandles())
+			{
+				if (getHandles().contains(handle))
+				{
+					handles.add(handle);
+					
+				}
+			}
+			return handles;
+		}
+		else
+		{
+			return getHandles();
+		}
+
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getEffectiveParentParameter(boolean first) {
+		if (getParent() == null)
+			return this;
+		else
+			if (first)
+				return getParent();
+		
+		return getEffectiveParentParameter(first);
 	}
 
 	/**
@@ -1110,18 +1154,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 */
 	public Logger getLogger() {
 		return logger;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Object> getValue() {
-		if (value == null) {
-			value = new EDataTypeUniqueEList<Object>(Object.class, this, ToolPackage.PARAMETER__VALUE);
-		}
-		return value;
 	}
 
 	/**
@@ -1292,8 +1324,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return getLogger();
 			case ToolPackage.PARAMETER__TYPE:
 				return getType();
-			case ToolPackage.PARAMETER__VALUE:
-				return getValue();
 			case ToolPackage.PARAMETER__VALUES:
 				if (coreType) return getValues();
 				else return getValues().map();
@@ -1342,6 +1372,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
+			case ToolPackage.PARAMETER__HANDLES:
+				return getHandles();
+			case ToolPackage.PARAMETER__GENERAL_VALUE:
+				return getGeneralValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1363,10 +1397,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return;
 			case ToolPackage.PARAMETER__TYPE:
 				setType((String)newValue);
-				return;
-			case ToolPackage.PARAMETER__VALUE:
-				getValue().clear();
-				getValue().addAll((Collection<? extends Object>)newValue);
 				return;
 			case ToolPackage.PARAMETER__VALUES:
 				((EStructuralFeature.Setting)getValues()).set(newValue);
@@ -1441,6 +1471,14 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__PARENT:
 				setParent((Parameter)newValue);
 				return;
+			case ToolPackage.PARAMETER__HANDLES:
+				getHandles().clear();
+				getHandles().addAll((Collection<? extends String>)newValue);
+				return;
+			case ToolPackage.PARAMETER__GENERAL_VALUE:
+				getGeneralValue().clear();
+				getGeneralValue().addAll((Collection<? extends Object>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1461,9 +1499,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return;
 			case ToolPackage.PARAMETER__TYPE:
 				setType(TYPE_EDEFAULT);
-				return;
-			case ToolPackage.PARAMETER__VALUE:
-				getValue().clear();
 				return;
 			case ToolPackage.PARAMETER__VALUES:
 				getValues().clear();
@@ -1534,6 +1569,12 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__PARENT:
 				setParent((Parameter)null);
 				return;
+			case ToolPackage.PARAMETER__HANDLES:
+				getHandles().clear();
+				return;
+			case ToolPackage.PARAMETER__GENERAL_VALUE:
+				getGeneralValue().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1554,8 +1595,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case ToolPackage.PARAMETER__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case ToolPackage.PARAMETER__VALUE:
-				return value != null && !value.isEmpty();
 			case ToolPackage.PARAMETER__VALUES:
 				return values != null && !values.isEmpty();
 			case ToolPackage.PARAMETER__OPTION_VALUES:
@@ -1602,6 +1641,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return fixedArgValue != FIXED_ARG_VALUE_EDEFAULT;
 			case ToolPackage.PARAMETER__PARENT:
 				return parent != null;
+			case ToolPackage.PARAMETER__HANDLES:
+				return handles != null && !handles.isEmpty();
+			case ToolPackage.PARAMETER__GENERAL_VALUE:
+				return generalValue != null && !generalValue.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1646,35 +1689,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * @generated
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP:
-				return generateCommandString((EMap<String, Object>)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_ARG_KEY:
-				return getArgKey();
-			case ToolPackage.PARAMETER___GET_ARG_VALUE:
-				return getArgValue();
-			case ToolPackage.PARAMETER___GET_ARG_DELIMITER:
-				return getArgDelimiter();
-			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER:
-				return getArgValueDelimiter();
-			case ToolPackage.PARAMETER___IS_OUTPUT:
-				return isOutput();
-			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
-				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
-				return isAnalysisType();
-		}
-		return super.eInvoke(operationID, arguments);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1687,8 +1701,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		result.append(logger);
 		result.append(", type: ");
 		result.append(type);
-		result.append(", value: ");
-		result.append(value);
 		result.append(", optional: ");
 		result.append(optional);
 		result.append(", multiple: ");
@@ -1725,6 +1737,10 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		result.append(grouping);
 		result.append(", fixedArgValue: ");
 		result.append(fixedArgValue);
+		result.append(", handles: ");
+		result.append(handles);
+		result.append(", generalValue: ");
+		result.append(generalValue);
 		result.append(')');
 		return result.toString();
 	}

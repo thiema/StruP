@@ -22,6 +22,7 @@ import easyflow.metadata.GroupingInstanceList;
 
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 
 import easyflow.traversal.TraversalChunk;
@@ -183,6 +184,10 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToProjectMap(Map.Entry<String, DefaultProject> object) {
 				return createStringToProjectMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToResolvedParamMap(Map.Entry<String, ResolvedParam> object) {
+				return createStringToResolvedParamMapAdapter();
 			}
 			@Override
 			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
@@ -479,6 +484,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToProjectMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Resolved Param Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToResolvedParamMapAdapter() {
 		return null;
 	}
 

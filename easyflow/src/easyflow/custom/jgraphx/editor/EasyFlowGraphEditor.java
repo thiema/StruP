@@ -38,6 +38,7 @@ import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 
 
@@ -91,7 +92,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		graphOutline.setVisible(true);
 
 		Task templateTask=CoreFactory.eINSTANCE.createTask();
-		templateTask.setName(GlobalVar.TEMPLATE_TASK_NAME);
+		templateTask.setName(GlobalConstants.TEMPLATE_TASK_NAME);
 		GlobalVar.setTemplateTask(templateTask);
 		mxCell templateCell = (mxCell) graph.createNewCell(templateTask, null);
 		templateCell.getGeometry().setAlternateBounds(
@@ -104,7 +105,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		
 		DataLink templateDataLink=DataFactory.eINSTANCE.createDataLink();
 		DataPort templateDataPort=DataFactory.eINSTANCE.createDataPort();
-		templateDataPort.setName(GlobalVar.TEMPLATE_DATA_PORT_NAME);
+		templateDataPort.setName(GlobalConstants.TEMPLATE_DATA_PORT_NAME);
 		templateDataLink.setDataPort(templateDataPort);
 		GlobalVar.setTemplateLink(templateDataLink);
 		mxGeometry geometry = new mxGeometry(0, 0, 120, 120);
@@ -225,16 +226,16 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
         // custom vertex style
         //Map<String, Object> vertexStyle = getDefaultVertexStyle(color);
         Map<String, Object> vertexStyle = getDefaultVertexStyle(null);
-        stylesheet.putCellStyle(GlobalVar.VERTEX_STYLE, vertexStyle);
+        stylesheet.putCellStyle(GlobalConstants.VERTEX_STYLE, vertexStyle);
 
         // custom edge style
         Map<String, Object> edgeStyle = getDefaultEdgeStyle(color);        
-        stylesheet.putCellStyle(GlobalVar.EDGE_STYLE, edgeStyle);
+        stylesheet.putCellStyle(GlobalConstants.EDGE_STYLE, edgeStyle);
         
         // task circumventing edges
-        stylesheet.putCellStyle(GlobalVar.TASK_CIRCUMVENTING_EDGE_STYLE, getTaskCircumventingEdgeStyle(color));
+        stylesheet.putCellStyle(GlobalConstants.TASK_CIRCUMVENTING_EDGE_STYLE, getTaskCircumventingEdgeStyle(color));
         
-        stylesheet.putCellStyle(GlobalVar.MISSING_IN_OUT_DATAPORT_EDGE_STYLE, getMissingInOutDataPortEdgeStyle(color));
+        stylesheet.putCellStyle(GlobalConstants.MISSING_IN_OUT_DATAPORT_EDGE_STYLE, getMissingInOutDataPortEdgeStyle(color));
         
         //GlobalVar.setDefaultVertexStyle(vertexStyle);
         //GlobalVar.setDefaultEdgeStyle(edgeStyle);

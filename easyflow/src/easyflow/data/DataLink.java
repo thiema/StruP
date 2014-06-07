@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.data.DataLink#getDataPort <em>Data Port</em>}</li>
- *   <li>{@link easyflow.data.DataLink#getOutDataPort <em>Out Data Port</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getInDataPort <em>In Data Port</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getChunks <em>Chunks</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getGroupingStr <em>Grouping Str</em>}</li>
@@ -70,30 +70,30 @@ public interface DataLink extends EObject {
 	void setDataPort(DataPort value);
 
 	/**
-	 * Returns the value of the '<em><b>Out Data Port</b></em>' reference.
+	 * Returns the value of the '<em><b>In Data Port</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Out Data Port</em>' reference isn't clear,
+	 * If the meaning of the '<em>In Data Port</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Out Data Port</em>' reference.
-	 * @see #setOutDataPort(DataPort)
-	 * @see easyflow.data.DataPackage#getDataLink_OutDataPort()
+	 * @return the value of the '<em>In Data Port</em>' reference.
+	 * @see #setInDataPort(DataPort)
+	 * @see easyflow.data.DataPackage#getDataLink_InDataPort()
 	 * @model
 	 * @generated
 	 */
-	DataPort getOutDataPort();
+	DataPort getInDataPort();
 
 	/**
-	 * Sets the value of the '{@link easyflow.data.DataLink#getOutDataPort <em>Out Data Port</em>}' reference.
+	 * Sets the value of the '{@link easyflow.data.DataLink#getInDataPort <em>In Data Port</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Out Data Port</em>' reference.
-	 * @see #getOutDataPort()
+	 * @param value the new value of the '<em>In Data Port</em>' reference.
+	 * @see #getInDataPort()
 	 * @generated
 	 */
-	void setOutDataPort(DataPort value);
+	void setInDataPort(DataPort value);
 
 	/**
 	 * Returns the value of the '<em><b>Chunks</b></em>' map.

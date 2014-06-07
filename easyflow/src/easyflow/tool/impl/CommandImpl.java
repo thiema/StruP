@@ -6,7 +6,6 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.data.Data;
 import easyflow.data.DataPort;
 
 import easyflow.custom.exception.ParameterNotFoundException;
@@ -17,12 +16,12 @@ import easyflow.tool.Command;
 
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
-import easyflow.traversal.TraversalCriterion;
 import easyflow.util.maps.MapsPackage;
 
-import easyflow.util.maps.impl.StringToParameterMapImpl;
+import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 
 import java.net.URI;
 import org.apache.commons.lang.StringUtils;
@@ -43,11 +42,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
-import org.w3c.dom.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,7 +57,7 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.CommandImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.tool.impl.CommandImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getResolvedParams <em>Resolved Params</em>}</li>
  * </ul>
  * </p>
  *
@@ -148,14 +145,14 @@ public class CommandImpl extends EObjectImpl implements Command {
 	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' map.
+	 * The cached value of the '{@link #getResolvedParams() <em>Resolved Params</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParameters()
+	 * @see #getResolvedParams()
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<String, Parameter> parameters;
+	protected EMap<String, ResolvedParam> resolvedParams;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -253,11 +250,11 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Parameter> getParameters() {
-		if (parameters == null) {
-			parameters = new EcoreEMap<String,Parameter>(MapsPackage.Literals.STRING_TO_PARAMETER_MAP, StringToParameterMapImpl.class, this, ToolPackage.COMMAND__PARAMETERS);
+	public EMap<String, ResolvedParam> getResolvedParams() {
+		if (resolvedParams == null) {
+			resolvedParams = new EcoreEMap<String,ResolvedParam>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP, StringToResolvedParamMapImpl.class, this, ToolPackage.COMMAND__RESOLVED_PARAMS);
 		}
-		return parameters;
+		return resolvedParams;
 	}
 
 	/**
@@ -266,10 +263,10 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * @generated not
 	 */
 	public String generateCommandString(EMap<String, Object> constraints) {
-		Iterator<Parameter> it = getParameters().values().iterator();
+		Iterator<ResolvedParam> it = getResolvedParams().values().iterator();
 		EList<String> tmp = new BasicEList<String>();
 		while (it.hasNext()) {
-			Parameter parameter = it.next();
+			ResolvedParam parameter = it.next();
 			//paramString+="name="+parameter.getName();
 			//paramString+=" cmd="+parameter.generateCommandString(null);
 			tmp.add(parameter.generateCommandString(constraints));
@@ -283,31 +280,31 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/*
 	public boolean resolvePorts() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public boolean resolveStaticPorts() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+*/
+	
 	public EMap<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks) {
 		EMap<String, URI> inputs = new BasicEMap<String, URI>();
 		
+		/*
 		if (getParameters().containsKey("input"))
 		{
 			Parameter parameter = getParameters().get("input");
@@ -323,31 +320,27 @@ public class CommandImpl extends EObjectImpl implements Command {
 			//logger.debug(parameterEntry.getKey()+" "+parameterEntry.getValue().getName());
 		}
 		return inputs;
+		*/
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+	/*
 	public EMap<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public EMap<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	
+	*/
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -356,6 +349,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	/*
 	public EList<String> getGroupingsForDataPort(DataPort dataPort, boolean isRequired) {
 		EList<String> groupings=new BasicEList<String>();
 		
@@ -376,7 +370,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 		}
 		return groupings;
 	}
-
+*/
 
 	
 	
@@ -385,17 +379,19 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	/*
 	public EList<String> getGroupingsForDataPortAny(DataPort dataPort, boolean required, boolean isOutput) {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
-
+*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	/*
 	public Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException {
 		
 		//boolean matchAll = false;
@@ -413,18 +409,15 @@ public class CommandImpl extends EObjectImpl implements Command {
 		return null;
 	}
 
-	
+	/*
 	private Parameter getParameterByName(String name)
 	{
 		if (getParameters().containsKey(name))
 			return getParameters().get(name);
 		return null;
 	}
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+	
+	
 	public boolean setInputParameterValue(URI value, String parameterName, DataPort dataPort) {
 		boolean   rc        = false;
 		Parameter parameter = null;
@@ -450,15 +443,11 @@ public class CommandImpl extends EObjectImpl implements Command {
 		return rc;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
+	
 	public boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort) {
 		return setInputParameterValue(value, parameterName, dataPort);
 	}
-
+*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -467,10 +456,10 @@ public class CommandImpl extends EObjectImpl implements Command {
 	public EList<String> getPositionalParameterNames() {
 		
 		EList<String> paramNames = new BasicEList<String>();
-		for (Entry<String, Parameter> e:getParameters())
+		for (Entry<String, ResolvedParam> e:getResolvedParams())
 		{
-			Parameter parameter = e.getValue();
-			if (parameter.isPositional())
+			ResolvedParam parameter = e.getValue();
+			if (parameter.getParameter().isPositional())
 				if (!parameter.getValue().isEmpty())
 					paramNames.add(e.getKey());
 		}
@@ -485,10 +474,10 @@ public class CommandImpl extends EObjectImpl implements Command {
 	public EList<String> getOptionalParameterNames() {
 
 		EList<String> paramNames = new BasicEList<String>();
-		for (Entry<String, Parameter> e:getParameters())
+		for (Entry<String, ResolvedParam> e:getResolvedParams())
 		{
-			Parameter parameter = e.getValue();
-			if (parameter.isOptional())
+			ResolvedParam parameter = e.getValue();
+			if (parameter.getParameter().isOptional() && !parameter.getParameter().isPositional())
 				if (!parameter.getValue().isEmpty())
 					paramNames.add(e.getKey());
 		}
@@ -504,8 +493,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ToolPackage.COMMAND__PARAMETERS:
-				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+			case ToolPackage.COMMAND__RESOLVED_PARAMS:
+				return ((InternalEList<?>)getResolvedParams()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -526,9 +515,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return isExecutable();
 			case ToolPackage.COMMAND__LOGGER:
 				return getLogger();
-			case ToolPackage.COMMAND__PARAMETERS:
-				if (coreType) return getParameters();
-				else return getParameters().map();
+			case ToolPackage.COMMAND__RESOLVED_PARAMS:
+				if (coreType) return getResolvedParams();
+				else return getResolvedParams().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -551,8 +540,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__EXECUTABLE:
 				setExecutable((Boolean)newValue);
 				return;
-			case ToolPackage.COMMAND__PARAMETERS:
-				((EStructuralFeature.Setting)getParameters()).set(newValue);
+			case ToolPackage.COMMAND__RESOLVED_PARAMS:
+				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -575,8 +564,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__EXECUTABLE:
 				setExecutable(EXECUTABLE_EDEFAULT);
 				return;
-			case ToolPackage.COMMAND__PARAMETERS:
-				getParameters().clear();
+			case ToolPackage.COMMAND__RESOLVED_PARAMS:
+				getResolvedParams().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -598,8 +587,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return executable != EXECUTABLE_EDEFAULT;
 			case ToolPackage.COMMAND__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
-			case ToolPackage.COMMAND__PARAMETERS:
-				return parameters != null && !parameters.isEmpty();
+			case ToolPackage.COMMAND__RESOLVED_PARAMS:
+				return resolvedParams != null && !resolvedParams.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

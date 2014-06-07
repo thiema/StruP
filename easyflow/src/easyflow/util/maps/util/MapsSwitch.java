@@ -22,6 +22,7 @@ import easyflow.metadata.GroupingInstanceList;
 
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 
 import easyflow.traversal.TraversalChunk;
@@ -220,6 +221,12 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.STRING_TO_PROJECT_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, DefaultProject> stringToProjectMap = (Map.Entry<String, DefaultProject>)theEObject;
 				T result = caseStringToProjectMap(stringToProjectMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_RESOLVED_PARAM_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, ResolvedParam> stringToResolvedParamMap = (Map.Entry<String, ResolvedParam>)theEObject;
+				T result = caseStringToResolvedParamMap(stringToResolvedParamMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -539,6 +546,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToProjectMap(Map.Entry<String, DefaultProject> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Resolved Param Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Resolved Param Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToResolvedParamMap(Map.Entry<String, ResolvedParam> object) {
 		return null;
 	}
 

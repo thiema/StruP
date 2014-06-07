@@ -15,6 +15,7 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -56,6 +57,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -84,7 +86,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGenericAttributes <em>Generic Attributes</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCatalog <em>Catalog</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessingConfig <em>Processing Config</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getRootTask <em>Root Task</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getStaticTasks <em>Static Tasks</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessedStates <em>Processed States</em>}</li>
@@ -97,7 +98,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workflow {
+public class WorkflowImpl extends EObjectImpl implements Workflow {
 	
 	protected static int totSteps = 5;
 	/**
@@ -309,16 +310,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * @ordered
 	 */
 	protected Catalog catalog;
-
-	/**
-	 * The cached value of the '{@link #getProcessingConfig() <em>Processing Config</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getProcessingConfig()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, String> processingConfig;
 
 	/**
 	 * The cached value of the '{@link #getRootTask() <em>Root Task</em>}' reference.
@@ -805,18 +796,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, String> getProcessingConfig() {
-		if (processingConfig == null) {
-			processingConfig = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.WORKFLOW__PROCESSING_CONFIG);
-		}
-		return processingConfig;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Task getRootTask() {
 		if (rootTask != null && rootTask.eIsProxy()) {
 			InternalEObject oldRootTask = (InternalEObject)rootTask;
@@ -1194,8 +1173,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
     		getGraphUtil().getUtilityTasks().put("merge", findUtilityTaskForAnalysisType("merge"));
     		getGraphUtil().getUtilityTasks().put("index", findUtilityTaskForAnalysisType("index"));
     		getGraphUtil().getUtilityTasks().put("sort", findUtilityTaskForAnalysisType("sort"));
+    		getGraphUtil().getUtilityTasks().put("view", findUtilityTaskForAnalysisType("view"));
+    		//printGraph();
     		generateAbstractGraphEdges();
-    	
+    		//printGraph();
 
 	        Task tmp;
 			try {
@@ -1253,7 +1234,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         							pkg.setName(toolName);
         							tool.setPackage(pkg);
         						}
+        					logger.debug("generateGraphFromTemplate(): add tool definition "+tool.getName()+"/"+tool.getId()+" to tasks tool map");
         					task.getTools().put(toolName, tool);
+        					if (task.getPreferredTool().getCommand() == null)
+        						logger.error("generateGraphFromTemplate(): no command provided by tool.");
+        					//task.setCommand(task.getPreferredTool().getCommand());
         					//logger.debug("validation result for tool="+toolName+" "+task.validateTool(tool));
         				}
         				else
@@ -1265,6 +1250,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	        		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
 	        		logger.trace("generateGraphFromTemplate(): "
 	        				+"add to cell map: key="+task.getUniqueString()
+	        				+" cmd="+task.getCommand()
 	        				+" cell="+getGraph().getLabel(target));
 	        		//map.put(task.getName(), target);
         		}
@@ -1293,7 +1279,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         	
         	Tool rootTool = ToolFactory.eINSTANCE.createTool();
 			Command rootCommand = ToolFactory.eINSTANCE.createCommand();
-			rootTool.setCommand(rootCommand);
+			rootTask.setCommand(rootCommand);
 			getRootTask().getTools().put("rootTool", rootTool);
         	
         	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());
@@ -1372,8 +1358,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 								for (DataLink dataLink:parentTaskList.get(pTask))
 								{
-									dataLink.setOutDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
-									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode()+" "+dataLink.getOutDataPort());
+									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
+									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode()+" "+dataLink.getInDataPort());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
 										getGraph().setCellUnvisible(o);
@@ -1387,6 +1373,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 						if (resolveMissingDataPortsByToolFor(task))
 							logger.debug("resolved data port by Tool !");
 					}
+					logger.debug(task.getUniqueString()+" cmd="+(task.getCommand()==null));
 					getLastTasks().add(task);
 					//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 				}
@@ -1776,10 +1763,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public boolean resolveToolDependencies(EMap<String, String> constraints) {
-		return getGraphUtil().resolveToolDependencies((mxICell) getFirstNode(), getCatalog(), null);
+	public boolean resolveToolDependencies() throws NoValidInOutDataException {
+		return getGraphUtil().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
 	}
 
 	/**
@@ -1805,7 +1793,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				task.getInDataPorts().add(dataPort);
 				DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 				dataLink.setDataPort(dataPort);
-				dataLink.setOutDataPort(tmpTask.getDataPortByDataPort(dataPort, true));
+				dataLink.setInDataPort(tmpTask.getDataPortByDataPort(dataPort, true));
 				getGraphUtil().getDataLinks().put(Integer.toString(dataLink.hashCode()), dataLink);
 				Object   o  = getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 				DataPort dp = tmpTask.getDataPortByDataPort(dataPort, true);
@@ -1904,8 +1892,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		return !getParentTasksByOutDataPort(dataPort).isEmpty();
 	}
 
-	private void printGraph()
+	public void printGraph()
 	{
+		final String printmode = "simple";
 		
 		mxICellVisitor visitor=new mxICellVisitor() {
 			String lastParent = null;
@@ -1918,6 +1907,12 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				try {
 					task = getGraphUtil().loadTask(vertex);
 				
+				if (printmode.equals("simple"))
+				{
+					System.out.println(task.getUniqueString()+" "+task.getCommand());
+				}
+				else
+				{
 				path += task.getUniqueString();
 				Task parentTask = null;
 				//Object parent = null;
@@ -1945,6 +1940,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				if (getGraph().getOutgoingEdges(vertex).length > 0)
 					path +="=>";
 				System.out.print(path);
+				}
 				} catch (TaskNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1955,10 +1951,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		System.out.println("======start=======");
 		System.out.println("traverse");
 		getGraph().traverse(getFirstNode(), true, visitor);
-		System.out.println("\ntraverse all paths");
-		getGraph().traverseAllPaths(getFirstNode(), true, visitor, null);
-		System.out.println("\ntraverse topological order");
-		getGraph().traverseTopologicalOrder((mxICell) getFirstNode(), visitor);
+		//System.out.println("\ntraverse all paths");
+		//getGraph().traverseAllPaths(getFirstNode(), true, visitor, null);
+		//System.out.println("\ntraverse topological order");
+		//getGraph().traverseTopologicalOrder((mxICell) getFirstNode(), visitor);
 		System.out.println("\n=======end========");
 	}
 	
@@ -2195,8 +2191,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		switch (featureID) {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return ((InternalEList<?>)getGenericAttributes()).basicRemove(otherEnd, msgs);
-			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
-				return ((InternalEList<?>)getProcessingConfig()).basicRemove(otherEnd, msgs);
 			case CorePackage.WORKFLOW__PROCESSED_STATES:
 				return ((InternalEList<?>)getProcessedStates()).basicRemove(otherEnd, msgs);
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
@@ -2247,9 +2241,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__CATALOG:
 				if (resolve) return getCatalog();
 				return basicGetCatalog();
-			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
-				if (coreType) return getProcessingConfig();
-				else return getProcessingConfig().map();
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				if (resolve) return getRootTask();
 				return basicGetRootTask();
@@ -2324,9 +2315,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__CATALOG:
 				setCatalog((Catalog)newValue);
 				return;
-			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
-				((EStructuralFeature.Setting)getProcessingConfig()).set(newValue);
-				return;
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				setRootTask((Task)newValue);
 				return;
@@ -2400,9 +2388,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__CATALOG:
 				setCatalog((Catalog)null);
 				return;
-			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
-				getProcessingConfig().clear();
-				return;
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				setRootTask((Task)null);
 				return;
@@ -2464,8 +2449,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				return graphUtil != null;
 			case CorePackage.WORKFLOW__CATALOG:
 				return catalog != null;
-			case CorePackage.WORKFLOW__PROCESSING_CONFIG:
-				return processingConfig != null && !processingConfig.isEmpty();
 			case CorePackage.WORKFLOW__ROOT_TASK:
 				return rootTask != null;
 			case CorePackage.WORKFLOW__STATIC_TASKS:
@@ -2482,125 +2465,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				return executionSystem != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case CorePackage.WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP:
-				return generateGraphFromTemplate((EMap<String, Tool>)arguments.get(0));
-			case CorePackage.WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK:
-				return getParentTaskByOutDataPort((DataPort)arguments.get(0), (Task)arguments.get(1));
-			case CorePackage.WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT:
-				return getParentTasksByOutDataPort((DataPort)arguments.get(0));
-			case CorePackage.WORKFLOW___VALIDATE_PARENT_TASK_OUT_DATA_PORT__DATAPORT_TASK:
-				return validateParentTaskOutDataPort((DataPort)arguments.get(0), (Task)arguments.get(1));
-			case CorePackage.WORKFLOW___VALIDATE_LAST_TASK_OUT_DATA_PORT__DATAPORT:
-				return validateLastTaskOutDataPort((DataPort)arguments.get(0));
-			case CorePackage.WORKFLOW___READ_META_DATA:
-				readMetaData();
-				return null;
-			case CorePackage.WORKFLOW___GET_PARENT_TASKS_FOR__TASK:
-				return getParentTasksFor((Task)arguments.get(0));
-			case CorePackage.WORKFLOW___RESOLVE_MISSING_DATA_PORTS_BY_TOOL_FOR__TASK:
-				return resolveMissingDataPortsByToolFor((Task)arguments.get(0));
-			case CorePackage.WORKFLOW___READ_WORKFOW_TEMPLATE:
-				return readWorkfowTemplate();
-			case CorePackage.WORKFLOW___GENERATE_ABSTRACT_WORKFLOW:
-				return generateAbstractWorkflow();
-			case CorePackage.WORKFLOW___APPLY_GROUPING_CRITERIA:
-				try {
-					return applyGroupingCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___APPLY_PARAMETER_CRITERIA:
-				try {
-					return applyParameterCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT:
-				try {
-					return applyTraversalEvent((TraversalEvent)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___RESOLVE_TRAVERSAL_EVENTS:
-				try {
-					return resolveTraversalEvents();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS:
-				try {
-					return resolveIncompatibleGroupings();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___RESOLVE_PREPROCESSING_TASKS:
-				try {
-					return resolvePreprocessingTasks();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___RESOLVE_TOOL_DEPENDENCIES__EMAP:
-				return resolveToolDependencies((EMap<String, String>)arguments.get(0));
-			case CorePackage.WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
-				return generateWorklowForExecutionSystem();
-			case CorePackage.WORKFLOW___RUN_NEXT_WORKFLOW_STEP:
-				try {
-					return runNextWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___RUN_PREV_WORKFLOW_STEP:
-				try {
-					return runPrevWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___RUN_ENTIRE_WORKFLOW:
-				try {
-					return runEntireWorkflow();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.WORKFLOW___HAS_NEXT_WORKFLOW_STEP:
-				return hasNextWorkflowStep();
-			case CorePackage.WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:
-				return getTotalNumberOfWorkflowSteps();
-			case CorePackage.WORKFLOW___GET_WORKFLOW_STEP_LABEL_FOR__STRING:
-				return getWorkflowStepLabelFor((String)arguments.get(0));
-			case CorePackage.WORKFLOW___GET_WORKFLOW_STEP_DESC_FOR__STRING:
-				return getWorkflowStepDescFor((String)arguments.get(0));
-			case CorePackage.WORKFLOW___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP:
-				return getNumberOfCurrentWorkflowStep();
-			case CorePackage.WORKFLOW___GET_NEXT_WORKFLOW_STEP:
-				return getNextWorkflowStep();
-			case CorePackage.WORKFLOW___GET_CUR_WORKFLOW_STEP:
-				return getCurWorkflowStep();
-			case CorePackage.WORKFLOW___DELETE:
-				return delete();
-			case CorePackage.WORKFLOW___RESET_WORKFLOW_STEP:
-				return resetWorkflowStep();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

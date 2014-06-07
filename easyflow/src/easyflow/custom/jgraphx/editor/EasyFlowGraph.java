@@ -24,6 +24,7 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 
 import easyflow.core.Task;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.XMLUtil;
 import easyflow.data.DataLink;
@@ -33,13 +34,13 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 {
 	
 	final int    maxEdges      = 100;
-	final double defaultXPos   = GlobalVar.defaultCellXPos;
-	final double defaultYPos   = GlobalVar.defaultCellYPos;
-	final double defaultWidth  = GlobalVar.defaultCellWidth;
-	final double defaultHeight = GlobalVar.defaultCellHeight;
-	final String vertexStyle   = GlobalVar.VERTEX_STYLE;
+	final double defaultXPos   = GlobalConstants.defaultCellXPos;
+	final double defaultYPos   = GlobalConstants.defaultCellYPos;
+	final double defaultWidth  = GlobalConstants.defaultCellWidth;
+	final double defaultHeight = GlobalConstants.defaultCellHeight;
+	final String vertexStyle   = GlobalConstants.VERTEX_STYLE;
 	//final String vertexStyle   = null;
-	final String edgeStyle     = GlobalVar.EDGE_STYLE;
+	final String edgeStyle     = GlobalConstants.EDGE_STYLE;
 	//final String edgeStyle     = null;
 	
 	public boolean isConnected(Object source, Object target)
@@ -66,11 +67,11 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		if (dataLink != null && dataLink.getCondition()!=null)
 		{
 			if (dataLink.getCondition().isUnconditional())
-				return GlobalVar.EDGE_STYLE;
+				return GlobalConstants.EDGE_STYLE;
 			else
-				return GlobalVar.TASK_CIRCUMVENTING_EDGE_STYLE;
+				return GlobalConstants.TASK_CIRCUMVENTING_EDGE_STYLE;
 		}
-		return GlobalVar.EDGE_STYLE;
+		return GlobalConstants.EDGE_STYLE;
 	}
 	
 	public Object getStyleFor(Object cell)

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow" nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0"
-    nsPrefix="easyflow">
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
+    nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
   <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
@@ -20,6 +21,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="BufferedReader" instanceClassName="java.io.BufferedReader"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BufferedWriter" instanceClassName="java.io.BufferedWriter"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Pattern" instanceClassName="java.util.regex.Pattern"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EasyFlowOverallWorker" instanceClassName="easyflow.custom.jgraphx.EasyFlowOverallWorker"/>
   <eClassifiers xsi:type="ecore:EDataType" name="CellNotFoundException" instanceClassName="easyflow.custom.exception.CellNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="FileNotFoundException" instanceClassName="java.io.FileNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TaskNotFoundException" instanceClassName="easyflow.custom.exception.TaskNotFoundException"/>
@@ -36,7 +38,7 @@
       instanceClassName="easyflow.custom.exception.ParameterCriterionInstanceNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ParameterNotFoundException" instanceClassName="easyflow.custom.exception.ParameterNotFoundException"/>
   <eClassifiers xsi:type="ecore:EDataType" name="UtilityTaskNotFoundException" instanceClassName="easyflow.custom.exception.UtilityTaskNotFoundException"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="EasyFlowOverallWorker" instanceClassName="easyflow.custom.jgraphx.EasyFlowOverallWorker"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NoValidInOutDataException" instanceClassName="easyflow.custom.exception.NoValidInOutDataException"/>
   <eSubpackages name="core" nsURI="http:///de/thiema/easyflow/core/easyflow.core/1.0.0"
       nsPrefix="easyflow">
     <eClassifiers xsi:type="ecore:EClass" name="Workflow">
@@ -113,9 +115,8 @@
           eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
       <eOperations name="resolvePreprocessingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataLinkNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToStringMap"/>
-      </eOperations>
+      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//NoValidInOutDataException"/>
       <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
           eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
@@ -211,6 +212,7 @@
           <details key="documentation" value=""/>
         </eAnnotations>
       </eOperations>
+      <eOperations name="getUniqueURIString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="isCompatibleWithOutDataPortFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value=""/>
@@ -240,13 +242,10 @@
         <eParameters name="dataPorts1" upperBound="-1" eType="#//data/DataPort"/>
         <eParameters name="dataPorts2" upperBound="-1" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="Fill inputs and outputs with its concrete sources/targets (e.g. file names).&#xA;Resolve the executables (i.e. interpreter and/or executable (script) name).&#xA;Depending on configuration the whole path is used or only the 'dirname'. In &#xA;the latter case resolving of path is done by execution system. (Which could &#xA;also mean, that the name can be resolved e.g. using PATH environment variable)"/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="createCommandLineMap" upperBound="-1" eType="#//util/maps/StringToStringListMap"/>
-      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eOperations name="createCommandLineMap" upperBound="-1" eType="#//util/maps/StringToStringListMap"
+          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException"/>
+      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
         <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="commandLineParts" upperBound="-1" eType="#//util/maps/StringToStringListMap"/>
       </eOperations>
@@ -342,7 +341,7 @@
       </eOperations>
       <eOperations name="resolveInputs" eExceptions="#//DataLinkNotFoundException"/>
       <eOperations name="resolveOutputs" eExceptions="#//DataLinkNotFoundException"/>
-      <eOperations name="resolveParameters"/>
+      <eOperations name="resolveParameters" eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPorts" upperBound="-1"
           eType="#//data/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="outDataPorts" upperBound="-1"
@@ -400,8 +399,8 @@
           eType="#//traversal/TraversalChunk"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="preprocessingTasks" upperBound="-1"
           eType="#//core/PreprocessingTask"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-          eType="#//util/maps/StringToParameterMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//tool/Command"
+          containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PreprocessingTask">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -568,7 +567,8 @@
           eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
       <eOperations name="resolvePreprocessingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataLinkNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//NoValidInOutDataException"/>
       <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="setWorker">
         <eParameters name="worker" eType="#//EasyFlowOverallWorker"/>
@@ -659,10 +659,10 @@
         </eOperations>
         <eOperations name="findCellsWherePreprocessingIsRequired" upperBound="-1"
             eType="#//util/maps/CellToCellListMap"/>
-        <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//NoValidInOutDataException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="catalog" eType="#//core/Catalog"/>
-          <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToStringMap"/>
         </eOperations>
         <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//util/maps/CellToCellListMap"/>
         <eOperations name="resolveEdge" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -792,15 +792,18 @@
     <eClassifiers xsi:type="ecore:EClass" name="IExecutionSystem" abstract="true"
         interface="true">
       <eOperations name="getJgraphxVisitor" eType="#//mxICellVisitor"/>
-      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
         <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="commandLineParts" upperBound="-1" eType="#//util/maps/StringToStringListMap"/>
       </eOperations>
-      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
         <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="task" eType="#//core/Task"/>
       </eOperations>
-      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
         <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="tool" eType="#//tool/Tool"/>
       </eOperations>
@@ -835,7 +838,8 @@
         <eOperations name="getTargets" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
           <eParameters name="tool" eType="#//tool/Tool"/>
         </eOperations>
-        <eOperations name="createRule" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eOperations name="createRule" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+            eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>
@@ -923,8 +927,6 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="interpreter" eType="#//tool/Interpreter"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//tool/Command"
-          containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="package" eType="#//tool/Package"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="requirements" upperBound="-1"
           eType="#//tool/Requirement"/>
@@ -934,77 +936,15 @@
           eType="#//util/maps/StringToDataListMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="filenamePrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="analysisType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//tool/Command"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Interpreter" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="exe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
     </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="Command" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
-      <eOperations name="generateCommandString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToObjectMap"/>
-      </eOperations>
-      <eOperations name="resolvePorts" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="Generates the input/output files (e.g. the file name), that correspond to the &#xA;inputs/output ports, as provided the parent tasks and are consumed by the childs."/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="resolveStaticPorts" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="Finds the static input files (e.g. the file name), that are not dependant on the previous task."/>
-        </eAnnotations>
-      </eOperations>
-      <eOperations name="getInputs" upperBound="-1" eType="#//util/maps/StringToURIMap">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="Returns the concrete input ports (e.g. file names) and with respect to the given &#xA;chunks. The returned keys correspond to the name of data format."/>
-        </eAnnotations>
-        <eParameters name="chunks" upperBound="-1" eType="#//util/maps/StringToChunksMap"/>
-      </eOperations>
-      <eOperations name="getOutputs" upperBound="-1" eType="#//util/maps/StringToURIMap">
-        <eParameters name="chunks" upperBound="-1" eType="#//util/maps/StringToChunksMap"/>
-      </eOperations>
-      <eOperations name="getStaticInputs" upperBound="-1" eType="#//util/maps/StringToURIMap">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="Returns the concrete input ports (e.g. file names). The keys correspond to the&#xA;name of data format."/>
-        </eAnnotations>
-        <eParameters name="chunks" upperBound="-1" eType="#//util/maps/StringToChunksMap"/>
-      </eOperations>
-      <eOperations name="getGroupingsForDataPort" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-        <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      </eOperations>
-      <eOperations name="getGroupingsForDataPortAny" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-        <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-        <eParameters name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      </eOperations>
-      <eOperations name="getParameterForDataPort" eType="#//tool/Parameter" eExceptions="#//ParameterNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setInputParameterValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="value" eType="#//URI"/>
-        <eParameters name="parameterName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setOutputParameterValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="value" eType="#//URI"/>
-        <eParameters name="parameterName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="getPositionalParameterNames" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eOperations name="getOptionalParameterNames" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="executable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
-          changeable="false" transient="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-          eType="#//util/maps/StringToParameterMap" containment="true"/>
-    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
-      <eOperations name="generateCommandString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="constaints" upperBound="-1" eType="#//util/maps/StringToObjectMap"/>
-      </eOperations>
       <eOperations name="getArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eOperations name="getArgValue" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="getArgDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="getArgValueDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -1012,15 +952,15 @@
         <eParameters name="records" upperBound="-1" eType="#//traversal/TraversalChunk"/>
       </eOperations>
       <eOperations name="isAnalysisType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getSupportedHandles" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="applyConfig" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getEffectiveParentParameter" eType="#//tool/Parameter">
+        <eParameters name="first" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
-          eType="#//Object">
-        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-          <details key="documentation" value="The actual argument value. If it is a string its used as is. If it is an Iteratable the &#xA;individual values are enumerated and joined to a string with delimiter."/>
-        </eAnnotations>
-      </eStructuralFeatures>
       <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
           eType="#//util/maps/StringToParameterListMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="optionValues" upperBound="-1"
@@ -1059,10 +999,16 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedArgValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//tool/Parameter"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="InOutParameter" eSuperTypes="#//tool/Parameter">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="handles" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="generalValue" upperBound="-1"
+          eType="#//Object">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The actual argument value. If it is a string its used as is. If it is an Iteratable the &#xA;individual values are enumerated and joined to a string with delimiter."/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="InOutParameter" eSuperTypes="#//tool/Parameter">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="formats" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
@@ -1093,6 +1039,34 @@
     <eClassifiers xsi:type="ecore:EClass" name="OptionValue" eSuperTypes="#//tool/DefaultToolElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="help" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Command" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
+      <eOperations name="generateCommandString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToObjectMap"/>
+      </eOperations>
+      <eOperations name="getParameterForDataPort" eType="#//tool/Parameter" eExceptions="#//ParameterNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="getPositionalParameterNames" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getOptionalParameterNames" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="executable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedParams" upperBound="-1"
+          eType="#//util/maps/StringToResolvedParamMap" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ResolvedParam" eSuperTypes="#//tool/DefaultToolElement">
+      <eOperations name="generateCommandString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="constaints" upperBound="-1" eType="#//util/maps/StringToObjectMap"/>
+      </eOperations>
+      <eOperations name="getArgValue" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="#//tool/Parameter"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
+          eType="#//Object">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The actual argument value. If it is a string its used as is. If it is an Iteratable the &#xA;individual values are enumerated and joined to a string with delimiter."/>
+        </eAnnotations>
+      </eStructuralFeatures>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="metadata" nsURI="http:///de/thiema/easyflow/metadata/1.0.0"
@@ -1382,6 +1356,10 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//ui/DefaultProject"/>
       </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToResolvedParamMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//tool/ResolvedParam"/>
+      </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="StringToStringListMap" instanceClassName="java.util.Map$Entry">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
@@ -1475,7 +1453,7 @@
       </eOperations>
       <eOperations name="getFormat" eType="#//data/DataFormat"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="dataPort" eType="#//data/DataPort"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="outDataPort" eType="#//data/DataPort"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPort" eType="#//data/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="chunks" upperBound="-1"
           eType="#//util/maps/StringToChunksMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -1493,8 +1471,16 @@
     <eClassifiers xsi:type="ecore:EClass" name="Data">
       <eOperations name="getFormat" eType="#//data/DataFormat"/>
       <eOperations name="getFormatStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eOperations name="isAllowed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToStringMap"/>
+      <eOperations name="isAllowed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getSupportedHandles" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="applyConfig" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="match" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="testData" eType="#//data/Data"/>
+        <eParameters name="applyConfig" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="matchFormat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="testDataFormat" eType="#//data/DataFormat"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="port" eType="#//data/DataPort"/>
@@ -1504,11 +1490,15 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="#//tool/Parameter"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferredHandle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DataFormat">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value=""/>
       </eAnnotations>
+      <eOperations name="match" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="testDataFormat" eType="#//data/DataFormat"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>

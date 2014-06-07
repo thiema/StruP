@@ -284,22 +284,13 @@ public interface ToolPackage extends EPackage {
 	int TOOL__INTERPRETER = ITOOL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Command</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL__COMMAND = ITOOL_ELEMENT_FEATURE_COUNT + 6;
-
-	/**
 	 * The feature id for the '<em><b>Package</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL__PACKAGE = ITOOL_ELEMENT_FEATURE_COUNT + 7;
+	int TOOL__PACKAGE = ITOOL_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -308,7 +299,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL__REQUIREMENTS = ITOOL_ELEMENT_FEATURE_COUNT + 8;
+	int TOOL__REQUIREMENTS = ITOOL_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Executables</b></em>' map.
@@ -317,7 +308,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL__EXECUTABLES = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+	int TOOL__EXECUTABLES = ITOOL_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Data</b></em>' map.
@@ -326,7 +317,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+	int TOOL__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Filename Prefix</b></em>' attribute.
@@ -335,7 +326,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL__FILENAME_PREFIX = ITOOL_ELEMENT_FEATURE_COUNT + 11;
+	int TOOL__FILENAME_PREFIX = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Analysis Type</b></em>' attribute.
@@ -344,7 +335,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL__ANALYSIS_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 12;
+	int TOOL__ANALYSIS_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 11;
+
+	/**
+	 * The feature id for the '<em><b>Command</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__COMMAND = ITOOL_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
@@ -418,61 +418,17 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getCommand()
 	 * @generated
 	 */
-	int COMMAND = 6;
+	int COMMAND = 13;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The meta object id for the '{@link easyflow.tool.impl.ResolvedParamImpl <em>Resolved Param</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see easyflow.tool.impl.ResolvedParamImpl
+	 * @see easyflow.tool.impl.ToolPackageImpl#getResolvedParam()
 	 * @generated
-	 * @ordered
 	 */
-	int COMMAND__NAME = ITOOL_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMMAND__DESCRIPTION = ITOOL_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Executable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMMAND__EXECUTABLE = ITOOL_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Logger</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMMAND__LOGGER = ITOOL_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Parameters</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMMAND__PARAMETERS = ITOOL_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The number of structural features of the '<em>Command</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMMAND_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 5;
+	int RESOLVED_PARAM = 14;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -482,7 +438,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getParameter()
 	 * @generated
 	 */
-	int PARAMETER = 7;
+	int PARAMETER = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -521,22 +477,13 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER__VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
 	 * The feature id for the '<em><b>Values</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 5;
+	int PARAMETER__VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Option Values</b></em>' reference list.
@@ -545,7 +492,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__OPTION_VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 6;
+	int PARAMETER__OPTION_VALUES = ITOOL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Optional</b></em>' attribute.
@@ -554,7 +501,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__OPTIONAL = ITOOL_ELEMENT_FEATURE_COUNT + 7;
+	int PARAMETER__OPTIONAL = ITOOL_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Multiple</b></em>' attribute.
@@ -563,7 +510,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__MULTIPLE = ITOOL_ELEMENT_FEATURE_COUNT + 8;
+	int PARAMETER__MULTIPLE = ITOOL_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Value</b></em>' attribute.
@@ -572,7 +519,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__MULTIPLE_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+	int PARAMETER__MULTIPLE_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Value Type</b></em>' attribute.
@@ -581,7 +528,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__VALUE_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+	int PARAMETER__VALUE_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Default Value</b></em>' attribute.
@@ -590,7 +537,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__DEFAULT_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 11;
+	int PARAMETER__DEFAULT_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Prefix</b></em>' attribute.
@@ -599,7 +546,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__PREFIX = ITOOL_ELEMENT_FEATURE_COUNT + 12;
+	int PARAMETER__PREFIX = ITOOL_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Option Key</b></em>' attribute.
@@ -608,7 +555,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__OPTION_KEY = ITOOL_ELEMENT_FEATURE_COUNT + 13;
+	int PARAMETER__OPTION_KEY = ITOOL_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Delimiter</b></em>' attribute.
@@ -617,7 +564,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 14;
+	int PARAMETER__DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Value Delimiter</b></em>' attribute.
@@ -626,7 +573,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__VALUE_DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 15;
+	int PARAMETER__VALUE_DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Keys</b></em>' reference list.
@@ -635,7 +582,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__KEYS = ITOOL_ELEMENT_FEATURE_COUNT + 16;
+	int PARAMETER__KEYS = ITOOL_ELEMENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Named</b></em>' attribute.
@@ -644,7 +591,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__NAMED = ITOOL_ELEMENT_FEATURE_COUNT + 17;
+	int PARAMETER__NAMED = ITOOL_ELEMENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -653,7 +600,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__LABEL = ITOOL_ELEMENT_FEATURE_COUNT + 18;
+	int PARAMETER__LABEL = ITOOL_ELEMENT_FEATURE_COUNT + 17;
 
 	/**
 	 * The feature id for the '<em><b>Help</b></em>' attribute.
@@ -662,7 +609,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__HELP = ITOOL_ELEMENT_FEATURE_COUNT + 19;
+	int PARAMETER__HELP = ITOOL_ELEMENT_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Min Occ</b></em>' attribute.
@@ -671,7 +618,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__MIN_OCC = ITOOL_ELEMENT_FEATURE_COUNT + 20;
+	int PARAMETER__MIN_OCC = ITOOL_ELEMENT_FEATURE_COUNT + 19;
 
 	/**
 	 * The feature id for the '<em><b>Max Occ</b></em>' attribute.
@@ -680,7 +627,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__MAX_OCC = ITOOL_ELEMENT_FEATURE_COUNT + 21;
+	int PARAMETER__MAX_OCC = ITOOL_ELEMENT_FEATURE_COUNT + 20;
 
 	/**
 	 * The feature id for the '<em><b>Advanced</b></em>' attribute.
@@ -689,7 +636,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__ADVANCED = ITOOL_ELEMENT_FEATURE_COUNT + 22;
+	int PARAMETER__ADVANCED = ITOOL_ELEMENT_FEATURE_COUNT + 21;
 
 	/**
 	 * The feature id for the '<em><b>Positional</b></em>' attribute.
@@ -698,7 +645,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__POSITIONAL = ITOOL_ELEMENT_FEATURE_COUNT + 23;
+	int PARAMETER__POSITIONAL = ITOOL_ELEMENT_FEATURE_COUNT + 22;
 
 	/**
 	 * The feature id for the '<em><b>Grouping</b></em>' attribute list.
@@ -707,7 +654,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__GROUPING = ITOOL_ELEMENT_FEATURE_COUNT + 24;
+	int PARAMETER__GROUPING = ITOOL_ELEMENT_FEATURE_COUNT + 23;
 
 	/**
 	 * The feature id for the '<em><b>Data</b></em>' reference list.
@@ -716,7 +663,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 25;
+	int PARAMETER__DATA = ITOOL_ELEMENT_FEATURE_COUNT + 24;
 
 	/**
 	 * The feature id for the '<em><b>Fixed Arg Value</b></em>' attribute.
@@ -725,7 +672,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__FIXED_ARG_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 26;
+	int PARAMETER__FIXED_ARG_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 25;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -734,7 +681,25 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__PARENT = ITOOL_ELEMENT_FEATURE_COUNT + 27;
+	int PARAMETER__PARENT = ITOOL_ELEMENT_FEATURE_COUNT + 26;
+
+	/**
+	 * The feature id for the '<em><b>Handles</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__HANDLES = ITOOL_ELEMENT_FEATURE_COUNT + 27;
+
+	/**
+	 * The feature id for the '<em><b>General Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__GENERAL_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 28;
 
 	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
@@ -743,7 +708,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 28;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 29;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -753,7 +718,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getInOutParameter()
 	 * @generated
 	 */
-	int IN_OUT_PARAMETER = 8;
+	int IN_OUT_PARAMETER = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -790,15 +755,6 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int IN_OUT_PARAMETER__TYPE = PARAMETER__TYPE;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IN_OUT_PARAMETER__VALUE = PARAMETER__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' map.
@@ -1014,7 +970,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER__HANDLES = PARAMETER_FEATURE_COUNT + 0;
+	int IN_OUT_PARAMETER__HANDLES = PARAMETER__HANDLES;
+
+	/**
+	 * The feature id for the '<em><b>General Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__GENERAL_VALUE = PARAMETER__GENERAL_VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Formats</b></em>' attribute list.
@@ -1023,7 +988,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER__FORMATS = PARAMETER_FEATURE_COUNT + 1;
+	int IN_OUT_PARAMETER__FORMATS = PARAMETER_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>In Out Parameter</em>' class.
@@ -1032,7 +997,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 2;
+	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -1042,7 +1007,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getPackage()
 	 * @generated
 	 */
-	int PACKAGE = 9;
+	int PACKAGE = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1124,7 +1089,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getKey()
 	 * @generated
 	 */
-	int KEY = 10;
+	int KEY = 9;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1197,7 +1162,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getRequirement()
 	 * @generated
 	 */
-	int REQUIREMENT = 11;
+	int REQUIREMENT = 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1261,7 +1226,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getDocumentProperties()
 	 * @generated
 	 */
-	int DOCUMENT_PROPERTIES = 12;
+	int DOCUMENT_PROPERTIES = 11;
 
 	/**
 	 * The feature id for the '<em><b>Source URI</b></em>' attribute.
@@ -1299,7 +1264,7 @@ public interface ToolPackage extends EPackage {
 	 * @see easyflow.tool.impl.ToolPackageImpl#getOptionValue()
 	 * @generated
 	 */
-	int OPTION_VALUE = 13;
+	int OPTION_VALUE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1345,6 +1310,105 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int OPTION_VALUE_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND__NAME = ITOOL_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND__DESCRIPTION = ITOOL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Executable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND__EXECUTABLE = ITOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND__LOGGER = ITOOL_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Resolved Params</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND__RESOLVED_PARAMS = ITOOL_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Command</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__NAME = DEFAULT_TOOL_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__DESCRIPTION = DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Parameter</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__PARAMETER = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__VALUE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Resolved Param</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
 
 
 	/**
@@ -1541,17 +1605,6 @@ public interface ToolPackage extends EPackage {
 	EReference getTool_Interpreter();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link easyflow.tool.Tool#getCommand <em>Command</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Command</em>'.
-	 * @see easyflow.tool.Tool#getCommand()
-	 * @see #getTool()
-	 * @generated
-	 */
-	EReference getTool_Command();
-
-	/**
 	 * Returns the meta object for the reference '{@link easyflow.tool.Tool#getPackage <em>Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1618,6 +1671,17 @@ public interface ToolPackage extends EPackage {
 	EAttribute getTool_AnalysisType();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.tool.Tool#getCommand <em>Command</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Command</em>'.
+	 * @see easyflow.tool.Tool#getCommand()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EReference getTool_Command();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Interpreter <em>Interpreter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1682,15 +1746,47 @@ public interface ToolPackage extends EPackage {
 	EAttribute getCommand_Logger();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.tool.Command#getParameters <em>Parameters</em>}'.
+	 * Returns the meta object for the map '{@link easyflow.tool.Command#getResolvedParams <em>Resolved Params</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Parameters</em>'.
-	 * @see easyflow.tool.Command#getParameters()
+	 * @return the meta object for the map '<em>Resolved Params</em>'.
+	 * @see easyflow.tool.Command#getResolvedParams()
 	 * @see #getCommand()
 	 * @generated
 	 */
-	EReference getCommand_Parameters();
+	EReference getCommand_ResolvedParams();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.tool.ResolvedParam <em>Resolved Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Resolved Param</em>'.
+	 * @see easyflow.tool.ResolvedParam
+	 * @generated
+	 */
+	EClass getResolvedParam();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.tool.ResolvedParam#getParameter <em>Parameter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parameter</em>'.
+	 * @see easyflow.tool.ResolvedParam#getParameter()
+	 * @see #getResolvedParam()
+	 * @generated
+	 */
+	EReference getResolvedParam_Parameter();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.ResolvedParam#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Value</em>'.
+	 * @see easyflow.tool.ResolvedParam#getValue()
+	 * @see #getResolvedParam()
+	 * @generated
+	 */
+	EAttribute getResolvedParam_Value();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Parameter <em>Parameter</em>}'.
@@ -1712,17 +1808,6 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameter_Logger();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getValue <em>Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Value</em>'.
-	 * @see easyflow.tool.Parameter#getValue()
-	 * @see #getParameter()
-	 * @generated
-	 */
-	EAttribute getParameter_Value();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getType <em>Type</em>}'.
@@ -1989,6 +2074,28 @@ public interface ToolPackage extends EPackage {
 	EReference getParameter_Parent();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getHandles <em>Handles</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Handles</em>'.
+	 * @see easyflow.tool.Parameter#getHandles()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Handles();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getGeneralValue <em>General Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>General Value</em>'.
+	 * @see easyflow.tool.Parameter#getGeneralValue()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_GeneralValue();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1997,17 +2104,6 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getInOutParameter();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.tool.InOutParameter#getHandles <em>Handles</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Handles</em>'.
-	 * @see easyflow.tool.InOutParameter#getHandles()
-	 * @see #getInOutParameter()
-	 * @generated
-	 */
-	EAttribute getInOutParameter_Handles();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link easyflow.tool.InOutParameter#getFormats <em>Formats</em>}'.
@@ -2423,14 +2519,6 @@ public interface ToolPackage extends EPackage {
 		EReference TOOL__INTERPRETER = eINSTANCE.getTool_Interpreter();
 
 		/**
-		 * The meta object literal for the '<em><b>Command</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TOOL__COMMAND = eINSTANCE.getTool_Command();
-
-		/**
 		 * The meta object literal for the '<em><b>Package</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2477,6 +2565,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TOOL__ANALYSIS_TYPE = eINSTANCE.getTool_AnalysisType();
+
+		/**
+		 * The meta object literal for the '<em><b>Command</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL__COMMAND = eINSTANCE.getTool_Command();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InterpreterImpl <em>Interpreter</em>}' class.
@@ -2531,12 +2627,38 @@ public interface ToolPackage extends EPackage {
 		EAttribute COMMAND__LOGGER = eINSTANCE.getCommand_Logger();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameters</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Resolved Params</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference COMMAND__PARAMETERS = eINSTANCE.getCommand_Parameters();
+		EReference COMMAND__RESOLVED_PARAMS = eINSTANCE.getCommand_ResolvedParams();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.tool.impl.ResolvedParamImpl <em>Resolved Param</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.tool.impl.ResolvedParamImpl
+		 * @see easyflow.tool.impl.ToolPackageImpl#getResolvedParam()
+		 * @generated
+		 */
+		EClass RESOLVED_PARAM = eINSTANCE.getResolvedParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESOLVED_PARAM__PARAMETER = eINSTANCE.getResolvedParam_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESOLVED_PARAM__VALUE = eINSTANCE.getResolvedParam_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -2555,14 +2677,6 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER__LOGGER = eINSTANCE.getParameter_Logger();
-
-		/**
-		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETER__VALUE = eINSTANCE.getParameter_Value();
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -2757,6 +2871,22 @@ public interface ToolPackage extends EPackage {
 		EReference PARAMETER__PARENT = eINSTANCE.getParameter_Parent();
 
 		/**
+		 * The meta object literal for the '<em><b>Handles</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__HANDLES = eINSTANCE.getParameter_Handles();
+
+		/**
+		 * The meta object literal for the '<em><b>General Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__GENERAL_VALUE = eINSTANCE.getParameter_GeneralValue();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2765,14 +2895,6 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EClass IN_OUT_PARAMETER = eINSTANCE.getInOutParameter();
-
-		/**
-		 * The meta object literal for the '<em><b>Handles</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute IN_OUT_PARAMETER__HANDLES = eINSTANCE.getInOutParameter_Handles();
 
 		/**
 		 * The meta object literal for the '<em><b>Formats</b></em>' attribute list feature.

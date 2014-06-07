@@ -8,6 +8,8 @@ package easyflow.execution.shell.impl;
 
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.core.Task;
+import easyflow.custom.exception.NoValidInOutDataException;
+import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
 
@@ -197,7 +199,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) {
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -208,7 +210,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Task task) {
+	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -219,7 +221,7 @@ public class ShellImpl extends EObjectImpl implements Shell {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Tool tool) {
+	public String createCommandLine(String commandPattern, Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();

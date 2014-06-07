@@ -461,7 +461,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
 		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 

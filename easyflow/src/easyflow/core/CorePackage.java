@@ -196,22 +196,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__CATALOG = 13;
 
 	/**
-	 * The feature id for the '<em><b>Processing Config</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__PROCESSING_CONFIG = 14;
-
-	/**
 	 * The feature id for the '<em><b>Root Task</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__ROOT_TASK = 15;
+	int WORKFLOW__ROOT_TASK = 14;
 
 	/**
 	 * The feature id for the '<em><b>Static Tasks</b></em>' reference list.
@@ -220,7 +211,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__STATIC_TASKS = 16;
+	int WORKFLOW__STATIC_TASKS = 15;
 
 	/**
 	 * The feature id for the '<em><b>Processed States</b></em>' map.
@@ -229,7 +220,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__PROCESSED_STATES = 17;
+	int WORKFLOW__PROCESSED_STATES = 16;
 
 	/**
 	 * The feature id for the '<em><b>Previous Task Name</b></em>' map.
@@ -238,7 +229,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__PREVIOUS_TASK_NAME = 18;
+	int WORKFLOW__PREVIOUS_TASK_NAME = 17;
 
 	/**
 	 * The feature id for the '<em><b>Worker</b></em>' attribute.
@@ -247,7 +238,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__WORKER = 19;
+	int WORKFLOW__WORKER = 18;
 
 	/**
 	 * The feature id for the '<em><b>Tools</b></em>' map.
@@ -256,7 +247,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__TOOLS = 20;
+	int WORKFLOW__TOOLS = 19;
 
 	/**
 	 * The feature id for the '<em><b>Execution System</b></em>' reference.
@@ -265,7 +256,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__EXECUTION_SYSTEM = 21;
+	int WORKFLOW__EXECUTION_SYSTEM = 20;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -274,7 +265,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 22;
+	int WORKFLOW_FEATURE_COUNT = 21;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -521,13 +512,13 @@ public interface CorePackage extends EPackage {
 	int TASK__PREPROCESSING_TASKS = 25;
 
 	/**
-	 * The feature id for the '<em><b>Parameters</b></em>' map.
+	 * The feature id for the '<em><b>Command</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__PARAMETERS = 26;
+	int TASK__COMMAND = 26;
 
 	/**
 	 * The number of structural features of the '<em>Task</em>' class.
@@ -1210,17 +1201,6 @@ public interface CorePackage extends EPackage {
 	EReference getWorkflow_Catalog();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Processing Config</em>'.
-	 * @see easyflow.core.Workflow#getProcessingConfig()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EReference getWorkflow_ProcessingConfig();
-
-	/**
 	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1594,15 +1574,15 @@ public interface CorePackage extends EPackage {
 	EReference getTask_PreprocessingTasks();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.core.Task#getParameters <em>Parameters</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.core.Task#getCommand <em>Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Parameters</em>'.
-	 * @see easyflow.core.Task#getParameters()
+	 * @return the meta object for the containment reference '<em>Command</em>'.
+	 * @see easyflow.core.Task#getCommand()
 	 * @see #getTask()
 	 * @generated
 	 */
-	EReference getTask_Parameters();
+	EReference getTask_Command();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
@@ -2189,14 +2169,6 @@ public interface CorePackage extends EPackage {
 		EReference WORKFLOW__CATALOG = eINSTANCE.getWorkflow_Catalog();
 
 		/**
-		 * The meta object literal for the '<em><b>Processing Config</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WORKFLOW__PROCESSING_CONFIG = eINSTANCE.getWorkflow_ProcessingConfig();
-
-		/**
 		 * The meta object literal for the '<em><b>Root Task</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2471,12 +2443,12 @@ public interface CorePackage extends EPackage {
 		EReference TASK__PREPROCESSING_TASKS = eINSTANCE.getTask_PreprocessingTasks();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameters</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Command</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TASK__PARAMETERS = eINSTANCE.getTask_Parameters();
+		EReference TASK__COMMAND = eINSTANCE.getTask_Command();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.

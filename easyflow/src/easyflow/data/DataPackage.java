@@ -179,13 +179,13 @@ public interface DataPackage extends EPackage {
 	int DATA_LINK__DATA_PORT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Out Data Port</b></em>' reference.
+	 * The feature id for the '<em><b>In Data Port</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__OUT_DATA_PORT = 1;
+	int DATA_LINK__IN_DATA_PORT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Chunks</b></em>' map.
@@ -351,13 +351,22 @@ public interface DataPackage extends EPackage {
 	int DATA__PARAMETER = 6;
 
 	/**
+	 * The feature id for the '<em><b>Preferred Handle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__PREFERRED_HANDLE = 7;
+
+	/**
 	 * The number of structural features of the '<em>Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_FEATURE_COUNT = 7;
+	int DATA_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.
@@ -528,15 +537,15 @@ public interface DataPackage extends EPackage {
 	EReference getDataLink_DataPort();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.data.DataLink#getOutDataPort <em>Out Data Port</em>}'.
+	 * Returns the meta object for the reference '{@link easyflow.data.DataLink#getInDataPort <em>In Data Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Out Data Port</em>'.
-	 * @see easyflow.data.DataLink#getOutDataPort()
+	 * @return the meta object for the reference '<em>In Data Port</em>'.
+	 * @see easyflow.data.DataLink#getInDataPort()
 	 * @see #getDataLink()
 	 * @generated
 	 */
-	EReference getDataLink_OutDataPort();
+	EReference getDataLink_InDataPort();
 
 	/**
 	 * Returns the meta object for the map '{@link easyflow.data.DataLink#getChunks <em>Chunks</em>}'.
@@ -725,6 +734,17 @@ public interface DataPackage extends EPackage {
 	EReference getData_Parameter();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.Data#getPreferredHandle <em>Preferred Handle</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Preferred Handle</em>'.
+	 * @see easyflow.data.Data#getPreferredHandle()
+	 * @see #getData()
+	 * @generated
+	 */
+	EAttribute getData_PreferredHandle();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataFormat <em>Format</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -879,12 +899,12 @@ public interface DataPackage extends EPackage {
 		EReference DATA_LINK__DATA_PORT = eINSTANCE.getDataLink_DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Out Data Port</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>In Data Port</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DATA_LINK__OUT_DATA_PORT = eINSTANCE.getDataLink_OutDataPort();
+		EReference DATA_LINK__IN_DATA_PORT = eINSTANCE.getDataLink_InDataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Chunks</b></em>' map feature.
@@ -1023,6 +1043,14 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DATA__PARAMETER = eINSTANCE.getData_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Preferred Handle</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA__PREFERRED_HANDLE = eINSTANCE.getData_PreferredHandle();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.

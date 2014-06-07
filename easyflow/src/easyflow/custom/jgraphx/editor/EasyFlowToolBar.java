@@ -15,6 +15,7 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -225,28 +226,31 @@ public class EasyFlowToolBar extends JToolBar
 						//btnResolveUtilityTasks.setEnabled(true);
 					}
 					
-				} catch (DataLinkNotFoundException e1) {
+				} catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DataPortNotFoundException e1) {
+					e.printStackTrace();
+				} catch (DataPortNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ToolNotFoundException e1) {
+					e.printStackTrace();
+				} catch (ToolNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (UtilityTaskNotFoundException e1) {
+					e.printStackTrace();
+				} catch (UtilityTaskNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 
-				} catch (CellNotFoundException e1) {
+				} catch (CellNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (TaskNotFoundException e1) {
+					e.printStackTrace();
+				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (GroupingCriterionInstanceNotFoundException e1) {
+					e.printStackTrace();
+				} catch (GroupingCriterionInstanceNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
+				} catch (NoValidInOutDataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 		}
 	}
@@ -372,10 +376,15 @@ public class EasyFlowToolBar extends JToolBar
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (GlobalVar.getDefaultProject().resolveToolDependencies())
-			{
-				btnResolveToolDeps.setEnabled(false);
-				btnGenAbstractWorkflow.setEnabled(true);
+			try {
+				if (GlobalVar.getDefaultProject().resolveToolDependencies())
+				{
+					btnResolveToolDeps.setEnabled(false);
+					btnGenAbstractWorkflow.setEnabled(true);
+				}
+			} catch (NoValidInOutDataException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}

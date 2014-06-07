@@ -322,7 +322,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDataLink_OutDataPort() {
+	public EReference getDataLink_InDataPort() {
 		return (EReference)dataLinkEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -484,6 +484,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getData_PreferredHandle() {
+		return (EAttribute)dataEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDataFormat() {
 		return dataFormatEClass;
 	}
@@ -547,7 +556,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		dataLinkEClass = createEClass(DATA_LINK);
 		createEReference(dataLinkEClass, DATA_LINK__DATA_PORT);
-		createEReference(dataLinkEClass, DATA_LINK__OUT_DATA_PORT);
+		createEReference(dataLinkEClass, DATA_LINK__IN_DATA_PORT);
 		createEReference(dataLinkEClass, DATA_LINK__CHUNKS);
 		createEAttribute(dataLinkEClass, DATA_LINK__ID);
 		createEAttribute(dataLinkEClass, DATA_LINK__GROUPING_STR);
@@ -566,6 +575,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(dataEClass, DATA__NAME);
 		createEAttribute(dataEClass, DATA__DESCRIPTION);
 		createEReference(dataEClass, DATA__PARAMETER);
+		createEAttribute(dataEClass, DATA__PREFERRED_HANDLE);
 
 		dataFormatEClass = createEClass(DATA_FORMAT);
 		createEAttribute(dataFormatEClass, DATA_FORMAT__NAME);
@@ -630,7 +640,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		initEClass(dataLinkEClass, DataLink.class, "DataLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataLink_DataPort(), this.getDataPort(), null, "dataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataLink_OutDataPort(), this.getDataPort(), null, "outDataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataLink_InDataPort(), this.getDataPort(), null, "inDataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataLink_Chunks(), theMapsPackage.getStringToChunksMap(), null, "chunks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_Id(), ecorePackage.getEInt(), "id", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -663,14 +673,30 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEAttribute(getData_Name(), ecorePackage.getEString(), "name", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getData_Description(), ecorePackage.getEString(), "description", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getData_Parameter(), theToolPackage.getParameter(), null, "parameter", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getData_PreferredHandle(), ecorePackage.getEString(), "preferredHandle", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(dataEClass, this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(dataEClass, ecorePackage.getEString(), "getFormatStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		addEOperation(dataEClass, ecorePackage.getEBoolean(), "isAllowed", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(dataEClass, ecorePackage.getEString(), "getSupportedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "applyConfig", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(dataEClass, ecorePackage.getEBoolean(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getData(), "testData", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "applyConfig", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(dataEClass, ecorePackage.getEBoolean(), "matchFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataFormat(), "testDataFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(dataFormatEClass, DataFormat.class, "DataFormat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDataFormat_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataFormat_Description(), ecorePackage.getEString(), "description", null, 0, 1, DataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = addEOperation(dataFormatEClass, ecorePackage.getEBoolean(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataFormat(), "testDataFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //DataPackageImpl

@@ -2,10 +2,12 @@ package easyflow.custom.ui;
 
 import org.apache.log4j.Logger;
 
+import easyflow.core.impl.WorkflowImpl;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -43,7 +45,9 @@ public class Easyflow {
 			try {
 				defaultProject.init(null);
 				defaultProject.generateAbstractGraph();
+				//((WorkflowImpl)defaultProject.getActiveWorkflow()).printGraph();
 				defaultProject.resolveTraversalCriteria();
+				
 				defaultProject.applyGroupingCriteria();
 				defaultProject.applyParameterCriteria();
 				
@@ -67,6 +71,11 @@ public class Easyflow {
 			catch (DataPortNotFoundException e) {e.printStackTrace();}
 			catch (ToolNotFoundException e) {e.printStackTrace();}
 			catch (UtilityTaskNotFoundException e) {e.printStackTrace();}
+			catch (NoValidInOutDataException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
 
 			
 		}

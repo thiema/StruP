@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
 
-import javax.xml.parsers.SAXParserFactory;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
@@ -24,7 +22,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import easyflow.core.CoreFactory;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
 import easyflow.data.Data;
@@ -34,13 +31,12 @@ import easyflow.data.DataPort;
 import easyflow.tool.Command;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
-import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
-import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
 import easyflow.tool.Package;
 
@@ -228,7 +224,7 @@ public class ToolContentHandler implements ContentHandler {
 
 		// relevant for package
 		if (atts.getValue("value")!=null)
-			curParam.getValue().add(atts.getValue("value"));
+			curParam.getGeneralValue().add(atts.getValue("value"));
 
 		if (atts.getValue("separator")!=null)
 			curParam.setDelimiter(atts.getValue("separator"));
@@ -250,9 +246,15 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setNamed(atts.getValue("named").equals("true")?true:false);
 		if (atts.getValue("advanced")!=null)
 			curParam.setAdvanced(atts.getValue("advanced").equals("true")?true:false);
+		
+		if (atts.getValue("handle")!=null)
+			for (String handle:atts.getValue("handle").split(","))
+				(curParam).getHandles().add(handle);
+
 		if (atts.getValue("grouping")!=null)
 			for (String group:atts.getValue("grouping").split(","))
 				curParam.getGrouping().add(group);
+		
 		if (atts.getValue("data")!=null)
 			dataStrings.put(curParam.getName(), atts.getValue("data"));
 		
@@ -262,7 +264,7 @@ public class ToolContentHandler implements ContentHandler {
 			
 			data.setName(curParam.getName());
 			data.setParameter(curParam);
-			
+			logger.debug("param id="+curParam.hashCode()+" "+curParam.getName()+" ("+tool.getName()+")");
 			if (atts.getValue("output")!=null)
 			{
 				if (atts.getValue("output").equalsIgnoreCase("true"))
@@ -270,9 +272,14 @@ public class ToolContentHandler implements ContentHandler {
 				else
 					data.setOutput(false);
 			}
+			else if ("output".equalsIgnoreCase(data.getName()))
+			{
+				data.setOutput(true);
+			}
 			else
+			{
 				data.setOutput(false);
-			
+			}
 			if (tool.getData().containsKey(data.getName()))
 				logger.warn("overiding data="+data.getName()+" of tool="+tool.getId());
 			else
@@ -284,10 +291,7 @@ public class ToolContentHandler implements ContentHandler {
 			if (atts.getValue("format")!=null)
 				for (String format:atts.getValue("format").split(","))
 					((InOutParameter)curParam).getFormats().add(format);
-			if (atts.getValue("handle")!=null)
-				for (String handle:atts.getValue("handle").split(","))
-					((InOutParameter)curParam).getHandles().add(handle);
-			
+
 			dataPort = DataFactory.eINSTANCE.createDataPort();
 			dataPort.setName(curParam.getName());
 			dataPort.getTools().put(tool.getName(), tool);
@@ -316,10 +320,6 @@ public class ToolContentHandler implements ContentHandler {
 			
 		}
 		tool.getData().get(param.getName()).add(data);
-		
-		logger.debug(dataList.size()+" "+tool.getData().get(param.getName()).size());
-		logger.debug("");
-		
 	}
 	
 	@Override
@@ -356,11 +356,14 @@ public class ToolContentHandler implements ContentHandler {
 				tools.add(tool);
 				Command command=ToolFactory.eINSTANCE.createCommand();
 				tool.setCommand(command);
+				
 				tool.setName(atts.getValue("name"));
 				if (atts.getValue("id")==null)
 					tool.setId(tool.getName());
 				else
 					tool.setId(atts.getValue("id"));
+				if (tool.getName()==null)
+					tool.setName(tool.getId());
 				logger.debug("processing tool="+tool.getId());
 				tool.setVersion(atts.getValue("version"));
 				if (atts.getValue("package")!=null && packages.containsKey(atts.getValue("package")))
@@ -439,11 +442,11 @@ public class ToolContentHandler implements ContentHandler {
 				else if (subParam!=p)
 				{
 					logger.debug("put "+parameter.getName());
-					tool.getCommand().getParameters().put(parameter.getName(), parameter);
-					
+					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+					resolvedParam.setParameter(parameter);
+					tool.getCommand().getResolvedParams().put(parameter.getName(), resolvedParam);
 				}
 				withinParam = true;
-				
 				break;
 			case KEY:
 				key = ToolFactory.eINSTANCE.createKey();
@@ -500,9 +503,7 @@ public class ToolContentHandler implements ContentHandler {
 				{
 					String format = conditionalMap.get("when_value");
 					setDataPort(format);
-
 				}
-					
 				break;
 			case DATA:
 				withinData = true;
@@ -524,15 +525,28 @@ public class ToolContentHandler implements ContentHandler {
 				EList<Data> dataList = null;
 				if (tool.getData().containsKey(data.getName()))
 				{
-					logger.warn("data with name="+data.getName()+ "of tool="+tool.getId()+" already known");
+					logger.warn("data with name="+data.getName()+" of tool="+tool.getId()+" already known");
 					dataList = tool.getData().get(data.getName());
+					boolean merged = false;
+					// do a basic check, to avoid overriding known data
+					for (Data d:dataList)
+					{
+						if (d.getName().equals(data.getName()))
+						{
+							//data.merge(d);
+							merged=true;
+						}
+					}
+					if (!merged)
+						dataList.add(data);	
 				}
 				else
 				{
 					dataList = new BasicEList<Data>();
 					tool.getData().put(data.getName(), dataList);
+					dataList.add(data);
 				}
-				dataList.add(data);
+				
 				
 				dataPort = DataFactory.eINSTANCE.createDataPort();
 				dataPort.setName(data.getName());
@@ -607,10 +621,10 @@ public class ToolContentHandler implements ContentHandler {
 				for (Entry<String, String> e:dataStrings.entrySet())
 				{
 					logger.debug("key="+e.getKey()+" value="+e.getValue()
-							+" "+tool.getCommand().getParameters().containsKey(e.getKey()));
-					if (tool.getCommand().getParameters().containsKey(e.getKey()))
+							+" "+tool.getCommand().getResolvedParams().containsKey(e.getKey()));
+					if (tool.getCommand().getResolvedParams().containsKey(e.getKey()))
 					{
-						Parameter p=tool.getCommand().getParameters().get(e.getKey());
+						ResolvedParam p=tool.getCommand().getResolvedParams().get(e.getKey());
 						
 						for (String dataString:StringUtils.split(e.getValue()))
 						{
@@ -620,7 +634,7 @@ public class ToolContentHandler implements ContentHandler {
 								{
 								//Data d=tool.getData().get(dataString);
 									logger.debug("add data="+d.getName()+" to param="+p.getName());
-									p.getData().add(d);
+									p.getParameter().getData().add(d);
 								}
 							}
 							else
@@ -634,6 +648,7 @@ public class ToolContentHandler implements ContentHandler {
 						logger.warn("couldnt find parameter "+e.getKey());
 					}
 				}
+				logger.debug("");
 			default:
 				break;
 		}

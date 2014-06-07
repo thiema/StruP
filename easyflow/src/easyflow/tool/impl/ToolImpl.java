@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -54,19 +55,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getInterpreter <em>Interpreter</em>}</li>
- *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getExecutables <em>Executables</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getData <em>Data</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getFilenamePrefix <em>Filename Prefix</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getAnalysisType <em>Analysis Type</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
+public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -178,16 +179,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	protected Interpreter interpreter;
 
 	/**
-	 * The cached value of the '{@link #getCommand() <em>Command</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCommand()
-	 * @generated
-	 * @ordered
-	 */
-	protected Command command;
-
-	/**
 	 * The cached value of the '{@link #getPackage() <em>Package</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -266,6 +257,16 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @ordered
 	 */
 	protected String analysisType = ANALYSIS_TYPE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getCommand() <em>Command</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommand()
+	 * @generated
+	 * @ordered
+	 */
+	protected Command command;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -422,49 +423,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Command getCommand() {
-		return command;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetCommand(Command newCommand, NotificationChain msgs) {
-		Command oldCommand = command;
-		command = newCommand;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__COMMAND, oldCommand, newCommand);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCommand(Command newCommand) {
-		if (newCommand != command) {
-			NotificationChain msgs = null;
-			if (command != null)
-				msgs = ((InternalEObject)command).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ToolPackage.TOOL__COMMAND, null, msgs);
-			if (newCommand != null)
-				msgs = ((InternalEObject)newCommand).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ToolPackage.TOOL__COMMAND, null, msgs);
-			msgs = basicSetCommand(newCommand, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__COMMAND, newCommand, newCommand));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public easyflow.tool.Package getPackage() {
 		if (package_ != null && package_.eIsProxy()) {
 			InternalEObject oldPackage = (InternalEObject)package_;
@@ -574,6 +532,44 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		analysisType = newAnalysisType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__ANALYSIS_TYPE, oldAnalysisType, analysisType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Command getCommand() {
+		if (command != null && command.eIsProxy()) {
+			InternalEObject oldCommand = (InternalEObject)command;
+			command = (Command)eResolveProxy(oldCommand);
+			if (command != oldCommand) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.TOOL__COMMAND, oldCommand, command));
+			}
+		}
+		return command;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Command basicGetCommand() {
+		return command;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCommand(Command newCommand) {
+		Command oldCommand = command;
+		command = newCommand;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__COMMAND, oldCommand, command));
 	}
 
 	/**
@@ -747,8 +743,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ToolPackage.TOOL__COMMAND:
-				return basicSetCommand(null, msgs);
 			case ToolPackage.TOOL__EXECUTABLES:
 				return ((InternalEList<?>)getExecutables()).basicRemove(otherEnd, msgs);
 			case ToolPackage.TOOL__DATA:
@@ -778,8 +772,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__INTERPRETER:
 				if (resolve) return getInterpreter();
 				return basicGetInterpreter();
-			case ToolPackage.TOOL__COMMAND:
-				return getCommand();
 			case ToolPackage.TOOL__PACKAGE:
 				if (resolve) return getPackage();
 				return basicGetPackage();
@@ -795,6 +787,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return getFilenamePrefix();
 			case ToolPackage.TOOL__ANALYSIS_TYPE:
 				return getAnalysisType();
+			case ToolPackage.TOOL__COMMAND:
+				if (resolve) return getCommand();
+				return basicGetCommand();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -823,9 +818,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__INTERPRETER:
 				setInterpreter((Interpreter)newValue);
 				return;
-			case ToolPackage.TOOL__COMMAND:
-				setCommand((Command)newValue);
-				return;
 			case ToolPackage.TOOL__PACKAGE:
 				setPackage((easyflow.tool.Package)newValue);
 				return;
@@ -844,6 +836,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return;
 			case ToolPackage.TOOL__ANALYSIS_TYPE:
 				setAnalysisType((String)newValue);
+				return;
+			case ToolPackage.TOOL__COMMAND:
+				setCommand((Command)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -872,9 +867,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__INTERPRETER:
 				setInterpreter((Interpreter)null);
 				return;
-			case ToolPackage.TOOL__COMMAND:
-				setCommand((Command)null);
-				return;
 			case ToolPackage.TOOL__PACKAGE:
 				setPackage((easyflow.tool.Package)null);
 				return;
@@ -892,6 +884,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return;
 			case ToolPackage.TOOL__ANALYSIS_TYPE:
 				setAnalysisType(ANALYSIS_TYPE_EDEFAULT);
+				return;
+			case ToolPackage.TOOL__COMMAND:
+				setCommand((Command)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -917,8 +912,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 			case ToolPackage.TOOL__INTERPRETER:
 				return interpreter != null;
-			case ToolPackage.TOOL__COMMAND:
-				return command != null;
 			case ToolPackage.TOOL__PACKAGE:
 				return package_ != null;
 			case ToolPackage.TOOL__REQUIREMENTS:
@@ -931,6 +924,8 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return FILENAME_PREFIX_EDEFAULT == null ? filenamePrefix != null : !FILENAME_PREFIX_EDEFAULT.equals(filenamePrefix);
 			case ToolPackage.TOOL__ANALYSIS_TYPE:
 				return ANALYSIS_TYPE_EDEFAULT == null ? analysisType != null : !ANALYSIS_TYPE_EDEFAULT.equals(analysisType);
+			case ToolPackage.TOOL__COMMAND:
+				return command != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -967,48 +962,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.TOOL___WRITE_MODEL_TO_XML:
-				writeModelToXML();
-				return null;
-			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLES_INSTANCES_FOR__DATAPORT:
-				try {
-					return canProcessMultiplesInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT:
-				try {
-					return canFilterInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___REQUIRES_GROUPING__STRING_DATAPORT:
-				return requiresGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
-			case ToolPackage.TOOL___PROVIDES_GROUPING__STRING_DATAPORT:
-				return providesGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
-			case ToolPackage.TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN:
-				return getGroupingsForInputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case ToolPackage.TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN:
-				return getGroupingsForOutputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case ToolPackage.TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST:
-				return getAnalysisTypeOfPackage((EList<TraversalChunk>)arguments.get(0));
-			case ToolPackage.TOOL___GET_DATA_FOR_PARAM__PARAMETER_EMAP:
-				return getDataForParam((Parameter)arguments.get(0), (Map.Entry<String, String>)arguments.get(1));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

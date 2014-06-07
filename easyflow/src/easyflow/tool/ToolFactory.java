@@ -80,6 +80,15 @@ public interface ToolFactory extends EFactory {
 	Command createCommand();
 
 	/**
+	 * Returns a new object of class '<em>Resolved Param</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Resolved Param</em>'.
+	 * @generated
+	 */
+	ResolvedParam createResolvedParam();
+
+	/**
 	 * Returns a new object of class '<em>Parameter</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

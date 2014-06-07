@@ -6,6 +6,7 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -57,7 +58,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getProcessingConfig <em>Processing Config</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getStaticTasks <em>Static Tasks</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getProcessedStates <em>Processed States</em>}</li>
@@ -388,23 +388,6 @@ public interface Workflow extends EObject {
 	void setCatalog(Catalog value);
 
 	/**
-	 * Returns the value of the '<em><b>Processing Config</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link java.lang.String},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Processing Config</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Processing Config</em>' map.
-	 * @see easyflow.core.CorePackage#getWorkflow_ProcessingConfig()
-	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
-	 * @generated
-	 */
-	EMap<String, String> getProcessingConfig();
-
-	/**
 	 * Returns the value of the '<em><b>Root Task</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -688,14 +671,6 @@ public interface Workflow extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean resolveToolDependencies();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
 	boolean resolveMissingDataPortsByToolFor(Task task);
 
 	/**
@@ -713,6 +688,14 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	boolean resolvePreprocessingTasks() throws DataLinkNotFoundException, TaskNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	boolean resolveToolDependencies() throws NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->

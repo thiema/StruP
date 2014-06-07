@@ -16,6 +16,7 @@ import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
@@ -109,10 +110,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createInterpreterAdapter();
 			}
 			@Override
-			public Adapter caseCommand(Command object) {
-				return createCommandAdapter();
-			}
-			@Override
 			public Adapter caseParameter(Parameter object) {
 				return createParameterAdapter();
 			}
@@ -139,6 +136,14 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOptionValue(OptionValue object) {
 				return createOptionValueAdapter();
+			}
+			@Override
+			public Adapter caseCommand(Command object) {
+				return createCommandAdapter();
+			}
+			@Override
+			public Adapter caseResolvedParam(ResolvedParam object) {
+				return createResolvedParamAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -255,6 +260,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCommandAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.ResolvedParam <em>Resolved Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.ResolvedParam
+	 * @generated
+	 */
+	public Adapter createResolvedParamAdapter() {
 		return null;
 	}
 

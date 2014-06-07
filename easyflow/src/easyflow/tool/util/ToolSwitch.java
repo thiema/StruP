@@ -16,6 +16,7 @@ import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
@@ -123,14 +124,6 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ToolPackage.COMMAND: {
-				Command command = (Command)theEObject;
-				T result = caseCommand(command);
-				if (result == null) result = caseIToolElement(command);
-				if (result == null) result = caseDefaultToolElement(command);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ToolPackage.PARAMETER: {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
@@ -180,6 +173,21 @@ public class ToolSwitch<T> extends Switch<T> {
 				OptionValue optionValue = (OptionValue)theEObject;
 				T result = caseOptionValue(optionValue);
 				if (result == null) result = caseDefaultToolElement(optionValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ToolPackage.COMMAND: {
+				Command command = (Command)theEObject;
+				T result = caseCommand(command);
+				if (result == null) result = caseIToolElement(command);
+				if (result == null) result = caseDefaultToolElement(command);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ToolPackage.RESOLVED_PARAM: {
+				ResolvedParam resolvedParam = (ResolvedParam)theEObject;
+				T result = caseResolvedParam(resolvedParam);
+				if (result == null) result = caseDefaultToolElement(resolvedParam);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -289,6 +297,21 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCommand(Command object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Resolved Param</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Resolved Param</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResolvedParam(ResolvedParam object) {
 		return null;
 	}
 
