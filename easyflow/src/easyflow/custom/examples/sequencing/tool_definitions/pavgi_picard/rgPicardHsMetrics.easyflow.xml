@@ -14,19 +14,13 @@
     <param name="input_file" type="data" format="sam,bam"
           label="SAM/BAM dataset to generate statistics for"/>
     <param name="out_prefix" type="text" help="Use to remind you what the job was for."
-          label="Title for the output file">
-      <key>Use</key>
-   </param>
+          label="Title for the output file"/>
     <param name="bait_bed" type="data" format="bed,interval"
           help="Note specific format requirements below!"
-          label="Bait intervals: Sequences for bait in the design">
-      <key>Note</key>
-   </param>
+          label="Bait intervals: Sequences for bait in the design"/>
     <param name="target_bed" type="data" format="bed,interval"
           help="Note specific format requirements below!"
-          label="Target intervals: Sequences for targets in the design">
-      <key>Note</key>
-   </param>
+          label="Target intervals: Sequences for targets in the design"/>
     
   
   

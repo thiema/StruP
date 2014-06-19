@@ -934,25 +934,17 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException"
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	void resolveInputs() throws DataLinkNotFoundException;
+	void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException"
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	void resolveOutputs() throws DataLinkNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
-	 * @generated
-	 */
-	void resolveParameters() throws ParameterNotFoundException, NoValidInOutDataException;
+	void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
 
 } // Task

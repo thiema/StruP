@@ -1303,13 +1303,22 @@ public interface ToolPackage extends EPackage {
 	int OPTION_VALUE__HELP = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Exe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPTION_VALUE__EXE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Option Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPTION_VALUE_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+	int OPTION_VALUE_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2343,6 +2352,17 @@ public interface ToolPackage extends EPackage {
 	EAttribute getOptionValue_Help();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.OptionValue#getExe <em>Exe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Exe</em>'.
+	 * @see easyflow.tool.OptionValue#getExe()
+	 * @see #getOptionValue()
+	 * @generated
+	 */
+	EAttribute getOptionValue_Exe();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3081,6 +3101,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute OPTION_VALUE__HELP = eINSTANCE.getOptionValue_Help();
+
+		/**
+		 * The meta object literal for the '<em><b>Exe</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute OPTION_VALUE__EXE = eINSTANCE.getOptionValue_Exe();
 
 	}
 

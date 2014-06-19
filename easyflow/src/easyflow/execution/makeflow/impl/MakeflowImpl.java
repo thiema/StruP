@@ -312,7 +312,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		cmd = createCommandLine(
 				GlobalConfig.getToolConfig().get("command_pattern"),
 				task);
-		logger.debug(cmd+" ("+targets+":"+deps+")");
+		logger.info(cmd+" ("+targets+":"+deps+")");
 		rule+="\n\t"+cmd+"\n\n";
 
 				

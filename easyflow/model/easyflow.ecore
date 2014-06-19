@@ -339,9 +339,8 @@
       <eOperations name="getInputsForDataPort" upperBound="-1" eType="#//URI">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="resolveInputs" eExceptions="#//DataLinkNotFoundException"/>
-      <eOperations name="resolveOutputs" eExceptions="#//DataLinkNotFoundException"/>
-      <eOperations name="resolveParameters" eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException"/>
+      <eOperations name="resolveInputs" eExceptions="#//DataLinkNotFoundException #//ParameterNotFoundException #//NoValidInOutDataException"/>
+      <eOperations name="resolveOutputs" eExceptions="#//DataLinkNotFoundException #//ParameterNotFoundException #//NoValidInOutDataException"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPorts" upperBound="-1"
           eType="#//data/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="outDataPorts" upperBound="-1"
@@ -1037,8 +1036,10 @@
           defaultValueLiteral="false"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="OptionValue" eSuperTypes="#//tool/DefaultToolElement">
+      <eOperations name="resolveValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="help" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="exe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Command" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eOperations name="generateCommandString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">

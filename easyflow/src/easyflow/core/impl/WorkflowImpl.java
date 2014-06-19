@@ -2177,6 +2177,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			Entry<mxICell, EList<mxICell>> entry = it.next();
 			for (mxICell edge:entry.getValue())
 				rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), edge);
+			//rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), null);
 		}
 		return rc;
 	}

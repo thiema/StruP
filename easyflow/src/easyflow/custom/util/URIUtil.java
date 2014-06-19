@@ -239,4 +239,20 @@ public class URIUtil {
 		String path = createPath(uri.getPath(), name);
 		return new URI(uri.getScheme(), uri.getHost(), path, uri.getFragment());
 	}
+	public static URI addExtensionToURI(URI uri, String ext, boolean replace) throws URISyntaxException
+	{
+		String str = uri.getPath();
+		//path.replaceFirst("[.][^.]+$", ext);
+		if (replace)
+		{
+			int pos = str.lastIndexOf(".");
+	        // If there wasn't any '.' just return the string as is.
+	        if (pos != -1) 
+	        str = str.substring(0, pos);
+		}
+
+		
+		str+="."+ext.toLowerCase();
+		return new URI(uri.getScheme(), uri.getHost(), str, uri.getFragment());
+	}
 }

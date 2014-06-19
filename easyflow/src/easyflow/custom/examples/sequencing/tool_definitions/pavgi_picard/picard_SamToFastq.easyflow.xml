@@ -48,20 +48,15 @@
       <key>true</key>
    </param>
     <param name="clipping_attribute" type="text" help="Leave blank for null"
-          label="The attribute that stores the position at which the SAM record should be clipped">
-      <key>Leave</key>
-   </param>
+          label="The attribute that stores the position at which the SAM record should be clipped"/>
     <param name="clipping_action" type="text"
           help="'X' means the reads and qualities should be trimmed at the clipped position; 'N' means the bases should be changed to Ns in the clipped region; and any integer means that the base qualities should be set to that value in the clipped region. Leave blank for null"
-          label="The action that should be taken with clipped reads">
-      <key>'X'</key>
-   </param>
+          label="The action that should be taken with clipped reads"/>
     <param name="include_non_primary_alignments" type="boolean"
           help="Support of non-primary alignments in SamToFastq is not comprehensive, so there may be exceptions if this is set to true and there are paired reads with non-primary alignments."
           label="If true, include non-primary alignments in the output."
           defaultValue="true">
       <key>true</key>
-      <key>Support</key>
    </param>
     
   

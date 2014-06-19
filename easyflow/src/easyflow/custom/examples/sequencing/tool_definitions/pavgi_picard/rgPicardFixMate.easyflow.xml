@@ -13,23 +13,16 @@
   
     <param name="input_file" type="data" format="bam,sam"
           help="If empty, upload or import a SAM/BAM dataset."
-          label="SAM/BAM dataset to fix">
-      <key>If</key>
-   </param>
+          label="SAM/BAM dataset to fix"/>
       <param name="sortOrder" type="select"
           help="If in doubt, leave as default and read Picard/Samtools documentation"
-          label="Sort order">
-      <key>If</key>
-   </param>
+          label="Sort order"/>
     <param name="out_prefix" type="text" help="Use this remind you what the job was for."
-          label="Title for the output file">
-      <key>Use</key>
-   </param>
+          label="Title for the output file"/>
     <param name="outputFormat" type="boolean" help="Uncheck for SAM output"
           label="Output BAM instead of SAM"
           defaultValue="true">
       <key>bam</key>
-      <key>Uncheck</key>
    </param>
   
   

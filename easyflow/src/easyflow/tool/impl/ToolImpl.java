@@ -681,7 +681,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		//          tool=UnifiedGenotyper;
 		// Example2: package=bwa, with parameter analysisType and option values contain 
 		//              sampe with cond="size(InputFiles)==2" and samse with cond="size(InputFiles)==1"
-		
+		String retString = null;
 		if (getPackage()!=null)
 		{
 			for (Parameter parameter : getPackage().getParameters().values())
@@ -695,11 +695,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 					{
 						logger.debug("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
 						if (getAnalysisType()!=null && optionValue.getName().equals(getAnalysisType()))
-							matchByNameStr = getAnalysisType();
+							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getAnalysisType();
 						else if (optionValue.getName().equals(getId()))
-							matchByNameStr = getId();
+							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getId();
 						else if (optionValue.getName().equals(getName()))
-							matchByNameStr = getName();
+							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getName();
 							
 						else if (optionValue.getCondition()!=null)
 						{
@@ -709,12 +709,14 @@ public class ToolImpl extends EObjectImpl implements Tool {
 							if (evalObject instanceof Boolean) {
 								if (((Boolean) evalObject).booleanValue())
 								{
-									matchByCondStr = optionValue.getName();
+									matchByCondStr = optionValue.getExe()!=null ? optionValue.getExe() : optionValue.getName();
 								}
 							}
 						}
+						
 					}
 					if (matchByNameStr != null)
+						
 						return matchByNameStr;
 					else if (matchByCondStr != null)
 						return matchByCondStr;

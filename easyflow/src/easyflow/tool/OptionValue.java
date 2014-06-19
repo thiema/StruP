@@ -17,6 +17,7 @@ package easyflow.tool;
  * <ul>
  *   <li>{@link easyflow.tool.OptionValue#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.tool.OptionValue#getHelp <em>Help</em>}</li>
+ *   <li>{@link easyflow.tool.OptionValue#getExe <em>Exe</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,4 +78,38 @@ public interface OptionValue extends DefaultToolElement {
 	 * @generated
 	 */
 	void setHelp(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Exe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Exe</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Exe</em>' attribute.
+	 * @see #setExe(String)
+	 * @see easyflow.tool.ToolPackage#getOptionValue_Exe()
+	 * @model
+	 * @generated
+	 */
+	String getExe();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.OptionValue#getExe <em>Exe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Exe</em>' attribute.
+	 * @see #getExe()
+	 * @generated
+	 */
+	void setExe(String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	String resolveValue();
 } // OptionValue

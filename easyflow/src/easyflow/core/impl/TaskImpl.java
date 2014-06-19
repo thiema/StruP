@@ -48,6 +48,7 @@ import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
@@ -1460,24 +1461,46 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	}
 
+	
+
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @throws NoValidInOutDataException 
-	 * @throws ParameterNotFoundException 
-	 * @generated not
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public EMap<String, EList<String>> createCommandLineMap() throws ParameterNotFoundException, NoValidInOutDataException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
 
-		EMap<String, EList<String>> map  = new BasicEMap<String, EList<String>>();
-		EList<String>               exe  = new BasicEList<String>();
-		EList<String>          submodule = new BasicEList<String>();
-		Tool                        tool = getPreferredTool();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
 
+	private String createCommandLinePart1(Tool tool)
+	{
+		EList<String>  exe  = new BasicEList<String>();
+		
+		// resolve Interpreter
 		if (tool.getExecutables().containsKey("interpreter"))
 			exe.add(getPreferredTool().getExecutables().get("interpreter")
 					.getPath());
 		else if (tool.getPackage() != null && tool.getPackage().getInterpreter() != null)
 			exe.add(tool.getPackage().getInterpreter());
+		
+		
+		// resolve interpreter options
+		
+		
+		// resolve the executable
 		
 		if (tool.getExecutables().containsKey("executable"))
 			exe.add(tool.getExecutables().get("executable").getPath());
@@ -1491,104 +1514,124 @@ public class TaskImpl extends EObjectImpl implements Task {
 		}
 		
 		if (exe.isEmpty())
-			logger.error("createCommandLineMap(): no executables found");
-		
-		map.put("executable", exe);
-
+			logger.error("createCommandLinePart1(): no executables found for tool="+tool.getId());
 		
 		// check submodule
 		String anaType = tool.getAnalysisTypeOfPackage(getRecords());
 		if (anaType != null)
 		{
-			logger.debug("add submodule="+anaType+" for tool="+tool.getName()+" ("+tool.getId()+")");
-			submodule.add(anaType);
-			map.put("submodule", submodule);
+			logger.debug("add module="+anaType+" for tool="+tool.getName()+" ("+tool.getId()+")");
+			exe.add(anaType);
+			//map.put("module", module);
 		}
-		
-		if (getInputs() != null)
-			map.put("input", dataPorts2ParamStringList(getInputs(), tool, false));
-		
-		if (getOutputs() != null)
-			map.put("output", dataPorts2ParamStringList(getOutputs(), tool, true));
 
 		
-		// set submodule
-		// set positional args
-		// if (getPreferredTool().getCommand().get)
-		logger.debug("createCommandLineMap(): task=" + getUniqueString()
-				+ " tool=" + tool.getName() + " #in="
-				+ getInputs().size() + " #out=" + getOutputs().size());
-		
-		if (getCommand().getResolvedParams() != null)
-		{
-			map.put("positional_arg", getCommand().getPositionalParameterNames());
-			EList<String> filter_opt_args = new BasicEList<String>();
-			Iterator<String> it = getCommand().getOptionalParameterNames().iterator();
-			while (it.hasNext())
-			{
-				String opt_arg = it.next();
-				
-				if (!map.get("positional_arg").contains(opt_arg))
-					filter_opt_args.add(opt_arg);
-			}
-			map.put("optional_arg", filter_opt_args);
-		}
-		
-		return map;
+		return StringUtils.join(exe, " ");
+
 	}
+	
+	
+	private String createCommandLinePart2(
+			Tool tool, 
+			EMap<String, Object> constaints,
+			boolean omitInput,
+			boolean omitOutput,
+			String type)
+	{
+		EList<String> commandLineList = new BasicEList<String>();
+		Iterator<Entry<String, ResolvedParam>> it = tool.getCommand().getResolvedParams().entrySet().iterator();  
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			ResolvedParam    resolvedParam = e.getValue();
+			Parameter        parameter     = resolvedParam.getParameter();
+			InOutParameter   inOutParmeter = null;
+			boolean          isInOutParam  = false;
+			boolean          shallGenerate = false;
+			if (parameter instanceof InOutParameter)
+			{
+				inOutParmeter = (InOutParameter) parameter;
+				isInOutParam  = true;
+			}
+			if (type == null)
+			{
+				shallGenerate = true;
+			}
+			else if (isInOutParam && !inOutParmeter.isOutput())
+			{
+				if ("input".equals(type)) 
+					shallGenerate = true;
+				else if (!omitInput && (("opt".equals(type) && parameter.isOptional()) || ("pos".equals(type) && !parameter.isOptional())))
+					shallGenerate = true;
+			}
+			else if (isInOutParam && inOutParmeter.isOutput())
+			{
+				if ("output".equals(type)) 
+					shallGenerate = true;
+				else if (!omitOutput && (("opt".equals(type) && parameter.isOptional()) || ("pos".equals(type) && !parameter.isOptional())))
+					shallGenerate = true;
 
+			}
+			else if ("opt".equals(type))
+			{
+				shallGenerate = true;
+			}
+			else if ("pos".equals(type))
+			{
+				shallGenerate = true;
+			}
+			if (shallGenerate)
+				commandLineList.add(resolvedParam.generateCommandString(constaints));
+			
+		}
+		
+		return StringUtils.join(commandLineList, " ");
+	}
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String createCommandLine(String commandPattern,
-			EMap<String, EList<String>> commandLineParts) {
+	public String createCommandLine(String commandPattern) {
 
-		Tool   tool        = getPreferredTool();
-		String commandLine = "";
-		//EMap<String, Object> constraints = new BasicEMap<String, Object>();
+		Tool           tool        = getPreferredTool();
+		EList<String>  commandLineParts = new BasicEList<String>();
 		
-		for (String commandLinePart : commandPattern.split(" "))
+		commandLineParts.add(createCommandLinePart1(tool));
+		
+		String[] commandPatterns = commandPattern.split(" ");
+		
+		// if commandpatterns does not contains input 
+		
+		for (String commandLinePart : commandPatterns)
 		{
 			logger.trace("createCommandLine(): "+commandLinePart);
+			
+			commandLineParts.add(createCommandLinePart2(tool, null, omitInput, omitOutput, type));
+			
+			/*
 			if (commandLineParts.containsKey(commandLinePart))
 			{
 				EList<String> keys = commandLineParts.get(commandLinePart);
 				
-				if ("executable".equals(commandLinePart))
-				{
-					commandLine += StringUtils.join(keys, " ");
-				}
-				else
-				{
 					for (String key : keys)
 					{
 					
-						if ("submodule".equals(commandLinePart))
-						{
-							//Parameter param = tool.getPackage().getParameters().get("analysis_type");
-							//constraints.put("value", key);
-							commandLine += " "+key;
-							//commandLine += param.generateCommandString(constraints);
-						}
-						else
-						{
-							
 							String tmp = getCommand().getResolvedParams().
 							get(key).generateCommandString(null);
 							logger.debug("process cmd part="+commandLinePart+" "+key+"="+tmp);
 							commandLine += " "+tmp;
-						}
+
 					}
-				}
-			}
+			}*/
 		}
-		return commandLine;
+		
+		return StringUtils.join(commandLineParts, " ");
 	}
 
-	private EList<String> dataPorts2ParamStringList(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
+	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
 		
-		EList<String> list = new BasicEList<String>();
+		//EList<String> list = new BasicEList<String>();
 		
 		Iterator<Entry<String, DataLink>> it = map.iterator();
 		while (it.hasNext()) {
@@ -1616,7 +1659,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 					+"; data param="+paramName+" (default="+dataParam.getName()+")"
 					+"; data resource="+dataLink.getData().getDataResourceName().toString()+" "+getInputs().hashCode());
 			if (paramName == null || !getCommand().getResolvedParams().containsKey(paramName))
-				throw new ParameterNotFoundException();
+			{
+				//throw new ParameterNotFoundException();
+				logger.warn("dataPorts2ParamStringList(): no parameter defined. This is ok for hidden/implicit input/output data."+
+						"in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
+						+" dataLink="+dataLink.getUniqueString(true)
+						+"; data resource="+dataLink.getData().getDataResourceName().toString());
+				continue;
+			}
 			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
 			
 			logger.trace("dataPorts2ParamStringList(): cmd param keyset="+getCommand().getResolvedParams().keySet());
@@ -1628,7 +1678,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 			//list.add(paramName);
 
 		}
-		return list;
 	}
 
 	/**
@@ -2094,84 +2143,50 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @throws DataLinkNotFoundException
+	 * @throws NoValidInOutDataException 
+	 * @throws ParameterNotFoundException 
 	 * @generated not
 	 */
-	public void resolveInputs() throws DataLinkNotFoundException {
+	public void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
 		for (Object edge : GlobalVar
 				.getGraphUtil()
-				.getGraph()
-				.getIncomingEdges(
-						GlobalVar.getGraphUtil().getCells()
-								.get(getUniqueString()))) {
+					.getGraph()
+						.getIncomingEdges(
+								GlobalVar.getGraphUtil().getCells()
+									.get(getUniqueString()))) {
 			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
 
 			// getInputs().put(dataLink.getUniqueString(null, null, null),
 			// dataLink);
 			getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 		}
+		resolveDataPorts(getInputs(), getPreferredTool(), false);
+
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated not
-	 */
-	public void resolveOutputs() throws DataLinkNotFoundException {
-		for (Object edge : GlobalVar
-				.getGraphUtil()
-				.getGraph()
-				.getOutgoingEdges(
-						GlobalVar.getGraphUtil().getCells()
-								.get(getUniqueString()))) {
-			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
-
-			// getOutputs().put(dataLink.getUniqueString(null, null, null),
-			// dataLink);
-			getOutputs()
-					.put(new Integer(dataLink.getId()).toString(), dataLink);
-		}
-	}
-
-	/**
-	 * <!-- begin-user-doc --> set the parameter values, i.e. assign the input and output data 
-	 * as values to its corresponding parameters <!-- end-user-doc -->
 	 * @throws NoValidInOutDataException 
 	 * @throws ParameterNotFoundException 
 	 * 
 	 * @generated not
 	 */
-	public void resolveParameters() throws ParameterNotFoundException, NoValidInOutDataException {
+	public void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
+		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString())==null)
+			logger.error("resolveOutputs(): no cell found for "+getUniqueString());
+		for (Object edge : GlobalVar
+				.getGraphUtil()
+					.getGraph()
+						.getOutgoingEdges(
+								GlobalVar.getGraphUtil().getCells()
+									.get(getUniqueString()))) {
+			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
 
-		EMap<String, EList<String>> cmdMap = createCommandLineMap();
-		
-		for (String cmdPart:cmdMap.keySet())
-		{
-			Iterator<String> it1 = cmdMap.get(cmdPart).iterator();
-			while (it1.hasNext())
-			{
-				if ("output".equals(cmdPart) || "input".equals(cmdPart))
-				{
-					String key = it1.next();
-					if (getCommand().getResolvedParams().containsKey(key))
-					{
-						ResolvedParam param = getCommand().getResolvedParams().get(key);
-						param.getValue().add(getInputs());
-					}
-				}
-			}
+			// getOutputs().put(dataLink.getUniqueString(null, null, null),
+			// dataLink);
+			getOutputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 		}
-		
-/*			Iterator<Entry<String, Parameter>> it = getPreferredTool().getCommand()
-					.getParameters().iterator();
-		
-		while (it.hasNext())
-		{
-			Entry<String, Parameter> e = it.next();
-			if (e.getValue().isOutput())
-
-			getParameters().put(e.getKey(), e.getValue());
-		}
-		*/
+		resolveDataPorts(getOutputs(), getPreferredTool(), true);
 	}
 
 	/**

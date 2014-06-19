@@ -41,6 +41,7 @@ public class GlobalVar {
 	private static Util util      = null;
 	
 	private static Map<String, easyflow.tool.Package> packages = new HashMap<String, easyflow.tool.Package>();
+	private static Map<String, Map<String, Map<String, Map<String, String>>>> masterMap = new HashMap<String, Map<String, Map<String, Map<String, String>>>>();
 	private static EasyFlowGraphEditor  editor               = null;
 	private static ComposeWorkflowPanel composeWorkflowPanel = null;
 	private static DefaultProject       defaultProject       = null;
@@ -181,6 +182,14 @@ public class GlobalVar {
 
 	public static void setLastErrorString(String lastErrorString) {
 		GlobalVar.lastErrorString = lastErrorString;
+	}
+
+	public static Map<String, Map<String, Map<String, Map<String, String>>>> getMasterMap() {
+		return masterMap;
+	}
+
+	public static void setMasterMap(Map<String, Map<String, Map<String, Map<String, String>>>> masterMap) {
+		GlobalVar.masterMap = masterMap;
 	}
 
 }

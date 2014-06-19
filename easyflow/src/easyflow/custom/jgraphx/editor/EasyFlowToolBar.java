@@ -45,7 +45,7 @@ public class EasyFlowToolBar extends JToolBar
 	final Action deleteGraphAction         = new DeleteGraphAction();
 	
 	final Action genAbstractWorkflowAction = new GenAbstractWorkflowAction();
-	final Action applyGroupingCritAction  = new ApplyGroupingCritAction();
+	final Action applyGroupingCritAction   = new ApplyGroupingCritAction();
 	final Action applyParameterCritAction  = new ApplyParameterCritAction();
 	final Action resolveUtilityTasksAction = new ResolveUtilityTaskAction();
 	final Action resolveToolDepsAction     = new ResolveToolDepsAction();
@@ -344,7 +344,8 @@ public class EasyFlowToolBar extends JToolBar
 		}
 		public void actionPerformed(ActionEvent ae) {
 			try {
-				if (GlobalVar.getDefaultProject().resolveUtilityTasks())
+				if (GlobalVar.getDefaultProject().resolveUtilityTasks()
+					&& GlobalVar.getDefaultProject().resolvePreprocessingTasks())
 				{
 					btnResolveToolDeps.setEnabled(true);
 					btnResolveUtilityTasks.setEnabled(false);

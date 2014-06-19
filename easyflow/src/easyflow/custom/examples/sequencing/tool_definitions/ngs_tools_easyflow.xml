@@ -4,9 +4,50 @@
 	xmlns="urn:de.thiema.easyflow/types" 
 	xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd">
 
-	<package id="gatk" version="2.3">
-		<exe name="GenomeAnalysisTK.jar"></exe>
+	<package name="picard" version="1.56.0">
 		<interpreter exe="java"></interpreter>
+		<param type="template" name="default_param" named="true" separator="=" prefix=""></param>
+		<param type="analysis_type" named="true" prefix="-jar">
+			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
+				<metadata_map>
+					<map_entry key="readgroup" value="rgid"/>
+					<map_entry key="sample" value="rgsm"/>
+					<map_entry key="library" value="rglib"/>
+					<map_entry key="platform" value="rgpl"/>
+				</metadata_map>
+			</option>
+			<option value="picard_BamIndexStats" exe="BamIndexStats.jar"></option>
+			<option value="picard_FastqToSam" exe="FastqToSam.jar"></option>
+			<option value="picard_ReorderSam" exe="ReorderSam.jar"></option>
+			<option value="picard_ReplaceSamHeader" exe="ReplaceSamHeader.jar"></option>
+			<option value="picard_SamToFastq" exe="SamToFastq.jar"></option>
+			<option value="PicardASMetrics" exe="CollectAlignmentSummaryMetrics.jar"></option>
+			<option value="rgPicFixMate" exe="FixMateInformation.jar"></option>
+			<option value="PicardGCBiasMetrics" exe="CollectGcBiasMetrics.jar"></option>
+			<option value="PicardHsMetrics" exe="CalculateHsMetrics.jar"></option>
+			<option value="PicardInsertSize" exe="CollectInsertSizeMetrics.jar"></option>
+			<option value="rgEstLibComp" exe="EstimateLibraryComplexity.jar"></option>
+			<option value="rgPicardMarkDups" exe="MarkDuplicates.jar"></option>
+		</param>
+	</package>
+	<!-- 
+id="picard_ARRG"
+id="picard_BamIndexStats"
+id="picard_FastqToSam"
+id="picard_ReorderSam"
+id="picard_ReplaceSamHeader"
+id="picard_SamToFastq"
+id="PicardASMetrics"
+id="rgPicFixMate"
+id="PicardGCBiasMetrics"
+id="PicardHsMetrics"
+id="PicardInsertSize"
+id="rgEstLibComp"
+id="rgPicardMarkDups"
+ -->
+	<package id="gatk" version="2.3">
+		<interpreter exe="java"></interpreter>
+		<param name="GenomeAnalysisTK.jar" type="exe" prefix="-jar"></param>
 		<param type="analysis_type" named="true" prefix="-T">
 			<option value="BaseRecalibrator"></option>
 			<option value="DepthOfCoverage"></option>
@@ -148,7 +189,6 @@ Command: view        SAM<->BAM conversion
 			bwa samse|sampe
 		</command>
 		
-		
 		<conditional name="analysis_type">
 			<param name="readend" type="select"/>					
 			<when value="sampe" >
@@ -158,7 +198,6 @@ Command: view        SAM<->BAM conversion
 				
 			</when>
 		</conditional>
-			
 		
 		<param name="reference" type="data" format="fasta" positional="true"/>
 		<param name="input" type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2"/>
@@ -210,7 +249,7 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 		<param name="input" type="data" format="bam" multiple="true"></param>
 		<param name="output" type="data" format="bam"></param>
 	</tool>
-	<tool id="sort_sam" name="rmdup" version="0.1" package="samtools" analysis_type="sort">
+	<tool id="sort_sam" name="sort_sam" version="0.1" package="samtools" analysis_type="sort">
 		<description>remove duplcates</description>
 		<param name="input" type="data" format="bam"></param>
 		<param name="output" type="data" format="bam" optional="true" output="true"/>

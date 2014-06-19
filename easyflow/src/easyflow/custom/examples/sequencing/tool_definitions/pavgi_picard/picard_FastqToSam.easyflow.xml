@@ -19,9 +19,7 @@
           format="fastqsanger,fastqillumina,fastqsolexa,fastqcssanger"
           help="Only needed when using paired end data."
           label="Second FASTQ of paired end data"
-          optional="true">
-      <key>Only</key>
-   </param>
+          optional="true"/>
     <param name="read_group_name" type="text" label="Read Group Name"/>
     <param name="sample_name" type="text" label="Sample Name"/>
     <conditional name="param_type">

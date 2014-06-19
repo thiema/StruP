@@ -12,19 +12,14 @@
   
     <param name="inputFile" type="data" format="bam,sam"
           help="If empty, upload or import a SAM/BAM dataset."
-          label="SAM/BAM dataset to replace header in (TARGET)">
-      <key>If</key>
-   </param>
+          label="SAM/BAM dataset to replace header in (TARGET)"/>
     <param name="headerFile" type="data" format="bam,sam"
           help="If empty, upload or import a SAM/BAM dataset."
-          label="SAM/BAM to reader header from (SOURCE)">
-      <key>If</key>
-   </param>
+          label="SAM/BAM to reader header from (SOURCE)"/>
     <param name="outputFormat" type="boolean" help="Uncheck for SAM output"
           label="Output BAM instead of SAM"
           defaultValue="true">
       <key>bam</key>
-      <key>Uncheck</key>
    </param>
   
   

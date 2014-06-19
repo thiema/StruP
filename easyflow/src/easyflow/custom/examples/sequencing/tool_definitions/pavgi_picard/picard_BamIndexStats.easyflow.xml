@@ -12,9 +12,7 @@
   
     <param name="input_file" type="data" format="bam"
           help="If empty, upload or import a BAM dataset"
-          label="BAM dataset to generate statistics for">
-      <key>If</key>
-   </param>
+          label="BAM dataset to generate statistics for"/>
   
   
     <param name="htmlfile" type="data" format="html"

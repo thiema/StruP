@@ -158,6 +158,8 @@
 	      <xs:enumeration value="data"/>
 	      <xs:enumeration value="drill_down"/>
 	      <xs:enumeration value="analysis_type"/>
+	      <xs:enumeration value="template"/>
+	      <xs:enumeration value="exe"/>
 	    </xs:restriction>
   </xs:simpleType>
 	
@@ -179,14 +181,20 @@
 	</xs:simpleType>
 	
 	<xs:complexType name="ParamOption">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="metadata_map" type="MetadataMap"/>
+		</xs:sequence>
 				<xs:attribute name="value" type="xs:string"/>
+				<xs:attribute name="exe" type="xs:string"/>
 				<xs:attribute default="false" name="selected" type="PermissiveBoolean"/>
 				<xs:attribute name="help" type="xs:string"/>
 				<xs:attribute name="condition" type="xs:string"/>
+
+<!-- 		<xs:simpleContent>
+			<xs:extension base="xs:string">
+
 			</xs:extension>
-		</xs:simpleContent>
+		</xs:simpleContent> -->
 	</xs:complexType>
 	
 	<xs:complexType name="ParamName">
@@ -199,6 +207,16 @@
 		<xs:attribute name="uri"/>
 	</xs:complexType>
 
+<xs:complexType name="MetadataMap">
+	<xs:sequence>
+		<xs:element maxOccurs="unbounded" minOccurs="1" name="map_entry" type="MapEntry"/>
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MapEntry">
+	<xs:attribute name="key" type="xs:string"></xs:attribute>
+	<xs:attribute name="value" type="xs:string"></xs:attribute>
+</xs:complexType>
 
 <!-- more or less 1:1 from Galaxy -->
 

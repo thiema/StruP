@@ -1604,11 +1604,11 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = addEOperation(taskEClass, null, "resolveInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getParameterNotFoundException());
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
 		op = addEOperation(taskEClass, null, "resolveOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-
-		op = addEOperation(taskEClass, null, "resolveParameters", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 

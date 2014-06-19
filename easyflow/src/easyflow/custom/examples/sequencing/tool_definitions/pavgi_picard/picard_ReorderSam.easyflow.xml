@@ -12,36 +12,41 @@
   
     <param name="inputFile" type="data" format="bam,sam"
           help="If empty, upload or import a SAM/BAM dataset."
-          label="SAM/BAM dataset to be reordered">
-      <key>If</key>
-   </param>
-    <param name="refFile" type="data" format="fasta" label="Using reference file"/>
-   <param name="speciesName" type="text" label="Species name"/>
-   <param name="buildName" type="text" label="Build name"/>
-   <param name="truncateSeqNames" type="boolean"
-          label="Truncate sequence names after first whitespace"
-          defaultValue="true">
-      <key>true</key>
-   </param>
+          label="SAM/BAM dataset to be reordered"/>
+    <conditional name="source">
+      <param name="indexSource" type="select"
+             help="This tool will re-order SAM/BAM in the same order as reference selected below."
+             label="Select Reference Genome"/>
+      <when value="built-in">
+        <param name="ref" type="select" label="Select a reference genome"/>
+      </when>
+      <when value="history">
+        <param name="refFile" type="data" format="fasta" label="Using reference file"/>
+        <param name="speciesName" type="text" label="Species name"/>
+        <param name="buildName" type="text" label="Build name"/>
+        <param name="truncateSeqNames" type="boolean"
+                label="Truncate sequence names after first whitespace"
+                defaultValue="true">
+            <key>true</key>
+         </param>
+      </when>
+    </conditional>
     <param name="allowIncDictConcord" type="boolean"
           help="Allows a partial overlap of the BAM contigs with the new reference sequence contigs."
           label="Allow incomplete dict concordance?"
           defaultValue="true">
       <key>true</key>
-      <key>Allows</key>
    </param>
     <param name="allowContigLenDiscord" type="boolean"
           help="This is dangerous--don't check it unless you know exactly what you're doing!"
           label="Allow contig length discordance?"
           defaultValue="true">
       <key>true</key>
-      <key>This</key>
    </param>
     <param name="outputFormat" type="boolean" help="Uncheck for SAM output"
           label="Output BAM instead of SAM"
           defaultValue="true">
       <key>bam</key>
-      <key>Uncheck</key>
    </param>
   
   

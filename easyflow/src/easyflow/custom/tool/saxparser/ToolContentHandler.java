@@ -50,31 +50,57 @@ public class ToolContentHandler implements ContentHandler {
 	Map<String, DataFormat> dataFormatMap = new HashMap<String, DataFormat>();
 	Stack<Tag> tagStack = new Stack<Tag>();
 	Stack<Parameter> paramStack = new Stack<Parameter>();
-	Tool tool = null;
-	Package pkg = null;
-	Parameter parameter = null;
-	Parameter subParam = null;
-	Data data = null;
-	DataPort dataPort = null;
+	
+	Package     pkg         = null;
+	Tool        tool        = null;
+	Parameter   parameter   = null;
+	Parameter   subParam    = null;
+	OptionValue optionValue = null;
+	Data        data        = null;
+	DataPort    dataPort    = null;
+	
 	Key key = null;
 	Requirement requirement = null;
 	int no_requirement;
-	Tag curTag = null;
-	Tag lastTag = null;
+	Tag curTag    = null;
+	Tag lastTag   = null;
 	Tag parentTag = null;
-	String lastMainAttributeValue = null;
+	
 	DocumentProperties documentProperties = null;
-	String xmlKey = null;
-	String condition = null;
-	String conditionValue = null;
-	String action = null;
-	boolean xmlKeyFound = false;
+	String lastMainAttributeValue = null;
+	String xmlKey           = null;
+	String condition        = null;
+	String conditionValue   = null;
+	String action           = null;
+	
+	boolean xmlKeyFound     = false;
+	
 	boolean withinParam       = false;
 	boolean withinData        = false;
 	boolean withinPackage     = false;
 	boolean withinConditional = false;
-	Map<String, String> dataStrings=new HashMap<String, String>();
+	boolean withinMetadataMap = false;
+	boolean withinOption      = false;
 	
+	Map<String, String> dataStrings=new HashMap<String, String>();
+	//Package -> Tool -> InfoType (e.g. Parameter, metadata) -> Map
+	Map<String, Map<String, Map<String, Map<String, String>>>> masterMap = null;
+	
+	private static Map<String, Map<String, Map<String, String>>> createNewMap3()
+	{
+		return new HashMap<String, Map<String, Map<String, String>>>();
+	}
+
+	private static Map<String, Map<String, String>> createNewMap2()
+	{
+		return new HashMap<String, Map<String, String>>();
+	}
+
+	private static Map<String, String> createNewMap1()
+	{
+		return new HashMap<String, String>();
+	}
+
 	public static List<Tool> parse(URI source, DocumentProperties documentProperties, 
 			ToolContentHandler toolContentHandler, String xmlKey)
 	{
@@ -134,6 +160,7 @@ public class ToolContentHandler implements ContentHandler {
 
 	@Override
 	public void startDocument() throws SAXException {
+		masterMap = GlobalVar.getMasterMap();
 		logger.trace("startDoc: parentTag="+parentTag+" lastAttrib="+lastMainAttributeValue+" parameter="+parameter);
 		no_requirement = 0;
 	}
@@ -371,6 +398,21 @@ public class ToolContentHandler implements ContentHandler {
 				if (atts.getValue("analysis_type")!=null)
 					tool.setAnalysisType(atts.getValue("analysis_type"));
 				break;
+			case METADATA_MAP:
+				withinMetadataMap = true;
+			case MAP_ENTRY:
+				if (withinParam && withinPackage && withinOption)
+					if (atts.getValue("key") != null && atts.getValue("value") != null)
+					{
+						if (!masterMap.containsKey(pkg.getId()))
+							masterMap.put(pkg.getId(), createNewMap3());
+						if (!masterMap.get(pkg.getId()).containsKey(optionValue.getName()))
+							masterMap.get(pkg.getId()).put(optionValue.getName(), createNewMap2());
+						if (!masterMap.get(pkg.getId()).get(optionValue.getName()).containsKey("metadata"))
+							masterMap.get(pkg.getId()).get(optionValue.getName()).put("metadata", createNewMap1());
+						masterMap.get(pkg.getId()).get(optionValue.getName()).get("metadata").put(atts.getValue("key"), atts.getValue("value"));
+					}
+					
 			case MACROS:
 				break;
 			case IMPORT:
@@ -461,7 +503,8 @@ public class ToolContentHandler implements ContentHandler {
 				parameter.getKeys().add(key);
 				break;
 			case OPTION:
-				OptionValue optionValue = ToolFactory.eINSTANCE.createOptionValue();
+				withinOption  = true;
+				optionValue   = ToolFactory.eINSTANCE.createOptionValue();
 				if (atts.getValue("name")!=null)
 					optionValue.setName(atts.getValue("name"));
 				else if (atts.getValue("value")!=null)
@@ -484,6 +527,8 @@ public class ToolContentHandler implements ContentHandler {
 				{
 					
 					parameter.getOptionValues().add(optionValue);
+					if (atts.getValue("exe")!=null)
+						optionValue.setExe(atts.getValue("exe"));
 				}
 				break;
 			case ACTIONS:
@@ -597,6 +642,9 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				
 				break;
+			case METADATA_MAP:
+				withinMetadataMap = false;
+				break;
 			case DATA:
 				withinData = false;
 				logger.debug(data);
@@ -610,6 +658,9 @@ public class ToolContentHandler implements ContentHandler {
 				break;
 			case PARAM:
 				withinParam = false;
+				break;
+			case OPTION:
+				withinOption  = false;
 				break;
 			case PACKAGE:
 				withinPackage = false;
@@ -639,7 +690,7 @@ public class ToolContentHandler implements ContentHandler {
 							}
 							else
 							{
-								logger.warn("couldnt find data "+dataString+" which is referenced by parameter "+e.getKey() );
+								logger.warn("couldnt find data "+dataString+" which is referenced by parameter "+e.getKey()+" for tool="+tool.getName()+"/"+tool.getId() );
 							}
 						}
 					}
@@ -648,6 +699,18 @@ public class ToolContentHandler implements ContentHandler {
 						logger.warn("couldnt find parameter "+e.getKey());
 					}
 				}
+				if (tool.getPackage() != null && masterMap.containsKey(tool.getPackage().getId()))
+					if (masterMap.get(tool.getPackage().getId()).containsKey(tool.getId()))
+						if (masterMap.get(tool.getPackage().getId()).get(tool.getId()).containsKey("metadata"))
+							for (Entry<String, String> e:masterMap.get(tool.getPackage().getId()).get(tool.getId()).get("metadata").entrySet())
+							{
+								if (tool.getCommand().getResolvedParams().containsKey(e.getValue()))
+									if (!tool.getCommand().getResolvedParams().get(e.getValue()).getParameter().getGrouping().contains(e.getKey()))
+									{
+										logger.debug("set metadata info "+e.getValue()+" for parameter="+e.getKey()+" of tool="+tool.getId()+" (pkg="+tool.getPackage().getId()+")");
+										tool.getCommand().getResolvedParams().get(e.getValue()).getParameter().getGrouping().add(e.getKey());
+									}
+							}
 				logger.debug("");
 			default:
 				break;
@@ -726,7 +789,7 @@ public class ToolContentHandler implements ContentHandler {
 	public enum Tag {
 		EASYFLOW, TOOLS, MACROS, IMPORT,
         XML, EXPAND, YIELD,
-        PACKAGE,
+        PACKAGE, METADATA_MAP, MAP_ENTRY,
         TOOL, DESCRIPTION, INTERPRETER, EXE,
         HELP, REQUIREMENTS, REQUIREMENT, COMMAND, PARAM, DATA,
         CONDITIONAL, 

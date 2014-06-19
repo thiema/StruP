@@ -6,30 +6,25 @@
  */
 package easyflow.example.impl;
 
-import easyflow.core.CorePackage;
-import easyflow.custom.jgraphx.editor.EasyFlowToolBar;
 import easyflow.custom.util.URIUtil;
 import easyflow.example.ExamplePackage;
 import easyflow.example.Examples;
 
 import easyflow.ui.DefaultProject;
 import easyflow.util.maps.MapsPackage;
-import easyflow.util.maps.impl.StringToObjectMapImpl;
+
 import easyflow.util.maps.impl.StringToProjectMapImpl;
-import easyflow.util.maps.impl.StringToURIMapImpl;
 import easyflow.ui.UiFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
 

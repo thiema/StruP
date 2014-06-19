@@ -42,6 +42,7 @@ import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.Util;
@@ -1874,27 +1875,40 @@ public class UtilImpl extends EObjectImpl implements Util {
 					
 					if (!task.getPreprocessingTasks().isEmpty())
 					{
+						DataLink dataLink = loadDataLink(edge);
 						Iterator<PreprocessingTask> it = task.getPreprocessingTasks().iterator();
+						boolean add = false;
 						while (it.hasNext())
 						{
 							PreprocessingTask prepTask = it.next();
 							
-							
 							if (getUtilityTasks().get(prepTask.getName())!=null)
 							{
-								prepTask.setTask(getUtilityTasks().get(prepTask.getName()));
-								loadDataLink(edge).getIntermediateTasks().add(prepTask);
-								logger.debug("findCellsWherePreprocessingIsRequired(): preprocessing task "+prepTask.getName()+" added for "+task.getUniqueString());
-								EList<mxICell> prepEdges = prepRequired.containsKey(vertex)?prepRequired.get(vertex):new BasicEList<mxICell>();
-								if (prepEdges.isEmpty())
-									prepRequired.put((mxICell) vertex, prepEdges);
-								prepEdges.add((mxICell) edge);
+								Task newPrepTask = EcoreUtil.copy(getUtilityTasks().get(prepTask.getName()));
+								copyTask(getUtilityTasks().get(prepTask.getName()), newPrepTask);
+								newPrepTask.setName(newPrepTask.getName()+"_"+task.getUniqueURIString());
+								getTasks().put(newPrepTask.getUniqueString(), newPrepTask);
+								prepTask.setTask(newPrepTask);
+								
+								dataLink.getIntermediateTasks().add(prepTask);
+								logger.debug("findCellsWherePreprocessingIsRequired(): preprocessing task "
+										+prepTask.getName()+" added for "
+										+task.getUniqueString()+" "+dataLink.hashCode());
+								add = true;
 									
 							}
 							else
 							{
-								logger.debug("findCellsWherePreprocessingIsRequired(): omit preprocessing tasks for "+task.getUniqueString()+": Preptask="+prepTask.getName()+" expression="+prepTask.getExpression()+" found="+(getUtilityTasks().get(prepTask.getName())!=null));
+								logger.debug("findCellsWherePreprocessingIsRequired(): omit preprocessing tasks for "+task.getUniqueString()
+										+": Preptask="+prepTask.getName()+" expression="+prepTask.getExpression()
+										+" found="+(getUtilityTasks().get(prepTask.getName())!=null));
 							}
+						}
+						if (add)
+						{
+							EList<mxICell> prepEdges = prepRequired.containsKey(vertex)?prepRequired.get(vertex):new BasicEList<mxICell>();
+							prepEdges.add((mxICell) edge);
+							prepRequired.put((mxICell) vertex, prepEdges);
 						}
 					}
 				} catch (TaskNotFoundException e) {
@@ -1944,11 +1958,12 @@ public class UtilImpl extends EObjectImpl implements Util {
 		{
 			
 			PreprocessingTask prepTask = it.next();
-			Task newPrepTask = (Task) EcoreUtil.copy(prepTask.getTask());
+			Task newPrepTask = prepTask.getTask();
 			logger.trace("resolvePreprocessingTask(): insertPrepTask="+newPrepTask.getUniqueString()+" for "+task.getUniqueString()+" "+prepTask.getTask().getPreferredTool());
 			rc = true;
 			// insert the new vertex 
 			Object newVertex = getGraph().insertVertexEasyFlow(null, null, newPrepTask);
+			getCells().put(newPrepTask.getUniqueString(), (mxICell) newVertex);
 			// link with parent
 			getGraph().insertEdgeEasyFlow(null, null, getSource((mxCell) edge), newVertex, copyDataLink(dataLink));
 			// link with child
@@ -1972,26 +1987,46 @@ public class UtilImpl extends EObjectImpl implements Util {
 		boolean  first    = true;
 		mxICell  last     = null;
 		
-		Iterator<PreprocessingTask> it = loadDataLink(edge).getIntermediateTasks().iterator();
+		logger.debug("resolvePreprocessingTask(): process intermediate tasks for dataLink="+dataLink.hashCode());
+		Iterator<PreprocessingTask> it = dataLink.getIntermediateTasks().iterator();
+		Object lastCompatibleVertex = null;
+		boolean incompatibleParentFound = false;
 		while (it.hasNext())
 		{
 			
 			mxICell source = first ? getSource((mxCell) edge) : last;
 			first = false;
 			PreprocessingTask prepTask = it.next();
-			Task newPrepTask = (Task) EcoreUtil.copy(prepTask.getTask());
-			
-			logger.trace("resolvePreprocessingTask(): insertPrepTask="+newPrepTask.getUniqueString()+" for "+task.getUniqueString()+" "+prepTask.getTask().getPreferredTool());
+			Task newPrepTask = prepTask.getTask();
+			logger.debug("resolvePreprocessingTask(): insertPrepTask="+newPrepTask.getUniqueString()
+					+" for "+task.getUniqueString()+" "
+					+prepTask.getTask().getPreferredTool().getId()+" "+newPrepTask.hashCode()
+					+" output compatibility="+
+					newPrepTask.isCompatibleWithInDataPortFor(dataLink.getDataPort()));
 			rc = true;
 			// insert the new vertex 
 			Object newVertex = getGraph().insertVertexEasyFlow(null, null, newPrepTask);
-			
+			if (incompatibleParentFound)
+			{
+				getGraph().insertEdgeEasyFlow(null, null, lastCompatibleVertex, newVertex, copyDataLink(dataLink));
+				incompatibleParentFound = false;
+			}
+
+			if (newPrepTask.isCompatibleWithInDataPortFor(dataLink.getDataPort()))
+				lastCompatibleVertex = newVertex;
+			else
+				incompatibleParentFound = true;
+
+			getCells().put(newPrepTask.getUniqueString(), (mxICell) newVertex);
 			// link with parent
-			getGraph().insertEdgeEasyFlow(null, null, source, newVertex, copyDataLink(dataLink));
+			getGraph().insertEdgeEasyFlow(null, null, source, newVertex, copyDataLink(dataLink, loadTask(source)));
 			last = (mxICell) newVertex;
 			
 		}
-		getGraph().insertEdgeEasyFlow(null, null, last, vertex, copyDataLink(dataLink));
+		if (incompatibleParentFound)
+			getGraph().insertEdgeEasyFlow(null, null, lastCompatibleVertex, vertex, copyDataLink(dataLink));
+		
+		getGraph().insertEdgeEasyFlow(null, null, last, vertex, copyDataLink(dataLink, loadTask(last)));
 		// remove obsolet parent and child edge		
 		getGraph().removeCells(new Object[]{edge}, true);
 		return rc;
@@ -2048,9 +2083,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 		else
 		{
 			
-			logger.error("no grouping instances defiend.");
+			logger.debug("no grouping instances defiend.");
 		}
-		int i = task.getChunks().indexOfKey(groupingStr);		
+		int i = task.getChunks().indexOfKey(groupingStr);
 		if (i!=-1)
 		{
 			EList<TraversalChunk> chunks = new BasicEList<TraversalChunk>();
@@ -2907,6 +2942,14 @@ public class UtilImpl extends EObjectImpl implements Util {
 	}
 	
 	
+	private DataLink copyDataLink(DataLink dataLink, Task source)
+	{
+		DataLink dataLinkCopy = copyDataLink(dataLink);
+		if (!source.getOutDataPorts().isEmpty() && !source.isCompatibleWithInDataPortFor(dataLinkCopy.getDataPort()))
+			dataLinkCopy.setDataPort(source.getOutDataPorts().get(0));
+		return dataLinkCopy;
+	}
+	
 	private DataLink copyDataLink(DataLink dataLink)
 	{
 		DataLink dataLinkCopy = EcoreUtil.copy(dataLink);
@@ -3014,7 +3057,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 				
 				try {
 					Task task = loadTask(vertex);
-					logger.debug("resolveToolDependencies(): process task="+task.getUniqueString());
+					//logger.debug("resolveToolDependencies(): process task="+task.getUniqueString());
 					if (task.getTools().isEmpty())
 					{
 						logger.error("resolveToolDependencies(): no tool. nothing to do.");
@@ -3029,7 +3072,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						{
 							int i=0;
 							Tool tool = task.getPreferredTool();
-							logger.debug("resolveToolDependencies(): tool="+tool.getId()+" data="+tool.getData().keySet());
+							//logger.debug("resolveToolDependencies(): tool="+tool.getId()+" data="+tool.getData().keySet());
 							for (Object edgeOut:getGraph().getOutgoingEdges(vertex))
 							{
 								i++;
@@ -3042,10 +3085,12 @@ public class UtilImpl extends EObjectImpl implements Util {
 									String   groupingStr   = dataLink.getGroupingStr();
 									String   paramStr      = dataLink.getParamStr();
 									String   firstInstanceDL = null;
-
-									logger.debug("resolveToolDependencies(): "
+									String   specString    = task.getUniqueString()+" (Tool="+tool.getName()+")=>"+(child!=null?child.getUniqueString():null)+" (Tool="+(childTool!=null?childTool.getName():null)+")";
+									boolean  assumeHiddenInput = false;
+									
+									logger.debug("resolveToolDependencies(): "+specString
 											+"process datalink #"+(i)
-											+" "+task.getUniqueString()+" "+tool.getName()+"=>"+(child!=null?child.getUniqueString():null)+" (Tool="+(childTool!=null?childTool.getName():null)+")"
+											+" "+task.getUniqueString()+" (Tool="+tool.getName()+")=>"+(child!=null?child.getUniqueString():null)+" (Tool="+(childTool!=null?childTool.getName():null)+")"
 											+" datalink="+dataLink.getId()
 											+"\n   ---group="+groupingStr+" firstInstance="+firstInstance+"/"+firstInstanceDL
 													+task.getTraversalEvents().keySet()+" childs:"+child.getTraversalEvents().keySet()
@@ -3057,9 +3102,21 @@ public class UtilImpl extends EObjectImpl implements Util {
 									EList<Data> parentData = getToolDataForDataLink(tool.getData(), dataLink);
 									EList<Data> childData  = null;
 									if (childTool != null)
-										childData = getToolDataForDataLink(childTool.getData(), dataLink);
+									{
+										try
+										{
+											childData = getToolDataForDataLink(childTool.getData(), dataLink);
+										
+										}
+										catch (NoValidInOutDataException e)
+										{
+										
+											//boolean noChildDataAvail = true;
+										}
+									
+									}
 									else
-										logger.error("resolveToolDependencies(): to child tool found.");
+										logger.error("resolveToolDependencies(): to child tool found."+" ("+specString+")");
 									
 									if (!dataLink.getChunks().isEmpty())
 									{
@@ -3092,12 +3149,25 @@ public class UtilImpl extends EObjectImpl implements Util {
 									if (matchingData.parent != null)
 										dataLink.getInDataPort().setParameterName(matchingData.parent.getParameter().getEffectiveParentParameter(true).getName());
 									if (dataLink.getInDataPort().getParameterName()==null)
-										logger.error("resolveToolDependencies(): parametername could not be resolved. parent="+matchingData.parent);
+										if (!task.isRoot())
+											logger.error("resolveToolDependencies(): parametername could not be resolved. parent="+matchingData.parent
+												+" ("+specString+")");
 									if (matchingData.child != null)
 										dataLink.getDataPort().setParameterName(matchingData.child.getParameter().getEffectiveParentParameter(true).getName());
 									if (dataLink.getDataPort().getParameterName()==null)
-										logger.error("resolveToolDependencies(): parametername could not be resolved. child="+matchingData.child);
+									{
+										logger.error("resolveToolDependencies(): parametername could not be resolved. child="+matchingData.child
+												+" ("+specString+")");
+										DataLink parentDataLink = getFirstParentDataLink(task, dataLink.getInDataPort());
+										if (parentDataLink != null && parentDataLink.getData().getDataResourceName() != null)
+										{
+											logger.info("resolveToolDependencies(): assume hidden parameter, use parent datalink="+parentDataLink.getUniqueString()+" to set resource.");
+											dataLink.getData().setDataResourceName(URIUtil.addExtensionToURI(
+													parentDataLink.getData().getDataResourceName(), dataLink.getDataPort().getFormat().getName(), true));
+											continue;
+										}
 										
+									}	
 									
 									// decide if the port is a static one if at least one 
 									boolean isStatic = isStaticPort(dataLink.getData(), task);
@@ -3251,6 +3321,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 									e.printStackTrace();
 									rcTraversal.add("NoValidInOutDataFoundException");
 									return false;
+								} catch (URISyntaxException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
 							}
 						}
@@ -3355,14 +3428,6 @@ public class UtilImpl extends EObjectImpl implements Util {
 					}
 			}
 		}
-		for (Data child : childData)
-		{
-			if (child.matchFormat(dataFormat))
-			{
-				//get the first dataformat matching data
-				return new Tuple<Data, Data>(child, null);
-			}
-		}
 		for (Data parent : parentData)
 		{
 			if (parent.matchFormat(dataFormat))
@@ -3371,9 +3436,28 @@ public class UtilImpl extends EObjectImpl implements Util {
 				return new Tuple<Data, Data>(parent, null);
 			}
 		}
+		for (Data child : childData)
+		{
+			if (child.matchFormat(dataFormat))
+			{
+				//get the first dataformat matching data
+				return new Tuple<Data, Data>(null, child);
+			}
+		}
+		
 		return null;
 	}
 
+	
+	private DataLink getFirstParentDataLink(Task task, DataPort dataPort) throws DataLinkNotFoundException, TaskNotFoundException
+	{
+		//DataLink parentDataLink;
+		for (Object o:getInEdgesForDataPort(getCells().get(task.getUniqueString()), dataPort))
+		{
+			return loadDataLink(o);
+		}
+		return null;
+	}
 	
 	private String getFirstInstance(Task task, DataLink dataLink)
 	{
@@ -3395,36 +3479,12 @@ public class UtilImpl extends EObjectImpl implements Util {
 			}
 			else
 			{
-				logger.warn("getFirstInstance(): no chunks for "+traversalCriterion.getId()+" in task "+task.getUniqueString()+" found.");
+				logger.trace("getFirstInstance(): no chunks for "+traversalCriterion.getId()+" in task "+task.getUniqueString()+" found.");
 			}
 		}
 		
 		return firstInstanceStr;
 		
-	}
-	
-	private String generateKeyForInputData(Task task, DataLink dataLink)
-	{
-		String key = dataLink.getDataPort().getName();
-		EList<String> tcs = new BasicEList<String>();
-		for (TraversalCriterion traversalCriterion : dataLink.getDataPort().getGroupingCriteria())
-		{
-			if (task.getChunks().containsKey(traversalCriterion.getId()))
-			{
-				logger.trace("generateKeyForInputData(): "
-						+"traversalCriterion="+traversalCriterion.getId()
-						+" chunks="+easyFlowUtil.list2String(task.getChunks().get(traversalCriterion.getId()), null));
-				tcs.add(traversalCriterion.getId()+":"+easyFlowUtil.list2String(task.getChunks().get(traversalCriterion.getId()), "-"));
-			}
-			else
-			{
-				logger.warn("generateKeyForInputData(): no chunks for "+traversalCriterion.getId()+" in task "+task.getUniqueString()+" found.");
-			}
-		}
-		if (!tcs.isEmpty())
-			key=key+"_"+StringUtils.join(tcs, "_");
-		//logger.debug(key);
-		return key; 
 	}
 	
 	/**

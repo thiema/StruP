@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link easyflow.tool.impl.OptionValueImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.tool.impl.OptionValueImpl#getHelp <em>Help</em>}</li>
+ *   <li>{@link easyflow.tool.impl.OptionValueImpl#getExe <em>Exe</em>}</li>
  * </ul>
  * </p>
  *
@@ -64,6 +65,25 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 	 * @ordered
 	 */
 	protected String help = HELP_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getExe() <em>Exe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExe()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EXE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getExe() <em>Exe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExe()
+	 * @generated
+	 * @ordered
+	 */
+	protected String exe = EXE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -131,6 +151,38 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getExe() {
+		return exe;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExe(String newExe) {
+		String oldExe = exe;
+		exe = newExe;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.OPTION_VALUE__EXE, oldExe, exe));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String resolveValue() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -138,6 +190,8 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return getCondition();
 			case ToolPackage.OPTION_VALUE__HELP:
 				return getHelp();
+			case ToolPackage.OPTION_VALUE__EXE:
+				return getExe();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -155,6 +209,9 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return;
 			case ToolPackage.OPTION_VALUE__HELP:
 				setHelp((String)newValue);
+				return;
+			case ToolPackage.OPTION_VALUE__EXE:
+				setExe((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -174,6 +231,9 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 			case ToolPackage.OPTION_VALUE__HELP:
 				setHelp(HELP_EDEFAULT);
 				return;
+			case ToolPackage.OPTION_VALUE__EXE:
+				setExe(EXE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -190,6 +250,8 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return CONDITION_EDEFAULT == null ? condition != null : !CONDITION_EDEFAULT.equals(condition);
 			case ToolPackage.OPTION_VALUE__HELP:
 				return HELP_EDEFAULT == null ? help != null : !HELP_EDEFAULT.equals(help);
+			case ToolPackage.OPTION_VALUE__EXE:
+				return EXE_EDEFAULT == null ? exe != null : !EXE_EDEFAULT.equals(exe);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -208,6 +270,8 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 		result.append(condition);
 		result.append(", help: ");
 		result.append(help);
+		result.append(", exe: ");
+		result.append(exe);
 		result.append(')');
 		return result.toString();
 	}
