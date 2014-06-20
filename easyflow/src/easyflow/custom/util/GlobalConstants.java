@@ -54,22 +54,5 @@ public class GlobalConstants {
 	public static final String EDGE_STYLE   = "EASYFLOW_EDGE_STYLE";
 	public static final String TASK_CIRCUMVENTING_EDGE_STYLE      = "EASYFLOW_TASK_CIRC_EDGE_STYLE";
 	public static final String MISSING_IN_OUT_DATAPORT_EDGE_STYLE = "EASYFLOW_MISSING_IN_OUT_DATAPORT_EDGE_STYLE";
-	
-	// configuration file (main.json)
-	
-	// processing options (keys)
-	public static final String CONFIG_PROCESSING_DEFAULT_HANDLE = "default_handle";
-	public static final String CONFIG_PROCESSING_ALLOW_PIPE     = "allow_pipe";
-	
-	// processing options (defaults)
-	public static final String   CONFIG_PROCESSING_HANDLE_FILE           = "file";
-	public static final String   CONFIG_PROCESSING_HANDLE_PIPE           = "pipe";
-	public static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE  = CONFIG_PROCESSING_HANDLE_FILE;
-	public static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE      = true;
-	public static final String[] CONFIG_PROCESSING_HANDLES               = {CONFIG_PROCESSING_HANDLE_FILE, CONFIG_PROCESSING_HANDLE_FILE};
-	
-	public static final String   ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL   = "No valid data handle found for tool.";
-	public static final String   ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG = "No valid data handle found due to configuration.";
-	
 
 }

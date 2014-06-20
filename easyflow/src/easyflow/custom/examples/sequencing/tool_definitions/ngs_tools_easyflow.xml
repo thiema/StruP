@@ -6,6 +6,7 @@
 
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"></interpreter>
+		<command pattern="pos_arg opt_arg"></command>
 		<param type="template" name="default_param" named="true" separator="=" prefix=""></param>
 		<param type="analysis_type" named="true" prefix="-jar">
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">

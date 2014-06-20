@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Package#getVersion <em>Version</em>}</li>
  *   <li>{@link easyflow.tool.Package#getExe <em>Exe</em>}</li>
  *   <li>{@link easyflow.tool.Package#getInterpreter <em>Interpreter</em>}</li>
+ *   <li>{@link easyflow.tool.Package#getCommandPattern <em>Command Pattern</em>}</li>
  * </ul>
  * </p>
  *
@@ -151,4 +152,30 @@ public interface Package extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setInterpreter(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Command Pattern</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Command Pattern</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Command Pattern</em>' attribute.
+	 * @see #setCommandPattern(String)
+	 * @see easyflow.tool.ToolPackage#getPackage_CommandPattern()
+	 * @model
+	 * @generated
+	 */
+	String getCommandPattern();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Package#getCommandPattern <em>Command Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Command Pattern</em>' attribute.
+	 * @see #getCommandPattern()
+	 * @generated
+	 */
+	void setCommandPattern(String value);
 } // Package

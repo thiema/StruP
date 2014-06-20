@@ -65,7 +65,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	 */
 	public static MapsFactory init() {
 		try {
-			MapsFactory theMapsFactory = (MapsFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/util/maps/1.0.0"); 
+			MapsFactory theMapsFactory = (MapsFactory)EPackage.Registry.INSTANCE.getEFactory(MapsPackage.eNS_URI);
 			if (theMapsFactory != null) {
 				return theMapsFactory;
 			}

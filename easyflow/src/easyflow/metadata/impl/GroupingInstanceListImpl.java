@@ -9,15 +9,10 @@ package easyflow.metadata.impl;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.GroupingInstanceList;
 import easyflow.metadata.MetadataPackage;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -33,7 +28,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class GroupingInstanceListImpl extends EObjectImpl implements GroupingInstanceList {
+public class GroupingInstanceListImpl extends MinimalEObjectImpl.Container implements GroupingInstanceList {
 	/**
 	 * The cached value of the '{@link #getInstances() <em>Instances</em>}' reference list.
 	 * <!-- begin-user-doc -->

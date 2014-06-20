@@ -9,26 +9,16 @@ package easyflow.core.impl;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.Task;
-
-import easyflow.tool.Tool;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -46,7 +36,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultWorkflowTemplate {
+public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container implements DefaultWorkflowTemplate {
 	/**
 	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -275,6 +265,21 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST:
+				return readTemplate((String)arguments.get(0), (EList<String>)arguments.get(1));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -7,11 +7,7 @@
 package easyflow.metadata;
 
 import java.io.BufferedReader;
-
-import java.util.Map;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EMap;
 
 /**

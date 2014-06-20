@@ -7,42 +7,32 @@
 package easyflow.tool.impl;
 
 import easyflow.data.DataPort;
-
 import easyflow.custom.exception.ParameterNotFoundException;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import easyflow.tool.Command;
-
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
-
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -58,12 +48,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.CommandImpl#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getResolvedParams <em>Resolved Params</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class CommandImpl extends EObjectImpl implements Command {
+public class CommandImpl extends MinimalEObjectImpl.Container implements Command {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -153,6 +144,26 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * @ordered
 	 */
 	protected EMap<String, ResolvedParam> resolvedParams;
+
+	/**
+	 * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPattern()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PATTERN_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPattern()
+	 * @generated
+	 * @ordered
+	 */
+	protected String pattern = PATTERN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -255,6 +266,27 @@ public class CommandImpl extends EObjectImpl implements Command {
 			resolvedParams = new EcoreEMap<String,ResolvedParam>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP, StringToResolvedParamMapImpl.class, this, ToolPackage.COMMAND__RESOLVED_PARAMS);
 		}
 		return resolvedParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getPattern() {
+		return pattern;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPattern(String newPattern) {
+		String oldPattern = pattern;
+		pattern = newPattern;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__PATTERN, oldPattern, pattern));
 	}
 
 	/**
@@ -518,6 +550,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				if (coreType) return getResolvedParams();
 				else return getResolvedParams().map();
+			case ToolPackage.COMMAND__PATTERN:
+				return getPattern();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -543,6 +577,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
 				return;
+			case ToolPackage.COMMAND__PATTERN:
+				setPattern((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -567,6 +604,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				getResolvedParams().clear();
 				return;
+			case ToolPackage.COMMAND__PATTERN:
+				setPattern(PATTERN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -589,6 +629,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				return resolvedParams != null && !resolvedParams.isEmpty();
+			case ToolPackage.COMMAND__PATTERN:
+				return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -633,6 +675,32 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * @generated
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.COMMAND___GENERATE_COMMAND_STRING__EMAP:
+				return generateCommandString((EMap<String, Object>)arguments.get(0));
+			case ToolPackage.COMMAND___GET_PARAMETER_FOR_DATA_PORT__DATAPORT:
+				try {
+					return getParameterForDataPort((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.COMMAND___GET_POSITIONAL_PARAMETER_NAMES:
+				return getPositionalParameterNames();
+			case ToolPackage.COMMAND___GET_OPTIONAL_PARAMETER_NAMES:
+				return getOptionalParameterNames();
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -645,6 +713,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 		result.append(executable);
 		result.append(", logger: ");
 		result.append(logger);
+		result.append(", pattern: ");
+		result.append(pattern);
 		result.append(')');
 		return result.toString();
 	}

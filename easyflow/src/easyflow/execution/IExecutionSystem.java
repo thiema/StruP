@@ -11,8 +11,6 @@ import easyflow.core.Task;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.tool.Tool;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -33,14 +31,6 @@ public interface IExecutionSystem extends EObject {
 	 * @generated
 	 */
 	mxICellVisitor getJgraphxVisitor();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException" commandLinePartsMapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
-	 * @generated
-	 */
-	String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->

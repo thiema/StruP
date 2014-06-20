@@ -6,10 +6,8 @@
  */
 package easyflow.tool;
 
-import easyflow.core.Task;
 import easyflow.data.Data;
 import easyflow.traversal.TraversalChunk;
-import easyflow.metadata.GroupingInstance;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -44,11 +42,13 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#isAdvanced <em>Advanced</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getGrouping <em>Grouping</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getDataDeprecated <em>Data Deprecated</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isFixedArgValue <em>Fixed Arg Value</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getParent <em>Parent</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getHandles <em>Handles</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getGeneralValue <em>General Value</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isOutput <em>Output</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isDataParam <em>Data Param</em>}</li>
  * </ul>
  * </p>
  *
@@ -241,20 +241,20 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	EList<String> getGrouping();
 
 	/**
-	 * Returns the value of the '<em><b>Data</b></em>' reference list.
+	 * Returns the value of the '<em><b>Data Deprecated</b></em>' reference list.
 	 * The list contents are of type {@link easyflow.data.Data}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Data</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Data Deprecated</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Data</em>' reference list.
-	 * @see easyflow.tool.ToolPackage#getParameter_Data()
+	 * @return the value of the '<em>Data Deprecated</em>' reference list.
+	 * @see easyflow.tool.ToolPackage#getParameter_DataDeprecated()
 	 * @model
 	 * @generated
 	 */
-	EList<Data> getData();
+	EList<Data> getDataDeprecated();
 
 	/**
 	 * Returns the value of the '<em><b>Fixed Arg Value</b></em>' attribute.
@@ -366,12 +366,52 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	String getArgValueDelimiter();
 
 	/**
+	 * Returns the value of the '<em><b>Output</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation"
+	 * @return the value of the '<em>Output</em>' attribute.
+	 * @see #setOutput(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Output()
+	 * @model
 	 * @generated
 	 */
 	boolean isOutput();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isOutput <em>Output</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Output</em>' attribute.
+	 * @see #isOutput()
+	 * @generated
+	 */
+	void setOutput(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Data Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Param</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Param</em>' attribute.
+	 * @see #setDataParam(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_DataParam()
+	 * @model
+	 * @generated
+	 */
+	boolean isDataParam();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isDataParam <em>Data Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data Param</em>' attribute.
+	 * @see #isDataParam()
+	 * @generated
+	 */
+	void setDataParam(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -404,6 +444,14 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	Parameter getEffectiveParentParameter(boolean first);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model effectiveParamsMany="true"
+	 * @generated
+	 */
+	EList<Parameter> getEffectiveParameters(EList<Parameter> effectiveParams);
 
 	/**
 	 * Returns the value of the '<em><b>Value Type</b></em>' attribute.

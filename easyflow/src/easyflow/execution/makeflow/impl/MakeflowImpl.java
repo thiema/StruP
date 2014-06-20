@@ -7,14 +7,11 @@
 package easyflow.execution.makeflow.impl;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
 import easyflow.core.Task;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
@@ -22,32 +19,23 @@ import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalVar;
-import easyflow.custom.util.XMLUtil;
 import easyflow.data.DataLink;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionPackage;
-
 import easyflow.execution.makeflow.Makeflow;
 import easyflow.execution.makeflow.MakeflowPackage;
 import easyflow.tool.Tool;
-import easyflow.graph.jgraphx.Util;
-
-import easyflow.tool.Parameter;
 import easyflow.ui.DefaultProject;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,7 +52,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class MakeflowImpl extends EObjectImpl implements Makeflow {
+public class MakeflowImpl extends MinimalEObjectImpl.Container implements Makeflow {
 	/**
 	 * The cached value of the '{@link #getProject() <em>Project</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -235,17 +223,6 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -254,10 +231,10 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * @throws ParameterNotFoundException 
 	 * @generated not
 	 */
-	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException {
-		return task.createCommandLine(commandPattern, task.createCommandLineMap());
+	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException 
+	{
+		return task.createCommandLine(commandPattern);
 	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -479,6 +456,45 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case MakeflowPackage.MAKEFLOW___GET_DEPENDENCIES__TOOL:
+				return getDependencies((Tool)arguments.get(0));
+			case MakeflowPackage.MAKEFLOW___GET_TARGETS__TOOL:
+				return getTargets((Tool)arguments.get(0));
+			case MakeflowPackage.MAKEFLOW___CREATE_RULE:
+				try {
+					return createRule();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case MakeflowPackage.MAKEFLOW___GET_JGRAPHX_VISITOR:
+				return getJgraphxVisitor();
+			case MakeflowPackage.MAKEFLOW___CREATE_COMMAND_LINE__STRING_TASK:
+				try {
+					return createCommandLine((String)arguments.get(0), (Task)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case MakeflowPackage.MAKEFLOW___CREATE_COMMAND_LINE__STRING_TOOL:
+				try {
+					return createCommandLine((String)arguments.get(0), (Tool)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

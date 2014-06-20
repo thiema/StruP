@@ -7,17 +7,12 @@
 package easyflow.tool;
 
 import easyflow.custom.exception.DataPortNotFoundException;
-
 import easyflow.data.Data;
 import easyflow.data.DataPort;
-
 import easyflow.traversal.TraversalChunk;
-import easyflow.metadata.GroupingInstance;
 import java.net.URI;
-
 import java.util.Map;
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 

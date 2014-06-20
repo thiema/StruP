@@ -9,16 +9,12 @@ package easyflow.traversal.impl;
 import easyflow.data.DataPort;
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalPackage;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,7 +36,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class GroupingCriterionImpl extends EObjectImpl implements GroupingCriterion {
+public class GroupingCriterionImpl extends MinimalEObjectImpl.Container implements GroupingCriterion {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->

@@ -9,16 +9,11 @@ package easyflow.tool.impl;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Interpreter;
 import easyflow.tool.ToolPackage;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.w3c.dom.Element;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +31,7 @@ import org.w3c.dom.Element;
  *
  * @generated
  */
-public class InterpreterImpl extends EObjectImpl implements Interpreter {
+public class InterpreterImpl extends MinimalEObjectImpl.Container implements Interpreter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

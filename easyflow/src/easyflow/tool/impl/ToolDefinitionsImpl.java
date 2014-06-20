@@ -9,38 +9,27 @@ package easyflow.tool.impl;
 import easyflow.tool.DocumentProperties;
 import easyflow.custom.util.XMLUtil;
 import easyflow.tool.ToolDefinitions;
-import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-
 import java.util.Collection;
-
-import java.util.Map;
 import org.apache.log4j.Logger;
 import javax.xml.validation.Schema;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.w3c.dom.Document;
@@ -63,7 +52,7 @@ import org.xml.sax.SAXException;
  *
  * @generated
  */
-public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions {
+public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements ToolDefinitions {
 	/**
 	 * The cached value of the '{@link #getToolDefinitions() <em>Tool Definitions</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -330,6 +319,25 @@ public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions 
 				return properties != null && !properties.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN:
+				try {
+					return validateToolDefinition((URI)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

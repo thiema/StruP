@@ -29,9 +29,11 @@
     "queue"            : "bioinf.q",
     "handles"          : "pipe,file",
     "default_handle"    : "file",
-    "stdin_operator"   : "<",
-    "stdout_operator"  : "1>",
-    "stderr_operator"  : "2>",
+    "stdin_operator"   : "|",
+    "stdout_operator"   : "|",
+    "stdin_file_operator"   : "<",
+    "stdout_file_operator"  : "1>",
+    "stderr_file_operator"  : "2>",
     "append_stdout_operator"  : "1>>",
     "append_stderr_operator"  : "2>>"
   },
@@ -64,7 +66,7 @@
   },
   
   "tool" : {
-    "command_pattern" : "interpreter executable submodule positional_arg optional_arg input output",
+    "command_pattern" : "pos opt in out",
   	"dir"             : "tool_definitions",
   	"tools_test"      : ["tool.xml", "tools.xml", "depth_of_coverage_gatk2_easyflow.xml", 
   				         "depth_of_coverage_gatk_easyflow.xml", "ngs_tools_easyflow.xml"],

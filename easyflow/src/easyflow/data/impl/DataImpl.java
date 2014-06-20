@@ -6,24 +6,23 @@
  */
 package easyflow.data.impl;
 
-import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
 import easyflow.tool.Parameter;
-
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,7 +44,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class DataImpl extends EObjectImpl implements Data {
+public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -322,9 +321,9 @@ public class DataImpl extends EObjectImpl implements Data {
 		if (getSupportedHandles(true).isEmpty())
 		{
 			if (getSupportedHandles(false).isEmpty())
-				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL);
+				GlobalVar.setLastErrorString(GlobalConfig.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL);
 			else
-				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG);
+				GlobalVar.setLastErrorString(GlobalConfig.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG);
 			return false;
 		}
 		return true;
@@ -655,6 +654,30 @@ public class DataImpl extends EObjectImpl implements Data {
 				return PREFERRED_HANDLE_EDEFAULT == null ? preferredHandle != null : !PREFERRED_HANDLE_EDEFAULT.equals(preferredHandle);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA___GET_FORMAT:
+				return getFormat();
+			case DataPackage.DATA___GET_FORMAT_STR:
+				return getFormatStr();
+			case DataPackage.DATA___IS_ALLOWED:
+				return isAllowed();
+			case DataPackage.DATA___GET_SUPPORTED_HANDLES__BOOLEAN:
+				return getSupportedHandles((Boolean)arguments.get(0));
+			case DataPackage.DATA___MATCH__DATA_BOOLEAN:
+				return match((Data)arguments.get(0), (Boolean)arguments.get(1));
+			case DataPackage.DATA___MATCH_FORMAT__DATAFORMAT:
+				return matchFormat((DataFormat)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

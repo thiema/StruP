@@ -8,15 +8,10 @@ package easyflow.core;
 
 import easyflow.data.DataPort;
 import easyflow.tool.Tool;
-
-import java.util.Map;
 import java.util.regex.Pattern;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

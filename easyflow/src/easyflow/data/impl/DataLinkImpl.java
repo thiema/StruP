@@ -9,36 +9,27 @@ package easyflow.data.impl;
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
 import easyflow.custom.util.Util;
-
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
-
 import easyflow.traversal.TraversalChunk;
-
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.StringToChunksMapImpl;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -66,7 +57,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DataLinkImpl extends EObjectImpl implements DataLink {
+public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLink {
 	/**
 	 * The cached value of the '{@link #getDataPort() <em>Data Port</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -830,6 +821,28 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return data != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA_LINK___IS_UNCONDITIONAL:
+				return isUnconditional();
+			case DataPackage.DATA_LINK___GET_UNIQUE_STRING__STRING_STRING_STRING:
+				return getUniqueString((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
+			case DataPackage.DATA_LINK___GET_UNIQUE_STRING:
+				return getUniqueString();
+			case DataPackage.DATA_LINK___GET_UNIQUE_STRING__BOOLEAN:
+				return getUniqueString((Boolean)arguments.get(0));
+			case DataPackage.DATA_LINK___GET_FORMAT:
+				return getFormat();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

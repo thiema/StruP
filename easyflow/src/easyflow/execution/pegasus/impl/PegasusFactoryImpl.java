@@ -31,7 +31,7 @@ public class PegasusFactoryImpl extends EFactoryImpl implements PegasusFactory {
 	 */
 	public static PegasusFactory init() {
 		try {
-			PegasusFactory thePegasusFactory = (PegasusFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/execution/pegasus/1.0.0"); 
+			PegasusFactory thePegasusFactory = (PegasusFactory)EPackage.Registry.INSTANCE.getEFactory(PegasusPackage.eNS_URI);
 			if (thePegasusFactory != null) {
 				return thePegasusFactory;
 			}

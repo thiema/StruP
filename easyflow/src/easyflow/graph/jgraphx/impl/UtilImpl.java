@@ -74,7 +74,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -111,7 +111,7 @@ import org.w3c.dom.Element;
  *
  * @generated
  */
-public class UtilImpl extends EObjectImpl implements Util {
+public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	
 	private static easyflow.custom.util.Util easyFlowUtil; 
 	
@@ -4471,6 +4471,181 @@ public class UtilImpl extends EObjectImpl implements Util {
 				return utilityTaskCells != null && !utilityTaskCells.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.UTIL___RESOLVE_TRAVERSAL_EVENTS__MXICELL:
+				try {
+					return resolveTraversalEvents((mxICell)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN:
+				try {
+					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE:
+				try {
+					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (GroupingInstance)arguments.get(3));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST:
+				try {
+					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (EList<GroupingInstance>)arguments.get(3));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE:
+				try {
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (GroupingInstance)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST:
+				try {
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (EList<GroupingInstance>)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL:
+				try {
+					return resolvePreprocessingTask((mxICell)arguments.get(0), (mxICell)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED:
+				return findCellsWherePreprocessingIsRequired();
+			case JgraphxPackage.UTIL___RESOLVE_TOOL_DEPENDENCIES__MXICELL_CATALOG:
+				try {
+					return resolveToolDependencies((mxICell)arguments.get(0), (Catalog)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS:
+				return findCellsWithUntranslatedDataLinks();
+			case JgraphxPackage.UTIL___RESOLVE_EDGE__EMAP:
+				try {
+					return resolveEdge((Map.Entry<mxICell, EList<mxICell>>)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GENERATE_WORKFLOW_FOR_EXECUTION_SYSTEM__MXICELL_IEXECUTIONSYSTEM:
+				return generateWorkflowForExecutionSystem((mxICell)arguments.get(0), (IExecutionSystem)arguments.get(1));
+			case JgraphxPackage.UTIL___GET_TRAVERSAL_EVENTS__MXICELL_BOOLEAN:
+				try {
+					return getTraversalEvents((mxICell)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_NEW_TRAVERSAL_EVENTS__TRAVERSALEVENT_MXICELL:
+				try {
+					return getNewTraversalEvents((TraversalEvent)arguments.get(0), (mxICell)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_NEXT_TRAVERSAL_EVENT__BOOLEAN:
+				try {
+					return getNextTraversalEvent((Boolean)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_CELLS__ELIST:
+				return getCells((EList<Task>)arguments.get(0));
+			case JgraphxPackage.UTIL___REMOVE_SUB_GRAPH__MXICELL_TRAVERSALEVENT:
+				return removeSubGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1));
+			case JgraphxPackage.UTIL___GET_GROUPING_INSTANCES__TRAVERSALEVENT:
+				try {
+					return getGroupingInstances((TraversalEvent)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___RESET_FLAGS:
+				resetFlags();
+				return null;
+			case JgraphxPackage.UTIL___TRAVERSAL_EVENT_TO_STRING__TRAVERSALEVENT:
+				return traversalEventToString((TraversalEvent)arguments.get(0));
+			case JgraphxPackage.UTIL___LAYOUT_GRAPH:
+				layoutGraph();
+				return null;
+			case JgraphxPackage.UTIL___IS_CHILD_OF__TASK_TASK:
+				return isChildOf((Task)arguments.get(0), (Task)arguments.get(1));
+			case JgraphxPackage.UTIL___GET_PARENT_DATA_PORTS_FOR__TASK:
+				try {
+					return getParentDataPortsFor((Task)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_CHILD_DATA_PORTS_FOR__TASK:
+				try {
+					return getChildDataPortsFor((Task)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___LOAD_TASK__OBJECT:
+				try {
+					return loadTask(arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___LOAD_DATA_LINK__OBJECT:
+				try {
+					return loadDataLink(arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_CHILD_TASKS_FOR__TASK:
+				try {
+					return getChildTasksFor((Task)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_SIBLING_TASKS_FOR__TASK:
+				try {
+					return getSiblingTasksFor((Task)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.UTIL___GET_PARENT_TASKS_FOR__TASK:
+				try {
+					return getParentTasksFor((Task)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

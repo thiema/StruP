@@ -9,22 +9,18 @@ package easyflow.tool.impl;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterMapImpl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.w3c.dom.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,12 +36,13 @@ import org.w3c.dom.Element;
  *   <li>{@link easyflow.tool.impl.PackageImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getExe <em>Exe</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getInterpreter <em>Interpreter</em>}</li>
+ *   <li>{@link easyflow.tool.impl.PackageImpl#getCommandPattern <em>Command Pattern</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
+public class PackageImpl extends MinimalEObjectImpl.Container implements easyflow.tool.Package {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -166,6 +163,25 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 * @ordered
 	 */
 	protected String interpreter = INTERPRETER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCommandPattern() <em>Command Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandPattern()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COMMAND_PATTERN_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getCommandPattern() <em>Command Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandPattern()
+	 * @generated
+	 * @ordered
+	 */
+	protected String commandPattern = COMMAND_PATTERN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -329,6 +345,27 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCommandPattern() {
+		return commandPattern;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCommandPattern(String newCommandPattern) {
+		String oldCommandPattern = commandPattern;
+		commandPattern = newCommandPattern;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PACKAGE__COMMAND_PATTERN, oldCommandPattern, commandPattern));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -361,6 +398,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return getExe();
 			case ToolPackage.PACKAGE__INTERPRETER:
 				return getInterpreter();
+			case ToolPackage.PACKAGE__COMMAND_PATTERN:
+				return getCommandPattern();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -393,6 +432,9 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return;
 			case ToolPackage.PACKAGE__INTERPRETER:
 				setInterpreter((String)newValue);
+				return;
+			case ToolPackage.PACKAGE__COMMAND_PATTERN:
+				setCommandPattern((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -427,6 +469,9 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 			case ToolPackage.PACKAGE__INTERPRETER:
 				setInterpreter(INTERPRETER_EDEFAULT);
 				return;
+			case ToolPackage.PACKAGE__COMMAND_PATTERN:
+				setCommandPattern(COMMAND_PATTERN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -453,6 +498,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return EXE_EDEFAULT == null ? exe != null : !EXE_EDEFAULT.equals(exe);
 			case ToolPackage.PACKAGE__INTERPRETER:
 				return INTERPRETER_EDEFAULT == null ? interpreter != null : !INTERPRETER_EDEFAULT.equals(interpreter);
+			case ToolPackage.PACKAGE__COMMAND_PATTERN:
+				return COMMAND_PATTERN_EDEFAULT == null ? commandPattern != null : !COMMAND_PATTERN_EDEFAULT.equals(commandPattern);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -513,6 +560,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 		result.append(exe);
 		result.append(", interpreter: ");
 		result.append(interpreter);
+		result.append(", commandPattern: ");
+		result.append(commandPattern);
 		result.append(')');
 		return result.toString();
 	}

@@ -300,6 +300,51 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getTraversalEvent__ApplyMetadata() {
+		return traversalEventEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__ReadChunks() {
+		return traversalEventEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__IsGrouping() {
+		return traversalEventEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__IsParent__Task_String() {
+		return traversalEventEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__GetType() {
+		return traversalEventEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGroupingCriterion() {
 		return groupingCriterionEClass;
 	}
@@ -521,6 +566,11 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__TRAVERSAL_CRITERION);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__LOGGER);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__META_DATA);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___APPLY_METADATA);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___READ_CHUNKS);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___IS_GROUPING);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___IS_PARENT__TASK_STRING);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___GET_TYPE);
 
 		groupingCriterionEClass = createEClass(GROUPING_CRITERION);
 		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__ID);
@@ -584,7 +634,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		// Add supertypes to classes
 		traversalCriterionEClass.getESuperTypes().add(this.getGroupingCriterion());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(traversalEventEClass, TraversalEvent.class, "TraversalEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraversalEvent_MergeTask(), theCorePackage.getTask(), null, "mergeTask", null, 0, -1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTraversalEvent_SplitTask(), theCorePackage.getTask(), null, "splitTask", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -595,17 +645,17 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEAttribute(getTraversalEvent_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_MetaData(), theEasyflowPackage.getEObject(), "metaData", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(traversalEventEClass, ecorePackage.getEBoolean(), "applyMetadata", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTraversalEvent__ApplyMetadata(), ecorePackage.getEBoolean(), "applyMetadata", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(traversalEventEClass, null, "readChunks", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTraversalEvent__ReadChunks(), null, "readChunks", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(traversalEventEClass, ecorePackage.getEBoolean(), "isGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTraversalEvent__IsGrouping(), ecorePackage.getEBoolean(), "isGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(traversalEventEClass, ecorePackage.getEBoolean(), "isParent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getTraversalEvent__IsParent__Task_String(), ecorePackage.getEBoolean(), "isParent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getTask(), "parentTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "traversalChunkName", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(traversalEventEClass, ecorePackage.getEString(), "getType", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getTraversalEvent__GetType(), ecorePackage.getEString(), "getType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(groupingCriterionEClass, GroupingCriterion.class, "GroupingCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroupingCriterion_Id(), ecorePackage.getEString(), "id", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

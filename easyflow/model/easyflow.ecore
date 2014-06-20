@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
-    nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow" nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0"
+    nsPrefix="easyflow">
   <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
@@ -242,12 +241,9 @@
         <eParameters name="dataPorts1" upperBound="-1" eType="#//data/DataPort"/>
         <eParameters name="dataPorts2" upperBound="-1" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="createCommandLineMap" upperBound="-1" eType="#//util/maps/StringToStringListMap"
-          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
         <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="commandLineParts" upperBound="-1" eType="#//util/maps/StringToStringListMap"/>
       </eOperations>
       <eOperations name="validateTool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="tool" eType="#//tool/Tool"/>
@@ -794,11 +790,6 @@
       <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
         <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="commandLineParts" upperBound="-1" eType="#//util/maps/StringToStringListMap"/>
-      </eOperations>
-      <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-          eExceptions="#//ParameterNotFoundException #//NoValidInOutDataException">
-        <eParameters name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="task" eType="#//core/Task"/>
       </eOperations>
       <eOperations name="createCommandLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -946,7 +937,6 @@
       <eOperations name="getArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="getArgDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="getArgValueDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eOperations name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="getParameterForAnalysisType" eType="#//tool/Parameter">
         <eParameters name="records" upperBound="-1" eType="#//traversal/TraversalChunk"/>
       </eOperations>
@@ -956,6 +946,9 @@
       </eOperations>
       <eOperations name="getEffectiveParentParameter" eType="#//tool/Parameter">
         <eParameters name="first" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getEffectiveParameters" upperBound="-1" eType="#//tool/Parameter">
+        <eParameters name="effectiveParams" upperBound="-1" eType="#//tool/Parameter"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
@@ -993,7 +986,7 @@
           defaultValueLiteral="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="grouping" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="data" upperBound="-1"
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dataDeprecated" upperBound="-1"
           eType="#//data/Data"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedArgValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           defaultValueLiteral="false"/>
@@ -1006,6 +999,8 @@
           <details key="documentation" value="The actual argument value. If it is a string its used as is. If it is an Iteratable the &#xA;individual values are enumerated and joined to a string with delimiter."/>
         </eAnnotations>
       </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataParam" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="InOutParameter" eSuperTypes="#//tool/Parameter">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="formats" upperBound="-1"
@@ -1018,6 +1013,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="exe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="interpreter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Key" eSuperTypes="#//tool/DefaultToolElement">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -1055,6 +1051,7 @@
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedParams" upperBound="-1"
           eType="#//util/maps/StringToResolvedParamMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ResolvedParam" eSuperTypes="#//tool/DefaultToolElement">
       <eOperations name="generateCommandString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">

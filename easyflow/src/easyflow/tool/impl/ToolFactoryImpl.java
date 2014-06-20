@@ -45,7 +45,7 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	 */
 	public static ToolFactory init() {
 		try {
-			ToolFactory theToolFactory = (ToolFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/tool/1.0.0"); 
+			ToolFactory theToolFactory = (ToolFactory)EPackage.Registry.INSTANCE.getEFactory(ToolPackage.eNS_URI);
 			if (theToolFactory != null) {
 				return theToolFactory;
 			}

@@ -7,19 +7,14 @@
 package easyflow.util.maps.impl;
 
 import com.mxgraph.model.mxICell;
-
 import easyflow.util.maps.MapsPackage;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class StringToGraphCellMapImpl extends EObjectImpl implements BasicEMap.Entry<String,mxICell> {
+public class StringToGraphCellMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String,mxICell> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->

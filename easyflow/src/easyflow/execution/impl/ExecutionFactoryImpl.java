@@ -31,7 +31,7 @@ public class ExecutionFactoryImpl extends EFactoryImpl implements ExecutionFacto
 	 */
 	public static ExecutionFactory init() {
 		try {
-			ExecutionFactory theExecutionFactory = (ExecutionFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/execution/1.0.0"); 
+			ExecutionFactory theExecutionFactory = (ExecutionFactory)EPackage.Registry.INSTANCE.getEFactory(ExecutionPackage.eNS_URI);
 			if (theExecutionFactory != null) {
 				return theExecutionFactory;
 			}

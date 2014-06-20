@@ -7,10 +7,7 @@
 package easyflow.metadata;
 
 import easyflow.traversal.TraversalChunk;
-import easyflow.traversal.GroupingCriterion;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 

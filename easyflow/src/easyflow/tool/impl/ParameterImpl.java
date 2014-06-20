@@ -8,9 +8,7 @@ package easyflow.tool.impl;
 
 import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
-import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.DefaultToolElement;
-import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
@@ -18,11 +16,11 @@ import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterListMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 import java.util.Collection;
-import java.util.Iterator;
-import org.apache.commons.lang.StringUtils;
+import java.util.Map.Entry;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -33,7 +31,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -71,17 +68,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isAdvanced <em>Advanced</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGrouping <em>Grouping</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getDataDeprecated <em>Data Deprecated</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isFixedArgValue <em>Fixed Arg Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getHandles <em>Handles</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGeneralValue <em>General Value</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isOutput <em>Output</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isDataParam <em>Data Param</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ParameterImpl extends EObjectImpl implements Parameter {
+public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -523,14 +522,14 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected EList<String> grouping;
 
 	/**
-	 * The cached value of the '{@link #getData() <em>Data</em>}' reference list.
+	 * The cached value of the '{@link #getDataDeprecated() <em>Data Deprecated</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getData()
+	 * @see #getDataDeprecated()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Data> data;
+	protected EList<Data> dataDeprecated;
 
 	/**
 	 * The default value of the '{@link #isFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
@@ -581,6 +580,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @ordered
 	 */
 	protected EList<Object> generalValue;
+
+	/**
+	 * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOutput()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean OUTPUT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isOutput()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean output = OUTPUT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isDataParam() <em>Data Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDataParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DATA_PARAM_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDataParam() <em>Data Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDataParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean dataParam = DATA_PARAM_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -789,11 +828,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Data> getData() {
-		if (data == null) {
-			data = new EObjectResolvingEList<Data>(Data.class, this, ToolPackage.PARAMETER__DATA);
+	public EList<Data> getDataDeprecated() {
+		if (dataDeprecated == null) {
+			dataDeprecated = new EObjectResolvingEList<Data>(Data.class, this, ToolPackage.PARAMETER__DATA_DEPRECATED);
 		}
-		return data;
+		return dataDeprecated;
 	}
 
 	/**
@@ -882,6 +921,48 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isOutput() {
+		return output;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOutput(boolean newOutput) {
+		boolean oldOutput = output;
+		output = newOutput;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OUTPUT, oldOutput, output));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isDataParam() {
+		return dataParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataParam(boolean newDataParam) {
+		boolean oldDataParam = dataParam;
+		dataParam = newDataParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__DATA_PARAM, oldDataParam, dataParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public String getArgKey() {
@@ -932,7 +1013,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean isOutput() {
+	/*public boolean isOutput() {
+		
+		
 		for (Data data:getData())
 		{
 			if (data.isOutput())
@@ -940,7 +1023,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		}
 		return false;
 	}
-	
+	*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -983,7 +1066,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		
 		if (getHandles()==null || getHandles().isEmpty())
 		{
-			handles.add(GlobalConstants.CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE);
+			handles.add(GlobalConfig.CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE);
 			return handles;
 		}
 
@@ -1019,6 +1102,26 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getParent();
 		
 		return getEffectiveParentParameter(first);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<Parameter> getEffectiveParameters(EList<Parameter> effectiveParams) {
+		if (effectiveParams == null)
+			effectiveParams = new BasicEList<Parameter>(); 
+		if (getValues().isEmpty())
+		{
+			effectiveParams.add(this);
+			return effectiveParams;
+		}
+		for (Entry<String, EList<Parameter>> parameters : getValues())
+			for (Parameter parameter:parameters.getValue())
+				parameter.getEffectiveParameters(effectiveParams);
+		
+		return effectiveParams;
 	}
 
 	/**
@@ -1365,8 +1468,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return isPositional();
 			case ToolPackage.PARAMETER__GROUPING:
 				return getGrouping();
-			case ToolPackage.PARAMETER__DATA:
-				return getData();
+			case ToolPackage.PARAMETER__DATA_DEPRECATED:
+				return getDataDeprecated();
 			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
 				return isFixedArgValue();
 			case ToolPackage.PARAMETER__PARENT:
@@ -1376,6 +1479,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getHandles();
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				return getGeneralValue();
+			case ToolPackage.PARAMETER__OUTPUT:
+				return isOutput();
+			case ToolPackage.PARAMETER__DATA_PARAM:
+				return isDataParam();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1461,9 +1568,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				getGrouping().clear();
 				getGrouping().addAll((Collection<? extends String>)newValue);
 				return;
-			case ToolPackage.PARAMETER__DATA:
-				getData().clear();
-				getData().addAll((Collection<? extends Data>)newValue);
+			case ToolPackage.PARAMETER__DATA_DEPRECATED:
+				getDataDeprecated().clear();
+				getDataDeprecated().addAll((Collection<? extends Data>)newValue);
 				return;
 			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
 				setFixedArgValue((Boolean)newValue);
@@ -1478,6 +1585,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				getGeneralValue().clear();
 				getGeneralValue().addAll((Collection<? extends Object>)newValue);
+				return;
+			case ToolPackage.PARAMETER__OUTPUT:
+				setOutput((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__DATA_PARAM:
+				setDataParam((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1560,8 +1673,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__GROUPING:
 				getGrouping().clear();
 				return;
-			case ToolPackage.PARAMETER__DATA:
-				getData().clear();
+			case ToolPackage.PARAMETER__DATA_DEPRECATED:
+				getDataDeprecated().clear();
 				return;
 			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
 				setFixedArgValue(FIXED_ARG_VALUE_EDEFAULT);
@@ -1574,6 +1687,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return;
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				getGeneralValue().clear();
+				return;
+			case ToolPackage.PARAMETER__OUTPUT:
+				setOutput(OUTPUT_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__DATA_PARAM:
+				setDataParam(DATA_PARAM_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1635,8 +1754,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return positional != POSITIONAL_EDEFAULT;
 			case ToolPackage.PARAMETER__GROUPING:
 				return grouping != null && !grouping.isEmpty();
-			case ToolPackage.PARAMETER__DATA:
-				return data != null && !data.isEmpty();
+			case ToolPackage.PARAMETER__DATA_DEPRECATED:
+				return dataDeprecated != null && !dataDeprecated.isEmpty();
 			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
 				return fixedArgValue != FIXED_ARG_VALUE_EDEFAULT;
 			case ToolPackage.PARAMETER__PARENT:
@@ -1645,6 +1764,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return handles != null && !handles.isEmpty();
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				return generalValue != null && !generalValue.isEmpty();
+			case ToolPackage.PARAMETER__OUTPUT:
+				return output != OUTPUT_EDEFAULT;
+			case ToolPackage.PARAMETER__DATA_PARAM:
+				return dataParam != DATA_PARAM_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1681,6 +1804,35 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.PARAMETER___GET_ARG_KEY:
+				return getArgKey();
+			case ToolPackage.PARAMETER___GET_ARG_DELIMITER:
+				return getArgDelimiter();
+			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER:
+				return getArgValueDelimiter();
+			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
+				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
+				return isAnalysisType();
+			case ToolPackage.PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN:
+				return getSupportedHandles((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN:
+				return getEffectiveParentParameter((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARAMETERS__ELIST:
+				return getEffectiveParameters((EList<Parameter>)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -1741,6 +1893,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(handles);
 		result.append(", generalValue: ");
 		result.append(generalValue);
+		result.append(", output: ");
+		result.append(output);
+		result.append(", dataParam: ");
+		result.append(dataParam);
 		result.append(')');
 		return result.toString();
 	}

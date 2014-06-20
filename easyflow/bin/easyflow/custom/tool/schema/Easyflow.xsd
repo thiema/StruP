@@ -82,8 +82,9 @@
 	<xs:complexType mixed="true" name="Command">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="interpreter" type="xs:string"/>
-				<xs:attribute name="exe" type="xs:string"/>
+				<xs:attribute name="interpreter" type="xs:string" />
+				<xs:attribute name="exe" type="xs:string" />
+				<xs:attribute name="pattern" type="xs:string"></xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

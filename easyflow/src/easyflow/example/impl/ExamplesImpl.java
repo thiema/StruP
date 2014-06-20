@@ -9,38 +9,30 @@ package easyflow.example.impl;
 import easyflow.custom.util.URIUtil;
 import easyflow.example.ExamplePackage;
 import easyflow.example.Examples;
-
 import easyflow.ui.DefaultProject;
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.StringToProjectMapImpl;
 import easyflow.ui.UiFactory;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -60,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ExamplesImpl extends EObjectImpl implements Examples {
+public class ExamplesImpl extends MinimalEObjectImpl.Container implements Examples {
 	/**
 	 * The default value of the '{@link #getLocator() <em>Locator</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -421,6 +413,23 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 				return fromJar != FROM_JAR_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ExamplePackage.EXAMPLES___READ_EXAMPLES:
+				return readExamples();
+			case ExamplePackage.EXAMPLES___READ_REPOSITORY:
+				readRepository();
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

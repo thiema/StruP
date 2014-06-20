@@ -7,23 +7,17 @@
 package easyflow.util.maps.impl;
 
 import easyflow.metadata.GroupingInstanceList;
-
 import easyflow.util.maps.MapsPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -41,7 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class StringToGroupingInstanceMapMapImpl extends EObjectImpl implements BasicEMap.Entry<String,EMap<String, GroupingInstanceList>> {
+public class StringToGroupingInstanceMapMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String,EMap<String, GroupingInstanceList>> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->

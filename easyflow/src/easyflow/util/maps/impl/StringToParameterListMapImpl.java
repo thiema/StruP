@@ -6,27 +6,17 @@
  */
 package easyflow.util.maps.impl;
 
-import easyflow.core.Task;
-
 import easyflow.tool.Parameter;
-
 import easyflow.util.maps.MapsPackage;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -43,7 +33,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class StringToParameterListMapImpl extends EObjectImpl implements BasicEMap.Entry<String,EList<Parameter>> {
+public class StringToParameterListMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String,EList<Parameter>> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->

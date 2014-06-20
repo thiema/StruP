@@ -291,6 +291,7 @@ public class ToolContentHandler implements ContentHandler {
 			
 			data.setName(curParam.getName());
 			data.setParameter(curParam);
+			curParam.setDataParam(true);
 			logger.debug("param id="+curParam.hashCode()+" "+curParam.getName()+" ("+tool.getName()+")");
 			if (atts.getValue("output")!=null)
 			{
@@ -307,6 +308,7 @@ public class ToolContentHandler implements ContentHandler {
 			{
 				data.setOutput(false);
 			}
+			curParam.setOutput(data.isOutput());
 			if (tool.getData().containsKey(data.getName()))
 				logger.warn("overiding data="+data.getName()+" of tool="+tool.getId());
 			else
@@ -436,7 +438,18 @@ public class ToolContentHandler implements ContentHandler {
 			case DESCRIPTION:
 				break;
 			case COMMAND:
-				tool.getCommand().setName(atts.getValue("name"));
+				if (withinPackage)
+				{
+					if (atts.getValue("pattern") != null)
+						pkg.setCommandPattern(atts.getValue("pattern"));
+				}
+				else
+				{
+					tool.getCommand().setName(atts.getValue("name"));
+				
+					if (atts.getValue("pattern") != null)
+						tool.getCommand().setPattern(atts.getValue("pattern"));
+				}
 				break;
 			case REQUIREMENTS:
 				break;
@@ -685,7 +698,7 @@ public class ToolContentHandler implements ContentHandler {
 								{
 								//Data d=tool.getData().get(dataString);
 									logger.debug("add data="+d.getName()+" to param="+p.getName());
-									p.getParameter().getData().add(d);
+									//p.getParameter().getData().add(d);
 								}
 							}
 							else

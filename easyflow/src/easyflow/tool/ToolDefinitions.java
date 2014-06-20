@@ -7,16 +7,11 @@
 package easyflow.tool;
 
 import java.io.FileNotFoundException;
-
 import java.net.URI;
-
-import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
-
 import org.w3c.dom.Document;
 
 /**

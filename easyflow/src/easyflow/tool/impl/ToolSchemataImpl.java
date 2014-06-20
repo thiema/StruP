@@ -6,53 +6,36 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.core.CorePackage;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.XMLUtil;
-
-
-import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToSchemaMapImpl;
-
 import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
-
 import org.apache.log4j.Logger;
 import javax.xml.validation.SchemaFactory;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.ls.LSInput;
@@ -74,7 +57,7 @@ import org.xml.sax.SAXException;
  *
  * @generated
  */
-public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
+public class ToolSchemataImpl extends MinimalEObjectImpl.Container implements ToolSchemata {
 	/**
 	 * The cached value of the '{@link #getSchemata() <em>Schemata</em>}' map.
 	 * <!-- begin-user-doc -->
@@ -403,6 +386,37 @@ public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.TOOL_SCHEMATA___READ_SCHEMA__URI_BOOLEAN:
+				try {
+					return readSchema((URI)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL_SCHEMATA___READ_SCHEMATA__ELIST_BOOLEAN:
+				try {
+					return readSchemata((EList<URI>)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL_SCHEMATA___GET_DEFAULT_SCHEMA:
+				return getDefaultSchema();
+			case ToolPackage.TOOL_SCHEMATA___GET_SCHEMA_FOR__DOCUMENT:
+				return getSchemaFor((Document)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

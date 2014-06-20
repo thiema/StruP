@@ -8,8 +8,6 @@ package easyflow.tool;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.w3c.dom.Element;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>ITool Element</b></em>'.

@@ -11,6 +11,7 @@ import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
@@ -18,16 +19,12 @@ import java.util.Iterator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
@@ -152,7 +149,7 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			cmd = "";
 			logger.error("generateCommandString(): no argument set.");
 		} else
-			cmd += StringUtils.join(getArgValue(), getParameter().getValueDelimiter());
+			cmd += StringUtils.join(getArgValue(), getParameter().getArgValueDelimiter());
 
 		return cmd;
 	}
@@ -254,6 +251,23 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return value != null && !value.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP:
+				return generateCommandString((EMap<String, Object>)arguments.get(0));
+			case ToolPackage.RESOLVED_PARAM___GET_ARG_VALUE:
+				return getArgValue();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

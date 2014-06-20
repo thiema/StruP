@@ -15,7 +15,6 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -33,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class CatalogImpl extends EObjectImpl implements Catalog {
+public class CatalogImpl extends MinimalEObjectImpl.Container implements Catalog {
 	/**
 	 * The cached value of the '{@link #getEntries() <em>Entries</em>}' map.
 	 * <!-- begin-user-doc -->

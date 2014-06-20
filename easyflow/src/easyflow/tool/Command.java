@@ -8,13 +8,7 @@ package easyflow.tool;
 
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.data.DataPort;
-
-import easyflow.traversal.TraversalChunk;
-
-import java.net.URI;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -29,6 +23,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Command#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.Command#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.Command#getResolvedParams <em>Resolved Params</em>}</li>
+ *   <li>{@link easyflow.tool.Command#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
@@ -94,6 +89,32 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EMap<String, ResolvedParam> getResolvedParams();
+
+	/**
+	 * Returns the value of the '<em><b>Pattern</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Pattern</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Pattern</em>' attribute.
+	 * @see #setPattern(String)
+	 * @see easyflow.tool.ToolPackage#getCommand_Pattern()
+	 * @model
+	 * @generated
+	 */
+	String getPattern();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Command#getPattern <em>Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Pattern</em>' attribute.
+	 * @see #getPattern()
+	 * @generated
+	 */
+	void setPattern(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

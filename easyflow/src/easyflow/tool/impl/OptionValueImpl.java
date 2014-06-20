@@ -9,7 +9,9 @@ package easyflow.tool.impl;
 import easyflow.tool.OptionValue;
 import easyflow.tool.ToolPackage;
 
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -254,6 +256,20 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return EXE_EDEFAULT == null ? exe != null : !EXE_EDEFAULT.equals(exe);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.OPTION_VALUE___RESOLVE_VALUE:
+				return resolveValue();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
