@@ -6,6 +6,7 @@
  */
 package easyflow.tool.util;
 
+import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
@@ -106,20 +107,12 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createToolAdapter();
 			}
 			@Override
-			public Adapter caseInterpreter(Interpreter object) {
-				return createInterpreterAdapter();
-			}
-			@Override
 			public Adapter caseParameter(Parameter object) {
 				return createParameterAdapter();
 			}
 			@Override
 			public Adapter caseInOutParameter(InOutParameter object) {
 				return createInOutParameterAdapter();
-			}
-			@Override
-			public Adapter casePackage(easyflow.tool.Package object) {
-				return createPackageAdapter();
 			}
 			@Override
 			public Adapter caseKey(Key object) {
@@ -136,6 +129,14 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseOptionValue(OptionValue object) {
 				return createOptionValueAdapter();
+			}
+			@Override
+			public Adapter caseBaseCommand(BaseCommand object) {
+				return createBaseCommandAdapter();
+			}
+			@Override
+			public Adapter casePackage(easyflow.tool.Package object) {
+				return createPackageAdapter();
 			}
 			@Override
 			public Adapter caseCommand(Command object) {
@@ -232,20 +233,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createToolAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.tool.Interpreter <em>Interpreter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see easyflow.tool.Interpreter
-	 * @generated
-	 */
-	public Adapter createInterpreterAdapter() {
 		return null;
 	}
 
@@ -372,6 +359,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOptionValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.BaseCommand <em>Base Command</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.BaseCommand
+	 * @generated
+	 */
+	public Adapter createBaseCommandAdapter() {
 		return null;
 	}
 

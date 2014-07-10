@@ -304,33 +304,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getDataPort__IsCompatible__DataPort() {
-		return dataPortEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataPort__RemoveDataPortFrom__EList() {
-		return dataPortEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataPort__GetFormat() {
-		return dataPortEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDataLink() {
 		return dataLinkEClass;
 	}
@@ -430,51 +403,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getDataLink__IsUnconditional() {
-		return dataLinkEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataLink__GetUniqueString__String_String_String() {
-		return dataLinkEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataLink__GetUniqueString() {
-		return dataLinkEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataLink__GetUniqueString__boolean() {
-		return dataLinkEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataLink__GetFormat() {
-		return dataLinkEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getDataLink_ParamStr() {
 		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(6);
 	}
@@ -565,60 +493,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getData__GetFormat() {
-		return dataEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getData__GetFormatStr() {
-		return dataEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getData__IsAllowed() {
-		return dataEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getData__GetSupportedHandles__boolean() {
-		return dataEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getData__Match__Data_boolean() {
-		return dataEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getData__MatchFormat__DataFormat() {
-		return dataEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDataFormat() {
 		return dataFormatEClass;
 	}
@@ -639,15 +513,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 */
 	public EAttribute getDataFormat_Description() {
 		return (EAttribute)dataFormatEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getDataFormat__Match__DataFormat() {
-		return dataFormatEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -688,9 +553,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEReference(dataPortEClass, DATA_PORT__TOOLS);
 		createEAttribute(dataPortEClass, DATA_PORT__STATIC);
 		createEAttribute(dataPortEClass, DATA_PORT__PARAMETER_NAME);
-		createEOperation(dataPortEClass, DATA_PORT___IS_COMPATIBLE__DATAPORT);
-		createEOperation(dataPortEClass, DATA_PORT___REMOVE_DATA_PORT_FROM__ELIST);
-		createEOperation(dataPortEClass, DATA_PORT___GET_FORMAT);
 
 		dataLinkEClass = createEClass(DATA_LINK);
 		createEReference(dataLinkEClass, DATA_LINK__DATA_PORT);
@@ -704,11 +566,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEReference(dataLinkEClass, DATA_LINK__CONDITION);
 		createEReference(dataLinkEClass, DATA_LINK__INTERMEDIATE_TASKS);
 		createEReference(dataLinkEClass, DATA_LINK__DATA);
-		createEOperation(dataLinkEClass, DATA_LINK___IS_UNCONDITIONAL);
-		createEOperation(dataLinkEClass, DATA_LINK___GET_UNIQUE_STRING__STRING_STRING_STRING);
-		createEOperation(dataLinkEClass, DATA_LINK___GET_UNIQUE_STRING);
-		createEOperation(dataLinkEClass, DATA_LINK___GET_UNIQUE_STRING__BOOLEAN);
-		createEOperation(dataLinkEClass, DATA_LINK___GET_FORMAT);
 
 		dataEClass = createEClass(DATA);
 		createEAttribute(dataEClass, DATA__LABEL);
@@ -719,17 +576,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(dataEClass, DATA__DESCRIPTION);
 		createEReference(dataEClass, DATA__PARAMETER);
 		createEAttribute(dataEClass, DATA__PREFERRED_HANDLE);
-		createEOperation(dataEClass, DATA___GET_FORMAT);
-		createEOperation(dataEClass, DATA___GET_FORMAT_STR);
-		createEOperation(dataEClass, DATA___IS_ALLOWED);
-		createEOperation(dataEClass, DATA___GET_SUPPORTED_HANDLES__BOOLEAN);
-		createEOperation(dataEClass, DATA___MATCH__DATA_BOOLEAN);
-		createEOperation(dataEClass, DATA___MATCH_FORMAT__DATAFORMAT);
 
 		dataFormatEClass = createEClass(DATA_FORMAT);
 		createEAttribute(dataFormatEClass, DATA_FORMAT__NAME);
 		createEAttribute(dataFormatEClass, DATA_FORMAT__DESCRIPTION);
-		createEOperation(dataFormatEClass, DATA_FORMAT___MATCH__DATAFORMAT);
 	}
 
 	/**
@@ -768,7 +618,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		// Add supertypes to classes
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(dataPortEClass, DataPort.class, "DataPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataPort_GroupingCriteria(), theTraversalPackage.getTraversalCriterion(), null, "groupingCriteria", null, 0, -1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataPort_Cardinality(), ecorePackage.getEShort(), "cardinality", null, 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -780,13 +630,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEAttribute(getDataPort_Static(), ecorePackage.getEBoolean(), "static", "false", 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataPort_ParameterName(), ecorePackage.getEString(), "parameterName", null, 0, 1, DataPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getDataPort__IsCompatible__DataPort(), ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getDataPort__RemoveDataPortFrom__EList(), ecorePackage.getEBoolean(), "removeDataPortFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "removeDataPortFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataPort(), "dataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getDataPort__GetFormat(), this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataPortEClass, this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(dataLinkEClass, DataLink.class, "DataLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataLink_DataPort(), this.getDataPort(), null, "dataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -801,19 +651,19 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEReference(getDataLink_IntermediateTasks(), theCorePackage.getPreprocessingTask(), null, "intermediateTasks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataLink_Data(), this.getData(), null, "data", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getDataLink__IsUnconditional(), ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataLinkEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getDataLink__GetUniqueString__String_String_String(), ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataLinkEClass, ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "prefix", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "suffix", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "sep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getDataLink__GetUniqueString(), ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataLinkEClass, ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getDataLink__GetUniqueString__boolean(), ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataLinkEClass, ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isVerbose", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getDataLink__GetFormat(), this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataLinkEClass, this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(dataEClass, Data.class, "Data", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getData_Label(), ecorePackage.getEString(), "label", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -825,27 +675,27 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEReference(getData_Parameter(), theToolPackage.getParameter(), null, "parameter", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getData_PreferredHandle(), ecorePackage.getEString(), "preferredHandle", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getData__GetFormat(), this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataEClass, this.getDataFormat(), "getFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getData__GetFormatStr(), ecorePackage.getEString(), "getFormatStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataEClass, ecorePackage.getEString(), "getFormatStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getData__IsAllowed(), ecorePackage.getEBoolean(), "isAllowed", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(dataEClass, ecorePackage.getEBoolean(), "isAllowed", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getData__GetSupportedHandles__boolean(), ecorePackage.getEString(), "getSupportedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataEClass, ecorePackage.getEString(), "getSupportedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "applyConfig", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getData__Match__Data_boolean(), ecorePackage.getEBoolean(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataEClass, ecorePackage.getEBoolean(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getData(), "testData", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "applyConfig", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getData__MatchFormat__DataFormat(), ecorePackage.getEBoolean(), "matchFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataEClass, ecorePackage.getEBoolean(), "matchFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataFormat(), "testDataFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(dataFormatEClass, DataFormat.class, "DataFormat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDataFormat_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataFormat_Description(), ecorePackage.getEString(), "description", null, 0, 1, DataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getDataFormat__Match__DataFormat(), ecorePackage.getEBoolean(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(dataFormatEClass, ecorePackage.getEBoolean(), "match", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataFormat(), "testDataFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 

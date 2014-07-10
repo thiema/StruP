@@ -68,7 +68,7 @@ public class EasyFlowToolBar extends JToolBar
 	final JButton btnGenerateExecWorkflow    = add(generateExecWorkflowAction);
 
 	final JButton btnCalcAll                 = add(calcAllProjectAction);
-	final JButton btnApplyNextTraversalEvent = add(applyNextTraversalEvent);
+	//final JButton btnApplyNextTraversalEvent = add(applyNextTraversalEvent);
 
 	
 	private void initButtons()
@@ -89,6 +89,7 @@ public class EasyFlowToolBar extends JToolBar
 		
 		btnCalcAll.setEnabled(false);
 		btnDeleteGraph.setEnabled(false);
+		btnGenerateExecWorkflow.setEnabled(false);	
 	}
 	
 	public EasyFlowToolBar(EasyFlowGraphEditor easyFlowGraphEditor,
@@ -221,9 +222,12 @@ public class EasyFlowToolBar extends JToolBar
 							&& defaultProject.resolveUtilityTasks()
 							&& defaultProject.resolvePreprocessingTasks()
 							&& defaultProject.resolveToolDependencies()
+							&& defaultProject.generateWorklowForExecutionSystem()
 						)
 					{
 						//btnResolveUtilityTasks.setEnabled(true);
+						btnCalcAll.setEnabled(false);
+						btnGenAbstractWorkflow.setEnabled(false);
 					}
 					
 				} catch (DataLinkNotFoundException e) {
@@ -268,6 +272,7 @@ public class EasyFlowToolBar extends JToolBar
 				{
 					btnApplyGroupingCrit.setEnabled(true);
 					btnApplyParameterCrit.setEnabled(true);
+					btnCalcAll.setEnabled(false);
 				}
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -381,7 +386,7 @@ public class EasyFlowToolBar extends JToolBar
 				if (GlobalVar.getDefaultProject().resolveToolDependencies())
 				{
 					btnResolveToolDeps.setEnabled(false);
-					btnGenAbstractWorkflow.setEnabled(true);
+					btnGenerateExecWorkflow.setEnabled(true);
 				}
 			} catch (NoValidInOutDataException e1) {
 				// TODO Auto-generated catch block

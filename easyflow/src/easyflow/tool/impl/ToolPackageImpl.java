@@ -29,6 +29,7 @@ import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 import easyflow.impl.EasyflowPackageImpl;
 import easyflow.metadata.MetadataPackage;
 import easyflow.metadata.impl.MetadataPackageImpl;
+import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
@@ -113,13 +114,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass interpreterEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass commandEClass = null;
 
 	/**
@@ -177,6 +171,13 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * @generated
 	 */
 	private EClass optionValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass baseCommandEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -321,42 +322,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getToolSchemata__ReadSchema__URI_boolean() {
-		return toolSchemataEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolSchemata__ReadSchemata__EList_boolean() {
-		return toolSchemataEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolSchemata__GetDefaultSchema() {
-		return toolSchemataEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolSchemata__GetSchemaFor__Document() {
-		return toolSchemataEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getToolDefinitions() {
 		return toolDefinitionsEClass;
 	}
@@ -395,15 +360,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 */
 	public EReference getToolDefinitions_Properties() {
 		return (EReference)toolDefinitionsEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolDefinitions__ValidateToolDefinition__URI_boolean() {
-		return toolDefinitionsEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -483,7 +439,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTool_Interpreter() {
+	public EReference getTool_Package() {
 		return (EReference)toolEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -492,7 +448,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTool_Package() {
+	public EReference getTool_Requirements() {
 		return (EReference)toolEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -501,7 +457,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTool_Requirements() {
+	public EReference getTool_Executables() {
 		return (EReference)toolEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -510,7 +466,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTool_Executables() {
+	public EReference getTool_Data() {
 		return (EReference)toolEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -519,17 +475,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTool_Data() {
-		return (EReference)toolEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getTool_FilenamePrefix() {
-		return (EAttribute)toolEClass.getEStructuralFeatures().get(8);
+		return (EAttribute)toolEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -538,7 +485,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * @generated
 	 */
 	public EAttribute getTool_AnalysisType() {
-		return (EAttribute)toolEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)toolEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -547,115 +494,16 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * @generated
 	 */
 	public EReference getTool_Command() {
+		return (EReference)toolEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTool_ResolvedParams() {
 		return (EReference)toolEClass.getEStructuralFeatures().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__WriteModelToXML() {
-		return toolEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__CanProcessMultiplesInstancesFor__DataPort() {
-		return toolEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__CanFilterInstancesFor__DataPort() {
-		return toolEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__RequiresGrouping__String_DataPort() {
-		return toolEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__ProvidesGrouping__String_DataPort() {
-		return toolEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__GetGroupingsForInputPort__DataPort_boolean() {
-		return toolEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__GetGroupingsForOutputPort__DataPort_boolean() {
-		return toolEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__GetAnalysisTypeOfPackage__EList() {
-		return toolEClass.getEOperations().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__GetDataForParam__Parameter_EMap() {
-		return toolEClass.getEOperations().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getInterpreter() {
-		return interpreterEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getInterpreter_Exe() {
-		return (EAttribute)interpreterEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getInterpreter_Logger() {
-		return (EAttribute)interpreterEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -699,51 +547,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getCommand_Pattern() {
-		return (EAttribute)commandEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getCommand__GenerateCommandString__EMap() {
-		return commandEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getCommand__GetParameterForDataPort__DataPort() {
-		return commandEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getCommand__GetPositionalParameterNames() {
-		return commandEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getCommand__GetOptionalParameterNames() {
-		return commandEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getResolvedParam() {
 		return resolvedParamEClass;
 	}
@@ -764,24 +567,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 */
 	public EAttribute getResolvedParam_Value() {
 		return (EAttribute)resolvedParamEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getResolvedParam__GenerateCommandString__EMap() {
-		return resolvedParamEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getResolvedParam__GetArgValue() {
-		return resolvedParamEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -1059,71 +844,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getParameter__GetArgKey() {
-		return parameterEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__GetArgDelimiter() {
-		return parameterEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__GetArgValueDelimiter() {
-		return parameterEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__GetParameterForAnalysisType__EList() {
-		return parameterEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__IsAnalysisType() {
-		return parameterEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__GetSupportedHandles__boolean() {
-		return parameterEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__GetEffectiveParentParameter__boolean() {
-		return parameterEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getParameter__GetEffectiveParameters__EList() {
-		return parameterEClass.getEOperations().get(7);
+	public EAttribute getParameter_CmdPart() {
+		return (EAttribute)parameterEClass.getEStructuralFeatures().get(29);
 	}
 
 	/**
@@ -1158,7 +880,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPackage_Parameters() {
+	public EReference getPackage_ResolvedParams() {
 		return (EReference)packageEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1178,33 +900,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 */
 	public EAttribute getPackage_Version() {
 		return (EAttribute)packageEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPackage_Exe() {
-		return (EAttribute)packageEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPackage_Interpreter() {
-		return (EAttribute)packageEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPackage_CommandPattern() {
-		return (EAttribute)packageEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -1356,8 +1051,53 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getOptionValue__ResolveValue() {
-		return optionValueEClass.getEOperations().get(0);
+	public EAttribute getOptionValue_Id() {
+		return (EAttribute)optionValueEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBaseCommand() {
+		return baseCommandEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBaseCommand_CommandPattern() {
+		return (EAttribute)baseCommandEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBaseCommand_TemplateParam() {
+		return (EReference)baseCommandEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBaseCommand_AssumeDataParamPositional() {
+		return (EAttribute)baseCommandEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBaseCommand_CmdPartDelimiter() {
+		return (EAttribute)baseCommandEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1392,17 +1132,12 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEReference(toolSchemataEClass, TOOL_SCHEMATA__SCHEMATA);
 		createEReference(toolSchemataEClass, TOOL_SCHEMATA__SCHEMATA_URI);
 		createEAttribute(toolSchemataEClass, TOOL_SCHEMATA__LOGGER);
-		createEOperation(toolSchemataEClass, TOOL_SCHEMATA___READ_SCHEMA__URI_BOOLEAN);
-		createEOperation(toolSchemataEClass, TOOL_SCHEMATA___READ_SCHEMATA__ELIST_BOOLEAN);
-		createEOperation(toolSchemataEClass, TOOL_SCHEMATA___GET_DEFAULT_SCHEMA);
-		createEOperation(toolSchemataEClass, TOOL_SCHEMATA___GET_SCHEMA_FOR__DOCUMENT);
 
 		toolDefinitionsEClass = createEClass(TOOL_DEFINITIONS);
 		createEAttribute(toolDefinitionsEClass, TOOL_DEFINITIONS__TOOL_DEFINITIONS);
 		createEReference(toolDefinitionsEClass, TOOL_DEFINITIONS__TOOL_SCHEMATA);
 		createEAttribute(toolDefinitionsEClass, TOOL_DEFINITIONS__LOGGER);
 		createEReference(toolDefinitionsEClass, TOOL_DEFINITIONS__PROPERTIES);
-		createEOperation(toolDefinitionsEClass, TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN);
 
 		iToolElementEClass = createEClass(ITOOL_ELEMENT);
 
@@ -1414,7 +1149,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(toolEClass, TOOL__LOGGER);
 		createEAttribute(toolEClass, TOOL__ID);
 		createEAttribute(toolEClass, TOOL__VERSION);
-		createEReference(toolEClass, TOOL__INTERPRETER);
 		createEReference(toolEClass, TOOL__PACKAGE);
 		createEReference(toolEClass, TOOL__REQUIREMENTS);
 		createEReference(toolEClass, TOOL__EXECUTABLES);
@@ -1422,19 +1156,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(toolEClass, TOOL__FILENAME_PREFIX);
 		createEAttribute(toolEClass, TOOL__ANALYSIS_TYPE);
 		createEReference(toolEClass, TOOL__COMMAND);
-		createEOperation(toolEClass, TOOL___WRITE_MODEL_TO_XML);
-		createEOperation(toolEClass, TOOL___CAN_PROCESS_MULTIPLES_INSTANCES_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___REQUIRES_GROUPING__STRING_DATAPORT);
-		createEOperation(toolEClass, TOOL___PROVIDES_GROUPING__STRING_DATAPORT);
-		createEOperation(toolEClass, TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN);
-		createEOperation(toolEClass, TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN);
-		createEOperation(toolEClass, TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST);
-		createEOperation(toolEClass, TOOL___GET_DATA_FOR_PARAM__PARAMETER_EMAP);
-
-		interpreterEClass = createEClass(INTERPRETER);
-		createEAttribute(interpreterEClass, INTERPRETER__EXE);
-		createEAttribute(interpreterEClass, INTERPRETER__LOGGER);
+		createEReference(toolEClass, TOOL__RESOLVED_PARAMS);
 
 		parameterEClass = createEClass(PARAMETER);
 		createEAttribute(parameterEClass, PARAMETER__LOGGER);
@@ -1466,25 +1188,10 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(parameterEClass, PARAMETER__GENERAL_VALUE);
 		createEAttribute(parameterEClass, PARAMETER__OUTPUT);
 		createEAttribute(parameterEClass, PARAMETER__DATA_PARAM);
-		createEOperation(parameterEClass, PARAMETER___GET_ARG_KEY);
-		createEOperation(parameterEClass, PARAMETER___GET_ARG_DELIMITER);
-		createEOperation(parameterEClass, PARAMETER___GET_ARG_VALUE_DELIMITER);
-		createEOperation(parameterEClass, PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST);
-		createEOperation(parameterEClass, PARAMETER___IS_ANALYSIS_TYPE);
-		createEOperation(parameterEClass, PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN);
-		createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN);
-		createEOperation(parameterEClass, PARAMETER___GET_EFFECTIVE_PARAMETERS__ELIST);
+		createEAttribute(parameterEClass, PARAMETER__CMD_PART);
 
 		inOutParameterEClass = createEClass(IN_OUT_PARAMETER);
 		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__FORMATS);
-
-		packageEClass = createEClass(PACKAGE);
-		createEReference(packageEClass, PACKAGE__PARAMETERS);
-		createEAttribute(packageEClass, PACKAGE__ID);
-		createEAttribute(packageEClass, PACKAGE__VERSION);
-		createEAttribute(packageEClass, PACKAGE__EXE);
-		createEAttribute(packageEClass, PACKAGE__INTERPRETER);
-		createEAttribute(packageEClass, PACKAGE__COMMAND_PATTERN);
 
 		keyEClass = createEClass(KEY);
 		createEAttribute(keyEClass, KEY__VALUE);
@@ -1505,23 +1212,27 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(optionValueEClass, OPTION_VALUE__CONDITION);
 		createEAttribute(optionValueEClass, OPTION_VALUE__HELP);
 		createEAttribute(optionValueEClass, OPTION_VALUE__EXE);
-		createEOperation(optionValueEClass, OPTION_VALUE___RESOLVE_VALUE);
+		createEAttribute(optionValueEClass, OPTION_VALUE__ID);
+
+		baseCommandEClass = createEClass(BASE_COMMAND);
+		createEAttribute(baseCommandEClass, BASE_COMMAND__COMMAND_PATTERN);
+		createEReference(baseCommandEClass, BASE_COMMAND__TEMPLATE_PARAM);
+		createEAttribute(baseCommandEClass, BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL);
+		createEAttribute(baseCommandEClass, BASE_COMMAND__CMD_PART_DELIMITER);
+
+		packageEClass = createEClass(PACKAGE);
+		createEReference(packageEClass, PACKAGE__RESOLVED_PARAMS);
+		createEAttribute(packageEClass, PACKAGE__ID);
+		createEAttribute(packageEClass, PACKAGE__VERSION);
 
 		commandEClass = createEClass(COMMAND);
 		createEAttribute(commandEClass, COMMAND__EXECUTABLE);
 		createEAttribute(commandEClass, COMMAND__LOGGER);
 		createEReference(commandEClass, COMMAND__RESOLVED_PARAMS);
-		createEAttribute(commandEClass, COMMAND__PATTERN);
-		createEOperation(commandEClass, COMMAND___GENERATE_COMMAND_STRING__EMAP);
-		createEOperation(commandEClass, COMMAND___GET_PARAMETER_FOR_DATA_PORT__DATAPORT);
-		createEOperation(commandEClass, COMMAND___GET_POSITIONAL_PARAMETER_NAMES);
-		createEOperation(commandEClass, COMMAND___GET_OPTIONAL_PARAMETER_NAMES);
 
 		resolvedParamEClass = createEClass(RESOLVED_PARAM);
 		createEReference(resolvedParamEClass, RESOLVED_PARAM__PARAMETER);
 		createEAttribute(resolvedParamEClass, RESOLVED_PARAM__VALUE);
-		createEOperation(resolvedParamEClass, RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP);
-		createEOperation(resolvedParamEClass, RESOLVED_PARAM___GET_ARG_VALUE);
 	}
 
 	/**
@@ -1560,39 +1271,39 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		// Add supertypes to classes
 		toolEClass.getESuperTypes().add(this.getIToolElement());
 		toolEClass.getESuperTypes().add(this.getDefaultToolElement());
-		interpreterEClass.getESuperTypes().add(this.getIToolElement());
-		interpreterEClass.getESuperTypes().add(this.getDefaultToolElement());
 		parameterEClass.getESuperTypes().add(this.getIToolElement());
 		parameterEClass.getESuperTypes().add(this.getDefaultToolElement());
 		inOutParameterEClass.getESuperTypes().add(this.getParameter());
-		packageEClass.getESuperTypes().add(this.getIToolElement());
-		packageEClass.getESuperTypes().add(this.getDefaultToolElement());
 		keyEClass.getESuperTypes().add(this.getDefaultToolElement());
 		requirementEClass.getESuperTypes().add(this.getDefaultToolElement());
 		optionValueEClass.getESuperTypes().add(this.getDefaultToolElement());
+		packageEClass.getESuperTypes().add(this.getIToolElement());
+		packageEClass.getESuperTypes().add(this.getDefaultToolElement());
+		packageEClass.getESuperTypes().add(this.getBaseCommand());
 		commandEClass.getESuperTypes().add(this.getIToolElement());
 		commandEClass.getESuperTypes().add(this.getDefaultToolElement());
+		commandEClass.getESuperTypes().add(this.getBaseCommand());
 		resolvedParamEClass.getESuperTypes().add(this.getDefaultToolElement());
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(toolSchemataEClass, ToolSchemata.class, "ToolSchemata", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getToolSchemata_Schemata(), theMapsPackage.getStringToSchemaMap(), null, "schemata", null, 0, -1, ToolSchemata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getToolSchemata_SchemataURI(), theMapsPackage.getStringToURIMap(), null, "schemataURI", null, 0, -1, ToolSchemata.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getToolSchemata_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, ToolSchemata.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getToolSchemata__ReadSchema__URI_boolean(), theEasyflowPackage.getSchema(), "readSchema", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(toolSchemataEClass, theEasyflowPackage.getSchema(), "readSchema", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "xsdSource", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isFromJar", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
 
-		op = initEOperation(getToolSchemata__ReadSchemata__EList_boolean(), theEasyflowPackage.getSchema(), "readSchemata", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolSchemataEClass, theEasyflowPackage.getSchema(), "readSchemata", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "xsdSource", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isFromJar", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
 
-		initEOperation(getToolSchemata__GetDefaultSchema(), theEasyflowPackage.getSchema(), "getDefaultSchema", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(toolSchemataEClass, theEasyflowPackage.getSchema(), "getDefaultSchema", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getToolSchemata__GetSchemaFor__Document(), theEasyflowPackage.getSchema(), "getSchemaFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolSchemataEClass, theEasyflowPackage.getSchema(), "getSchemaFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getDocument(), "document", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(toolDefinitionsEClass, ToolDefinitions.class, "ToolDefinitions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1601,7 +1312,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getToolDefinitions_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, ToolDefinitions.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getToolDefinitions_Properties(), theMapsPackage.getStringToDocumentPropertiesMap(), null, "properties", null, 0, -1, ToolDefinitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getToolDefinitions__ValidateToolDefinition__URI_boolean(), ecorePackage.getEBoolean(), "validateToolDefinition", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolDefinitionsEClass, ecorePackage.getEBoolean(), "validateToolDefinition", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "xmlSource", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isFromJar", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
@@ -1616,7 +1327,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getTool_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Tool.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTool_Id(), ecorePackage.getEString(), "id", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTool_Version(), ecorePackage.getEString(), "version", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTool_Interpreter(), this.getInterpreter(), null, "interpreter", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_Package(), this.getPackage(), null, "package", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_Requirements(), this.getRequirement(), null, "requirements", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_Executables(), theMapsPackage.getStringToURIMap(), null, "executables", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1624,111 +1334,169 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getTool_FilenamePrefix(), ecorePackage.getEString(), "filenamePrefix", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTool_AnalysisType(), ecorePackage.getEString(), "analysisType", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_Command(), this.getCommand(), null, "command", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTool_ResolvedParams(), theMapsPackage.getStringToResolvedParamMap(), null, "resolvedParams", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getTool__WriteModelToXML(), null, "writeModelToXML", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(toolEClass, null, "writeModelToXML", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTool__CanProcessMultiplesInstancesFor__DataPort(), ecorePackage.getEBoolean(), "canProcessMultiplesInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, ecorePackage.getEBoolean(), "canProcessMultiplesInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTool__CanFilterInstancesFor__DataPort(), ecorePackage.getEBoolean(), "canFilterInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, ecorePackage.getEBoolean(), "canFilterInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTool__RequiresGrouping__String_DataPort(), ecorePackage.getEBoolean(), "requiresGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, ecorePackage.getEBoolean(), "requiresGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingCriterion", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTool__ProvidesGrouping__String_DataPort(), ecorePackage.getEBoolean(), "providesGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, ecorePackage.getEBoolean(), "providesGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingCriterion", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTool__GetGroupingsForInputPort__DataPort_boolean(), ecorePackage.getEString(), "getGroupingsForInputPort", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, ecorePackage.getEString(), "getGroupingsForInputPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTool__GetGroupingsForOutputPort__DataPort_boolean(), ecorePackage.getEString(), "getGroupingsForOutputPort", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, ecorePackage.getEString(), "getGroupingsForOutputPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTool__GetAnalysisTypeOfPackage__EList(), ecorePackage.getEString(), "getAnalysisTypeOfPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, theEasyflowPackage.getTuple(), "getAnalysisTypeOfPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalChunk(), "records", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTool__GetDataForParam__Parameter_EMap(), theDataPackage.getData(), "getDataForParam", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolEClass, theDataPackage.getData(), "getDataForParam", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getParameter(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToStringMap(), "constraints", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(interpreterEClass, Interpreter.class, "Interpreter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getInterpreter_Exe(), ecorePackage.getEString(), "exe", null, 0, 1, Interpreter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getInterpreter_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Interpreter.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		addEOperation(toolEClass, this.getParameter(), "getTemplateParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, ecorePackage.getEBoolean(), "assumeDataParamPositional", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, ecorePackage.getEBoolean(), "omitPrefixIfNoArgKey", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, ecorePackage.getEString(), "getCmdPartDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, theMapsPackage.getStringToResolvedParamMap(), "getInterpreterParams", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, this.getResolvedParam(), "getExe", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, theMapsPackage.getStringToResolvedParamMap(), "getModuleParams", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(toolEClass, this.getResolvedParam(), "getInterpreter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameter_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Parameter.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_Values(), theMapsPackage.getStringToParameterListMap(), null, "values", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_OptionValues(), this.getOptionValue(), null, "optionValues", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Optional(), ecorePackage.getEBoolean(), "optional", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Multiple(), ecorePackage.getEBoolean(), "multiple", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_MultipleValue(), ecorePackage.getEBoolean(), "multipleValue", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Optional(), ecorePackage.getEBooleanObject(), "optional", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Multiple(), ecorePackage.getEBooleanObject(), "multiple", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_MultipleValue(), ecorePackage.getEBooleanObject(), "multipleValue", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_ValueType(), ecorePackage.getEString(), "valueType", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_DefaultValue(), ecorePackage.getEString(), "defaultValue", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Prefix(), ecorePackage.getEString(), "prefix", "-", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Prefix(), ecorePackage.getEString(), "prefix", "", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_OptionKey(), ecorePackage.getEString(), "optionKey", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Delimiter(), ecorePackage.getEString(), "delimiter", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_ValueDelimiter(), ecorePackage.getEString(), "valueDelimiter", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_Keys(), this.getKey(), null, "keys", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Named(), ecorePackage.getEBoolean(), "named", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Named(), ecorePackage.getEBooleanObject(), "named", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Label(), ecorePackage.getEString(), "label", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Help(), ecorePackage.getEString(), "help", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_MinOcc(), ecorePackage.getEInt(), "minOcc", "1", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_MaxOcc(), ecorePackage.getEInt(), "maxOcc", "1", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Advanced(), ecorePackage.getEBoolean(), "advanced", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_Positional(), ecorePackage.getEBoolean(), "positional", "true", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Positional(), ecorePackage.getEBooleanObject(), "positional", "true", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Grouping(), ecorePackage.getEString(), "grouping", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_DataDeprecated(), theDataPackage.getData(), null, "dataDeprecated", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_FixedArgValue(), ecorePackage.getEBoolean(), "fixedArgValue", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_FixedArgValue(), ecorePackage.getEBooleanObject(), "fixedArgValue", "false", 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_Parent(), this.getParameter(), null, "parent", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Handles(), ecorePackage.getEString(), "handles", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_GeneralValue(), theEasyflowPackage.getObject(), "generalValue", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_DataParam(), ecorePackage.getEBoolean(), "dataParam", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_CmdPart(), ecorePackage.getEString(), "cmdPart", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getParameter__GetArgKey(), ecorePackage.getEString(), "getArgKey", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "getArgKey", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultPrefix", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getParameter__GetArgDelimiter(), ecorePackage.getEString(), "getArgDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "getArgDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getParameter__GetArgValueDelimiter(), ecorePackage.getEString(), "getArgValueDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "getArgValueDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultDelimiter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getParameter__GetParameterForAnalysisType__EList(), this.getParameter(), "getParameterForAnalysisType", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "getPrefix", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultPrefix", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, this.getParameter(), "getParameterForAnalysisType", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalChunk(), "records", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getParameter__IsAnalysisType(), ecorePackage.getEBoolean(), "isAnalysisType", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isAnalysisType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getParameter__GetSupportedHandles__boolean(), ecorePackage.getEString(), "getSupportedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "getSupportedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "applyConfig", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getParameter__GetEffectiveParentParameter__boolean(), this.getParameter(), "getEffectiveParentParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, this.getParameter(), "getEffectiveParentParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "first", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getParameter__GetEffectiveParameters__EList(), this.getParameter(), "getEffectiveParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(parameterEClass, this.getParameter(), "getEffectiveParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getParameter(), "effectiveParams", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "generateCommandStringURI", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getURI(), "value", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getParameter(), "templateParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "generateCommandString", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getObject(), "value", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getParameter(), "templateParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "generateCommandString", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getObject(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getParameter(), "templateParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "generateCommandString", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getOptionValue(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getParameter(), "templateParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEString(), "generateCommandString", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getURI(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getParameter(), "templateParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isOptional", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isMultiple", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isNamed", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isPositional", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isFixedArgValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isMultipleValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(inOutParameterEClass, InOutParameter.class, "InOutParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInOutParameter_Formats(), ecorePackage.getEString(), "formats", null, 0, -1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(packageEClass, easyflow.tool.Package.class, "Package", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPackage_Parameters(), theMapsPackage.getStringToParameterMap(), null, "parameters", null, 0, -1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPackage_Id(), ecorePackage.getEString(), "id", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPackage_Version(), ecorePackage.getEString(), "version", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPackage_Exe(), ecorePackage.getEString(), "exe", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPackage_Interpreter(), ecorePackage.getEString(), "interpreter", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPackage_CommandPattern(), ecorePackage.getEString(), "commandPattern", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(keyEClass, Key.class, "Key", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getKey_Value(), ecorePackage.getEString(), "value", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getKey_Delimiter(), ecorePackage.getEString(), "delimiter", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getKey_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getKey_Type(), ecorePackage.getEString(), "type", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = addEOperation(keyEClass, ecorePackage.getEString(), "resolveArgKey", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultPrefix", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(requirementEClass, Requirement.class, "Requirement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRequirement_Type(), ecorePackage.getEString(), "type", null, 0, 1, Requirement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1743,34 +1511,49 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getOptionValue_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOptionValue_Help(), ecorePackage.getEString(), "help", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOptionValue_Exe(), ecorePackage.getEString(), "exe", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getOptionValue_Id(), ecorePackage.getEString(), "id", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getOptionValue__ResolveValue(), ecorePackage.getEString(), "resolveValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(optionValueEClass, ecorePackage.getEString(), "resolveValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(baseCommandEClass, BaseCommand.class, "BaseCommand", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBaseCommand_CommandPattern(), ecorePackage.getEString(), "commandPattern", null, 0, 1, BaseCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBaseCommand_TemplateParam(), this.getParameter(), null, "templateParam", null, 0, 1, BaseCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseCommand_AssumeDataParamPositional(), ecorePackage.getEBooleanObject(), "assumeDataParamPositional", null, 0, 1, BaseCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseCommand_CmdPartDelimiter(), ecorePackage.getEString(), "cmdPartDelimiter", null, 0, 1, BaseCommand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(packageEClass, easyflow.tool.Package.class, "Package", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPackage_ResolvedParams(), theMapsPackage.getStringToResolvedParamMap(), null, "resolvedParams", null, 0, -1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPackage_Id(), ecorePackage.getEString(), "id", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPackage_Version(), ecorePackage.getEString(), "version", null, 0, 1, easyflow.tool.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(packageEClass, this.getResolvedParam(), "getInterpreter", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(packageEClass, this.getResolvedParam(), "getExe", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(packageEClass, theMapsPackage.getStringToResolvedParamMap(), "getInterpreterParams", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(commandEClass, Command.class, "Command", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCommand_Executable(), ecorePackage.getEBoolean(), "executable", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCommand_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Command.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCommand_ResolvedParams(), theMapsPackage.getStringToResolvedParamMap(), null, "resolvedParams", null, 0, -1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCommand_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getCommand__GenerateCommandString__EMap(), ecorePackage.getEString(), "generateCommandString", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(commandEClass, ecorePackage.getEString(), "getPositionalParameterNames", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getCommand__GetParameterForDataPort__DataPort(), this.getParameter(), "getParameterForDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getParameterNotFoundException());
+		addEOperation(commandEClass, ecorePackage.getEString(), "getOptionalParameterNames", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getCommand__GetPositionalParameterNames(), ecorePackage.getEString(), "getPositionalParameterNames", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(commandEClass, this.getResolvedParam(), "getInterperter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getCommand__GetOptionalParameterNames(), ecorePackage.getEString(), "getOptionalParameterNames", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(commandEClass, this.getResolvedParam(), "getExe", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(resolvedParamEClass, ResolvedParam.class, "ResolvedParam", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getResolvedParam_Parameter(), this.getParameter(), null, "parameter", null, 0, 1, ResolvedParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getResolvedParam_Value(), theEasyflowPackage.getObject(), "value", null, 0, -1, ResolvedParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getResolvedParam__GenerateCommandString__EMap(), ecorePackage.getEString(), "generateCommandString", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constaints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(resolvedParamEClass, ecorePackage.getEString(), "generateCommandString", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToObjectMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getParameter(), "templateParam", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getResolvedParam__GetArgValue(), ecorePackage.getEString(), "getArgValue", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(resolvedParamEClass, ecorePackage.getEString(), "getArgValue", 0, -1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //ToolPackageImpl

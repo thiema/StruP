@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link easyflow.tool.impl.OptionValueImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.tool.impl.OptionValueImpl#getHelp <em>Help</em>}</li>
  *   <li>{@link easyflow.tool.impl.OptionValueImpl#getExe <em>Exe</em>}</li>
+ *   <li>{@link easyflow.tool.impl.OptionValueImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -86,6 +87,25 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 	 * @ordered
 	 */
 	protected String exe = EXE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ID_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String id = ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,6 +194,27 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.OPTION_VALUE__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String resolveValue() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -194,6 +235,8 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return getHelp();
 			case ToolPackage.OPTION_VALUE__EXE:
 				return getExe();
+			case ToolPackage.OPTION_VALUE__ID:
+				return getId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -214,6 +257,9 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return;
 			case ToolPackage.OPTION_VALUE__EXE:
 				setExe((String)newValue);
+				return;
+			case ToolPackage.OPTION_VALUE__ID:
+				setId((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -236,6 +282,9 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 			case ToolPackage.OPTION_VALUE__EXE:
 				setExe(EXE_EDEFAULT);
 				return;
+			case ToolPackage.OPTION_VALUE__ID:
+				setId(ID_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -254,22 +303,10 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 				return HELP_EDEFAULT == null ? help != null : !HELP_EDEFAULT.equals(help);
 			case ToolPackage.OPTION_VALUE__EXE:
 				return EXE_EDEFAULT == null ? exe != null : !EXE_EDEFAULT.equals(exe);
+			case ToolPackage.OPTION_VALUE__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.OPTION_VALUE___RESOLVE_VALUE:
-				return resolveValue();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -288,6 +325,8 @@ public class OptionValueImpl extends DefaultToolElementImpl implements OptionVal
 		result.append(help);
 		result.append(", exe: ");
 		result.append(exe);
+		result.append(", id: ");
+		result.append(id);
 		result.append(')');
 		return result.toString();
 	}

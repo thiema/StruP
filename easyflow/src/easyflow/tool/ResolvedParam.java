@@ -72,10 +72,10 @@ public interface ResolvedParam extends DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model constaintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
+	 * @model constraintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
 	 * @generated
 	 */
-	String generateCommandString(EMap<String, Object> constaints);
+	EList<String> generateCommandString(EMap<String, Object> constraints, Parameter templateParam);
 
 	/**
 	 * <!-- begin-user-doc -->

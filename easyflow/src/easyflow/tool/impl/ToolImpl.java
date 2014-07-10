@@ -7,6 +7,9 @@
 package easyflow.tool.impl;
 
 import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.Tuple;
 import easyflow.data.Data;
 import easyflow.data.DataPort;
 import easyflow.tool.Command;
@@ -15,27 +18,32 @@ import easyflow.tool.Interpreter;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDataListMapImpl;
+import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -53,7 +61,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getVersion <em>Version</em>}</li>
- *   <li>{@link easyflow.tool.impl.ToolImpl#getInterpreter <em>Interpreter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getExecutables <em>Executables</em>}</li>
@@ -61,12 +68,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getFilenamePrefix <em>Filename Prefix</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getAnalysisType <em>Analysis Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getResolvedParams <em>Resolved Params</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
+public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -168,16 +176,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	protected String version = VERSION_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getInterpreter() <em>Interpreter</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInterpreter()
-	 * @generated
-	 * @ordered
-	 */
-	protected Interpreter interpreter;
-
-	/**
 	 * The cached value of the '{@link #getPackage() <em>Package</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -266,6 +264,16 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @ordered
 	 */
 	protected Command command;
+
+	/**
+	 * The cached value of the '{@link #getResolvedParams() <em>Resolved Params</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResolvedParams()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, ResolvedParam> resolvedParams;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -377,44 +385,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		version = newVersion;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__VERSION, oldVersion, version));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Interpreter getInterpreter() {
-		if (interpreter != null && interpreter.eIsProxy()) {
-			InternalEObject oldInterpreter = (InternalEObject)interpreter;
-			interpreter = (Interpreter)eResolveProxy(oldInterpreter);
-			if (interpreter != oldInterpreter) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.TOOL__INTERPRETER, oldInterpreter, interpreter));
-			}
-		}
-		return interpreter;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Interpreter basicGetInterpreter() {
-		return interpreter;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setInterpreter(Interpreter newInterpreter) {
-		Interpreter oldInterpreter = interpreter;
-		interpreter = newInterpreter;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__INTERPRETER, oldInterpreter, interpreter));
 	}
 
 	/**
@@ -576,6 +546,18 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, ResolvedParam> getResolvedParams() {
+		if (resolvedParams == null) {
+			resolvedParams = new EcoreEMap<String,ResolvedParam>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP, StringToResolvedParamMapImpl.class, this, ToolPackage.TOOL__RESOLVED_PARAMS);
+		}
+		return resolvedParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void writeModelToXML() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -667,8 +649,10 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String getAnalysisTypeOfPackage(EList<TraversalChunk> records) {
+	public Tuple<Parameter, OptionValue> getAnalysisTypeOfPackage(EList<TraversalChunk> records) {
 		
+		//Parameter returnParam = null;
+		OptionValue returnValue = null;
 		// Example: 
 		//   jexlString=
 		//   
@@ -681,25 +665,38 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		// Example2: package=bwa, with parameter analysisType and option values contain 
 		//              sampe with cond="size(InputFiles)==2" and samse with cond="size(InputFiles)==1"
 		String retString = null;
+		Tool t = this;
 		if (getPackage()!=null)
 		{
-			for (Parameter parameter : getPackage().getParameters().values())
+			for (ResolvedParam resolvedParam : getPackage().getResolvedParams().values())
 			{
+				Parameter parameter = resolvedParam.getParameter(); 
 				if (parameter.isAnalysisType())
 				{
 					String matchByNameStr = null;
 					String matchByCondStr = null;
 					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName());
-					for (OptionValue optionValue:parameter.getOptionValues())
+					for (OptionValue optionValue : parameter.getOptionValues())
 					{
 						logger.debug("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
 						if (getAnalysisType()!=null && optionValue.getName().equals(getAnalysisType()))
+						{
 							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getAnalysisType();
+							returnValue = optionValue;
+							returnValue.setExe(matchByNameStr);
+						}
 						else if (optionValue.getName().equals(getId()))
+						{
 							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getId();
+							returnValue = optionValue;
+							returnValue.setExe(matchByNameStr);
+						}
 						else if (optionValue.getName().equals(getName()))
+						{
 							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getName();
-							
+							returnValue = optionValue;
+							returnValue.setExe(matchByNameStr);
+						}	
 						else if (optionValue.getCondition()!=null)
 						{
 							Object evalObject = easyflow.custom.util.Util.evaluateJexl(
@@ -709,16 +706,21 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 								if (((Boolean) evalObject).booleanValue())
 								{
 									matchByCondStr = optionValue.getExe()!=null ? optionValue.getExe() : optionValue.getName();
+									returnValue = optionValue;
 								}
 							}
 						}
 						
 					}
 					if (matchByNameStr != null)
-						
-						return matchByNameStr;
+					{
+						//return matchByNameStr;
+						return new Tuple<Parameter, OptionValue>(parameter, returnValue);
+					}
 					else if (matchByCondStr != null)
-						return matchByCondStr;
+					{
+						return new Tuple<Parameter, OptionValue>(parameter, returnValue);
+					}
 				}
 			}
 		}
@@ -739,6 +741,133 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getTemplateParameter() {
+
+		// check the tool for parameter of type template
+		if (getCommand().getTemplateParam() != null)
+			return getCommand().getTemplateParam();
+		
+		// check the package
+		if (getPackage() != null && getPackage().getTemplateParam() != null)
+			return getPackage().getTemplateParam();
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean assumeDataParamPositional() {
+		
+		if (getCommand().getAssumeDataParamPositional() != null)
+			return getCommand().getAssumeDataParamPositional();
+		else if (getPackage().getAssumeDataParamPositional() != null)
+			return getPackage().getAssumeDataParamPositional();
+		else
+			return GlobalConfig.assumePositionalDataParam();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean omitPrefixIfNoArgKey() {
+		
+		return GlobalConfig.omitPrefixIfNoArgKey();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getCmdPartDelimiter() {
+		if (getCommand().getCmdPartDelimiter() != null)
+			return getCommand().getCmdPartDelimiter();
+		else
+			return GlobalConfig.getCmdPartDelimiter();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getInterpreter() {
+		
+		ResolvedParam param = getPackage() != null ? getPackage().getInterpreter() : null;
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(e.getValue().getParameter().getCmdPart()))
+				param = e.getValue();
+		}
+		return param;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, ResolvedParam> getInterpreterParams() {
+		
+		EMap<String, ResolvedParam> map = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEMap<String, ResolvedParam>();
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
+				map.put(e.getKey(), e.getValue());
+		}
+		return map;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getExe() {
+		
+		ResolvedParam param = getPackage() != null ? getPackage().getExe() : null;
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(e.getValue().getParameter().getCmdPart()))
+				param = e.getValue();
+		}
+		return param;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, ResolvedParam> getModuleParams() {
+		
+		EMap<String, ResolvedParam> map = new BasicEMap<String, ResolvedParam>();
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_MODULE.equals(e.getValue().getParameter().getCmdPart()))
+				map.put(e.getKey(), e.getValue());
+		}
+		return map;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -748,6 +877,8 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return ((InternalEList<?>)getExecutables()).basicRemove(otherEnd, msgs);
 			case ToolPackage.TOOL__DATA:
 				return ((InternalEList<?>)getData()).basicRemove(otherEnd, msgs);
+			case ToolPackage.TOOL__RESOLVED_PARAMS:
+				return ((InternalEList<?>)getResolvedParams()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -770,9 +901,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return getId();
 			case ToolPackage.TOOL__VERSION:
 				return getVersion();
-			case ToolPackage.TOOL__INTERPRETER:
-				if (resolve) return getInterpreter();
-				return basicGetInterpreter();
 			case ToolPackage.TOOL__PACKAGE:
 				if (resolve) return getPackage();
 				return basicGetPackage();
@@ -791,6 +919,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__COMMAND:
 				if (resolve) return getCommand();
 				return basicGetCommand();
+			case ToolPackage.TOOL__RESOLVED_PARAMS:
+				if (coreType) return getResolvedParams();
+				else return getResolvedParams().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -816,9 +947,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__VERSION:
 				setVersion((String)newValue);
 				return;
-			case ToolPackage.TOOL__INTERPRETER:
-				setInterpreter((Interpreter)newValue);
-				return;
 			case ToolPackage.TOOL__PACKAGE:
 				setPackage((easyflow.tool.Package)newValue);
 				return;
@@ -840,6 +968,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return;
 			case ToolPackage.TOOL__COMMAND:
 				setCommand((Command)newValue);
+				return;
+			case ToolPackage.TOOL__RESOLVED_PARAMS:
+				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -865,9 +996,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
-			case ToolPackage.TOOL__INTERPRETER:
-				setInterpreter((Interpreter)null);
-				return;
 			case ToolPackage.TOOL__PACKAGE:
 				setPackage((easyflow.tool.Package)null);
 				return;
@@ -888,6 +1016,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return;
 			case ToolPackage.TOOL__COMMAND:
 				setCommand((Command)null);
+				return;
+			case ToolPackage.TOOL__RESOLVED_PARAMS:
+				getResolvedParams().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -911,8 +1042,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case ToolPackage.TOOL__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
-			case ToolPackage.TOOL__INTERPRETER:
-				return interpreter != null;
 			case ToolPackage.TOOL__PACKAGE:
 				return package_ != null;
 			case ToolPackage.TOOL__REQUIREMENTS:
@@ -927,6 +1056,8 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return ANALYSIS_TYPE_EDEFAULT == null ? analysisType != null : !ANALYSIS_TYPE_EDEFAULT.equals(analysisType);
 			case ToolPackage.TOOL__COMMAND:
 				return command != null;
+			case ToolPackage.TOOL__RESOLVED_PARAMS:
+				return resolvedParams != null && !resolvedParams.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -963,48 +1094,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.TOOL___WRITE_MODEL_TO_XML:
-				writeModelToXML();
-				return null;
-			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLES_INSTANCES_FOR__DATAPORT:
-				try {
-					return canProcessMultiplesInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT:
-				try {
-					return canFilterInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___REQUIRES_GROUPING__STRING_DATAPORT:
-				return requiresGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
-			case ToolPackage.TOOL___PROVIDES_GROUPING__STRING_DATAPORT:
-				return providesGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
-			case ToolPackage.TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN:
-				return getGroupingsForInputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case ToolPackage.TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN:
-				return getGroupingsForOutputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case ToolPackage.TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST:
-				return getAnalysisTypeOfPackage((EList<TraversalChunk>)arguments.get(0));
-			case ToolPackage.TOOL___GET_DATA_FOR_PARAM__PARAMETER_EMAP:
-				return getDataForParam((Parameter)arguments.get(0), (Map.Entry<String, String>)arguments.get(1));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -228,26 +228,44 @@ public class ToolContentHandler implements ContentHandler {
 		
 	}
 	
+	private void initParam(Parameter curParam)
+	{
+		curParam.setPrefix        (null);
+		curParam.setDelimiter     (null);
+		curParam.setValueDelimiter(null);
+	}
+	
 	private void setParam(Attributes atts, Parameter curParam)
 	{
+		initParam(curParam);
 		if (atts.getValue("name")!=null)
 			curParam.setName(atts.getValue("name"));
 		if (atts.getValue("type")!=null)
 			curParam.setType(atts.getValue("type"));
-		
+		if (atts.getValue("cmd_part")!=null)
+			curParam.setCmdPart(atts.getValue("cmd_part"));
+
 		if (curParam.getName()==null && curParam.getType()!=null)
 			curParam.setName(curParam.getType());
 		
 		if (atts.getValue("optional")!=null)
 			curParam.setOptional(atts.getValue("optional").equals("true")?true:false);
+		else
+			curParam.setOptional(null);
 		if (atts.getValue("multiple")!=null)
 			curParam.setMultiple(atts.getValue("multiple").equals("true")?true:false);
-		if (atts.getValue("multipleValue")!=null)
-			curParam.setMultipleValue(atts.getValue("multipleValue").equals("true")?true:false);
-		if (atts.getValue("defaultValue")!=null)
-			curParam.setDefaultValue(atts.getValue("defaultValue"));
-		if (atts.getValue("valueType")!=null)
-			curParam.setValueType(atts.getValue("valueType"));
+		else
+			curParam.setMultiple(null);
+		
+		if (atts.getValue("multiple_value")!=null)
+			curParam.setMultipleValue(atts.getValue("multiple_value").equals("true")?true:false);
+		else
+			curParam.setMultipleValue(null);
+		
+		if (atts.getValue("default_value")!=null)
+			curParam.setDefaultValue(atts.getValue("default_value"));
+		if (atts.getValue("value_type")!=null)
+			curParam.setValueType(atts.getValue("value_type"));
 
 		// relevant for package
 		if (atts.getValue("value")!=null)
@@ -257,7 +275,12 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setDelimiter(atts.getValue("separator"));
 		if (atts.getValue("prefix")!=null)
 			curParam.setPrefix(atts.getValue("prefix"));
-		
+		if (atts.getValue("arg_value_separator")!=null)
+			curParam.setValueDelimiter(atts.getValue("arg_value_separator"));
+		if (atts.getValue("fixed") != null)
+			curParam.setFixedArgValue(atts.getValue("fixed").equals("true")?true:false);
+		else
+			curParam.setFixedArgValue(null);
 		
 		if (atts.getValue("label")!=null)
 			curParam.setLabel(atts.getValue("label"));
@@ -271,6 +294,8 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setMaxOcc(new Integer(atts.getValue("maxOcc")));
 		if (atts.getValue("named")!=null)
 			curParam.setNamed(atts.getValue("named").equals("true")?true:false);
+		else 
+			curParam.setNamed(null);
 		if (atts.getValue("advanced")!=null)
 			curParam.setAdvanced(atts.getValue("advanced").equals("true")?true:false);
 		
@@ -442,24 +467,47 @@ public class ToolContentHandler implements ContentHandler {
 				{
 					if (atts.getValue("pattern") != null)
 						pkg.setCommandPattern(atts.getValue("pattern"));
+					if (atts.getValue("assume_data_param_positional") != null
+							&& atts.getValue("assume_data_param_positional").equals("true"))
+						pkg.setAssumeDataParamPositional(true);
+						
 				}
 				else
 				{
 					tool.getCommand().setName(atts.getValue("name"));
 				
 					if (atts.getValue("pattern") != null)
-						tool.getCommand().setPattern(atts.getValue("pattern"));
+						tool.getCommand().setCommandPattern(atts.getValue("pattern"));
+					if (atts.getValue("assume_data_param_positional") != null
+							&& atts.getValue("assume_data_param_positional").equals("true"))
+						tool.getCommand().setAssumeDataParamPositional(true);
 				}
 				break;
 			case REQUIREMENTS:
 				break;
 			case EXE:
 				if (withinPackage)
-					pkg.setExe(atts.getValue("name"));
+				{
+					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+					resolvedParam.setName(atts.getValue("name"));
+					Parameter param = ToolFactory.eINSTANCE.createParameter();
+					param.setName(resolvedParam.getName());
+					param.setCmdPart("exe");
+					resolvedParam.setParameter(param);
+					pkg.getResolvedParams().put(atts.getValue("name"), resolvedParam);
+				}
 				break;
 			case INTERPRETER:
 				if (withinPackage)
-					pkg.setInterpreter(atts.getValue("exe"));
+				{
+					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+					resolvedParam.setName(atts.getValue("exe"));
+					Parameter param = ToolFactory.eINSTANCE.createParameter();
+					param.setName(resolvedParam.getName());
+					param.setCmdPart("interpreter");
+					resolvedParam.setParameter(param);
+					pkg.getResolvedParams().put(atts.getValue("exe"), resolvedParam);
+				}
 				break;
 			case PARAM:
 				Parameter p = createParameter(atts);
@@ -493,13 +541,25 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				
 				if (withinPackage)
-					pkg.getParameters().put(parameter.getName(), parameter);
+				{
+					if (parameter.getType().equals("template"))
+						pkg.setTemplateParam(parameter);
+					else
+					{
+						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+						resolvedParam.setParameter(parameter);
+						pkg.getResolvedParams().put(parameter.getName(), resolvedParam);
+					}
+				}
 				else if (subParam!=p)
 				{
 					logger.debug("put "+parameter.getName());
 					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
 					resolvedParam.setParameter(parameter);
-					tool.getCommand().getResolvedParams().put(parameter.getName(), resolvedParam);
+					if (parameter.getType().equals("template"))
+						tool.getCommand().setTemplateParam(parameter);
+					else
+						tool.getCommand().getResolvedParams().put(parameter.getName(), resolvedParam);
 				}
 				withinParam = true;
 				break;
@@ -703,7 +763,7 @@ public class ToolContentHandler implements ContentHandler {
 							}
 							else
 							{
-								logger.warn("couldnt find data "+dataString+" which is referenced by parameter "+e.getKey()+" for tool="+tool.getName()+"/"+tool.getId() );
+								logger.warn("couldnt find data: "+dataString+" which is referenced by parameter "+e.getKey()+" for tool="+tool.getName()+"/"+tool.getId() );
 							}
 						}
 					}

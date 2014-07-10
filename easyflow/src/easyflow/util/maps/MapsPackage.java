@@ -367,15 +367,6 @@ public interface MapsPackage extends EPackage {
 	int CELL_TO_CELL_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>Cell To Cell List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CELL_TO_CELL_LIST_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -401,15 +392,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_BOOLEAN_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Boolean Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_BOOLEAN_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -439,15 +421,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_CHUNK_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Chunk Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNK_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -473,15 +446,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_CHUNKS_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Chunks Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_CHUNKS_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -511,15 +475,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_DATA_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Data Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -545,15 +500,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_DATA_LIST_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Data List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_LIST_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -583,15 +529,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_DATA_FORMAT_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Data Format Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_FORMAT_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -617,15 +554,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_DATA_LINK_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Data Link Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DATA_LINK_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -655,15 +583,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_DOCUMENT_PROPERTIES_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Document Properties Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_DOCUMENT_PROPERTIES_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -689,15 +608,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_GROUPING_FEATURE_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Grouping Feature Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_FEATURE_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -727,15 +637,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_GROUPING_INSTANCE_MAP_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Grouping Instance Map Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_MAP_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -761,15 +662,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_GROUPING_INSTANCE_LIST_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Grouping Instance List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_INSTANCE_LIST_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -799,15 +691,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_GROUPING_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Grouping Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GROUPING_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -833,15 +716,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_GRAPH_CELL_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Graph Cell Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_GRAPH_CELL_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -871,15 +745,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_SCHEMA_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Schema Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_SCHEMA_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -905,15 +770,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_OBJECT_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Object Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_OBJECT_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -943,15 +799,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_PACKAGE_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Package Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PACKAGE_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -977,15 +824,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_PARAMETER_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Parameter Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PARAMETER_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.TaskToDataLinkListMapImpl <em>Task To Data Link List Map</em>}' class.
@@ -1035,15 +873,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_PARAMETER_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Parameter List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PARAMETER_LIST_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1069,15 +898,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_PROJECT_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Project Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_PROJECT_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToResolvedParamMapImpl <em>String To Resolved Param Map</em>}' class.
@@ -1117,15 +937,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_RESOLVED_PARAM_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Resolved Param Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_RESOLVED_PARAM_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1151,15 +962,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_STRING_LIST_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To String List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_LIST_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1189,15 +991,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_STRING_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To String Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_STRING_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1223,15 +1016,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_TASK_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Task Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TASK_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1261,15 +1045,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_TOOL_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Tool Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1295,15 +1070,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_TRAVERSAL_EVENT_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To Traversal Event Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_EVENT_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1333,15 +1099,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_TRAVERSAL_CRITERION_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Traversal Criterion Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TRAVERSAL_CRITERION_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1367,15 +1124,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_URI_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>String To URI Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_URI_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1405,15 +1153,6 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_TOOL_MATCH_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>String To Tool Match Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STRING_TO_TOOL_MATCH_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1441,15 +1180,6 @@ public interface MapsPackage extends EPackage {
 	int TASK_TO_DATA_PORTS_MAP_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>Task To Data Ports Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_TO_DATA_PORTS_MAP_OPERATION_COUNT = 0;
-
-	/**
 	 * The feature id for the '<em><b>Key</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1475,15 +1205,6 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int TASK_TO_DATA_LINK_LIST_MAP_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>Task To Data Link List Map</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_TO_DATA_LINK_LIST_MAP_OPERATION_COUNT = 0;
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.

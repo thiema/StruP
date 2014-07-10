@@ -172,60 +172,6 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_EVENT_FEATURE_COUNT = 8;
 
 	/**
-	 * The operation id for the '<em>Apply Metadata</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT___APPLY_METADATA = 0;
-
-	/**
-	 * The operation id for the '<em>Read Chunks</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT___READ_CHUNKS = 1;
-
-	/**
-	 * The operation id for the '<em>Is Grouping</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT___IS_GROUPING = 2;
-
-	/**
-	 * The operation id for the '<em>Is Parent</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT___IS_PARENT__TASK_STRING = 3;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT___GET_TYPE = 4;
-
-	/**
-	 * The number of operations of the '<em>Event</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_EVENT_OPERATION_COUNT = 5;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -305,15 +251,6 @@ public interface TraversalPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUPING_CRITERION_FEATURE_COUNT = 8;
-
-	/**
-	 * The number of operations of the '<em>Grouping Criterion</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPING_CRITERION_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -424,15 +361,6 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_CRITERION_FEATURE_COUNT = GROUPING_CRITERION_FEATURE_COUNT + 3;
 
 	/**
-	 * The number of operations of the '<em>Criterion</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CRITERION_OPERATION_COUNT = GROUPING_CRITERION_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link easyflow.traversal.impl.TraversalOperationImpl <em>Operation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -479,15 +407,6 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_OPERATION_FEATURE_COUNT = 3;
 
 	/**
-	 * The number of operations of the '<em>Operation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_OPERATION_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link easyflow.traversal.impl.TraversalChunkImpl <em>Chunk</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -532,16 +451,6 @@ public interface TraversalPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRAVERSAL_CHUNK_FEATURE_COUNT = 3;
-
-
-	/**
-	 * The number of operations of the '<em>Chunk</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAVERSAL_CHUNK_OPERATION_COUNT = 0;
 
 
 	/**
@@ -782,56 +691,6 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTraversalEvent_MetaData();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#applyMetadata() <em>Apply Metadata</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Apply Metadata</em>' operation.
-	 * @see easyflow.traversal.TraversalEvent#applyMetadata()
-	 * @generated
-	 */
-	EOperation getTraversalEvent__ApplyMetadata();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#readChunks() <em>Read Chunks</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Read Chunks</em>' operation.
-	 * @see easyflow.traversal.TraversalEvent#readChunks()
-	 * @generated
-	 */
-	EOperation getTraversalEvent__ReadChunks();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#isGrouping() <em>Is Grouping</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Grouping</em>' operation.
-	 * @see easyflow.traversal.TraversalEvent#isGrouping()
-	 * @generated
-	 */
-	EOperation getTraversalEvent__IsGrouping();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#isParent(easyflow.core.Task, java.lang.String) <em>Is Parent</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Parent</em>' operation.
-	 * @see easyflow.traversal.TraversalEvent#isParent(easyflow.core.Task, java.lang.String)
-	 * @generated
-	 */
-	EOperation getTraversalEvent__IsParent__Task_String();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#getType() <em>Get Type</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type</em>' operation.
-	 * @see easyflow.traversal.TraversalEvent#getType()
-	 * @generated
-	 */
-	EOperation getTraversalEvent__GetType();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.traversal.TraversalOperation <em>Operation</em>}'.
@@ -1122,46 +981,6 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRAVERSAL_EVENT__META_DATA = eINSTANCE.getTraversalEvent_MetaData();
-
-		/**
-		 * The meta object literal for the '<em><b>Apply Metadata</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TRAVERSAL_EVENT___APPLY_METADATA = eINSTANCE.getTraversalEvent__ApplyMetadata();
-
-		/**
-		 * The meta object literal for the '<em><b>Read Chunks</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TRAVERSAL_EVENT___READ_CHUNKS = eINSTANCE.getTraversalEvent__ReadChunks();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Grouping</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TRAVERSAL_EVENT___IS_GROUPING = eINSTANCE.getTraversalEvent__IsGrouping();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Parent</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TRAVERSAL_EVENT___IS_PARENT__TASK_STRING = eINSTANCE.getTraversalEvent__IsParent__Task_String();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TRAVERSAL_EVENT___GET_TYPE = eINSTANCE.getTraversalEvent__GetType();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.traversal.impl.TraversalOperationImpl <em>Operation</em>}' class.

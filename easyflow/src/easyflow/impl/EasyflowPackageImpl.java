@@ -33,6 +33,7 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
+import easyflow.custom.util.Tuple;
 import easyflow.data.DataPackage;
 import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
@@ -298,6 +299,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * @generated
 	 */
 	private EDataType noValidInOutDataExceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType tupleEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -683,6 +691,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getTuple() {
+		return tupleEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getEasyFlowOverallWorker() {
 		return easyFlowOverallWorkerEDataType;
 	}
@@ -746,6 +763,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		parameterNotFoundExceptionEDataType = createEDataType(PARAMETER_NOT_FOUND_EXCEPTION);
 		utilityTaskNotFoundExceptionEDataType = createEDataType(UTILITY_TASK_NOT_FOUND_EXCEPTION);
 		noValidInOutDataExceptionEDataType = createEDataType(NO_VALID_IN_OUT_DATA_EXCEPTION);
+		tupleEDataType = createEDataType(TUPLE);
 	}
 
 	/**
@@ -827,6 +845,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(parameterNotFoundExceptionEDataType, ParameterNotFoundException.class, "ParameterNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(utilityTaskNotFoundExceptionEDataType, UtilityTaskNotFoundException.class, "UtilityTaskNotFoundException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(noValidInOutDataExceptionEDataType, NoValidInOutDataException.class, "NoValidInOutDataException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(tupleEDataType, Tuple.class, "Tuple", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

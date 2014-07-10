@@ -42,11 +42,17 @@
         <param name="pedigree_file" type="data" format="txt"
                 help="-ped,--pedigree &amp;lt;pedigree&amp;gt;"
                 label="Pedigree files for samples"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">ped</key>
+            <key type="long">pedigree</key>
+         </param>
         <param name="pedigree_string" type="text"
                 help="-pedString,--pedigreeString &amp;lt;pedigreeString&amp;gt;"
                 label="Pedigree string for samples"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">pedString</key>
+            <key type="long">pedigreeString</key>
+         </param>
         <param name="pedigree_validation_type" type="select"
                 help="-pedValidationType,--pedigreeValidationType &amp;lt;pedigreeValidationType&amp;gt;"
                 label="How strict should we be in validating the pedigree information">
@@ -54,7 +60,12 @@
             <key type="long">pedigreeValidationType</key>
          </param>
         <conditional name="read_filter_type">
-              <param name="read_filter_type_selector" type="select" label="Read Filter Type"/>
+              <param name="read_filter_type_selector" type="select"
+                   help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                   label="Read Filter Type">
+               <key type="short">rf</key>
+               <key type="long">read_filter</key>
+            </param>
               <when value="BadCigar">
                   
               </when>
@@ -71,14 +82,18 @@
                   <param name="filter_mismatching_base_and_quals" type="boolean"
                       help="filter out the mismatch reads instead of quitting with an error"
                       label="filter out the reads with mismatching number of bases and base qualities"
-                      defaultValue="true">
+                      default_value="true">
                   <key type="long">filter_mismatching_base_and_quals</key>
                   <key>filter</key>
                </param>
               </when>
               <when value="MappingQuality">
                   <param name="min_mapping_quality_score" type="integer"
-                      label="Minimum read mapping quality required to consider a read for calling"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Minimum read mapping quality required to consider a read for calling">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="MappingQualityUnavailable">
                   
@@ -91,10 +106,19 @@
               </when>
               <when value="MaxInsertSize">
                   <param name="maxInsertSize" type="integer"
-                      label="Discard reads with insert size greater than the specified value"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Discard reads with insert size greater than the specified value">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="MaxReadLength">
-                  <param name="maxReadLength" type="integer" label="Max Read Length"/>
+                  <param name="maxReadLength" type="integer"
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Max Read Length">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="MissingReadGroup">
                   
@@ -109,8 +133,11 @@
                   
               </when>
               <when value="Platform">
-                  <param name="PLFilterName" type="text"
-                      label="Discard reads with RG:PL attribute containing this string"/>
+                  <param name="PLFilterName" type="text" help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Discard reads with RG:PL attribute containing this string">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="PlatformUnit">
                   
@@ -119,27 +146,44 @@
                   
               </when>
               <when value="ReadName">
-                  <param name="readName" type="text"
-                      label="Filter out all reads except those with this read name"/>
+                  <param name="readName" type="text" help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Filter out all reads except those with this read name">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="ReadStrand">
                   <param name="filterPositive" type="boolean"
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
                       label="Discard reads on the forward strand"
-                      defaultValue="true">
+                      default_value="true">
                   <key type="long">filterPositive</key>
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
                </param>
               </when>
               <when value="ReassignMappingQuality">
                   <param name="default_mapping_quality" type="integer"
-                      label="Default read mapping quality to assign to all reads"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Default read mapping quality to assign to all reads">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="Sample">
-                  <param name="sample_to_keep" type="text"
-                      label="The name of the sample(s) to keep, filtering out all others"/>
+                  <param name="sample_to_keep" type="text" help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="The name of the sample(s) to keep, filtering out all others">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="SingleReadGroup">
                   <param name="read_group_to_keep" type="integer"
-                      label="The name of the read group to keep, filtering out all others"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="The name of the read group to keep, filtering out all others">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="UnmappedRead">
                   
@@ -149,12 +193,18 @@
                 format="bed,gatk_interval,picard_interval_list,vcf"
                 help="-L,--intervals &amp;lt;intervals&amp;gt;"
                 label="Genomic intervals"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">L</key>
+            <key type="long">intervals</key>
+         </param>
         <param name="input_exclude_intervals" type="data"
                 format="bed,gatk_interval,picard_interval_list,vcf"
                 help="-XL,--excludeIntervals &amp;lt;excludeIntervals&amp;gt;"
                 label="Genomic intervals"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">XL</key>
+            <key type="long">excludeIntervals</key>
+         </param>
         
         <param name="interval_set_rule" type="select"
                 help="-isr,--interval_set_rule &amp;lt;interval_set_rule&amp;gt;"
@@ -228,7 +278,7 @@
          </param>
         <param name="use_original_qualities" type="boolean" help="-OQ,--useOriginalQualities"
                 label="Use the original base quality scores from the OQ tag"
-                defaultValue="true">
+                default_value="true">
             <key type="long">useOriginalQualities</key>
             <key type="short">OQ</key>
          </param>
@@ -253,34 +303,46 @@
         
         <conditional name="read_group_black_list_type">
             <param name="read_group_black_list_type_selector" type="select"
-                   label="Type of reads read group black list"/>
+                   help="-rgbl,--read_group_black_list &amp;lt;read_group_black_list&amp;gt;"
+                   label="Type of reads read group black list">
+               <key type="short">rgbl</key>
+               <key type="long">read_group_black_list</key>
+            </param>
             <when value="file">
               <param name="read_group_black_list" type="data" format="txt"
-                      label="Read group black list file"/>
+                      help="-rgbl,--read_group_black_list &amp;lt;read_group_black_list&amp;gt;"
+                      label="Read group black list file">
+                  <key type="short">rgbl</key>
+                  <key type="long">read_group_black_list</key>
+               </param>
             </when>
             <when value="text">
               <param name="read_group_black_list" type="text"
-                      label="Read group black list tag:string"/>
+                      help="-rgbl,--read_group_black_list &amp;lt;read_group_black_list&amp;gt;"
+                      label="Read group black list tag:string">
+                  <key type="short">rgbl</key>
+                  <key type="long">read_group_black_list</key>
+               </param>
             </when>
           </conditional>
         
         <param name="disable_experimental_low_memory_sharding" type="boolean"
                 help="--disable_experimental_low_memory_sharding"
                 label="Disable experimental low-memory sharding functionality."
-                defaultValue="true">
+                default_value="true">
             <key type="long">disable_experimental_low_memory_sharding</key>
          </param>
         <param name="non_deterministic_random_seed" type="boolean"
                 help="-ndrs,--nonDeterministicRandomSeed"
                 label="Makes the GATK behave non deterministically, that is, the random numbers generated will be different in every run"
-                defaultValue="true">
+                default_value="true">
             <key type="long">nonDeterministicRandomSeed</key>
             <key type="short">ndrs</key>
          </param>
         <param name="fix_misencoded_quality_scores" type="boolean"
                 help="-fixMisencodedQuals / --fix_misencoded_quality_scores"
                 label="Fix mis-encoded base quality scores. Q0 == ASCII 33 according to the SAM specification, whereas Illumina encoding starts at Q64. The idea here is simple: we just iterate over all reads and subtract 31 from every quality score."
-                defaultValue="true">
+                default_value="true">
             <key type="long">fix_misencoded_quality_scores</key>
             <key type="short">fixMisencodedQuals</key>
          </param>
@@ -298,7 +360,7 @@
         <param name="allow_polyploid_reduction" type="boolean"
                 help="--allow_polyploid_reduction / -polyploid Allow the experimental polyploid-based reduction capabilities"
                 label="Allow polyploid-based reduction"
-                defaultValue="true">
+                default_value="true">
             <key type="short">polyploid</key>
             <key type="long">allow_polyploid_reduction</key>
          </param>
@@ -311,14 +373,14 @@
         <param name="dont_compress_read_names" type="boolean"
                 help="--dont_compress_read_names / -nocmp_names  By default, ReduceReads will compress read names to numbers and guarantee uniqueness and reads with similar name will still have similar compressed names. Note: If you scatter/gather there is no guarantee that read name uniqueness will be maintained -- in this case we recommend not compressing."
                 label="Do not compress read names."
-                defaultValue="true">
+                default_value="true">
             <key type="short">nocmp_names</key>
             <key type="long">dont_compress_read_names</key>
          </param>
         <param name="dont_hardclip_low_qual_tails" type="boolean"
                 help="--dont_hardclip_low_qual_tails / -noclip_tail This option overrides the argument of minimum tail quality"
                 label="Do not hard clip the low quality tails of the reads"
-                defaultValue="true">
+                default_value="true">
             <key type="short">noclip_tail</key>
             <key type="long">dont_hardclip_low_qual_tails</key>
          </param>
@@ -326,14 +388,14 @@
         <param name="dont_simplify_reads" type="boolean"
                 help="--dont_simplify_reads / -nosimplify Do not simplify read (strip away all extra information of the read -- anything other than bases, quals and read group)."
                 label="Do not simplify read"
-                defaultValue="true">
+                default_value="true">
             <key type="short">nosimplify</key>
             <key type="long">dont_simplify_reads</key>
          </param>
         <param name="dont_use_softclipped_bases" type="boolean"
                 help="--dont_use_softclipped_bases / -no_soft  Do not use high quality soft-clipped bases. By default, ReduceReads will hard clip away any low quality soft clipped base left by the aligner and use the high quality soft clipped bases in it's traversal algorithm to identify variant regions. The minimum quality for soft clipped bases is the same as the minimum base quality to consider (minqual)"
                 label="Do not use high quality soft-clipped bases"
-                defaultValue="true">
+                default_value="true">
             <key type="short">no_soft</key>
             <key type="long">dont_use_softclipped_bases</key>
          </param>
@@ -346,7 +408,7 @@
         <param name="hard_clip_to_interval" type="boolean"
                 help="--hard_clip_to_interval / -clip_int  Optionally hard clip all incoming reads to the desired intervals. The hard clips will happen exactly at the interval border."
                 label="Hard clip all incoming reads"
-                defaultValue="true">
+                default_value="true">
             <key type="short">clip_int</key>
             <key type="long">hard_clip_to_interval</key>
          </param>
@@ -383,7 +445,7 @@
         <param name="dont_hardclip_adaptor_sequences" type="boolean"
                 help="--dont_hardclip_adaptor_sequences / -noclip_ad  Do not hard clip adaptor sequences. Note: You don't have to turn this on for reads that are not mate paired. The program will behave correctly in those cases."
                 label="Do not hard clip adaptor sequences"
-                defaultValue="true">
+                default_value="true">
             <key type="short">noclip_ad</key>
             <key type="long">dont_hardclip_adaptor_sequences</key>
          </param>

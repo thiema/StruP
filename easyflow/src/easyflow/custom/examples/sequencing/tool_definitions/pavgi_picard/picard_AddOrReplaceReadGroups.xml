@@ -35,7 +35,7 @@
     </conditional>
     <param name="outputFormat" type="boolean" help="Uncheck for sam output"
           label="Output bam instead of sam"
-          defaultValue="true">
+          default_value="true">
       <key>bam</key>
    </param>
   

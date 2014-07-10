@@ -39,7 +39,11 @@ public class Easyflow {
 		//defaultProject.setBasePath("/easyflow/custom/examples/sequencing/");
 		if (!examples.getExamples().isEmpty())
 		{
-			DefaultProject defaultProject = examples.getExamples().get(0).getValue();
+			
+			//DefaultProject defaultProject = examples.getExamples().get(0).getValue();
+			DefaultProject defaultProject = examples.getExamples().get("abstract_simple");
+			if (defaultProject != null)
+			{
 			if (!isFromJar)
 				defaultProject.setFromJar(false);
 			try {
@@ -77,7 +81,7 @@ public class Easyflow {
 				
 			}
 
-			
+			}
 		}
 	}	
 }

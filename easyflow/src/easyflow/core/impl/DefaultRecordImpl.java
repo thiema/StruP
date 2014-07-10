@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -32,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DefaultRecordImpl extends MinimalEObjectImpl.Container implements DefaultRecord {
+public class DefaultRecordImpl extends EObjectImpl implements DefaultRecord {
 	/**
 	 * The cached value of the '{@link #getGenericAttributes() <em>Generic Attributes</em>}' map.
 	 * <!-- begin-user-doc -->

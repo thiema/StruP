@@ -8,6 +8,7 @@ package easyflow.core.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -43,6 +45,7 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.Tuple;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
@@ -50,6 +53,7 @@ import easyflow.data.DataPort;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
 import easyflow.tool.InOutParameter;
+import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
@@ -107,7 +111,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
+public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * The cached value of the '{@link #getInDataPorts() <em>In Data Ports</em>}' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1478,17 +1482,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	public String createCommandLine(String commandPattern) {
 
-		Tool           tool        = getPreferredTool();
+		Tool           tool             = getPreferredTool();
 		EList<String>  commandLineParts = new BasicEList<String>();
-		
-		commandLineParts.add(createCommandLinePart1(tool));
-		
+		EMap<String, Object> constraints= new BasicEMap<String, Object>();
+		constraints.put(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY, tool.omitPrefixIfNoArgKey());
 		String[] commandPatterns = commandPattern.split(" ");
 		logger.debug("createCommandLine(): create command line for tool="+tool.getId()+" and pattern="+commandPattern);
 		
-		
+		commandLineParts.add(createCommandLinePart1(tool, constraints));
 		// check if commandpatterns contains input and or output 
-		boolean isInputDefined = false;
+		boolean isInputDefined  = false;
 		boolean isOutputDefined = false;
 		for (String part : commandPatterns)
 		{
@@ -1497,15 +1500,15 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			else if (part.equalsIgnoreCase("out"))
 				isOutputDefined = true;
 		}
-			
-
 		
 		for (String commandLinePart : commandPatterns)
 		{
 			//logger.trace("createCommandLine(): "+commandLinePart);
 			if (GlobalConfig.getValidCommandPatternParts().contains(commandLinePart))
 			{
-				commandLineParts.add(createCommandLinePart2(null, isInputDefined, isOutputDefined, commandLinePart));
+				String cmdPart = createCommandLinePart2(constraints, tool, isInputDefined, isOutputDefined, commandLinePart, tool.getTemplateParameter());
+				if (cmdPart != null && !cmdPart.equals(""))
+					commandLineParts.add(cmdPart);
 			}
 			else
 			{
@@ -1528,48 +1531,117 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			}*/
 		}
 		logger.debug(commandLineParts);
-		return StringUtils.join(commandLineParts, " ");
+		return StringUtils.join(commandLineParts, tool.getCmdPartDelimiter());
 	}
 
-	
-	private String createCommandLinePart1(Tool tool)
+	private String createCommandLinePart1(Tool tool, EMap<String, Object> constraints)
 	{
-		EList<String>  exe  = new BasicEList<String>();
-		
-		// resolve Interpreter
-		if (tool.getExecutables().containsKey("interpreter"))
-			exe.add(getPreferredTool().getExecutables().get("interpreter")
-					.getPath());
-		else if (tool.getPackage() != null && tool.getPackage().getInterpreter() != null)
-			exe.add(tool.getPackage().getInterpreter());
-		
-		
-		// resolve interpreter options
-		
-		
-		// resolve the executable
-		
-		if (tool.getExecutables().containsKey("executable"))
-			exe.add(tool.getExecutables().get("executable").getPath());
-		else if (tool.getPackage() != null)
+		EList<String>  cmdParts         = new BasicEList<String>();
+		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
+		EList<String>  cmd;
+		ResolvedParam interpreter = tool.getInterpreter();
+		if (interpreter != null)
 		{
-			if (tool.getPackage().getExe()!=null)
+			logger.debug(interpreter.getParameter().getName());
+			cmd = interpreter.generateCommandString(constraints, defaultParameter);
+			if (!cmd.isEmpty())
+				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+			for (Entry<String, ResolvedParam> e : tool.getInterpreterParams())
 			{
-				exe.add(tool.getPackage().getExe());
-			} else
-				exe.add(tool.getPackage().getId());
+				logger.debug(e.getKey()+" "+e.getValue().getParameter().getName());
+			}
+		}
+		else
+		{
+			logger.debug("createCommandLinePart(): no interpreter defined.");
 		}
 		
+		ResolvedParam exe = tool.getExe();
+		if (exe != null)
+		{
+			logger.debug("createCommandLinePart(): "+exe.getParameter().getName());
+			cmd = exe.generateCommandString(constraints, defaultParameter);
+			if (!cmd.isEmpty())
+				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+
+		}
+		else if (interpreter == null)
+			logger.error("createCommandLinePart(): neither interpreter nor exe defined. Cannot generate meaningful command line.");
+			
+		
+		for (Entry<String, ResolvedParam> e : tool.getModuleParams())
+		{
+			logger.debug(e.getKey()+" "+e.getValue().getParameter().getName());
+			cmd = e.getValue().generateCommandString(constraints, defaultParameter);
+			if (!cmd.isEmpty())
+				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+		}
+		
+		// check submodule
+		
+		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
+		
+		if (anaType != null)
+		{
+			Parameter   param = anaType.parent;
+			OptionValue value = anaType.child;
+			logger.debug("add module="+param.getName()+" for tool="+tool.getName()
+					+" ("+tool.getId()+") cmdline="+param.generateCommandString(constraints, value, defaultParameter));
+			cmdParts.add(StringUtils.join(
+					param.generateCommandString(constraints, value, defaultParameter),
+					tool.getCmdPartDelimiter())
+					);
+		}
+
+		
+		
+		return StringUtils.join(cmdParts, " ");
+	}
+	
+	private String createCommandLinePart1_(Tool tool, EMap<String, Object> constraints)
+	{
+		EList<String>  exe  = new BasicEList<String>();
+		EList<String>  cmd  = null;
+		// resolve Interpreter
+		Parameter     defaultParameter = GlobalConfig.getExeParameterTemplate();
+		ResolvedParam resolvedParam    = tool.getCommand().getInterperter();
+		if (resolvedParam == null)
+			resolvedParam = tool.getPackage().getInterpreter();
+		
+		if (resolvedParam != null && resolveStaticParam(resolvedParam))
+		{
+			cmd = resolvedParam.generateCommandString(constraints, defaultParameter);
+			if (cmd != null && !cmd.isEmpty())
+				exe.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+		}
+		resolvedParam = tool.getCommand().getExe();
+		if (resolvedParam == null)
+			resolvedParam = tool.getPackage().getExe();
+
+		if (resolvedParam != null && resolveStaticParam(resolvedParam))
+		{
+			cmd = resolvedParam.generateCommandString(constraints, defaultParameter);
+			if (cmd != null && !cmd.isEmpty())
+				exe.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+		}
+		
+			
 		if (exe.isEmpty())
 			logger.error("createCommandLinePart1(): no executables found for tool="+tool.getId());
 		
 		// check submodule
-		String anaType = tool.getAnalysisTypeOfPackage(getRecords());
+		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
+		
 		if (anaType != null)
 		{
-			logger.debug("add module="+anaType+" for tool="+tool.getName()+" ("+tool.getId()+")");
-			exe.add(anaType);
-			//map.put("module", module);
+			Parameter   param = anaType.parent;
+			OptionValue value = anaType.child;
+			logger.debug("add module="+param.getName()+" for tool="+tool.getName()
+					+" ("+tool.getId()+") cmdline="+param.generateCommandString(constraints, value, defaultParameter));
+			exe.add(StringUtils.join(
+					param.generateCommandString(constraints, value, defaultParameter),
+					tool.getCmdPartDelimiter())
+					);
 		}
 
 		
@@ -1607,24 +1679,30 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @return
 	 */
 	private String createCommandLinePart2(
-			EMap<String, Object> constaints,
+			EMap<String, Object> constraints,
+			Tool tool,
 			boolean omitInput,
 			boolean omitOutput,
-			String type)
+			String type,
+			Parameter templateParam)
 	{
 		EList<String> commandLineList = new BasicEList<String>();
-		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().entrySet().iterator();  
+		Parameter     effectiveTemplateParam;
+		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().entrySet().iterator();
 		while (it.hasNext())
 		{
+			
+			
 			Entry<String, ResolvedParam> e      = it.next();
 			ResolvedParam    resolvedParam      = e.getValue();
 			Parameter        parameter          = resolvedParam.getParameter();
-			EList<Parameter> effectiveParams    =  parameter.getEffectiveParameters(null);
+			EList<Parameter> effectiveParams    = parameter.getEffectiveParameters(null);
 			Parameter        effectiveParameter = null;
+			effectiveTemplateParam = null;
 			if (!effectiveParams.isEmpty())
-				effectiveParameter = retrieveEffectiveParam(effectiveParams, constaints);
+				effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
 			
-			
+			boolean          isOptional     = parameter.isOptional(templateParam != null ? templateParam.getOptional():null);
 			InOutParameter   inOutParameter = null;
 			boolean          isInOutParam   = false;
 			boolean          shallGenerate  = false;
@@ -1635,10 +1713,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			}
 			else if (effectiveParameter.isDataParam())
 			{
-				isInOutParam = true;
+				isInOutParam   = true;
 				inOutParameter = (InOutParameter) effectiveParameter;
 			}
-			
+			if (isInOutParam && getPreferredTool().assumeDataParamPositional())
+				effectiveTemplateParam = GlobalConfig.getPositonalParamTemplate();
+			else
+				effectiveTemplateParam = templateParam;
 			
 			if (type == null)
 			{
@@ -1648,44 +1729,65 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			{
 				if ("in".equals(type)) 
 					shallGenerate = true;
-				else if (!omitInput && (("opt".equals(type) && parameter.isOptional()) || ("pos".equals(type) && !parameter.isOptional())))
+				else if (!omitInput && (("opt".equals(type) && isOptional) || ("pos".equals(type) && !isOptional)))
 					shallGenerate = true;
 			}
 			else if (isInOutParam && inOutParameter.isOutput())
 			{
 				if ("out".equals(type)) 
 					shallGenerate = true;
-				else if (!omitOutput && (("opt".equals(type) && parameter.isOptional()) || ("pos".equals(type) && !parameter.isOptional())))
+				else if (!omitOutput && (("opt".equals(type) && isOptional) || ("pos".equals(type) && !isOptional)))
 					shallGenerate = true;
 			}
-			else if ("opt".equals(type) && parameter.isOptional())
+			else if ("opt".equals(type) && isOptional)
 			{
 				shallGenerate = true;
 			}
-			else if ("pos".equals(type) && !parameter.isOptional())
+			else if ("pos".equals(type) && !isOptional)
 			{
 				shallGenerate = true;
 			}
 			
-			logger.debug("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
+			logger.trace("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
 					+" param type="+type+" of param="+resolvedParam.getParameter().getName()
 					+" type="+resolvedParam.getParameter().getType()
-					+" output="+parameter.isOutput()
+					+" output="+parameter.isOutput()+" templatePrefix="+effectiveTemplateParam.getPrefix()
 					);
 			if (shallGenerate)
 			{
+				// check if parameters value is set, if not, check default value
+				if (resolvedParam.getValue() == null || resolvedParam.getValue().isEmpty())
+				{
+					if (effectiveParameter.getDefaultValue() == null || effectiveParameter.getDefaultValue().equals(""))
+					{
+						logger.debug("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (unset default value)");
+						continue;
+					}
+					// skip if default is not required
+					else if (!GlobalConfig.useDefaultValue())
+					{
+						logger.debug("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (omit default value)");
+						continue;
+					}
+				}
+
 				//logger.trace("add param="+resolvedParam.getParameter().getName()+" "+parameter.getName()
 						//		+" cmd="+getCommand().hashCode()+" map="+getCommand().getResolvedParams().hashCode()+" "
 						//		+" resolvedparam="+resolvedParam.hashCode()+" param="+resolvedParam.getParameter().hashCode()
 					//			);
-				String res = resolvedParam.generateCommandString(constaints);
-				if (res != null)
+				
+				String res = StringUtils.join(
+						resolvedParam.generateCommandString(constraints, effectiveTemplateParam),
+						tool.getCmdPartDelimiter());
+				
+				if (res != null && !res.equals(""))
+				{
+					logger.debug("cmd="+res);
 					commandLineList.add(res);
+				}
 			}
-			
 		}
-		
-		return StringUtils.join(commandLineList, " ");
+		return StringUtils.join(commandLineList, tool.getCmdPartDelimiter());
 	}
 	
 	
@@ -1702,6 +1804,27 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		return null;
 	}
 
+	private boolean resolveStaticParam(ResolvedParam resolvedParam)
+	{
+		boolean rc = false;
+		String cmdParts[] = {GlobalConstants.COMMAND_PART_VALUE_EXE, GlobalConstants.COMMAND_PART_VALUE_INTERPRETER, GlobalConstants.COMMAND_PART_VALUE_MODULE}; 
+		if (resolvedParam.getParameter().getCmdPart() != null
+				&& Arrays.asList(cmdParts).contains(resolvedParam.getParameter().getCmdPart()))
+		{
+			if (resolvedParam.getName() != null)
+			{
+				resolvedParam.getValue().add(resolvedParam.getName());
+				rc = true;
+			}
+			else if (resolvedParam.getParameter().getName() != null)
+			{
+				resolvedParam.getValue().add(resolvedParam.getParameter().getName());
+				rc = true;
+			}
+		}
+		return rc;
+	}
+	
 	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
 		
 		//EList<String> list = new BasicEList<String>();
@@ -2750,154 +2873,6 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return command != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case CorePackage.TASK___READ_TASK__STRING_STRING_ELIST:
-				readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
-				return null;
-			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING:
-				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1));
-			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN:
-				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2), (Boolean)arguments.get(3));
-			case CorePackage.TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST:
-				return parseDataFormatField((String)arguments.get(0), (EList<Pattern>)arguments.get(1));
-			case CorePackage.TASK___GET_UNIQUE_STRING:
-				return getUniqueString();
-			case CorePackage.TASK___GET_UNIQUE_URI_STRING:
-				return getUniqueURIString();
-			case CorePackage.TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT:
-				return isCompatibleWithOutDataPortFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT:
-				return isCompatibleWithInDataPortFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT:
-				return getParentTaskByOutDataPort((DataPort)arguments.get(0));
-			case CorePackage.TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK:
-				return getNonOveralppingTraversalChunksFor((Task)arguments.get(0));
-			case CorePackage.TASK___READ_TOOLS__ELIST:
-				readTools((EList<Tool>)arguments.get(0));
-				return null;
-			case CorePackage.TASK___GET_PREFERRED_TOOL:
-				return getPreferredTool();
-			case CorePackage.TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST:
-				return getOverlappingDataPorts((EList<DataPort>)arguments.get(0), (EList<DataPort>)arguments.get(1));
-			case CorePackage.TASK___CREATE_COMMAND_LINE__STRING:
-				try {
-					return createCommandLine((String)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___VALIDATE_TOOL__TOOL:
-				return validateTool((Tool)arguments.get(0));
-			case CorePackage.TASK___VALIDATE_TOOLS:
-				return validateTools();
-			case CorePackage.TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN:
-				return getDataPortByDataPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case CorePackage.TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN:
-				return getDataPortByNameOfFormat((String)arguments.get(0), (Boolean)arguments.get(1));
-			case CorePackage.TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN:
-				return getDataPortByName((String)arguments.get(0), (Boolean)arguments.get(1));
-			case CorePackage.TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST:
-				return resolveMissingDataPortsByTool((EList<Task>)arguments.get(0));
-			case CorePackage.TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING:
-				return getOverlappingChunksFor((Task)arguments.get(0), (String)arguments.get(1));
-			case CorePackage.TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
-				try {
-					return getRequiredGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
-				try {
-					return getProvidedGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___HAS_MULTIPLE_INPUTS_FOR__DATAPORT:
-				return hasMultipleInputsFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___HAS_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				return hasMultipleInstancesFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___HAS_MULTIPLE_GROUPINGS_FOR__DATAPORT:
-				return hasMultipleGroupingsFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
-				try {
-					return canProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					return canProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT:
-				try {
-					return canProcessMultipleGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					return canFilterInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___GET_RECORDS__BOOLEAN:
-				return getRecords((Boolean)arguments.get(0));
-			case CorePackage.TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK:
-				return getOverlappingRecordsProvidedBy((Task)arguments.get(0));
-			case CorePackage.TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
-				try {
-					return canProvideDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
-				try {
-					return canComsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT:
-				return getOutputsForDataPort((DataPort)arguments.get(0));
-			case CorePackage.TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT:
-				return getInputsForDataPort((DataPort)arguments.get(0));
-			case CorePackage.TASK___RESOLVE_INPUTS:
-				try {
-					resolveInputs();
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___RESOLVE_OUTPUTS:
-				try {
-					resolveOutputs();
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

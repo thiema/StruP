@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Command#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.Command#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.Command#getResolvedParams <em>Resolved Params</em>}</li>
- *   <li>{@link easyflow.tool.Command#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,7 +30,7 @@ import org.eclipse.emf.common.util.EMap;
  * @model
  * @generated
  */
-public interface Command extends IToolElement, DefaultToolElement {
+public interface Command extends IToolElement, DefaultToolElement, BaseCommand {
 	/**
 	 * Returns the value of the '<em><b>Executable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -91,48 +90,6 @@ public interface Command extends IToolElement, DefaultToolElement {
 	EMap<String, ResolvedParam> getResolvedParams();
 
 	/**
-	 * Returns the value of the '<em><b>Pattern</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Pattern</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Pattern</em>' attribute.
-	 * @see #setPattern(String)
-	 * @see easyflow.tool.ToolPackage#getCommand_Pattern()
-	 * @model
-	 * @generated
-	 */
-	String getPattern();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.Command#getPattern <em>Pattern</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Pattern</em>' attribute.
-	 * @see #getPattern()
-	 * @generated
-	 */
-	void setPattern(String value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model constraintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
-	 * @generated
-	 */
-	String generateCommandString(EMap<String, Object> constraints);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException"
-	 * @generated
-	 */
-	Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
@@ -147,5 +104,21 @@ public interface Command extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<String> getOptionalParameterNames();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	ResolvedParam getInterperter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	ResolvedParam getExe();
 
 } // Command

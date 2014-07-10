@@ -54,5 +54,11 @@ public class GlobalConstants {
 	public static final String EDGE_STYLE   = "EASYFLOW_EDGE_STYLE";
 	public static final String TASK_CIRCUMVENTING_EDGE_STYLE      = "EASYFLOW_TASK_CIRC_EDGE_STYLE";
 	public static final String MISSING_IN_OUT_DATAPORT_EDGE_STYLE = "EASYFLOW_MISSING_IN_OUT_DATAPORT_EDGE_STYLE";
+	
+	public static final String COMMAND_PART_VALUE_INTERPRETER       = "interpreter";
+	public static final String COMMAND_PART_VALUE_INTERPRETER_PARAM = "interpreter_param";
+	public static final String COMMAND_PART_VALUE_EXE               = "exe";
+	public static final String COMMAND_PART_VALUE_MODULE            = "module";
+	public static final String COMMAND_PART_VALUE_PARAM             = "param";
 
 }

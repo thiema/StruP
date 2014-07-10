@@ -107,22 +107,22 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		// Display some useful information about repaint events
 		installRepaintListener();
 
+		
 		// Puts everything together
 		setLayout(new BorderLayout());
 		add(outer, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
-		
-		
 		installToolBar();
+		
+		
+		//EditorToolBar and EasyFlowToolBar in one Panel
 		/*
-		 * EditorToolBar and EasyFlowToolBar in one Panel
-		 */
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
 		upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		//upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
-		
+		*/
 		
 		
 		// Installs rubberband selection and handling for some special
@@ -137,7 +137,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setJMenuBar(new EditorMenuBar(this));
+//		frame.setJMenuBar(new EditorMenuBar(this));
 		
 		frame.setSize(870, 640);
 		

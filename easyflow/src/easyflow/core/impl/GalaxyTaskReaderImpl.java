@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -29,7 +30,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class GalaxyTaskReaderImpl extends MinimalEObjectImpl.Container implements GalaxyTaskReader {
+public class GalaxyTaskReaderImpl extends EObjectImpl implements GalaxyTaskReader {
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -157,21 +158,6 @@ public class GalaxyTaskReaderImpl extends MinimalEObjectImpl.Container implement
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case CorePackage.GALAXY_TASK_READER___READ_TASK:
-				readTask();
-				return null;
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

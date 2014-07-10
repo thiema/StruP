@@ -48,6 +48,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import easyflow.EasyflowPackage;
 import easyflow.core.CorePackage;
@@ -574,7 +575,8 @@ public class XMLUtil {
 		
 	}
 	
-	public static void validateXML(java.net.URI xmlSource, Schema schema, boolean isFromJar) throws FileNotFoundException, SAXException, IOException
+	public static void validateXML(java.net.URI xmlSource, Schema schema, boolean isFromJar) 
+			throws FileNotFoundException, SAXException, IOException, SAXParseException
 	{
 		Validator validator = schema.newValidator();
 		validator.validate(new StreamSource(URIUtil.getInputStream(xmlSource, isFromJar)));

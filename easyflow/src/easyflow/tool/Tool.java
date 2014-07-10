@@ -7,6 +7,7 @@
 package easyflow.tool;
 
 import easyflow.custom.exception.DataPortNotFoundException;
+import easyflow.custom.util.Tuple;
 import easyflow.data.Data;
 import easyflow.data.DataPort;
 import easyflow.traversal.TraversalChunk;
@@ -32,7 +33,6 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getVersion <em>Version</em>}</li>
- *   <li>{@link easyflow.tool.Tool#getInterpreter <em>Interpreter</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getPackage <em>Package</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getExecutables <em>Executables</em>}</li>
@@ -40,6 +40,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getFilenamePrefix <em>Filename Prefix</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getAnalysisType <em>Analysis Type</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getCommand <em>Command</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getResolvedParams <em>Resolved Params</em>}</li>
  * </ul>
  * </p>
  *
@@ -116,30 +117,16 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	void setVersion(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Interpreter</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Interpreter</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Interpreter</em>' reference.
-	 * @see #setInterpreter(Interpreter)
-	 * @see easyflow.tool.ToolPackage#getTool_Interpreter()
-	 * @model
+	 * @model kind="operation"
 	 * @generated
 	 */
-	Interpreter getInterpreter();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.Tool#getInterpreter <em>Interpreter</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Interpreter</em>' reference.
-	 * @see #getInterpreter()
-	 * @generated
-	 */
-	void setInterpreter(Interpreter value);
+	ResolvedParam getInterpreter();
 
 	/**
 	 * Returns the value of the '<em><b>Package</b></em>' reference.
@@ -296,6 +283,23 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	void setCommand(Command value);
 
 	/**
+	 * Returns the value of the '<em><b>Resolved Params</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.ResolvedParam},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Resolved Params</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Resolved Params</em>' map.
+	 * @see easyflow.tool.ToolPackage#getTool_ResolvedParams()
+	 * @model mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @generated
+	 */
+	EMap<String, ResolvedParam> getResolvedParams();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -354,10 +358,10 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model recordsMany="true"
+	 * @model dataType="easyflow.Tuple" recordsMany="true"
 	 * @generated
 	 */
-	String getAnalysisTypeOfPackage(EList<TraversalChunk> records);
+	Tuple getAnalysisTypeOfPackage(EList<TraversalChunk> records);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -366,5 +370,61 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<Data> getDataForParam(Parameter parameter, Map.Entry<String, String> constraints);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	Parameter getTemplateParameter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean assumeDataParamPositional();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean omitPrefixIfNoArgKey();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getCmdPartDelimiter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @generated
+	 */
+	EMap<String, ResolvedParam> getInterpreterParams();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	ResolvedParam getExe();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @generated
+	 */
+	EMap<String, ResolvedParam> getModuleParams();
 
 } // Tool

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -46,7 +47,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class TraversalEventImpl extends MinimalEObjectImpl.Container implements TraversalEvent {
+public class TraversalEventImpl extends EObjectImpl implements TraversalEvent {
 	/**
 	 * The cached value of the '{@link #getMergeTask() <em>Merge Task</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -548,29 +549,6 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 				return META_DATA_EDEFAULT == null ? metaData != null : !META_DATA_EDEFAULT.equals(metaData);
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case TraversalPackage.TRAVERSAL_EVENT___APPLY_METADATA:
-				return applyMetadata();
-			case TraversalPackage.TRAVERSAL_EVENT___READ_CHUNKS:
-				readChunks();
-				return null;
-			case TraversalPackage.TRAVERSAL_EVENT___IS_GROUPING:
-				return isGrouping();
-			case TraversalPackage.TRAVERSAL_EVENT___IS_PARENT__TASK_STRING:
-				return isParent((Task)arguments.get(0), (String)arguments.get(1));
-			case TraversalPackage.TRAVERSAL_EVENT___GET_TYPE:
-				return getType();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

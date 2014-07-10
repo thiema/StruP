@@ -28,6 +28,7 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
+import easyflow.custom.util.Tuple;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -166,6 +167,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createUtilityTaskNotFoundExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.NO_VALID_IN_OUT_DATA_EXCEPTION:
 				return createNoValidInOutDataExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.TUPLE:
+				return createTupleFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -239,6 +242,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertUtilityTaskNotFoundExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.NO_VALID_IN_OUT_DATA_EXCEPTION:
 				return convertNoValidInOutDataExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.TUPLE:
+				return convertTupleToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -763,6 +768,24 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertNoValidInOutDataExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Tuple createTupleFromString(EDataType eDataType, String initialValue) {
+		return (Tuple)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertTupleToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

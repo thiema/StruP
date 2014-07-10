@@ -742,18 +742,10 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	EMap<String, EList<String>> createCommandLineMap() throws ParameterNotFoundException, NoValidInOutDataException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException" commandLinePartsMapType="easyflow.util.maps.StringToStringListMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
-	 * @generated
-	 */
-	String createCommandLine(String commandPattern, EMap<String, EList<String>> commandLineParts) throws ParameterNotFoundException, NoValidInOutDataException;
+	String createCommandLine(String commandPattern) throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -18,13 +18,13 @@
     <param name="remDups" type="boolean"
           help="If true do not write duplicates to the output file instead of writing them with appropriate flags set."
           label="Remove duplicates from output file"
-          defaultValue="true">
+          default_value="true">
       <key>true</key>
    </param>
     <param name="assumeSorted" type="boolean"
           help="If true assume input data are already sorted (most Galaxy SAM/BAM should be)."
           label="Assume reads are already ordered"
-          defaultValue="true">
+          default_value="true">
       <key>true</key>
    </param>
      <param name="readRegex" type="text"

@@ -6,6 +6,8 @@
  */
 package easyflow.ui.impl;
 
+import easyflow.EasyflowFactory;
+import easyflow.EasyflowPackage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,6 +32,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -101,7 +104,7 @@ import easyflow.util.maps.impl.StringToToolMapImpl;
  *
  * @generated
  */
-public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements DefaultProject {
+public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * The cached value of the '{@link #getWorkflows() <em>Workflows</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -728,38 +731,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				logger.trace("read processing config key="+key);
 				GlobalConfig.getProcessingConfig().put(key, processingCfg.getString(key));
 			}
-			DefaultExecutionSystem executionSystem = null;
-			
-			if (GlobalConfig.getProcessingConfig().containsKey("execution_system"))
-			{
-				if ("makeflow".equalsIgnoreCase(GlobalConfig.getProcessingConfig().get("execution_system")))
-				{
-					executionSystem = MakeflowFactory.eINSTANCE.createMakeflow();
-					if (GlobalConfig.getProcessingConfig().containsKey("execution_system_output_file"))
-						GlobalVar.setExecutionSystemOutputFileName(GlobalConfig.
-								getProcessingConfig().get("execution_system_output_file"));
-				}
-				else
-				{
-					executionSystem = ExecutionFactory.eINSTANCE.createDefaultExecutionSystem();
-					GlobalVar.setExecutionSystemOutputFileName("exec_rules.txt");
-				}
-			}
-			else
-			{
-				executionSystem = ExecutionFactory.eINSTANCE.createDefaultExecutionSystem();
-				GlobalVar.setExecutionSystemOutputFileName("exec_rules.txt");
-			}
-			if (GlobalVar.getExecutionSystemOutputFileName() == null || GlobalVar.getExecutionSystemOutputFileName().equals(""))
-				logger.warn("couldnt set output file for execution system.");
-			logger.debug(GlobalVar.getExecutionSystemOutputFileName());
-			logger.debug(GlobalVar.getExecutionSystemOutputFile());
-			executionSystem.setWriter(GlobalVar.getExecutionSystemOutputWriter());
-			logger.debug(executionSystem.getWriter());
-			workflow.setExecutionSystem(executionSystem);
-			
 		}
-		
+		workflow.setExecutionSystem(GlobalConfig.getExecutionSystem());
 		
 		// ####### READ CATALOG CONFIGURATION ########
 		if (jsonObject.has("catalog"))
@@ -878,6 +851,10 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 							getTools().put(tool.getId(), tool);
 							
 						}
+					}
+					else
+					{
+						logger.error("Could not parse tool definition.");
 					}
 				}
 				
@@ -1397,133 +1374,6 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return packages != null && !packages.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case UiPackage.DEFAULT_PROJECT___VALIDATE:
-				return validate();
-			case UiPackage.DEFAULT_PROJECT___GET_ACTIVE_WORKFLOW:
-				return getActiveWorkflow();
-			case UiPackage.DEFAULT_PROJECT___CLEAR_WORKFLOWS:
-				clearWorkflows();
-				return null;
-			case UiPackage.DEFAULT_PROJECT___READ_CONFIGURATION:
-				return readConfiguration();
-			case UiPackage.DEFAULT_PROJECT___READ_PROJECT_JSON__URI:
-				try {
-					readProjectJson((URI)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___SET_CONFIG_AND_BASE_PATH__STRING:
-				setConfigAndBasePath((String)arguments.get(0));
-				return null;
-			case UiPackage.DEFAULT_PROJECT___APPLY_META_DATA:
-				applyMetaData();
-				return null;
-			case UiPackage.DEFAULT_PROJECT___INIT__EASYFLOWGRAPH:
-				return init((EasyFlowGraph)arguments.get(0));
-			case UiPackage.DEFAULT_PROJECT___DELETE:
-				return delete();
-			case UiPackage.DEFAULT_PROJECT___RUN_ENTIRE_WORKFLOW:
-				try {
-					return runEntireWorkflow();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___RESOLVE_TRAVERSAL_CRITERIA:
-				try {
-					return resolveTraversalCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___GENERATE_ABSTRACT_GRAPH:
-				return generateAbstractGraph();
-			case UiPackage.DEFAULT_PROJECT___APPLY_GROUPING_CRITERIA:
-				try {
-					return applyGroupingCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___APPLY_PARAMETER_CRITERIA:
-				try {
-					return applyParameterCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___RESOLVE_UTILITY_TASKS:
-				try {
-					return resolveUtilityTasks();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___RESOLVE_PREPROCESSING_TASKS:
-				try {
-					return resolvePreprocessingTasks();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___RESOLVE_TOOL_DEPENDENCIES:
-				try {
-					return resolveToolDependencies();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
-				return generateWorklowForExecutionSystem();
-			case UiPackage.DEFAULT_PROJECT___SET_WORKER__EASYFLOWOVERALLWORKER:
-				setWorker((EasyFlowOverallWorker)arguments.get(0));
-				return null;
-			case UiPackage.DEFAULT_PROJECT___RUN_NEXT_WORKFLOW_STEP:
-				try {
-					return runNextWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___RUN_PREV_WORKFLOW_STEP:
-				try {
-					return runPrevWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case UiPackage.DEFAULT_PROJECT___HAS_NEXT_WORKFLOW_STEP:
-				return hasNextWorkflowStep();
-			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING:
-				return getWorkflowStepLabelFor((String)arguments.get(0));
-			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING:
-				return getWorkflowStepDescFor((String)arguments.get(0));
-			case UiPackage.DEFAULT_PROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:
-				return getTotalNumberOfWorkflowSteps();
-			case UiPackage.DEFAULT_PROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP:
-				return getNumberOfCurrentWorkflowStep();
-			case UiPackage.DEFAULT_PROJECT___GET_NEXT_WORKFLOW_STEP:
-				return getNextWorkflowStep();
-			case UiPackage.DEFAULT_PROJECT___GET_CUR_WORKFLOW_STEP:
-				return getCurWorkflowStep();
-			case UiPackage.DEFAULT_PROJECT___RESET_WORKFLOW_STEP:
-				return resetWorkflowStep();
-			case UiPackage.DEFAULT_PROJECT___GET_EXECUTION_SYSTEM:
-				return getExecutionSystem();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

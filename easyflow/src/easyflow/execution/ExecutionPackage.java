@@ -90,42 +90,6 @@ public interface ExecutionPackage extends EPackage {
 	int IEXECUTION_SYSTEM_FEATURE_COUNT = 0;
 
 	/**
-	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR = 0;
-
-	/**
-	 * The operation id for the '<em>Create Command Line</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK = 1;
-
-	/**
-	 * The operation id for the '<em>Create Command Line</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL = 2;
-
-	/**
-	 * The number of operations of the '<em>IExecution System</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IEXECUTION_SYSTEM_OPERATION_COUNT = 3;
-
-	/**
 	 * The feature id for the '<em><b>Project</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -160,43 +124,6 @@ public interface ExecutionPackage extends EPackage {
 	 * @ordered
 	 */
 	int DEFAULT_EXECUTION_SYSTEM_FEATURE_COUNT = IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
-
-
-	/**
-	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_EXECUTION_SYSTEM___GET_JGRAPHX_VISITOR = IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR;
-
-	/**
-	 * The operation id for the '<em>Create Command Line</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_EXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK = IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK;
-
-	/**
-	 * The operation id for the '<em>Create Command Line</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_EXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL = IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL;
-
-	/**
-	 * The number of operations of the '<em>Default Execution System</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_EXECUTION_SYSTEM_OPERATION_COUNT = IEXECUTION_SYSTEM_OPERATION_COUNT + 0;
 
 
 	/**
@@ -251,36 +178,6 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIExecutionSystem();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.execution.IExecutionSystem#getJgraphxVisitor() <em>Get Jgraphx Visitor</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Jgraphx Visitor</em>' operation.
-	 * @see easyflow.execution.IExecutionSystem#getJgraphxVisitor()
-	 * @generated
-	 */
-	EOperation getIExecutionSystem__GetJgraphxVisitor();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.execution.IExecutionSystem#createCommandLine(java.lang.String, easyflow.core.Task) <em>Create Command Line</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Create Command Line</em>' operation.
-	 * @see easyflow.execution.IExecutionSystem#createCommandLine(java.lang.String, easyflow.core.Task)
-	 * @generated
-	 */
-	EOperation getIExecutionSystem__CreateCommandLine__String_Task();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.execution.IExecutionSystem#createCommandLine(java.lang.String, easyflow.tool.Tool) <em>Create Command Line</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Create Command Line</em>' operation.
-	 * @see easyflow.execution.IExecutionSystem#createCommandLine(java.lang.String, easyflow.tool.Tool)
-	 * @generated
-	 */
-	EOperation getIExecutionSystem__CreateCommandLine__String_Tool();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -347,30 +244,6 @@ public interface ExecutionPackage extends EPackage {
 		 * @generated
 		 */
 		EClass IEXECUTION_SYSTEM = eINSTANCE.getIExecutionSystem();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Jgraphx Visitor</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR = eINSTANCE.getIExecutionSystem__GetJgraphxVisitor();
-
-		/**
-		 * The meta object literal for the '<em><b>Create Command Line</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK = eINSTANCE.getIExecutionSystem__CreateCommandLine__String_Task();
-
-		/**
-		 * The meta object literal for the '<em><b>Create Command Line</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL = eINSTANCE.getIExecutionSystem__CreateCommandLine__String_Tool();
 
 	}
 

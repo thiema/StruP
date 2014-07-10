@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -45,7 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class GroupingInstanceImpl extends MinimalEObjectImpl.Container implements GroupingInstance {
+public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstance {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -366,21 +367,6 @@ public class GroupingInstanceImpl extends MinimalEObjectImpl.Container implement
 				return records != null && !records.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case MetadataPackage.GROUPING_INSTANCE___GET_OVERLAPPING_RECORDS__ELIST:
-				return getOverlappingRecords((EList<String>)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -6,6 +6,7 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.tool.Key;
 import easyflow.tool.ToolPackage;
 
@@ -213,6 +214,25 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.KEY__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String resolveArgKey(String defaultPrefix) {
+		String argKey = "";
+		String prefix = GlobalConfig.getArgPrefixForType(getType());
+		Key k = this;
+		if (getPrefix() != null)
+			argKey = getPrefix();
+		else if (prefix != null)
+			argKey = prefix;
+		else if (defaultPrefix != null)
+			argKey = defaultPrefix;
+		argKey+=getValue();
+		return argKey;
 	}
 
 	/**

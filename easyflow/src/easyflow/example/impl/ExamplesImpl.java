@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -52,7 +53,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ExamplesImpl extends MinimalEObjectImpl.Container implements Examples {
+public class ExamplesImpl extends EObjectImpl implements Examples {
 	/**
 	 * The default value of the '{@link #getLocator() <em>Locator</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -413,23 +414,6 @@ public class ExamplesImpl extends MinimalEObjectImpl.Container implements Exampl
 				return fromJar != FROM_JAR_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ExamplePackage.EXAMPLES___READ_EXAMPLES:
-				return readExamples();
-			case ExamplePackage.EXAMPLES___READ_REPOSITORY:
-				readRepository();
-				return null;
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

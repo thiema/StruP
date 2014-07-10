@@ -15,7 +15,10 @@
           help="-input,--input &amp;lt;input&amp;gt;"
           label="Variant file to recalibrate"
           multiple="true"
-          min_occur="1"/>
+          min_occur="1">
+      <key type="short">input</key>
+      <key type="long">input</key>
+   </param>
    <param name="ref_file" type="data" format="fasta"
           help="-R,--reference_sequence &amp;lt;reference_sequence&amp;gt;"
           label="Using reference file">
@@ -24,231 +27,505 @@
    </param>
     
     <conditional name="rod_bind_type">
-          <param name="rod_bind_type_selector" type="select" label="Binding Type"/>
+          <param name="rod_bind_type_selector" type="select"
+             help="-resource,--resource &amp;lt;resource&amp;gt;"
+             label="Binding Type">
+         <key type="short">resource</key>
+         <key type="long">resource</key>
+      </param>
           <when value="variant">
-              <param name="input_rod" type="data" format="vcf" label="Variant ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="Variant ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="comp">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
-              <param name="custom_rod_name" type="text" label="ROD Name"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
+              <param name="custom_rod_name" type="text" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD Name">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="mask">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>          
           <when value="dbsnp">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="snps">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="hapmap">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="omni">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="indels">
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
           <when value="custom">
-              <param name="custom_rod_name" type="text" label="ROD Name"/>
-              <param name="input_rod" type="data" format="vcf" label="ROD file"/>
+              <param name="custom_rod_name" type="text" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD Name">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
+              <param name="input_rod" type="data" format="vcf"
+                help="-resource,--resource &amp;lt;resource&amp;gt;"
+                label="ROD file">
+            <key type="short">resource</key>
+            <key type="long">resource</key>
+         </param>
               <conditional name="rod_training_type">
                   <param name="rod_training_type_selector" type="select"
-                   label="Use as training/truth/known sites"/>
+                   help="-resource,--resource &amp;lt;resource&amp;gt;"
+                   label="Use as training/truth/known sites">
+               <key type="short">resource</key>
+               <key type="long">resource</key>
+            </param>
                   <when value="not_training_truth_known">
                       
                   </when>
                   <when value="is_training_truth_known">
-                      <param name="known" type="boolean" label="Is Known Site" defaultValue="true">
+                      <param name="known" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Known Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="training" type="boolean" label="Is Training Site" defaultValue="true">
+                      <param name="training" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Training Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="truth" type="boolean" label="Is Truth Site" defaultValue="true">
+                      <param name="truth" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Truth Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="bad" type="boolean" label="Is Bad Site" defaultValue="true">
+                      <param name="bad" type="boolean" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="Is Bad Site"
+                      default_value="true">
                   <key>true</key>
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
                </param>
-                      <param name="prior" type="float" label="prior probability of being true"/>
+                      <param name="prior" type="float" help="-resource,--resource &amp;lt;resource&amp;gt;"
+                      label="prior probability of being true">
+                  <key type="short">resource</key>
+                  <key type="long">resource</key>
+               </param>
                   </when>
               </conditional>
           </when>
@@ -264,7 +541,10 @@
     <param name="additional_annotation_name" type="text"
           help="-an,--use_annotation &amp;lt;use_annotation&amp;gt;"
           label="Annotation name"
-          multiple="true"/>
+          multiple="true">
+      <key type="short">an</key>
+      <key type="long">use_annotation</key>
+   </param>
     
     <param name="mode" type="select" help="-mode,--mode &amp;lt;mode&amp;gt;"
           label="Recalibration mode">
@@ -282,11 +562,17 @@
         <param name="pedigree_file" type="data" format="txt"
                 help="-ped,--pedigree &amp;lt;pedigree&amp;gt;"
                 label="Pedigree files for samples"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">ped</key>
+            <key type="long">pedigree</key>
+         </param>
         <param name="pedigree_string" type="text"
                 help="-pedString,--pedigreeString &amp;lt;pedigreeString&amp;gt;"
                 label="Pedigree string for samples"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">pedString</key>
+            <key type="long">pedigreeString</key>
+         </param>
         <param name="pedigree_validation_type" type="select"
                 help="-pedValidationType,--pedigreeValidationType &amp;lt;pedigreeValidationType&amp;gt;"
                 label="How strict should we be in validating the pedigree information">
@@ -294,7 +580,12 @@
             <key type="long">pedigreeValidationType</key>
          </param>
         <conditional name="read_filter_type">
-              <param name="read_filter_type_selector" type="select" label="Read Filter Type"/>
+              <param name="read_filter_type_selector" type="select"
+                   help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                   label="Read Filter Type">
+               <key type="short">rf</key>
+               <key type="long">read_filter</key>
+            </param>
               <when value="BadCigar">
                   
               </when>
@@ -311,14 +602,18 @@
                   <param name="filter_mismatching_base_and_quals" type="boolean"
                       help="filter out the mismatch reads instead of quitting with an error"
                       label="filter out the reads with mismatching number of bases and base qualities"
-                      defaultValue="true">
+                      default_value="true">
                   <key type="long">filter_mismatching_base_and_quals</key>
                   <key>filter</key>
                </param>
               </when>
               <when value="MappingQuality">
                   <param name="min_mapping_quality_score" type="integer"
-                      label="Minimum read mapping quality required to consider a read for calling"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Minimum read mapping quality required to consider a read for calling">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="MappingQualityUnavailable">
                   
@@ -331,10 +626,19 @@
               </when>
               <when value="MaxInsertSize">
                   <param name="maxInsertSize" type="integer"
-                      label="Discard reads with insert size greater than the specified value"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Discard reads with insert size greater than the specified value">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="MaxReadLength">
-                  <param name="maxReadLength" type="integer" label="Max Read Length"/>
+                  <param name="maxReadLength" type="integer"
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Max Read Length">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="MissingReadGroup">
                   
@@ -349,8 +653,11 @@
                   
               </when>
               <when value="Platform">
-                  <param name="PLFilterName" type="text"
-                      label="Discard reads with RG:PL attribute containing this string"/>
+                  <param name="PLFilterName" type="text" help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Discard reads with RG:PL attribute containing this string">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="PlatformUnit">
                   
@@ -359,27 +666,44 @@
                   
               </when>
               <when value="ReadName">
-                  <param name="readName" type="text"
-                      label="Filter out all reads except those with this read name"/>
+                  <param name="readName" type="text" help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Filter out all reads except those with this read name">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="ReadStrand">
                   <param name="filterPositive" type="boolean"
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
                       label="Discard reads on the forward strand"
-                      defaultValue="true">
+                      default_value="true">
                   <key type="long">filterPositive</key>
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
                </param>
               </when>
               <when value="ReassignMappingQuality">
                   <param name="default_mapping_quality" type="integer"
-                      label="Default read mapping quality to assign to all reads"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="Default read mapping quality to assign to all reads">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="Sample">
-                  <param name="sample_to_keep" type="text"
-                      label="The name of the sample(s) to keep, filtering out all others"/>
+                  <param name="sample_to_keep" type="text" help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="The name of the sample(s) to keep, filtering out all others">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="SingleReadGroup">
                   <param name="read_group_to_keep" type="integer"
-                      label="The name of the read group to keep, filtering out all others"/>
+                      help="-rf,--read_filter &amp;lt;read_filter&amp;gt;"
+                      label="The name of the read group to keep, filtering out all others">
+                  <key type="short">rf</key>
+                  <key type="long">read_filter</key>
+               </param>
               </when>
               <when value="UnmappedRead">
                   
@@ -389,12 +713,18 @@
                 format="bed,gatk_interval,picard_interval_list,vcf"
                 help="-L,--intervals &amp;lt;intervals&amp;gt;"
                 label="Genomic intervals"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">L</key>
+            <key type="long">intervals</key>
+         </param>
         <param name="input_exclude_intervals" type="data"
                 format="bed,gatk_interval,picard_interval_list,vcf"
                 help="-XL,--excludeIntervals &amp;lt;excludeIntervals&amp;gt;"
                 label="Genomic intervals"
-                multiple="true"/>
+                multiple="true">
+            <key type="short">XL</key>
+            <key type="long">excludeIntervals</key>
+         </param>
         
         <param name="interval_set_rule" type="select"
                 help="-isr,--interval_set_rule &amp;lt;interval_set_rule&amp;gt;"
@@ -468,7 +798,7 @@
          </param>
         <param name="use_original_qualities" type="boolean" help="-OQ,--useOriginalQualities"
                 label="Use the original base quality scores from the OQ tag"
-                defaultValue="true">
+                default_value="true">
             <key type="long">useOriginalQualities</key>
             <key type="short">OQ</key>
          </param>
@@ -493,34 +823,46 @@
         
         <conditional name="read_group_black_list_type">
             <param name="read_group_black_list_type_selector" type="select"
-                   label="Type of reads read group black list"/>
+                   help="-rgbl,--read_group_black_list &amp;lt;read_group_black_list&amp;gt;"
+                   label="Type of reads read group black list">
+               <key type="short">rgbl</key>
+               <key type="long">read_group_black_list</key>
+            </param>
             <when value="file">
               <param name="read_group_black_list" type="data" format="txt"
-                      label="Read group black list file"/>
+                      help="-rgbl,--read_group_black_list &amp;lt;read_group_black_list&amp;gt;"
+                      label="Read group black list file">
+                  <key type="short">rgbl</key>
+                  <key type="long">read_group_black_list</key>
+               </param>
             </when>
             <when value="text">
               <param name="read_group_black_list" type="text"
-                      label="Read group black list tag:string"/>
+                      help="-rgbl,--read_group_black_list &amp;lt;read_group_black_list&amp;gt;"
+                      label="Read group black list tag:string">
+                  <key type="short">rgbl</key>
+                  <key type="long">read_group_black_list</key>
+               </param>
             </when>
           </conditional>
         
         <param name="disable_experimental_low_memory_sharding" type="boolean"
                 help="--disable_experimental_low_memory_sharding"
                 label="Disable experimental low-memory sharding functionality."
-                defaultValue="true">
+                default_value="true">
             <key type="long">disable_experimental_low_memory_sharding</key>
          </param>
         <param name="non_deterministic_random_seed" type="boolean"
                 help="-ndrs,--nonDeterministicRandomSeed"
                 label="Makes the GATK behave non deterministically, that is, the random numbers generated will be different in every run"
-                defaultValue="true">
+                default_value="true">
             <key type="long">nonDeterministicRandomSeed</key>
             <key type="short">ndrs</key>
          </param>
         <param name="fix_misencoded_quality_scores" type="boolean"
                 help="-fixMisencodedQuals / --fix_misencoded_quality_scores"
                 label="Fix mis-encoded base quality scores. Q0 == ASCII 33 according to the SAM specification, whereas Illumina encoding starts at Q64. The idea here is simple: we just iterate over all reads and subtract 31 from every quality score."
-                defaultValue="true">
+                default_value="true">
             <key type="long">fix_misencoded_quality_scores</key>
             <key type="short">fixMisencodedQuals</key>
          </param>
@@ -611,9 +953,19 @@
             <key type="long">TStranche</key>
          </param>
         <conditional name="ignore_filter_type">
-            <param name="ignore_filter_type_selector" type="select" label="Filter Type"/>
+            <param name="ignore_filter_type_selector" type="select"
+                   help="-ignoreFilter,--ignore_filter &amp;lt;ignore_filter&amp;gt;"
+                   label="Filter Type">
+               <key type="short">ignoreFilter</key>
+               <key type="long">ignore_filter</key>
+            </param>
             <when value="custom">
-              <param name="filter_name" type="text" label="Filter name"/>
+              <param name="filter_name" type="text"
+                      help="-ignoreFilter,--ignore_filter &amp;lt;ignore_filter&amp;gt;"
+                      label="Filter name">
+                  <key type="short">ignoreFilter</key>
+                  <key type="long">ignore_filter</key>
+               </param>
             </when>
             <when value="HARD_TO_VALIDATE"/>
             <when value="LowQual"/>

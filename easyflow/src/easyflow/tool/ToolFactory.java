@@ -62,15 +62,6 @@ public interface ToolFactory extends EFactory {
 	Tool createTool();
 
 	/**
-	 * Returns a new object of class '<em>Interpreter</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Interpreter</em>'.
-	 * @generated
-	 */
-	Interpreter createInterpreter();
-
-	/**
 	 * Returns a new object of class '<em>Command</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -150,6 +141,15 @@ public interface ToolFactory extends EFactory {
 	 * @generated
 	 */
 	OptionValue createOptionValue();
+
+	/**
+	 * Returns a new object of class '<em>Base Command</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Base Command</em>'.
+	 * @generated
+	 */
+	BaseCommand createBaseCommand();
 
 	/**
 	 * Returns the package supported by this factory.

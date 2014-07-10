@@ -7,7 +7,10 @@
 package easyflow.tool.impl;
 
 import easyflow.data.DataPort;
+import easyflow.tool.BaseCommand;
 import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.custom.util.GlobalConstants;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 import easyflow.tool.Command;
@@ -18,6 +21,7 @@ import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
+import java.util.Collection;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +36,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -45,16 +51,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getCommandPattern <em>Command Pattern</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getTemplateParam <em>Template Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getResolvedParams <em>Resolved Params</em>}</li>
- *   <li>{@link easyflow.tool.impl.CommandImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class CommandImpl extends MinimalEObjectImpl.Container implements Command {
+public class CommandImpl extends EObjectImpl implements Command {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -94,6 +103,76 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCommandPattern() <em>Command Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandPattern()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COMMAND_PATTERN_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCommandPattern() <em>Command Pattern</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCommandPattern()
+	 * @generated
+	 * @ordered
+	 */
+	protected String commandPattern = COMMAND_PATTERN_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTemplateParam() <em>Template Param</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTemplateParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected Parameter templateParam;
+
+	/**
+	 * The default value of the '{@link #getAssumeDataParamPositional() <em>Assume Data Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeDataParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAssumeDataParamPositional() <em>Assume Data Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeDataParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean assumeDataParamPositional = ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCmdPartDelimiter() <em>Cmd Part Delimiter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCmdPartDelimiter()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CMD_PART_DELIMITER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCmdPartDelimiter() <em>Cmd Part Delimiter</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCmdPartDelimiter()
+	 * @generated
+	 * @ordered
+	 */
+	protected String cmdPartDelimiter = CMD_PART_DELIMITER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isExecutable() <em>Executable</em>}' attribute.
@@ -144,26 +223,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 	 * @ordered
 	 */
 	protected EMap<String, ResolvedParam> resolvedParams;
-
-	/**
-	 * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPattern()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PATTERN_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPattern()
-	 * @generated
-	 * @ordered
-	 */
-	protected String pattern = PATTERN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -231,6 +290,27 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getCommandPattern() {
+		return commandPattern;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCommandPattern(String newCommandPattern) {
+		String oldCommandPattern = commandPattern;
+		commandPattern = newCommandPattern;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__COMMAND_PATTERN, oldCommandPattern, commandPattern));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isExecutable() {
 		return executable;
 	}
@@ -273,8 +353,16 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPattern() {
-		return pattern;
+	public Parameter getTemplateParam() {
+		if (templateParam != null && templateParam.eIsProxy()) {
+			InternalEObject oldTemplateParam = (InternalEObject)templateParam;
+			templateParam = (Parameter)eResolveProxy(oldTemplateParam);
+			if (templateParam != oldTemplateParam) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.COMMAND__TEMPLATE_PARAM, oldTemplateParam, templateParam));
+			}
+		}
+		return templateParam;
 	}
 
 	/**
@@ -282,29 +370,20 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPattern(String newPattern) {
-		String oldPattern = pattern;
-		pattern = newPattern;
+	public Parameter basicGetTemplateParam() {
+		return templateParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTemplateParam(Parameter newTemplateParam) {
+		Parameter oldTemplateParam = templateParam;
+		templateParam = newTemplateParam;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__PATTERN, oldPattern, pattern));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public String generateCommandString(EMap<String, Object> constraints) {
-		Iterator<ResolvedParam> it = getResolvedParams().values().iterator();
-		EList<String> tmp = new BasicEList<String>();
-		while (it.hasNext()) {
-			ResolvedParam parameter = it.next();
-			//paramString+="name="+parameter.getName();
-			//paramString+=" cmd="+parameter.generateCommandString(null);
-			tmp.add(parameter.generateCommandString(constraints));
-		}
-		String commandString = StringUtils.join(tmp.toArray(), " ");
-		return commandString;
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__TEMPLATE_PARAM, oldTemplateParam, templateParam));
 	}
 
 	/**
@@ -312,174 +391,44 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public Boolean getAssumeDataParamPositional() {
+		return assumeDataParamPositional;
 	}
 
-	/*
-	public boolean resolvePorts() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	
-	public boolean resolveStaticPorts() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-*/
-	
-	public EMap<String, URI> getInputs(EMap<String, EList<TraversalChunk>> chunks) {
-		EMap<String, URI> inputs = new BasicEMap<String, URI>();
-		
-		/*
-		if (getParameters().containsKey("input"))
-		{
-			Parameter parameter = getParameters().get("input");
-			
-			logger.debug("create inputs for chunks="+chunks.keySet()+" with param="+parameter.getLabel()
-					+" "+parameter.getName()+" "+parameter.getArgValue());
-			
-		}
-		
-		for (Entry<String, Parameter> parameterEntry:getParameters())
-		{
-			//if (parameterEntry.getValue())
-			//logger.debug(parameterEntry.getKey()+" "+parameterEntry.getValue().getName());
-		}
-		return inputs;
-		*/
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/*
-	public EMap<String, URI> getOutputs(EMap<String, EList<TraversalChunk>> chunks) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	
-	public EMap<String, URI> getStaticInputs(EMap<String, EList<TraversalChunk>> chunks) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	*/
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * find the groupings that are (implicitly) defined for given dataport by 
-	 * resolving the associated parameters groupings field.
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	/*
-	public EList<String> getGroupingsForDataPort(DataPort dataPort, boolean isRequired) {
-		EList<String> groupings=new BasicEList<String>();
-		
-		//Parameter parameter=getParameterForDataPort(dataPort);		
-		for (TraversalCriterion tc:dataPort.getGroupingCriteria())
-		{
-			for (String groupingStr:tc.getChunks().keySet())
-			{
-				if (getParameters().containsKey(groupingStr))
-				{
-					Parameter parameter = getParameters().get(groupingStr);
-					if (!parameter.isOptional() && isRequired)
-						groupings.addAll(parameter.getGrouping());
-					else
-						groupings.addAll(parameter.getGrouping());
-				}
-			}	
-		}
-		return groupings;
-	}
-*/
-
-	
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	/*
-	public EList<String> getGroupingsForDataPortAny(DataPort dataPort, boolean required, boolean isOutput) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public void setAssumeDataParamPositional(Boolean newAssumeDataParamPositional) {
+		Boolean oldAssumeDataParamPositional = assumeDataParamPositional;
+		assumeDataParamPositional = newAssumeDataParamPositional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL, oldAssumeDataParamPositional, assumeDataParamPositional));
 	}
-*/
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
-	/*
-	public Parameter getParameterForDataPort(DataPort dataPort) throws ParameterNotFoundException {
-		
-		//boolean matchAll = false;
-		//boolean matchAllMandatoryPorts = true;
-		
-		for (Parameter parameter:getParameters().values())
-		{
-			
-			for (Data data:parameter.getData())
-			{
-				if (data.getPort().isCompatible(dataPort))
-					return parameter;
-			}
-		}
-		return null;
+	public String getCmdPartDelimiter() {
+		return cmdPartDelimiter;
 	}
 
-	/*
-	private Parameter getParameterByName(String name)
-	{
-		if (getParameters().containsKey(name))
-			return getParameters().get(name);
-		return null;
-	}
-	
-	
-	public boolean setInputParameterValue(URI value, String parameterName, DataPort dataPort) {
-		boolean   rc        = false;
-		Parameter parameter = null;
-		if (dataPort != null)
-		{
-			try {
-				parameter = getParameterForDataPort(dataPort);
-			} catch (ParameterNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else if (parameterName != null && !parameterName.equals(""))
-		{
-			parameter = getParameterByName(parameterName);
-		}
-		
-		if (parameter != null)
-		{
-			parameter.getValue().add(value);
-			rc = true;
-		}
-		return rc;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCmdPartDelimiter(String newCmdPartDelimiter) {
+		String oldCmdPartDelimiter = cmdPartDelimiter;
+		cmdPartDelimiter = newCmdPartDelimiter;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__CMD_PART_DELIMITER, oldCmdPartDelimiter, cmdPartDelimiter));
 	}
 
-	
-	public boolean setOutputParameterValue(URI value, String parameterName, DataPort dataPort) {
-		return setInputParameterValue(value, parameterName, dataPort);
-	}
-*/
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -491,7 +440,7 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 		for (Entry<String, ResolvedParam> e:getResolvedParams())
 		{
 			ResolvedParam parameter = e.getValue();
-			if (parameter.getParameter().isPositional())
+			if (parameter.getParameter().isPositional(null))
 				if (!parameter.getValue().isEmpty())
 					paramNames.add(e.getKey());
 		}
@@ -509,13 +458,41 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 		for (Entry<String, ResolvedParam> e:getResolvedParams())
 		{
 			ResolvedParam parameter = e.getValue();
-			if (parameter.getParameter().isOptional() && !parameter.getParameter().isPositional())
+			if (parameter.getParameter().isOptional(null) && !parameter.getParameter().isPositional(null))
 				if (!parameter.getValue().isEmpty())
 					paramNames.add(e.getKey());
 		}
 		return paramNames;
 
 	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getInterperter() {
+		
+		for (ResolvedParam resolvedParam:getResolvedParams().values())
+			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(resolvedParam.getParameter().getCmdPart()))
+				return resolvedParam;
+		return null; 
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getExe() {
+		
+		for (ResolvedParam resolvedParam:getResolvedParams().values())
+			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(resolvedParam.getParameter().getCmdPart()))
+				return resolvedParam;
+		return null;
+	}
+
+	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -543,6 +520,15 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 				return getName();
 			case ToolPackage.COMMAND__DESCRIPTION:
 				return getDescription();
+			case ToolPackage.COMMAND__COMMAND_PATTERN:
+				return getCommandPattern();
+			case ToolPackage.COMMAND__TEMPLATE_PARAM:
+				if (resolve) return getTemplateParam();
+				return basicGetTemplateParam();
+			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
+				return getAssumeDataParamPositional();
+			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
+				return getCmdPartDelimiter();
 			case ToolPackage.COMMAND__EXECUTABLE:
 				return isExecutable();
 			case ToolPackage.COMMAND__LOGGER:
@@ -550,8 +536,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				if (coreType) return getResolvedParams();
 				else return getResolvedParams().map();
-			case ToolPackage.COMMAND__PATTERN:
-				return getPattern();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -571,14 +555,23 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 			case ToolPackage.COMMAND__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
+			case ToolPackage.COMMAND__COMMAND_PATTERN:
+				setCommandPattern((String)newValue);
+				return;
+			case ToolPackage.COMMAND__TEMPLATE_PARAM:
+				setTemplateParam((Parameter)newValue);
+				return;
+			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
+				setAssumeDataParamPositional((Boolean)newValue);
+				return;
+			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
+				setCmdPartDelimiter((String)newValue);
+				return;
 			case ToolPackage.COMMAND__EXECUTABLE:
 				setExecutable((Boolean)newValue);
 				return;
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
-				return;
-			case ToolPackage.COMMAND__PATTERN:
-				setPattern((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -598,14 +591,23 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 			case ToolPackage.COMMAND__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
+			case ToolPackage.COMMAND__COMMAND_PATTERN:
+				setCommandPattern(COMMAND_PATTERN_EDEFAULT);
+				return;
+			case ToolPackage.COMMAND__TEMPLATE_PARAM:
+				setTemplateParam((Parameter)null);
+				return;
+			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
+				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
+				return;
+			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
+				setCmdPartDelimiter(CMD_PART_DELIMITER_EDEFAULT);
+				return;
 			case ToolPackage.COMMAND__EXECUTABLE:
 				setExecutable(EXECUTABLE_EDEFAULT);
 				return;
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				getResolvedParams().clear();
-				return;
-			case ToolPackage.COMMAND__PATTERN:
-				setPattern(PATTERN_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -623,14 +625,20 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ToolPackage.COMMAND__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case ToolPackage.COMMAND__COMMAND_PATTERN:
+				return COMMAND_PATTERN_EDEFAULT == null ? commandPattern != null : !COMMAND_PATTERN_EDEFAULT.equals(commandPattern);
+			case ToolPackage.COMMAND__TEMPLATE_PARAM:
+				return templateParam != null;
+			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
+				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
+			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
+				return CMD_PART_DELIMITER_EDEFAULT == null ? cmdPartDelimiter != null : !CMD_PART_DELIMITER_EDEFAULT.equals(cmdPartDelimiter);
 			case ToolPackage.COMMAND__EXECUTABLE:
 				return executable != EXECUTABLE_EDEFAULT;
 			case ToolPackage.COMMAND__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case ToolPackage.COMMAND__RESOLVED_PARAMS:
 				return resolvedParams != null && !resolvedParams.isEmpty();
-			case ToolPackage.COMMAND__PATTERN:
-				return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -646,6 +654,15 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 			switch (derivedFeatureID) {
 				case ToolPackage.COMMAND__NAME: return ToolPackage.DEFAULT_TOOL_ELEMENT__NAME;
 				case ToolPackage.COMMAND__DESCRIPTION: return ToolPackage.DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+				default: return -1;
+			}
+		}
+		if (baseClass == BaseCommand.class) {
+			switch (derivedFeatureID) {
+				case ToolPackage.COMMAND__COMMAND_PATTERN: return ToolPackage.BASE_COMMAND__COMMAND_PATTERN;
+				case ToolPackage.COMMAND__TEMPLATE_PARAM: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAM;
+				case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
+				case ToolPackage.COMMAND__CMD_PART_DELIMITER: return ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER;
 				default: return -1;
 			}
 		}
@@ -666,33 +683,16 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 				default: return -1;
 			}
 		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.COMMAND___GENERATE_COMMAND_STRING__EMAP:
-				return generateCommandString((EMap<String, Object>)arguments.get(0));
-			case ToolPackage.COMMAND___GET_PARAMETER_FOR_DATA_PORT__DATAPORT:
-				try {
-					return getParameterForDataPort((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.COMMAND___GET_POSITIONAL_PARAMETER_NAMES:
-				return getPositionalParameterNames();
-			case ToolPackage.COMMAND___GET_OPTIONAL_PARAMETER_NAMES:
-				return getOptionalParameterNames();
+		if (baseClass == BaseCommand.class) {
+			switch (baseFeatureID) {
+				case ToolPackage.BASE_COMMAND__COMMAND_PATTERN: return ToolPackage.COMMAND__COMMAND_PATTERN;
+				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM: return ToolPackage.COMMAND__TEMPLATE_PARAM;
+				case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
+				case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER: return ToolPackage.COMMAND__CMD_PART_DELIMITER;
+				default: return -1;
+			}
 		}
-		return super.eInvoke(operationID, arguments);
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -709,12 +709,16 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 		result.append(name);
 		result.append(", description: ");
 		result.append(description);
+		result.append(", commandPattern: ");
+		result.append(commandPattern);
+		result.append(", assumeDataParamPositional: ");
+		result.append(assumeDataParamPositional);
+		result.append(", cmdPartDelimiter: ");
+		result.append(cmdPartDelimiter);
 		result.append(", executable: ");
 		result.append(executable);
 		result.append(", logger: ");
 		result.append(logger);
-		result.append(", pattern: ");
-		result.append(pattern);
 		result.append(')');
 		return result.toString();
 	}

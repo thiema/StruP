@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -61,7 +62,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements DefaultMetaData {
+public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData {
 	/**
 	 * The default value of the '{@link #getReader() <em>Reader</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -682,48 +683,6 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 				return aliases != null && !aliases.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case MetadataPackage.DEFAULT_META_DATA___INIT_META_DATA:
-				initMetaData();
-				return null;
-			case MetadataPackage.DEFAULT_META_DATA___READ_META_DATA:
-				readMetaData();
-				return null;
-			case MetadataPackage.DEFAULT_META_DATA___GET_INSTANCES__GROUPINGINSTANCE_STRING:
-				return getInstances((GroupingInstance)arguments.get(0), (String)arguments.get(1));
-			case MetadataPackage.DEFAULT_META_DATA___GET_INSTANCES__STRING_STRING_STRING:
-				return getInstances((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
-			case MetadataPackage.DEFAULT_META_DATA___GET_INSTANCES_FOR_RECORDS__STRING_ELIST:
-				return getInstancesForRecords((String)arguments.get(0), (EList<String>)arguments.get(1));
-			case MetadataPackage.DEFAULT_META_DATA___GET_VALUE_FOR_GROUPING_INSTANCE__GROUPINGINSTANCE_STRING:
-				getValueForGroupingInstance((GroupingInstance)arguments.get(0), (String)arguments.get(1));
-				return null;
-			case MetadataPackage.DEFAULT_META_DATA___GET_RECORDS_BY__STRING_STRING:
-				return getRecordsBy((String)arguments.get(0), (String)arguments.get(1));
-			case MetadataPackage.DEFAULT_META_DATA___GET_RECORD__GROUPINGINSTANCE:
-				return getRecord((GroupingInstance)arguments.get(0));
-			case MetadataPackage.DEFAULT_META_DATA___GET_RECORD__TRAVERSALCHUNK:
-				return getRecord((TraversalChunk)arguments.get(0));
-			case MetadataPackage.DEFAULT_META_DATA___GET_ROW__STRING:
-				return getRow((String)arguments.get(0));
-			case MetadataPackage.DEFAULT_META_DATA___GET_COLUMN__STRING:
-				return getColumn((String)arguments.get(0));
-			case MetadataPackage.DEFAULT_META_DATA___CONTAINS_COLUMN__STRING:
-				return containsColumn((String)arguments.get(0));
-			case MetadataPackage.DEFAULT_META_DATA___CONTAINS_ROW__STRING:
-				return containsRow((String)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

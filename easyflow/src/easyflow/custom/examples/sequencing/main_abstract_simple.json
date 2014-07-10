@@ -39,12 +39,8 @@
 
   "workflow": {
     "metadata_input_field"    : ["InputFiles"],
-    "inputs"                  : ["FASTQ"],
-    "static_inputs"           : ["FASTA"],
-    "inputs_map"              : {"Reads" : "FASTQ"
-                                },
-    "static_inputs_map"       : {"Reference" : "FASTA"
-                                },
+    "inputs"                  : ["F1"],
+    "static_inputs"           : [],
     "workflows"               : ["w1", "w2"], 
     "w1"                      : ["MapReads", "AddReadGroup"],
     "w2"                      : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
@@ -55,11 +51,7 @@
   "tool" : {
     "command_pattern" : "interpreter executable submodule positional_arg optional_arg input output",
   	"dir"             : "tool_definitions",
-  	"tools_test"      : ["tool.xml", "tools.xml", "depth_of_coverage_gatk2_easyflow.xml", 
-  				         "depth_of_coverage_gatk_easyflow.xml", "ngs_tools_easyflow.xml"],
-  	"tools"           : ["ngs_tools_easyflow.xml"],
-  	"tools_"          : ["ngs_tools_easyflow.xml",
-  				         "pavgi_picard", "gatk2", "bedtools-galaxy"],
+  	"tools"           : ["abstract_tools.xml"],
   	"schemata"        : ["../../../tool/schema/Easyflow.xsd", 
   					     "../../../tool/schema/Easyflow_multiple.xsd", 
   					     "../../../tool/schema/external/Galaxy.xsd"]

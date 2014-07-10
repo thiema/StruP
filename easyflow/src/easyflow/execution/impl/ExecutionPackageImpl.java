@@ -232,33 +232,6 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getIExecutionSystem__GetJgraphxVisitor() {
-		return iExecutionSystemEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getIExecutionSystem__CreateCommandLine__String_Task() {
-		return iExecutionSystemEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getIExecutionSystem__CreateCommandLine__String_Tool() {
-		return iExecutionSystemEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ExecutionFactory getExecutionFactory() {
 		return (ExecutionFactory)getEFactoryInstance();
 	}
@@ -288,9 +261,6 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		createEAttribute(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__WRITER);
 
 		iExecutionSystemEClass = createEClass(IEXECUTION_SYSTEM);
-		createEOperation(iExecutionSystemEClass, IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR);
-		createEOperation(iExecutionSystemEClass, IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK);
-		createEOperation(iExecutionSystemEClass, IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL);
 	}
 
 	/**
@@ -337,7 +307,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		// Add supertypes to classes
 		defaultExecutionSystemEClass.getESuperTypes().add(this.getIExecutionSystem());
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(defaultExecutionSystemEClass, DefaultExecutionSystem.class, "DefaultExecutionSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultExecutionSystem_Project(), theUiPackage.getDefaultProject(), null, "project", null, 0, 1, DefaultExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultExecutionSystem_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultExecutionSystem.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -345,15 +315,15 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 
 		initEClass(iExecutionSystemEClass, IExecutionSystem.class, "IExecutionSystem", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEOperation(getIExecutionSystem__GetJgraphxVisitor(), theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iExecutionSystemEClass, theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = initEOperation(getIExecutionSystem__CreateCommandLine__String_Task(), ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		op = initEOperation(getIExecutionSystem__CreateCommandLine__String_Tool(), ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());

@@ -17,10 +17,15 @@ import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterListMapImpl;
 
+import java.net.URI;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,11 +36,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.omg.CORBA.portable.ValueInputStream;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,9 +57,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getType <em>Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOptionValues <em>Option Values</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isOptional <em>Optional</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isMultiple <em>Multiple</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isMultipleValue <em>Multiple Value</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getOptional <em>Optional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultiple <em>Multiple</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleValue <em>Multiple Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValueType <em>Value Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDefaultValue <em>Default Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getPrefix <em>Prefix</em>}</li>
@@ -60,27 +67,28 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDelimiter <em>Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getValueDelimiter <em>Value Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getKeys <em>Keys</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isNamed <em>Named</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getNamed <em>Named</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getHelp <em>Help</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMinOcc <em>Min Occ</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMaxOcc <em>Max Occ</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isAdvanced <em>Advanced</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isPositional <em>Positional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getPositional <em>Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGrouping <em>Grouping</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDataDeprecated <em>Data Deprecated</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isFixedArgValue <em>Fixed Arg Value</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getFixedArgValue <em>Fixed Arg Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getHandles <em>Handles</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGeneralValue <em>General Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isOutput <em>Output</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isDataParam <em>Data Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getCmdPart <em>Cmd Part</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
+public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -182,64 +190,64 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected EList<OptionValue> optionValues;
 
 	/**
-	 * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+	 * The default value of the '{@link #getOptional() <em>Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOptional()
+	 * @see #getOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean OPTIONAL_EDEFAULT = false;
+	protected static final Boolean OPTIONAL_EDEFAULT = Boolean.FALSE;
 
 	/**
-	 * The cached value of the '{@link #isOptional() <em>Optional</em>}' attribute.
+	 * The cached value of the '{@link #getOptional() <em>Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isOptional()
+	 * @see #getOptional()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean optional = OPTIONAL_EDEFAULT;
+	protected Boolean optional = OPTIONAL_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
+	 * The default value of the '{@link #getMultiple() <em>Multiple</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isMultiple()
+	 * @see #getMultiple()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean MULTIPLE_EDEFAULT = false;
+	protected static final Boolean MULTIPLE_EDEFAULT = Boolean.FALSE;
 
 	/**
-	 * The cached value of the '{@link #isMultiple() <em>Multiple</em>}' attribute.
+	 * The cached value of the '{@link #getMultiple() <em>Multiple</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isMultiple()
+	 * @see #getMultiple()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean multiple = MULTIPLE_EDEFAULT;
+	protected Boolean multiple = MULTIPLE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isMultipleValue() <em>Multiple Value</em>}' attribute.
+	 * The default value of the '{@link #getMultipleValue() <em>Multiple Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isMultipleValue()
+	 * @see #getMultipleValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean MULTIPLE_VALUE_EDEFAULT = false;
+	protected static final Boolean MULTIPLE_VALUE_EDEFAULT = Boolean.FALSE;
 
 	/**
-	 * The cached value of the '{@link #isMultipleValue() <em>Multiple Value</em>}' attribute.
+	 * The cached value of the '{@link #getMultipleValue() <em>Multiple Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isMultipleValue()
+	 * @see #getMultipleValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean multipleValue = MULTIPLE_VALUE_EDEFAULT;
+	protected Boolean multipleValue = MULTIPLE_VALUE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getValueType() <em>Value Type</em>}' attribute.
@@ -289,7 +297,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PREFIX_EDEFAULT = "-";
+	protected static final String PREFIX_EDEFAULT = "";
 
 	/**
 	 * The cached value of the '{@link #getPrefix() <em>Prefix</em>}' attribute.
@@ -372,24 +380,24 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected EList<Key> keys;
 
 	/**
-	 * The default value of the '{@link #isNamed() <em>Named</em>}' attribute.
+	 * The default value of the '{@link #getNamed() <em>Named</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isNamed()
+	 * @see #getNamed()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean NAMED_EDEFAULT = false;
+	protected static final Boolean NAMED_EDEFAULT = Boolean.FALSE;
 
 	/**
-	 * The cached value of the '{@link #isNamed() <em>Named</em>}' attribute.
+	 * The cached value of the '{@link #getNamed() <em>Named</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isNamed()
+	 * @see #getNamed()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean named = NAMED_EDEFAULT;
+	protected Boolean named = NAMED_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -492,24 +500,24 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected boolean advanced = ADVANCED_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isPositional() <em>Positional</em>}' attribute.
+	 * The default value of the '{@link #getPositional() <em>Positional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isPositional()
+	 * @see #getPositional()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean POSITIONAL_EDEFAULT = true;
+	protected static final Boolean POSITIONAL_EDEFAULT = Boolean.TRUE;
 
 	/**
-	 * The cached value of the '{@link #isPositional() <em>Positional</em>}' attribute.
+	 * The cached value of the '{@link #getPositional() <em>Positional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isPositional()
+	 * @see #getPositional()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean positional = POSITIONAL_EDEFAULT;
+	protected Boolean positional = POSITIONAL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getGrouping() <em>Grouping</em>}' attribute list.
@@ -532,24 +540,24 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected EList<Data> dataDeprecated;
 
 	/**
-	 * The default value of the '{@link #isFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
+	 * The default value of the '{@link #getFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isFixedArgValue()
+	 * @see #getFixedArgValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean FIXED_ARG_VALUE_EDEFAULT = false;
+	protected static final Boolean FIXED_ARG_VALUE_EDEFAULT = Boolean.FALSE;
 
 	/**
-	 * The cached value of the '{@link #isFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
+	 * The cached value of the '{@link #getFixedArgValue() <em>Fixed Arg Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isFixedArgValue()
+	 * @see #getFixedArgValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean fixedArgValue = FIXED_ARG_VALUE_EDEFAULT;
+	protected Boolean fixedArgValue = FIXED_ARG_VALUE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getParent() <em>Parent</em>}' reference.
@@ -620,6 +628,26 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * @ordered
 	 */
 	protected boolean dataParam = DATA_PARAM_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getCmdPart() <em>Cmd Part</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCmdPart()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CMD_PART_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCmdPart() <em>Cmd Part</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCmdPart()
+	 * @generated
+	 * @ordered
+	 */
+	protected String cmdPart = CMD_PART_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -708,69 +736,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isOptional() {
-		return optional;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setOptional(boolean newOptional) {
-		boolean oldOptional = optional;
-		optional = newOptional;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OPTIONAL, oldOptional, optional));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isMultiple() {
-		return multiple;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMultiple(boolean newMultiple) {
-		boolean oldMultiple = multiple;
-		multiple = newMultiple;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE, oldMultiple, multiple));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isMultipleValue() {
-		return multipleValue;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMultipleValue(boolean newMultipleValue) {
-		boolean oldMultipleValue = multipleValue;
-		multipleValue = newMultipleValue;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_VALUE, oldMultipleValue, multipleValue));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EMap<String, EList<Parameter>> getValues() {
 		if (values == null) {
 			values = new EcoreEMap<String,EList<Parameter>>(MapsPackage.Literals.STRING_TO_PARAMETER_LIST_MAP, StringToParameterListMapImpl.class, this, ToolPackage.PARAMETER__VALUES);
@@ -795,8 +760,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isPositional() {
-		return positional;
+	public Boolean getOptional() {
+		return optional;
 	}
 
 	/**
@@ -804,11 +769,53 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPositional(boolean newPositional) {
-		boolean oldPositional = positional;
-		positional = newPositional;
+	public void setOptional(Boolean newOptional) {
+		Boolean oldOptional = optional;
+		optional = newOptional;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__POSITIONAL, oldPositional, positional));
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OPTIONAL, oldOptional, optional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getMultiple() {
+		return multiple;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMultiple(Boolean newMultiple) {
+		Boolean oldMultiple = multiple;
+		multiple = newMultiple;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE, oldMultiple, multiple));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getMultipleValue() {
+		return multipleValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMultipleValue(Boolean newMultipleValue) {
+		Boolean oldMultipleValue = multipleValue;
+		multipleValue = newMultipleValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_VALUE, oldMultipleValue, multipleValue));
 	}
 
 	/**
@@ -840,7 +847,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isFixedArgValue() {
+	public Boolean getFixedArgValue() {
 		return fixedArgValue;
 	}
 
@@ -849,8 +856,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFixedArgValue(boolean newFixedArgValue) {
-		boolean oldFixedArgValue = fixedArgValue;
+	public void setFixedArgValue(Boolean newFixedArgValue) {
+		Boolean oldFixedArgValue = fixedArgValue;
 		fixedArgValue = newFixedArgValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__FIXED_ARG_VALUE, oldFixedArgValue, fixedArgValue));
@@ -963,35 +970,83 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
-	public String getArgKey() {
-		if (!getKeys().isEmpty())
-			return getKeys().get(0).getPrefix()+getKeys().get(0).getValue();
-		else if (getPrefix()!=null && isNamed())
-			return getPrefix();
-		else if (isNamed())
-			return getName().length()==1 ? "-"+getName() : "--"+getName();
-		else
-			return "";
+	public String getCmdPart() {
+		return cmdPart;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCmdPart(String newCmdPart) {
+		String oldCmdPart = cmdPart;
+		cmdPart = newCmdPart;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__CMD_PART, oldCmdPart, cmdPart));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getArgKey(String defaultPrefix) {
+
+		String argKey = "";
+		if (!getKeys().isEmpty())
+			argKey = resolveArgKey(defaultPrefix);
+		else
+		{
+			if (getPrefix()!=null)// && isNamed(defaultIsNamed))
+				argKey = getPrefix();
+			else if (defaultPrefix != null)// && isNamed(defaultIsNamed))
+				argKey = defaultPrefix;
+			else 
+				argKey = GlobalConfig.getArgPrefix();
+			argKey += getName();
+		}
+		return argKey;
+	}
+
+	private String resolveArgKey(String defaultPrefix)
+	{
+		String preferredType = GlobalConfig.getPreferredOptionType();
+		for (Key key : getKeys())
+		{
+			if (key.getType() != null && key.getType().equalsIgnoreCase(preferredType))
+				return key.resolveArgKey(defaultPrefix);
+		}
+		return getKeys().get(0).resolveArgKey(defaultPrefix);
+		//if (.equalsIgnoreCase("long"))
+	}
 	
-
+	private String resolveArgKeyDelimiter(String defaultDelimiter)
+	{
+		String preferredType = GlobalConfig.getPreferredOptionType();
+		for (Key key : getKeys())
+		{
+			if (key.getType().equalsIgnoreCase(preferredType))
+				return key.getDelimiter() != null ? key.getDelimiter() : defaultDelimiter; 
+		}
+		return getKeys().get(0).getDelimiter() != null ? getKeys().get(0).getDelimiter() : defaultDelimiter;
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String getArgDelimiter() {
+	public String getArgDelimiter(String defaultDelimiter) {
 		if (!getKeys().isEmpty())
-			return getKeys().get(0).getDelimiter();
-		else if (getDelimiter()!=null)
+			return resolveArgKeyDelimiter(defaultDelimiter);
+		else if (getDelimiter() != null)
 			return getDelimiter();
-		else if ((getPrefix()!=null || isNamed()) && getDelimiter()==null)
-			return " ";
-		else
-			return "";
+		else if (defaultDelimiter != null)
+			return defaultDelimiter;
+		else 
+			return GlobalConfig.getArgDelimiter();
 	}
 
 	/**
@@ -999,13 +1054,27 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String getArgValueDelimiter() {
-		if (getValueDelimiter()!=null && !getValueDelimiter().equals(""))
+	public String getArgValueDelimiter(String defaultDelimiter) {
+		if (getValueDelimiter() != null && !getValueDelimiter().equals(""))
 			return getValueDelimiter();
-		else if (GlobalConfig.getToolConfig().containsKey("default_value_delimiter"))
-			return GlobalConfig.getToolConfig().get("default_value_delimiter");
+		else if (defaultDelimiter != null)
+			return defaultDelimiter;
+		else 
+			return GlobalConfig.getArgValueDelimiter();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getPrefix(String defaultPrefix) {
+		if (getPrefix() != null)
+			return getPrefix();
+		else if (defaultPrefix != null)
+			return defaultPrefix;
 		else
-			return ",";
+			return GlobalConfig.getArgPrefix();
 	}
 
 	/**
@@ -1122,6 +1191,293 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				parameter.getEffectiveParameters(effectiveParams);
 		
 		return effectiveParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> generateCommandStringURI(EMap<String, Object> constraints, EList<URI> value, Parameter templateParam) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * transforms the parameter to a command line string, so it can be used in the command line
+	 * - the constraints map is no yet specified
+	 * - the value specifies the arguments value(s) 
+	 * - the template parameter is used, when a particular attribute of the parameter is not set
+	 * 
+	 * the command line parameter has the following general layout:
+	 *  <prefix><key><delimiter><arg1><arg-delimiter><arg2>
+	 *  
+	 *  examples:
+	 *  
+	 *  1.) named short/long (GATK style)
+	 *   prefix        : -/--
+	 *   named         : true
+	 *   key           : I/input
+	 *   delimiter     : " "
+	 *   multipleValue : false
+	 *   multiple      : true
+	 *   
+	 *    short: -I file1.bam -I file2.bam
+	 *    long: --input_files file1.bam --input_files file2.bam
+	 *   
+	 *  2.) named short/long (Picard style)
+	 *   prefix        : ""
+	 *   named         : true
+	 *   key           : I/INPUT
+	 *   delimiter     : "="
+	 *   multipleValue : false
+	 *   multiple      : true
+	 *   
+	 *    short: I=file1.bam 
+	 *    long:  INPUT=file1.bam
+	 *    
+	 *  3.) positional (samtools) 
+	 *   prefix        : ""
+	 *   named         : false
+	 *   key           : ""
+	 *   delimiter     : ""
+	 *   multipleValue : false //doesnt matter, at least one of
+	 *   multiple      : true  //them should be true, if arg can occur multiple times
+	 *  
+	 *          file1.bam file2.bam
+	 *  
+	 * 
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> generateCommandString(EMap<String, Object> constraints, EList<Object> value, Parameter templateParam) {
+		
+		EList<String> cmdString = new BasicEList<String>();
+		EList<String> argValue  = null;
+		Boolean defaultIsFixed  = templateParam != null ? templateParam.getFixedArgValue() : null;
+		
+		if (constraints != null && constraints.containsKey("value"))
+		{
+			argValue = resolveValues(constraints.get("value"));
+		}
+		else if (value != null && !value.isEmpty()) 
+		{
+			argValue = resolveValues(value);
+		}
+		else if (getGeneralValue() != null && !getGeneralValue().isEmpty())
+		{
+			argValue = resolveValues(getGeneralValue());
+		}
+		else if (getDefaultValue() != null && !getDefaultValue().equals("") && isFixedArgValue(defaultIsFixed))
+		{
+			argValue = new BasicEList<String>();
+			argValue.add(getDefaultValue());
+		}
+		
+		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed() : null;
+		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter(null) : null;
+		String  defaultPrefix            = templateParam != null ? templateParam.getPrefix() : null;
+		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
+				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
+
+		Parameter p = this;
+		if (isAnalysisType())
+		{
+			EList<Parameter> pl = getEffectiveParameters(null);
+			logger.debug(getName()+" "+pl.size());
+			//logger.debug("");
+		}
+		// resolve prefix and key
+		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
+			;
+		else if (isNamed(defaultIsNamed) || argValue == null)
+		{
+			cmdString.add(getArgKey(defaultPrefix));
+		}
+		// resolve delimiter
+		if (argValue != null && isNamed(defaultIsNamed))
+			cmdString.add(getArgDelimiter(defaultArgDelimiter));
+		
+		if (argValue != null)
+			return resolveMultiplicity(cmdString, argValue, templateParam);
+		else
+			return cmdString;
+		
+	}
+	
+	private EList<String> resolveMultiplicity(EList<String> cmdString, EList<String> argValue, Parameter templateParam)
+	{
+		Boolean          defaultIsMultiple      = templateParam != null ? templateParam.isMultiple(null) : null;
+		Boolean          defaultIsMultipleValue = templateParam != null ? templateParam.isMultipleValue(null) : null;
+		String         defaultArgValueDelimiter = templateParam != null ? templateParam.getArgValueDelimiter(null) : null;
+		EList<String>    res = new BasicEList<String>();
+		if (isMultiple(defaultIsMultiple) && isMultipleValue(defaultIsMultipleValue))
+		{
+			String tmp  = StringUtils.join(cmdString, "");
+			tmp        += StringUtils.join(argValue, getArgValueDelimiter(defaultArgValueDelimiter));
+			res.add(tmp);
+		}
+		else
+		{
+			Iterator<String> it  = argValue.iterator();
+			while (it.hasNext())
+			{
+				String tmp  = StringUtils.join(cmdString, "");
+				tmp        += it.next();
+				res.add(tmp);
+			}
+		}
+		return res;
+	}
+	
+	private EList<String> resolveValues(Object value)
+	{
+		EList<String> finalValue = new BasicEList<String>();
+		if (value instanceof EList)
+		{
+			Iterator<Object> it = ((EList<Object>) value).iterator();
+			while (it.hasNext())
+			{
+				Object v = it.next();
+				if (v instanceof String)
+					finalValue.add((String) v);
+				else if (v instanceof URI)
+					finalValue.add(((URI)v).toString());
+				else
+					logger.error("generateCommandString(): couldnt process argument value in constraints map.");
+			}
+		}
+		else if (value instanceof String)
+			finalValue.add((String) value);
+		else if (value instanceof URI)
+			finalValue.add(((URI) value).toString());
+		else
+			logger.error("generateCommandString(): couldnt process argument value in constraints map.");
+		return finalValue;
+	}
+	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> generateCommandString(EMap<String, Object> constraints, Object value, Parameter templateParam) {
+		EList<Object> values = new BasicEList<Object>();
+		values.add(value);
+		return generateCommandString(constraints, values, templateParam);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> generateCommandString(EMap<String, Object> constraints, OptionValue value, Parameter templateParam) {
+		String strValue = null;
+		if (value.getExe() != null)
+			strValue = value.getExe();
+		else if (value.getName() != null)
+			strValue = value.getName();
+		return generateCommandString(constraints, strValue, templateParam);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> generateCommandString(EMap<String, Object> constraints, URI value, Parameter templateParam) {
+		EList<URI> values = new BasicEList<URI>();
+		values.add(value);
+		return generateCommandStringURI(constraints, values, templateParam);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isOptional(Boolean default_) {
+		if (getOptional() != null)
+			return getOptional();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsOptional();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isMultiple(Boolean default_) {
+		if (getMultiple() != null)
+			return getMultiple();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsMultiple();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isNamed(Boolean default_) {
+		if (getNamed() != null)
+			return getNamed();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsNamed();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isPositional(Boolean default_) {
+		if (getPositional() != null)
+			return getPositional();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsPositional();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isFixedArgValue(Boolean default_) {
+		if (getFixedArgValue() != null)
+			return getFixedArgValue();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsFixedArgValue();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isMultipleValue(Boolean default_) {
+		if (getMultipleValue() != null)
+			return getMultipleValue();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.isMultipleArgValue();
+			
 	}
 
 	/**
@@ -1276,7 +1632,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isNamed() {
+	public Boolean getNamed() {
 		return named;
 	}
 
@@ -1285,8 +1641,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setNamed(boolean newNamed) {
-		boolean oldNamed = named;
+	public void setNamed(Boolean newNamed) {
+		Boolean oldNamed = named;
 		named = newNamed;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__NAMED, oldNamed, named));
@@ -1402,6 +1758,27 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Boolean getPositional() {
+		return positional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPositional(Boolean newPositional) {
+		Boolean oldPositional = positional;
+		positional = newPositional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__POSITIONAL, oldPositional, positional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1433,11 +1810,11 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__OPTION_VALUES:
 				return getOptionValues();
 			case ToolPackage.PARAMETER__OPTIONAL:
-				return isOptional();
+				return getOptional();
 			case ToolPackage.PARAMETER__MULTIPLE:
-				return isMultiple();
+				return getMultiple();
 			case ToolPackage.PARAMETER__MULTIPLE_VALUE:
-				return isMultipleValue();
+				return getMultipleValue();
 			case ToolPackage.PARAMETER__VALUE_TYPE:
 				return getValueType();
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
@@ -1453,7 +1830,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__KEYS:
 				return getKeys();
 			case ToolPackage.PARAMETER__NAMED:
-				return isNamed();
+				return getNamed();
 			case ToolPackage.PARAMETER__LABEL:
 				return getLabel();
 			case ToolPackage.PARAMETER__HELP:
@@ -1465,13 +1842,13 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__ADVANCED:
 				return isAdvanced();
 			case ToolPackage.PARAMETER__POSITIONAL:
-				return isPositional();
+				return getPositional();
 			case ToolPackage.PARAMETER__GROUPING:
 				return getGrouping();
 			case ToolPackage.PARAMETER__DATA_DEPRECATED:
 				return getDataDeprecated();
 			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
-				return isFixedArgValue();
+				return getFixedArgValue();
 			case ToolPackage.PARAMETER__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
@@ -1483,6 +1860,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return isOutput();
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				return isDataParam();
+			case ToolPackage.PARAMETER__CMD_PART:
+				return getCmdPart();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1592,6 +1971,9 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				setDataParam((Boolean)newValue);
 				return;
+			case ToolPackage.PARAMETER__CMD_PART:
+				setCmdPart((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1694,6 +2076,9 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				setDataParam(DATA_PARAM_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__CMD_PART:
+				setCmdPart(CMD_PART_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1719,11 +2104,11 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__OPTION_VALUES:
 				return optionValues != null && !optionValues.isEmpty();
 			case ToolPackage.PARAMETER__OPTIONAL:
-				return optional != OPTIONAL_EDEFAULT;
+				return OPTIONAL_EDEFAULT == null ? optional != null : !OPTIONAL_EDEFAULT.equals(optional);
 			case ToolPackage.PARAMETER__MULTIPLE:
-				return multiple != MULTIPLE_EDEFAULT;
+				return MULTIPLE_EDEFAULT == null ? multiple != null : !MULTIPLE_EDEFAULT.equals(multiple);
 			case ToolPackage.PARAMETER__MULTIPLE_VALUE:
-				return multipleValue != MULTIPLE_VALUE_EDEFAULT;
+				return MULTIPLE_VALUE_EDEFAULT == null ? multipleValue != null : !MULTIPLE_VALUE_EDEFAULT.equals(multipleValue);
 			case ToolPackage.PARAMETER__VALUE_TYPE:
 				return VALUE_TYPE_EDEFAULT == null ? valueType != null : !VALUE_TYPE_EDEFAULT.equals(valueType);
 			case ToolPackage.PARAMETER__DEFAULT_VALUE:
@@ -1739,7 +2124,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__KEYS:
 				return keys != null && !keys.isEmpty();
 			case ToolPackage.PARAMETER__NAMED:
-				return named != NAMED_EDEFAULT;
+				return NAMED_EDEFAULT == null ? named != null : !NAMED_EDEFAULT.equals(named);
 			case ToolPackage.PARAMETER__LABEL:
 				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 			case ToolPackage.PARAMETER__HELP:
@@ -1751,13 +2136,13 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__ADVANCED:
 				return advanced != ADVANCED_EDEFAULT;
 			case ToolPackage.PARAMETER__POSITIONAL:
-				return positional != POSITIONAL_EDEFAULT;
+				return POSITIONAL_EDEFAULT == null ? positional != null : !POSITIONAL_EDEFAULT.equals(positional);
 			case ToolPackage.PARAMETER__GROUPING:
 				return grouping != null && !grouping.isEmpty();
 			case ToolPackage.PARAMETER__DATA_DEPRECATED:
 				return dataDeprecated != null && !dataDeprecated.isEmpty();
 			case ToolPackage.PARAMETER__FIXED_ARG_VALUE:
-				return fixedArgValue != FIXED_ARG_VALUE_EDEFAULT;
+				return FIXED_ARG_VALUE_EDEFAULT == null ? fixedArgValue != null : !FIXED_ARG_VALUE_EDEFAULT.equals(fixedArgValue);
 			case ToolPackage.PARAMETER__PARENT:
 				return parent != null;
 			case ToolPackage.PARAMETER__HANDLES:
@@ -1768,6 +2153,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return output != OUTPUT_EDEFAULT;
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				return dataParam != DATA_PARAM_EDEFAULT;
+			case ToolPackage.PARAMETER__CMD_PART:
+				return CMD_PART_EDEFAULT == null ? cmdPart != null : !CMD_PART_EDEFAULT.equals(cmdPart);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1804,35 +2191,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.PARAMETER___GET_ARG_KEY:
-				return getArgKey();
-			case ToolPackage.PARAMETER___GET_ARG_DELIMITER:
-				return getArgDelimiter();
-			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER:
-				return getArgValueDelimiter();
-			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
-				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
-				return isAnalysisType();
-			case ToolPackage.PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN:
-				return getSupportedHandles((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN:
-				return getEffectiveParentParameter((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARAMETERS__ELIST:
-				return getEffectiveParameters((EList<Parameter>)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -1897,6 +2255,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		result.append(output);
 		result.append(", dataParam: ");
 		result.append(dataParam);
+		result.append(", cmdPart: ");
+		result.append(cmdPart);
 		result.append(')');
 		return result.toString();
 	}

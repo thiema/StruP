@@ -108,70 +108,6 @@ public interface MakeflowPackage extends EPackage {
 
 
 	/**
-	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW___GET_JGRAPHX_VISITOR = ExecutionPackage.IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR;
-
-	/**
-	 * The operation id for the '<em>Create Command Line</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW___CREATE_COMMAND_LINE__STRING_TASK = ExecutionPackage.IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK;
-
-	/**
-	 * The operation id for the '<em>Create Command Line</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW___CREATE_COMMAND_LINE__STRING_TOOL = ExecutionPackage.IEXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL;
-
-	/**
-	 * The operation id for the '<em>Get Dependencies</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW___GET_DEPENDENCIES__TOOL = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Targets</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW___GET_TARGETS__TOOL = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Create Rule</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW___CREATE_RULE = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>Makeflow</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW_OPERATION_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 3;
-
-
-	/**
 	 * Returns the meta object for class '{@link easyflow.execution.makeflow.Makeflow <em>Makeflow</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -180,36 +116,6 @@ public interface MakeflowPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getMakeflow();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.execution.makeflow.Makeflow#getDependencies(easyflow.tool.Tool) <em>Get Dependencies</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Dependencies</em>' operation.
-	 * @see easyflow.execution.makeflow.Makeflow#getDependencies(easyflow.tool.Tool)
-	 * @generated
-	 */
-	EOperation getMakeflow__GetDependencies__Tool();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.execution.makeflow.Makeflow#getTargets(easyflow.tool.Tool) <em>Get Targets</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Targets</em>' operation.
-	 * @see easyflow.execution.makeflow.Makeflow#getTargets(easyflow.tool.Tool)
-	 * @generated
-	 */
-	EOperation getMakeflow__GetTargets__Tool();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.execution.makeflow.Makeflow#createRule() <em>Create Rule</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Create Rule</em>' operation.
-	 * @see easyflow.execution.makeflow.Makeflow#createRule()
-	 * @generated
-	 */
-	EOperation getMakeflow__CreateRule();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -242,27 +148,6 @@ public interface MakeflowPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MAKEFLOW = eINSTANCE.getMakeflow();
-		/**
-		 * The meta object literal for the '<em><b>Get Dependencies</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation MAKEFLOW___GET_DEPENDENCIES__TOOL = eINSTANCE.getMakeflow__GetDependencies__Tool();
-		/**
-		 * The meta object literal for the '<em><b>Get Targets</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation MAKEFLOW___GET_TARGETS__TOOL = eINSTANCE.getMakeflow__GetTargets__Tool();
-		/**
-		 * The meta object literal for the '<em><b>Create Rule</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation MAKEFLOW___CREATE_RULE = eINSTANCE.getMakeflow__CreateRule();
 
 	}
 

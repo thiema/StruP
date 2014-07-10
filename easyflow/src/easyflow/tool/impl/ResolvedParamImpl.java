@@ -136,24 +136,68 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * to generate the prefix:
+	 * 1.) use parameter definition
+	 * 2.) use template definition (template param)
+	 * 3.) use default (from configuration)
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String generateCommandString(EMap<String, Object> constraints) {
+	
+	
+	public EList<String> generateCommandString(EMap<String, Object> constraints, Parameter templateParam)
+	{
+		ResolvedParam p = this;
+		EList<String> res = getParameter().generateCommandString(constraints, getValue(), templateParam);
+		return res;
+		//return getParameter().generateCommandString(constraints, getValue(), templateParam);
+	}
+/*	
+	public String generateCommandString1(EMap<String, Object> constraints, Parameter templateParam) {
 
-		String cmd = getParameter().getArgKey() + getParameter().getArgDelimiter();
+		String cmd = "";
+		
+		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed()                 : null;
+		String  defaultPrefix            = templateParam != null ? templateParam.getPrefix(null)            : null;
+		
+		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter
+																		(null, templateParam.getNamed())    : null;
+		String  defaultArgValueDelimiter = templateParam != null ? templateParam.getArgValueDelimiter(null) : null;
+		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
+				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
+		
+		ResolvedParam p = this;
+		
+		String  argKey = "";
+		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
+			;
+		else
+			argKey = getParameter().getArgKey(defaultPrefix, defaultIsNamed);
+		
+		if (argKey != null && !argKey.equals(""))
+			cmd+=argKey + getParameter().getArgDelimiter(defaultArgDelimiter, defaultIsNamed);
+		else if (templateParam != null)
+		{
+			argKey = templateParam.getArgKey(defaultPrefix, defaultIsNamed);
+			if (argKey != null && !argKey.equals(""))
+				cmd+=argKey + templateParam.getArgDelimiter(defaultArgDelimiter, defaultIsNamed);
+		}
+		
 		if (constraints != null && constraints.containsKey("value"))
 			// if (constraints.get("value") )
 			cmd += constraints.get("value");
-		else if (getArgValue().isEmpty()) {
+		else if (!getArgValue().isEmpty())
+			cmd += StringUtils.join(getArgValue(), getParameter().getArgValueDelimiter(defaultArgValueDelimiter));
+		else
+		{
 			cmd = "";
 			logger.error("generateCommandString(): no argument set.");
-		} else
-			cmd += StringUtils.join(getArgValue(), getParameter().getArgValueDelimiter());
+		}
+			
 
 		return cmd;
 	}
-
+*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -174,9 +218,9 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			else if (v instanceof URI)
 				values.add(((URI)v).getPath());
 		}
-		if (i==0 && getParameter().getDefaultValue() != null && !getParameter().getDefaultValue().equals("") 
-				&& GlobalConfig.getToolConfig().containsKey("write_default_value_to_command_line")
-				&& GlobalConfig.getToolConfig().get("write_default_value_to_command_line").equals("1"))
+		if (i==0 && getParameter().getDefaultValue() != null 
+				&& !getParameter().getDefaultValue().equals("")
+				&& GlobalConfig.useDefaultValue())
 			value.add(getParameter().getDefaultValue());
 		
 		return values;
@@ -251,23 +295,6 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return value != null && !value.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP:
-				return generateCommandString((EMap<String, Object>)arguments.get(0));
-			case ToolPackage.RESOLVED_PARAM___GET_ARG_VALUE:
-				return getArgValue();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

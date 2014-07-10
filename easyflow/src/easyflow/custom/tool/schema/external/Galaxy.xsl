@@ -3,7 +3,6 @@
 <xsl:stylesheet version="2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:de.thiema.easyflow/types">
-
 	<xsl:output method="xml" indent="yes" />
 
 	<xsl:param name="assume_short_key" as="xs:boolean" select="false()"
@@ -36,12 +35,14 @@
 	</xsl:template>
 
 	<xsl:template match="*" mode="param">
+
 		<xsl:element name="{node-name(.)}">
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:element>
 	</xsl:template>
 
 	<xsl:template match="@*" mode="param">
+
 		<xsl:attribute name="{node-name(.)}">
       		<xsl:value-of select="." />
 	    </xsl:attribute>
@@ -93,37 +94,43 @@
 		</xsl:element>
 	</xsl:template>
 
-	<xsl:template match="repeat" mode="param">
-		<xsl:apply-templates select="child::*">
-			<xsl:with-param name="name" select="@name" />
-			<xsl:with-param name="min" select="@min" />
-			<xsl:with-param name="max" select="@max" />
-			<xsl:with-param name="help" select="@help" />
-			<xsl:with-param name="title" select="@title" />
-			<xsl:with-param name="multiple" select="true()" />
-			<xsl:with-param name="mode" select="'param'" />
-		</xsl:apply-templates>
-	</xsl:template>
-
+<!-- 
+<xsl:template match="repeat">
+	<xsl:apply-templates/>
+</xsl:template>
+ -->
+	
 	<xsl:template match="repeat">
 		<xsl:apply-templates select="child::*">
 			<xsl:with-param name="name" select="@name" />
 			<xsl:with-param name="min" select="@min" />
 			<xsl:with-param name="max" select="@max" />
-			<xsl:with-param name="help" select="@help" />
 			<xsl:with-param name="title" select="@title" />
 			<xsl:with-param name="multiple" select="true()" />
 			<xsl:with-param name="mode" select="'param'" />
 		</xsl:apply-templates>
 	</xsl:template>
 
+
+
+	<xsl:template match="repeat" mode="param">
+		<xsl:apply-templates select="child::*">
+			<xsl:with-param name="name" select="@name" />
+			<xsl:with-param name="min" select="@min" />
+			<xsl:with-param name="max" select="@max" />
+			<xsl:with-param name="title" select="@title" />
+			<xsl:with-param name="multiple" select="true()" />
+			<xsl:with-param name="mode" select="'param'" />
+		</xsl:apply-templates>
+	</xsl:template>
+
+ 
 	<xsl:template match="conditional" mode="param">
 		<xsl:param name="name" />
 		<xsl:param name="min" />
 		<xsl:param name="max" />
 		<xsl:param name="help" />
 		<xsl:param name="title" />
-
 		<xsl:choose>
 		
 			<xsl:when test="param/option/@value=$source">
@@ -189,23 +196,27 @@
 			
 			<xsl:choose>
 				<xsl:when test="@type='data' and @format">
-					<xsl:attribute name="format"><xsl:value-of
-						select="@format" /></xsl:attribute>
+					<xsl:attribute name="format">
+						<xsl:value-of select="@format" />
+					</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="$format">
-					<xsl:attribute name="format"><xsl:value-of
-						select="$format" /></xsl:attribute>
+					<xsl:attribute name="format">
+						<xsl:value-of select="$format" />
+					</xsl:attribute>
 				</xsl:when>
 			</xsl:choose>
 
 			<xsl:choose>
 				<xsl:when test="@help">
-					<xsl:attribute name="help"><xsl:value-of
-						select="@help" /></xsl:attribute>
+					<xsl:attribute name="help">
+					<xsl:value-of select="@help" /></xsl:attribute>
+
 				</xsl:when>
-				<xsl:when test="$help">
-					<xsl:attribute name="help"><xsl:value-of
-						select="$help" /></xsl:attribute>
+				<xsl:when test="ancestor::repeat/@help">
+					<xsl:attribute name="help">
+					<xsl:value-of select="ancestor::repeat/@help" />
+					</xsl:attribute>
 				</xsl:when>
 			</xsl:choose>
 
@@ -233,7 +244,6 @@
 					<xsl:otherwise><xsl:value-of select="@optional"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
-				
 			</xsl:if>
 
 			<xsl:choose>
@@ -248,8 +258,10 @@
 					</xsl:choose>
 				</xsl:when>
 			</xsl:choose>
-			<xsl:call-template name="output_default" />
-			<xsl:call-template name="output_option_key" />
+			<xsl:call-template name="output_default"></xsl:call-template>
+			<xsl:call-template name="output_option_key">
+				<xsl:with-param name="help" select="ancestor::repeat/@help"></xsl:with-param>
+			</xsl:call-template>
 
 			<xsl:if test="$mode=param">
 				<xsl:apply-templates select="node()"/>
@@ -263,17 +275,22 @@
 	<xsl:template name="output_default">
 		<xsl:choose>
 			<xsl:when test="attribute::truevalue">
-				<xsl:attribute name="defaultValue"><xsl:value-of select="true()"/></xsl:attribute>
+				<xsl:attribute name="default_value"><xsl:value-of select="true()"/></xsl:attribute>
 			</xsl:when>
 			<xsl:when test="attribute::falsevalue">
-				<xsl:attribute name="defaultValue"><xsl:value-of select="false()"/></xsl:attribute>
+				<xsl:attribute name="default_value"><xsl:value-of select="false()"/></xsl:attribute>
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="helpfunc_output_option_key">
 		<xsl:param name="key" />
-
+		<!-- 
+<xsl:message>
+<xsl:text>option key value of $key: </xsl:text>
+<xsl:value-of select="$key"/>
+</xsl:message>
+ -->
 		<xsl:element name="key">
 			<xsl:choose>
 				<xsl:when test="starts-with($key,'--')">
@@ -293,7 +310,17 @@
 	</xsl:template>
 
 	<xsl:template name="output_option_key">
-
+		<xsl:param name="help" />
+		<!-- 
+<xsl:message>
+<xsl:text>option key value of $help: </xsl:text>
+<xsl:value-of select="$help"/>
+<xsl:text>####end</xsl:text>
+<xsl:text>@help: </xsl:text>
+<xsl:copy-of select="@help"/>
+<xsl:text>####end</xsl:text>
+</xsl:message>
+ -->
 		<xsl:variable name="key">
 			<xsl:choose>
 				<xsl:when test="attribute::truevalue">
@@ -310,9 +337,21 @@
 			</xsl:call-template>
 		</xsl:if>
 
-		<xsl:if test="$infer_option_from_help_attribute and @help">
-			<xsl:variable name="keys"
-				select="tokenize(tokenize(@help, '\s+')[1], ',')" />
+		<xsl:if test="$infer_option_from_help_attribute and (@help or $help)">
+			<xsl:variable name="tmp_keys">
+				<xsl:choose>
+					<xsl:when test="@help">
+					<xsl:value-of select="tokenize(@help, '\s+')[1]" />
+						
+					</xsl:when>
+					<xsl:when test="$help">
+						<xsl:value-of select="tokenize($help, '\s+')[1]" />
+					</xsl:when>
+				</xsl:choose>			 
+			</xsl:variable>
+			<xsl:variable name="keys" select="tokenize($tmp_keys, ',')">
+			
+			</xsl:variable>
 			<xsl:for-each select="$keys">
 				<xsl:variable name="cur_key" select="." />
 				<xsl:if test="$key!=$cur_key">
@@ -345,6 +384,5 @@
 			<xsl:apply-templates select="node()|@*" mode="param"/>
 		</xsl:element>
 	</xsl:template>
-
 
 </xsl:stylesheet>

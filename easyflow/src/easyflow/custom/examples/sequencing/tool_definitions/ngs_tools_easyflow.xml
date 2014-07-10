@@ -7,8 +7,8 @@
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"></interpreter>
 		<command pattern="pos_arg opt_arg"></command>
-		<param type="template" name="default_param" named="true" separator="=" prefix=""></param>
-		<param type="analysis_type" named="true" prefix="-jar">
+		<param type="template" name="default_param" named="true" separator="=" prefix=""/>
+		<param type="analysis_type" named="true" name="jar" prefix="-">
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
 					<map_entry key="readgroup" value="rgid"/>
@@ -48,8 +48,26 @@ id="rgPicardMarkDups"
  -->
 	<package id="gatk" version="2.3">
 		<interpreter exe="java"></interpreter>
-		<param name="GenomeAnalysisTK.jar" type="exe" prefix="-jar"></param>
-		<param type="analysis_type" named="true" prefix="-T">
+		<param name="default_param" type="template" named="true" separator=" " prefix="-"/>
+		<param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/>
+		<param type="analysis_type" named="true" name="T" prefix="-">
+			<option value="Base Recalibrator" exe="BaseRecalibrator"></option>
+			<option value="Depth of Coverage" exe="DepthOfCoverage"></option>
+			<option value="Haplotype Caller" exe="HaplotypeCaller"></option>
+			<option value="Indel Realigner" exe="IndelRealigner"></option>
+			<option value="Print Reads" exe="PrintReads"></option>
+			<option value="Realigner Target Creator" exe="RealignerTargetCreator"></option>
+			<option value="Reduce Reads" exe="ReduceReads"></option>
+			<option value="Unified Genotyper" exe="UnifiedGenotyper"></option>
+			<option value="Variant Annotator" exe="VariantAnnotator"></option>
+			<option value="Apply Variant Recalibration" exe="ApplyRecalibration"></option>
+			<option value="Combine Variants" exe="CombineVariants"></option>
+			<option value="Eval Variant" exe="VariantEval"></option>
+			<option value="Variant Filtration" exe="VariantFiltration"></option>
+			<option value="Variant Recalibrator" exe="VariantRecalibrator"></option>
+			<option value="Select Variants" exe="SelectVariants"></option>
+			<option value="Validate Variants" exe="ValidateVariants"></option>
+			<!-- 
 			<option value="BaseRecalibrator"></option>
 			<option value="DepthOfCoverage"></option>
 			<option value="HaplotypeCaller"></option>
@@ -66,6 +84,7 @@ id="rgPicardMarkDups"
 			<option value="VariantRecalibrator"></option>
 			<option value="SelectVariants"></option>
 			<option value="ValidateVariants"></option>			
+			 -->			
 		</param>
 	</package>
 
@@ -74,6 +93,9 @@ id="rgPicardMarkDups"
 		<description>
 			bwa package to map short reads.
 		</description>
+		<exe name="bwa"/>
+		<command assume_data_param_positional="true"/>
+		<param type="template" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
 		<param type="analysis_type">
 			<option value="aln" help="gapped/ungapped alignment"/>
 			<option value="samse" condition="size(InputFiles)==1" help="generate alignment (single ended)"/>
@@ -112,6 +134,7 @@ Command: index         index sequences in the FASTA format
 			samtools package to manipulate (aligned) short reads.
 		</description>
 		<exe name="samtools"/>
+		<param type="template" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
 		<param type="analysis_type">
 			<option value="view" help="SAM-BAM conversion"/>
 			<option value="sort" help="sort alignment file"/>
@@ -201,8 +224,8 @@ Command: view        SAM<->BAM conversion
 		</conditional>
 		
 		<param name="reference" type="data" format="fasta" positional="true"/>
-		<param name="input" type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2"/>
-		<param name="input_index" type="data" format="sai" positional="true" multiple="true" min_occur="1" max_occur="2"/>
+		<param name="input" type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
+		<param name="input_index" type="data" format="sai" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<param name="output" type="data" format="sam" output="true"/> 
 		
 	</tool>

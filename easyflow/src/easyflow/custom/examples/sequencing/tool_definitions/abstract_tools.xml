@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- defintion for abstract tools A, B, C -->
+<easyflow   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:de.thiema.easyflow/types" 
+	xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd">
+
+	<package name="dummy_package" version="0.1.2">
+	
+	</package>
+	
+<!-- main tools -->
+	<tool id="A" package="dummy_package">
+		<command exe="toolA"></command>
+		<param name="input" type="data" format="F1,F2"></param>
+		<param name="output" type="data" format="F1,F2" output="true"></param>
+	</tool>
+
+	<tool id="B" package="dummy_package">
+		<command exe="toolB"></command>
+		<param name="input" type="data" format="F1,F2"></param>
+		<param name="output" type="data" format="F1,F2" output="true"></param>
+	</tool>
+		
+	<tool id="C" package="dummy_package">
+		<command exe="toolC"></command>
+		<param name="input" type="data" format="F1,F2"></param>
+		<param name="output" type="data" format="F1,F2" output="true"></param>
+	</tool>
+	
+<!-- utility tools -->
+	<tool id="sort" analysis_type="sort"> 
+		<param name="input" type="data" format="F1"></param>
+		<param name="output" type="data" format="F1"></param>
+	</tool>
+	
+	<tool id="split" analysis_type="split"> 
+		<param name="input" type="data" format="F1"></param>
+		<param name="output" type="data" format="F1"></param>
+	</tool>
+	
+	<tool id="merge" analysis_type="merge"> 
+		<param name="input" type="data" format="F1" multiple="true"></param>
+		<param name="output" type="data" format="F1"></param>
+	</tool>
+	
+	<tool id="index" analysis_type="index"> 
+		<param name="input" type="data" format="F1" multiple="true"></param>
+		<param name="output" type="data" format="idx"></param>
+	</tool>
+	
+	
+</easyflow>

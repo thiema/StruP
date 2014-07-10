@@ -39,12 +39,12 @@
     </conditional>
     <param name="re_reverse" type="boolean"
           label="Re-reverse bases and qualities of reads on negative strand"
-          defaultValue="true">
+          default_value="true">
       <key>true</key>
    </param>
     <param name="include_non_pf_reads" type="boolean"
           label="Include non-PF reads from the SAM file into the output FASTQ files."
-          defaultValue="true">
+          default_value="true">
       <key>true</key>
    </param>
     <param name="clipping_attribute" type="text" help="Leave blank for null"
@@ -55,7 +55,7 @@
     <param name="include_non_primary_alignments" type="boolean"
           help="Support of non-primary alignments in SamToFastq is not comprehensive, so there may be exceptions if this is set to true and there are paired reads with non-primary alignments."
           label="If true, include non-primary alignments in the output."
-          defaultValue="true">
+          default_value="true">
       <key>true</key>
    </param>
     

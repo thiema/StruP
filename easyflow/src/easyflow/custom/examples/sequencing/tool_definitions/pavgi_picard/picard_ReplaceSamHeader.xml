@@ -18,7 +18,7 @@
           label="SAM/BAM to reader header from (SOURCE)"/>
     <param name="outputFormat" type="boolean" help="Uncheck for SAM output"
           label="Output BAM instead of SAM"
-          defaultValue="true">
+          default_value="true">
       <key>bam</key>
    </param>
   

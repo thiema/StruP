@@ -6,6 +6,7 @@
  */
 package easyflow.tool.util;
 
+import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
@@ -116,14 +117,6 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ToolPackage.INTERPRETER: {
-				Interpreter interpreter = (Interpreter)theEObject;
-				T result = caseInterpreter(interpreter);
-				if (result == null) result = caseIToolElement(interpreter);
-				if (result == null) result = caseDefaultToolElement(interpreter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ToolPackage.PARAMETER: {
 				Parameter parameter = (Parameter)theEObject;
 				T result = caseParameter(parameter);
@@ -138,14 +131,6 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = caseParameter(inOutParameter);
 				if (result == null) result = caseIToolElement(inOutParameter);
 				if (result == null) result = caseDefaultToolElement(inOutParameter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ToolPackage.PACKAGE: {
-				easyflow.tool.Package package_ = (easyflow.tool.Package)theEObject;
-				T result = casePackage(package_);
-				if (result == null) result = caseIToolElement(package_);
-				if (result == null) result = caseDefaultToolElement(package_);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -176,11 +161,27 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ToolPackage.BASE_COMMAND: {
+				BaseCommand baseCommand = (BaseCommand)theEObject;
+				T result = caseBaseCommand(baseCommand);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ToolPackage.PACKAGE: {
+				easyflow.tool.Package package_ = (easyflow.tool.Package)theEObject;
+				T result = casePackage(package_);
+				if (result == null) result = caseIToolElement(package_);
+				if (result == null) result = caseDefaultToolElement(package_);
+				if (result == null) result = caseBaseCommand(package_);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ToolPackage.COMMAND: {
 				Command command = (Command)theEObject;
 				T result = caseCommand(command);
 				if (result == null) result = caseIToolElement(command);
 				if (result == null) result = caseDefaultToolElement(command);
+				if (result == null) result = caseBaseCommand(command);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -267,21 +268,6 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTool(Tool object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Interpreter</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Interpreter</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseInterpreter(Interpreter object) {
 		return null;
 	}
 
@@ -417,6 +403,21 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseOptionValue(OptionValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Base Command</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Base Command</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBaseCommand(BaseCommand object) {
 		return null;
 	}
 

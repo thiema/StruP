@@ -6,6 +6,7 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
@@ -45,7 +46,7 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	 */
 	public static ToolFactory init() {
 		try {
-			ToolFactory theToolFactory = (ToolFactory)EPackage.Registry.INSTANCE.getEFactory(ToolPackage.eNS_URI);
+			ToolFactory theToolFactory = (ToolFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/tool/1.0.0"); 
 			if (theToolFactory != null) {
 				return theToolFactory;
 			}
@@ -78,14 +79,14 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.TOOL_DEFINITIONS: return createToolDefinitions();
 			case ToolPackage.DEFAULT_TOOL_ELEMENT: return createDefaultToolElement();
 			case ToolPackage.TOOL: return createTool();
-			case ToolPackage.INTERPRETER: return createInterpreter();
 			case ToolPackage.PARAMETER: return createParameter();
 			case ToolPackage.IN_OUT_PARAMETER: return createInOutParameter();
-			case ToolPackage.PACKAGE: return createPackage();
 			case ToolPackage.KEY: return createKey();
 			case ToolPackage.REQUIREMENT: return createRequirement();
 			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
 			case ToolPackage.OPTION_VALUE: return createOptionValue();
+			case ToolPackage.BASE_COMMAND: return createBaseCommand();
+			case ToolPackage.PACKAGE: return createPackage();
 			case ToolPackage.COMMAND: return createCommand();
 			case ToolPackage.RESOLVED_PARAM: return createResolvedParam();
 			default:
@@ -131,16 +132,6 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public Tool createTool() {
 		ToolImpl tool = new ToolImpl();
 		return tool;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Interpreter createInterpreter() {
-		InterpreterImpl interpreter = new InterpreterImpl();
-		return interpreter;
 	}
 
 	/**
@@ -231,6 +222,16 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public OptionValue createOptionValue() {
 		OptionValueImpl optionValue = new OptionValueImpl();
 		return optionValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BaseCommand createBaseCommand() {
+		BaseCommandImpl baseCommand = new BaseCommandImpl();
+		return baseCommand;
 	}
 
 	/**

@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -38,7 +39,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class ParentTaskResultImpl extends MinimalEObjectImpl.Container implements ParentTaskResult {
+public class ParentTaskResultImpl extends EObjectImpl implements ParentTaskResult {
 	/**
 	 * The cached value of the '{@link #getParentTask() <em>Parent Task</em>}' reference.
 	 * <!-- begin-user-doc -->

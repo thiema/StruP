@@ -96,7 +96,8 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 		radioButton.setActionCommand("userInputFile");
 		radioButton.setSelected(true);
 		radioButton.addActionListener(this);
-		
+//disable uri source, no implemented anyway 
+/*		
 		JRadioButton uriRadioButton = new JRadioButton("uri");
 		uriRadioButton.addActionListener(new ActionListener() {
 			
@@ -108,15 +109,18 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 		uriRadioButton.setActionCommand("userInputURI");
 		uriRadioButton.setSelected(true);
 		uriRadioButton.addActionListener(this);
-
+				group.add(uriRadioButton);
+				panel.add(uriRadioButton);
+				panel.add(uriTextField);
+*/
 		//Group the radio buttons.
 		group.add(radioButton);
-		group.add(uriRadioButton);
+
 		panel.add(radioButton);
-		panel.add(uriRadioButton);
+		
 		
 		panel.add(selectedFileText);
-		panel.add(uriTextField);
+
 		//dialog.setBounds(editor.getGraphComponent().getX(), 
         	//	editor.getGraphComponent().getY(), 300, 150);
 		dialog.setBounds(xpos, ypos, 300, 150);

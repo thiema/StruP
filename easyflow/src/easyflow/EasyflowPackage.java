@@ -358,6 +358,16 @@ public interface EasyflowPackage extends EPackage {
 	int NO_VALID_IN_OUT_DATA_EXCEPTION = 30;
 
 	/**
+	 * The meta object id for the '<em>Tuple</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.custom.util.Tuple
+	 * @see easyflow.impl.EasyflowPackageImpl#getTuple()
+	 * @generated
+	 */
+	int TUPLE = 31;
+
+	/**
 	 * The meta object id for the '<em>Easy Flow Overall Worker</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -699,6 +709,17 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getNoValidInOutDataException();
 
 	/**
+	 * Returns the meta object for data type '{@link easyflow.custom.util.Tuple <em>Tuple</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Tuple</em>'.
+	 * @see easyflow.custom.util.Tuple
+	 * @model instanceClass="easyflow.custom.util.Tuple"
+	 * @generated
+	 */
+	EDataType getTuple();
+
+	/**
 	 * Returns the meta object for data type '{@link easyflow.custom.jgraphx.EasyFlowOverallWorker <em>Easy Flow Overall Worker</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1030,6 +1051,16 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType NO_VALID_IN_OUT_DATA_EXCEPTION = eINSTANCE.getNoValidInOutDataException();
+
+		/**
+		 * The meta object literal for the '<em>Tuple</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.custom.util.Tuple
+		 * @see easyflow.impl.EasyflowPackageImpl#getTuple()
+		 * @generated
+		 */
+		EDataType TUPLE = eINSTANCE.getTuple();
 
 		/**
 		 * The meta object literal for the '<em>Easy Flow Overall Worker</em>' data type.
