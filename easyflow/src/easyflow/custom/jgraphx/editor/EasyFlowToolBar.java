@@ -37,7 +37,9 @@ public class EasyFlowToolBar extends JToolBar
 	private static String               repositoryFS       = "easyflow/custom/examples";
 	private static final String         repositoryFS_src   = "src/easyflow/custom/examples";
 	// when running from ../easyflow/build folder the path is 
-	private static final String         repositoryFS_bin   = "build/classes/easyflow/custom/examples";
+	//private static final String         repositoryFS_bin   = "build/classes/easyflow/custom/examples";
+	// when running from the unzipped archive folder
+	private static final String         repositoryFS_bin   = "examples";
 
 	
 	final Action configureProjectAction    = new ConfigureProjectAction();
@@ -108,7 +110,9 @@ public class EasyFlowToolBar extends JToolBar
 				repositoryFS=repositoryFS_src;
 			// from command line
 			else if (repoBinFile.exists())
+			{
 				repositoryFS=repositoryFS_bin;
+			}
 			else
 				repositoryFS=null;
 		}
@@ -159,8 +163,7 @@ public class EasyFlowToolBar extends JToolBar
 			ConfigureProjectDialog dialog = new ConfigureProjectDialog(
 					examples.getExamples(), 
 					editor.getGraphComponent().getX(), 
-					editor.getGraphComponent().getY());
-			
+					editor.getGraphComponent().getY(), repositoryFS);
 			GlobalVar.setDefaultProject(dialog.getSelectedProject());
 
 		}

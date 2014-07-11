@@ -33,7 +33,8 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 	JButton      validateButton   = new JButton("Validate");
 	JButton      closeButton      = new JButton("Close");
 	JTextField   uriTextField     = new JTextField("https://bitbucket.org/thiema/easyflow/downloads/main.json");
-	JTextField   selectedFileText = new JTextField("/home/heinz/git/easyflow/easyflow/src/easyflow/custom/examples/sequencing");
+	JTextField   selectedFileText = new JTextField("src/easyflow/custom/examples/sequencing");
+	String       defaultFilePath;
 	JPanel       panel            = new JPanel(new GridLayout(0, 1));
 	JPanel       sfPanel          = new JPanel(new GridLayout(0, 3));
 	JDialog      dialog           = new JDialog();// nicht modal
@@ -43,10 +44,12 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 	/**/
 	private DefaultProject selectedProject;
 	
-	public ConfigureProjectDialog(EMap<String, DefaultProject> examples, int xpos, int ypos)
+	public ConfigureProjectDialog(final EMap<String, DefaultProject> examples, int xpos, int ypos, String defaultRepos)
 	{
 		super();
 		this.examples = examples;
+		this.defaultFilePath = defaultRepos;
+		selectedFileText.setText(this.defaultFilePath);
 		//fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fc.setToolTipText("Either select the main configuration file in the json format or the directory where the file main.json is located.");
@@ -73,6 +76,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 					selectFileButton.setEnabled(false);
 					selectedFileText.setEnabled(false);
+					selectedFileText.setText(examples.get(exampleName).getConfigSource().getPath());
 					uriTextField.setEnabled(false);
 					//selectedFileText.setText(getExamples().getExamples().get(exampleName).getConfigSource().toString());
 				}
@@ -120,7 +124,6 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 		
 		
 		panel.add(selectedFileText);
-
 		//dialog.setBounds(editor.getGraphComponent().getX(), 
         	//	editor.getGraphComponent().getY(), 300, 150);
 		dialog.setBounds(xpos, ypos, 300, 150);
@@ -167,13 +170,17 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
         	selectProject(defaultProject);
         	logger.debug(getSelectedProject().getBaseURI()+" "+getSelectedProject().getConfigSource());
         	if (getSelectedProject() != null && getSelectedProject().validate())
-        		JOptionPane.showMessageDialog(this, "Project settings are valid !");
+        		//JOptionPane.showMessageDialog(this, "Project settings are valid !");
+        		;
         	else
         		JOptionPane.showMessageDialog(this, "Unvalid project settings found !",
         				"Inane error", JOptionPane.ERROR_MESSAGE);
         }
         else
-        	logger.debug("no action defined.");
+        {
+        	selectedFileText.setText(this.defaultFilePath);
+        	//logger.debug("no action defined.");
+        }
         
         
 	}
@@ -213,8 +220,6 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 	public void setFromJar(boolean isFromJar) {
 		this.isFromJar = isFromJar;
 	}
-
-
 	
 	public DefaultProject getSelectedProject()
 	{

@@ -1051,15 +1051,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getOptionValue_Id() {
-		return (EAttribute)optionValueEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getBaseCommand() {
 		return baseCommandEClass;
 	}
@@ -1212,7 +1203,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(optionValueEClass, OPTION_VALUE__CONDITION);
 		createEAttribute(optionValueEClass, OPTION_VALUE__HELP);
 		createEAttribute(optionValueEClass, OPTION_VALUE__EXE);
-		createEAttribute(optionValueEClass, OPTION_VALUE__ID);
 
 		baseCommandEClass = createEClass(BASE_COMMAND);
 		createEAttribute(baseCommandEClass, BASE_COMMAND__COMMAND_PATTERN);
@@ -1511,7 +1501,6 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getOptionValue_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOptionValue_Help(), ecorePackage.getEString(), "help", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getOptionValue_Exe(), ecorePackage.getEString(), "exe", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getOptionValue_Id(), ecorePackage.getEString(), "id", null, 0, 1, OptionValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(optionValueEClass, ecorePackage.getEString(), "resolveValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 

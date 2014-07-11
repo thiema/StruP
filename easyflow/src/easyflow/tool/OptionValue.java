@@ -18,7 +18,6 @@ package easyflow.tool;
  *   <li>{@link easyflow.tool.OptionValue#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.tool.OptionValue#getHelp <em>Help</em>}</li>
  *   <li>{@link easyflow.tool.OptionValue#getExe <em>Exe</em>}</li>
- *   <li>{@link easyflow.tool.OptionValue#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -105,32 +104,6 @@ public interface OptionValue extends DefaultToolElement {
 	 * @generated
 	 */
 	void setExe(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see easyflow.tool.ToolPackage#getOptionValue_Id()
-	 * @model
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.OptionValue#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

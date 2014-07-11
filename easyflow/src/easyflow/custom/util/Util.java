@@ -28,8 +28,9 @@ import easyflow.traversal.TraversalCriterion;
 public class Util {
 	
 	
+	
 	private static Logger logger = Logger.getLogger(Util.class);
-
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 

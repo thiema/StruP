@@ -18,18 +18,32 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 public class URIUtil {
 
 	protected static final Logger logger = Logger.getLogger(URIUtil.class);
 	
+	
+	public static boolean isFromJar(String pathToMain)
+	{
+		URL url = ClassLoader.getSystemResource(pathToMain);
+		logger.debug(url.getProtocol());
+		
+		if (url.getProtocol().equalsIgnoreCase("file"))
+			return false;
+		else
+			return true;
+	}
+
+	
 	public static InputStream getInputStream(URI uri, boolean isFromJar) throws FileNotFoundException
 	{
 		InputStream inputStream;
-		logger.trace("uri="+uri.toString()+" fromJar="+isFromJar);
+		logger.debug("uri="+uri.toString()+" normalized path="+FilenameUtils.normalize(uri.getPath())+" fromJar="+isFromJar);
 		if (isFromJar)
-			inputStream = URIUtil.class.getResourceAsStream(uri.getPath());
+			inputStream = URIUtil.class.getResourceAsStream(FilenameUtils.normalize(uri.getPath()));
 		else
 			inputStream = new FileInputStream(new File(uri.getPath()));
 		return inputStream;
@@ -38,10 +52,12 @@ public class URIUtil {
 	
 	public static InputStreamReader getInputStreamReader(URI uri, boolean isFromJar) throws FileNotFoundException
 	{
-		InputStreamReader isReader; 
+		InputStreamReader isReader;
+		
+		logger.debug("uri="+uri.toString()+" normalized path="+FilenameUtils.normalize(uri.getPath())+" fromJar="+isFromJar);
 		if (isFromJar)
 		{			
-			isReader = new InputStreamReader(URIUtil.class.getResourceAsStream(uri.getPath()));
+			isReader = new InputStreamReader(URIUtil.class.getResourceAsStream(FilenameUtils.normalize(uri.getPath())));
 		}
 		else
 		{

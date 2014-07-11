@@ -51,7 +51,13 @@
 	    </javac>
 	</target>
 
-
+	<target name="pkg" depends="jar, jar-gui">
+		<zip destfile="easyflow.zip">
+			<zipfileset dir="${build.dir}/jar" prefix="easyflow/jar"/>
+			<zipfileset dir="${build.dir}/classes/easyflow/custom/examples" prefix="easyflow/examples"/>
+			<zipfileset dir="." includes="start.sh" fullpath="easyflow/start.sh"/>
+		</zip>
+  	</target>
 <!-- <echo message='Create build directory, and its subdirectories.'/>
   <mkdir dir="${build.dir}/lib"/>
  -->	
@@ -68,8 +74,9 @@ directory, flattening the directory structure. -->
 <!-- copy resources -->
 <copy todir="${build.dir}/classes">
     <fileset dir="${src.dir}"
-    includes="**/*.xml,**/*.xsd,**/*.xsl,**/*.json,**/*.tsv,**/*.csv,**/*.workflow,**/swing/images/*"
-    />
+    includes="**/*"/>
+    <!-- includes="**/*.xml,**/*.xsd,**/*.xsl,**/*.json,**/*.tsv,**/*.csv,**/*.workflow,**/swing/images/*" -->
+    
 </copy>
 
 <!--

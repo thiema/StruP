@@ -554,6 +554,7 @@ public class XMLUtil {
 	{
 		
 		try {
+			logger.debug(xmlSource+" "+isFromJar);
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(URIUtil.getInputStream(xmlSource,
 					isFromJar));

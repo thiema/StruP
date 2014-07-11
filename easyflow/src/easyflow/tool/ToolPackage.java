@@ -1240,22 +1240,13 @@ public interface ToolPackage extends EPackage {
 	int OPTION_VALUE__EXE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OPTION_VALUE__ID = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
 	 * The number of structural features of the '<em>Option Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPTION_VALUE_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 4;
+	int OPTION_VALUE_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.BaseCommandImpl <em>Base Command</em>}' class.
@@ -2460,17 +2451,6 @@ public interface ToolPackage extends EPackage {
 	EAttribute getOptionValue_Exe();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.OptionValue#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see easyflow.tool.OptionValue#getId()
-	 * @see #getOptionValue()
-	 * @generated
-	 */
-	EAttribute getOptionValue_Id();
-
-	/**
 	 * Returns the meta object for class '{@link easyflow.tool.BaseCommand <em>Base Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3253,14 +3233,6 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute OPTION_VALUE__EXE = eINSTANCE.getOptionValue_Exe();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute OPTION_VALUE__ID = eINSTANCE.getOptionValue_Id();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.BaseCommandImpl <em>Base Command</em>}' class.

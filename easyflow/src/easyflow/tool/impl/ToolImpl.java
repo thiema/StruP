@@ -570,10 +570,12 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated not
 	 */
 	public boolean canProcessMultiplesInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		throw new UnsupportedOperationException();
+		/*
 		Data data = getData().get(dataPort.getName());
 		if (data==null)
 			throw new DataPortNotFoundException();
-		return false;
+		return false;*/
 	}
 
 	/**
@@ -582,10 +584,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated not
 	 */
 	public boolean canFilterInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		Data data = getData().get(dataPort.getName());
+		throw new UnsupportedOperationException();
+		/*Data data = getData().get(dataPort.getName());
 		if (data==null)
 			throw new DataPortNotFoundException();
-		return false;
+		return false;*/
 	}
 
 	/**
@@ -594,10 +597,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated not
 	 */
 	public boolean requiresGrouping(String groupingCriterion, DataPort dataPort) {
-		for (Entry<String, Data> e:getData().entrySet())
+		throw new UnsupportedOperationException();
+		/*for (Entry<String, Data> e:getData().entrySet())
 			if (!e.getValue().isOutput() && e.getValue().getPort().isCompatible(dataPort))
 				return true;
-		return false;
+		return false;*/
 	}
 
 	/**
@@ -606,10 +610,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated not
 	 */
 	public boolean providesGrouping(String groupingCriterion, DataPort dataPort) {
-		for (Entry<String, Data> e:getData().entrySet())
+		throw new UnsupportedOperationException();
+		/*for (Entry<String, Data> e:getData().entrySet())
 			if (e.getValue().isOutput() && e.getValue().getPort().isCompatible(dataPort))
 				return true;
-		return false;
+		return false;*/
 	}
 
 	/**
@@ -618,13 +623,14 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated not
 	 */
 	public EList<String> getGroupingsForInputPort(DataPort dataPort, boolean isRequired) {
-		EList<String> groupings=new BasicEList<String>();
+		throw new UnsupportedOperationException();
+		/*EList<String> groupings=new BasicEList<String>();
 		for (Entry<String, Data> e:getData().entrySet())
 			if (!e.getValue().isOutput())
 				if (dataPort.isCompatible(e.getValue().getPort()))
 					groupings.addAll(getCommand().getGroupingsForDataPort(dataPort, true));
 		
-		return groupings;
+		return groupings;*/
 	}
 
 	/**
@@ -633,13 +639,14 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated not
 	 */
 	public EList<String> getGroupingsForOutputPort(DataPort dataPort, boolean isRequired) {
-		EList<String> groupings=new BasicEList<String>();
+		throw new UnsupportedOperationException();
+		/*EList<String> groupings=new BasicEList<String>();
 		for (Entry<String, Data> e:getData().entrySet())
 			if (e.getValue().isOutput())
 				if (dataPort.isCompatible(e.getValue().getPort()))
 					groupings.addAll(getCommand().getGroupingsForDataPort(dataPort, true));
 				
-		return groupings;
+		return groupings;*/
 	}
 
 	/**

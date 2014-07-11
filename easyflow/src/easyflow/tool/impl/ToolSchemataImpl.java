@@ -189,6 +189,7 @@ public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
 		
 		InputStream inputStream = URIUtil.getInputStream(xsdSource, isFromJar);
 		Source schemaSource = new StreamSource(inputStream);
+		
 		Document doc = XMLUtil.readXML(xsdSource, isFromJar);
 		String targetNamespace = null;
 		if (doc.getDocumentElement().hasAttribute("targetNamespace"))
