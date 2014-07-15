@@ -433,6 +433,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
 		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveTraversalCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
@@ -477,6 +478,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
 		op = addEOperation(iProjectEClass, ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
@@ -486,6 +488,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
 		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 

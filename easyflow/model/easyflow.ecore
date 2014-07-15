@@ -120,11 +120,11 @@
           eExceptions="#//NoValidInOutDataException"/>
       <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="hasNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="getTotalNumberOfWorkflowSteps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="getWorkflowStepLabelFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -138,6 +138,13 @@
       <eOperations name="getCurWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eOperations name="delete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="resetWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="printWorkflowStepMsgOnStart">
+        <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="printWorkflowStepMsgOnEnd">
+        <eParameters name="rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstNode" eType="#//Object"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="knownGroupingCriteria"
@@ -552,7 +559,7 @@
       </eOperations>
       <eOperations name="delete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="resolveTraversalCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//CellNotFoundException #//TaskNotFoundException"/>
       <eOperations name="generateAbstractGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -571,9 +578,9 @@
         <eParameters name="worker" eType="#//EasyFlowOverallWorker"/>
       </eOperations>
       <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
+          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
       <eOperations name="hasNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="getWorkflowStepLabelFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

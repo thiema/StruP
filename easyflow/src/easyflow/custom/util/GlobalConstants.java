@@ -11,23 +11,31 @@ public class GlobalConstants {
 
 	
 	//
-	public static final String ABSTRACT_NODES                    = "abstractNodes";
-	public static final String ABSTRACT_WORKFLOW                 = "abstractWorkflow";
+	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
+	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";
 	public static final String TRAVERSAL_EVENTS_RESOLVED         = "traversalEventsResolved";
 	public static final String GROUPING_APPLIED                  = "groupingCriteriaApplied";
 	public static final String PARAMETER_APPLIED                 = "parameterCriteriaApplied";
 	public static final String INCOMPATIBLE_GROUPINGS_RESOLVED   = "incompatibleGroupingsResolved";
+	public static final String PREPROCESSING_TASKS_RESPOLVED     = "preprocessingTasksResolved";
+	public static final String TOOL_DEPS_RESOLVED                = "toolDepsResolved";
+	public static final String EXEC_WORKFLOW_GENERATED           = "execWorkflowGenerated";
 	public static final String FINISHED                          = "finished";
 	public static final String START                             = "start";
 	
 	// 
+	public static final String GENERATE_EXECUTABLE_WORKFLOW      = "genExecWorkflow";
+	public static final String RESOLVE_TOOL_DEPS                 = "resolveToolDeps";
+	public static final String RESOLVE_PREPROCESSING_TASKS       = "resolvePreocessingTasks";
 	public static final String RESOLVE_INCOMPATIBLE_GROUPINGS    = "resolveIncompatibleGroupings";
 	public static final String APPLY_GROUPINGS                   = "applyGroupings";
 	public static final String APPLY_PARAMETERS                  = "applyParameters";
 	public static final String RESOLVE_TRAVERSAL_EVENTS          = "resolveTraversalEvents";
 	public static final String GENERATE_ABSTRACT_WORKFLOW        = "generateAbstractWorfklow";
 	
-	
+	public static final String GENERATE_EXECUTABLE_WORKFLOW_DESCRIPTION   = "Generate executable workflow.";
+	public static final String RESOLVE_TOOL_DEPS_DESCRIPTION              = "Resolve tools input and output parameters.";
+	public static final String RESOLVE_PREPROCESSING_TASKS_DESCRIPTION    = "Resolve preprocessing tasks.";
 	public static final String GENERATE_ABSTRACT_GRAPH_DESCRIPTION        = "The abstract Workflow is computed based on the Workflow template.";
 	public static final String RESOLVE_TRAVERSAL_EVENTS_DESCRIPTION       = "Defined parameter and grouping criteria are resolved.";
 	public static final String APPLY_GROUPING_DESCRIPTION                 = "The metadata are applied to generate a concrete graph.";
@@ -39,6 +47,11 @@ public class GlobalConstants {
 	public static final String APPLY_GROUPING_LABEL                  = "Apply Grouping Criteria";
 	public static final String APPLY_PARAMETER_LABEL                 = "Apply Parameter Criteria";
 	public static final String RESOLVE_INCOMPATIBLE_GROUPINGS_LABEL  = "Resolve incompatible Groupings";
+	public static final String RESOLVE_TOOL_DEPS_LABEL               = "Resolve tools input and output parameters";
+	public static final String RESOLVE_PREPROCESSING_TASKS_LABEL     = "Resolve preprocessing tasks";
+	public static final String RESOVLE_UTILTY_LABEL                  = "Resolve utility tasks";
+	public static final String GENERATE_EXECUTABLE_WORKFLOW_LABEL    = "Generate executable workflow";
+	
 	public static final String FINISHED_LABEL                        = "finished";
 	public static final String START_LABEL                           = "start";
 	public static final String FINISHED_DESCRIPTION                  = "Workflow composition finished";

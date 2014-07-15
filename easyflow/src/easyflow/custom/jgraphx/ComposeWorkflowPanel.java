@@ -19,7 +19,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
 
 import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +31,7 @@ import org.apache.log4j.Logger;
 
 import easyflow.custom.jgraphx.EasyFlowWorker.Informable;
 import easyflow.ui.DefaultProject;
+import groovy.swing.factory.BoxLayoutFactory;
 
 public class ComposeWorkflowPanel extends JPanel {
 
@@ -37,23 +41,23 @@ public class ComposeWorkflowPanel extends JPanel {
 	private static final long serialVersionUID = -7097891149697524964L;
 	private static final Logger         logger = Logger.getLogger(ComposeWorkflowPanel.class);
 
-	private final Action runAction      = new RunAction();
-	private final Action stopAction     = new StopAction();
-	private final Action nextStepAction = new NextStepAction();
-	private final Action prevStepAction = new PrevStepAction();
+	private final Action                runAction            = new RunAction();
+	private final Action                stopAction           = new StopAction();
+	private final Action                nextStepAction       = new NextStepAction();
+	private final Action                prevStepAction       = new PrevStepAction();
 
-	private JToolBar              toolBar;
-	private JProgressBar          progressBar          = null;
-	private CurrentTaskPanel      currentTaskPanel;
-	private EasyFlowOverallWorker worker;
+	private       JToolBar              toolBar;
+	private       JProgressBar          progressBar          = null;
+	private       CurrentTaskPanel      currentTaskPanel;
+	private       EasyFlowOverallWorker worker;
 	
-	final private JTextArea  textAreaTaskDesc     = new JTextArea(5, 10);
-	final private JTextArea  textAreaTaskProgress = new JTextArea(5, 10);
-    final private JLabel     taskLabel            = new JLabel();
+	final private JTextArea             textAreaTaskDesc     = new JTextArea(5, 10);
+	final private JTextArea             textAreaTaskProgress = new JTextArea(5, 10);
+    final private JLabel                taskLabel            = new JLabel();
 	
 	
-	private DefaultProject defaultProject;
-	private boolean        mayInterruptIfRunning  = true;
+	private       DefaultProject        defaultProject;
+	private       boolean               mayInterruptIfRunning = true;
 	
 	private JButton runButton;
 	private JButton stopButton;
@@ -64,9 +68,10 @@ public class ComposeWorkflowPanel extends JPanel {
 		super();
 		worker = createWorker();
 		setLayout(new BorderLayout());
-		//setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
-		add(createTaskPanel(), BorderLayout.NORTH);
-		add(createControlPanel(), BorderLayout.SOUTH);
+		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
+		add(createTaskScrollPanel(), BorderLayout.CENTER);
+		//add(createTaskPanel(), BorderLayout.NORTH);
+		//add(createControlPanel(), BorderLayout.SOUTH);
 	}
 	
 	public EasyFlowOverallWorker createWorker()
@@ -123,12 +128,41 @@ public class ComposeWorkflowPanel extends JPanel {
 	public JTextArea getTextAreaTaskDesc() {
 		return textAreaTaskDesc;
 	}
+	public JTextArea getTextAreaTaskProgress()
+	{
+		return textAreaTaskProgress;
+	}
 	
 	public EasyFlowOverallWorker getWorker()
 	{
 		return worker;
 	}
 	
+	private JScrollPane createTaskScrollPanel()
+	//private JPanel createTaskScrollPanel()
+	{
+		JPanel currentTaskPanel = new JPanel();
+		currentTaskPanel.setLayout(new BoxLayout(currentTaskPanel, BoxLayout.PAGE_AXIS));
+        
+        textAreaTaskProgress.setMinimumSize(new Dimension(50, 25));
+        textAreaTaskProgress.setMaximumSize(new Dimension(350, 300));
+        textAreaTaskProgress.setEditable(false);
+        textAreaTaskProgress.setBorder(BorderFactory.createLineBorder(Color.black));
+        textAreaTaskProgress.setLineWrap(true);
+        textAreaTaskProgress.setFont(new Font("Arial", Font.ITALIC, 10));
+        //currentTaskPanel.add(taskLabel);
+		
+		//currentTaskPanel.add(textAreaTaskDesc);
+		currentTaskPanel.add(textAreaTaskProgress);
+		currentTaskPanel.setVisible(true);
+		JScrollPane scrollPane = new JScrollPane (currentTaskPanel, 
+	            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+	            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		scrollPane.setVisible(true);
+		return scrollPane;
+		
+	}
 	private JPanel createTaskPanel()
 	{
 		// implementation as a selection list
@@ -182,9 +216,6 @@ public class ComposeWorkflowPanel extends JPanel {
 		
 		return controlPanel;
 	}
-	
-	
-	
 	
 	/*
 	private class Action extends AbstractAction {

@@ -43,13 +43,13 @@ import easyflow.custom.util.GlobalVar;
 
 
 // the menu- and tool-bars and the compose workflow panel are currently deactivated:
-// find the comments:
+// find the comments: (in class constructor)
 //setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 //upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
-// in this class (constructor)
-// the comment 
+// 
+// and the comment (in class EasyFlowBasicGraphEditor.java) 
 //frame.setJMenuBar(new EditorMenuBar(this));
-// in class EasyFlowBasicGraphEditor.java
+// 
 public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 {
 
@@ -77,7 +77,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 		//setStyleSheet(graph.getStylesheet(), getGraphComponent().getViewport().getBackground());
 		setStyleSheet(graph.getStylesheet(), null);
 		
-//setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
+setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		// Creates a single shapes palette
 		EditorPalette shapesPalette = insertPalette("Editor");
 

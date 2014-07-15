@@ -669,12 +669,15 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
-		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_NODES, false);
-		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW, false);
+		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, false);
+		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, false);
 		workflow.getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, false);
 		workflow.getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, false);
 		workflow.getProcessedStates().put(GlobalConstants.PARAMETER_APPLIED, false);
 		workflow.getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
+		workflow.getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, false);
+		workflow.getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, false);
+		workflow.getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, false);
 		
 		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
 		
@@ -931,7 +934,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated not
 	 */
 	public boolean init(EasyFlowGraph graph) {
-
 		
 		clearWorkflows();
 		readProjectJson(getConfigSource());
@@ -950,7 +952,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
 		
 		applyMetaData();
-		
 		return rc;
 		
 	}
@@ -1064,9 +1065,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException {
 		return getActiveWorkflow().runEntireWorkflow()==0;
 	}
 	/**
@@ -1109,18 +1111,20 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public int runNextWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public int runNextWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException {
 		return getActiveWorkflow().runNextWorkflowStep();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public int runPrevWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public int runPrevWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException {
 		return getActiveWorkflow().runPrevWorkflowStep();
 	}
 

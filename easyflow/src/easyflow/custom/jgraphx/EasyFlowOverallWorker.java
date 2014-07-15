@@ -36,6 +36,11 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ComposeWorkflowPanel getComposeWorkflowPanel()
+	{
+		return this.composeWorkflowPanel;
+	}
+	
 	public boolean isAddUtilityTask() {
 		return addUtilityTask;
 	}
@@ -117,6 +122,7 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 		while (getDefaultProject().hasNextWorkflowStep())
 		{
 			logger.debug(getDefaultProject().getWorkflowStepLabelFor(getDefaultProject().getNextWorkflowStep()));
+			publish(getDefaultProject().getWorkflowStepLabelFor(getDefaultProject().getNextWorkflowStep()));
 			if (isCancelled())
 			{
 				logger.debug("workflow cancelled !");
@@ -129,6 +135,7 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 				break;
 			if (isProcessNextStepOnly())
 				break;
+			
 		}
 		logger.debug(getProgress()+" "+getDefaultProject().hasNextWorkflowStep());
 		if (isProcessNextStepOnly() && getDefaultProject().hasNextWorkflowStep())

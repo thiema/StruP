@@ -55,6 +55,7 @@
 		<zip destfile="easyflow.zip">
 			<zipfileset dir="${build.dir}/jar" prefix="easyflow/jar"/>
 			<zipfileset dir="${build.dir}/classes/easyflow/custom/examples" prefix="easyflow/examples"/>
+			<zipfileset dir="${build.dir}/classes/easyflow/custom/tool/" includes="**/*.xsd" prefix="easyflow/tool"/>
 			<zipfileset dir="." includes="start.sh" fullpath="easyflow/start.sh"/>
 		</zip>
   	</target>

@@ -19,6 +19,7 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
@@ -63,7 +64,7 @@ public class EasyFlowToolBar extends JToolBar
 	final JButton btnDeleteGraph           = add(deleteGraphAction);
 
 	final JButton btnGenAbstractWorkflow   = add(genAbstractWorkflowAction);
-	final JButton btnApplyGroupingCrit    = add(applyGroupingCritAction);
+	final JButton btnApplyGroupingCrit     = add(applyGroupingCritAction);
 	final JButton btnApplyParameterCrit    = add(applyParameterCritAction);
 	final JButton btnResolveUtilityTasks   = add(resolveUtilityTasksAction);
 	final JButton btnResolveToolDeps         = add(resolveToolDepsAction);
@@ -81,7 +82,6 @@ public class EasyFlowToolBar extends JToolBar
 			btnInitWorkflow.setEnabled(true);
 		else
 			btnInitWorkflow.setEnabled(false);
-		
 		
 		btnGenAbstractWorkflow.setEnabled(false);
 		btnApplyParameterCrit.setEnabled(false);
@@ -128,6 +128,7 @@ public class EasyFlowToolBar extends JToolBar
 		else
 		{
 			GlobalVar.setDefaultProject(defaultProject);
+			defaultProject.getActiveWorkflow();
 			btnInitWorkflow.setEnabled(true);
 		}
 		
@@ -178,12 +179,14 @@ public class EasyFlowToolBar extends JToolBar
 		public void actionPerformed(ActionEvent ae) {
 			logger.debug("Init: ");
 			GlobalVar.getDefaultProject().setFromJar(isFromJar);
-			GlobalVar.getDefaultProject().init((EasyFlowGraph) editor.getGraphComponent().getGraph());
-			
+			boolean rc = GlobalVar.getDefaultProject().init((EasyFlowGraph) editor.getGraphComponent().getGraph());
+			GlobalVar.getDefaultProject().getActiveWorkflow().setWorker(editor.getComposeWorkflowPanel().getWorker());
 			btnDeleteGraph.setEnabled(true);
 			btnGenAbstractWorkflow.setEnabled(true);
 			btnCalcAll.setEnabled(true);
 			btnInitWorkflow.setEnabled(false);
+			GlobalVar.getDefaultProject().getActiveWorkflow().
+				printWorkflowStepMsgOnEnd(rc, GlobalConstants.START);
 		}
 	}
 		
@@ -210,7 +213,7 @@ public class EasyFlowToolBar extends JToolBar
 	private class CalcAllProjectAction extends AbstractAction {
 		public CalcAllProjectAction() {
 			putValue(NAME, "CalcAll");
-			putValue(SHORT_DESCRIPTION, "Perform whole analysis.");
+			putValue(SHORT_DESCRIPTION, "Perform whole composition cycle.");
 		}
 		@Override
 		public void actionPerformed(ActionEvent ae) {
@@ -229,9 +232,9 @@ public class EasyFlowToolBar extends JToolBar
 						)
 					{
 						//btnResolveUtilityTasks.setEnabled(true);
-						btnCalcAll.setEnabled(false);
-						btnGenAbstractWorkflow.setEnabled(false);
 					}
+					btnCalcAll.setEnabled(false);
+					btnGenAbstractWorkflow.setEnabled(false);
 					
 				} catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -270,13 +273,14 @@ public class EasyFlowToolBar extends JToolBar
 		public void actionPerformed(ActionEvent ae) {
 			
 			try {
+				GlobalVar.getDefaultProject().getActiveWorkflow().printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
 				if (GlobalVar.getDefaultProject().generateAbstractGraph() && 
 					GlobalVar.getDefaultProject().resolveTraversalCriteria())
 				{
 					btnApplyGroupingCrit.setEnabled(true);
 					btnApplyParameterCrit.setEnabled(true);
-					btnCalcAll.setEnabled(false);
 				}
+				btnCalcAll.setEnabled(false);
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -294,13 +298,14 @@ public class EasyFlowToolBar extends JToolBar
 			putValue(SHORT_DESCRIPTION, "apply metadata (i.e. sample, readgroup, group, ...)");
 		}
 		public void actionPerformed(ActionEvent ae) {
-			System.out.println("ApplyGroupingCrit");
 			try {
 				if (GlobalVar.getDefaultProject().applyGroupingCriteria())
 				{
-					btnApplyGroupingCrit.setEnabled(false);
+					
 					btnResolveUtilityTasks.setEnabled(true);
 				}
+				btnApplyGroupingCrit.setEnabled(false);
+				btnGenAbstractWorkflow.setEnabled(false);
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -326,9 +331,11 @@ public class EasyFlowToolBar extends JToolBar
 			try {
 				if (GlobalVar.getDefaultProject().applyParameterCriteria())
 				{
-					btnApplyParameterCrit.setEnabled(false);
+					
 					//btnResolveUtilityTasks.setEnabled(true);
 				}
+				btnApplyParameterCrit.setEnabled(false);
+				btnGenAbstractWorkflow.setEnabled(false);
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -356,8 +363,9 @@ public class EasyFlowToolBar extends JToolBar
 					&& GlobalVar.getDefaultProject().resolvePreprocessingTasks())
 				{
 					btnResolveToolDeps.setEnabled(true);
-					btnResolveUtilityTasks.setEnabled(false);
+					
 				}
+				btnResolveUtilityTasks.setEnabled(false);
 			} catch (DataLinkNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -388,9 +396,10 @@ public class EasyFlowToolBar extends JToolBar
 			try {
 				if (GlobalVar.getDefaultProject().resolveToolDependencies())
 				{
-					btnResolveToolDeps.setEnabled(false);
+
 					btnGenerateExecWorkflow.setEnabled(true);
 				}
+				btnResolveToolDeps.setEnabled(false);
 			} catch (NoValidInOutDataException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -407,8 +416,9 @@ public class EasyFlowToolBar extends JToolBar
 		public void actionPerformed(ActionEvent e) {
 			if (GlobalVar.getDefaultProject().generateWorklowForExecutionSystem())
 			{
-				btnGenerateExecWorkflow.setEnabled(false);
+				
 			}
+			btnGenerateExecWorkflow.setEnabled(false);
 		}
 	}
 	

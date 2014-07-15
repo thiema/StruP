@@ -28,11 +28,11 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 	
 	EMap<String,DefaultProject>     examples;
 	private static final Logger     logger = Logger.getLogger(EasyFlowToolBar.class);
-	JFileChooser fc               = new JFileChooser();
+	JFileChooser fc;
 	JButton      selectFileButton = new JButton("Select Path");
 	JButton      validateButton   = new JButton("Validate");
 	JButton      closeButton      = new JButton("Close");
-	JTextField   uriTextField     = new JTextField("https://bitbucket.org/thiema/easyflow/downloads/main.json");
+	//JTextField   uriTextField     = new JTextField("https://bitbucket.org/thiema/easyflow/downloads/main.json");
 	JTextField   selectedFileText = new JTextField("src/easyflow/custom/examples/sequencing");
 	String       defaultFilePath;
 	JPanel       panel            = new JPanel(new GridLayout(0, 1));
@@ -50,6 +50,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 		this.examples = examples;
 		this.defaultFilePath = defaultRepos;
 		selectedFileText.setText(this.defaultFilePath);
+		fc = new JFileChooser(this.defaultFilePath);
 		//fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fc.setToolTipText("Either select the main configuration file in the json format or the directory where the file main.json is located.");
@@ -60,7 +61,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
         sfPanel.add(validateButton);
         sfPanel.add(closeButton);
         panel.add(sfPanel);
-        uriTextField.setEnabled(false);
+        //uriTextField.setEnabled(false);
         //userProject.setFromJar(false);    
         
 		// add the radio buttons to select predefined configs
@@ -77,7 +78,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 					selectFileButton.setEnabled(false);
 					selectedFileText.setEnabled(false);
 					selectedFileText.setText(examples.get(exampleName).getConfigSource().getPath());
-					uriTextField.setEnabled(false);
+					//uriTextField.setEnabled(false);
 					//selectedFileText.setText(getExamples().getExamples().get(exampleName).getConfigSource().toString());
 				}
 			});
@@ -93,7 +94,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				selectFileButton.setEnabled(true);
 				selectedFileText.setEnabled(true);
-				uriTextField.setEnabled(false);
+				//uriTextField.setEnabled(false);
 			}
 		});
 
@@ -119,10 +120,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 */
 		//Group the radio buttons.
 		group.add(radioButton);
-
-		panel.add(radioButton);
-		
-		
+		panel.add(radioButton);	
 		panel.add(selectedFileText);
 		//dialog.setBounds(editor.getGraphComponent().getX(), 
         	//	editor.getGraphComponent().getY(), 300, 150);
@@ -137,15 +135,20 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 		defaultProject.setFromJar(isFromJar);
 		logger.debug("action performed");
         if (e.getSource() == selectFileButton) {
+        	
             int returnVal = fc.showOpenDialog(panel);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
             	// select the file and set project path
-                File file = fc.getSelectedFile();
+                //File file = fc.getSelectedFile();
                 
-                logger.debug("Opening: " + file.getName() + ".");
-                selectedFileText.setText(file.getName());
-               	defaultProject.setConfigAndBasePath(file.getPath());
+                //logger.debug("Opening: " + file.getName() + "."+" "+fc.getSelectedFile().getAbsolutePath().toString());
+                //selectedFileText.setText(file.getName());
+            	String path = fc.getSelectedFile().getAbsolutePath();
+                logger.debug("Opening: "+path);
+                selectedFileText.setText(path);
+
+               	defaultProject.setConfigAndBasePath(path);
             } else {
             	logger.debug("Open command cancelled by user.");
             }
@@ -173,7 +176,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
         		//JOptionPane.showMessageDialog(this, "Project settings are valid !");
         		;
         	else
-        		JOptionPane.showMessageDialog(this, "Unvalid project settings found !",
+        		JOptionPane.showMessageDialog(this, "Invalid project settings found !",
         				"Inane error", JOptionPane.ERROR_MESSAGE);
         }
         else
@@ -196,14 +199,17 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
     	}
     	else if (group.getSelection().getActionCommand().equals("userInputURI"))
     	{
-    		curProject = defaultProject;
-    		try {
-				curProject.setConfigSource(
-						URIUtil.createURI(uriTextField.getText(), null));
-			} catch (URISyntaxException e1) {
+    		throw new UnsupportedOperationException();
+    	//}
+    		//curProject = defaultProject;
+    		//try {
+				//curProject.setConfigSource(
+					//	URIUtil.createURI(uriTextField.getText(), null));
+    			
+			//} catch (URISyntaxException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				//e1.printStackTrace();
+			//}
     	}
     	else if (examples.containsKey(group.getSelection().getActionCommand()))
     		curProject = examples.get(group.getSelection().getActionCommand());
