@@ -274,6 +274,15 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDefaultMetaData_GroupingProps() {
+		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIProjectMetaData() {
 		return iProjectMetaDataEClass;
 	}
@@ -440,6 +449,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPINGS);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_INSTANCES);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__ALIASES);
+		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_PROPS);
 
 		iProjectMetaDataEClass = createEClass(IPROJECT_META_DATA);
 
@@ -549,6 +559,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		initEReference(getDefaultMetaData_Groupings(), theMapsPackage.getStringToGroupingMap(), null, "groupings", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_GroupingInstances(), theMapsPackage.getStringToGroupingInstanceListMap(), null, "groupingInstances", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_Aliases(), theMapsPackage.getStringToStringMap(), null, "aliases", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultMetaData_GroupingProps(), theMapsPackage.getStringToStringMap(), null, "groupingProps", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(iProjectMetaDataEClass, IProjectMetaData.class, "IProjectMetaData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

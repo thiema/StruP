@@ -137,7 +137,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		//getGraphComponent().getGraphHandler().setKeepOnTop(false);
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
-//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 
@@ -207,7 +207,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
         //edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL);
         edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
         //if (color != null)
-        	edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
+        	//edgeStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
 
         return edgeStyle;
 	}

@@ -135,6 +135,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.setJMenuBar(new EditorMenuBar(this));
+//		frame.setJMenuBar(new EditorMenuBar(this));
 		frame.setSize(870, 640);
 		// Updates the frame title
 		updateTitle();

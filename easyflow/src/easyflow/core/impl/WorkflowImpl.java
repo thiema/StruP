@@ -5,6 +5,7 @@ import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
+import easyflow.core.EasyflowTemplate;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.Task;
@@ -23,6 +24,7 @@ import easyflow.data.DataFactory;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.GroupingInstance;
@@ -1208,8 +1210,14 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean readWorkfowTemplate() {
-		return ((EasyflowTemplateImpl) getWorkflowTemplate()).readTemplate(getMode(), 
+		EasyflowTemplate eTpl = (EasyflowTemplate) getWorkflowTemplate();
+		boolean rc = eTpl.readTemplate(getMode(), 
 				getDefaultGroupingCriteria());
+		for (Task t:eTpl.getTasks())
+			if (GlobalConstants.ROOT_TASK_NAME.equals(t.getName()))
+				setRootTask(t);
+			
+		return rc; 
 	}
 
 	
@@ -1577,7 +1585,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
 		
 		// add parents unconditionally
-		tasks.addAll(getBestFittingParentSet(task, results, null, null));
+		//tasks.addAll(getAllParents(task, results, null, null));
+		tasks.addAll(getAllParentsByStrategy(task, results, null, null));
 		
 		// evaluate conditions
 		String uconds[] = new String[results.size()];
@@ -1608,21 +1617,53 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					taskSet.add(ctasks[j]);
 				}
 				// find parents which circumvent the given set of conditions
-				tasks.addAll(getBestFittingParentSet(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet));
+				//EMap<Task, EList<DataLink>> allTasks = getAllParents(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet);
+				EMap<Task, EList<DataLink>> allTasks = getAllParentsByStrategy(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet);
+				tasks.addAll(allTasks);
 			}
 		}
 		return tasks;
 	}
 	
-	// find those results which, taken together, cover all dataports of the given task and create
-	// a corresponding map
-	private EMap<Task, EList<DataLink>> getBestFittingParentSet(Task task, 
+	private EMap<Task, EList<DataLink>> getAllParentsByStrategy(Task task, 
+			EList<ParentTaskResult> results,
+			EList<String> conditionsToCircumvent,
+			EList<String> tasksToCircumvent)
+	{
+		logger.debug("strategy="+GlobalConfig.getResolveParentTasksStrategy());
+		// find parents which circumvent the given set of conditions
+		EMap<Task, EList<DataLink>> allTasks = getAllParents(task, results, conditionsToCircumvent, tasksToCircumvent);
+		logger.debug("all="+allTasks.size());
+		
+		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
+		
+		if (GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT.equals(GlobalConfig.getResolveParentTasksStrategy()))
+		{
+			allTasks = getNearestParentsFirst(task, allTasks);
+			logger.debug("restrict by strategy="+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT
+					+" to="+allTasks.size());
+			tasks.addAll(allTasks);
+		}
+		else if (GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK.equals(GlobalConfig.getResolveParentTasksStrategy()))
+		{
+			allTasks = getParentsOfMaxRank(task, allTasks);
+			logger.debug("restrict by strategy="+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK
+					+" to="+allTasks.size());
+			tasks.addAll(allTasks);
+		}
+		else if (!GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS.equals(GlobalConfig.getResolveParentTasksStrategy()))
+			logger.error("Unkown Resolve-Parent-Tasks Strategy. Default to "+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS);
+				
+		return tasks;
+	}
+			
+	
+	private EMap<Task, EList<DataLink>> getAllParents(Task task, 
 			EList<ParentTaskResult> results,
 			EList<String> conditionsToCircumvent,
 			EList<String> tasksToCircumvent)
 	{
 		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
-		EList<DataPort> resolvedDataPorts = new BasicEList<DataPort>();
 		
 		for (ParentTaskResult result:results)
 		{
@@ -1647,18 +1688,63 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						+" task="+dataLink.getCondition().getCircumventingParents()
 						+" result object="+result.getCondition()
 						+" "+dataLink.hashCode()
-						);
+				);
 			}
-			resolvedDataPorts.addAll(result.getCoveredPorts());
+			
 			tasks.put(result.getParentTask(), dataLinks);
 			logger.trace("parent="+result.getParentTask().getUniqueString()
 					+" (resolving "+result.getCoveredPorts().size()+" ports) added."
 					//+" "+dataLinks.hashCode()
 					);
+			
+		}
+		return tasks;
+	}
+	
+	private EMap<Task, EList<DataLink>> getParentsOfMaxRank(Task task, EMap<Task, EList<DataLink>> allTasks)
+	{
+		
+		
+		// get first parents which cover all the ports
+		return getNearestParentsFirst(task, allTasks);
+	}
+	
+	// find those results which, taken together, cover all dataports of the given task and create
+	// a corresponding map
+	private EMap<Task, EList<DataLink>> getNearestParentsFirst(Task task, EMap<Task, EList<DataLink>> allTasks)
+	{
+		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
+		// track the resolved dataports
+		EList<DataPort> resolvedDataPorts = new BasicEList<DataPort>();
+
+		for (Entry<Task, EList<DataLink>> e:allTasks)
+		{
+		
+			EList<DataPort> unresolvedDataPorts = new BasicEList<DataPort>();
+			EList<DataLink> dataLinks           = new BasicEList<DataLink>();
+			for (DataLink dataLink : e.getValue())
+			{
+				DataPort coveredPort = dataLink.getDataPort();
+			
+				boolean add = true;
+				for (DataPort resolvedPort:resolvedDataPorts)
+					if (coveredPort.isCompatible(resolvedPort))
+						add = false;
+				if (add)
+				{
+					unresolvedDataPorts.add(coveredPort);
+					dataLinks.add(dataLink);
+				}
+			}
+			resolvedDataPorts.addAll(unresolvedDataPorts);
+			
+			tasks.put(e.getKey(), dataLinks);
+			// break, as soon as all ports are resolved
 			if (task.getInDataPorts().size() == resolvedDataPorts.size())
 				break;
 		}
 		return tasks;
+
 	}
 	
 	private EList<ParentTaskResult> getMatchingParentTasks(EList<ParentTaskResult> results, 
@@ -2245,7 +2331,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean resolveIncompatibleGroupings() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
 		
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
-		boolean rc=false;
+		boolean rc = true;
 		//Iterator<Entry<mxICell, EList<mxICell>>> it = getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet().iterator();
 		EMap<mxICell, EList<mxICell>> untranslatedDLs = getGraphUtil().findCellsWithUntranslatedDataLinks();
 		ListIterator<Entry<mxICell, EList<mxICell>>> it = untranslatedDLs.listIterator(untranslatedDLs.size()); 
@@ -2275,7 +2361,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean resolvePreprocessingTasks() throws TaskNotFoundException, DataLinkNotFoundException {
-		boolean rc=false;
+		
+		boolean rc = true;
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_PREPROCESSING_TASKS);
 		EMap<mxICell, EList<mxICell>> prepRequired = getGraphUtil().findCellsWherePreprocessingIsRequired();
 		logger.debug("resolvePreprocessingTasks(): found "+prepRequired.size()+" tasks with unresolved preprocessings");
@@ -2284,12 +2371,16 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		{
 			Entry<mxICell, EList<mxICell>> entry = it.next();
 			for (mxICell edge:entry.getValue())
+			{
 				rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), edge);
+				logger.debug("resolvePreprocessingTasks(): rc="+rc);
+			}
 			//rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), null);
 		}
 		if (rc)
 			getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, true);
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_PREPROCESSING_TASKS);
+		
 		return rc;
 	}
 

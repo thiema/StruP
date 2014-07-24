@@ -81,58 +81,86 @@ public class Util {
 	 * 
 	 * @generated not
 	 */
-	public static EMap<String, Object> createMetaDataMapForJexl(
+	public static EList<EMap<String, Object>> createMetaDataMapForJexl(
 			EList<GroupingInstance> groupingInstances, String forGrouping) {
 
-		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
-		// logger.debug(forGrouping);
-		// for (GroupingInstance groupingInstance:groupingInstances)
-		// logger.debug(groupingInstance.getName());
+		EList<EMap<String, Object>> list = new BasicEList<EMap<String, Object>>();
+		
 
 		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
 		for (GroupingInstance groupingInstance : groupingInstances) {
 			EList<GroupingInstance> recordInstances = metaData.getInstances(
-					groupingInstance, GlobalConstants.TRAVERSAL_CRITERION_RECORD);
+					groupingInstance, 
+					GlobalConstants.TRAVERSAL_CRITERION_RECORD
+					);
 			for (GroupingInstance recordInstance : recordInstances)
-				for (Entry<String, Object> entry : metaData.getRecord(
-						recordInstance).entrySet()) {
-					Object value = entry.getValue();
-					if (metaDataMap.containsKey(entry.getKey())) {
-						mergeValue(metaDataMap.get(entry.getKey()), value);
-					}
-					metaDataMap.put(entry.getKey(), value);
-				}
-		}
-		// for (Entry<String, Grouping>
-		// entry:metaData.getGroupings().entrySet())
-		// { metaData.g }
-		return metaDataMap;
-	}
-	
-	
-	public static EMap<String, Object> createMetaDataMapForJexl(
-			EList<TraversalChunk> records) {
-
-		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
-		// logger.debug(forGrouping);
-		// for (GroupingInstance groupingInstance:groupingInstances)
-		// logger.debug(groupingInstance.getName());
-
-		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
-		for (TraversalChunk record : records) {
-			for (Entry<String, Object> entry : metaData.getRecord(
-						record).entrySet()) {
-				Object value = entry.getValue();
-				if (metaDataMap.containsKey(entry.getKey())) {
-					mergeValue(metaDataMap.get(entry.getKey()), value);
-				}
-				metaDataMap.put(entry.getKey(), value);
+			{
+				EMap<String, Object> metaDataMap = createMetaDataMapForJexlForRecordInstance(recordInstance);
+				if (!metaDataMap.isEmpty())
+					list.add(metaDataMap);
 			}
 		}
 		// for (Entry<String, Grouping>
 		// entry:metaData.getGroupings().entrySet())
 		// { metaData.g }
+		return list;
+	}
+	
+	public static EMap<String, Object> createMetaDataMapForJexlForRecordInstance(GroupingInstance recordInstance)
+	{
+		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
+		//logger.debug("createMetaDataMapForJexl(): found "+recordInstances.size()+" records for grouping instance="+groupingInstance.getName()+" "+groupingInstance.getGroupingStr());
+		
+			for (Entry<String, Object> entry : metaData.getRecord(
+					recordInstance).entrySet()) {
+				Object value = entry.getValue();
+				logger.debug("createMetaDataMapForJexl(): set key="+entry.getKey()+" value="+value);
+				if (metaDataMap.containsKey(entry.getKey())) {
+					mergeValue(metaDataMap.get(entry.getKey()), value);
+				}
+				
+				metaDataMap.put(entry.getKey(), value);
+			}
 		return metaDataMap;
+
+	}
+	
+	public static EMap<String, Object> createMetaDataMapForJexlForTraversalChunk(TraversalChunk record)
+	{
+		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
+		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+		
+		for (Entry<String, Object> entry : metaData.getRecord(
+				record).entrySet()) {
+			Object value = entry.getValue();
+			if (metaDataMap.containsKey(entry.getKey())) {
+				mergeValue(metaDataMap.get(entry.getKey()), value);
+			}
+			metaDataMap.put(entry.getKey(), value);
+		}
+		return metaDataMap;
+	}
+	
+	public static EList<EMap<String, Object>> createMetaDataMapForJexl(
+			EList<TraversalChunk> records) {
+
+		EList<EMap<String, Object>> list = new BasicEList<EMap<String, Object>>();
+		
+		// logger.debug(forGrouping);
+		// for (GroupingInstance groupingInstance:groupingInstances)
+		// logger.debug(groupingInstance.getName());
+
+		
+		for (TraversalChunk record : records) {
+			EMap<String, Object> metaDataMap = createMetaDataMapForJexlForTraversalChunk(record);
+			if (!metaDataMap.isEmpty())
+					list.add(metaDataMap);
+		}
+		// for (Entry<String, Grouping>
+		// entry:metaData.getGroupings().entrySet())
+		// { metaData.g }
+		return list;
 	}
 	
 	private static Object mergeValue(Object o1, Object o2) {

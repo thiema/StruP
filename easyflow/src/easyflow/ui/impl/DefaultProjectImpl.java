@@ -758,17 +758,25 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		// ####### READ WORKFLOW CONFIGURATION ########
 		JSONObject workflowCfg = jsonObject.getJSONObject("workflow");
 		workflow.setMode(workflowCfg.getString("defaultMode"));
+		
+		
     	// create the special root task/cell which is the root
     	// in all subsequent processed graphs, the root should link any
     	// task from the workflow template that has no incoming task
-    	Task rootTask = CoreFactory.eINSTANCE.createTask();
-    	rootTask.setName("_root_");
+		Task rootTask = workflow.getRootTask();
+		if (rootTask == null)
+		{
+    	rootTask = CoreFactory.eINSTANCE.createTask();
+    	rootTask.setName(GlobalConstants.ROOT_TASK_NAME);
     	rootTask.setRoot(true);
+    	workflow.setRootTask(rootTask);
+		}
+    	//rootTask.getGroupingCriteria().put(, value)
 
     	readInputs(workflowCfg, rootTask);
     	
-    	workflow.setRootTask(rootTask);
-
+    	
+		
 		for (int i=0; i<workflowCfg.getJSONArray("defaultGroupingCriteria").size();i++)
 			workflow.getDefaultGroupingCriteria().add(workflowCfg.getJSONArray("defaultGroupingCriteria").getString(i));
 		

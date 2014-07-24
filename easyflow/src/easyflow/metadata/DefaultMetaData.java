@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.metadata.DefaultMetaData#getAliases <em>Aliases</em>}</li>
+ *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupingProps <em>Grouping Props</em>}</li>
  * </ul>
  * </p>
  *
@@ -137,5 +138,22 @@ public interface DefaultMetaData extends IMetaData {
 	 * @generated
 	 */
 	EMap<String, String> getAliases();
+
+	/**
+	 * Returns the value of the '<em><b>Grouping Props</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping Props</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping Props</em>' map.
+	 * @see easyflow.metadata.MetadataPackage#getDefaultMetaData_GroupingProps()
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getGroupingProps();
 
 } // DefaultMetaData

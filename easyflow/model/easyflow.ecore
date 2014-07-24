@@ -1204,6 +1204,8 @@
           eType="#//util/maps/StringToGroupingInstanceListMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="aliases" upperBound="-1"
           eType="#//util/maps/StringToStringMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="groupingProps" upperBound="-1"
+          eType="#//util/maps/StringToStringMap" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IProjectMetaData" abstract="true"
         interface="true">

@@ -34,7 +34,7 @@
 		<param name="output" type="data" format="F1"></param>
 	</tool>
 	
-	<tool id="split" analysis_type="split"> 
+	<tool id="split" analysis_type="view"> 
 		<param name="input" type="data" format="F1"></param>
 		<param name="output" type="data" format="F1"></param>
 	</tool>

@@ -280,6 +280,7 @@ public class EasyFlowToolBar extends JToolBar
 					btnApplyGroupingCrit.setEnabled(true);
 					btnApplyParameterCrit.setEnabled(true);
 				}
+				btnGenAbstractWorkflow.setEnabled(false);
 				btnCalcAll.setEnabled(false);
 			} catch (CellNotFoundException e) {
 				// TODO Auto-generated catch block

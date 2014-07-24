@@ -57,6 +57,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupings <em>Groupings</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getAliases <em>Aliases</em>}</li>
+ *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingProps <em>Grouping Props</em>}</li>
  * </ul>
  * </p>
  *
@@ -132,6 +133,16 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @ordered
 	 */
 	protected EMap<String, String> aliases;
+
+	/**
+	 * The cached value of the '{@link #getGroupingProps() <em>Grouping Props</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupingProps()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> groupingProps;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -223,6 +234,18 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, String> getGroupingProps() {
+		if (groupingProps == null) {
+			groupingProps = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS);
+		}
+		return groupingProps;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMap<String, Grouping> getGroupings() {
 		if (groupings == null) {
 			groupings = new EcoreEMap<String,Grouping>(MapsPackage.Literals.STRING_TO_GROUPING_MAP, StringToGroupingMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__GROUPINGS);
@@ -290,13 +313,30 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
         Map<String, Integer> colNames=new HashMap<String, Integer>();
         String[] colnames={};
         
+        //doesnt work due to index shift (starts without first element)
+        //colnames = GlobalVarMetaData.getColHeader();
+        //colNames = GlobalVarMetaData.getMetaDataColHeader();
+        //logger.debug(colNames);
+        //logger.debug(colnames);
         try {
-        	//expecting first line to be header
         	String strLine = bufferedReader.readLine();
-			colnames=strLine.split(sep);
+        	//expecting first line to be header and to be read already...
+        	
+        	
+        	
+        	colnames=strLine.split(sep);
 			for (int i=0; i<colnames.length; i++) {
-				colNames.put(colnames[i], i);
+				String colName = colnames[i]; 
+        		String tmp[]=colName.split(":");
+        		if (tmp.length>1)
+        		{
+        			getGroupingProps().put(tmp[0], tmp[1]);
+        			colName=tmp[0];
+        		}
+
+				colNames.put(colName, i);
 			}
+
 			//read the remainder
 			int row=0;
 			while ((strLine = bufferedReader.readLine()) != null)   {
@@ -310,8 +350,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 					//logger.debug("ReadGroup: "+lina[colNames.get("ReadGroup")]);
 					//logger.debug("Library: "+lina[colNames.get("Library")]);
 					//logger.debug("Group: "+lina[colNames.get("Group")]);
-
-					
+					boolean metadataRowInserted = false;
 			        for (String colName1:colNames.keySet())
 			        {
 			        	if (lina.length>colNames.get(colName1))
@@ -341,15 +380,18 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			        			known = true;
 			        			break;
 			        		}
-			        			
 			        	}
 			        	if (!known)
 			        	{
-			        		groupingInstance = MetadataFactory.eINSTANCE.createGroupingInstance();
-			        		groupingInstance.setName(lina[colNames.get(colName1)]);
-			        		groupingInstance.setGroupingStr(alias1);
-			        		groupingInstance.getRecords().add(lina[0]);
-			        		groupingInstanceList.getInstances().add(groupingInstance);
+			        		String names[] = lina[colNames.get(colName1)].split(",");
+			        		for (String name:names)
+			        		{
+			        			groupingInstance = MetadataFactory.eINSTANCE.createGroupingInstance();
+			        			groupingInstance.setName(name);
+			        			groupingInstance.setGroupingStr(alias1);
+			        			groupingInstance.getRecords().add(lina[0]);
+			        			groupingInstanceList.getInstances().add(groupingInstance);
+			        		}
 			        	}
 			        	else
 			        	{
@@ -359,8 +401,11 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			        			groupingInstance.getRecords().add(lina[0]);
 			        	}
 			        	
-			        	GlobalVarMetaData.setMetaDataTableRow(lina);
-			        	
+			        	if (!metadataRowInserted)
+			        	{
+			        		GlobalVarMetaData.setMetaDataTableRow(lina);
+			        		metadataRowInserted = true;
+			        	}
 			        }
 			        }
 
@@ -399,10 +444,10 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 */
 	public EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr) {
 
+		logger.debug("getInstances(groupingStr1="+groupingStr1+", groupingStr1="+groupingStr2+", instanceStr="+instanceStr);
 		EList<String> records=getRecordsBy(groupingStr1, instanceStr);
+		logger.debug("getInstances(): found "+records.size()+" recs.");
 		EList<GroupingInstance> groupingInstances = getInstancesForRecords(groupingStr2, records);
-		//String res=""; for (GroupingInstance groupingInstance:groupingInstances) res+=","+groupingInstance.getName();
-		//logger.debug(groupingStr1+" "+groupingStr2+" "+instanceStr+" "+res);
 		return groupingInstances;
 	}
 
@@ -449,8 +494,17 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			if(!GlobalVarMetaData.getMetaDataTableRow(instanceStr).isEmpty())
 				records.add(instanceStr);
 		}
-		else
+		else if (groupingStr.equals(GlobalConstants.METADATA_INPUT))
 		{
+			String res = GlobalVarMetaData.getRecordForMultiFieldValue(groupingStr, instanceStr);
+			if (res != null)
+				records.add(res);
+				
+		}
+		//else
+		if (records.isEmpty() && !groupingStr.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
+		{
+			
 			for (String rowHead:GlobalVarMetaData.getMetaDataRowHeader().keySet())
 			{
 				Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(rowHead);
@@ -544,6 +598,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	private Object parseString(String field, String value)
 	{
 		Object o=value;
+		
 		String[] a = StringUtils.split(value, ",");
 		boolean isArray=false;
 		if (GlobalVarMetaData.getMetaDataColType().containsKey(field))
@@ -579,6 +634,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return ((InternalEList<?>)getGroupingInstances()).basicRemove(otherEnd, msgs);
 			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
 				return ((InternalEList<?>)getAliases()).basicRemove(otherEnd, msgs);
+			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
+				return ((InternalEList<?>)getGroupingProps()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -604,6 +661,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
 				if (coreType) return getAliases();
 				else return getAliases().map();
+			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
+				if (coreType) return getGroupingProps();
+				else return getGroupingProps().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -632,6 +692,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
 				((EStructuralFeature.Setting)getAliases()).set(newValue);
 				return;
+			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
+				((EStructuralFeature.Setting)getGroupingProps()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -659,6 +722,9 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
 				getAliases().clear();
 				return;
+			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
+				getGroupingProps().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -681,6 +747,8 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 				return groupingInstances != null && !groupingInstances.isEmpty();
 			case MetadataPackage.DEFAULT_META_DATA__ALIASES:
 				return aliases != null && !aliases.isEmpty();
+			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
+				return groupingProps != null && !groupingProps.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

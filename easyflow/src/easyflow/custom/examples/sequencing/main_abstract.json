@@ -1,7 +1,7 @@
 {
 	
   "project" : {	
-	"workflowTemplateFile"       : "abstract1.workflow",
+	"workflowTemplateFile"       : "abstract.workflow",
     "metadataFile"               : "metadata_abstract.tsv", 
     
     "isContrast"                 : "true",
@@ -39,21 +39,14 @@
 
   "workflow": {
     "metadata_input_field"    : ["InputFiles"],
-    "inputs"                  : ["FASTQ"],
-    "static_inputs"           : ["FASTA"],
-    "inputs_map"              : {"Reads" : "FASTQ"
-                                },
-    "static_inputs_map"       : {"Reference" : "FASTA"
-                                },
-    "workflows"               : ["w1", "w2"], 
-    "w1"                      : ["MapReads", "AddReadGroup"],
-    "w2"                      : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
+    "inputs"                  : ["F1"],
+    "static_inputs"           : [],
     "defaultGroupingCriteria" : ["Record"],
     "defaultMode"             : "batch"
   },
   
   "tool" : {
-    "command_pattern" : "interpreter executable submodule positional_arg optional_arg input output",
+    "command_pattern" : "pos opt in out",
   	"dir"             : "tool_definitions",
   	"tools"           : ["abstract_tools.xml"],
   	"schemata"        : ["../../../tool/schema/Easyflow.xsd", 

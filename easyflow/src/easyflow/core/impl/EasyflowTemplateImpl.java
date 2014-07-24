@@ -17,6 +17,8 @@ import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
+import easyflow.custom.util.GlobalConstants;
+
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -240,7 +242,10 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 							task.getParents().put("Root", tmpMap.get("Root"));
 						}
 					}
+					if (GlobalConstants.ROOT_TASK_NAME.equals(task.getName()))
+						task.setRoot(true);
 					getTasks().add(task);
+					
 					//if (!task.getParents().isEmpty())
 						//System.out.println(task.getParents()+"("+task.getParents().size()+")");
 				}

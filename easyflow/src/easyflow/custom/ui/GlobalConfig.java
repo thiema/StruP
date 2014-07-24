@@ -87,6 +87,11 @@ public class GlobalConfig {
 	private static final Parameter positionalParamTemplate = ToolFactory.eINSTANCE.createParameter();
 	private static final Parameter exeParameterDefault     = positionalParamTemplate;
 	
+	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY                = "resolve_parent_task_strategy";
+	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT = "nearest_parents_first";
+	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK       = "max_rank_first";
+	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS    = "all_parents";
+	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE  = CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT;
 	
 	
 	// config maps
@@ -115,6 +120,10 @@ public class GlobalConfig {
 		return processingConfig;
 	}
 
+	public static EMap<String, String> getWorkflowConfig()
+	{
+		return workflowConfig;
+	}
 	
 	// processing
 	public static String getDefaultHandle()
@@ -365,5 +374,13 @@ public class GlobalConfig {
 		else
 			return CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_OUTPUT_FILE_VALUE;
 		
+	}
+	
+	public static String getResolveParentTasksStrategy()
+	{
+		if (getWorkflowConfig().containsKey(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY))
+			return getWorkflowConfig().get(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY);
+		else
+			return CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE;
 	}
 }

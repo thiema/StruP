@@ -49,7 +49,7 @@
   },
   
   "tool" : {
-    "command_pattern" : "interpreter executable submodule positional_arg optional_arg input output",
+    "command_pattern" : "pos opt in out",
   	"dir"             : "tool_definitions",
   	"tools"           : ["abstract_tools.xml"],
   	"schemata"        : ["../../../tool/schema/Easyflow.xsd", 

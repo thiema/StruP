@@ -772,7 +772,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		
 		if (getCommand().getAssumeDataParamPositional() != null)
 			return getCommand().getAssumeDataParamPositional();
-		else if (getPackage().getAssumeDataParamPositional() != null)
+		else if (getPackage() != null && getPackage().getAssumeDataParamPositional() != null)
 			return getPackage().getAssumeDataParamPositional();
 		else
 			return GlobalConfig.assumePositionalDataParam();

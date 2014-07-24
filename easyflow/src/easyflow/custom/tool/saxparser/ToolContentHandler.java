@@ -474,8 +474,22 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				else
 				{
-					tool.getCommand().setName(atts.getValue("name"));
-				
+					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+					if (atts.getValue("exe") != null)
+					{
+						resolvedParam.setName(atts.getValue("exe"));
+					}
+					else if (atts.getValue("name") != null)
+					{
+						resolvedParam.setName(atts.getValue("name"));
+					}
+					
+					Parameter param = ToolFactory.eINSTANCE.createParameter();
+					param.setName(resolvedParam.getName());
+					param.setCmdPart("exe");
+					resolvedParam.setParameter(param);
+					tool.getResolvedParams().put(atts.getValue("name"), resolvedParam);
+					
 					if (atts.getValue("pattern") != null)
 						tool.getCommand().setCommandPattern(atts.getValue("pattern"));
 					if (atts.getValue("assume_data_param_positional") != null

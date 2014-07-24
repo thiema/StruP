@@ -135,13 +135,22 @@ public interface MetadataPackage extends EPackage {
 	int DEFAULT_META_DATA__ALIASES = IMETA_DATA_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Grouping Props</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA__GROUPING_PROPS = IMETA_DATA_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Default Meta Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 5;
+	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.
@@ -405,6 +414,17 @@ public interface MetadataPackage extends EPackage {
 	EReference getDefaultMetaData_Aliases();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.metadata.DefaultMetaData#getGroupingProps <em>Grouping Props</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Grouping Props</em>'.
+	 * @see easyflow.metadata.DefaultMetaData#getGroupingProps()
+	 * @see #getDefaultMetaData()
+	 * @generated
+	 */
+	EReference getDefaultMetaData_GroupingProps();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -645,6 +665,14 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEFAULT_META_DATA__ALIASES = eINSTANCE.getDefaultMetaData_Aliases();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping Props</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_META_DATA__GROUPING_PROPS = eINSTANCE.getDefaultMetaData_GroupingProps();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.
