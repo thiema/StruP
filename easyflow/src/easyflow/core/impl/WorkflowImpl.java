@@ -2194,6 +2194,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		}
 		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
 		printWorkflowStepMsgOnEnd(rc, step);
+		setFirstNode(getGraphUtil().getDefaultRootCell());
 		return rc;
 
 		
@@ -2260,6 +2261,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return false;
 			
 			mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+		
 			getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
 			
 			if (subGraphRoot != null)
@@ -2274,7 +2276,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 							mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
 									traversalEvent, 
 									groupingInstance);
-							
+							//if (!traversalEvent.isGrouping())
+							//throw new UnsupportedOperationException();
 							getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 									traversalEvent.getTraversalCriterion().getId(),
 									groupingInstance);

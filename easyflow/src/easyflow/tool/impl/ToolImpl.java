@@ -706,15 +706,19 @@ public class ToolImpl extends EObjectImpl implements Tool {
 						}	
 						else if (optionValue.getCondition()!=null)
 						{
+							for (EMap<String, Object> map:easyflow.custom.util.Util.createMetaDataMapForJexl(
+									records))
+							{
 							Object evalObject = easyflow.custom.util.Util.evaluateJexl(
-									easyflow.custom.util.Util.createMetaDataMapForJexl(
-											records), optionValue.getCondition());
+									map, optionValue.getCondition());
 							if (evalObject instanceof Boolean) {
 								if (((Boolean) evalObject).booleanValue())
 								{
 									matchByCondStr = optionValue.getExe()!=null ? optionValue.getExe() : optionValue.getName();
 									returnValue = optionValue;
+									break;
 								}
+							}
 							}
 						}
 						

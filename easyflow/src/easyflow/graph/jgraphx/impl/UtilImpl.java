@@ -947,14 +947,22 @@ public class UtilImpl extends EObjectImpl implements Util {
 	 * @throws TaskNotFoundException 
 	 * @generated not
 	 */	
-	public mxICell computeSubgraph(final TraversalEvent traversalEvent, final boolean isComplete) throws TaskNotFoundException {
-		
+	public mxICell computeSubgraph(final TraversalEvent traversalEvent, final boolean isComplete) throws TaskNotFoundException 
+	{
+		if (traversalEvent.isGrouping())
+			return computeSubgraph(traversalEvent);
+		else
+			return computeSubgraph_Param(traversalEvent);
+	}
+	
+	public mxICell computeSubgraph(final TraversalEvent traversalEvent) throws TaskNotFoundException 
+	{
 		// track all new Tasks
 		final Map<String, Object> addedTasks = new HashMap<String, Object>();
 		final Map<String, String> addedEdges = new HashMap<String, String>();
 		final EList<mxCell>     firstNodeTmp = new BasicEList<mxCell>();
 
-		mxICell startCell = getCells().get(traversalEvent.getSplitTask().getUniqueString()); 
+		mxICell startCell = getCells().get(traversalEvent.getSplitTask().getUniqueString());
 		
 		
 		EList<mxICell> stopCells = getCells(traversalEvent.getMergeTask());
@@ -1148,6 +1156,122 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 	}
 	
+	public mxICell computeSubgraph_Param(final TraversalEvent traversalEvent)
+	{
+		
+		final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
+		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
+		final EList<String>        mergeTasks = new BasicEList<String>();
+		final EList<String>        addedEdges = new BasicEList<String>();
+		final Map<String, Boolean>     memMap = new HashMap<String, Boolean>();
+		memMap.put("withinTraversalEvent", false);
+		
+		for (Task task:traversalEvent.getMergeTask())
+		{
+			mergeTasks.add(task.getName());
+		}
+
+		mxICellVisitor visitor = new mxICellVisitor() {
+
+			/**
+			 * add vertex and edge to graph stop visiting when mergeTask is
+			 * reached
+			 */
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				
+				// set the current task
+				Task parentTask   = null;
+				Task task         = null;
+				DataLink dataLink = null;
+				mxICell source    = null;
+				mxICell target    = null;
+				try {
+					task = loadTask(vertex);
+					if (task.getName().equals(traversalEvent.getSplitTask().getName()))
+					{
+						logger.debug("splitting task found");
+						//mxICell clonedVertex = cloneCell((mxICell) vertex);
+						
+						memMap.put("withinTraversalEvent", true);
+						//use artifical root node
+						if (firstNodeTmp.isEmpty())
+						{
+							Task rootTask = CoreFactory.eINSTANCE.createTask();
+							rootTask.setRoot(true);
+							
+							rootTask.setName("root_"+traversalEvent.getTraversalCriterion().getId());
+							getTasks().put(rootTask.getName(), rootTask);
+							mxICell tmp = (mxICell) getGraph().insertVertexEasyFlow(null, null, rootTask);
+							logger.debug("added artifical root: "+tmp);
+							firstNodeTmp.add(tmp);
+							//addedTasks.put(task.getUniqueString(), firstNodeTmp.get(0));
+						}
+						source = firstNodeTmp.get(0);
+					}
+					else if (!memMap.get("withinTraversalEvent"))
+						return true;
+					
+					if (!addedTasks.containsKey(task.getUniqueString()))
+					{
+						//mxICell clonedVertex = cloneCell((mxICell) vertex);
+						target = (mxICell) getGraph().insertVertexEasyFlow(null, null, task);
+						logger.debug("added task="+task.getUniqueString()+" "+target);
+						addedTasks.put(task.getUniqueString(), target);
+					}
+					else
+						target = addedTasks.get(task.getUniqueString());
+					
+					if (edge == null)
+						return true;
+					
+					if (source == null)
+					{
+						parentTask = getSourceTask((mxCell) edge);
+						source = (mxICell) addedTasks.get(parentTask.getUniqueString());
+					}
+					
+					dataLink = loadDataLink(edge);
+					String uniqueDataLink = dataLink.getUniqueString()
+							+"_"+(parentTask==null ? "root":parentTask.getUniqueString())
+							+"_"+task.getUniqueString();
+					logger.debug("computeSubgraph_Param(): "+dataLink.getUniqueString()+" "+dataLink.getUniqueString(true));
+					if (addedEdges.contains(uniqueDataLink))
+						return true;
+					
+					//insert edge
+					logger.debug("computeSubgraph_Param(): "
+                			+"edge "+(parentTask == null ? "root":parentTask.getUniqueString())
+                			+"->"+task.getUniqueString()+" inserted"
+                			+" ("+source+" "+target+")");
+					getGraph().insertEdgeEasyFlow(null, null, source, target, 
+	            			((mxCell)edge).getValue());
+					
+					addedEdges.add(uniqueDataLink);
+					if (mergeTasks.contains(task.getName()))
+					{
+						logger.debug("computeSubgraph_Param(): merge task "+task.getName()+" reached.");
+						memMap.put("withinTraversalEvent", false);
+						return false;
+					}
+					return true;
+					
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				catch (DataLinkNotFoundException e) {			e.printStackTrace();}
+				return false;
+			}
+		};
+		graph.getModel().beginUpdate();		try		{
+			getGraph().traverseAllPaths(getDefaultRootCell(), true, visitor, null);
+			layoutGraph();
+			}		finally		{			graph.getModel().endUpdate();		}
+		
+		return firstNodeTmp.isEmpty() ? null : firstNodeTmp.get(0);
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1157,6 +1281,8 @@ public class UtilImpl extends EObjectImpl implements Util {
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		groupingInstances.add(groupingInstance);
 		applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstances);
+		if (!traversalEvent.isGrouping())
+			getGraph().removeCells(new Object[]{root}, true);
 	}
 	
 	/**
@@ -1179,8 +1305,14 @@ public class UtilImpl extends EObjectImpl implements Util {
 			) throws TaskNotFoundException 
 	{
 		
-		final EMap<String, EList<String>> possibleMergeParents = new BasicEMap<String, EList<String>>();
+		//final EMap<String, EList<String>> possibleMergeParents = new BasicEMap<String, EList<String>>();
 		final EMap<String, mxICell> mergeCells   = new BasicEMap<String, mxICell>();
+		// only used in case of param criterion
+		final EList<String>         mergeTasks   = new BasicEList<String>();
+		if (!traversalEvent.isGrouping())
+			for (Task mergeTask:traversalEvent.getMergeTask())
+				mergeTasks.add(mergeTask.getName());
+		
 		mxICellVisitor visitor=new mxICellVisitor() {
 			
 			
@@ -1211,7 +1343,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 				
 				if (task.isRoot())
 				{
-					if (possibleMergeParents.containsKey(task.getPreviousTaskStr()))
+				/*	if (possibleMergeParents.containsKey(task.getPreviousTaskStr()))
 					{
 						possibleMergeParents.get(task.getPreviousTaskStr()).add(taskString);
 					}
@@ -1220,8 +1352,10 @@ public class UtilImpl extends EObjectImpl implements Util {
 						EList<String> taskStrs = new BasicEList<String>();
 						taskStrs.add(taskString);
 						possibleMergeParents.put(task.getPreviousTaskStr(), taskStrs);
-					}	
+					}
+					*/
 				}
+				
 				else
 					
 				for (Object edgeIn : getGraph().getIncomingEdges(
@@ -1267,7 +1401,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 								traversalEvent.getTraversalCriterion().getMode(),
 								traversalEvent.isGrouping());
 							logger.debug("add "+taskString+" for key="+task.getPreviousTaskStr());
-							if (possibleMergeParents.containsKey(task.getPreviousTaskStr()))
+							/*if (possibleMergeParents.containsKey(task.getPreviousTaskStr()))
 							{
 								possibleMergeParents.get(task.getPreviousTaskStr()).add(taskString);
 							}
@@ -1276,7 +1410,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 								EList<String> taskStrs = new BasicEList<String>();
 								taskStrs.add(taskString);
 								possibleMergeParents.put(task.getPreviousTaskStr(), taskStrs);
-							}
+							}*/
 						}
 					} catch (TaskNotFoundException e) {
 						// TODO Auto-generated catch block
@@ -1297,10 +1431,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 						+" ("               +task.getUniqueString()+", "
 						                    +getTasks().get(task.getPreviousTaskStr()).getUniqueString()+")");
 
-				if (containsTask(traversalEvent.getMergeTask(),
+				if (traversalEvent.isGrouping() && containsTask(traversalEvent.getMergeTask(),
 						getTasks().get(task.getPreviousTaskStr())) 
 						//|| task.getPreviousTaskStr().equals(traversalEvent.getSplitTask().getUniqueString()) // added to resolve 'nested' traversal events / avoid orphan nodes
 					)
+				{
+					mergeCells.put(taskString, (mxICell) vertex);
+					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged (for "+task.getUniqueString()+")");
+				}
+				else if (!traversalEvent.isGrouping() && mergeTasks.contains(task.getName()))
 				{
 					mergeCells.put(taskString, (mxICell) vertex);
 					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged (for "+task.getUniqueString()+")");
@@ -1333,7 +1472,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			}
 		}
 		
-	
+	/*
 		// apply parameter criterion to the merging tasks (listed in MergeTasksParamCrit) 
 		for (Task task:traversalEvent.getMergeTasksParamCrit())
 		{
@@ -1389,7 +1528,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 			}
 		}
 		
-
+*/
 
 		
 /*
@@ -1544,11 +1683,15 @@ public class UtilImpl extends EObjectImpl implements Util {
 				
 				try {
 					Task task = loadTask(vertex);
-					//DataLink inDataLink = null;
-					//if (edge != null)
-						//inDataLink = loadDataLink(edge);
-
+					
 					String taskString = task.getUniqueString();
+					// test if the current task is already specified with the current param
+					//if (task.getGroupingCriteria().containsKey(traversalEvent.getTraversalCriterion().getName()))
+					logger.debug("applyTraversalEventCopyGraph_Param(): processed events so far="+task.getChunks().keySet()
+							+" cur crit name="+traversalEvent.getTraversalCriterion().getName()
+							+" cur crit source="+traversalEvent.getTraversalCriterion().getChunkSource()
+							+" cur crit id="+traversalEvent.getTraversalCriterion().getId());
+
 					Task copyTask = createTask_Param(task, groupingStr, groupingInstances);
 					
 					taskPreviousTaskMap.put(taskString, copyTask.getUniqueString());
@@ -1570,20 +1713,23 @@ public class UtilImpl extends EObjectImpl implements Util {
 					if (returnCell.isEmpty())
 						returnCell.add(cell);
 					
-					if (edge!=null)
+					if (edge != null)
 					{
-						Task source = getSourceTask((mxCell) edge);
-						String taskStr=taskPreviousTaskMap.get(source.getUniqueString());
-						DataLink dataLink = createDataLink(edge, copyTask, groupingStr, groupingStr, false);
-						
-						logger.debug("applyTraversalEventCopyGraph_Param(): insert edge="+taskStr+"->"+copyTask.getUniqueString()
-								+" dataLink="+dataLink.getUniqueString(null, null, null)
+						for (Object edgeIn : getGraph().getIncomingEdges(vertex))
+						{
+							Task     source   = getSourceTask((mxCell) edgeIn);
+							String   taskStr  = taskPreviousTaskMap.get(source.getUniqueString());
+							DataLink dataLink = createDataLink(edgeIn, copyTask, groupingStr, groupingStr, false);
+							
+							logger.debug("applyTraversalEventCopyGraph_Param(): insert edge="+taskStr+"->"+copyTask.getUniqueString()
+									+" dataLink="+dataLink.getUniqueString(null, null, null)
+										);
+							getGraph().insertEdgeEasyFlow(null, null, 
+									getCells().get(taskStr),
+									cell,
+									dataLink
 									);
-						getGraph().insertEdgeEasyFlow(null, null, 
-								getCells().get(taskStr),
-								cell,
-								dataLink
-								);
+						}
 					}
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -1599,7 +1745,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		
 
 		graph.getModel().beginUpdate();		try		{
-			getGraph().traverse(root, true, visitor);
+			getGraph().traverseTopologicalOrder(root, visitor);
 			layoutGraph();
 			
 		}		finally		{			graph.getModel().endUpdate();		}
@@ -2489,9 +2635,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 						{							
 							for (String key : newTraversalEvents.keySet())
 							{
-								logger.trace("getNewTravEvents(): test "
+								logger.trace("getNewTravEvents(): test if "
 										+newTraversalEvents.get(key).getSplitTask().getUniqueString()
-										+" convertable to "+task.getUniqueString());
+										+" is convertable to "+task.getUniqueString());
 								if (isValidConversion(newTraversalEvents.get(key).getSplitTask(), task))
 								{
 									mergeTasksToDelete.put(key, mergeTask);
@@ -2508,6 +2654,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 					}
 					
 					mergeTasksToDelete.clear();
+					/*
 					for (Task mergeTaskParamCrit : traversalEvent.getMergeTasksParamCrit())
 					{
 						if (mergeTaskParamCrit.getName().equals(task.getName()) &&
@@ -2529,6 +2676,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 						logger.trace("getNewTravEvents(): remove param crit merge task: "+mergeTasksToDelete.get(key).getUniqueString());
 						newTraversalEvents.get(key).getMergeTasksParamCrit().remove(mergeTasksToDelete.get(key));
 					}
+					*/
 						
 				}
 				return true;
@@ -3038,11 +3186,13 @@ public class UtilImpl extends EObjectImpl implements Util {
 				getTraversalEvents().remove(0);
 				return null;
 			}
-			
-			getNewTraversalEvents().addAll(
+			if (isGrouping)
+				getNewTraversalEvents().addAll(
 					getNewTraversalEvents(
 							getTraversalEvents().remove(0), 
 							getDefaultRootCell()));
+			else
+				getNewTraversalEvents().add(getTraversalEvents().remove(0));
 		}
 		
 		return getNewTraversalEvents().remove(0);
