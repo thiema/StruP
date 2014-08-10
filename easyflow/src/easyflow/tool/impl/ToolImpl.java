@@ -14,7 +14,6 @@ import easyflow.data.Data;
 import easyflow.data.DataPort;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
-import easyflow.tool.Interpreter;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
@@ -35,7 +34,6 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -43,7 +41,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -69,12 +66,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getAnalysisType <em>Analysis Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getResolvedParams <em>Resolved Params</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#isRoot <em>Root</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ToolImpl extends EObjectImpl implements Tool {
+public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -274,6 +272,26 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @ordered
 	 */
 	protected EMap<String, ResolvedParam> resolvedParams;
+
+	/**
+	 * The default value of the '{@link #isRoot() <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRoot()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ROOT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isRoot() <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRoot()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean root = ROOT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -558,25 +576,33 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isRoot() {
+		return root;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRoot(boolean newRoot) {
+		boolean oldRoot = root;
+		root = newRoot;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__ROOT, oldRoot, root));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void writeModelToXML() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean canProcessMultiplesInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		throw new UnsupportedOperationException();
-		/*
-		Data data = getData().get(dataPort.getName());
-		if (data==null)
-			throw new DataPortNotFoundException();
-		return false;*/
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -822,6 +848,193 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		return param;
 	}
 	
+	private Data getDataForDataPort(DataPort dataPort)
+	{
+		//EList<Data> dataList = getData().get(dataPort.getName());
+		//boolean found = false;
+		for (EList<Data> data : getData().values())
+		{
+			for (Data d : data)
+			{
+				if (d.getPort().isCompatible(dataPort))
+				{
+					return d;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws DataPortNotFoundException 
+	 * @generated not
+	 */
+	public boolean canProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			if (isRoot())
+				return GlobalConfig.getMultipleInputsForRootTaskValue();
+			Parameter p = matchingData.getParameter();
+			return p.isMultiple(GlobalConfig.getMultipleInputsDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			if (isRoot())
+				return GlobalConfig.getMultipleInstancesForRootTaskValue();
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstances(GlobalConfig.getMultipleInstancesDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			if (isRoot())
+				return GlobalConfig.getMultipleInstancesForRootTaskValue();
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstancesPerInput(GlobalConfig.getMultipleInstancesPerInputDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			Parameter p = matchingData.getParameter();
+			return p.isMultiple(GlobalConfig.getMultipleInputsDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstances(GlobalConfig.getMultipleInstancesDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstancesPerInput(GlobalConfig.getMultipleInstancesPerInputDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -933,6 +1146,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				if (coreType) return getResolvedParams();
 				else return getResolvedParams().map();
+			case ToolPackage.TOOL__ROOT:
+				return isRoot();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -983,6 +1198,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
 				return;
+			case ToolPackage.TOOL__ROOT:
+				setRoot((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1031,6 +1249,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				getResolvedParams().clear();
 				return;
+			case ToolPackage.TOOL__ROOT:
+				setRoot(ROOT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1069,6 +1290,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return command != null;
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				return resolvedParams != null && !resolvedParams.isEmpty();
+			case ToolPackage.TOOL__ROOT:
+				return root != ROOT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1113,6 +1336,147 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @generated
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.TOOL___WRITE_MODEL_TO_XML:
+				writeModelToXML();
+				return null;
+			case ToolPackage.TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT:
+				try {
+					return canFilterInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___REQUIRES_GROUPING__STRING_DATAPORT:
+				return requiresGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
+			case ToolPackage.TOOL___PROVIDES_GROUPING__STRING_DATAPORT:
+				return providesGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
+			case ToolPackage.TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN:
+				return getGroupingsForInputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN:
+				return getGroupingsForOutputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST:
+				return getAnalysisTypeOfPackage((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.TOOL___GET_DATA_FOR_PARAM__PARAMETER_EMAP:
+				return getDataForParam((Parameter)arguments.get(0), (Map.Entry<String, String>)arguments.get(1));
+			case ToolPackage.TOOL___GET_TEMPLATE_PARAMETER:
+				return getTemplateParameter();
+			case ToolPackage.TOOL___ASSUME_DATA_PARAM_POSITIONAL:
+				return assumeDataParamPositional();
+			case ToolPackage.TOOL___OMIT_PREFIX_IF_NO_ARG_KEY:
+				return omitPrefixIfNoArgKey();
+			case ToolPackage.TOOL___GET_CMD_PART_DELIMITER:
+				return getCmdPartDelimiter();
+			case ToolPackage.TOOL___GET_INTERPRETER_PARAMS:
+				return getInterpreterParams();
+			case ToolPackage.TOOL___GET_EXE:
+				return getExe();
+			case ToolPackage.TOOL___GET_MODULE_PARAMS:
+				return getModuleParams();
+			case ToolPackage.TOOL___GET_INTERPRETER:
+				return getInterpreter();
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					return canProvideMultipleInputsFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					return canProvideMultipleInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					return canProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					return canProcessMultipleInputsFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					return canProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					return canProcessMultipleInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					setProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					setProcessMultipleInstancesFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					setProcessMultipleInputsFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					setProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					setProvideMultipleInstancesFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					setProvideMultipleInputsFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1131,6 +1495,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		result.append(filenamePrefix);
 		result.append(", analysisType: ");
 		result.append(analysisType);
+		result.append(", root: ");
+		result.append(root);
 		result.append(')');
 		return result.toString();
 	}

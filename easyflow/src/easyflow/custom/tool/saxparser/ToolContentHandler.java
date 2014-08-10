@@ -238,76 +238,86 @@ public class ToolContentHandler implements ContentHandler {
 	private void setParam(Attributes atts, Parameter curParam)
 	{
 		initParam(curParam);
-		if (atts.getValue("name")!=null)
+		if (atts.getValue("name") != null)
 			curParam.setName(atts.getValue("name"));
-		if (atts.getValue("type")!=null)
+		if (atts.getValue("type") != null)
 			curParam.setType(atts.getValue("type"));
-		if (atts.getValue("cmd_part")!=null)
+		if (atts.getValue("cmd_part") != null)
 			curParam.setCmdPart(atts.getValue("cmd_part"));
 
-		if (curParam.getName()==null && curParam.getType()!=null)
+		if (curParam.getName() == null && curParam.getType() != null)
 			curParam.setName(curParam.getType());
 		
-		if (atts.getValue("optional")!=null)
+		if (atts.getValue("optional") != null)
 			curParam.setOptional(atts.getValue("optional").equals("true")?true:false);
 		else
 			curParam.setOptional(null);
-		if (atts.getValue("multiple")!=null)
+		if (atts.getValue("multiple") != null)
 			curParam.setMultiple(atts.getValue("multiple").equals("true")?true:false);
 		else
 			curParam.setMultiple(null);
 		
-		if (atts.getValue("multiple_value")!=null)
-			curParam.setMultipleValue(atts.getValue("multiple_value").equals("true")?true:false);
+		if (atts.getValue("multipleInstances") != null)
+			curParam.setMultipleInstances(atts.getValue("multipleInstances").equals("true") ? true:false);
+		else
+			curParam.setMultipleInstances(null);
+
+		if (atts.getValue("multipleInstancesPerInput") != null)
+			curParam.setMultipleInstancesPerInput(atts.getValue("multipleInstancesPerInput").equals("true") ? true:false);
+		else
+			curParam.setMultipleInstancesPerInput(null);
+
+		if (atts.getValue("multiple_value") != null)
+			curParam.setMultipleValue(atts.getValue("multiple_value").equals("true") ? true:false);
 		else
 			curParam.setMultipleValue(null);
 		
-		if (atts.getValue("default_value")!=null)
+		if (atts.getValue("default_value") != null)
 			curParam.setDefaultValue(atts.getValue("default_value"));
-		if (atts.getValue("value_type")!=null)
+		if (atts.getValue("value_type") != null)
 			curParam.setValueType(atts.getValue("value_type"));
 
 		// relevant for package
-		if (atts.getValue("value")!=null)
+		if (atts.getValue("value") != null)
 			curParam.getGeneralValue().add(atts.getValue("value"));
 
-		if (atts.getValue("separator")!=null)
+		if (atts.getValue("separator") != null)
 			curParam.setDelimiter(atts.getValue("separator"));
-		if (atts.getValue("prefix")!=null)
+		if (atts.getValue("prefix") != null)
 			curParam.setPrefix(atts.getValue("prefix"));
-		if (atts.getValue("arg_value_separator")!=null)
+		if (atts.getValue("arg_value_separator") != null)
 			curParam.setValueDelimiter(atts.getValue("arg_value_separator"));
 		if (atts.getValue("fixed") != null)
-			curParam.setFixedArgValue(atts.getValue("fixed").equals("true")?true:false);
+			curParam.setFixedArgValue(atts.getValue("fixed").equals("true") ? true:false);
 		else
 			curParam.setFixedArgValue(null);
 		
-		if (atts.getValue("label")!=null)
+		if (atts.getValue("label") != null)
 			curParam.setLabel(atts.getValue("label"));
-		if (atts.getValue("help")!=null)
+		if (atts.getValue("help") != null)
 			curParam.setHelp(atts.getValue("help"));
-		if (atts.getValue("description")!=null)
+		if (atts.getValue("description") != null)
 			curParam.setDescription(atts.getValue("description"));
-		if (atts.getValue("minOcc")!=null)
+		if (atts.getValue("minOcc") != null)
 			curParam.setMinOcc(new Integer(atts.getValue("minOcc")));
-		if (atts.getValue("maxOCc")!=null)
+		if (atts.getValue("maxOCc") != null)
 			curParam.setMaxOcc(new Integer(atts.getValue("maxOcc")));
-		if (atts.getValue("named")!=null)
-			curParam.setNamed(atts.getValue("named").equals("true")?true:false);
+		if (atts.getValue("named") != null)
+			curParam.setNamed(atts.getValue("named").equals("true") ? true:false);
 		else 
 			curParam.setNamed(null);
-		if (atts.getValue("advanced")!=null)
-			curParam.setAdvanced(atts.getValue("advanced").equals("true")?true:false);
+		if (atts.getValue("advanced") != null)
+			curParam.setAdvanced(atts.getValue("advanced").equals("true") ? true:false);
 		
-		if (atts.getValue("handle")!=null)
+		if (atts.getValue("handle") != null)
 			for (String handle:atts.getValue("handle").split(","))
 				(curParam).getHandles().add(handle);
 
-		if (atts.getValue("grouping")!=null)
+		if (atts.getValue("grouping") != null)
 			for (String group:atts.getValue("grouping").split(","))
 				curParam.getGrouping().add(group);
 		
-		if (atts.getValue("data")!=null)
+		if (atts.getValue("data") != null)
 			dataStrings.put(curParam.getName(), atts.getValue("data"));
 		
 		if ("data".equals(atts.getValue("type")))
@@ -317,8 +327,9 @@ public class ToolContentHandler implements ContentHandler {
 			data.setName(curParam.getName());
 			data.setParameter(curParam);
 			curParam.setDataParam(true);
-			logger.debug("param id="+curParam.hashCode()+" "+curParam.getName()+" ("+tool.getName()+")");
-			if (atts.getValue("output")!=null)
+			if (!withinPackage)
+				logger.debug("param id="+curParam.hashCode()+" "+curParam.getName()+" ("+tool.getName()+")");
+			if (atts.getValue("output") != null)
 			{
 				if (atts.getValue("output").equalsIgnoreCase("true"))
 					data.setOutput(true);
@@ -334,13 +345,15 @@ public class ToolContentHandler implements ContentHandler {
 				data.setOutput(false);
 			}
 			curParam.setOutput(data.isOutput());
-			if (tool.getData().containsKey(data.getName()))
-				logger.warn("overiding data="+data.getName()+" of tool="+tool.getId());
-			else
-				logger.debug("adding data="+data.getName()+ " for tool="+tool.getId());
-			
-			
-			addToToolData(getParamParent(curParam), data, tool);
+			if (!withinPackage)
+			{
+				if (tool.getData().containsKey(data.getName()))
+					logger.warn("overiding data="+data.getName()+" of tool="+tool.getId());
+				else
+					logger.debug("adding data="+data.getName()+ " for tool="+tool.getId());
+			}
+			if (!withinPackage)
+				addToToolData(getParamParent(curParam), data, tool);
 
 			if (atts.getValue("format")!=null)
 				for (String format:atts.getValue("format").split(","))
@@ -348,7 +361,8 @@ public class ToolContentHandler implements ContentHandler {
 
 			dataPort = DataFactory.eINSTANCE.createDataPort();
 			dataPort.setName(curParam.getName());
-			dataPort.getTools().put(tool.getName(), tool);
+			if (!withinPackage)
+				dataPort.getTools().put(tool.getName(), tool);
 			data.setPort(dataPort);
 			
 			setDataPort(((InOutParameter)curParam).getFormats());
@@ -556,7 +570,7 @@ public class ToolContentHandler implements ContentHandler {
 				
 				if (withinPackage)
 				{
-					if (parameter.getType().equals("template"))
+					if (atts.getValue("abstract") != null && atts.getValue("abstract").equals("true"))
 						pkg.setTemplateParam(parameter);
 					else
 					{

@@ -8,9 +8,11 @@ package easyflow.core.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +27,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -45,7 +46,9 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.GlobalVarMetaData;
 import easyflow.custom.util.Tuple;
+import easyflow.custom.util.Util;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
@@ -111,7 +114,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class TaskImpl extends EObjectImpl implements Task {
+public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	/**
 	 * The cached value of the '{@link #getInDataPorts() <em>In Data Ports</em>}' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1433,6 +1436,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 					+ dataPort.getName() + " found. Returning null.");
 		return (tasks.size() > 0) ? tasks.get(0) : null;
 	}
+	
+	public EMap<String, String> getValidInOutDataPortCombinations()
+	{
+		EMap<String, String> combis = new BasicEMap<String, String>();
+		for (DataPort dataPortIn : getInDataPorts())
+			for (DataPort dataPortOut : getOutDataPorts())
+				combis.put(dataPortIn.getFormat().getName(), dataPortOut.getFormat().getName());
+		return combis;
+	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1897,18 +1909,20 @@ public class TaskImpl extends EObjectImpl implements Task {
 					paramName = dataParam.getName();
 			}
 			//dataLink.getData().getDataResourceName().getPath();
-			if (getCommand()==null)
-				logger.debug("cmd null");
-			logger.debug("dataPorts2ParamStringList(): out="+isOutput
+			if (getCommand() == null)
+				logger.error("resolveDataPorts(): cmd null");
+			/*logger.debug("resolveDataPorts(): out="+isOutput
 					+" datalink="+dataLink.hashCode()+" "+dataLink.getDataPort().hashCode()+" "+dataLink.getInDataPort().hashCode()
 					+"\n dataLink="+dataLink.getUniqueString(true) 
 					+"; in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
 					+"; data param="+paramName+" (default="+dataParam.getName()+")"
 					+"; data resource="+dataLink.getData().getDataResourceName().toString()+" "+getInputs().hashCode());
+			Command cmd = getCommand();
+			logger.debug("tmp");*/
 			if (paramName == null || !getCommand().getResolvedParams().containsKey(paramName))
 			{
 				//throw new ParameterNotFoundException();
-				logger.warn("dataPorts2ParamStringList(): no parameter defined. This is ok for hidden/implicit input/output data."+
+				logger.warn("resolveDataPorts(): no parameter defined. This is ok for hidden/implicit input/output data."+
 						"in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
 						+" dataLink="+dataLink.getUniqueString(true)
 						+"; data resource="+dataLink.getData().getDataResourceName().toString());
@@ -1916,9 +1930,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			}
 			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
 			
-			//logger.trace("dataPorts2ParamStringList(): cmd param keyset="+getCommand().getResolvedParams().keySet());
+			//logger.trace("resolveDataPorts(): cmd param keyset="+getCommand().getResolvedParams().keySet());
 			//parameter.getValue().clear();
-			if (dataLink.getData().getDataResourceName()==null)
+			if (dataLink.getData().getDataResourceName() == null)
 				throw new NoValidInOutDataException();
 			parameter.getValue().add(dataLink.getData().getDataResourceName());
 			//logger.debug("param id="+parameter.hashCode()
@@ -2038,20 +2052,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * 
 	 * @generated not
 	 */
-	public boolean canProcessMultiplesInstancesFor(Tool tool, DataPort dataPort)
-			throws DataPortNotFoundException, ToolNotFoundException {
-		if (tool == null)
-			tool = getPreferredTool();
-		if (tool == null)
-			throw new ToolNotFoundException();
-		return tool.canProcessMultiplesInstancesFor(dataPort);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated not
-	 */
 	public boolean canFilterInstancesFor(Tool tool, DataPort dataPort)
 			throws DataPortNotFoundException, ToolNotFoundException {
 		if (tool == null)
@@ -2061,6 +2061,38 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return tool.canFilterInstancesFor(dataPort);
 	}
 
+	public EList<TraversalChunk> getInputs(boolean intersect)
+	{
+		EList<TraversalChunk> recs = getRecords(intersect);
+		EList<TraversalChunk> inputs = new BasicEList<TraversalChunk>();
+		List<String> processedSoFar = new ArrayList<String>();
+		
+		for (TraversalChunk rec : recs)
+		{
+			List<String> ina = GlobalVarMetaData.getMultiFieldValues(rec.getName(), GlobalConstants.METADATA_INPUT);
+			if (ina.size() == 0)
+			{
+				TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
+				traversalChunk.setName(
+						GlobalVarMetaData.getMetaDataTableEntry(rec.getName(), GlobalConstants.METADATA_INPUT));
+				inputs.add(traversalChunk);
+			}
+			else
+			for (String in:ina)
+			{
+				if (!processedSoFar.contains(in))
+				{
+					processedSoFar.add(in);
+				TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
+				traversalChunk.setName(in);
+				inputs.add(traversalChunk);
+				}
+			}
+		}
+		
+		logger.debug("getInputs(): retrieved "+inputs.size()+" inputs: "+processedSoFar);
+		return inputs;
+	}
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -2069,7 +2101,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public EList<TraversalChunk> getRecords(boolean intersect) {
 
 		boolean modeUnion = !intersect;
-		boolean firstTC = true;
+		boolean firstTC   = true;
 		// if (!getRecords().isEmpty())
 		// {
 		// logger.warn("getRecords(): record already processed. Return cached value.");
@@ -2148,7 +2180,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 							logger.trace("getRecords(): remove traversal chunk "
 									+ rec
 									+ "because it doesnt intersect with a previous seen chunk.");
-
 						}
 
 					}
@@ -2180,13 +2211,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 						}
 					}
 				}
-			} else {
+			} else
+			{
 				logger.info("getRecords(): no records can be retrieved for grouping="
 						+ groupingStr
 						+ ", because it is not contained in metadata table.");
 			}
 		}
-		logger.debug("getRecords(): result=" + chunks.values().size());
+		logger.debug("getRecords(): result=" + chunks.values().size()+" ("+Util.list2String(chunks.values(), ", ")+")");
 		getRecords().addAll(new BasicEList<TraversalChunk>(chunks.values()));
 		return getRecords();
 
@@ -2197,10 +2229,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * 
 	 * @generated not
 	 */
-	public EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask) {
-
+	public EList<TraversalChunk> getOverlappingRecordsProvidedBy(Task testTask)
+	{
 		EList<TraversalChunk> overlappingTraversalChunks = new BasicEList<TraversalChunk>();
-		
 		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "
 				+ testTask.getUniqueString());
 		EList<TraversalChunk> providedTraversalChunks = testTask
@@ -2208,18 +2239,20 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 		logger.debug("getOverlappingRecordsProvidedBy(): retrieve records for task "
 				+ getUniqueString());
-		for (TraversalChunk traversalChunk : getRecords(true)) {
+		for (TraversalChunk traversalChunk : getRecords(true))
+		{
 			logger.debug("getOverlappingRecordsProvidedBy(): test required chunk "
 					+ traversalChunk.getName());
-			for (TraversalChunk providedTraversalChunk : providedTraversalChunks) {
+			for (TraversalChunk providedTraversalChunk : providedTraversalChunks)
+			{
 				logger.debug("getOverlappingRecordsProvidedBy(): "
 						+ providedTraversalChunk.getName()
 						+ " match="
 						+ traversalChunk.getName().equals(
 								providedTraversalChunk.getName()));
 				if (traversalChunk.getName().equals(
-						providedTraversalChunk.getName())) {
-
+						providedTraversalChunk.getName()))
+				{
 					overlappingTraversalChunks.add(traversalChunk);
 				}
 			}
@@ -2227,13 +2260,46 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return overlappingTraversalChunks;
 	}
 
+	public boolean isEqual(EList<TraversalChunk> requiredChunks, 
+			EList<TraversalChunk> providedChunks,
+			boolean contain)
+	{
+		EList<TraversalChunk> controlList = new BasicEList<TraversalChunk>();
+		if (providedChunks != null && requiredChunks != null 
+				&& (providedChunks.size() == requiredChunks.size() || contain))
+		{
+			for (TraversalChunk requiredChunk : requiredChunks)
+			{
+				TraversalChunk rec = null;
+				for (TraversalChunk providedChunk : providedChunks)
+				{
+					if (requiredChunk.getName().equals(
+							providedChunk.getName()))
+					{
+						rec = requiredChunk;
+						break;
+					}
+				}
+				if (rec == null)
+					break;
+				controlList.add(rec);
+			}
+			return controlList.size() == requiredChunks.size();
+		}
+		else if (requiredChunks == null || requiredChunks.isEmpty())
+			return true;
+		
+		return false;
+	}
+	
 	/**
-	 * <!-- begin-user-doc --> Tell, if the task and its implementing tool is
+	 * <!-- begin-user-doc --> 
+	 * Tell, if the task and its implementing tool is
 	 * able to generate the outputs that match the given dataPort. To refine the
 	 * evaluation specify grouping string and, optional, a list of chunks for
 	 * the given grouping. Usually the most granular grouping is used (e.g. ID
-	 * or records) to precisely define which outputs are of interest. <!--
-	 * end-user-doc -->
+	 * or records) to precisely define which outputs are of interest. 
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated not
 	 */
@@ -2242,27 +2308,33 @@ public class TaskImpl extends EObjectImpl implements Task {
 			throws DataPortNotFoundException, ToolNotFoundException {
 
 		if (traversalChunks == null) {
-			// todo: if the the chunks for the grouping criteria can be provided
+			// todo: if the the chunks for the grouping criteria cannot be provided
 			// (-> check with tool definition)
-		} else if (grouping != null
-				&& grouping.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD)) {
-			EList<TraversalChunk> recs = getRecords(true);
-			if (recs.size() == traversalChunks.size()) {
-				for (TraversalChunk requiredChunk : traversalChunks) {
-					TraversalChunk rec = null;
-					for (TraversalChunk provdiedChunk : recs) {
-						if (requiredChunk.getName().equals(
-								provdiedChunk.getName())) {
-							rec = provdiedChunk;
-							break;
-						}
-					}
-					if (rec == null)
-						break;
-					recs.remove(rec);
-				}
-				return recs.isEmpty();
+			logger.debug("canProvideDataPort(): no traversal chunks provided.");
+		}
+		else if (grouping != null)
+		{
+			EList<TraversalChunk> recs = null;
+			if (GlobalConstants.TRAVERSAL_CRITERION_RECORD.equals(grouping))
+			{
+				recs = getRecords(true);
+				logger.debug("canProvideDataPort(): found "+recs.size()+" chunks for grouping="+grouping);
 			}
+			else if (GlobalConstants.METADATA_INPUT.equals(grouping))
+			{
+				recs = getInputs(true);
+				logger.debug("canProvideDataPort(): found "+recs.size()+" chunks for grouping="+grouping);
+			}
+			
+			/*if (isRoot() && 
+					getTraversalEvents().get(grouping).getTraversalCriterion()
+					.getMode().equals(GlobalConstants.GROUPING_MODE_JOINT))
+			{
+				return isEqual(traversalChunks, recs, true);
+			}
+			else*/
+				return isEqual(traversalChunks, recs, false);
+			
 		}
 		return false;
 	}
@@ -2467,10 +2539,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean hasMultipleInputsFor(DataPort dataPort) {
+	public boolean canProvideMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -2478,52 +2551,141 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public boolean hasMultipleInstancesFor(DataPort dataPort) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public boolean canProvideMultipleInputsFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException {
+		if (tool == null)
+			tool = getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProvideMultipleInputsFor(dataPort);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
-	public boolean hasMultipleGroupingsFor(DataPort dataPort) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public boolean canProvideMultipleInstancesFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException {
+		if (tool == null)
+			tool = getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProvideMultipleInstancesFor(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+		if (tool == null)
+			tool = getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProvideMultipleInstancesPerInputFor(dataPort);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean canProcessMultipleInputsFor(Tool tool, DataPort dataPort)
 			throws DataPortNotFoundException, ToolNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		if (tool == null)
+			tool = getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProcessMultipleInputsFor(dataPort);
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean canProcessMultipleInstancesFor(Tool tool, DataPort dataPort)
 			throws DataPortNotFoundException, ToolNotFoundException {
+		if (tool == null)
+			tool = getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProcessMultipleInstancesFor(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException {
+		if (tool == null)
+			tool = getPreferredTool();
+		if (tool == null)
+			throw new ToolNotFoundException();
+		return tool.canProcessMultipleInstancesPerInputFor(dataPort);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort)
-			throws DataPortNotFoundException, ToolNotFoundException {
+	public void setProcessMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -2535,22 +2697,54 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public EList<TraversalChunk> getOverlappingChunksFor(Task parentTask,
-			String groupingStr) {
+			String groupingStr)
+	{
 
-		EList<TraversalChunk> tc = new BasicEList<TraversalChunk>();
+		EList<TraversalChunk> overlap      = new BasicEList<TraversalChunk>();
+		EList<TraversalChunk> chunks       = null;
+		EList<TraversalChunk> parentChunks = null;
+		boolean intersect = true;
+		//GlobalVarMetaData
+		//GlobalVar.getGraphUtil().getMetaData().get
 		if (getChunks().containsKey(groupingStr))
-			for (TraversalChunk traversalChunk : getChunks().get(groupingStr)) {
-				if (parentTask.getChunks().containsKey(groupingStr)) {
-					for (TraversalChunk parentTraversalChunk : parentTask
-							.getChunks().get(groupingStr)) {
-						if (traversalChunk.getName().equals(
-								parentTraversalChunk.getName()))
-							tc.add(traversalChunk);
-					}
-
-				}
+		{
+			chunks = getChunks().get(groupingStr);
+		}
+		if (chunks == null && GlobalConstants.METADATA_INPUT.equals(groupingStr))
+		{
+			chunks = getInputs(intersect);
+		}
+		else if (chunks == null)
+		{
+			chunks = getRecords(intersect);
+		}
+		
+		if (parentTask.getChunks().containsKey(groupingStr)) 
+		{
+			parentChunks = parentTask.getChunks().get(groupingStr);
+		}
+		if (chunks == null && GlobalConstants.METADATA_INPUT.equals(groupingStr))
+		{
+			parentChunks = ((TaskImpl)parentTask).getInputs(intersect);
+		}
+		else if (chunks == null)
+		{
+			parentChunks = parentTask.getRecords(intersect);
+		}
+		
+		if (chunks == null || parentChunks == null)
+			return overlap;
+		
+		for (TraversalChunk traversalChunk : chunks) 
+		{
+			for (TraversalChunk parentTraversalChunk : parentChunks) 
+			{
+				if (traversalChunk.getName().equals(
+					parentTraversalChunk.getName()))
+					overlap.add(traversalChunk);
 			}
-		return tc;
+		}	
+		return overlap;
 	}
 
 	/**
@@ -2921,6 +3115,226 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return command != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.TASK___READ_TASK__STRING_STRING_ELIST:
+				readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
+				return null;
+			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING:
+				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN:
+				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2), (Boolean)arguments.get(3));
+			case CorePackage.TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST:
+				return parseDataFormatField((String)arguments.get(0), (EList<Pattern>)arguments.get(1));
+			case CorePackage.TASK___GET_UNIQUE_STRING:
+				return getUniqueString();
+			case CorePackage.TASK___GET_UNIQUE_URI_STRING:
+				return getUniqueURIString();
+			case CorePackage.TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT:
+				return isCompatibleWithOutDataPortFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT:
+				return isCompatibleWithInDataPortFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT:
+				return getParentTaskByOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK:
+				return getNonOveralppingTraversalChunksFor((Task)arguments.get(0));
+			case CorePackage.TASK___READ_TOOLS__ELIST:
+				readTools((EList<Tool>)arguments.get(0));
+				return null;
+			case CorePackage.TASK___GET_PREFERRED_TOOL:
+				return getPreferredTool();
+			case CorePackage.TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST:
+				return getOverlappingDataPorts((EList<DataPort>)arguments.get(0), (EList<DataPort>)arguments.get(1));
+			case CorePackage.TASK___CREATE_COMMAND_LINE__STRING:
+				try {
+					return createCommandLine((String)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___VALIDATE_TOOL__TOOL:
+				return validateTool((Tool)arguments.get(0));
+			case CorePackage.TASK___VALIDATE_TOOLS:
+				return validateTools();
+			case CorePackage.TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN:
+				return getDataPortByDataPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN:
+				return getDataPortByNameOfFormat((String)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN:
+				return getDataPortByName((String)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST:
+				return resolveMissingDataPortsByTool((EList<Task>)arguments.get(0));
+			case CorePackage.TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING:
+				return getOverlappingChunksFor((Task)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
+				try {
+					return getRequiredGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
+				try {
+					return getProvidedGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					setProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					setProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					setProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					setProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					setProvideMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					setProvideMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canFilterInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_RECORDS__BOOLEAN:
+				return getRecords((Boolean)arguments.get(0));
+			case CorePackage.TASK___GET_INPUTS__BOOLEAN:
+				return getInputs((Boolean)arguments.get(0));
+			case CorePackage.TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK:
+				return getOverlappingRecordsProvidedBy((Task)arguments.get(0));
+			case CorePackage.TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
+				try {
+					return canProvideDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
+				try {
+					return canComsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT:
+				return getOutputsForDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT:
+				return getInputsForDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___RESOLVE_INPUTS:
+				try {
+					resolveInputs();
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_OUTPUTS:
+				try {
+					resolveOutputs();
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

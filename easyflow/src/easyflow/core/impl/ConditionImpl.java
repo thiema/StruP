@@ -12,7 +12,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
@@ -30,7 +29,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  *
  * @generated
  */
-public class ConditionImpl extends EObjectImpl implements Condition {
+public class ConditionImpl extends MinimalEObjectImpl.Container implements Condition {
 	/**
 	 * The cached value of the '{@link #getForbidden() <em>Forbidden</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -172,6 +171,20 @@ public class ConditionImpl extends EObjectImpl implements Condition {
 				return circumventingParents != null && !circumventingParents.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.CONDITION___IS_UNCONDITIONAL:
+				return isUnconditional();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

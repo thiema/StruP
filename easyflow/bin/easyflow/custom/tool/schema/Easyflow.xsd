@@ -130,7 +130,7 @@
 		<xs:attribute name="name" type="xs:string" />
 		<xs:attribute name="format" type="xs:string" />
 		<xs:attribute name="output" type="xs:boolean" />
-
+		<xs:attribute name="abstract" type="xs:boolean"/>
 		<xs:attribute name="min_occur" type="xs:int" />
 		<xs:attribute name="max_occur" type="xs:int" />
 
@@ -149,6 +149,8 @@
 		<xs:attribute name="default_value" type="xs:string" />
 		<xs:attribute name="is_value_required" type="xs:boolean" />
 		<xs:attribute name="multiple" type="xs:boolean" />
+		<xs:attribute name="multipleInstances" type="xs:boolean" />
+		<xs:attribute name="multipleInstancesPerInput" type="xs:boolean" />
 		<xs:attribute name="multiple_value" type="xs:boolean" />
 		<xs:attribute name="grouping" type="xs:string" />
 		<xs:attribute name="handle" type="xs:string" />
@@ -182,7 +184,6 @@
 	      <xs:enumeration value="data"/>
 	      <xs:enumeration value="drill_down"/>
 	      <xs:enumeration value="analysis_type"/>
-	      <xs:enumeration value="template"/>
 	      <xs:enumeration value="binary"/>
 	    </xs:restriction>
   </xs:simpleType>

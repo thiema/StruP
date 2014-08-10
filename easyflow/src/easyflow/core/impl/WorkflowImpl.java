@@ -1,8 +1,10 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
+
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTemplate;
@@ -20,6 +22,7 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
@@ -30,6 +33,8 @@ import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.Command;
+import easyflow.tool.InOutParameter;
+import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
@@ -38,14 +43,13 @@ import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Stack;
-
-import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -58,7 +62,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -99,7 +102,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class WorkflowImpl extends EObjectImpl implements Workflow {
+public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workflow {
 	
 	protected static int totSteps = 5;
 	/**
@@ -1193,15 +1196,64 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Task findUtilityTaskForAnalysisType(String analysisType) {
+	public Task findUtilityTaskForAnalysisType(String analysisType, DataPort dataPortIn, DataPort dataPortOut) {
 		
 		Task utilityTask=null;
 		for (Task task:getStaticTasks())
-			if (task.getAnalysisTypes().contains(analysisType))
+			if ((dataPortIn == null || task.isCompatibleWithInDataPortFor(dataPortIn)) 
+					&& (dataPortOut == null || task.isCompatibleWithOutDataPortFor(dataPortOut))
+					&& task.getAnalysisTypes().contains(analysisType))
 			{
 				utilityTask=task;
 			}
 		return utilityTask;
+	}
+	
+	public boolean registerUtilityTasks()
+	{
+		boolean rc = true;
+		
+		
+		/*
+    	// filter and merge must be defined, when PreprocessingTasks of Type 1 (grouping data dependent) should be resolved.
+    	String utilityTasks[] = {"filter", "merge", "index", "sort", "view"};
+    	Task utilTask = null;
+		for (String utility : utilityTasks)
+		{
+			utilTask = findUtilityTaskForAnalysisType(utility, null, null);
+			if (utilTask != null)
+			{	
+				for (Entry<DataPort, DataPort> e : utilTask.getValidInOutDataPortCombinations())
+				{
+				
+					getGraphUtil().getUtilityTasks().put(e.getKey().getName()
+							+"_"+e.getValue().getName()
+							+"_"+utility, utilTask);
+				}
+			}
+			else
+				logger.error("generateAbstractWorkflow(): no utility task found for utility="+utility);
+		}
+*/
+		for (Task utilTask : getStaticTasks())
+		{
+			for (Entry<String, String> e : ((TaskImpl)utilTask).getValidInOutDataPortCombinations())
+			{
+				for (String analysisType : utilTask.getAnalysisTypes())
+				{
+					String combi = e.getKey()+"_"+e.getValue();
+					getGraphUtil().getUtilityTasks().put(
+							combi+"_"+analysisType, utilTask);
+					logger.debug("generateAbstractWorkflow(): utility task "+analysisType+" for combination="+combi);
+				}
+			}
+		}
+		
+		// add the "input"-splitting task, which actually doesnt do anything
+		Task dummyTask = CoreFactory.eINSTANCE.createTask();
+		dummyTask.setUtil(true);
+		getGraphUtil().getUtilityTasks().put(GlobalConstants.METADATA_INPUT, dummyTask);
+		return rc;
 	}
 	
 	/**
@@ -1210,13 +1262,15 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean readWorkfowTemplate() {
+		
 		EasyflowTemplate eTpl = (EasyflowTemplate) getWorkflowTemplate();
 		boolean rc = eTpl.readTemplate(getMode(), 
 				getDefaultGroupingCriteria());
+		
 		for (Task t:eTpl.getTasks())
 			if (GlobalConstants.ROOT_TASK_NAME.equals(t.getName()))
 				setRootTask(t);
-			
+		
 		return rc; 
 	}
 
@@ -1249,6 +1303,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getValidInOutDataPortCombinations() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean generateAbstractWorkflow() {
@@ -1256,19 +1321,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		//printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
     	boolean res=generateGraphFromTemplate(getTools());
 
-    	// filter and merge must be defined, when PreprocessingTasks of Type 1 (grouping data dependent) should be resolved.
-    	String utilityTasks[] = {"filter", "merge", "index", "sort", "view"};
+
     	if (res)
     	{
-    		Task utilTask = null;
-    		for (String utility : utilityTasks)
-    		{
-    			utilTask = findUtilityTaskForAnalysisType(utility);
-    			if (utilTask != null)
-    				getGraphUtil().getUtilityTasks().put(utility, utilTask);
-    			else
-    				logger.error("generateAbstractWorkflow(): no utility task found for utility="+utility);
-    		}
+    		registerUtilityTasks();
     		//printGraph();
     		generateAbstractGraphEdges();
     		//printGraph();
@@ -1376,14 +1432,23 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	
         	Tool rootTool = ToolFactory.eINSTANCE.createTool();
 			Command rootCommand = ToolFactory.eINSTANCE.createCommand();
-			rootTask.setCommand(rootCommand);
+			getRootTask().setCommand(rootCommand);
+			for (DataPort dataPort : getRootTask().getOutDataPorts())
+			{
+				Data           data  = DataFactory.eINSTANCE.createData();
+				InOutParameter param = ToolFactory.eINSTANCE.createInOutParameter();
+				param.setDataParam(true);
+				param.setOutput(true);
+				data.setOutput(true);
+				data.setParameter(param);
+				data.setPort(dataPort);
+				EList<Data> dataList = new BasicEList<Data>();
+				dataList.add(data);
+				rootTool.getData().put(dataPort.getName(), dataList);
+				rootTool.setRoot(true);
+			}
 			getRootTask().getTools().put("rootTool", rootTool);
-        	
-        	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());
-        	//logger.trace("insert dedicated root cell"+" "+rootTask.getUniqueString());
-        	
-        	//logger.debug(getGraph().getLabel(rootCell));
-        	
+        	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());        	
         	getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, true);
 
         } finally {
@@ -1397,6 +1462,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	{
 		DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 		dataLink.setDataPort(dataPort);
+		dataLink.setParentGroupingStr(GlobalConstants.METADATA_INPUT);
 		return dataLink;
 	}
 	
@@ -1672,6 +1738,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			{
 				DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 				dataLink.setDataPort(dataPort);
+				if (result.getParentTask().isRoot())
+					dataLink.setParentGroupingStr(GlobalConstants.METADATA_INPUT);
 				if (dataLink.getCondition()==null)
 					dataLink.setCondition(CoreFactory.eINSTANCE.createCondition());
 
@@ -1980,6 +2048,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				task.getInDataPorts().add(dataPort);
 				DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 				dataLink.setDataPort(dataPort);
+				
 				dataLink.setInDataPort(tmpTask.getDataPortByDataPort(dataPort, true));
 				getGraphUtil().getDataLinks().put(Integer.toString(dataLink.hashCode()), dataLink);
 				Object   o  = getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
@@ -2671,6 +2740,138 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return executionSystem != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP:
+				return generateGraphFromTemplate((EMap<String, Tool>)arguments.get(0));
+			case CorePackage.WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK:
+				return getParentTaskByOutDataPort((DataPort)arguments.get(0), (Task)arguments.get(1));
+			case CorePackage.WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT:
+				return getParentTasksByOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.WORKFLOW___VALIDATE_PARENT_TASK_OUT_DATA_PORT__DATAPORT_TASK:
+				return validateParentTaskOutDataPort((DataPort)arguments.get(0), (Task)arguments.get(1));
+			case CorePackage.WORKFLOW___VALIDATE_LAST_TASK_OUT_DATA_PORT__DATAPORT:
+				return validateLastTaskOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.WORKFLOW___READ_META_DATA:
+				readMetaData();
+				return null;
+			case CorePackage.WORKFLOW___GET_PARENT_TASKS_FOR__TASK:
+				return getParentTasksFor((Task)arguments.get(0));
+			case CorePackage.WORKFLOW___RESOLVE_MISSING_DATA_PORTS_BY_TOOL_FOR__TASK:
+				return resolveMissingDataPortsByToolFor((Task)arguments.get(0));
+			case CorePackage.WORKFLOW___READ_WORKFOW_TEMPLATE:
+				return readWorkfowTemplate();
+			case CorePackage.WORKFLOW___GENERATE_ABSTRACT_WORKFLOW:
+				return generateAbstractWorkflow();
+			case CorePackage.WORKFLOW___APPLY_GROUPING_CRITERIA:
+				try {
+					return applyGroupingCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___APPLY_PARAMETER_CRITERIA:
+				try {
+					return applyParameterCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT:
+				try {
+					return applyTraversalEvent((TraversalEvent)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_TRAVERSAL_EVENTS:
+				try {
+					return resolveTraversalEvents();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS:
+				try {
+					return resolveIncompatibleGroupings();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_PREPROCESSING_TASKS:
+				try {
+					return resolvePreprocessingTasks();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RESOLVE_TOOL_DEPENDENCIES:
+				try {
+					return resolveToolDependencies();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
+				return generateWorklowForExecutionSystem();
+			case CorePackage.WORKFLOW___RUN_NEXT_WORKFLOW_STEP:
+				try {
+					return runNextWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RUN_PREV_WORKFLOW_STEP:
+				try {
+					return runPrevWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___RUN_ENTIRE_WORKFLOW:
+				try {
+					return runEntireWorkflow();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.WORKFLOW___HAS_NEXT_WORKFLOW_STEP:
+				return hasNextWorkflowStep();
+			case CorePackage.WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:
+				return getTotalNumberOfWorkflowSteps();
+			case CorePackage.WORKFLOW___GET_WORKFLOW_STEP_LABEL_FOR__STRING:
+				return getWorkflowStepLabelFor((String)arguments.get(0));
+			case CorePackage.WORKFLOW___GET_WORKFLOW_STEP_DESC_FOR__STRING:
+				return getWorkflowStepDescFor((String)arguments.get(0));
+			case CorePackage.WORKFLOW___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP:
+				return getNumberOfCurrentWorkflowStep();
+			case CorePackage.WORKFLOW___GET_NEXT_WORKFLOW_STEP:
+				return getNextWorkflowStep();
+			case CorePackage.WORKFLOW___GET_CUR_WORKFLOW_STEP:
+				return getCurWorkflowStep();
+			case CorePackage.WORKFLOW___DELETE:
+				return delete();
+			case CorePackage.WORKFLOW___RESET_WORKFLOW_STEP:
+				return resetWorkflowStep();
+			case CorePackage.WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING:
+				printWorkflowStepMsgOnStart((String)arguments.get(0));
+				return null;
+			case CorePackage.WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING:
+				printWorkflowStepMsgOnEnd((Boolean)arguments.get(0), (String)arguments.get(1));
+				return null;
+			case CorePackage.WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS:
+				return getValidInOutDataPortCombinations();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

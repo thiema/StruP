@@ -7,7 +7,7 @@
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"></interpreter>
 		<command pattern="pos_arg opt_arg"></command>
-		<param type="template" name="default_param" named="true" separator="=" prefix=""/>
+		<param type="text" name="default_param" named="true" separator="=" prefix=""/>
 		<param type="analysis_type" named="true" name="jar" prefix="-">
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
@@ -48,7 +48,10 @@ id="rgPicardMarkDups"
  -->
 	<package id="gatk" version="2.3">
 		<interpreter exe="java"></interpreter>
-		<param name="default_param" type="template" named="true" separator=" " prefix="-"/>
+		<param type="text"  abstract="true" name="any" named="true" separator=" " prefix="-"/>
+		<param type="data" abstract="true" name="input" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" name="output" output="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
+		
 		<param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/>
 		<param type="analysis_type" named="true" name="T" prefix="-">
 			<option value="Base Recalibrator" exe="BaseRecalibrator"></option>
@@ -95,7 +98,9 @@ id="rgPicardMarkDups"
 		</description>
 		<exe name="bwa"/>
 		<command assume_data_param_positional="true"/>
-		<param type="template" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		<param type="data" abstract="true" name="input" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" name="output" output="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
 		<param type="analysis_type">
 			<option value="aln" help="gapped/ungapped alignment"/>
 			<option value="samse" condition="size(InputFiles)==1" help="generate alignment (single ended)"/>
@@ -134,7 +139,7 @@ Command: index         index sequences in the FASTA format
 			samtools package to manipulate (aligned) short reads.
 		</description>
 		<exe name="samtools"/>
-		<param type="template" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		<param type="text" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
 		<param type="analysis_type">
 			<option value="view" help="SAM-BAM conversion"/>
 			<option value="sort" help="sort alignment file"/>

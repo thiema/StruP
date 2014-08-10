@@ -16,15 +16,11 @@ import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterListMapImpl;
-
 import java.net.URI;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -36,13 +32,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.omg.CORBA.portable.ValueInputStream;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,12 +77,14 @@ import org.omg.CORBA.portable.ValueInputStream;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isOutput <em>Output</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isDataParam <em>Data Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getCmdPart <em>Cmd Part</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstances <em>Multiple Instances</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ParameterImpl extends EObjectImpl implements Parameter {
+public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -650,6 +646,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected String cmdPart = CMD_PART_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getMultipleInstances() <em>Multiple Instances</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMultipleInstances()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean MULTIPLE_INSTANCES_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getMultipleInstances() <em>Multiple Instances</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMultipleInstances()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean multipleInstances = MULTIPLE_INSTANCES_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMultipleInstancesPerInput() <em>Multiple Instances Per Input</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMultipleInstancesPerInput()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getMultipleInstancesPerInput() <em>Multiple Instances Per Input</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMultipleInstancesPerInput()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean multipleInstancesPerInput = MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -986,6 +1022,48 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		cmdPart = newCmdPart;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__CMD_PART, oldCmdPart, cmdPart));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getMultipleInstances() {
+		return multipleInstances;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMultipleInstances(Boolean newMultipleInstances) {
+		Boolean oldMultipleInstances = multipleInstances;
+		multipleInstances = newMultipleInstances;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_INSTANCES, oldMultipleInstances, multipleInstances));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getMultipleInstancesPerInput() {
+		return multipleInstancesPerInput;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setMultipleInstancesPerInput(Boolean newMultipleInstancesPerInput) {
+		Boolean oldMultipleInstancesPerInput = multipleInstancesPerInput;
+		multipleInstancesPerInput = newMultipleInstancesPerInput;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT, oldMultipleInstancesPerInput, multipleInstancesPerInput));
 	}
 
 	/**
@@ -1421,6 +1499,28 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			return default_;
 		else
 			return GlobalConfig.paramIsMultiple();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isMultipleInstances(Boolean default_) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isMultipleInstancesPerInput(Boolean default_) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1862,6 +1962,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return isDataParam();
 			case ToolPackage.PARAMETER__CMD_PART:
 				return getCmdPart();
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
+				return getMultipleInstances();
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
+				return getMultipleInstancesPerInput();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1974,6 +2078,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__CMD_PART:
 				setCmdPart((String)newValue);
 				return;
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
+				setMultipleInstances((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
+				setMultipleInstancesPerInput((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2079,6 +2189,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__CMD_PART:
 				setCmdPart(CMD_PART_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
+				setMultipleInstances(MULTIPLE_INSTANCES_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
+				setMultipleInstancesPerInput(MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2155,6 +2271,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return dataParam != DATA_PARAM_EDEFAULT;
 			case ToolPackage.PARAMETER__CMD_PART:
 				return CMD_PART_EDEFAULT == null ? cmdPart != null : !CMD_PART_EDEFAULT.equals(cmdPart);
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
+				return MULTIPLE_INSTANCES_EDEFAULT == null ? multipleInstances != null : !MULTIPLE_INSTANCES_EDEFAULT.equals(multipleInstances);
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
+				return MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT == null ? multipleInstancesPerInput != null : !MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT.equals(multipleInstancesPerInput);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2191,6 +2311,63 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.PARAMETER___GET_ARG_KEY__STRING:
+				return getArgKey((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_ARG_DELIMITER__STRING:
+				return getArgDelimiter((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER__STRING:
+				return getArgValueDelimiter((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_PREFIX__STRING:
+				return getPrefix((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
+				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
+				return isAnalysisType();
+			case ToolPackage.PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN:
+				return getSupportedHandles((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN:
+				return getEffectiveParentParameter((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARAMETERS__ELIST:
+				return getEffectiveParameters((EList<Parameter>)arguments.get(0));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER:
+				return generateCommandStringURI((EMap<String, Object>)arguments.get(0), (EList<URI>)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (EList<Object>)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (OptionValue)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (URI)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___IS_OPTIONAL__BOOLEAN:
+				return isOptional((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE__BOOLEAN:
+				return isMultiple((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN:
+				return isMultipleInstances((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN:
+				return isMultipleInstancesPerInput((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_NAMED__BOOLEAN:
+				return isNamed((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_POSITIONAL__BOOLEAN:
+				return isPositional((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN:
+				return isFixedArgValue((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN:
+				return isMultipleValue((Boolean)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -2257,6 +2434,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(dataParam);
 		result.append(", cmdPart: ");
 		result.append(cmdPart);
+		result.append(", multipleInstances: ");
+		result.append(multipleInstances);
+		result.append(", multipleInstancesPerInput: ");
+		result.append(multipleInstancesPerInput);
 		result.append(')');
 		return result.toString();
 	}

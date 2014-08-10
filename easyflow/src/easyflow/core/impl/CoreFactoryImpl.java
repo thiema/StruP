@@ -31,7 +31,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	 */
 	public static CoreFactory init() {
 		try {
-			CoreFactory theCoreFactory = (CoreFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/core/easyflow.core/1.0.0"); 
+			CoreFactory theCoreFactory = (CoreFactory)EPackage.Registry.INSTANCE.getEFactory(CorePackage.eNS_URI);
 			if (theCoreFactory != null) {
 				return theCoreFactory;
 			}

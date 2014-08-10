@@ -27,7 +27,8 @@ SortSam	STATIC:sort	samtools:sort_sam	BAM	BAM
 IndexSam	STATIC:index	samtools:index_sam	BAM	BAI		Read:sort:Coordinate	
 MergeSam	STATIC:merge	samtools:merge_sam	BAM,SAM	BAM,SAM	ReadGroup
 #SplitSam	STATIC	samtools:split	BAM,SAM	BAM,SAM	ReadGroup	
-PrintSam	STATIC:filter	samtools:view	(SAM | BAM)	SAM || BAM
+#PrintSam	STATIC:filter	samtools:view	(SAM | BAM)	SAM || BAM
+PrintSam	STATIC:filter	samtools:view	BAM	BAM
 #ReadMappingFlag,Contig,IntervalList	
 #IndexFasta	STATIC	samtools:index_fasta	FASTA	FAI		Read:Coordinate	
 #BwtFasta	STATIC	bwa:index	FASTA	SAI		
