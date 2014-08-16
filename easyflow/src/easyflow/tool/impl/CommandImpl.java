@@ -6,38 +6,27 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.data.DataPort;
 import easyflow.tool.BaseCommand;
-import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.util.GlobalConstants;
-
-import java.util.Iterator;
 import java.util.Map.Entry;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
-import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
-import java.util.Collection;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -63,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class CommandImpl extends EObjectImpl implements Command {
+public class CommandImpl extends MinimalEObjectImpl.Container implements Command {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -693,6 +682,26 @@ public class CommandImpl extends EObjectImpl implements Command {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.COMMAND___GET_POSITIONAL_PARAMETER_NAMES:
+				return getPositionalParameterNames();
+			case ToolPackage.COMMAND___GET_OPTIONAL_PARAMETER_NAMES:
+				return getOptionalParameterNames();
+			case ToolPackage.COMMAND___GET_INTERPERTER:
+				return getInterperter();
+			case ToolPackage.COMMAND___GET_EXE:
+				return getExe();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

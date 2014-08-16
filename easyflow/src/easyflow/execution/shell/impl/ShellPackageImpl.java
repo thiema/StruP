@@ -186,6 +186,15 @@ public class ShellPackageImpl extends EPackageImpl implements ShellPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getShell__GenerateCommandLine__Task() {
+		return shellEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ShellFactory getShellFactory() {
 		return (ShellFactory)getEFactoryInstance();
 	}
@@ -210,6 +219,7 @@ public class ShellPackageImpl extends EPackageImpl implements ShellPackage {
 
 		// Create classes and their features
 		shellEClass = createEClass(SHELL);
+		createEOperation(shellEClass, SHELL___GENERATE_COMMAND_LINE__TASK);
 	}
 
 	/**
@@ -247,10 +257,10 @@ public class ShellPackageImpl extends EPackageImpl implements ShellPackage {
 		shellEClass.getESuperTypes().add(theExecutionPackage.getIExecutionSystem());
 		shellEClass.getESuperTypes().add(theExecutionPackage.getDefaultExecutionSystem());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(shellEClass, Shell.class, "Shell", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		EOperation op = addEOperation(shellEClass, ecorePackage.getEString(), "generateCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getShell__GenerateCommandLine__Task(), ecorePackage.getEString(), "generateCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 

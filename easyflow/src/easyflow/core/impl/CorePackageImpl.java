@@ -1035,6 +1035,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTask_UnresolvedOutDataPorts() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(27);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTask__ReadTask__String_String_EList() {
 		return taskEClass.getEOperations().get(0);
 	}
@@ -2006,6 +2015,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__RECORDS);
 		createEReference(taskEClass, TASK__PREPROCESSING_TASKS);
 		createEReference(taskEClass, TASK__COMMAND);
+		createEReference(taskEClass, TASK__UNRESOLVED_OUT_DATA_PORTS);
 		createEOperation(taskEClass, TASK___READ_TASK__STRING_STRING_ELIST);
 		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING);
 		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN);
@@ -2338,6 +2348,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_Records(), theTraversalPackage.getTraversalChunk(), null, "records", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_PreprocessingTasks(), this.getPreprocessingTask(), null, "preprocessingTasks", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Command(), theToolPackage.getCommand(), null, "command", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_UnresolvedOutDataPorts(), theDataPackage.getDataPort(), null, "unresolvedOutDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getTask__ReadTask__String_String_EList(), null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);

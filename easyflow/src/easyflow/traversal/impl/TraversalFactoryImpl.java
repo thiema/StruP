@@ -31,7 +31,7 @@ public class TraversalFactoryImpl extends EFactoryImpl implements TraversalFacto
 	 */
 	public static TraversalFactory init() {
 		try {
-			TraversalFactory theTraversalFactory = (TraversalFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/traversal/1.0.0"); 
+			TraversalFactory theTraversalFactory = (TraversalFactory)EPackage.Registry.INSTANCE.getEFactory(TraversalPackage.eNS_URI);
 			if (theTraversalFactory != null) {
 				return theTraversalFactory;
 			}

@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -40,7 +39,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultExecutionSystem {
+public class DefaultExecutionSystemImpl extends MinimalEObjectImpl.Container implements DefaultExecutionSystem {
 	/**
 	 * The cached value of the '{@link #getProject() <em>Project</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -281,6 +280,34 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 				return WRITER_EDEFAULT == null ? writer != null : !WRITER_EDEFAULT.equals(writer);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM___GET_JGRAPHX_VISITOR:
+				return getJgraphxVisitor();
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TASK:
+				try {
+					return createCommandLine((String)arguments.get(0), (Task)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM___CREATE_COMMAND_LINE__STRING_TOOL:
+				try {
+					return createCommandLine((String)arguments.get(0), (Tool)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

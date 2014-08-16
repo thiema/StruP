@@ -1,10 +1,8 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
-
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTemplate;
@@ -34,7 +32,6 @@ import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.Command;
 import easyflow.tool.InOutParameter;
-import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
@@ -43,14 +40,12 @@ import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Stack;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -1400,6 +1395,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         		if (!task.isUtil())
         		{
 	        		Object target=getGraph().insertVertexEasyFlow(null, null, task);
+					for (DataPort dataPort:task.getOutDataPorts())
+					{
+						task.getUnresolvedOutDataPorts().add(dataPort);
+					}
 	        		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
 	        		logger.trace("generateGraphFromTemplate(): "
 	        				+"add to cell map: key="+task.getUniqueString()
@@ -1521,11 +1520,13 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 								for (DataLink dataLink:parentTaskList.get(pTask))
 								{
+									
 									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
 									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode()+" "+dataLink.getInDataPort());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
 										getGraph().setCellUnvisible(o);
+									pTask.getUnresolvedOutDataPorts().remove(dataLink.getInDataPort());
 								}
 							}
 						}
@@ -2165,7 +2166,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				
 				if (printmode.equals("simple"))
 				{
-					System.out.println(task.getUniqueString()+" "+task.getCommand());
+					System.out.println(task.getUniqueString());
 				}
 				else
 				{
@@ -2217,9 +2218,30 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	private void printAllCells(Object root) {
 		logger.debug("Totalsize: "+getGraph().getVertices(root).size());
 		for (Object o:getGraph().getVertices(root))
-			logger.debug("label "+getGraph().getLabel(o)+" ");
+			logger.debug("label "+getGraph().getLabel(o)+" #out="+getGraph().getOutgoingEdges(o).length);
 	}
+
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
+		
+		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
+		{
+			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
+			return true;
+			
+		}
+		return false;
+			
+	}
+
+
 	
 	public boolean applyTraversalCriteria(boolean isGrouping) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		
@@ -2264,6 +2286,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
 		printWorkflowStepMsgOnEnd(rc, step);
 		setFirstNode(getGraphUtil().getDefaultRootCell());
+		//printGraph();
+		printAllCells(getGraphUtil().getDefaultRootCell());
 		return rc;
 
 		
@@ -2291,7 +2315,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		boolean rc = applyTraversalCriteria(true); 
 		if (rc)
 			getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, true);
-
 		return rc;
 	}
 	
@@ -2374,27 +2397,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		return rc;
 	}	
 
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
-	 * @generated not
-	 */
-	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
-		
-		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
-		{
-			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
-			return true;
-			
-		}
-		return false;
-			
-	}
-
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2422,6 +2424,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		if (rc)
 			getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
+		//printAllCells(getGraphUtil().getDefaultRootCell());
 		return rc;
 	}
 

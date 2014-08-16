@@ -31,7 +31,7 @@ public class JgraphxFactoryImpl extends EFactoryImpl implements JgraphxFactory {
 	 */
 	public static JgraphxFactory init() {
 		try {
-			JgraphxFactory theJgraphxFactory = (JgraphxFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/graph/jgraphx/easyflow.core/1.0.0"); 
+			JgraphxFactory theJgraphxFactory = (JgraphxFactory)EPackage.Registry.INSTANCE.getEFactory(JgraphxPackage.eNS_URI);
 			if (theJgraphxFactory != null) {
 				return theJgraphxFactory;
 			}

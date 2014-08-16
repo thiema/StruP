@@ -35,7 +35,6 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -53,7 +52,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class MakeflowImpl extends EObjectImpl implements Makeflow {
+public class MakeflowImpl extends MinimalEObjectImpl.Container implements Makeflow {
 	/**
 	 * The cached value of the '{@link #getProject() <em>Project</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -283,16 +282,14 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		
 		String targets = StringUtils.join(getFiles(task.getOutputs()), ' ');
 		String deps    = StringUtils.join(getFiles(task.getInputs()), ' ');
-		String rule    = targets+": "+deps;
-
 		String cmd;
 
 		cmd = createCommandLine(
 				GlobalConfig.getToolConfig().get("command_pattern"),
 				task);
 		logger.debug(cmd+" ("+targets+":"+deps+")");
-		rule+="\n\t"+cmd+"\n\n";
-				
+		String rule = targets+": "+deps+"\n\t"+cmd+"\n\n";
+		
 		return rule;
 	}
 	
@@ -456,6 +453,45 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case MakeflowPackage.MAKEFLOW___GET_DEPENDENCIES__TOOL:
+				return getDependencies((Tool)arguments.get(0));
+			case MakeflowPackage.MAKEFLOW___GET_TARGETS__TOOL:
+				return getTargets((Tool)arguments.get(0));
+			case MakeflowPackage.MAKEFLOW___CREATE_RULE:
+				try {
+					return createRule();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case MakeflowPackage.MAKEFLOW___GET_JGRAPHX_VISITOR:
+				return getJgraphxVisitor();
+			case MakeflowPackage.MAKEFLOW___CREATE_COMMAND_LINE__STRING_TASK:
+				try {
+					return createCommandLine((String)arguments.get(0), (Task)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case MakeflowPackage.MAKEFLOW___CREATE_COMMAND_LINE__STRING_TOOL:
+				try {
+					return createCommandLine((String)arguments.get(0), (Tool)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -597,6 +597,17 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		
 	}
 	
+	public boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException, CellNotFoundException {
+		
+		boolean rc = true;
+		if (!resolveTraversalEvents_Grouping(root))
+			rc = false;
+		if (!resolveTraversalEvents_Param(root))
+			rc = false;
+			
+		return rc;
+	}
+
 	public boolean resolveTraversalEvents_Param(mxICell root)
 	{
 		boolean rc = true;
@@ -633,13 +644,13 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 							traversalEvent = allTraversalEvents.get(entry.getKey());
 							if (entry.getValue().getSplitTask() == null && !entry.getValue().getMergeTask().isEmpty())
 							{
-								if (parentTask != null)
-									traversalEvent.getMergeTask().add(parentTask);
-								else
+								if (parentTask == null)
+								//	traversalEvent.getMergeTask().add(parentTask);
+								//else
 									logger.error("resolveTraversalEvents_Param(): no parent task found.");
 								
-								traversalEvent.getMergeTasksParamCrit().addAll(entry.getValue().getMergeTask());
-								//traversalEvent.getMergeTask().addAll(entry.getValue().getMergeTask());
+								//traversalEvent.getMergeTasksParamCrit().addAll(entry.getValue().getMergeTask());
+								traversalEvent.getMergeTask().addAll(entry.getValue().getMergeTask());
 								EList<String> depricatedTEs = null;
 								if (deprecatedTraversalEvents.containsKey(taskString))
 									depricatedTEs = deprecatedTraversalEvents.get(taskString);
@@ -692,18 +703,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	 * TEs sharing same split and/or merging tasks might exist.
 	 * <!-- end-user-doc -->
 	 * @generated not
-	 */
-	public boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException, CellNotFoundException {
-		
-		boolean rc = true;
-		if (!resolveTraversalEvents_Grouping(root))
-			rc = false;
-		if (!resolveTraversalEvents_Param(root))
-			rc = false;
-			
-		return rc;
-	}
-	
+	 */	
 	public boolean resolveTraversalEvents_Grouping(mxICell root) throws TaskNotFoundException, CellNotFoundException {
 		
 		// map to track all processed traversalevents: <grouping>_<mode>_<te's root> x <Traversalevent>
@@ -857,6 +857,24 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 				
 				//debug+="\n";
 				logger.debug(debug);
+				
+				//add terminal edge (dataport)
+				BasicEList<DataPort> dataPorts = null;
+				for (DataPort dataPort : task.getUnresolvedOutDataPorts())
+				{
+					if (dataPorts == null)
+						dataPorts = new BasicEList<DataPort>();
+					DataLink termDataLink = DataFactory.eINSTANCE.createDataLink();
+					termDataLink.setInDataPort(dataPort);
+					termDataLink.setTerminal(true);
+					logger.debug("resolveTraversalEvents_Grouping(): add terminal edge for "+dataPort.getName()+" "+dataPort.getFormat().getName());
+					getGraph().insertEdgeEasyFlow(null, null, vertex, null, termDataLink);
+					dataPorts.add(dataPort);
+					
+				}
+				if (dataPorts != null && !dataPorts.isEmpty())
+					task.getUnresolvedOutDataPorts().removeAll(dataPorts);
+				
 				return true;
 			}
 		};
@@ -959,12 +977,12 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	public mxICell computeSubgraph(final TraversalEvent traversalEvent, final boolean isComplete) throws TaskNotFoundException 
 	{
 		if (traversalEvent.isGrouping())
-			return computeSubgraph(traversalEvent);
+			return computeSubgraph_Grouping(traversalEvent);
 		else
 			return computeSubgraph_Param(traversalEvent);
 	}
 	
-	public mxICell computeSubgraph(final TraversalEvent traversalEvent) throws TaskNotFoundException 
+	public mxICell computeSubgraph_Grouping(final TraversalEvent traversalEvent) throws TaskNotFoundException 
 	{
 		// track all new Tasks
 		final Map<String, Object> addedTasks = new HashMap<String, Object>();
@@ -972,7 +990,6 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		final EList<mxCell>     firstNodeTmp = new BasicEList<mxCell>();
 
 		mxICell startCell = getCells().get(traversalEvent.getSplitTask().getUniqueString());
-		
 		
 		EList<mxICell> stopCells = getCells(traversalEvent.getMergeTask());
 		logger.trace("computeSubgraph(): "+getCells().size()+" "+traversalEvent.getMergeTask().size()+" "+stopCells.size()+" "+startCell);
@@ -991,15 +1008,14 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			 * reached
 			 */
 			@Override
-			public boolean visit(Object vertex1, Object edge1) {
+			public boolean visit(Object vertex, Object edge1) {
 				
-				
-				mxICell clonedVertex = cloneCell((mxICell) vertex1);
+				mxICell clonedVertex = cloneCell((mxICell) vertex);
 				// set the current task
-				Task curTask = null;
+				Task     curTask  = null;
 				DataLink dataLink = null;
 				try {
-					curTask = loadTask(vertex1);
+					curTask = loadTask(vertex);
 					if (edge1 != null)
 						dataLink = loadDataLink(edge1);
 				} catch (TaskNotFoundException e) {
@@ -1015,7 +1031,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 						+ " " + targetTaskNames
 						+ " flags=" + curTask.getFlags()
 						+ " alreadyProcessed=" + ((curTask.getFlags() & 0x000F) == 1)
-						+ " #out="+getGraph().getOutgoingEdges(vertex1).length
+						+ " #out="+getGraph().getOutgoingEdges(vertex).length
 						+ " #out="+getGraph().getOutgoingEdges(clonedVertex).length
 						);
 				if ((curTask.getFlags() & 0x000F) == 1)
@@ -1036,24 +1052,17 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 					}
 					
 					mxICell target = getCells().get(mergeTask.getUniqueString());
-					/*try {
-						logger.debug(loadTask(vertex1).getUniqueString()+"->"+loadTask(target).getUniqueString());
-					} catch (TaskNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-					//if (vertex1 == null || target == null)
-						logger.trace("computeSubgraph(): "+"cur task:"+curTask.getUniqueString()
-								+"("+curTask.getPreviousTaskStr()+") corresponding cell:"+vertex1
+					logger.trace("computeSubgraph(): "+"cur task:"+curTask.getUniqueString()
+								+"("+curTask.getPreviousTaskStr()+") corresponding cell:"+vertex
 								+"merge task:"+mergeTask.getUniqueString()+" corresponding cell:"+target);
-					//int ps1=getGraph().getShortestPath(vertex1, target).length;
+					
 					int ps=getGraph().getShortestPath(
-							vertex1, 
+							vertex, 
 							target).length;
 					logger.trace("computeSubgraph(): compute shortest path from "+
 							curTask.getUniqueString()+" ("+getCells().get(curTask.getUniqueString())+") to "
 									+mergeTask.getUniqueString()+" ("+getCells().get(mergeTask.getUniqueString())+")="+ps
-									+ " #out="+getGraph().getOutgoingEdges(vertex1).length
+									+ " #out="+getGraph().getOutgoingEdges(vertex).length
 									+ " #in="+getGraph().getIncomingEdges(target).length);
 					
 					if (ps>0)
@@ -1064,20 +1073,11 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
                 }
 				logger.trace("computeSubgraph(): mergeTask found: "+mergeTaskFound
 						+" mergeTask reached: "+mergeTaskReached
-						+" offtarget: "+curTask.getGroupingCriteria().keySet().contains(traversalEvent.getTraversalCriterion().getId()));
+						+" offtarget: "+!curTask.getGroupingCriteria().keySet().contains(traversalEvent.getTraversalCriterion().getId()));
 
-				// stop traversal if no mergeTask exists and current task is not the merge task
-				if (traversalEvent.isGrouping() && !curTask.getGroupingCriteria().keySet().contains(traversalEvent.getTraversalCriterion().getId()))
-					return false;
-				//stop traversal if datalinks dataport is not compatible with the current traversal event
-				//if (dataLink != null && !traversalEvent.getTraversalCriterion().getDataPort().isCompatible(dataLink.getDataPort()))
-					//return false;
-				//if (!targetTaskNames.isEmpty())
-					//if (!mergeTaskFound && !mergeTaskReached)
-						//return false;
-
-				//logger.trace("computeSubgraph(): "+"path to merge task exists.");
-				
+				// stop traversal 
+				if (!curTask.getGroupingCriteria().keySet().contains(traversalEvent.getTraversalCriterion().getId()))
+					return false;				
 				
 				Object target = null;
 				
@@ -1105,8 +1105,9 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 					target=addedTasks.get(curTask.getUniqueString());
 				
 				// the root node doesn't have an incoming edge
-                if (edge1==null)
+                if (edge1 == null)
                 {
+                	computeSubgraph_TerminalEdge(vertex, target, curTask, addedEdges);
                 	if (traversalEvent.isGrouping())
                 		return !mergeTaskReached && mergeTaskFound;
                 	else
@@ -1139,16 +1140,9 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
                 	getGraph().insertEdgeEasyFlow(null, null, source, target, 
                 			((mxCell)edge1).getValue());
                 }
-				/*if (!curTask.getGroupingCriteria().keySet().contains(traversalEvent.getTraversalCriterion().getId()))
-				{
-					logger.debug("adding: "+curTask.getUniqueString());
-					traversalEvent.getMergeTask().add(curTask);
-					return false;
-				}*/
-                if (traversalEvent.isGrouping())
-                	return !mergeTaskReached && mergeTaskFound;
-                else
-                	return !mergeTaskReached;
+                
+                computeSubgraph_TerminalEdge(vertex, target, curTask, addedEdges);
+                return !mergeTaskReached && mergeTaskFound;
 			}
 		};
 
@@ -1164,16 +1158,56 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		return firstNodeTmp.isEmpty() ? null : firstNodeTmp.get(0);
 
 	}
+
+	private void computeSubgraph_TerminalEdge(Object vertex, Object source, Task curTask, Map<String, String> addedEdges)
+	{
+        for (Object o : getGraph().getOutgoingEdges(vertex))
+        {
+        	try {
+				DataLink odl = loadDataLink(o);
+				if (odl.isTerminal())
+				{
+					if (addedEdges == null 
+							|| !addedEdges.containsKey(curTask.getUniqueString()) 
+							|| (addedEdges.containsKey(curTask.getUniqueString()) && 
+									addedEdges.get(curTask.getUniqueString()) != null))
+					{
+						if (addedEdges != null)
+							addedEdges.put(curTask.getUniqueString(), null);
+						Object i = getGraph().insertEdgeEasyFlow(null, null, source, null, ((mxCell)o).getValue());
+						logger.debug("computeSubgraph(): "
+	                			+"terminal edge inserted for task"+curTask.getUniqueString()
+	                			+" "+getGraph().getOutgoingEdges(source).length);
+						
+
+					}
+				}
+			} catch (DataLinkNotFoundException e) {
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			}
+        }
+
+	}
 	
+
 	public mxICell computeSubgraph_Param(final TraversalEvent traversalEvent)
 	{
-		
 		final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
 		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
 		final EList<String>        mergeTasks = new BasicEList<String>();
 		final EList<String>        addedEdges = new BasicEList<String>();
 		final Map<String, Boolean>     memMap = new HashMap<String, Boolean>();
-		memMap.put("withinTraversalEvent", false);
+		
+		final String SPLITTING_TASK_FOUND = "splittingTaskFound";
+		final String MERGE_TASK_REACHED   = "mergeTaskReached";
+		//final String CUR_TASK_IS_SPLITTING_TASK = "curTaskIsSplittingTask";
+		//final String TERMINAL_EDGE_REACHED= "terminalEdgeReached";
+		memMap.put(SPLITTING_TASK_FOUND, false);
+		//memMap.put(, false);
+		memMap.put(MERGE_TASK_REACHED, false);
+		//memMap.put(TERMINAL_EDGE_REACHED, false);
+
 		
 		for (Task task:traversalEvent.getMergeTask())
 		{
@@ -1187,38 +1221,59 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			 * reached
 			 */
 			@Override
-			public boolean visit(Object vertex, Object edge) {
+			public boolean visit(Object vertex, Object edgeIn) {
 				
 				// set the current task
-				Task parentTask   = null;
-				Task task         = null;
-				DataLink dataLink = null;
-				mxICell source    = null;
-				mxICell target    = null;
+				Task     parentTask = null;
+				Task     task       = null;
+				DataLink dataLink   = null;
+				mxICell  source     = null;
+				mxICell  target     = null;
+					
 				try {
-					task = loadTask(vertex);
+						task = loadTask(vertex);
+					if (edgeIn != null)
+						parentTask = getSourceTask((mxCell) edgeIn);
+					
+					logger.debug("process "+(parentTask != null ? parentTask.getUniqueString():null)+"=>"+task.getUniqueString());
+					
 					if (task.getName().equals(traversalEvent.getSplitTask().getName()))
 					{
 						logger.debug("splitting task found");
 						//mxICell clonedVertex = cloneCell((mxICell) vertex);
 						
-						memMap.put("withinTraversalEvent", true);
+						memMap.put(SPLITTING_TASK_FOUND, true);
+						memMap.put(MERGE_TASK_REACHED, false);
+						//memMap.put(CUR_TASK_IS_SPLITTING_TASK, true);
 						//use artifical root node
 						if (firstNodeTmp.isEmpty())
 						{
 							Task rootTask = CoreFactory.eINSTANCE.createTask();
+							parentTask = rootTask;
 							rootTask.setRoot(true);
 							
 							rootTask.setName("root_"+traversalEvent.getTraversalCriterion().getId());
 							getTasks().put(rootTask.getName(), rootTask);
 							mxICell tmp = (mxICell) getGraph().insertVertexEasyFlow(null, null, rootTask);
 							logger.debug("added artifical root: "+tmp);
+							firstNodeTmp.clear();
 							firstNodeTmp.add(tmp);
 							//addedTasks.put(task.getUniqueString(), firstNodeTmp.get(0));
 						}
 						source = firstNodeTmp.get(0);
 					}
-					else if (!memMap.get("withinTraversalEvent"))
+					else if (mergeTasks.contains(task.getName()))
+					{
+						logger.debug("computeSubgraph_Param(): merge task "+task.getName()+" reached.");
+						memMap.put("mergeTaskReached", true);
+						return false;
+					}
+					else if (addedTasks.containsKey(task.getUniqueString()))
+					{
+						//memMap.put(MERGE_TASK_REACHED, false);
+						;
+					}
+					else if (!memMap.get(SPLITTING_TASK_FOUND))
 						return true;
 					
 					if (!addedTasks.containsKey(task.getUniqueString()))
@@ -1231,16 +1286,181 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 					else
 						target = addedTasks.get(task.getUniqueString());
 					
-					if (edge == null)
+
+					if (edgeIn == null)
+					{
+						computeSubgraph_TerminalEdge(vertex, target, task, null);
 						return true;
+					}
+					
 					
 					if (source == null)
 					{
-						parentTask = getSourceTask((mxCell) edge);
 						source = (mxICell) addedTasks.get(parentTask.getUniqueString());
 					}
 					
+					dataLink = loadDataLink(edgeIn);
+					dataLink.setProcessed(false);
+					String uniqueDataLink = dataLink.getUniqueString()
+							+"_"+(parentTask==null ? "root":parentTask.getUniqueString())
+							+"_"+task.getUniqueString();
+					logger.debug("computeSubgraph_Param(): "+dataLink.getUniqueString()+" "+dataLink.getUniqueString(true));
+					if (addedEdges.contains(uniqueDataLink))
+						return true;
+					
+					//insert edge
+					logger.debug("computeSubgraph_Param(): "
+                			+"edge "+(parentTask == null ? "root":parentTask.getUniqueString())
+                			+"->"+task.getUniqueString()+" inserted"
+                			+" ("+source+" "+target+")");
+					getGraph().insertEdgeEasyFlow(null, null, source, target, 
+	            			((mxCell)edgeIn).getValue());
+					computeSubgraph_TerminalEdge(vertex, target, task, null);
+					
+					addedEdges.add(uniqueDataLink);
+					
+				
+					
+				} catch (TaskNotFoundException | DataLinkNotFoundException e) {
+					// TODO Automatisch generierter Erfassungsblock
+					e.printStackTrace();
+				}
+				
+				return true;
+			}
+		};
+		
+		graph.getModel().beginUpdate();		try		{
+			getGraph().traverseAllPaths(getDefaultRootCell(), true, visitor, null);
+			//getGraph().traverseTopologicalOrder(getDefaultRootCell(), visitor);
+			layoutGraph();
+			}		finally		{			graph.getModel().endUpdate();		}
+		
+		return firstNodeTmp.isEmpty() ? null : firstNodeTmp.get(0);
+	}
+	
+	
+	public mxICell computeSubgraph_Param1(final TraversalEvent traversalEvent)
+	{
+		// store the artifical root node (index 0) and the the first node after the splitting task 
+		// of the current subgraph path
+		final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
+		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
+		final EList<String>        mergeTasks = new BasicEList<String>();
+		final EList<String>        addedEdges = new BasicEList<String>();
+		final Map<String, Boolean>     memMap = new HashMap<String, Boolean>();
+		memMap.put("splittingTaskFound", false);
+		memMap.put("curTaskIsSplittingTask", false);
+		memMap.put("mergeTaskReached", false);
+		memMap.put("terminalEdgeReached", false);
+		
+		for (Task task:traversalEvent.getMergeTask())
+		{
+			mergeTasks.add(task.getName());
+		}
+
+		mxICellVisitor visitor = new mxICellVisitor() {
+
+			/**
+			 * add vertex and edge to graph stop visiting when mergeTask is
+			 * reached
+			 */
+			@Override
+			public boolean visit(Object vertex, Object edgeIn) {
+				
+				// set the current task
+				Task     parentTask = null;
+				Task     task       = null;
+				DataLink dataLink   = null;
+				mxICell  source     = null;
+				mxICell  target     = null;
+				try {
+					task = loadTask(vertex);
+					if (edgeIn != null)
+						parentTask = getSourceTask((mxCell) edgeIn);
+					
+					logger.debug("process "+(parentTask != null ? parentTask.getUniqueString():null)+"=>"+task.getUniqueString());
+					if (task.getName().equals(traversalEvent.getSplitTask().getName()))
+					{
+						logger.debug("splitting task found");
+						//mxICell clonedVertex = cloneCell((mxICell) vertex);
+						
+						memMap.put("splittingTaskFound", true);
+						memMap.put("curTaskIsSplittingTask", true);
+						memMap.put("mergeTaskReached", false);
+						memMap.put("terminalEdgeReached", false);
+						//use artifical root node
+						if (firstNodeTmp.isEmpty())
+						{
+							Task rootTask = CoreFactory.eINSTANCE.createTask();
+							parentTask = rootTask;
+							rootTask.setRoot(true);
+							
+							rootTask.setName("root_"+traversalEvent.getTraversalCriterion().getId());
+							getTasks().put(rootTask.getName(), rootTask);
+							mxICell tmp = (mxICell) getGraph().insertVertexEasyFlow(null, null, rootTask);
+							logger.debug("added artifical root: "+tmp);
+							firstNodeTmp.clear();
+							firstNodeTmp.add(tmp);
+							//addedTasks.put(task.getUniqueString(), firstNodeTmp.get(0));
+						}
+						source = firstNodeTmp.get(0);
+					}
+					else if (addedTasks.containsKey(task.getUniqueString()))
+					{
+						memMap.put("splittingTaskFound", true);
+						memMap.put("mergeTaskReached", false);
+						memMap.put("terminalEdgeReached", false);
+
+					}
+					else if (!memMap.get("splittingTaskFound"))
+						return true;
+					
+					if (!addedTasks.containsKey(task.getUniqueString()))
+					{
+						//mxICell clonedVertex = cloneCell((mxICell) vertex);
+						target = (mxICell) getGraph().insertVertexEasyFlow(null, null, task);
+						logger.debug("added task="+task.getUniqueString()+" "+target);
+						addedTasks.put(task.getUniqueString(), target);
+					}
+					else
+						target = addedTasks.get(task.getUniqueString());
+					
+					if (edgeIn == null)
+					{
+						computeSubgraph_TerminalEdge(vertex, target, task, null);
+						return true;
+					}
+					//for (Object edge : getGraph().getIncomingEdges(vertex))
+					Object edge = edgeIn;
+					{
+					if (source == null)
+					{
+						source = (mxICell) addedTasks.get(parentTask.getUniqueString());
+					}
+					if (memMap.get("curTaskIsSplittingTask"))
+					{
+						memMap.put("curTaskIsSplittingTask", false);
+						firstNodeTmp.add(1, (mxICell) vertex);
+					}
+					Object os[] = getGraph().getOutgoingEdges(vertex);
+					if (os.length == 0)
+					{
+						memMap.put("terminalEdgeReached", true);
+						
+					}
+					else
+					for (Object o:os)
+					{
+						DataLink odl = loadDataLink(o);
+						if (odl.isTerminal())
+							memMap.put("terminalEdgeReached", true);
+					}
+					if (memMap.get("terminalEdgeReached"))
+						logger.debug("terminal edge reached.");
+					
 					dataLink = loadDataLink(edge);
+					dataLink.setProcessed(false);
 					String uniqueDataLink = dataLink.getUniqueString()
 							+"_"+(parentTask==null ? "root":parentTask.getUniqueString())
 							+"_"+task.getUniqueString();
@@ -1255,26 +1475,50 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
                 			+" ("+source+" "+target+")");
 					getGraph().insertEdgeEasyFlow(null, null, source, target, 
 	            			((mxCell)edge).getValue());
+					computeSubgraph_TerminalEdge(vertex, target, task, null);
 					
 					addedEdges.add(uniqueDataLink);
+					}
 					if (mergeTasks.contains(task.getName()))
 					{
 						logger.debug("computeSubgraph_Param(): merge task "+task.getName()+" reached.");
-						memMap.put("withinTraversalEvent", false);
+						memMap.put("mergeTaskReached", true);
 						return false;
 					}
+					logger.debug("mergeTaskReached="+memMap.get("mergeTaskReached")
+							+" splittingTaskFound="+memMap.get("splittingTaskFound")
+							+" terminalEdgeReached="+memMap.get("terminalEdgeReached")
+							+" curTaskIsSplittingTask="+memMap.get("curTaskIsSplittingTask"));
+					if (!memMap.get("mergeTaskReached") 
+							&& memMap.get("splittingTaskFound") 
+							&& memMap.get("terminalEdgeReached"))
+					{
+						getGraph().removeGraph(firstNodeTmp.get(1));
+						firstNodeTmp.clear();
+					}
+					
 					return true;
 					
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} 
+				}
 				catch (DataLinkNotFoundException e) {			e.printStackTrace();}
-				return false;
+				
+				if (!memMap.get("mergeTaskReached") 
+						&& memMap.get("splittingTaskFound") 
+						&& memMap.get("terminalEdgeReached"))
+				{
+					getGraph().removeGraph(firstNodeTmp.get(1));
+					firstNodeTmp.clear();
+				}
+				
+				return true;
 			}
 		};
 		graph.getModel().beginUpdate();		try		{
 			getGraph().traverseAllPaths(getDefaultRootCell(), true, visitor, null);
+			//getGraph().traverseTopologicalOrder(getDefaultRootCell(), visitor);
 			layoutGraph();
 			}		finally		{			graph.getModel().endUpdate();		}
 		
@@ -1377,13 +1621,19 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 					try {
 						DataLink dataLink=loadDataLink(edgeIn);
 						logger.debug("applyTraversalEvent(): check datalink for "
-								+"parent="+getSourceTask((mxCell) edgeIn).getUniqueString()
+								+" parent="+getSourceTask((mxCell) edgeIn).getUniqueString()
 								+" child="+getTargetTask((mxCell) edgeIn).getUniqueString()
 								+" link: group="+dataLink.getGroupingStr()
 								+" port="+dataLink.getDataPort().getName()
 								+" conditional="+!dataLink.isUnconditional()
 								+" te parents="+getTaskStringList(traversalEvent.getParentTask())
 						);
+						if (!traversalEvent.isGrouping())
+						{
+							logger.debug(" isProcessed="+dataLink.isProcessed()+" ");
+							if (dataLink.isProcessed())
+								continue;
+						}
 						
 						boolean shallProcess=true;
 						if (traversalEvent.isGrouping() && !dataLink.isUnconditional()) // check the datalink condition
@@ -1445,12 +1695,12 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 				if (traversalEvent.isGrouping() && containsTask(traversalEvent.getMergeTask(),
 						getTasks().get(task.getPreviousTaskStr())) 
 						//|| task.getPreviousTaskStr().equals(traversalEvent.getSplitTask().getUniqueString()) // added to resolve 'nested' traversal events / avoid orphan nodes
-					|| true)
+					)
 				{
 					mergeCells.put(taskString, (mxICell) vertex);
 					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged (for "+task.getUniqueString()+")");
 				}
-				else if (!traversalEvent.isGrouping() && mergeTasks.contains(task.getName()))
+				else if (!traversalEvent.isGrouping())// && mergeTasks.contains(task.getName()))
 				{
 					mergeCells.put(taskString, (mxICell) vertex);
 					logger.debug("applyTraversalEvent(): previousTask="+task.getPreviousTaskStr()+" marked to be merged (for "+task.getUniqueString()+")");
@@ -1473,7 +1723,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			try {
 				applyMergingCriterion(mergeCells.get(mergeTaskStr), 
 						getCells().get(getTasks().get(mergeTaskStr).getPreviousTaskStr()), 
-						groupingStr, groupingInstances, true);
+						groupingStr, groupingInstances, traversalEvent.isGrouping());
 			} catch (DataLinkNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1655,8 +1905,6 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 */
 	}
 
-	
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1675,6 +1923,231 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			return applyTraversalEventCopyGraph_Param(root, traversalEvent, groupingInstances);
 	}
 
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * apply the traversal criterion to the subgraph copy 
+	 * - stop when grouping is not a valid along an edge
+	 * - stop if task is not applicable to the grouping definition
+	 * - stop if condition does not fit the conditional edge
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException
+	 * @generated not
+	 */
+	public mxICell applyTraversalEventCopyGraph(mxICell root, 
+			final TraversalEvent traversalEvent, 
+			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
+
+		final String               groupingStr              = traversalEvent.getTraversalCriterion().getId();
+		final EMap<String, String> taskPreviousTaskMap      = new BasicEMap<String, String>();
+		final EList<mxICell>       returnCell               = new BasicEList<mxICell>();
+
+		EList<String> instances = new BasicEList<String>(); 
+		for (GroupingInstance groupingInstance : groupingInstances)
+			instances.add(groupingInstance.getName());
+			
+		logger.trace("applyTraversalEventCopyGraph(): group="+groupingStr+" instance="+StringUtils.join(instances.toArray(), ","));
+		mxICellVisitor visitor=new mxICellVisitor() {
+			String debug="";
+			
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				// set the current task
+				Task task = null;
+				DataLink inDataLink = null;
+				try {
+					task = loadTask(vertex);
+					if (edge != null)
+						inDataLink = loadDataLink(edge);
+				} catch (TaskNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String taskString = task.getUniqueString();
+				logger.trace("applyTraversalEventCopyGraph(): check task="+task.getUniqueString()
+						+" group="+groupingStr
+						+" valid="+isValidConversion(task.getChunks(), groupingStr, groupingInstances)
+						+" inDataLink is uncond="+(inDataLink!=null?inDataLink.isUnconditional():null)
+						);
+				
+				boolean shouldAddCircumventingParents = false;
+				
+
+				// check special conditions to possibly break this path and stop copying tasks
+				if (!isValidConversion(task.getChunks(), groupingStr, groupingInstances))
+					return false;
+				if (!task.shallProcess(groupingInstances, groupingStr))
+					return false;
+				
+				if (inDataLink != null && !inDataLink.isUnconditional())
+				{
+					logger.debug("applyTraversalEventCopyGraph(): check conditional edge.  "
+							+" circumventing parents="+inDataLink.getCondition().getCircumventingParents()
+							+" shall process="+getTasks().get(inDataLink.getCondition().getCircumventingParents().get(0)).
+							shallProcess(groupingInstances, groupingStr, 
+									inDataLink.getCondition().getForbidden(),
+									true)
+									);
+					// skip, because this processing is not permitted
+					if (!task.shallProcess(groupingInstances, groupingStr, 
+						inDataLink.getCondition().getForbidden(),
+						true))
+					{
+						logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
+						return false;
+					}
+					// skip, because the circumventing parent
+					else if (
+							!shallProcess(inDataLink.getCondition().getCircumventingParents(),
+										groupingInstances, groupingStr, 
+										inDataLink.getCondition().getForbidden(),
+										true
+									)
+						)
+					{
+							logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
+							return false;
+					}
+					//
+					else if (!inDataLink.getCondition().isUnconditional())
+					{
+						shouldAddCircumventingParents=true;
+					}
+						
+				}
+				// create the new task/cell and add it to a map with key of 
+				// tasks unique string (without the current instance information resolved)
+				
+				Task copyTask = createTask(task, groupingStr, groupingInstances); 
+
+				if (shouldAddCircumventingParents)
+				{
+					copyTask.getCircumventingParents().addAll(
+							inDataLink.getCondition().getCircumventingParents());
+				}
+
+				logger.trace("applyTraversalEventCopyGraph(): prevTaskStringMap put: "+taskString+"->"+copyTask.getUniqueString());
+				taskPreviousTaskMap.put(taskString, copyTask.getUniqueString());
+				mxICell cell = null;
+				if (getTasks().containsKey(copyTask.getUniqueString()))
+				{
+					cell = getCells().get(copyTask.getUniqueString());
+				}
+				else 
+				{
+					getTasks().put(copyTask.getUniqueString(), copyTask);
+					logger.trace("applyTraversalEventCopyGraph(): added key:"+copyTask.getUniqueString());
+					// create the new cell
+					cell = (mxICell) getGraph().insertVertexEasyFlow(null, null, copyTask);
+					logger.debug("applyTraversalEventCopyGraph(): added vertex:"+copyTask.getUniqueString());
+				
+					getCells().put(copyTask.getUniqueString(), (mxICell) cell);
+					if (task.isRoot())
+					{
+						
+						setDefaultRootCell(cell);
+					}
+
+				}				
+				
+				if (returnCell.isEmpty()) 
+					returnCell.add(cell);
+				
+				if (edge != null)
+				{
+					try 
+					{
+						Task source = null;
+						source = getSourceTask((mxCell) edge);
+						//DataLink oldDataLink=loadDataLink(edge);
+						logger.debug("applyTraversalEventCopyGraph(): try to insert edge:"
+								+(source!=null?source.getUniqueString():null)
+								+" ("+taskPreviousTaskMap.get(source.getUniqueString())+") "
+								+"->"+copyTask.getUniqueString()
+								);
+						if (
+								getProcessedEdgesCopyGraph().containsKey(taskPreviousTaskMap.get(source.getUniqueString()))
+							&& getProcessedEdgesCopyGraph().get(taskPreviousTaskMap.
+									get(source.getUniqueString())).equals(copyTask.getUniqueString())
+								)
+							logger.debug("applyTraversalEventCopyGraph(): skip already inserted edge");
+						else
+						{
+							String taskStr=taskPreviousTaskMap.get(source.getUniqueString());
+
+							try {
+								DataLink dataLink = createDataLink(edge, copyTask, groupingStr, groupingStr, null, true);
+								
+								logger.debug("applyTraversalEventCopyGraph(): insert edge (inserted!)");
+								getGraph().insertEdgeEasyFlow(null, null, 
+										getCells().get(taskStr),
+										cell,
+										dataLink
+										);
+								getProcessedEdgesCopyGraph().put(
+										taskPreviousTaskMap.get(source.getUniqueString()),
+										copyTask.getUniqueString());
+								
+							} catch (DataLinkNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+					} 
+					catch (TaskNotFoundException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				applyTraversalEventCopyGraph_terminalEdge(vertex, copyTask, groupingStr, cell);
+				return true;
+			}
+		};
+		//getGraph().traverse(root, true, visitor);
+		//getGraph().traverseTopologicalOrder(root, visitor);
+		graph.getModel().beginUpdate();		try		{
+			getGraph().traverseAllPaths(root, true, visitor, null);
+			layoutGraph();
+			
+		}		finally		{			graph.getModel().endUpdate();		}
+
+		return returnCell.size() > 0 ? returnCell.get(0) : null;
+	}
+
+	private void applyTraversalEventCopyGraph_terminalEdge(Object vertex, Task task, String groupingStr, Object sourceVertex)
+	{
+		String l;
+		// special handling for terminal edges
+		for (Object o : getGraph().getOutgoingEdges(vertex))
+		{
+			try {
+				DataLink odl = loadDataLink(o);
+				if (odl.isTerminal())
+				{
+					logger.debug(getGraph().getOutgoingEdges(sourceVertex).length);
+					logger.debug("applyTraversalEventCopyGraph(): insert terminal edge for task="+task.getUniqueString());
+					DataLink dataLink = createDataLink(o, task, null, groupingStr, null, true);
+					dataLink.setTerminal(true);
+					getGraph().insertEdgeEasyFlow(null, null, 
+								sourceVertex,
+								null,
+								dataLink
+							);
+					logger.debug(getGraph().getOutgoingEdges(sourceVertex).length);
+				}
+			} catch (DataLinkNotFoundException e) {
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			}
+		}
+
+	}
 	
 	private mxICell applyTraversalEventCopyGraph_Param(mxICell root, 
 			final TraversalEvent traversalEvent, 
@@ -1742,6 +2215,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 									);
 						}
 					}
+					applyTraversalEventCopyGraph_terminalEdge(vertex, copyTask, groupingStr, cell);
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1858,9 +2332,11 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		// get all child cells
 		for (Object edgeOut : getGraph().getOutgoingEdges(previousCell)) {
 			Object childCell = getTarget((mxCell) edgeOut);
-
+			if (childCell == null)
+				continue;
 			Task childTask = loadTask(((mxICell) childCell));
 			DataLink outDataLink = loadDataLink(edgeOut);
+
 			logger.trace("applyMergingCriterion(): " + "test edge: "
 					+ task.getUniqueString()
 					// +" (cell:"+cell+") "
@@ -1872,6 +2348,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			
 			
 			if (outDataLink != null) {
+
 				logger.debug("applyMergingCriterion(): " 
 						+ groupingStr + " instances=(" + easyFlowUtil.list2String(groupingInstances, ", ")+")"
 						+ " shallProcess1="+((!outDataLink.isUnconditional()) ?
@@ -1902,6 +2379,13 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 						+ " metadata="+!getMetaData().containsColumn(groupingStr)
 						//+ " cond="+outDataLink.getCondition()
 						);
+				if (!isGrouping)
+				{
+					//logger.debug(" isProcessed="+outDataLink.isProcessed()+" ");
+					if (outDataLink.isProcessed())
+						continue;
+				}
+
 				if (
 				// test for conditional edges
 						(outDataLink.isUnconditional() ||
@@ -1940,7 +2424,8 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 							)
 							
 						)
-				) {
+				)
+				{
 					DataLink dataLink = createDataLink(edgeOut, task,
 							null, groupingStr, null, isGrouping);
 					if (
@@ -1991,213 +2476,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		
 		return rc;
 	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * apply the traversal criterion to the subgraph copy 
-	 * - stop when grouping is not a valid along an edge
-	 * - stop if task is not applicable to the grouping definition
-	 * - stop if condition does not fit the conditional edge
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException
-	 * @generated not
-	 */
-	public mxICell applyTraversalEventCopyGraph(mxICell root, 
-			final TraversalEvent traversalEvent, 
-			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
 
-		final String               groupingStr              = traversalEvent.getTraversalCriterion().getId();
-		final EMap<String, String> taskPreviousTaskMap      = new BasicEMap<String, String>();
-		final EList<mxICell>       returnCell               = new BasicEList<mxICell>();
-		final EList<String>        circumventingParentsLast = new BasicEList<String>();
-
-		EList<String> instances = new BasicEList<String>(); 
-		for (GroupingInstance groupingInstance : groupingInstances)
-			instances.add(groupingInstance.getName());
-			
-		logger.trace("applyTraversalEventCopyGraph(): group="+groupingStr+" instance="+StringUtils.join(instances.toArray(), ","));
-		mxICellVisitor visitor=new mxICellVisitor() {
-			String debug="";
-			
-			@Override
-			public boolean visit(Object vertex, Object edge) {
-				// set the current task
-				Task task = null;
-				DataLink inDataLink = null;
-				try {
-					task = loadTask(vertex);
-					if (edge != null)
-						inDataLink = loadDataLink(edge);
-					else
-						circumventingParentsLast.clear();
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataLinkNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				String taskString = task.getUniqueString();
-				logger.trace("applyTraversalEventCopyGraph(): check task="+task.getUniqueString()
-						+" group="+groupingStr
-						+" valid="+isValidConversion(task.getChunks(), groupingStr, groupingInstances)
-						+" inDataLink is uncond="+(inDataLink!=null?inDataLink.isUnconditional():null)
-						);
-				
-				boolean shouldAddCircumventingParents = false;
-				
-
-				// check special conditions to possibly break this path and stop copying tasks
-				if (!isValidConversion(task.getChunks(), groupingStr, groupingInstances))
-					return false;
-				if (!task.shallProcess(groupingInstances, groupingStr))
-					return false;
-				
-				if (inDataLink != null && !inDataLink.isUnconditional())
-				{
-					logger.debug("applyTraversalEventCopyGraph(): check conditional edge.  "
-							+" circumventing parents="+inDataLink.getCondition().getCircumventingParents()
-							+" shall process="+getTasks().get(inDataLink.getCondition().getCircumventingParents().get(0)).
-							shallProcess(groupingInstances, groupingStr, 
-									inDataLink.getCondition().getForbidden(),
-									true)
-									);
-					// skip, because this processing is not permitted
-					if (!task.shallProcess(groupingInstances, groupingStr, 
-						inDataLink.getCondition().getForbidden(),
-						true))
-					{
-						logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
-						return false;
-					}
-					// skip, because the circumventing parent
-					else if (
-							!shallProcess(inDataLink.getCondition().getCircumventingParents(),
-										groupingInstances, groupingStr, 
-										inDataLink.getCondition().getForbidden(),
-										true
-									)
-						)
-					{
-							logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
-							return false;
-					}
-					//
-					else if (!inDataLink.getCondition().isUnconditional())
-					{
-						shouldAddCircumventingParents=true;
-					}
-						
-				}
-				// create the new task/cell and add it to a map with key of 
-				// tasks unique string (without the current instance information resolved)
-				
-				Task copyTask = createTask(task, groupingStr, groupingInstances); 
-
-				if (shouldAddCircumventingParents)
-				{
-					copyTask.getCircumventingParents().addAll(
-							inDataLink.getCondition().getCircumventingParents());
-					//circumventingParentsLast.clear();
-				}
-
-				logger.trace("applyTraversalEventCopyGraph(): prevTaskStringMap put: "+taskString+" "+copyTask.getUniqueString());
-				taskPreviousTaskMap.put(taskString, copyTask.getUniqueString());
-				mxICell cell = null;
-				if (getTasks().containsKey(copyTask.getUniqueString()))
-				{
-					cell = getCells().get(copyTask.getUniqueString());
-				}
-				else 
-				{
-					getTasks().put(copyTask.getUniqueString(), copyTask);
-					logger.trace("applyTraversalEventCopyGraph(): added key:"+copyTask.getUniqueString()+" "+getTasks().keySet());
-					// create the new cell
-					cell = (mxICell) getGraph().insertVertexEasyFlow(null, null, copyTask);
-					logger.debug("applyTraversalEventCopyGraph(): added vertex:"+copyTask.getUniqueString());
-				
-					getCells().put(copyTask.getUniqueString(), (mxICell) cell);
-					if (task.isRoot())
-					{
-						
-						setDefaultRootCell(cell);
-					}
-
-				}				
-				
-				if (returnCell.isEmpty()) 
-					returnCell.add(cell);
-				
-				if (edge != null)
-				{
-					try 
-					{
-						Task source = null;
-						source = getSourceTask((mxCell) edge);
-						//DataLink oldDataLink=loadDataLink(edge);
-						logger.debug("applyTraversalEventCopyGraph(): try to insert edge:"
-								+(source!=null?source.getUniqueString():null)
-								+" ("+taskPreviousTaskMap.get(source.getUniqueString())+") "
-								+"->"+copyTask.getUniqueString()
-								);
-						if (
-								//isEdgeInGraph(source, childTask, dataLink)
-						getProcessedEdgesCopyGraph().containsKey(taskPreviousTaskMap.get(source.getUniqueString()))
-							&& getProcessedEdgesCopyGraph().get(taskPreviousTaskMap.get(source.getUniqueString())).equals(copyTask.getUniqueString())
-								//||(getProcessedEdges().containsKey(taskPreviousTaskMap.get(source.getUniqueString()))
-								//&& getProcessedEdges().get(taskPreviousTaskMap.get(source.getUniqueString())).equals(copyTask.getUniqueString()))
-								)
-							logger.debug("applyTraversalEventCopyGraph(): skip already inserted edge");
-						else
-						{
-							String taskStr=taskPreviousTaskMap.get(source.getUniqueString());
-							//Task tmp=getTasks().get(taskStr);
-							//logger.debug(tmp.getTraversalEvents().keySet()+" "+groupingStr);
-							try {
-								DataLink dataLink = createDataLink(edge, copyTask, groupingStr, groupingStr, null, true);
-								
-								logger.debug("applyTraversalEventCopyGraph(): insert edge (inserted!)");
-								getGraph().insertEdgeEasyFlow(null, null, 
-										getCells().get(taskStr),
-										cell,
-										dataLink
-										);
-								getProcessedEdgesCopyGraph().put(
-										taskPreviousTaskMap.get(source.getUniqueString()),
-										copyTask.getUniqueString());
-								//getProcessedEdges().put(
-									//	taskPreviousTaskMap.get(source.getUniqueString()),
-										//copyTask.getUniqueString());
-								
-							} catch (DataLinkNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						
-						}
-					} 
-					catch (TaskNotFoundException e) 
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				//if (!circumventingParentsCurrent.isEmpty())
-					//circumventingParentsLast.addAll(circumventingParentsCurrent);
-				//getMostProcessedTasks().put(copyTask.getUniqueString(), task.getUniqueString());
-				return true;
-			}
-		};
-		//getGraph().traverse(root, true, visitor);
-		//getGraph().traverseTopologicalOrder(root, visitor);
-		graph.getModel().beginUpdate();		try		{
-			getGraph().traverseAllPaths(root, true, visitor, null);
-			layoutGraph();
-			
-		}		finally		{			graph.getModel().endUpdate();		}
-
-		return returnCell.size() > 0 ? returnCell.get(0) : null;
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2379,7 +2658,10 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		if (isGrouping)
 		{
 			newDataLink = DataFactory.eINSTANCE.createDataLink();
-			newDataLink.setGroupingStr(groupingStr);
+			/*if (groupingStr == null)
+				newDataLink.setTerminal(true);
+			else*/
+				newDataLink.setGroupingStr(groupingStr);
 			newDataLink.setParamStr(dataLink.getParamStr());
 			if (dataLink.getCondition()!=null && !dataLink.getCondition().isUnconditional())
 				newDataLink.setCondition(dataLink.getCondition());
@@ -2393,6 +2675,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			newDataLink = EcoreUtil.copy(dataLink);
 			newDataLink.setId(0);
 			newDataLink.setParamStr(groupingStr);
+			newDataLink.setProcessed(true);
 		}
 		return newDataLink;
 	}
@@ -2410,6 +2693,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		//newDataLink.setTraversalName(task.getChunks().get(i).getKey());
 	}
 	
+/*	
 	private void addGroupingInstancesToDataLink(DataLink dataLink, String parentGroupingStr, EList<GroupingInstance> groupingInstances, boolean isGrouping)
 	{	
 		if (groupingInstances != null && !groupingInstances.isEmpty())
@@ -2440,7 +2724,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			logger.debug("addGroupingInstancesToDataLink(): no grouping instances defiend.");
 		}
 	}
-	
+*/	
 	private DataLink createDataLink(Object edge, Task task, 
 			String groupingStr, String parentGroupingStr, 
 			EList<TraversalChunk> chunks, 
@@ -2473,7 +2757,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			
 		return newDataLink;
 	}
-
+/*
 	private DataLink createDataLink_groupingInstances(Object edge, Task task, 
 			String groupingStr, String parentGroupingStr, 
 			EList<GroupingInstance> groupingInstances,
@@ -2500,7 +2784,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 		
 		return newDataLink;
 	}
-	
+*/	
 	
 	private void copyTask(Task fromTask, Task toTask)
 	{
@@ -3342,13 +3626,31 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	
 	private DataLink copyDataLink(DataLink dataLink)
 	{
+		return copyDataLinkChunks(dataLink, null, null);
+	}
+	
+	private DataLink copyDataLinkChunk(DataLink dataLink, String grouping, TraversalChunk traversalChunk)
+	{
+		EList<TraversalChunk> traversalChunks = new BasicEList<TraversalChunk>();
+		traversalChunks.add(traversalChunk);
+		return copyDataLinkChunks(dataLink, grouping, traversalChunks);
+	}
+	private DataLink copyDataLinkChunks(DataLink dataLink, String grouping, EList<TraversalChunk> traversalChunks)
+	{
 		DataLink dataLinkCopy = EcoreUtil.copy(dataLink);
 		dataLinkCopy.setId(dataLinkCopy.hashCode());
 		dataLinkCopy.setDataPort(EcoreUtil.copy(dataLink.getDataPort()));
 		dataLinkCopy.setInDataPort(EcoreUtil.copy(dataLink.getInDataPort()));
-		for (Entry<String, EList<TraversalChunk>> e: dataLink.getChunks().entrySet())
+		if (grouping == null)
+			for (Entry<String, EList<TraversalChunk>> e: dataLink.getChunks().entrySet())
+			{
+				dataLinkCopy.getChunks().put(e.getKey(), new BasicEList<TraversalChunk>(EcoreUtil.copyAll(e.getValue())));
+			}
+		else
 		{
-			dataLinkCopy.getChunks().put(e.getKey(), new BasicEList<TraversalChunk>(EcoreUtil.copyAll(e.getValue())));
+			dataLinkCopy.getChunks().clear();
+			
+			dataLinkCopy.getChunks().put(grouping, traversalChunks);
 		}
 		//dataLinkCopy.setData(EcoreUtil.copy(dataLink.getData()));
 		
@@ -3458,23 +3760,23 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 					}
 					else
 					{
-						if (getGraph().getOutgoingEdges(vertex).length==0)
+						if (getGraph().getOutgoingEdges(vertex).length == 0)
 						{
-							
+							logger.debug("resolveToolDependencies(): no outgoing dataports. nothing to do.");
 						}
 						else
 						{
 							int i=0;
 							Tool tool = task.getPreferredTool();
 							//logger.debug("resolveToolDependencies(): tool="+tool.getId()+" data="+tool.getData().keySet());
-							for (Object edgeOut:getGraph().getOutgoingEdges(vertex))
+							for (Object edgeOut : getGraph().getOutgoingEdges(vertex))
 							{
 								i++;
 								try {
 									Task     child         = getTargetTask((mxCell) edgeOut);
-									Tool     childTool     = child.getPreferredTool();
+									Tool     childTool     = child == null ? null : child.getPreferredTool();
 									DataLink dataLink      = loadDataLink(edgeOut);
-									
+									DataPort dataPort      = null;
 									String   firstInstance = getFirstInstance(task, dataLink);
 									String   groupingStr   = dataLink.getParentGroupingStr();
 									String   paramStr      = dataLink.getParamStr();
@@ -3484,22 +3786,22 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 									
 									logger.debug("resolveToolDependencies(): "+specString
 											+"process datalink #"+(i)
-											+" "+task.getUniqueString()+" (Tool="+tool.getName()+")=>"+(child!=null?child.getUniqueString():null)+" (Tool="+(childTool!=null?childTool.getName():null)+")"
+											+"\n "+task.getUniqueString()+" (Tool="+tool.getName()+")=>"+(child!=null?child.getUniqueString():null)+" (Tool="+(childTool!=null?childTool.getName():null)+")"
 											+" datalink="+dataLink.getId()
 											+"\n   ---group="+groupingStr+" firstInstance="+firstInstance+"/"+firstInstanceDL
-													+task.getTraversalEvents().keySet()+" childs:"+child.getTraversalEvents().keySet()
-											+"\n   ---dataPort (Out)="+dataLink.getDataPort().getName()+" "+dataLink.getDataPort().getParameterName()+" "+dataLink.getDataPort().hashCode()
+													+task.getTraversalEvents().keySet()+" childs:"+(child == null ? "null":child.getTraversalEvents().keySet())
+											+"\n   ---dataPort (Out)="+(dataLink.getDataPort() != null ? (dataLink.getDataPort().getName()+" "+dataLink.getDataPort().getParameterName()+" "+dataLink.getDataPort().hashCode()) : null)
 											+" dataPort (In)="+(dataLink.getInDataPort()!=null?
 													(dataLink.getInDataPort().getName()+" "+dataLink.getInDataPort().getParameterName()+" "+dataLink.getInDataPort().hashCode()):null)
 									);
 									
-									EList<Data> parentData = getToolDataForDataLink(tool.getData(), dataLink);
+									EList<Data> parentData = getToolDataForDataLink(tool.getData(), dataLink, task.isRoot());
 									EList<Data> childData  = null;
 									if (childTool != null)
 									{
 										try
 										{
-											childData = getToolDataForDataLink(childTool.getData(), dataLink);
+											childData = getToolDataForDataLink(childTool.getData(), dataLink, true);
 										}
 										catch (NoValidInOutDataException e)
 										{
@@ -3507,16 +3809,16 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 											//boolean noChildDataAvail = true;
 										}
 									}
-									else
+									else if (!dataLink.isTerminal())
 										logger.error("resolveToolDependencies(): no child tool found."+" ("+specString+")");
 									
 									if (!dataLink.getChunks().isEmpty())
 									{
-										if (paramStr != null && !paramStr.equals("") 
+										/*if (paramStr != null && !paramStr.equals("") 
 												&& dataLink.getChunks().containsKey(paramStr) 
 												&& !dataLink.getChunks().get(paramStr).isEmpty())
 											firstInstanceDL=dataLink.getChunks().get(paramStr).get(0).getName();
-										else if (dataLink.getChunks().get(groupingStr) == null)
+										else */if (dataLink.getChunks().get(groupingStr) == null)
 											logger.debug("resolveToolDependencies(): no chunks found for grouping="+groupingStr);
 										else if (!dataLink.getChunks().get(groupingStr).isEmpty())
 											firstInstanceDL=dataLink.getChunks().get(groupingStr).get(0).getName();
@@ -3540,7 +3842,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 									
 									if (matchingData.parent != null)
 										dataLink.getInDataPort().setParameterName(matchingData.parent.getParameter().getEffectiveParentParameter(true).getName());
-									
+
 									if (dataLink.getInDataPort() == null)
 										throw new NoValidInOutDataException();
 									
@@ -3548,9 +3850,11 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 										if (!task.isRoot())
 											logger.error("resolveToolDependencies(): parametername could not be resolved. parent="+matchingData.parent
 												+" ("+specString+")");
+									
 									if (matchingData.child != null)
 										dataLink.getDataPort().setParameterName(matchingData.child.getParameter().getEffectiveParentParameter(true).getName());
-									if (dataLink.getDataPort().getParameterName() == null)
+									
+									if (!dataLink.isTerminal() && dataLink.getDataPort().getParameterName() == null)
 									{
 										logger.error("resolveToolDependencies(): parametername could not be resolved. child="+matchingData.child
 												+" ("+specString+")");
@@ -3559,7 +3863,9 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 										{
 											logger.info("resolveToolDependencies(): assume hidden parameter, use parent datalink="+parentDataLink.getUniqueString()+" to set resource.");
 											dataLink.getData().setDataResourceName(URIUtil.addExtensionToURI(
-													parentDataLink.getData().getDataResourceName(), dataLink.getDataPort().getFormat().getName(), true));
+													parentDataLink.getData().getDataResourceName(), 
+													dataLink.getDataPort().getFormat().getName(), true)
+													);
 											continue;
 										}
 									}
@@ -3567,20 +3873,21 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 									// decide if the port is a static one if at least one 
 									boolean isStatic = isStaticPort(dataLink.getData(), task);
 
-									//TraversalCriterion tc = task.getTraversalEvents().containsKey(groupingStr) ? 
-										//	task.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null;
-									TraversalCriterion tc = child.getTraversalEvents().containsKey(groupingStr) ? 
-											child.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null;
+									TraversalCriterion tc = dataLink.isTerminal() ?
+											(task.getTraversalEvents().containsKey(groupingStr) ? 
+											task.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null)
+											:
+											(child.getTraversalEvents().containsKey(groupingStr) ? 
+											child.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null);
 													
-									
 									logger.debug("resolveToolDependencies(): "
 											+"... continue ..."
 											+" travcrit=("+(tc != null ? 
 													(tc.getChunkSource()+" "+tc.getId()+" "+tc.getName()+" "+tc.getMode()+" "+tc.getOperation().getName()):null)+") all:"
-													+task.getTraversalEvents().keySet()+" childs:"+child.getTraversalEvents().keySet()
+													+task.getTraversalEvents().keySet()+" childs:"+(child != null ? child.getTraversalEvents().keySet() : null)
 											+" static="+isStatic
-											+" datalink="+dataLink.getId()
-											+"\n   ---paramName out="+dataLink.getInDataPort().getParameterName()+" in="+dataLink.getDataPort().getParameterName()
+											+"\n datalink="+dataLink.getId()+" "+dataLink.getData().getDataResourceName()
+											+"\n   ---paramName out="+dataLink.getInDataPort().getParameterName()+" in="+(dataLink.getDataPort() != null ? dataLink.getDataPort().getParameterName() : null)
 											+"\n   ---parent data=("+(matchingData.parent != null ?
 													("format="+matchingData.parent.getFormat().getName()+" name="+matchingData.parent.getName()
 															+" port="+matchingData.parent.getPort().getName()) 
@@ -3749,12 +4056,14 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	
 	// return the in/out data defined for the tool, for given datalink
 	// special handling needed for:
-	//   - root tool has undefined data
-	//   - data, which has no parameter defined (->isAllowed() function)
+	//   - root tool (only out-data port available)
+	//   - terminal tools (which have only in-data port defined)
+	//   - data, which have no parameter defined (->isAllowed() function)
 	
 	private EList<Data> getToolDataForDataLink(EMap<String, 
 						EList<Data>> dataMap,
-						DataLink dataLink) throws NoValidInOutDataException {
+						DataLink dataLink,
+						boolean useOutDataPort) throws NoValidInOutDataException {
 		
 		EList<Data> data = new BasicEList<Data>();
 		
@@ -3770,7 +4079,9 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			{
 				for (Data curData:dataList)
 				{
-					if (curData.isAllowed() && curData.getPort().isCompatible(dataLink.getDataPort()))
+					if (curData.isAllowed() 
+							&& curData.getPort().isCompatible(
+									useOutDataPort ? dataLink.getDataPort() : dataLink.getInDataPort()))
 						data.add(curData);
 				}
 			}
@@ -3865,7 +4176,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	{
 		String firstInstanceStr = null;
 
-		for (TraversalCriterion traversalCriterion : dataLink.getDataPort().getGroupingCriteria())
+		for (TraversalCriterion traversalCriterion : dataLink.getInDataPort().getGroupingCriteria())
 		{
 			if (task.getChunks().containsKey(traversalCriterion.getId()))
 			{
@@ -4297,7 +4608,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 					dataLink.getDataPort(),
 					groupingStr,
 					true
-					);
+				);
 			
 				logger.trace("createFilterTasks(): "+currentCoveredChunks.size()+" covered chunks found. "
 						+" filter chunks from "+sourceTask.getUniqueString());
@@ -4339,7 +4650,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 								if (sourceTask.canProvideMultipleInputsFor(null, dataPort))
 								{
 									logger.debug("createFilterTasks(): no filtering necessary (parent provide multiple inputs.)");
-									DataLink dataLinkCopy = copyDataLink(dataLink);
+									DataLink dataLinkCopy = copyDataLinkChunk(dataLink, e.getKey(), traversalChunk);
 									mxICell newCell = getCells().get(task.getUniqueString());
 									mxICell newEdge = (mxICell) getGraph().insertEdgeEasyFlow(null, null, 
 											getSource((mxCell) edge), newCell, dataLinkCopy);
@@ -4377,21 +4688,8 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	private EMap<String, EList<TraversalChunk>> getCoveredChunks(Task task, Task sourceTask, 
 			DataPort dataPort, String groupingStr, boolean modeUnion) throws ToolNotFoundException
 	{
-		
 		EMap<String, EList<TraversalChunk>> allCoveredChunks = new BasicEMap<String, EList<TraversalChunk>>();
-		
-		//boolean fullOverlap = true;
-		//EMap<String, EList<TraversalChunk>> allCoveredChunks = 
-		//EList<String> requiredGroupings=task.getRequiredGroupingsFor(null, dataPort);
-		//EList<String> providedGroupings=sourceTask.getProvidedGroupingsFor(null, dataPort);
 		logger.trace("getCoveredChunks(): sourceTask="+sourceTask.getUniqueString()+" task="+task.getUniqueString());
-		/*for (String groupingStr:task.getChunks().keySet())
-		{
-			EList<TraversalChunk> coveredChunks = task.getOverlappingChunksFor(sourceTask, groupingStr);
-			logger.trace("getCoveredChunks(): "+coveredChunks.size()+" overlapping chunks found for "+groupingStr+".");
-			if (!coveredChunks.isEmpty())
-				allCoveredChunks.put(groupingStr, coveredChunks);
-		}*/
 		
 		if (allCoveredChunks.isEmpty())
 		{
@@ -4414,7 +4712,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 							traversalChunk.setDerived1by1(targetTC.isDerived1by1());
 						traversalChunks.add(traversalChunk);
 						tcStrings.add(traversalChunk.getName());
-						found=true;
+						found = true;
 					}
 				}
 				if (!modeUnion && !found)
@@ -4427,8 +4725,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 			{
 				logger.trace("getCoveredChunks(): add "+traversalChunks.size()+" traversal chunks for record. ("+StringUtils.join(tcStrings.iterator(), ", ")+")");
 				allCoveredChunks.put(groupingStr, traversalChunks);
-			}
-					
+			}					
 		}
 		return allCoveredChunks;
 
@@ -4636,6 +4933,7 @@ public class UtilImpl extends MinimalEObjectImpl.Container implements Util {
 	 * @generated not
 	 */
 	public DataLink loadDataLink(Object edge) throws DataLinkNotFoundException {
+		
 		if (edge instanceof mxCell)
 		{
 			Object value=((mxCell)edge).getValue();

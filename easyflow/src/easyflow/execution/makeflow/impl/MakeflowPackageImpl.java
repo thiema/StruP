@@ -196,6 +196,33 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getMakeflow__GetDependencies__Tool() {
+		return makeflowEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getMakeflow__GetTargets__Tool() {
+		return makeflowEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getMakeflow__CreateRule() {
+		return makeflowEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public MakeflowFactory getMakeflowFactory() {
 		return (MakeflowFactory)getEFactoryInstance();
 	}
@@ -220,6 +247,9 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 
 		// Create classes and their features
 		makeflowEClass = createEClass(MAKEFLOW);
+		createEOperation(makeflowEClass, MAKEFLOW___GET_DEPENDENCIES__TOOL);
+		createEOperation(makeflowEClass, MAKEFLOW___GET_TARGETS__TOOL);
+		createEOperation(makeflowEClass, MAKEFLOW___CREATE_RULE);
 	}
 
 	/**
@@ -258,16 +288,16 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 		makeflowEClass.getESuperTypes().add(theExecutionPackage.getIExecutionSystem());
 		makeflowEClass.getESuperTypes().add(theExecutionPackage.getDefaultExecutionSystem());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(makeflowEClass, Makeflow.class, "Makeflow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		EOperation op = addEOperation(makeflowEClass, ecorePackage.getEString(), "getDependencies", 0, -1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getMakeflow__GetDependencies__Tool(), ecorePackage.getEString(), "getDependencies", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(makeflowEClass, ecorePackage.getEString(), "getTargets", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getMakeflow__GetTargets__Tool(), ecorePackage.getEString(), "getTargets", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(makeflowEClass, ecorePackage.getEString(), "createRule", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getMakeflow__CreateRule(), ecorePackage.getEString(), "createRule", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 	}

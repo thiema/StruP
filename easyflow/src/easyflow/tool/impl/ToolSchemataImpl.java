@@ -33,7 +33,6 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -58,7 +57,7 @@ import org.xml.sax.SAXException;
  *
  * @generated
  */
-public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
+public class ToolSchemataImpl extends MinimalEObjectImpl.Container implements ToolSchemata {
 	/**
 	 * The cached value of the '{@link #getSchemata() <em>Schemata</em>}' map.
 	 * <!-- begin-user-doc -->
@@ -388,6 +387,37 @@ public class ToolSchemataImpl extends EObjectImpl implements ToolSchemata {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.TOOL_SCHEMATA___READ_SCHEMA__URI_BOOLEAN:
+				try {
+					return readSchema((URI)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL_SCHEMATA___READ_SCHEMATA__ELIST_BOOLEAN:
+				try {
+					return readSchemata((EList<URI>)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL_SCHEMATA___GET_DEFAULT_SCHEMA:
+				return getDefaultSchema();
+			case ToolPackage.TOOL_SCHEMATA___GET_SCHEMA_FOR__DOCUMENT:
+				return getSchemaFor((Document)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -31,7 +31,7 @@ public class UiFactoryImpl extends EFactoryImpl implements UiFactory {
 	 */
 	public static UiFactory init() {
 		try {
-			UiFactory theUiFactory = (UiFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"); 
+			UiFactory theUiFactory = (UiFactory)EPackage.Registry.INSTANCE.getEFactory(UiPackage.eNS_URI);
 			if (theUiFactory != null) {
 				return theUiFactory;
 			}

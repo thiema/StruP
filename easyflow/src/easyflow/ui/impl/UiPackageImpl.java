@@ -204,6 +204,276 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getIProject__Validate() {
+		return iProjectEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetActiveWorkflow() {
+		return iProjectEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ClearWorkflows() {
+		return iProjectEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ReadConfiguration() {
+		return iProjectEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ReadProjectJson__URI() {
+		return iProjectEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__SetConfigAndBasePath__String() {
+		return iProjectEClass.getEOperations().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ApplyMetaData() {
+		return iProjectEClass.getEOperations().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__Init__EasyFlowGraph() {
+		return iProjectEClass.getEOperations().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__Delete() {
+		return iProjectEClass.getEOperations().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__RunEntireWorkflow() {
+		return iProjectEClass.getEOperations().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ResolveTraversalCriteria() {
+		return iProjectEClass.getEOperations().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GenerateAbstractGraph() {
+		return iProjectEClass.getEOperations().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ApplyGroupingCriteria() {
+		return iProjectEClass.getEOperations().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ApplyParameterCriteria() {
+		return iProjectEClass.getEOperations().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ResolveUtilityTasks() {
+		return iProjectEClass.getEOperations().get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ResolvePreprocessingTasks() {
+		return iProjectEClass.getEOperations().get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ResolveToolDependencies() {
+		return iProjectEClass.getEOperations().get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GenerateWorklowForExecutionSystem() {
+		return iProjectEClass.getEOperations().get(17);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__SetWorker__EasyFlowOverallWorker() {
+		return iProjectEClass.getEOperations().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__RunNextWorkflowStep() {
+		return iProjectEClass.getEOperations().get(19);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__RunPrevWorkflowStep() {
+		return iProjectEClass.getEOperations().get(20);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__HasNextWorkflowStep() {
+		return iProjectEClass.getEOperations().get(21);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetWorkflowStepLabelFor__String() {
+		return iProjectEClass.getEOperations().get(22);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetWorkflowStepDescFor__String() {
+		return iProjectEClass.getEOperations().get(23);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetTotalNumberOfWorkflowSteps() {
+		return iProjectEClass.getEOperations().get(24);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetNumberOfCurrentWorkflowStep() {
+		return iProjectEClass.getEOperations().get(25);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetNextWorkflowStep() {
+		return iProjectEClass.getEOperations().get(26);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetCurWorkflowStep() {
+		return iProjectEClass.getEOperations().get(27);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__ResetWorkflowStep() {
+		return iProjectEClass.getEOperations().get(28);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProject__GetExecutionSystem() {
+		return iProjectEClass.getEOperations().get(29);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDefaultProject() {
 		return defaultProjectEClass;
 	}
@@ -345,6 +615,36 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		// Create classes and their features
 		iProjectEClass = createEClass(IPROJECT);
+		createEOperation(iProjectEClass, IPROJECT___VALIDATE);
+		createEOperation(iProjectEClass, IPROJECT___GET_ACTIVE_WORKFLOW);
+		createEOperation(iProjectEClass, IPROJECT___CLEAR_WORKFLOWS);
+		createEOperation(iProjectEClass, IPROJECT___READ_CONFIGURATION);
+		createEOperation(iProjectEClass, IPROJECT___READ_PROJECT_JSON__URI);
+		createEOperation(iProjectEClass, IPROJECT___SET_CONFIG_AND_BASE_PATH__STRING);
+		createEOperation(iProjectEClass, IPROJECT___APPLY_META_DATA);
+		createEOperation(iProjectEClass, IPROJECT___INIT__EASYFLOWGRAPH);
+		createEOperation(iProjectEClass, IPROJECT___DELETE);
+		createEOperation(iProjectEClass, IPROJECT___RUN_ENTIRE_WORKFLOW);
+		createEOperation(iProjectEClass, IPROJECT___RESOLVE_TRAVERSAL_CRITERIA);
+		createEOperation(iProjectEClass, IPROJECT___GENERATE_ABSTRACT_GRAPH);
+		createEOperation(iProjectEClass, IPROJECT___APPLY_GROUPING_CRITERIA);
+		createEOperation(iProjectEClass, IPROJECT___APPLY_PARAMETER_CRITERIA);
+		createEOperation(iProjectEClass, IPROJECT___RESOLVE_UTILITY_TASKS);
+		createEOperation(iProjectEClass, IPROJECT___RESOLVE_PREPROCESSING_TASKS);
+		createEOperation(iProjectEClass, IPROJECT___RESOLVE_TOOL_DEPENDENCIES);
+		createEOperation(iProjectEClass, IPROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM);
+		createEOperation(iProjectEClass, IPROJECT___SET_WORKER__EASYFLOWOVERALLWORKER);
+		createEOperation(iProjectEClass, IPROJECT___RUN_NEXT_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___RUN_PREV_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___HAS_NEXT_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING);
+		createEOperation(iProjectEClass, IPROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING);
+		createEOperation(iProjectEClass, IPROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS);
+		createEOperation(iProjectEClass, IPROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___GET_NEXT_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___GET_CUR_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___RESET_WORKFLOW_STEP);
+		createEOperation(iProjectEClass, IPROJECT___GET_EXECUTION_SYSTEM);
 
 		defaultProjectEClass = createEClass(DEFAULT_PROJECT);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__WORKFLOWS);
@@ -400,32 +700,32 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		// Add supertypes to classes
 		defaultProjectEClass.getESuperTypes().add(this.getIProject());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(iProjectEClass, IProject.class, "IProject", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__Validate(), ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, theCorePackage.getWorkflow(), "getActiveWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GetActiveWorkflow(), theCorePackage.getWorkflow(), "getActiveWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, null, "clearWorkflows", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__ClearWorkflows(), null, "clearWorkflows", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "readConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__ReadConfiguration(), ecorePackage.getEBoolean(), "readConfiguration", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(iProjectEClass, null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getIProject__ReadProjectJson__URI(), null, "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "source", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getFileNotFoundException());
 
-		op = addEOperation(iProjectEClass, null, "setConfigAndBasePath", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__SetConfigAndBasePath__String(), null, "setConfigAndBasePath", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, null, "applyMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__ApplyMetaData(), null, "applyMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__Init__EasyFlowGraph(), ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getEasyFlowGraph(), "graph", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__Delete(), ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__RunEntireWorkflow(), ecorePackage.getEBoolean(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
@@ -435,42 +735,42 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveTraversalCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__ResolveTraversalCriteria(), ecorePackage.getEBoolean(), "resolveTraversalCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "generateAbstractGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GenerateAbstractGraph(), ecorePackage.getEBoolean(), "generateAbstractGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
-
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__ApplyGroupingCriteria(), ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveUtilityTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__ApplyParameterCriteria(), ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+
+		op = initEOperation(getIProject__ResolveUtilityTasks(), ecorePackage.getEBoolean(), "resolveUtilityTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolvePreprocessingTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__ResolvePreprocessingTasks(), ecorePackage.getEBoolean(), "resolvePreprocessingTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__ResolveToolDependencies(), ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GenerateWorklowForExecutionSystem(), ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, null, "setWorker", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__SetWorker__EasyFlowOverallWorker(), null, "setWorker", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getEasyFlowOverallWorker(), "worker", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__RunNextWorkflowStep(), ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
@@ -480,7 +780,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__RunPrevWorkflowStep(), ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
@@ -490,25 +790,25 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__HasNextWorkflowStep(), ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEString(), "getWorkflowStepLabelFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__GetWorkflowStepLabelFor__String(), ecorePackage.getEString(), "getWorkflowStepLabelFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iProjectEClass, ecorePackage.getEString(), "getWorkflowStepDescFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__GetWorkflowStepDescFor__String(), ecorePackage.getEString(), "getWorkflowStepDescFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEInt(), "getTotalNumberOfWorkflowSteps", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GetTotalNumberOfWorkflowSteps(), ecorePackage.getEInt(), "getTotalNumberOfWorkflowSteps", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEInt(), "getNumberOfCurrentWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GetNumberOfCurrentWorkflowStep(), ecorePackage.getEInt(), "getNumberOfCurrentWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEString(), "getNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GetNextWorkflowStep(), ecorePackage.getEString(), "getNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GetCurWorkflowStep(), ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__ResetWorkflowStep(), ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iProjectEClass, theExecutionPackage.getIExecutionSystem(), "getExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProject__GetExecutionSystem(), theExecutionPackage.getIExecutionSystem(), "getExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultProjectEClass, DefaultProject.class, "DefaultProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultProject_Workflows(), theCorePackage.getWorkflow(), null, "workflows", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

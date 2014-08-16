@@ -109,6 +109,7 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link easyflow.core.impl.TaskImpl#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getCommand <em>Command</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
  * </ul>
  * </p>
  *
@@ -440,6 +441,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @ordered
 	 */
 	protected Command command;
+
+	/**
+	 * The cached value of the '{@link #getUnresolvedOutDataPorts() <em>Unresolved Out Data Ports</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnresolvedOutDataPorts()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DataPort> unresolvedOutDataPorts;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -841,6 +852,18 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__COMMAND, newCommand, newCommand));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<DataPort> getUnresolvedOutDataPorts() {
+		if (unresolvedOutDataPorts == null) {
+			unresolvedOutDataPorts = new EObjectResolvingEList<DataPort>(DataPort.class, this, CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS);
+		}
+		return unresolvedOutDataPorts;
 	}
 
 	/*
@@ -1894,10 +1917,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		
 		Iterator<Entry<String, DataLink>> it = map.iterator();
 		while (it.hasNext()) {
-			Entry<String, DataLink> e = it.next();
-			DataLink  dataLink  = e.getValue();
-			Parameter dataParam = dataLink.getData().getParameter().getEffectiveParentParameter(true); 
-			String    paramName = null;
+			Entry<String, DataLink> e         = it.next();
+			DataLink                dataLink  = e.getValue();
+			Parameter               dataParam = dataLink.getData().getParameter().getEffectiveParentParameter(true); 
+			String                  paramName = null;
 			
 			if (isOutput)
 				paramName = dataLink.getInDataPort().getParameterName();
@@ -2491,19 +2514,32 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @generated not
 	 */
 	public void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
+		
 		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString())==null)
 			logger.error("resolveOutputs(): no cell found for "+getUniqueString());
-		for (Object edge : GlobalVar
+		if (!getOutputs().isEmpty())
+			return;
+		
+		Object edges[] = GlobalVar
 				.getGraphUtil()
-					.getGraph()
-						.getOutgoingEdges(
-								GlobalVar.getGraphUtil().getCells()
-									.get(getUniqueString()))) {
+				.getGraph()
+					.getOutgoingEdges(
+							GlobalVar.getGraphUtil().getCells()
+								.get(getUniqueString()));
+		
+		EList<String> unique = new BasicEList<String>();
+		for (Object edge : edges) 
+		{
 			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
-
-			// getOutputs().put(dataLink.getUniqueString(null, null, null),
-			// dataLink);
-			getOutputs().put(new Integer(dataLink.getId()).toString(), dataLink);
+			DataPort dataPort = dataLink.isTerminal() ? dataLink.getInDataPort() : dataLink.getDataPort(); 
+			logger.debug("check output for dataport="+dataPort.getName());
+			if (dataPort.getName() == null)
+				logger.error("undefined dataport name");
+			if (!unique.contains(dataPort.getName()))
+			{
+				getOutputs().put(new Integer(dataLink.getId()).toString(), dataLink);
+				unique.add(dataPort.getName());
+			}
 		}
 		resolveDataPorts(getOutputs(), getPreferredTool(), true);
 	}
@@ -2855,6 +2891,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return getPreprocessingTasks();
 			case CorePackage.TASK__COMMAND:
 				return getCommand();
+			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
+				return getUnresolvedOutDataPorts();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2956,6 +2994,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__COMMAND:
 				setCommand((Command)newValue);
 				return;
+			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
+				getUnresolvedOutDataPorts().clear();
+				getUnresolvedOutDataPorts().addAll((Collection<? extends DataPort>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -3048,6 +3090,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__COMMAND:
 				setCommand((Command)null);
 				return;
+			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
+				getUnresolvedOutDataPorts().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -3113,6 +3158,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return preprocessingTasks != null && !preprocessingTasks.isEmpty();
 			case CorePackage.TASK__COMMAND:
 				return command != null;
+			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
+				return unresolvedOutDataPorts != null && !unresolvedOutDataPorts.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

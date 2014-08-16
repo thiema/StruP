@@ -6,6 +6,7 @@
  */
 package easyflow.data.impl;
 
+import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
@@ -13,10 +14,13 @@ import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
 import easyflow.tool.Parameter;
+
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -45,6 +49,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * @generated
  */
 public class DataImpl extends MinimalEObjectImpl.Container implements Data {
+	
+	Logger logger = Logger.getLogger(Data.class);
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -398,6 +404,7 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 		
 		for (Entry<String, DataFormat> dataFormat:getPort().getDataFormats())
 		{
+			//logger.debug(testDataFormat+" "+dataFormat);
 			if (testDataFormat.match(dataFormat.getValue()))
 				return true;
 		}

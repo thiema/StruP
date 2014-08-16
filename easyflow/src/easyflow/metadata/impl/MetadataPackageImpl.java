@@ -220,6 +220,123 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getIMetaData__InitMetaData() {
+		return iMetaDataEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__ReadMetaData() {
+		return iMetaDataEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetInstances__GroupingInstance_String() {
+		return iMetaDataEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetInstances__String_String_String() {
+		return iMetaDataEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetInstancesForRecords__String_EList() {
+		return iMetaDataEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetValueForGroupingInstance__GroupingInstance_String() {
+		return iMetaDataEClass.getEOperations().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetRecordsBy__String_String() {
+		return iMetaDataEClass.getEOperations().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetRecord__GroupingInstance() {
+		return iMetaDataEClass.getEOperations().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetRecord__TraversalChunk() {
+		return iMetaDataEClass.getEOperations().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetRow__String() {
+		return iMetaDataEClass.getEOperations().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__GetColumn__String() {
+		return iMetaDataEClass.getEOperations().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__ContainsColumn__String() {
+		return iMetaDataEClass.getEOperations().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIMetaData__ContainsRow__String() {
+		return iMetaDataEClass.getEOperations().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDefaultMetaData() {
 		return defaultMetaDataEClass;
 	}
@@ -285,6 +402,15 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 */
 	public EClass getIProjectMetaData() {
 		return iProjectMetaDataEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIProjectMetaData__ReadMetaData() {
+		return iProjectMetaDataEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -373,6 +499,15 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getGroupingInstance__GetOverlappingRecords__EList() {
+		return groupingInstanceEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGroupingFeature() {
 		return groupingFeatureEClass;
 	}
@@ -442,6 +577,19 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 
 		// Create classes and their features
 		iMetaDataEClass = createEClass(IMETA_DATA);
+		createEOperation(iMetaDataEClass, IMETA_DATA___INIT_META_DATA);
+		createEOperation(iMetaDataEClass, IMETA_DATA___READ_META_DATA);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_INSTANCES__GROUPINGINSTANCE_STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_INSTANCES__STRING_STRING_STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_INSTANCES_FOR_RECORDS__STRING_ELIST);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_VALUE_FOR_GROUPING_INSTANCE__GROUPINGINSTANCE_STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_RECORDS_BY__STRING_STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_RECORD__GROUPINGINSTANCE);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_RECORD__TRAVERSALCHUNK);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_ROW__STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___GET_COLUMN__STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___CONTAINS_COLUMN__STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___CONTAINS_ROW__STRING);
 
 		defaultMetaDataEClass = createEClass(DEFAULT_META_DATA);
 		createEAttribute(defaultMetaDataEClass, DEFAULT_META_DATA__READER);
@@ -452,6 +600,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_PROPS);
 
 		iProjectMetaDataEClass = createEClass(IPROJECT_META_DATA);
+		createEOperation(iProjectMetaDataEClass, IPROJECT_META_DATA___READ_META_DATA);
 
 		groupingEClass = createEClass(GROUPING);
 		createEAttribute(groupingEClass, GROUPING__NAME);
@@ -463,6 +612,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEReference(groupingInstanceEClass, GROUPING_INSTANCE__GROUPING);
 		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__GROUPING_STR);
 		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__RECORDS);
+		createEOperation(groupingInstanceEClass, GROUPING_INSTANCE___GET_OVERLAPPING_RECORDS__ELIST);
 
 		groupingFeatureEClass = createEClass(GROUPING_FEATURE);
 		createEAttribute(groupingFeatureEClass, GROUPING_FEATURE__NAME);
@@ -507,50 +657,50 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		// Add supertypes to classes
 		defaultMetaDataEClass.getESuperTypes().add(this.getIMetaData());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(iMetaDataEClass, IMetaData.class, "IMetaData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		addEOperation(iMetaDataEClass, null, "initMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIMetaData__InitMetaData(), null, "initMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(iMetaDataEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIMetaData__ReadMetaData(), null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(iMetaDataEClass, this.getGroupingInstance(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getIMetaData__GetInstances__GroupingInstance_String(), this.getGroupingInstance(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "resolvedAs", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, this.getGroupingInstance(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetInstances__String_String_String(), this.getGroupingInstance(), "getInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr1", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr2", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, this.getGroupingInstance(), "getInstancesForRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetInstancesForRecords__String_EList(), this.getGroupingInstance(), "getInstancesForRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "recordInstanceStr", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, null, "getValueForGroupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetValueForGroupingInstance__GroupingInstance_String(), null, "getValueForGroupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "field", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, ecorePackage.getEString(), "getRecordsBy", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetRecordsBy__String_String(), ecorePackage.getEString(), "getRecordsBy", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "instanceStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetRecord__GroupingInstance(), theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getGroupingInstance(), "recordInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetRecord__TraversalChunk(), theMapsPackage.getStringToObjectMap(), "getRecord", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalChunk(), "record", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToStringMap(), "getRow", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetRow__String(), theMapsPackage.getStringToStringMap(), "getRow", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, theMapsPackage.getStringToStringMap(), "getColumn", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__GetColumn__String(), theMapsPackage.getStringToStringMap(), "getColumn", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "key", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, ecorePackage.getEBoolean(), "containsColumn", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__ContainsColumn__String(), ecorePackage.getEBoolean(), "containsColumn", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "column", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(iMetaDataEClass, ecorePackage.getEBoolean(), "containsRow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIMetaData__ContainsRow__String(), ecorePackage.getEBoolean(), "containsRow", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "row", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultMetaDataEClass, DefaultMetaData.class, "DefaultMetaData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -563,7 +713,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 
 		initEClass(iProjectMetaDataEClass, IProjectMetaData.class, "IProjectMetaData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		addEOperation(iProjectMetaDataEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIProjectMetaData__ReadMetaData(), null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(groupingEClass, Grouping.class, "Grouping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGrouping_Name(), ecorePackage.getEString(), "name", null, 0, 1, Grouping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -576,7 +726,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		initEAttribute(getGroupingInstance_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingInstance_Records(), ecorePackage.getEString(), "records", null, 0, -1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = addEOperation(groupingInstanceEClass, ecorePackage.getEString(), "getOverlappingRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGroupingInstance__GetOverlappingRecords__EList(), ecorePackage.getEString(), "getOverlappingRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "records", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(groupingFeatureEClass, GroupingFeature.class, "GroupingFeature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

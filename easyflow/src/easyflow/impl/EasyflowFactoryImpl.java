@@ -65,7 +65,7 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 */
 	public static EasyflowFactory init() {
 		try {
-			EasyflowFactory theEasyflowFactory = (EasyflowFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/easyflow.core/1.0.0"); 
+			EasyflowFactory theEasyflowFactory = (EasyflowFactory)EPackage.Registry.INSTANCE.getEFactory(EasyflowPackage.eNS_URI);
 			if (theEasyflowFactory != null) {
 				return theEasyflowFactory;
 			}

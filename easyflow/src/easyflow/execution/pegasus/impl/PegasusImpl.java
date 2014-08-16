@@ -25,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -46,7 +45,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class PegasusImpl extends EObjectImpl implements Pegasus {
+public class PegasusImpl extends MinimalEObjectImpl.Container implements Pegasus {
 	/**
 	 * The cached value of the '{@link #getProject() <em>Project</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -521,6 +520,46 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case PegasusPackage.PEGASUS___PLAN_WORKFLOW:
+				planWorkflow();
+				return null;
+			case PegasusPackage.PEGASUS___GENERATE_SITE_CATALOG:
+				generateSiteCatalog();
+				return null;
+			case PegasusPackage.PEGASUS___GENERATE_REPLICA_CATALOG:
+				generateReplicaCatalog();
+				return null;
+			case PegasusPackage.PEGASUS___GENERATE_TRANSFORMATION_CATALOG:
+				generateTransformationCatalog();
+				return null;
+			case PegasusPackage.PEGASUS___GET_JGRAPHX_VISITOR:
+				return getJgraphxVisitor();
+			case PegasusPackage.PEGASUS___CREATE_COMMAND_LINE__STRING_TASK:
+				try {
+					return createCommandLine((String)arguments.get(0), (Task)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case PegasusPackage.PEGASUS___CREATE_COMMAND_LINE__STRING_TOOL:
+				try {
+					return createCommandLine((String)arguments.get(0), (Tool)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

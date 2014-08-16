@@ -31,7 +31,7 @@ public class MetadataFactoryImpl extends EFactoryImpl implements MetadataFactory
 	 */
 	public static MetadataFactory init() {
 		try {
-			MetadataFactory theMetadataFactory = (MetadataFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/metadata/1.0.0"); 
+			MetadataFactory theMetadataFactory = (MetadataFactory)EPackage.Registry.INSTANCE.getEFactory(MetadataPackage.eNS_URI);
 			if (theMetadataFactory != null) {
 				return theMetadataFactory;
 			}

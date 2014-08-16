@@ -9,14 +9,11 @@ package easyflow.tool.impl;
 import easyflow.tool.BaseCommand;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +31,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
+public class BaseCommandImpl extends MinimalEObjectImpl.Container implements BaseCommand {
 	/**
 	 * The default value of the '{@link #getCommandPattern() <em>Command Pattern</em>}' attribute.
 	 * <!-- begin-user-doc -->

@@ -10,13 +10,10 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
-
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
@@ -295,6 +292,23 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return value != null && !value.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (Parameter)arguments.get(1));
+			case ToolPackage.RESOLVED_PARAM___GET_ARG_VALUE:
+				return getArgValue();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
