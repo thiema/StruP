@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
-    nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow" nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0"
+    nsPrefix="easyflow">
   <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
@@ -145,6 +144,7 @@
         <eParameters name="rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
         <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
+      <eOperations name="getValidInOutDataPortCombinations" upperBound="-1" eType="#//util/maps/StringToStringMap"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="graph" eType="#//EasyFlowGraph"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstNode" eType="#//Object"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="knownGroupingCriteria"
@@ -289,13 +289,24 @@
         <eParameters name="dataPort" eType="#//data/DataPort"/>
         <eParameters name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </eOperations>
-      <eOperations name="hasMultipleInputsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eOperations name="canProvideMultipleGroupingsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="hasMultipleInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eOperations name="canProvideMultipleInputsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="hasMultipleGroupingsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eOperations name="canProvideMultipleInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="canProvideMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
       <eOperations name="canProcessMultipleInputsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -308,8 +319,32 @@
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="canProcessMultipleGroupingsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
+      <eOperations name="canProcessMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//ToolNotFoundException #//DataPortNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProcessMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProcessMultipleInstancesFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProcessMultipleInputsFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProvideMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProvideMultipleInstancesFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="tool" eType="#//tool/Tool"/>
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProvideMultipleInputsFor" eExceptions="#//DataPortNotFoundException">
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
@@ -319,6 +354,9 @@
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
       <eOperations name="getRecords" upperBound="-1" eType="#//traversal/TraversalChunk">
+        <eParameters name="intersect" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="getInputs" upperBound="-1" eType="#//traversal/TraversalChunk">
         <eParameters name="intersect" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </eOperations>
       <eOperations name="getOverlappingRecordsProvidedBy" upperBound="-1" eType="#//traversal/TraversalChunk">
@@ -405,6 +443,8 @@
           eType="#//core/PreprocessingTask"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//tool/Command"
           containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="unresolvedOutDataPorts"
+          upperBound="-1" eType="#//data/DataPort"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PreprocessingTask">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -890,10 +930,6 @@
         <details key="documentation" value="Tool represents the tool which is used to implement an processing step.&#xA;The tools behaviour is mainly implemented by its command reference."/>
       </eAnnotations>
       <eOperations name="writeModelToXML"/>
-      <eOperations name="canProcessMultiplesInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
       <eOperations name="canFilterInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataPortNotFoundException">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
@@ -929,6 +965,48 @@
       <eOperations name="getExe" eType="#//tool/ResolvedParam"/>
       <eOperations name="getModuleParams" upperBound="-1" eType="#//util/maps/StringToResolvedParamMap"/>
       <eOperations name="getInterpreter" eType="#//tool/ResolvedParam"/>
+      <eOperations name="canProvideMultipleInputsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="canProvideMultipleInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="canProvideMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="canProcessMultipleInputsFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="canProcessMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="canProcessMultipleInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProcessMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProcessMultipleInstancesFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProcessMultipleInputsFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProvideMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProvideMultipleInstancesFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
+      <eOperations name="setProvideMultipleInputsFor" eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -945,6 +1023,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="command" eType="#//tool/Command"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedParams" upperBound="-1"
           eType="#//util/maps/StringToResolvedParamMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="root" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eOperations name="getArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -1001,6 +1080,12 @@
         <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       </eOperations>
       <eOperations name="isMultiple" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+      </eOperations>
+      <eOperations name="isMultipleInstances" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+      </eOperations>
+      <eOperations name="isMultipleInstancesPerInput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       </eOperations>
       <eOperations name="isNamed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1067,6 +1152,9 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataParam" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="cmdPart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstances" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstancesPerInput"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="InOutParameter" eSuperTypes="#//tool/Parameter">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="formats" upperBound="-1"
@@ -1539,6 +1627,10 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="intermediateTasks" upperBound="-1"
           eType="#//core/PreprocessingTask"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="#//data/Data"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="terminal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="processed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Data">
       <eOperations name="getFormat" eType="#//data/DataFormat"/>
