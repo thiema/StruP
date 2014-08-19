@@ -139,7 +139,8 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 	}
 	
 	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, DataLink dataLink) {
-		if (source == null || target == null)
+		
+		if (source == null)// || target == null)
 			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
 		if (dataLink!=null)
@@ -160,7 +161,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 	}
 	
 	public Object insertEdgeEasyFlow(Object parent, String id, Object source, Object target, Object value) {
-		if (source == null || target == null)
+		if (source == null)// || target == null)
 			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
 		return insertEdge(parent, id, value, source, target, edgeStyle);
@@ -390,7 +391,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 	
 	private void visit_topologicalOrder(mxICell vertex, EList<mxICell> sortedList, 
 			HashSet<mxICell> visitedSet, EMap<mxICell, mxICell> edgeMap, mxICell edge1) {
-		if (!visitedSet.contains(vertex)) {
+		if (!visitedSet.contains(vertex) && vertex != null) {
 			visitedSet.add(vertex);
 			for (Object edge : getOutgoingEdges(vertex)) {			
 				visit_topologicalOrder((mxICell) getView().getVisibleTerminal(edge, false), 

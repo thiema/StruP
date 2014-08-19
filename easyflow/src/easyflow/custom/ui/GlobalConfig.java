@@ -100,6 +100,14 @@ public class GlobalConfig {
 	private static final EMap<String, String> processingConfig = new BasicEMap<String, String>();
 	private static final EMap<String, String> catalogConfig    = new BasicEMap<String, String>();
 	private static final EMap<String, String> workflowConfig   = new BasicEMap<String, String>();
+
+	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE              = false;
+	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_DEFAULT_VALUE           = false;
+	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
+	
+	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INPUTS_DEFAULT_VALUE              = true;
+	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE           = true;
+	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
 	
 	private static       JSONObject           jsonConfig       = null; 
 	
@@ -382,5 +390,40 @@ public class GlobalConfig {
 			return getWorkflowConfig().get(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY);
 		else
 			return CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE;
+	}
+
+	public static String getGroupingCriterionForFilterTask() {
+		//return "ReadGroup";
+		return GlobalConstants.METADATA_INPUT;
+	}
+
+	public static Boolean getMultipleInputsDefaultValue()
+	{
+		return CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE;
+	}
+	
+	public static Boolean getMultipleInstancesDefaultValue()
+	{
+		return CONFIG_WORKFLOW_MULTIPLE_INSTANCES_DEFAULT_VALUE;
+	}
+	
+	public static Boolean getMultipleInstancesPerInputDefaultValue()
+	{
+		return CONFIG_WORKFLOW_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE;
+	}
+	
+	public static Boolean getMultipleInputsForRootTaskValue()
+	{
+		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INPUTS_DEFAULT_VALUE;
+	}
+	
+	public static Boolean getMultipleInstancesForRootTaskValue()
+	{
+		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE;
+	}
+	
+	public static Boolean getMultipleInstancesPerInputForRootTaskValue()
+	{
+		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE;
 	}
 }

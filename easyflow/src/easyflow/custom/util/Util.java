@@ -1,5 +1,7 @@
 package easyflow.custom.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -7,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
@@ -115,7 +118,7 @@ public class Util {
 			for (Entry<String, Object> entry : metaData.getRecord(
 					recordInstance).entrySet()) {
 				Object value = entry.getValue();
-				logger.debug("createMetaDataMapForJexl(): set key="+entry.getKey()+" value="+value);
+				logger.trace("createMetaDataMapForJexl(): set key="+entry.getKey()+" value="+value);
 				if (metaDataMap.containsKey(entry.getKey())) {
 					mergeValue(metaDataMap.get(entry.getKey()), value);
 				}
@@ -210,6 +213,34 @@ public class Util {
 			//logger.trace("list2String(): elist found");
 			EList chunks = (EList)list;
 			EList<String> cs = new BasicEList<String>();
+			
+			for (Object chunk:chunks)
+			{
+				cs.add(obejct2String(chunk));
+			}
+			return StringUtils.join(cs, sep);
+		}
+		else if (list instanceof Collection)
+		{
+			if (sep==null)
+				sep=", ";
+			//logger.trace("list2String(): elist found");
+			Collection chunks = (Collection)list;
+			Collection<String> cs = new ArrayList<String>();
+			
+			for (Object chunk:chunks)
+			{
+				cs.add(obejct2String(chunk));
+			}
+			return StringUtils.join(cs, sep);
+		}
+		else if (list instanceof Set)
+		{
+			if (sep==null)
+				sep=", ";
+			//logger.trace("list2String(): elist found");
+			Set chunks = (Set)list;
+			Collection<String> cs = new ArrayList<String>();
 			
 			for (Object chunk:chunks)
 			{

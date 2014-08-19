@@ -64,7 +64,8 @@ public class Easyflow {
 			
 			//DefaultProject defaultProject = examples.getExamples().get(0).getValue();
 			//DefaultProject defaultProject = examples.getExamples().get("abstract_simple");
-			DefaultProject defaultProject = examples.getExamples().get("abstract1");
+			//DefaultProject defaultProject = examples.getExamples().get("abstract1");
+			DefaultProject defaultProject = examples.getExamples().get("abstract2");
 			if (defaultProject != null)
 			{
 			

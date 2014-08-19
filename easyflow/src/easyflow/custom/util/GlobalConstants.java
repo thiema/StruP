@@ -8,8 +8,8 @@ public class GlobalConstants {
 	public static final double defaultCellHeight =  40;
 	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
 	public static final String METADATA_INPUT             = "InputFiles";
-
-	
+	public static final String GROUPING_MODE_JOINT        = "joint";
+	public static final String GROUPING_MODE_BATCH        = "batch";
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";
