@@ -218,24 +218,6 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getExamples__ReadExamples() {
-		return examplesEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getExamples__ReadRepository() {
-		return examplesEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ExampleFactory getExampleFactory() {
 		return (ExampleFactory)getEFactoryInstance();
 	}
@@ -264,8 +246,6 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 		createEAttribute(examplesEClass, EXAMPLES__LOGGER);
 		createEReference(examplesEClass, EXAMPLES__EXAMPLES);
 		createEAttribute(examplesEClass, EXAMPLES__FROM_JAR);
-		createEOperation(examplesEClass, EXAMPLES___READ_EXAMPLES);
-		createEOperation(examplesEClass, EXAMPLES___READ_REPOSITORY);
 	}
 
 	/**
@@ -301,16 +281,16 @@ public class ExamplePackageImpl extends EPackageImpl implements ExamplePackage {
 
 		// Add supertypes to classes
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(examplesEClass, Examples.class, "Examples", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getExamples_Locator(), ecorePackage.getEString(), "locator", "true", 0, 1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExamples_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Examples.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExamples_Examples(), theMapsPackage.getStringToProjectMap(), null, "examples", null, 0, -1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getExamples_FromJar(), ecorePackage.getEBoolean(), "fromJar", "false", 0, 1, Examples.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getExamples__ReadExamples(), ecorePackage.getEString(), "readExamples", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(examplesEClass, ecorePackage.getEString(), "readExamples", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getExamples__ReadRepository(), null, "readRepository", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(examplesEClass, null, "readRepository", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //ExamplePackageImpl

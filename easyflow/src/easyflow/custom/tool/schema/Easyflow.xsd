@@ -156,7 +156,8 @@
 		<xs:attribute name="handle" type="xs:string" />
 		<xs:attribute name="data" type="xs:string" />
 		<xs:attribute name="cmd_part" type="CmdPartType" />
-		<xs:attribute name="fixed" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="fixed" type="xs:boolean"/>
+		<xs:attribute name="key" type="xs:string"/>
 	</xs:complexType>
 
 	<xs:simpleType name="CmdPartType">
@@ -185,6 +186,7 @@
 	      <xs:enumeration value="drill_down"/>
 	      <xs:enumeration value="analysis_type"/>
 	      <xs:enumeration value="binary"/>
+	      <xs:enumeration value="any"/>
 	    </xs:restriction>
   </xs:simpleType>
 	

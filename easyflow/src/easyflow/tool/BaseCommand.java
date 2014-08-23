@@ -6,6 +6,7 @@
  */
 package easyflow.tool;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.tool.BaseCommand#getCommandPattern <em>Command Pattern</em>}</li>
- *   <li>{@link easyflow.tool.BaseCommand#getTemplateParam <em>Template Param</em>}</li>
+ *   <li>{@link easyflow.tool.BaseCommand#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.BaseCommand#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.BaseCommand#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  * </ul>
@@ -55,30 +56,20 @@ public interface BaseCommand extends EObject {
 	void setCommandPattern(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Template Param</b></em>' reference.
+	 * Returns the value of the '<em><b>Template Params</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.tool.Parameter}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Template Param</em>' reference isn't clear,
+	 * If the meaning of the '<em>Template Params</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Template Param</em>' reference.
-	 * @see #setTemplateParam(Parameter)
-	 * @see easyflow.tool.ToolPackage#getBaseCommand_TemplateParam()
+	 * @return the value of the '<em>Template Params</em>' reference list.
+	 * @see easyflow.tool.ToolPackage#getBaseCommand_TemplateParams()
 	 * @model
 	 * @generated
 	 */
-	Parameter getTemplateParam();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.BaseCommand#getTemplateParam <em>Template Param</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Template Param</em>' reference.
-	 * @see #getTemplateParam()
-	 * @generated
-	 */
-	void setTemplateParam(Parameter value);
+	EList<Parameter> getTemplateParams();
 
 	/**
 	 * Returns the value of the '<em><b>Assume Data Param Positional</b></em>' attribute.

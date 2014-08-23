@@ -226,7 +226,6 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	public String resolveArgKey(String defaultPrefix) {
 		String argKey = "";
 		String prefix = GlobalConfig.getArgPrefixForType(getType());
-		Key k = this;
 		if (getPrefix() != null)
 			argKey = getPrefix();
 		else if (prefix != null)
@@ -323,20 +322,6 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.KEY___RESOLVE_ARG_KEY__STRING:
-				return resolveArgKey((String)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -115,7 +116,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
+public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * The cached value of the '{@link #getInDataPorts() <em>In Data Ports</em>}' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -933,7 +934,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		boolean hasIndataPorts = false;
 		for (String dataPortField : wtplArray[inDataPortField].split(";")) {
 			DataPort dataPort = parseDataPortField(dataPortField,
-					inputDataPortValidator);
+					inputDataPortValidator, false);
 			if (dataPort == null || dataPort.getName().equals(""))
 				break;
 			else
@@ -947,7 +948,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		boolean hasOutdataPorts = false;
 		for (String dataPortField : wtplArray[outDataPortField].split(";")) {
 			DataPort dataPort = parseDataPortField(dataPortField,
-					outputDataPortValidator);
+					outputDataPortValidator, true);
 			if (dataPort == null || dataPort.getName().equals(""))
 				break;
 			else
@@ -957,6 +958,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			debugDataPort += dataPort.getName() + ", ";
 		}
 		debugDataPort += ") ";
+		
 		/**
 		 * Read Data(Grouping)Criteria.
 		 */
@@ -1181,6 +1183,69 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 
 	}
 
+
+	private DataPort parseDataPortField(String field, EList<Pattern> pattern, boolean isOutDataPort) {
+		
+		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
+		String[] tmp = field.split(":");
+		String dataPortString = tmp[0];
+		String dataFormatString;
+		
+		if (tmp.length > 1) {
+			dataPort.setName(dataPortString);
+			dataFormatString = tmp[1];
+			if (tmp.length > 2)
+				logger.warn("readTask(): unexpected format detected: multiple occurance of ':'.");
+		} else
+			dataFormatString = dataPortString;
+
+		Iterator<DataFormat> it = parseDataFormatField(dataFormatString,
+				pattern).iterator();
+
+		while (it.hasNext()) {
+
+			DataFormat dataFormat = it.next();
+			// enumerateInstances(dataFormat.getName());
+			dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
+			if (dataPort.getName() == null || dataPort.getName().equals(""))
+				dataPort.setName(dataFormat.getName());
+		}
+		DataPort knownDataPort = getDataPortByDataPort(dataPort, isOutDataPort);
+		if (knownDataPort != null)
+		{
+			if (isOutDataPort)
+				getOutDataPorts().remove(knownDataPort);
+			else
+				getInDataPorts().remove(knownDataPort);
+		}
+		return dataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public EList<DataFormat> parseDataFormatField(String dataFormatString,
+			EList<Pattern> pattern) {
+		String[] overall = dataFormatString.split(";");
+		if (overall.length > 1) {
+			// String[] tmp=overall[1].split(regex)
+			int i = 1;
+			while (i < overall.length)
+				pattern.add(Pattern.compile(overall[i++]));
+		}
+		String[] tmp = overall[0].split(",");
+		EList<DataFormat> list = new BasicEList<DataFormat>();
+		for (int i = 0; i < tmp.length; i++) {
+			// System.out.println(tmp[i]);
+			DataFormat dataFormat = DataFactory.eINSTANCE.createDataFormat();
+			dataFormat.setName(tmp[i]);
+			list.add(dataFormat);
+		}
+		return list;
+	}
+
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -1265,61 +1330,6 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		return true;
 
 	}
-
-
-	private DataPort parseDataPortField(String field, EList<Pattern> pattern) {
-		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
-		String[] tmp = field.split(":");
-		String dataPortString = tmp[0];
-		String dataFormatString;
-		if (tmp.length > 1) {
-			dataPort.setName(dataPortString);
-			dataFormatString = tmp[1];
-			if (tmp.length > 2)
-				logger.warn("unexpected format detected: multiple occurance of ':'.");
-		} else
-			dataFormatString = dataPortString;
-
-		Iterator<DataFormat> it = parseDataFormatField(dataFormatString,
-				pattern).iterator();
-
-		while (it.hasNext()) {
-
-			DataFormat dataFormat = it.next();
-			// enumerateInstances(dataFormat.getName());
-			dataPort.getDataFormats().put(dataFormat.getName(), dataFormat);
-			if (dataPort.getName() == null || dataPort.getName().equals(""))
-				dataPort.setName(dataFormat.getName());
-		}
-
-		return dataPort;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated not
-	 */
-	public EList<DataFormat> parseDataFormatField(String dataFormatString,
-			EList<Pattern> pattern) {
-		String[] overall = dataFormatString.split(";");
-		if (overall.length > 1) {
-			// String[] tmp=overall[1].split(regex)
-			int i = 1;
-			while (i < overall.length)
-				pattern.add(Pattern.compile(overall[i++]));
-		}
-		String[] tmp = overall[0].split(",");
-		EList<DataFormat> list = new BasicEList<DataFormat>();
-		for (int i = 0; i < tmp.length; i++) {
-			// System.out.println(tmp[i]);
-			DataFormat dataFormat = DataFactory.eINSTANCE.createDataFormat();
-			dataFormat.setName(tmp[i]);
-			list.add(dataFormat);
-		}
-		return list;
-	}
-
 	
 	//private void shallProcess(Map<String, Object> metaDataMap) {
 		/*
@@ -1774,10 +1784,11 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		EList<String> commandLineList = new BasicEList<String>();
 		Parameter     effectiveTemplateParam;
 		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().entrySet().iterator();
+		if (tool == null)
+			tool = getPreferredTool();
+		
 		while (it.hasNext())
 		{
-			
-			
 			Entry<String, ResolvedParam> e      = it.next();
 			ResolvedParam    resolvedParam      = e.getValue();
 			Parameter        parameter          = resolvedParam.getParameter();
@@ -1791,6 +1802,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			InOutParameter   inOutParameter = null;
 			boolean          isInOutParam   = false;
 			boolean          shallGenerate  = false;
+			
 			if (parameter instanceof InOutParameter)
 			{
 				inOutParameter = (InOutParameter) parameter;
@@ -1798,12 +1810,12 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			}
 			else if (effectiveParameter.isDataParam())
 			{
-				isInOutParam   = true;
 				inOutParameter = (InOutParameter) effectiveParameter;
+				isInOutParam   = true;
 			}
-			if (isInOutParam && getPreferredTool().assumeDataParamPositional())
-				effectiveTemplateParam = GlobalConfig.getPositonalParamTemplate();
-			else
+			
+			effectiveTemplateParam = tool.getTemplateParameter(parameter);
+			if (effectiveTemplateParam == null)
 				effectiveTemplateParam = templateParam;
 			
 			if (type == null)
@@ -1836,7 +1848,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			logger.trace("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
 					+" param type="+type+" of param="+resolvedParam.getParameter().getName()
 					+" type="+resolvedParam.getParameter().getType()
-					+" output="+parameter.isOutput()
+					//+" output="+parameter.isOutput()
 					//+" templatePrefix="+effectiveTemplateParam.getPrefix()
 					);
 			if (shallGenerate)
@@ -1846,13 +1858,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				{
 					if (effectiveParameter.getDefaultValue() == null || effectiveParameter.getDefaultValue().equals(""))
 					{
-						logger.debug("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (unset default value)");
+						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (unset default value)");
 						continue;
 					}
 					// skip if default is not required
 					else if (!GlobalConfig.useDefaultValue())
 					{
-						logger.debug("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (omit default value)");
+						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (omit default value)");
 						continue;
 					}
 				}
@@ -1861,15 +1873,28 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 						//		+" cmd="+getCommand().hashCode()+" map="+getCommand().getResolvedParams().hashCode()+" "
 						//		+" resolvedparam="+resolvedParam.hashCode()+" param="+resolvedParam.getParameter().hashCode()
 					//			);
-				
+				logger.debug("createCommandLinePart(): generate command line for parameter="+resolvedParam.getName()
+						+" (using template: "+(effectiveTemplateParam != null ? 
+								(" name="+effectiveTemplateParam.getName()
+										+" named="+effectiveTemplateParam.isNamed(null)
+										+" prefix="+effectiveTemplateParam.getPrefix()
+										+" delimiter="+effectiveTemplateParam.getDelimiter()
+										+" first key:"+(effectiveTemplateParam.getKeys().isEmpty() ? null : 
+											("name="+effectiveTemplateParam.getKeys().get(0).getName())
+											+" value="+effectiveTemplateParam.getKeys().get(0).getValue()))
+								: null)+")");
 				String res = StringUtils.join(
 						resolvedParam.generateCommandString(constraints, effectiveTemplateParam),
 						tool.getCmdPartDelimiter());
 				
 				if (res != null && !res.equals(""))
 				{
-					logger.debug("cmd="+res);
+					logger.debug("createCommandLinePart(): cmd="+res);
 					commandLineList.add(res);
+				}
+				else
+				{
+					logger.warn("createCommandLinePart(): empty command line result");
 				}
 			}
 		}
@@ -3162,226 +3187,6 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return unresolvedOutDataPorts != null && !unresolvedOutDataPorts.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case CorePackage.TASK___READ_TASK__STRING_STRING_ELIST:
-				readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
-				return null;
-			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING:
-				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1));
-			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN:
-				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2), (Boolean)arguments.get(3));
-			case CorePackage.TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST:
-				return parseDataFormatField((String)arguments.get(0), (EList<Pattern>)arguments.get(1));
-			case CorePackage.TASK___GET_UNIQUE_STRING:
-				return getUniqueString();
-			case CorePackage.TASK___GET_UNIQUE_URI_STRING:
-				return getUniqueURIString();
-			case CorePackage.TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT:
-				return isCompatibleWithOutDataPortFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT:
-				return isCompatibleWithInDataPortFor((DataPort)arguments.get(0));
-			case CorePackage.TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT:
-				return getParentTaskByOutDataPort((DataPort)arguments.get(0));
-			case CorePackage.TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK:
-				return getNonOveralppingTraversalChunksFor((Task)arguments.get(0));
-			case CorePackage.TASK___READ_TOOLS__ELIST:
-				readTools((EList<Tool>)arguments.get(0));
-				return null;
-			case CorePackage.TASK___GET_PREFERRED_TOOL:
-				return getPreferredTool();
-			case CorePackage.TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST:
-				return getOverlappingDataPorts((EList<DataPort>)arguments.get(0), (EList<DataPort>)arguments.get(1));
-			case CorePackage.TASK___CREATE_COMMAND_LINE__STRING:
-				try {
-					return createCommandLine((String)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___VALIDATE_TOOL__TOOL:
-				return validateTool((Tool)arguments.get(0));
-			case CorePackage.TASK___VALIDATE_TOOLS:
-				return validateTools();
-			case CorePackage.TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN:
-				return getDataPortByDataPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case CorePackage.TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN:
-				return getDataPortByNameOfFormat((String)arguments.get(0), (Boolean)arguments.get(1));
-			case CorePackage.TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN:
-				return getDataPortByName((String)arguments.get(0), (Boolean)arguments.get(1));
-			case CorePackage.TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST:
-				return resolveMissingDataPortsByTool((EList<Task>)arguments.get(0));
-			case CorePackage.TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING:
-				return getOverlappingChunksFor((Task)arguments.get(0), (String)arguments.get(1));
-			case CorePackage.TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
-				try {
-					return getRequiredGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
-				try {
-					return getProvidedGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT:
-				try {
-					return canProvideMultipleGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
-				try {
-					return canProvideMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					return canProvideMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
-				try {
-					return canProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
-				try {
-					return canProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					return canProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
-				try {
-					return canProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
-				try {
-					setProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					setProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
-				try {
-					setProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
-				try {
-					setProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					setProvideMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
-				try {
-					setProvideMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT:
-				try {
-					return canFilterInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___GET_RECORDS__BOOLEAN:
-				return getRecords((Boolean)arguments.get(0));
-			case CorePackage.TASK___GET_INPUTS__BOOLEAN:
-				return getInputs((Boolean)arguments.get(0));
-			case CorePackage.TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK:
-				return getOverlappingRecordsProvidedBy((Task)arguments.get(0));
-			case CorePackage.TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
-				try {
-					return canProvideDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST:
-				try {
-					return canComsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT:
-				return getOutputsForDataPort((DataPort)arguments.get(0));
-			case CorePackage.TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT:
-				return getInputsForDataPort((DataPort)arguments.get(0));
-			case CorePackage.TASK___RESOLVE_INPUTS:
-				try {
-					resolveInputs();
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case CorePackage.TASK___RESOLVE_OUTPUTS:
-				try {
-					resolveOutputs();
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

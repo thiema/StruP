@@ -48,9 +48,10 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getParent <em>Parent</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getHandles <em>Handles</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getGeneralValue <em>General Value</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#isOutput <em>Output</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isDataParam <em>Data Param</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getCmdPart <em>Cmd Part</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getMultipleInstances <em>Multiple Instances</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
  * </ul>
  * </p>
  *
@@ -333,28 +334,6 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	String getPrefix(String defaultPrefix);
 
 	/**
-	 * Returns the value of the '<em><b>Output</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Output</em>' attribute.
-	 * @see #setOutput(boolean)
-	 * @see easyflow.tool.ToolPackage#getParameter_Output()
-	 * @model
-	 * @generated
-	 */
-	boolean isOutput();
-
-	/**
-	 * Sets the value of the '{@link easyflow.tool.Parameter#isOutput <em>Output</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Output</em>' attribute.
-	 * @see #isOutput()
-	 * @generated
-	 */
-	void setOutput(boolean value);
-
-	/**
 	 * Returns the value of the '<em><b>Data Param</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -407,12 +386,64 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setCmdPart(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Multiple Instances</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Multiple Instances</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Multiple Instances</em>' attribute.
+	 * @see #setMultipleInstances(Boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_MultipleInstances()
+	 * @model
+	 * @generated
+	 */
+	Boolean getMultipleInstances();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getMultipleInstances <em>Multiple Instances</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Multiple Instances</em>' attribute.
+	 * @see #getMultipleInstances()
+	 * @generated
+	 */
+	void setMultipleInstances(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Multiple Instances Per Input</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Multiple Instances Per Input</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Multiple Instances Per Input</em>' attribute.
+	 * @see #setMultipleInstancesPerInput(Boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_MultipleInstancesPerInput()
+	 * @model
+	 * @generated
+	 */
+	Boolean getMultipleInstancesPerInput();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Multiple Instances Per Input</em>' attribute.
+	 * @see #getMultipleInstancesPerInput()
+	 * @generated
+	 */
+	void setMultipleInstancesPerInput(Boolean value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
-	String getArgKey(String defaultPrefix);
+	String getArgKey(String defaultPrefix, Key defaultKey);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -524,6 +555,22 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @model
 	 * @generated
 	 */
+	boolean isMultipleInstances(Boolean default_);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isMultipleInstancesPerInput(Boolean default_);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
 	boolean isNamed(Boolean default_);
 
 	/**
@@ -549,6 +596,30 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	boolean isMultipleValue(Boolean default_);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void merge(Parameter parameter);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean matches(Parameter templateParameter);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean matches(InOutParameter templateParameter);
 
 	/**
 	 * Returns the value of the '<em><b>Value Type</b></em>' attribute.

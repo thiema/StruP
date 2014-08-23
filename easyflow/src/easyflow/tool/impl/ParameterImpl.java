@@ -8,7 +8,9 @@ package easyflow.tool.impl;
 
 import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -74,7 +77,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getHandles <em>Handles</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getGeneralValue <em>General Value</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#isOutput <em>Output</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isDataParam <em>Data Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getCmdPart <em>Cmd Part</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstances <em>Multiple Instances</em>}</li>
@@ -84,7 +86,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
+public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -586,26 +588,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected EList<Object> generalValue;
 
 	/**
-	 * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isOutput()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean OUTPUT_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isOutput()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean output = OUTPUT_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #isDataParam() <em>Data Param</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -966,27 +948,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isOutput() {
-		return output;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setOutput(boolean newOutput) {
-		boolean oldOutput = output;
-		output = newOutput;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OUTPUT, oldOutput, output));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isDataParam() {
 		return dataParam;
 	}
@@ -1071,25 +1032,27 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String getArgKey(String defaultPrefix) {
+	public String getArgKey(String defaultPrefix, Key defaultKey) {
 
 		String argKey = "";
 		if (!getKeys().isEmpty())
-			argKey = resolveArgKey(defaultPrefix);
+			argKey = resolveArgKey(defaultPrefix, defaultKey);
+		else if (defaultKey != null)
+			return defaultKey.resolveArgKey(defaultPrefix);
 		else
 		{
-			if (getPrefix()!=null)// && isNamed(defaultIsNamed))
+			if (getPrefix() != null)// && isNamed(defaultIsNamed))
 				argKey = getPrefix();
 			else if (defaultPrefix != null)// && isNamed(defaultIsNamed))
 				argKey = defaultPrefix;
 			else 
 				argKey = GlobalConfig.getArgPrefix();
-			argKey += getName();
+			argKey += defaultKey == null ? getName() : defaultKey;
 		}
 		return argKey;
 	}
 
-	private String resolveArgKey(String defaultPrefix)
+	private String resolveArgKey(String defaultPrefix, Key defaultKey)
 	{
 		String preferredType = GlobalConfig.getPreferredOptionType();
 		for (Key key : getKeys())
@@ -1097,6 +1060,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			if (key.getType() != null && key.getType().equalsIgnoreCase(preferredType))
 				return key.resolveArgKey(defaultPrefix);
 		}
+		if (defaultKey != null)
+			return defaultKey.resolveArgKey(defaultPrefix);
 		return getKeys().get(0).resolveArgKey(defaultPrefix);
 		//if (.equalsIgnoreCase("long"))
 	}
@@ -1106,10 +1071,15 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		String preferredType = GlobalConfig.getPreferredOptionType();
 		for (Key key : getKeys())
 		{
-			if (key.getType().equalsIgnoreCase(preferredType))
+			if (key.getType() != null && key.getType().equalsIgnoreCase(preferredType))
 				return key.getDelimiter() != null ? key.getDelimiter() : defaultDelimiter; 
 		}
-		return getKeys().get(0).getDelimiter() != null ? getKeys().get(0).getDelimiter() : defaultDelimiter;
+		if (getKeys().get(0).getDelimiter() != null)
+			return getKeys().get(0).getDelimiter();
+		else if (getDelimiter() != null)
+			return getDelimiter();
+		else 
+			return defaultDelimiter;
 	}
 	/**
 	 * <!-- begin-user-doc -->
@@ -1333,6 +1303,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	public EList<String> generateCommandString(EMap<String, Object> constraints, EList<Object> value, Parameter templateParam) {
 		
 		EList<String> cmdString = new BasicEList<String>();
+		
 		EList<String> argValue  = null;
 		Boolean defaultIsFixed  = templateParam != null ? templateParam.getFixedArgValue() : null;
 		
@@ -1357,22 +1328,21 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed() : null;
 		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter(null) : null;
 		String  defaultPrefix            = templateParam != null ? templateParam.getPrefix() : null;
+		Key     defaultKey               = templateParam != null ? (templateParam.getKeys().isEmpty() ? null : templateParam.getKeys().get(0)) : null;
 		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
 				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
-
-		Parameter p = this;
+		
 		if (isAnalysisType())
 		{
 			EList<Parameter> pl = getEffectiveParameters(null);
-			logger.debug(getName()+" "+pl.size());
-			//logger.debug("");
+			logger.debug("generateCommandString(): param="+getName()+" no of effective params="+pl.size());
 		}
 		// resolve prefix and key
 		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
 			;
 		else if (isNamed(defaultIsNamed) || argValue == null)
 		{
-			cmdString.add(getArgKey(defaultPrefix));
+			cmdString.add(getArgKey(defaultPrefix, defaultKey));
 		}
 		// resolve delimiter
 		if (argValue != null && isNamed(defaultIsNamed))
@@ -1504,23 +1474,29 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean isMultipleInstances(Boolean default_) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		if (getMultipleInstances() != null)
+			return getMultipleInstances();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsMultipleInstances();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean isMultipleInstancesPerInput(Boolean default_) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		if (getMultipleInstancesPerInput() != null)
+			return getMultipleInstancesPerInput();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.paramIsMultipleInstancesPerInput();
 	}
 
 	/**
@@ -1578,6 +1554,77 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		else
 			return GlobalConfig.isMultipleArgValue();
 			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void merge(Parameter parameter) {
+		
+		setNamed(parameter.isNamed(getNamed()));
+		if (getPrefix() == null)
+			setPrefix(parameter.getPrefix());
+		if (getDelimiter() == null)
+			setDelimiter(parameter.getDelimiter());
+		mergeKeys(parameter.getKeys());
+			
+		
+	}
+	
+	private void mergeKeys(EList<Key> newKeys)
+	{
+		for (Key newKey:newKeys)
+		{
+			boolean contained = false;
+			for (Key key:getKeys())
+			{
+				if (newKey.getValue().equals(key.getValue()))
+					contained = true;
+			}
+			if (!contained)
+				getKeys().add(newKey);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean matches(Parameter templateParameter) {
+		
+		
+		boolean doesNameMatch = true;
+		boolean doesTypeMatch = false;
+		
+		if (templateParameter.getType().equals(getType()) || 
+				templateParameter.getType().equals(GlobalConstants.ANY_TEMPLATE_PARAM_NAME))
+			doesTypeMatch = true;
+		
+		if (templateParameter.getName() != null)
+		{
+			if (!templateParameter.getName().equals(getName()))
+				doesNameMatch = false;
+		}
+
+		if (!doesNameMatch && (GlobalConstants.DEFAULT_TEMPLATE_PARAM_NAME.equals(templateParameter.getName())
+				|| GlobalConstants.ANY_TEMPLATE_PARAM_NAME.equals(templateParameter.getName())))
+			doesNameMatch = true;
+		
+		return doesNameMatch && doesTypeMatch;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean matches(InOutParameter templateParameter) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1956,8 +2003,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return getHandles();
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				return getGeneralValue();
-			case ToolPackage.PARAMETER__OUTPUT:
-				return isOutput();
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				return isDataParam();
 			case ToolPackage.PARAMETER__CMD_PART:
@@ -2069,9 +2114,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				getGeneralValue().clear();
 				getGeneralValue().addAll((Collection<? extends Object>)newValue);
 				return;
-			case ToolPackage.PARAMETER__OUTPUT:
-				setOutput((Boolean)newValue);
-				return;
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				setDataParam((Boolean)newValue);
 				return;
@@ -2180,9 +2222,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				getGeneralValue().clear();
 				return;
-			case ToolPackage.PARAMETER__OUTPUT:
-				setOutput(OUTPUT_EDEFAULT);
-				return;
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				setDataParam(DATA_PARAM_EDEFAULT);
 				return;
@@ -2265,8 +2304,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return handles != null && !handles.isEmpty();
 			case ToolPackage.PARAMETER__GENERAL_VALUE:
 				return generalValue != null && !generalValue.isEmpty();
-			case ToolPackage.PARAMETER__OUTPUT:
-				return output != OUTPUT_EDEFAULT;
 			case ToolPackage.PARAMETER__DATA_PARAM:
 				return dataParam != DATA_PARAM_EDEFAULT;
 			case ToolPackage.PARAMETER__CMD_PART:
@@ -2311,63 +2348,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.PARAMETER___GET_ARG_KEY__STRING:
-				return getArgKey((String)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_ARG_DELIMITER__STRING:
-				return getArgDelimiter((String)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER__STRING:
-				return getArgValueDelimiter((String)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_PREFIX__STRING:
-				return getPrefix((String)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
-				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
-				return isAnalysisType();
-			case ToolPackage.PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN:
-				return getSupportedHandles((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN:
-				return getEffectiveParentParameter((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARAMETERS__ELIST:
-				return getEffectiveParameters((EList<Parameter>)arguments.get(0));
-			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER:
-				return generateCommandStringURI((EMap<String, Object>)arguments.get(0), (EList<URI>)arguments.get(1), (Parameter)arguments.get(2));
-			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER:
-				return generateCommandString((EMap<String, Object>)arguments.get(0), (EList<Object>)arguments.get(1), (Parameter)arguments.get(2));
-			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER:
-				return generateCommandString((EMap<String, Object>)arguments.get(0), arguments.get(1), (Parameter)arguments.get(2));
-			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER:
-				return generateCommandString((EMap<String, Object>)arguments.get(0), (OptionValue)arguments.get(1), (Parameter)arguments.get(2));
-			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER:
-				return generateCommandString((EMap<String, Object>)arguments.get(0), (URI)arguments.get(1), (Parameter)arguments.get(2));
-			case ToolPackage.PARAMETER___IS_OPTIONAL__BOOLEAN:
-				return isOptional((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_MULTIPLE__BOOLEAN:
-				return isMultiple((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN:
-				return isMultipleInstances((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN:
-				return isMultipleInstancesPerInput((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_NAMED__BOOLEAN:
-				return isNamed((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_POSITIONAL__BOOLEAN:
-				return isPositional((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN:
-				return isFixedArgValue((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN:
-				return isMultipleValue((Boolean)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -2428,8 +2408,6 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		result.append(handles);
 		result.append(", generalValue: ");
 		result.append(generalValue);
-		result.append(", output: ");
-		result.append(output);
 		result.append(", dataParam: ");
 		result.append(dataParam);
 		result.append(", cmdPart: ");

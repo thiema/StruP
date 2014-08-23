@@ -31,7 +31,7 @@ public class MakeflowFactoryImpl extends EFactoryImpl implements MakeflowFactory
 	 */
 	public static MakeflowFactory init() {
 		try {
-			MakeflowFactory theMakeflowFactory = (MakeflowFactory)EPackage.Registry.INSTANCE.getEFactory(MakeflowPackage.eNS_URI);
+			MakeflowFactory theMakeflowFactory = (MakeflowFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/execution/makeflow/1.0.0"); 
 			if (theMakeflowFactory != null) {
 				return theMakeflowFactory;
 			}

@@ -140,6 +140,11 @@ public class GlobalVar {
 		return getGraphUtil().getTasks().get(GlobalConstants.ROOT_TASK_NAME);
 	}
 
+	public static void setRootTask(Task task) {
+		getGraphUtil().getTasks().put(GlobalConstants.ROOT_TASK_NAME, task);		
+	}
+
+	
 	public static String getExecutionSystemOutputFileName() {
 		return executionSystemFileName;
 	}
@@ -191,5 +196,6 @@ public class GlobalVar {
 	public static void setMasterMap(Map<String, Map<String, Map<String, Map<String, String>>>> masterMap) {
 		GlobalVar.masterMap = masterMap;
 	}
+
 
 }

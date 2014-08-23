@@ -77,6 +77,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
  *   <li>{@link easyflow.core.Task#getCommand <em>Command</em>}</li>
+ *   <li>{@link easyflow.core.Task#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
  * </ul>
  * </p>
  *
@@ -611,6 +612,22 @@ public interface Task extends EObject {
 	void setCommand(Command value);
 
 	/**
+	 * Returns the value of the '<em><b>Unresolved Out Data Ports</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.data.DataPort}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Unresolved Out Data Ports</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Unresolved Out Data Ports</em>' reference list.
+	 * @see easyflow.core.CorePackage#getTask_UnresolvedOutDataPorts()
+	 * @model
+	 * @generated
+	 */
+	EList<DataPort> getUnresolvedOutDataPorts();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -822,26 +839,34 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
 	 * @generated
 	 */
-	boolean hasMultipleInputsFor(DataPort dataPort);
+	boolean canProvideMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
 	 * @generated
 	 */
-	boolean hasMultipleInstancesFor(DataPort dataPort);
+	boolean canProvideMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
 	 * @generated
 	 */
-	boolean hasMultipleGroupingsFor(DataPort dataPort);
+	boolean canProvideMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @generated
+	 */
+	boolean canProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -862,10 +887,58 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
+	 * @model exceptions="easyflow.ToolNotFoundException easyflow.DataPortNotFoundException"
 	 * @generated
 	 */
-	boolean canProcessMultipleGroupingsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+	boolean canProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProcessMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProcessMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProvideMultipleInstancesFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProvideMultipleInputsFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -882,6 +955,14 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EList<TraversalChunk> getRecords(boolean intersect);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<TraversalChunk> getInputs(boolean intersect);
 
 	/**
 	 * <!-- begin-user-doc -->

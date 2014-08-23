@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.tool.InOutParameter#getFormats <em>Formats</em>}</li>
+ *   <li>{@link easyflow.tool.InOutParameter#isOutput <em>Output</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,5 +41,55 @@ public interface InOutParameter extends Parameter {
 	 * @generated
 	 */
 	EList<String> getFormats();
+
+	/**
+	 * Returns the value of the '<em><b>Output</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Output</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Output</em>' attribute.
+	 * @see #setOutput(boolean)
+	 * @see easyflow.tool.ToolPackage#getInOutParameter_Output()
+	 * @model
+	 * @generated
+	 */
+	boolean isOutput();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.InOutParameter#isOutput <em>Output</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Output</em>' attribute.
+	 * @see #isOutput()
+	 * @generated
+	 */
+	void setOutput(boolean value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean matches(InOutParameter templateParameter);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean matches(Parameter templateParameter);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void merge(Parameter parameter);
 
 } // InOutParameter

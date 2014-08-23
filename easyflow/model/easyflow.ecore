@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow" nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0"
-    nsPrefix="easyflow">
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="easyflow"
+    nsURI="http:///de/thiema/easyflow/easyflow.core/1.0.0" nsPrefix="easyflow">
   <eClassifiers xsi:type="ecore:EDataType" name="mxGraph" instanceClassName="com.mxgraph.view.mxGraph"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICell" instanceClassName="com.mxgraph.model.mxICell"/>
   <eClassifiers xsi:type="ecore:EDataType" name="mxICellVisitor" instanceClassName="com.mxgraph.view.mxGraph.mxICellVisitor"/>
@@ -958,6 +959,14 @@
         <eParameters name="constraints" eType="#//util/maps/StringToStringMap"/>
       </eOperations>
       <eOperations name="getTemplateParameter" eType="#//tool/Parameter"/>
+      <eOperations name="getMatchingParameter" eType="#//tool/Parameter">
+        <eParameters name="parameters" upperBound="-1" eType="#//tool/Parameter"/>
+        <eParameters name="parameter" eType="#//tool/Parameter"/>
+      </eOperations>
+      <eOperations name="getMatchingParameterByName" eType="#//tool/Parameter">
+        <eParameters name="parameters" upperBound="-1" eType="#//tool/Parameter"/>
+        <eParameters name="parameter" eType="#//tool/Parameter"/>
+      </eOperations>
       <eOperations name="assumeDataParamPositional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="omitPrefixIfNoArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="getCmdPartDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -1028,6 +1037,7 @@
     <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eOperations name="getArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="defaultPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="defaultKey" eType="#//tool/Key"/>
       </eOperations>
       <eOperations name="getArgDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="defaultDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -1050,6 +1060,12 @@
       </eOperations>
       <eOperations name="getEffectiveParameters" upperBound="-1" eType="#//tool/Parameter">
         <eParameters name="effectiveParams" upperBound="-1" eType="#//tool/Parameter"/>
+      </eOperations>
+      <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="templateParameter" eType="#//tool/Parameter"/>
+      </eOperations>
+      <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="templateParameter" eType="#//tool/InOutParameter"/>
       </eOperations>
       <eOperations name="generateCommandStringURI" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="constraints" upperBound="-1" eType="#//util/maps/StringToObjectMap"/>
@@ -1100,6 +1116,9 @@
       <eOperations name="isMultipleValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       </eOperations>
+      <eOperations name="merge">
+        <eParameters name="parameter" eType="#//tool/Parameter"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -1149,7 +1168,6 @@
           <details key="documentation" value="The actual argument value. If it is a string its used as is. If it is an Iteratable the &#xA;individual values are enumerated and joined to a string with delimiter."/>
         </eAnnotations>
       </eStructuralFeatures>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataParam" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="cmdPart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstances" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
@@ -1157,8 +1175,18 @@
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="InOutParameter" eSuperTypes="#//tool/Parameter">
+      <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="templateParameter" eType="#//tool/InOutParameter"/>
+      </eOperations>
+      <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="templateParameter" eType="#//tool/Parameter"/>
+      </eOperations>
+      <eOperations name="merge">
+        <eParameters name="parameter" eType="#//tool/Parameter"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="formats" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Key" eSuperTypes="#//tool/DefaultToolElement">
       <eOperations name="resolveArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -1187,7 +1215,8 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="BaseCommand">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="commandPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="templateParam" eType="#//tool/Parameter"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="templateParams" upperBound="-1"
+          eType="#//tool/Parameter"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="assumeDataParamPositional"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="cmdPartDelimiter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

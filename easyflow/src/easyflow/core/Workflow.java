@@ -817,4 +817,12 @@ public interface Workflow extends EObject {
 	 */
 	void printWorkflowStepMsgOnEnd(boolean rc, String step);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getValidInOutDataPortCombinations();
+
 } // Workflow

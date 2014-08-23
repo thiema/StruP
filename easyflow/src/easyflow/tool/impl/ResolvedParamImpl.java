@@ -300,23 +300,6 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	 * @generated
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP_PARAMETER:
-				return generateCommandString((EMap<String, Object>)arguments.get(0), (Parameter)arguments.get(1));
-			case ToolPackage.RESOLVED_PARAM___GET_ARG_VALUE:
-				return getArgValue();
-		}
-		return super.eInvoke(operationID, arguments);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

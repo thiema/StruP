@@ -18,12 +18,15 @@ import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.GlobalVar;
+
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
@@ -44,7 +47,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implements EasyflowTemplate, IWorkflowTemplate {
+public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplate, IWorkflowTemplate {
 	/**
 	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -219,7 +222,11 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					
-					Task task = CoreFactory.eINSTANCE.createTask();
+					Task task = null;
+					if (strLine.startsWith(GlobalConstants.ROOT_TASK_NAME) && GlobalVar.getRootTask() != null)
+						task = GlobalVar.getRootTask();
+					else
+						task = CoreFactory.eINSTANCE.createTask();
 					
 					task.readTask(strLine, mode, defaultGroupingCriteria);
 					tmpMap.put(task.getName(), task);
@@ -240,8 +247,11 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 							task.getParents().put("Root", tmpMap.get("Root"));
 						}
 					}
-					if (GlobalConstants.ROOT_TASK_NAME.equals(task.getName()))
+					if (GlobalVar.getRootTask() == null && GlobalConstants.ROOT_TASK_NAME.equals(task.getName()))
+					{
+						GlobalVar.setRootTask(task);
 						task.setRoot(true);
+					}
 					getTasks().add(task);
 					
 					//if (!task.getParents().isEmpty())
@@ -370,21 +380,6 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case CorePackage.EASYFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST:
-				return readTemplate((String)arguments.get(0), (EList<String>)arguments.get(1));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

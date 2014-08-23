@@ -486,303 +486,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWorkflow__GenerateGraphFromTemplate__EMap() {
-		return workflowEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetParentTaskByOutDataPort__DataPort_Task() {
-		return workflowEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetParentTasksByOutDataPort__DataPort() {
-		return workflowEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ValidateParentTaskOutDataPort__DataPort_Task() {
-		return workflowEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ValidateLastTaskOutDataPort__DataPort() {
-		return workflowEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ReadMetaData() {
-		return workflowEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetParentTasksFor__Task() {
-		return workflowEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ResolveMissingDataPortsByToolFor__Task() {
-		return workflowEClass.getEOperations().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ReadWorkfowTemplate() {
-		return workflowEClass.getEOperations().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GenerateAbstractWorkflow() {
-		return workflowEClass.getEOperations().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ApplyGroupingCriteria() {
-		return workflowEClass.getEOperations().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ApplyParameterCriteria() {
-		return workflowEClass.getEOperations().get(11);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ApplyTraversalEvent__TraversalEvent() {
-		return workflowEClass.getEOperations().get(12);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ResolveTraversalEvents() {
-		return workflowEClass.getEOperations().get(13);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ResolveIncompatibleGroupings() {
-		return workflowEClass.getEOperations().get(14);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ResolvePreprocessingTasks() {
-		return workflowEClass.getEOperations().get(15);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ResolveToolDependencies() {
-		return workflowEClass.getEOperations().get(16);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GenerateWorklowForExecutionSystem() {
-		return workflowEClass.getEOperations().get(17);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__RunNextWorkflowStep() {
-		return workflowEClass.getEOperations().get(18);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__RunPrevWorkflowStep() {
-		return workflowEClass.getEOperations().get(19);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__RunEntireWorkflow() {
-		return workflowEClass.getEOperations().get(20);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__HasNextWorkflowStep() {
-		return workflowEClass.getEOperations().get(21);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetTotalNumberOfWorkflowSteps() {
-		return workflowEClass.getEOperations().get(22);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetWorkflowStepLabelFor__String() {
-		return workflowEClass.getEOperations().get(23);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetWorkflowStepDescFor__String() {
-		return workflowEClass.getEOperations().get(24);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetNumberOfCurrentWorkflowStep() {
-		return workflowEClass.getEOperations().get(25);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetNextWorkflowStep() {
-		return workflowEClass.getEOperations().get(26);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetCurWorkflowStep() {
-		return workflowEClass.getEOperations().get(27);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__Delete() {
-		return workflowEClass.getEOperations().get(28);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__ResetWorkflowStep() {
-		return workflowEClass.getEOperations().get(29);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__PrintWorkflowStepMsgOnStart__String() {
-		return workflowEClass.getEOperations().get(30);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String() {
-		return workflowEClass.getEOperations().get(31);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getWorkflow__GetValidInOutDataPortCombinations() {
-		return workflowEClass.getEOperations().get(32);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getTask() {
 		return taskEClass;
 	}
@@ -1044,420 +747,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTask__ReadTask__String_String_EList() {
-		return taskEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ShallProcess__EList_String() {
-		return taskEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ShallProcess__EList_String_EList_boolean() {
-		return taskEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ParseDataFormatField__String_EList() {
-		return taskEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetUniqueString() {
-		return taskEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetUniqueURIString() {
-		return taskEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__IsCompatibleWithOutDataPortFor__DataPort() {
-		return taskEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__IsCompatibleWithInDataPortFor__DataPort() {
-		return taskEClass.getEOperations().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetParentTaskByOutDataPort__DataPort() {
-		return taskEClass.getEOperations().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetNonOveralppingTraversalChunksFor__Task() {
-		return taskEClass.getEOperations().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ReadTools__EList() {
-		return taskEClass.getEOperations().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetPreferredTool() {
-		return taskEClass.getEOperations().get(11);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetOverlappingDataPorts__EList_EList() {
-		return taskEClass.getEOperations().get(12);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CreateCommandLine__String() {
-		return taskEClass.getEOperations().get(13);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ValidateTool__Tool() {
-		return taskEClass.getEOperations().get(14);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ValidateTools() {
-		return taskEClass.getEOperations().get(15);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetDataPortByDataPort__DataPort_boolean() {
-		return taskEClass.getEOperations().get(16);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetDataPortByNameOfFormat__String_boolean() {
-		return taskEClass.getEOperations().get(17);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetDataPortByName__String_boolean() {
-		return taskEClass.getEOperations().get(18);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ResolveMissingDataPortsByTool__EList() {
-		return taskEClass.getEOperations().get(19);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetOverlappingChunksFor__Task_String() {
-		return taskEClass.getEOperations().get(20);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetRequiredGroupingsFor__Tool_DataPort_boolean() {
-		return taskEClass.getEOperations().get(21);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetProvidedGroupingsFor__Tool_DataPort_boolean() {
-		return taskEClass.getEOperations().get(22);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProvideMultipleGroupingsFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(23);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProvideMultipleInputsFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(24);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProvideMultipleInstancesFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(25);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(26);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProcessMultipleInputsFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(27);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProcessMultipleInstancesFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(28);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(29);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(30);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__SetProcessMultipleInstancesFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(31);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__SetProcessMultipleInputsFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(32);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(33);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__SetProvideMultipleInstancesFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(34);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__SetProvideMultipleInputsFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(35);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanFilterInstancesFor__Tool_DataPort() {
-		return taskEClass.getEOperations().get(36);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetRecords__boolean() {
-		return taskEClass.getEOperations().get(37);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetInputs__boolean() {
-		return taskEClass.getEOperations().get(38);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetOverlappingRecordsProvidedBy__Task() {
-		return taskEClass.getEOperations().get(39);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanProvideDataPort__Tool_DataPort_String_EList() {
-		return taskEClass.getEOperations().get(40);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__CanComsumeDataPort__Tool_DataPort_String_EList() {
-		return taskEClass.getEOperations().get(41);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetOutputsForDataPort__DataPort() {
-		return taskEClass.getEOperations().get(42);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__GetInputsForDataPort__DataPort() {
-		return taskEClass.getEOperations().get(43);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ResolveInputs() {
-		return taskEClass.getEOperations().get(44);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTask__ResolveOutputs() {
-		return taskEClass.getEOperations().get(45);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getPreprocessingTask() {
 		return preprocessingTaskEClass;
 	}
@@ -1620,71 +909,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getToolMatch__ComputeScore__EMap() {
-		return toolMatchEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolMatch__ComputeExpectedScore() {
-		return toolMatchEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolMatch__ValidateDataPorts__EList_EList() {
-		return toolMatchEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolMatch__ResolveReverseMissingInDataPorts__EList() {
-		return toolMatchEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolMatch__ResolveReverseMissingOutDataPorts__EList() {
-		return toolMatchEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getToolMatch__GetDataPortProvidingTasks__EList_EList() {
-		return toolMatchEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getIWorkflowTemplate() {
 		return iWorkflowTemplateEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getIWorkflowTemplate__ReadTemplate__String_EList() {
-		return iWorkflowTemplateEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1739,15 +965,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EClass getITaskReader() {
 		return iTaskReaderEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getITaskReader__ReadTask() {
-		return iTaskReaderEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -1899,15 +1116,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getCondition__IsUnconditional() {
-		return conditionEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -1953,39 +1161,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(workflowEClass, WORKFLOW__WORKER);
 		createEReference(workflowEClass, WORKFLOW__TOOLS);
 		createEReference(workflowEClass, WORKFLOW__EXECUTION_SYSTEM);
-		createEOperation(workflowEClass, WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP);
-		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK);
-		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT);
-		createEOperation(workflowEClass, WORKFLOW___VALIDATE_PARENT_TASK_OUT_DATA_PORT__DATAPORT_TASK);
-		createEOperation(workflowEClass, WORKFLOW___VALIDATE_LAST_TASK_OUT_DATA_PORT__DATAPORT);
-		createEOperation(workflowEClass, WORKFLOW___READ_META_DATA);
-		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASKS_FOR__TASK);
-		createEOperation(workflowEClass, WORKFLOW___RESOLVE_MISSING_DATA_PORTS_BY_TOOL_FOR__TASK);
-		createEOperation(workflowEClass, WORKFLOW___READ_WORKFOW_TEMPLATE);
-		createEOperation(workflowEClass, WORKFLOW___GENERATE_ABSTRACT_WORKFLOW);
-		createEOperation(workflowEClass, WORKFLOW___APPLY_GROUPING_CRITERIA);
-		createEOperation(workflowEClass, WORKFLOW___APPLY_PARAMETER_CRITERIA);
-		createEOperation(workflowEClass, WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT);
-		createEOperation(workflowEClass, WORKFLOW___RESOLVE_TRAVERSAL_EVENTS);
-		createEOperation(workflowEClass, WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS);
-		createEOperation(workflowEClass, WORKFLOW___RESOLVE_PREPROCESSING_TASKS);
-		createEOperation(workflowEClass, WORKFLOW___RESOLVE_TOOL_DEPENDENCIES);
-		createEOperation(workflowEClass, WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM);
-		createEOperation(workflowEClass, WORKFLOW___RUN_NEXT_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___RUN_PREV_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___RUN_ENTIRE_WORKFLOW);
-		createEOperation(workflowEClass, WORKFLOW___HAS_NEXT_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS);
-		createEOperation(workflowEClass, WORKFLOW___GET_WORKFLOW_STEP_LABEL_FOR__STRING);
-		createEOperation(workflowEClass, WORKFLOW___GET_WORKFLOW_STEP_DESC_FOR__STRING);
-		createEOperation(workflowEClass, WORKFLOW___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___GET_NEXT_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___GET_CUR_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___DELETE);
-		createEOperation(workflowEClass, WORKFLOW___RESET_WORKFLOW_STEP);
-		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING);
-		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING);
-		createEOperation(workflowEClass, WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS);
 
 		taskEClass = createEClass(TASK);
 		createEReference(taskEClass, TASK__IN_DATA_PORTS);
@@ -2016,52 +1191,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__PREPROCESSING_TASKS);
 		createEReference(taskEClass, TASK__COMMAND);
 		createEReference(taskEClass, TASK__UNRESOLVED_OUT_DATA_PORTS);
-		createEOperation(taskEClass, TASK___READ_TASK__STRING_STRING_ELIST);
-		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING);
-		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN);
-		createEOperation(taskEClass, TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST);
-		createEOperation(taskEClass, TASK___GET_UNIQUE_STRING);
-		createEOperation(taskEClass, TASK___GET_UNIQUE_URI_STRING);
-		createEOperation(taskEClass, TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT);
-		createEOperation(taskEClass, TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT);
-		createEOperation(taskEClass, TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT);
-		createEOperation(taskEClass, TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK);
-		createEOperation(taskEClass, TASK___READ_TOOLS__ELIST);
-		createEOperation(taskEClass, TASK___GET_PREFERRED_TOOL);
-		createEOperation(taskEClass, TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST);
-		createEOperation(taskEClass, TASK___CREATE_COMMAND_LINE__STRING);
-		createEOperation(taskEClass, TASK___VALIDATE_TOOL__TOOL);
-		createEOperation(taskEClass, TASK___VALIDATE_TOOLS);
-		createEOperation(taskEClass, TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN);
-		createEOperation(taskEClass, TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN);
-		createEOperation(taskEClass, TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN);
-		createEOperation(taskEClass, TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST);
-		createEOperation(taskEClass, TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING);
-		createEOperation(taskEClass, TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN);
-		createEOperation(taskEClass, TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN);
-		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___GET_RECORDS__BOOLEAN);
-		createEOperation(taskEClass, TASK___GET_INPUTS__BOOLEAN);
-		createEOperation(taskEClass, TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK);
-		createEOperation(taskEClass, TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST);
-		createEOperation(taskEClass, TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST);
-		createEOperation(taskEClass, TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT);
-		createEOperation(taskEClass, TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT);
-		createEOperation(taskEClass, TASK___RESOLVE_INPUTS);
-		createEOperation(taskEClass, TASK___RESOLVE_OUTPUTS);
 
 		preprocessingTaskEClass = createEClass(PREPROCESSING_TASK);
 		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__NAME);
@@ -2082,15 +1211,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(toolMatchEClass, TOOL_MATCH__REVERSE_MISSING_OUT_DATA_PORTS);
 		createEReference(toolMatchEClass, TOOL_MATCH__REVERSE_MISSING_GROUPING_CRITERIA);
 		createEAttribute(toolMatchEClass, TOOL_MATCH__VALID);
-		createEOperation(toolMatchEClass, TOOL_MATCH___COMPUTE_SCORE__EMAP);
-		createEOperation(toolMatchEClass, TOOL_MATCH___COMPUTE_EXPECTED_SCORE);
-		createEOperation(toolMatchEClass, TOOL_MATCH___VALIDATE_DATA_PORTS__ELIST_ELIST);
-		createEOperation(toolMatchEClass, TOOL_MATCH___RESOLVE_REVERSE_MISSING_IN_DATA_PORTS__ELIST);
-		createEOperation(toolMatchEClass, TOOL_MATCH___RESOLVE_REVERSE_MISSING_OUT_DATA_PORTS__ELIST);
-		createEOperation(toolMatchEClass, TOOL_MATCH___GET_DATA_PORT_PROVIDING_TASKS__ELIST_ELIST);
 
 		iWorkflowTemplateEClass = createEClass(IWORKFLOW_TEMPLATE);
-		createEOperation(iWorkflowTemplateEClass, IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST);
 
 		defaultWorkflowTemplateEClass = createEClass(DEFAULT_WORKFLOW_TEMPLATE);
 		createEReference(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__TASKS);
@@ -2100,7 +1222,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		easyflowTemplateEClass = createEClass(EASYFLOW_TEMPLATE);
 
 		iTaskReaderEClass = createEClass(ITASK_READER);
-		createEOperation(iTaskReaderEClass, ITASK_READER___READ_TASK);
 
 		galaxyTaskReaderEClass = createEClass(GALAXY_TASK_READER);
 		createEAttribute(galaxyTaskReaderEClass, GALAXY_TASK_READER__LOGGER);
@@ -2122,7 +1243,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		conditionEClass = createEClass(CONDITION);
 		createEAttribute(conditionEClass, CONDITION__FORBIDDEN);
 		createEAttribute(conditionEClass, CONDITION__CIRCUMVENTING_PARENTS);
-		createEOperation(conditionEClass, CONDITION___IS_UNCONDITIONAL);
 	}
 
 	/**
@@ -2168,7 +1288,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		easyflowTemplateEClass.getESuperTypes().add(this.getDefaultWorkflowTemplate());
 		galaxyTaskReaderEClass.getESuperTypes().add(this.getITaskReader());
 
-		// Initialize classes, features, and operations; add parameters
+		// Initialize classes and features; add operations and parameters
 		initEClass(workflowEClass, Workflow.class, "Workflow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWorkflow_Graph(), theEasyflowPackage.getEasyFlowGraph(), "graph", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkflow_FirstNode(), theEasyflowPackage.getObject(), "firstNode", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2192,86 +1312,76 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getWorkflow_Tools(), theMapsPackage.getStringToToolMap(), null, "tools", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_ExecutionSystem(), theExecutionPackage.getIExecutionSystem(), null, "executionSystem", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getWorkflow__GenerateGraphFromTemplate__EMap(), ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToToolMap(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__GetParentTaskByOutDataPort__DataPort_Task(), this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__GetParentTasksByOutDataPort__DataPort(), null, "getParentTasksByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, null, "getParentTasksByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		EGenericType g1 = createEGenericType(ecorePackage.getEEList());
 		EGenericType g2 = createEGenericType(this.getTask());
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getWorkflow__ValidateParentTaskOutDataPort__DataPort_Task(), ecorePackage.getEBoolean(), "validateParentTaskOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "validateParentTaskOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ValidateLastTaskOutDataPort__DataPort(), ecorePackage.getEBoolean(), "validateLastTaskOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "validateLastTaskOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__ReadMetaData(), null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, null, "readMetaData", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__GetParentTasksFor__Task(), theMapsPackage.getTaskToDataLinkListMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, theMapsPackage.getTaskToDataLinkListMap(), "getParentTasksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ResolveMissingDataPortsByToolFor__Task(), ecorePackage.getEBoolean(), "resolveMissingDataPortsByToolFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveMissingDataPortsByToolFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__ReadWorkfowTemplate(), ecorePackage.getEBoolean(), "readWorkfowTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "readWorkfowTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__GenerateAbstractWorkflow(), ecorePackage.getEBoolean(), "generateAbstractWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "generateAbstractWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ApplyGroupingCriteria(), ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
-		op = initEOperation(getWorkflow__ApplyParameterCriteria(), ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
-		op = initEOperation(getWorkflow__ApplyTraversalEvent__TraversalEvent(), ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
-		op = initEOperation(getWorkflow__ResolveTraversalEvents(), ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		op = initEOperation(getWorkflow__ResolveIncompatibleGroupings(), ecorePackage.getEBoolean(), "resolveIncompatibleGroupings", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveIncompatibleGroupings", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		op = initEOperation(getWorkflow__ResolvePreprocessingTasks(), ecorePackage.getEBoolean(), "resolvePreprocessingTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolvePreprocessingTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 
-		op = initEOperation(getWorkflow__ResolveToolDependencies(), ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		initEOperation(getWorkflow__GenerateWorklowForExecutionSystem(), ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__RunNextWorkflowStep(), ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-		addEException(op, theEasyflowPackage.getToolNotFoundException());
-		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
-
-		op = initEOperation(getWorkflow__RunPrevWorkflowStep(), ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
@@ -2281,7 +1391,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		op = initEOperation(getWorkflow__RunEntireWorkflow(), ecorePackage.getEInt(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
@@ -2291,34 +1401,44 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		initEOperation(getWorkflow__HasNextWorkflowStep(), ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEInt(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
+		addEException(op, theEasyflowPackage.getToolNotFoundException());
+		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		initEOperation(getWorkflow__GetTotalNumberOfWorkflowSteps(), ecorePackage.getEInt(), "getTotalNumberOfWorkflowSteps", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__GetWorkflowStepLabelFor__String(), ecorePackage.getEString(), "getWorkflowStepLabelFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEInt(), "getTotalNumberOfWorkflowSteps", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(workflowEClass, ecorePackage.getEString(), "getWorkflowStepLabelFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__GetWorkflowStepDescFor__String(), ecorePackage.getEString(), "getWorkflowStepDescFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, ecorePackage.getEString(), "getWorkflowStepDescFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__GetNumberOfCurrentWorkflowStep(), ecorePackage.getEInt(), "getNumberOfCurrentWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEInt(), "getNumberOfCurrentWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__GetNextWorkflowStep(), ecorePackage.getEString(), "getNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEString(), "getNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__GetCurWorkflowStep(), ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEString(), "getCurWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__Delete(), ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "delete", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__ResetWorkflowStep(), ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, ecorePackage.getEBoolean(), "resetWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__PrintWorkflowStepMsgOnStart__String(), null, "printWorkflowStepMsgOnStart", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, null, "printWorkflowStepMsgOnStart", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String(), null, "printWorkflowStepMsgOnEnd", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(workflowEClass, null, "printWorkflowStepMsgOnEnd", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "rc", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getWorkflow__GetValidInOutDataPortCombinations(), theMapsPackage.getStringToStringMap(), "getValidInOutDataPortCombinations", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(workflowEClass, theMapsPackage.getStringToStringMap(), "getValidInOutDataPortCombinations", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTask_InDataPorts(), theDataPackage.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2350,22 +1470,22 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_Command(), theToolPackage.getCommand(), null, "command", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_UnresolvedOutDataPorts(), theDataPackage.getDataPort(), null, "unresolvedOutDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getTask__ReadTask__String_String_EList(), null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultMode", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultGroupingCriteria", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__ShallProcess__EList_String(), ecorePackage.getEBoolean(), "shallProcess", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "shallProcess", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__ShallProcess__EList_String_EList_boolean(), ecorePackage.getEBoolean(), "shallProcess", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "shallProcess", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "forGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "jexlStrings", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isInverse", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__ParseDataFormatField__String_EList(), null, "parseDataFormatField", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "parseDataFormatField", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "dataFormatString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getPattern(), "pattern", 0, -1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEEList());
@@ -2373,160 +1493,160 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		initEOperation(getTask__GetUniqueString(), ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(taskEClass, ecorePackage.getEString(), "getUniqueString", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getTask__GetUniqueURIString(), ecorePackage.getEString(), "getUniqueURIString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(taskEClass, ecorePackage.getEString(), "getUniqueURIString", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__IsCompatibleWithOutDataPortFor__DataPort(), ecorePackage.getEBoolean(), "isCompatibleWithOutDataPortFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "isCompatibleWithOutDataPortFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__IsCompatibleWithInDataPortFor__DataPort(), ecorePackage.getEBoolean(), "isCompatibleWithInDataPortFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "isCompatibleWithInDataPortFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetParentTaskByOutDataPort__DataPort(), this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetNonOveralppingTraversalChunksFor__Task(), theMapsPackage.getStringToChunksMap(), "getNonOveralppingTraversalChunksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theMapsPackage.getStringToChunksMap(), "getNonOveralppingTraversalChunksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__ReadTools__EList(), null, "readTools", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "readTools", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getTask__GetPreferredTool(), theToolPackage.getTool(), "getPreferredTool", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(taskEClass, theToolPackage.getTool(), "getPreferredTool", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetOverlappingDataPorts__EList_EList(), theDataPackage.getDataPort(), "getOverlappingDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getOverlappingDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPorts1", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPorts2", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__CreateCommandLine__String(), ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		op = initEOperation(getTask__ValidateTool__Tool(), ecorePackage.getEBoolean(), "validateTool", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "validateTool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getTask__ValidateTools(), ecorePackage.getEBoolean(), "validateTools", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(taskEClass, ecorePackage.getEBoolean(), "validateTools", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetDataPortByDataPort__DataPort_boolean(), theDataPackage.getDataPort(), "getDataPortByDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getDataPortByDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "testDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetDataPortByNameOfFormat__String_boolean(), theDataPackage.getDataPort(), "getDataPortByNameOfFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getDataPortByNameOfFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetDataPortByName__String_boolean(), theDataPackage.getDataPort(), "getDataPortByName", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theDataPackage.getDataPort(), "getDataPortByName", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "dataPortName", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__ResolveMissingDataPortsByTool__EList(), theMapsPackage.getTaskToDataPortsMap(), "resolveMissingDataPortsByTool", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theMapsPackage.getTaskToDataPortsMap(), "resolveMissingDataPortsByTool", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "tasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetOverlappingChunksFor__Task_String(), theTraversalPackage.getTraversalChunk(), "getOverlappingChunksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theTraversalPackage.getTraversalChunk(), "getOverlappingChunksFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "parentTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetRequiredGroupingsFor__Tool_DataPort_boolean(), ecorePackage.getEString(), "getRequiredGroupingsFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEString(), "getRequiredGroupingsFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__GetProvidedGroupingsFor__Tool_DataPort_boolean(), ecorePackage.getEString(), "getProvidedGroupingsFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEString(), "getProvidedGroupingsFor", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "required", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProvideMultipleGroupingsFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleGroupingsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideMultipleGroupingsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProvideMultipleInputsFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProvideMultipleInstancesFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProcessMultipleInputsFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProcessMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProcessMultipleInstancesFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort(), null, "setProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "setProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProcessMultipleInstancesFor__Tool_DataPort(), null, "setProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "setProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProcessMultipleInputsFor__Tool_DataPort(), null, "setProcessMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "setProcessMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort(), null, "setProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "setProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProvideMultipleInstancesFor__Tool_DataPort(), null, "setProvideMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "setProvideMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProvideMultipleInputsFor__Tool_DataPort(), null, "setProvideMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "setProvideMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__CanFilterInstancesFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canFilterInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canFilterInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__GetRecords__boolean(), theTraversalPackage.getTraversalChunk(), "getRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theTraversalPackage.getTraversalChunk(), "getRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "intersect", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetInputs__boolean(), theTraversalPackage.getTraversalChunk(), "getInputs", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theTraversalPackage.getTraversalChunk(), "getInputs", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "intersect", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetOverlappingRecordsProvidedBy__Task(), theTraversalPackage.getTraversalChunk(), "getOverlappingRecordsProvidedBy", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theTraversalPackage.getTraversalChunk(), "getOverlappingRecordsProvidedBy", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "testTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__CanProvideDataPort__Tool_DataPort_String_EList(), ecorePackage.getEBoolean(), "canProvideDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canProvideDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -2534,7 +1654,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanComsumeDataPort__Tool_DataPort_String_EList(), ecorePackage.getEBoolean(), "canComsumeDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "canComsumeDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -2542,18 +1662,18 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__GetOutputsForDataPort__DataPort(), theEasyflowPackage.getURI(), "getOutputsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theEasyflowPackage.getURI(), "getOutputsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__GetInputsForDataPort__DataPort(), theEasyflowPackage.getURI(), "getInputsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, theEasyflowPackage.getURI(), "getInputsForDataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getTask__ResolveInputs(), null, "resolveInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "resolveInputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
-		op = initEOperation(getTask__ResolveOutputs(), null, "resolveOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "resolveOutputs", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
@@ -2578,28 +1698,28 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getToolMatch_ReverseMissingGroupingCriteria(), theMapsPackage.getStringToStringMap(), null, "reverseMissingGroupingCriteria", null, 0, -1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getToolMatch_Valid(), ecorePackage.getEBoolean(), "valid", "false", 0, 1, ToolMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getToolMatch__ComputeScore__EMap(), ecorePackage.getELong(), "computeScore", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeScore", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToStringMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getToolMatch__ComputeExpectedScore(), ecorePackage.getELong(), "computeExpectedScore", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(toolMatchEClass, ecorePackage.getELong(), "computeExpectedScore", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getToolMatch__ValidateDataPorts__EList_EList(), ecorePackage.getEBoolean(), "validateDataPorts", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolMatchEClass, ecorePackage.getEBoolean(), "validateDataPorts", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getPattern(), "pattern", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getToolMatch__ResolveReverseMissingInDataPorts__EList(), theMapsPackage.getTaskToDataPortsMap(), "resolveReverseMissingInDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolMatchEClass, theMapsPackage.getTaskToDataPortsMap(), "resolveReverseMissingInDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "tasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getToolMatch__ResolveReverseMissingOutDataPorts__EList(), theMapsPackage.getTaskToDataPortsMap(), "resolveReverseMissingOutDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolMatchEClass, theMapsPackage.getTaskToDataPortsMap(), "resolveReverseMissingOutDataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "tasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getToolMatch__GetDataPortProvidingTasks__EList_EList(), theMapsPackage.getTaskToDataPortsMap(), "getDataPortProvidingTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(toolMatchEClass, theMapsPackage.getTaskToDataPortsMap(), "getDataPortProvidingTasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getTask(), "tasks", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(iWorkflowTemplateEClass, IWorkflowTemplate.class, "IWorkflowTemplate", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		op = initEOperation(getIWorkflowTemplate__ReadTemplate__String_EList(), ecorePackage.getEBoolean(), "readTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(iWorkflowTemplateEClass, ecorePackage.getEBoolean(), "readTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "mode", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultGroupingCriteria", 0, -1, IS_UNIQUE, IS_ORDERED);
 
@@ -2612,7 +1732,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		initEClass(iTaskReaderEClass, ITaskReader.class, "ITaskReader", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEOperation(getITaskReader__ReadTask(), null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(iTaskReaderEClass, null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(galaxyTaskReaderEClass, GalaxyTaskReader.class, "GalaxyTaskReader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGalaxyTaskReader_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, GalaxyTaskReader.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2635,7 +1755,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getCondition_Forbidden(), ecorePackage.getEString(), "forbidden", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCondition_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getCondition__IsUnconditional(), ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(conditionEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //CorePackageImpl

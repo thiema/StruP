@@ -269,13 +269,31 @@ public interface DataPackage extends EPackage {
 	int DATA_LINK__DATA = 10;
 
 	/**
+	 * The feature id for the '<em><b>Terminal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__TERMINAL = 11;
+
+	/**
+	 * The feature id for the '<em><b>Processed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__PROCESSED = 12;
+
+	/**
 	 * The number of structural features of the '<em>Link</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 11;
+	int DATA_LINK_FEATURE_COUNT = 13;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataImpl <em>Data</em>}' class.
@@ -636,6 +654,28 @@ public interface DataPackage extends EPackage {
 	EReference getDataLink_Data();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#isTerminal <em>Terminal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Terminal</em>'.
+	 * @see easyflow.data.DataLink#isTerminal()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_Terminal();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#isProcessed <em>Processed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Processed</em>'.
+	 * @see easyflow.data.DataLink#isProcessed()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_Processed();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#getParamStr <em>Param Str</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -969,6 +1009,22 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DATA_LINK__DATA = eINSTANCE.getDataLink_Data();
+
+		/**
+		 * The meta object literal for the '<em><b>Terminal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__TERMINAL = eINSTANCE.getDataLink_Terminal();
+
+		/**
+		 * The meta object literal for the '<em><b>Processed</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__PROCESSED = eINSTANCE.getDataLink_Processed();
 
 		/**
 		 * The meta object literal for the '<em><b>Param Str</b></em>' attribute feature.

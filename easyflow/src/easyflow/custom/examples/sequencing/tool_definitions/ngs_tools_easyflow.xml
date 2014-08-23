@@ -7,7 +7,9 @@
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"></interpreter>
 		<command pattern="pos_arg opt_arg"></command>
-		<param type="text" name="default_param" named="true" separator="=" prefix=""/>
+		<param type="any" abstract="true" name="default_param" named="true" separator="=" prefix=""/>
+		<param type="data" abstract="true" name="inputFile" named="true" key="INPUT" format="bam,sam"/>
+		<param type="data" abstract="true" output="true" name="outFile" named="true" key="OUTPUT" format="bam,sam"/>
 		<param type="analysis_type" named="true" name="jar" prefix="-">
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
@@ -48,9 +50,9 @@ id="rgPicardMarkDups"
  -->
 	<package id="gatk" version="2.3">
 		<interpreter exe="java"></interpreter>
-		<param type="text"  abstract="true" name="any" named="true" separator=" " prefix="-"/>
-		<param type="data" abstract="true" name="input" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
-		<param type="data" abstract="true" name="output" output="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" output="true"   multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf" named="true" key="o"/>
+		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-"/>
 		
 		<param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/>
 		<param type="analysis_type" named="true" name="T" prefix="-">
@@ -139,7 +141,7 @@ Command: index         index sequences in the FASTA format
 			samtools package to manipulate (aligned) short reads.
 		</description>
 		<exe name="samtools"/>
-		<param type="text" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
 		<param type="analysis_type">
 			<option value="view" help="SAM-BAM conversion"/>
 			<option value="sort" help="sort alignment file"/>
@@ -200,7 +202,7 @@ Command: view        SAM<->BAM conversion
 		<conditional name="output_file">
 			<param name="output_file" type="select"/>
 			<when value="file">
-				<param name="out_file" label="output" type="data" output="true" format="sai" named="true"/>
+				<param name="out_file" label="output" type="data" output="true" format="sai" named="true" prefix="-" key="f" separator=" "/>
 			</when>
 			<when value="pipe">
 				<param name="out_pipe" type="data" output="true" format="sai" handle="stdout"/>
@@ -232,7 +234,6 @@ Command: view        SAM<->BAM conversion
 		<param name="input" type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<param name="input_index" type="data" format="sai" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<param name="output" type="data" format="sam" output="true"/> 
-		
 	</tool>
 	
 	<tool id="bwasw" name="bwasw" package="bwa">
@@ -308,6 +309,8 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 	</tool>
 	
 	<tool id="view" package="samtools" analysis_type="view">
+		<!-- define tool specific default parameter layout (abstract param) -->
+		<param type="any" name="default_param" abstract="true" separator="=" />
 		<!-- the optional grouping attribute tells us that this parameter
 		triggers processing (e.g. displaying) of only those data records 
 		matching the specified group. When attribute data is set, the grouping

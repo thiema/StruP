@@ -9,10 +9,14 @@ package easyflow.tool.impl;
 import easyflow.tool.BaseCommand;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -23,7 +27,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getCommandPattern <em>Command Pattern</em>}</li>
- *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getTemplateParam <em>Template Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  * </ul>
@@ -31,7 +35,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class BaseCommandImpl extends MinimalEObjectImpl.Container implements BaseCommand {
+public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 	/**
 	 * The default value of the '{@link #getCommandPattern() <em>Command Pattern</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -53,14 +57,14 @@ public class BaseCommandImpl extends MinimalEObjectImpl.Container implements Bas
 	protected String commandPattern = COMMAND_PATTERN_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTemplateParam() <em>Template Param</em>}' reference.
+	 * The cached value of the '{@link #getTemplateParams() <em>Template Params</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTemplateParam()
+	 * @see #getTemplateParams()
 	 * @generated
 	 * @ordered
 	 */
-	protected Parameter templateParam;
+	protected EList<Parameter> templateParams;
 
 	/**
 	 * The default value of the '{@link #getAssumeDataParamPositional() <em>Assume Data Param Positional</em>}' attribute.
@@ -147,37 +151,11 @@ public class BaseCommandImpl extends MinimalEObjectImpl.Container implements Bas
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Parameter getTemplateParam() {
-		if (templateParam != null && templateParam.eIsProxy()) {
-			InternalEObject oldTemplateParam = (InternalEObject)templateParam;
-			templateParam = (Parameter)eResolveProxy(oldTemplateParam);
-			if (templateParam != oldTemplateParam) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.BASE_COMMAND__TEMPLATE_PARAM, oldTemplateParam, templateParam));
-			}
+	public EList<Parameter> getTemplateParams() {
+		if (templateParams == null) {
+			templateParams = new EObjectResolvingEList<Parameter>(Parameter.class, this, ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS);
 		}
-		return templateParam;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Parameter basicGetTemplateParam() {
-		return templateParam;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTemplateParam(Parameter newTemplateParam) {
-		Parameter oldTemplateParam = templateParam;
-		templateParam = newTemplateParam;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.BASE_COMMAND__TEMPLATE_PARAM, oldTemplateParam, templateParam));
+		return templateParams;
 	}
 
 	/**
@@ -232,9 +210,8 @@ public class BaseCommandImpl extends MinimalEObjectImpl.Container implements Bas
 		switch (featureID) {
 			case ToolPackage.BASE_COMMAND__COMMAND_PATTERN:
 				return getCommandPattern();
-			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM:
-				if (resolve) return getTemplateParam();
-				return basicGetTemplateParam();
+			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS:
+				return getTemplateParams();
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return getAssumeDataParamPositional();
 			case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER:
@@ -248,14 +225,16 @@ public class BaseCommandImpl extends MinimalEObjectImpl.Container implements Bas
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ToolPackage.BASE_COMMAND__COMMAND_PATTERN:
 				setCommandPattern((String)newValue);
 				return;
-			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM:
-				setTemplateParam((Parameter)newValue);
+			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS:
+				getTemplateParams().clear();
+				getTemplateParams().addAll((Collection<? extends Parameter>)newValue);
 				return;
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional((Boolean)newValue);
@@ -278,8 +257,8 @@ public class BaseCommandImpl extends MinimalEObjectImpl.Container implements Bas
 			case ToolPackage.BASE_COMMAND__COMMAND_PATTERN:
 				setCommandPattern(COMMAND_PATTERN_EDEFAULT);
 				return;
-			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM:
-				setTemplateParam((Parameter)null);
+			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS:
+				getTemplateParams().clear();
 				return;
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
@@ -301,8 +280,8 @@ public class BaseCommandImpl extends MinimalEObjectImpl.Container implements Bas
 		switch (featureID) {
 			case ToolPackage.BASE_COMMAND__COMMAND_PATTERN:
 				return COMMAND_PATTERN_EDEFAULT == null ? commandPattern != null : !COMMAND_PATTERN_EDEFAULT.equals(commandPattern);
-			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM:
-				return templateParam != null;
+			case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS:
+				return templateParams != null && !templateParams.isEmpty();
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
 			case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER:

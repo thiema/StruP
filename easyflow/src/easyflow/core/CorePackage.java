@@ -521,13 +521,22 @@ public interface CorePackage extends EPackage {
 	int TASK__COMMAND = 26;
 
 	/**
+	 * The feature id for the '<em><b>Unresolved Out Data Ports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__UNRESOLVED_OUT_DATA_PORTS = 27;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 27;
+	int TASK_FEATURE_COUNT = 28;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
@@ -1585,6 +1594,17 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Command();
 
 	/**
+	 * Returns the meta object for the reference list '{@link easyflow.core.Task#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Unresolved Out Data Ports</em>'.
+	 * @see easyflow.core.Task#getUnresolvedOutDataPorts()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_UnresolvedOutDataPorts();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2449,6 +2469,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK__COMMAND = eINSTANCE.getTask_Command();
+
+		/**
+		 * The meta object literal for the '<em><b>Unresolved Out Data Ports</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__UNRESOLVED_OUT_DATA_PORTS = eINSTANCE.getTask_UnresolvedOutDataPorts();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.

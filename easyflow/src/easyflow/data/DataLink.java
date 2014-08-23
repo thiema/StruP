@@ -35,6 +35,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.DataLink#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#isTerminal <em>Terminal</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#isProcessed <em>Processed</em>}</li>
  * </ul>
  * </p>
  *
@@ -284,6 +286,60 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setData(Data value);
+
+	/**
+	 * Returns the value of the '<em><b>Terminal</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Terminal</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Terminal</em>' attribute.
+	 * @see #setTerminal(boolean)
+	 * @see easyflow.data.DataPackage#getDataLink_Terminal()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isTerminal();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#isTerminal <em>Terminal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Terminal</em>' attribute.
+	 * @see #isTerminal()
+	 * @generated
+	 */
+	void setTerminal(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Processed</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processed</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processed</em>' attribute.
+	 * @see #setProcessed(boolean)
+	 * @see easyflow.data.DataPackage#getDataLink_Processed()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isProcessed();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#isProcessed <em>Processed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Processed</em>' attribute.
+	 * @see #isProcessed()
+	 * @generated
+	 */
+	void setProcessed(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Param Str</b></em>' attribute.

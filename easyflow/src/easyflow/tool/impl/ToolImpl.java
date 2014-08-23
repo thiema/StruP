@@ -14,6 +14,7 @@ import easyflow.data.Data;
 import easyflow.data.DataPort;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
@@ -41,9 +42,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -72,7 +75,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
+public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -697,8 +700,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		//          tool=UnifiedGenotyper;
 		// Example2: package=bwa, with parameter analysisType and option values contain 
 		//              sampe with cond="size(InputFiles)==2" and samse with cond="size(InputFiles)==1"
-		String retString = null;
-		Tool t = this;
 		if (getPackage()!=null)
 		{
 			for (ResolvedParam resolvedParam : getPackage().getResolvedParams().values())
@@ -711,7 +712,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName());
 					for (OptionValue optionValue : parameter.getOptionValues())
 					{
-						logger.debug("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
+						logger.trace("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
 						if (getAnalysisType()!=null && optionValue.getName().equals(getAnalysisType()))
 						{
 							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getAnalysisType();
@@ -751,7 +752,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 					}
 					if (matchByNameStr != null)
 					{
-						//return matchByNameStr;
 						return new Tuple<Parameter, OptionValue>(parameter, returnValue);
 					}
 					else if (matchByCondStr != null)
@@ -774,23 +774,187 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getTemplateParameter()
+	{
+		return getTemplateParameter(null);
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Parameter getTemplateParameter() {
+	public Parameter getTemplateParameter(Parameter parameter) {
+		
+		Parameter res = null;
+		if (!getCommand().getTemplateParams().isEmpty())
+			res = getMatchingParameter(getCommand().getTemplateParams(), parameter);
+		
+		else if (res == null && getPackage() != null && !getPackage().getTemplateParams().isEmpty())
+			res = getMatchingParameter(getPackage().getTemplateParams(), parameter);
+		
+		if (res == null && (parameter.isDataParam() && assumeDataParamPositional()))
+			res = GlobalConfig.getPositonalParamTemplate();
 
-		// check the tool for parameter of type template
-		if (getCommand().getTemplateParam() != null)
-			return getCommand().getTemplateParam();
+		return res;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getMatchingParameter(EList<Parameter> parameters, Parameter parameter) {
 		
-		// check the package
-		if (getPackage() != null && getPackage().getTemplateParam() != null)
-			return getPackage().getTemplateParam();
+		logger.trace("getMatchingParameter()");
+		if (parameter == null)
+			if (!parameters.isEmpty())
+				return parameters.get(0);
 		
-		return null;
+		Parameter      res      = null;
+		//InOutParameter resInOut = null;
+		Iterator<Parameter> it = parameters.iterator();
+		while (it.hasNext())
+		{
+			Parameter templateParameter = it.next();
+			
+			if (templateParameter != null)
+			{
+					boolean   match             = false;
+					InOutParameter dataParameter         = null;
+					InOutParameter templateDataParameter = null;
+					if (parameter.isDataParam())
+					{
+						dataParameter = (InOutParameter) parameter;
+					}
+					if (templateParameter.isDataParam())
+					{
+						templateDataParameter = (InOutParameter) templateParameter;
+					}
+					
+					if (dataParameter != null && templateDataParameter != null)
+					{
+						if (dataParameter.matches(templateDataParameter))
+							match = true;
+							
+					}
+					else if (dataParameter == null && templateDataParameter == null)
+					{
+						if (parameter.matches(templateParameter))
+							match = true;
+					}
+					// what should be done in a mixed (non-data/data) situation
+					else
+					{
+						if (dataParameter != null && templateDataParameter == null)
+						{
+							match = true;
+						}
+						else
+							logger.trace("getTemplateParameter(): skip non-data/data parameter pair. "
+								+" (test: "+parameter.getName()+" against "+templateParameter.getName());
+					}
+					if (match)
+					{
+						logger.debug("getTemplateParameter(): found "+(res==null ? "" : "(add) ")+"template param="
+								+templateParameter.getName()+" "
+								+templateParameter.isNamed(null)+" "
+								+templateParameter.getPrefix()+" "
+								+templateParameter.getDelimiter());
+						if (res == null)
+						{
+							res = EcoreUtil.copy(templateParameter);
+						}
+						else
+							res.merge(templateParameter);
+					}
+					else
+						logger.debug("getTemplateParameter(): skip template param="
+								+templateParameter.getName()+" "
+								+templateParameter.isNamed(null)+" "
+								+templateParameter.getPrefix()+" "
+								+templateParameter.getDelimiter());
+						
+				}
+				else
+				{
+					logger.trace("getTemplateParameter(): in/out port not matching"
+							+" (test: "+parameter.getName()+" against "+templateParameter.getName());
+				}
+		}
+		return res;
+
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Parameter getMatchingParameterByName(EList<Parameter> parameters, Parameter parameter) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, ResolvedParam> getInterpreterParams() {
+		
+		EMap<String, ResolvedParam> map = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEMap<String, ResolvedParam>();
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
+				map.put(e.getKey(), e.getValue());
+		}
+		return map;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getExe() {
+		
+		ResolvedParam param = getPackage() != null ? getPackage().getExe() : null;
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(e.getValue().getParameter().getCmdPart()))
+				param = e.getValue();
+		}
+		return param;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EMap<String, ResolvedParam> getModuleParams() {
+		
+		EMap<String, ResolvedParam> map = new BasicEMap<String, ResolvedParam>();
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_MODULE.equals(e.getValue().getParameter().getCmdPart()))
+				map.put(e.getKey(), e.getValue());
+		}
+		return map;
 	}
 
 	/**
@@ -1038,60 +1202,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public EMap<String, ResolvedParam> getInterpreterParams() {
-		
-		EMap<String, ResolvedParam> map = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEMap<String, ResolvedParam>();
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
-		while (it.hasNext())
-		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
-		}
-		return map;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public ResolvedParam getExe() {
-		
-		ResolvedParam param = getPackage() != null ? getPackage().getExe() : null;
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
-		while (it.hasNext())
-		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(e.getValue().getParameter().getCmdPart()))
-				param = e.getValue();
-		}
-		return param;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public EMap<String, ResolvedParam> getModuleParams() {
-		
-		EMap<String, ResolvedParam> map = new BasicEMap<String, ResolvedParam>();
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
-		while (it.hasNext())
-		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_MODULE.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
-		}
-		return map;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -1328,147 +1438,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.TOOL___WRITE_MODEL_TO_XML:
-				writeModelToXML();
-				return null;
-			case ToolPackage.TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT:
-				try {
-					return canFilterInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___REQUIRES_GROUPING__STRING_DATAPORT:
-				return requiresGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
-			case ToolPackage.TOOL___PROVIDES_GROUPING__STRING_DATAPORT:
-				return providesGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
-			case ToolPackage.TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN:
-				return getGroupingsForInputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case ToolPackage.TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN:
-				return getGroupingsForOutputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
-			case ToolPackage.TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST:
-				return getAnalysisTypeOfPackage((EList<TraversalChunk>)arguments.get(0));
-			case ToolPackage.TOOL___GET_DATA_FOR_PARAM__PARAMETER_EMAP:
-				return getDataForParam((Parameter)arguments.get(0), (Map.Entry<String, String>)arguments.get(1));
-			case ToolPackage.TOOL___GET_TEMPLATE_PARAMETER:
-				return getTemplateParameter();
-			case ToolPackage.TOOL___ASSUME_DATA_PARAM_POSITIONAL:
-				return assumeDataParamPositional();
-			case ToolPackage.TOOL___OMIT_PREFIX_IF_NO_ARG_KEY:
-				return omitPrefixIfNoArgKey();
-			case ToolPackage.TOOL___GET_CMD_PART_DELIMITER:
-				return getCmdPartDelimiter();
-			case ToolPackage.TOOL___GET_INTERPRETER_PARAMS:
-				return getInterpreterParams();
-			case ToolPackage.TOOL___GET_EXE:
-				return getExe();
-			case ToolPackage.TOOL___GET_MODULE_PARAMS:
-				return getModuleParams();
-			case ToolPackage.TOOL___GET_INTERPRETER:
-				return getInterpreter();
-			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
-				try {
-					return canProvideMultipleInputsFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				try {
-					return canProvideMultipleInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
-				try {
-					return canProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
-				try {
-					return canProcessMultipleInputsFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
-				try {
-					return canProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				try {
-					return canProcessMultipleInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
-				try {
-					setProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				try {
-					setProcessMultipleInstancesFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
-				try {
-					setProcessMultipleInputsFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
-				try {
-					setProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				try {
-					setProvideMultipleInstancesFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
-				try {
-					setProvideMultipleInputsFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

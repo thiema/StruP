@@ -348,13 +348,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL__RESOLVED_PARAMS = ITOOL_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
+	 * The feature id for the '<em><b>Root</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__ROOT = ITOOL_ELEMENT_FEATURE_COUNT + 13;
+
+	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 13;
+	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -648,22 +657,13 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__GENERAL_VALUE = ITOOL_ELEMENT_FEATURE_COUNT + 28;
 
 	/**
-	 * The feature id for the '<em><b>Output</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETER__OUTPUT = ITOOL_ELEMENT_FEATURE_COUNT + 29;
-
-	/**
 	 * The feature id for the '<em><b>Data Param</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__DATA_PARAM = ITOOL_ELEMENT_FEATURE_COUNT + 30;
+	int PARAMETER__DATA_PARAM = ITOOL_ELEMENT_FEATURE_COUNT + 29;
 
 	/**
 	 * The feature id for the '<em><b>Cmd Part</b></em>' attribute.
@@ -672,7 +672,25 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__CMD_PART = ITOOL_ELEMENT_FEATURE_COUNT + 31;
+	int PARAMETER__CMD_PART = ITOOL_ELEMENT_FEATURE_COUNT + 30;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__MULTIPLE_INSTANCES = ITOOL_ELEMENT_FEATURE_COUNT + 31;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Instances Per Input</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = ITOOL_ELEMENT_FEATURE_COUNT + 32;
 
 	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
@@ -681,7 +699,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 32;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 33;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -955,15 +973,6 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__GENERAL_VALUE = PARAMETER__GENERAL_VALUE;
 
 	/**
-	 * The feature id for the '<em><b>Output</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IN_OUT_PARAMETER__OUTPUT = PARAMETER__OUTPUT;
-
-	/**
 	 * The feature id for the '<em><b>Data Param</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -982,6 +991,24 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__CMD_PART = PARAMETER__CMD_PART;
 
 	/**
+	 * The feature id for the '<em><b>Multiple Instances</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__MULTIPLE_INSTANCES = PARAMETER__MULTIPLE_INSTANCES;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Instances Per Input</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = PARAMETER__MULTIPLE_INSTANCES_PER_INPUT;
+
+	/**
 	 * The feature id for the '<em><b>Formats</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -991,13 +1018,22 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__FORMATS = PARAMETER_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Output</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__OUTPUT = PARAMETER_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>In Out Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 1;
+	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -1268,13 +1304,13 @@ public interface ToolPackage extends EPackage {
 	int BASE_COMMAND__COMMAND_PATTERN = 0;
 
 	/**
-	 * The feature id for the '<em><b>Template Param</b></em>' reference.
+	 * The feature id for the '<em><b>Template Params</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASE_COMMAND__TEMPLATE_PARAM = 1;
+	int BASE_COMMAND__TEMPLATE_PARAMS = 1;
 
 	/**
 	 * The feature id for the '<em><b>Assume Data Param Positional</b></em>' attribute.
@@ -1331,13 +1367,13 @@ public interface ToolPackage extends EPackage {
 	int PACKAGE__COMMAND_PATTERN = ITOOL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Template Param</b></em>' reference.
+	 * The feature id for the '<em><b>Template Params</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE__TEMPLATE_PARAM = ITOOL_ELEMENT_FEATURE_COUNT + 3;
+	int PACKAGE__TEMPLATE_PARAMS = ITOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Assume Data Param Positional</b></em>' attribute.
@@ -1421,13 +1457,13 @@ public interface ToolPackage extends EPackage {
 	int COMMAND__COMMAND_PATTERN = ITOOL_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Template Param</b></em>' reference.
+	 * The feature id for the '<em><b>Template Params</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMMAND__TEMPLATE_PARAM = ITOOL_ELEMENT_FEATURE_COUNT + 3;
+	int COMMAND__TEMPLATE_PARAMS = ITOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Assume Data Param Positional</b></em>' attribute.
@@ -1798,6 +1834,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTool_ResolvedParams();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Tool#isRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Root</em>'.
+	 * @see easyflow.tool.Tool#isRoot()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EAttribute getTool_Root();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Command <em>Command</em>}'.
@@ -2182,17 +2229,6 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_GeneralValue();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isOutput <em>Output</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Output</em>'.
-	 * @see easyflow.tool.Parameter#isOutput()
-	 * @see #getParameter()
-	 * @generated
-	 */
-	EAttribute getParameter_Output();
-
-	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isDataParam <em>Data Param</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2215,6 +2251,28 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_CmdPart();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getMultipleInstances <em>Multiple Instances</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Multiple Instances</em>'.
+	 * @see easyflow.tool.Parameter#getMultipleInstances()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_MultipleInstances();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Multiple Instances Per Input</em>'.
+	 * @see easyflow.tool.Parameter#getMultipleInstancesPerInput()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_MultipleInstancesPerInput();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2234,6 +2292,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInOutParameter_Formats();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.InOutParameter#isOutput <em>Output</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Output</em>'.
+	 * @see easyflow.tool.InOutParameter#isOutput()
+	 * @see #getInOutParameter()
+	 * @generated
+	 */
+	EAttribute getInOutParameter_Output();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Package <em>Package</em>}'.
@@ -2472,15 +2541,15 @@ public interface ToolPackage extends EPackage {
 	EAttribute getBaseCommand_CommandPattern();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.tool.BaseCommand#getTemplateParam <em>Template Param</em>}'.
+	 * Returns the meta object for the reference list '{@link easyflow.tool.BaseCommand#getTemplateParams <em>Template Params</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Template Param</em>'.
-	 * @see easyflow.tool.BaseCommand#getTemplateParam()
+	 * @return the meta object for the reference list '<em>Template Params</em>'.
+	 * @see easyflow.tool.BaseCommand#getTemplateParams()
 	 * @see #getBaseCommand()
 	 * @generated
 	 */
-	EReference getBaseCommand_TemplateParam();
+	EReference getBaseCommand_TemplateParams();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.BaseCommand#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}'.
@@ -2735,6 +2804,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOOL__RESOLVED_PARAMS = eINSTANCE.getTool_ResolvedParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TOOL__ROOT = eINSTANCE.getTool_Root();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -3023,14 +3100,6 @@ public interface ToolPackage extends EPackage {
 		EAttribute PARAMETER__GENERAL_VALUE = eINSTANCE.getParameter_GeneralValue();
 
 		/**
-		 * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETER__OUTPUT = eINSTANCE.getParameter_Output();
-
-		/**
 		 * The meta object literal for the '<em><b>Data Param</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3045,6 +3114,22 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER__CMD_PART = eINSTANCE.getParameter_CmdPart();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple Instances</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__MULTIPLE_INSTANCES = eINSTANCE.getParameter_MultipleInstances();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple Instances Per Input</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = eINSTANCE.getParameter_MultipleInstancesPerInput();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -3063,6 +3148,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute IN_OUT_PARAMETER__FORMATS = eINSTANCE.getInOutParameter_Formats();
+
+		/**
+		 * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IN_OUT_PARAMETER__OUTPUT = eINSTANCE.getInOutParameter_Output();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -3253,12 +3346,12 @@ public interface ToolPackage extends EPackage {
 		EAttribute BASE_COMMAND__COMMAND_PATTERN = eINSTANCE.getBaseCommand_CommandPattern();
 
 		/**
-		 * The meta object literal for the '<em><b>Template Param</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Template Params</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference BASE_COMMAND__TEMPLATE_PARAM = eINSTANCE.getBaseCommand_TemplateParam();
+		EReference BASE_COMMAND__TEMPLATE_PARAMS = eINSTANCE.getBaseCommand_TemplateParams();
 
 		/**
 		 * The meta object literal for the '<em><b>Assume Data Param Positional</b></em>' attribute feature.

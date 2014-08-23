@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -52,7 +53,7 @@ import org.xml.sax.SAXException;
  *
  * @generated
  */
-public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements ToolDefinitions {
+public class ToolDefinitionsImpl extends EObjectImpl implements ToolDefinitions {
 	/**
 	 * The cached value of the '{@link #getToolDefinitions() <em>Tool Definitions</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -319,25 +320,6 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 				return properties != null && !properties.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN:
-				try {
-					return validateToolDefinition((URI)arguments.get(0), (Boolean)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

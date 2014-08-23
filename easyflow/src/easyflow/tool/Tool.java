@@ -41,6 +41,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getAnalysisType <em>Analysis Type</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getResolvedParams <em>Resolved Params</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#isRoot <em>Root</em>}</li>
  * </ul>
  * </p>
  *
@@ -127,6 +128,118 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	ResolvedParam getInterpreter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean canProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	void setProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model parametersMany="true"
+	 * @generated
+	 */
+	Parameter getMatchingParameter(EList<Parameter> parameters, Parameter parameter);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model parametersMany="true"
+	 * @generated
+	 */
+	Parameter getMatchingParameterByName(EList<Parameter> parameters, Parameter parameter);
 
 	/**
 	 * Returns the value of the '<em><b>Package</b></em>' reference.
@@ -300,20 +413,38 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	EMap<String, ResolvedParam> getResolvedParams();
 
 	/**
+	 * Returns the value of the '<em><b>Root</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Root</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Root</em>' attribute.
+	 * @see #setRoot(boolean)
+	 * @see easyflow.tool.ToolPackage#getTool_Root()
+	 * @model
+	 * @generated
+	 */
+	boolean isRoot();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Tool#isRoot <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Root</em>' attribute.
+	 * @see #isRoot()
+	 * @generated
+	 */
+	void setRoot(boolean value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
 	void writeModelToXML();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	boolean canProcessMultiplesInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -378,6 +509,14 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	Parameter getTemplateParameter();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Parameter getTemplateParameter(Parameter parameter);
 
 	/**
 	 * <!-- begin-user-doc -->

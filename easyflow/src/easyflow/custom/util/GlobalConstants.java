@@ -10,6 +10,8 @@ public class GlobalConstants {
 	public static final String METADATA_INPUT             = "InputFiles";
 	public static final String GROUPING_MODE_JOINT        = "joint";
 	public static final String GROUPING_MODE_BATCH        = "batch";
+	public static final String DEFAULT_TEMPLATE_PARAM_NAME= "default_param";
+	public static final String ANY_TEMPLATE_PARAM_NAME    = "any";
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";

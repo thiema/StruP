@@ -11,12 +11,17 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
+import java.util.Collection;
 import java.lang.reflect.InvocationTargetException;
+
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -26,6 +31,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -40,7 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.PackageImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getCommandPattern <em>Command Pattern</em>}</li>
- *   <li>{@link easyflow.tool.impl.PackageImpl#getTemplateParam <em>Template Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.PackageImpl#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getResolvedParams <em>Resolved Params</em>}</li>
@@ -51,7 +58,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class PackageImpl extends MinimalEObjectImpl.Container implements easyflow.tool.Package {
+public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
+	
+	Logger logger = Logger.getLogger(Package.class);
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -108,15 +117,14 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 	 */
 	protected String commandPattern = COMMAND_PATTERN_EDEFAULT;
 	/**
-	 * The cached value of the '{@link #getTemplateParam() <em>Template Param</em>}' reference.
+	 * The cached value of the '{@link #getTemplateParams() <em>Template Params</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTemplateParam()
+	 * @see #getTemplateParams()
 	 * @generated
 	 * @ordered
 	 */
-	protected Parameter templateParam;
-
+	protected EList<Parameter> templateParams;
 	/**
 	 * The default value of the '{@link #getAssumeDataParamPositional() <em>Assume Data Param Positional</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -287,6 +295,18 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Parameter> getTemplateParams() {
+		if (templateParams == null) {
+			templateParams = new EObjectResolvingEList<Parameter>(Parameter.class, this, ToolPackage.PACKAGE__TEMPLATE_PARAMS);
+		}
+		return templateParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMap<String, ResolvedParam> getResolvedParams() {
 		if (resolvedParams == null) {
 			resolvedParams = new EcoreEMap<String,ResolvedParam>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP, StringToResolvedParamMapImpl.class, this, ToolPackage.PACKAGE__RESOLVED_PARAMS);
@@ -352,8 +372,8 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 				map.put(e.getKey(), e.getValue());
 		}
 		return map;
-	}
-
+	}	
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -380,44 +400,6 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 		return null; 
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Parameter getTemplateParam() {
-		if (templateParam != null && templateParam.eIsProxy()) {
-			InternalEObject oldTemplateParam = (InternalEObject)templateParam;
-			templateParam = (Parameter)eResolveProxy(oldTemplateParam);
-			if (templateParam != oldTemplateParam) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.PACKAGE__TEMPLATE_PARAM, oldTemplateParam, templateParam));
-			}
-		}
-		return templateParam;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Parameter basicGetTemplateParam() {
-		return templateParam;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTemplateParam(Parameter newTemplateParam) {
-		Parameter oldTemplateParam = templateParam;
-		templateParam = newTemplateParam;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PACKAGE__TEMPLATE_PARAM, oldTemplateParam, templateParam));
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -488,9 +470,8 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 				return getDescription();
 			case ToolPackage.PACKAGE__COMMAND_PATTERN:
 				return getCommandPattern();
-			case ToolPackage.PACKAGE__TEMPLATE_PARAM:
-				if (resolve) return getTemplateParam();
-				return basicGetTemplateParam();
+			case ToolPackage.PACKAGE__TEMPLATE_PARAMS:
+				return getTemplateParams();
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				return getAssumeDataParamPositional();
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
@@ -511,6 +492,7 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -523,8 +505,9 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 			case ToolPackage.PACKAGE__COMMAND_PATTERN:
 				setCommandPattern((String)newValue);
 				return;
-			case ToolPackage.PACKAGE__TEMPLATE_PARAM:
-				setTemplateParam((Parameter)newValue);
+			case ToolPackage.PACKAGE__TEMPLATE_PARAMS:
+				getTemplateParams().clear();
+				getTemplateParams().addAll((Collection<? extends Parameter>)newValue);
 				return;
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional((Boolean)newValue);
@@ -562,8 +545,8 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 			case ToolPackage.PACKAGE__COMMAND_PATTERN:
 				setCommandPattern(COMMAND_PATTERN_EDEFAULT);
 				return;
-			case ToolPackage.PACKAGE__TEMPLATE_PARAM:
-				setTemplateParam((Parameter)null);
+			case ToolPackage.PACKAGE__TEMPLATE_PARAMS:
+				getTemplateParams().clear();
 				return;
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
@@ -598,8 +581,8 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case ToolPackage.PACKAGE__COMMAND_PATTERN:
 				return COMMAND_PATTERN_EDEFAULT == null ? commandPattern != null : !COMMAND_PATTERN_EDEFAULT.equals(commandPattern);
-			case ToolPackage.PACKAGE__TEMPLATE_PARAM:
-				return templateParam != null;
+			case ToolPackage.PACKAGE__TEMPLATE_PARAMS:
+				return templateParams != null && !templateParams.isEmpty();
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
@@ -631,7 +614,7 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 		if (baseClass == BaseCommand.class) {
 			switch (derivedFeatureID) {
 				case ToolPackage.PACKAGE__COMMAND_PATTERN: return ToolPackage.BASE_COMMAND__COMMAND_PATTERN;
-				case ToolPackage.PACKAGE__TEMPLATE_PARAM: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAM;
+				case ToolPackage.PACKAGE__TEMPLATE_PARAMS: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS;
 				case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
 				case ToolPackage.PACKAGE__CMD_PART_DELIMITER: return ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER;
 				default: return -1;
@@ -657,31 +640,13 @@ public class PackageImpl extends MinimalEObjectImpl.Container implements easyflo
 		if (baseClass == BaseCommand.class) {
 			switch (baseFeatureID) {
 				case ToolPackage.BASE_COMMAND__COMMAND_PATTERN: return ToolPackage.PACKAGE__COMMAND_PATTERN;
-				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM: return ToolPackage.PACKAGE__TEMPLATE_PARAM;
+				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS: return ToolPackage.PACKAGE__TEMPLATE_PARAMS;
 				case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL;
 				case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER: return ToolPackage.PACKAGE__CMD_PART_DELIMITER;
 				default: return -1;
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ToolPackage.PACKAGE___GET_INTERPRETER:
-				return getInterpreter();
-			case ToolPackage.PACKAGE___GET_EXE:
-				return getExe();
-			case ToolPackage.PACKAGE___GET_INTERPRETER_PARAMS:
-				return getInterpreterParams();
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -245,30 +245,31 @@ public class ToolContentHandler implements ContentHandler {
 		if (atts.getValue("cmd_part") != null)
 			curParam.setCmdPart(atts.getValue("cmd_part"));
 
-		if (curParam.getName() == null && curParam.getType() != null)
-			curParam.setName(curParam.getType());
+		//if (curParam.getName() == null && curParam.getType() != null)
+			//curParam.setName(curParam.getType());
 		
 		if (atts.getValue("optional") != null)
-			curParam.setOptional(atts.getValue("optional").equals("true")?true:false);
+			curParam.setOptional(atts.getValue("optional").equals("true") ? true : false);
 		else
 			curParam.setOptional(null);
+		
 		if (atts.getValue("multiple") != null)
-			curParam.setMultiple(atts.getValue("multiple").equals("true")?true:false);
+			curParam.setMultiple(atts.getValue("multiple").equals("true") ? true : false);
 		else
 			curParam.setMultiple(null);
 		
 		if (atts.getValue("multipleInstances") != null)
-			curParam.setMultipleInstances(atts.getValue("multipleInstances").equals("true") ? true:false);
+			curParam.setMultipleInstances(atts.getValue("multipleInstances").equals("true") ? true : false);
 		else
 			curParam.setMultipleInstances(null);
 
 		if (atts.getValue("multipleInstancesPerInput") != null)
-			curParam.setMultipleInstancesPerInput(atts.getValue("multipleInstancesPerInput").equals("true") ? true:false);
+			curParam.setMultipleInstancesPerInput(atts.getValue("multipleInstancesPerInput").equals("true") ? true : false);
 		else
 			curParam.setMultipleInstancesPerInput(null);
 
 		if (atts.getValue("multiple_value") != null)
-			curParam.setMultipleValue(atts.getValue("multiple_value").equals("true") ? true:false);
+			curParam.setMultipleValue(atts.getValue("multiple_value").equals("true") ? true : false);
 		else
 			curParam.setMultipleValue(null);
 		
@@ -285,10 +286,21 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setDelimiter(atts.getValue("separator"));
 		if (atts.getValue("prefix") != null)
 			curParam.setPrefix(atts.getValue("prefix"));
+		if (atts.getValue("key") != null)
+		{
+			Key newKey = ToolFactory.eINSTANCE.createKey();
+			newKey.setName(atts.getValue("key"));
+			if (atts.getValue("value") != null)
+				newKey.setValue(atts.getValue("value"));
+			else
+				newKey.setValue(newKey.getName());
+			curParam.getKeys().add(newKey);
+		}
 		if (atts.getValue("arg_value_separator") != null)
 			curParam.setValueDelimiter(atts.getValue("arg_value_separator"));
+		
 		if (atts.getValue("fixed") != null)
-			curParam.setFixedArgValue(atts.getValue("fixed").equals("true") ? true:false);
+			curParam.setFixedArgValue(atts.getValue("fixed").equals("true") ? true : false);
 		else
 			curParam.setFixedArgValue(null);
 		
@@ -303,11 +315,12 @@ public class ToolContentHandler implements ContentHandler {
 		if (atts.getValue("maxOCc") != null)
 			curParam.setMaxOcc(new Integer(atts.getValue("maxOcc")));
 		if (atts.getValue("named") != null)
-			curParam.setNamed(atts.getValue("named").equals("true") ? true:false);
-		else 
+			curParam.setNamed(atts.getValue("named").equals("true") ? true : false);
+		else
 			curParam.setNamed(null);
+		
 		if (atts.getValue("advanced") != null)
-			curParam.setAdvanced(atts.getValue("advanced").equals("true") ? true:false);
+			curParam.setAdvanced(atts.getValue("advanced").equals("true") ? true : false);
 		
 		if (atts.getValue("handle") != null)
 			for (String handle:atts.getValue("handle").split(","))
@@ -344,7 +357,7 @@ public class ToolContentHandler implements ContentHandler {
 			{
 				data.setOutput(false);
 			}
-			curParam.setOutput(data.isOutput());
+			((InOutParameter)curParam).setOutput(data.isOutput());
 			if (!withinPackage)
 			{
 				if (tool.getData().containsKey(data.getName()))
@@ -567,11 +580,11 @@ public class ToolContentHandler implements ContentHandler {
 				{
 					parameter=p;
 				}
-				
+				boolean isAbstract = atts.getValue("abstract") != null && atts.getValue("abstract").equals("true");
 				if (withinPackage)
 				{
-					if (atts.getValue("abstract") != null && atts.getValue("abstract").equals("true"))
-						pkg.setTemplateParam(parameter);
+					if (isAbstract)
+						pkg.getTemplateParams().add(parameter);
 					else
 					{
 						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
@@ -582,25 +595,32 @@ public class ToolContentHandler implements ContentHandler {
 				else if (subParam!=p)
 				{
 					logger.debug("put "+parameter.getName());
-					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
-					resolvedParam.setParameter(parameter);
-					if (parameter.getType().equals("template"))
-						tool.getCommand().setTemplateParam(parameter);
+					if (isAbstract)
+					{
+						tool.getCommand().getTemplateParams().add(parameter);
+					}
 					else
+					{
+						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+						resolvedParam.setParameter(parameter);
 						tool.getCommand().getResolvedParams().put(parameter.getName(), resolvedParam);
+					}
 				}
 				withinParam = true;
 				break;
 			case KEY:
 				key = ToolFactory.eINSTANCE.createKey();
 				key.setName(atts.getValue("name"));
-				if (atts.getValue("type")!=null)
+				if (atts.getValue("value") != null)
+					key.setValue(atts.getValue("value"));
+				else
+					key.setValue(key.getName());
+				if (atts.getValue("type") != null)
 					key.setType(atts.getValue("type"));
-				if (atts.getValue("prefix")!=null)
+				if (atts.getValue("prefix") != null)
 					key.setPrefix(atts.getValue("prefix"));
-				if (atts.getValue("separator")!=null)
+				if (atts.getValue("separator") != null)
 					key.setDelimiter(atts.getValue("separator"));
-				
 				parameter.getKeys().add(key);
 				break;
 			case OPTION:
@@ -709,7 +729,7 @@ public class ToolContentHandler implements ContentHandler {
 		
 			if (tagStack.size()>=2)
 				parentTag = tagStack.get(tagStack.size()-2);
-			logger.debug(" parent="+parentTag+" cur="+curTag+" "+tagStack);
+			logger.trace(" parent="+parentTag+" cur="+curTag+" "+tagStack);
 		}
 		lastTag = curTag;
 	}

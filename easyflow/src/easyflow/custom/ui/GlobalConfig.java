@@ -256,6 +256,16 @@ public class GlobalConfig {
 		return false;
 	}
 	
+	public static boolean paramIsMultipleInstances() {
+		// TODO Auto-generated method stub
+		return false;		
+	}
+
+	public static boolean paramIsMultipleInstancesPerInput() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	public static final Parameter getPositonalParamTemplate()
 	{
 		if (!positionalParamTemplate.getPositional())
