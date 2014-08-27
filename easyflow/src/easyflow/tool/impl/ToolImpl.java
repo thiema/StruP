@@ -704,7 +704,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		{
 			for (ResolvedParam resolvedParam : getPackage().getResolvedParams().values())
 			{
-				Parameter parameter = resolvedParam.getParameter(); 
+				Parameter parameter = resolvedParam.getParameter();
 				if (parameter.isAnalysisType())
 				{
 					String matchByNameStr = null;
@@ -858,11 +858,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 						}
 						else
 							logger.trace("getTemplateParameter(): skip non-data/data parameter pair. "
-								+" (test: "+parameter.getName()+" against "+templateParameter.getName());
+								+" (test: "+parameter.getName()+" against "+templateParameter.getName()+")");
 					}
 					if (match)
 					{
-						logger.debug("getTemplateParameter(): found "+(res==null ? "" : "(add) ")+"template param="
+						logger.trace("getTemplateParameter(): found "+(res==null ? "" : "(add) ")+"template param="
 								+templateParameter.getName()+" "
 								+templateParameter.isNamed(null)+" "
 								+templateParameter.getPrefix()+" "
@@ -875,7 +875,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 							res.merge(templateParameter);
 					}
 					else
-						logger.debug("getTemplateParameter(): skip template param="
+						logger.trace("getTemplateParameter(): skip template param="
 								+templateParameter.getName()+" "
 								+templateParameter.isNamed(null)+" "
 								+templateParameter.getPrefix()+" "

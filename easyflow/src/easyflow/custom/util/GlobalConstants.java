@@ -12,6 +12,10 @@ public class GlobalConstants {
 	public static final String GROUPING_MODE_BATCH        = "batch";
 	public static final String DEFAULT_TEMPLATE_PARAM_NAME= "default_param";
 	public static final String ANY_TEMPLATE_PARAM_NAME    = "any";
+	public static final String PARAM_OPTIONAL             = "opt";
+	public static final String PARAM_POSITIONAL           = "pos";
+	public static final String PARAM_INPUT                = "in";
+	public static final String PARAM_OUTPUT               = "out";
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";

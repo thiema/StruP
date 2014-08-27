@@ -1393,8 +1393,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 					finalValue.add((String) v);
 				else if (v instanceof URI)
 					finalValue.add(((URI)v).toString());
+				else if (v instanceof TraversalChunk)
+					finalValue.add(((TraversalChunk)v).getName());
 				else
-					logger.error("generateCommandString(): couldnt process argument value in constraints map.");
+					logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
 			}
 		}
 		else if (value instanceof String)
@@ -1402,7 +1404,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		else if (value instanceof URI)
 			finalValue.add(((URI) value).toString());
 		else
-			logger.error("generateCommandString(): couldnt process argument value in constraints map.");
+			logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
 		return finalValue;
 	}
 	
@@ -1573,6 +1575,24 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getUniqueString()
+	{
+		String uniqueString = getName() != null ? getName() : "noname";
+		if ("noname".equals(uniqueString))
+		{
+			Parameter p = this;
+			logger.debug("no name set.");
+		}
+		uniqueString += "_" + (getKeys().isEmpty() ? "nokey" : getKeys().get(0).getUniqueString());
+		//uniqueString += "_" + (getLabel() != null ? getLabel(): "nolabel");
+		return uniqueString;
+	}
+
 	private void mergeKeys(EList<Key> newKeys)
 	{
 		for (Key newKey:newKeys)

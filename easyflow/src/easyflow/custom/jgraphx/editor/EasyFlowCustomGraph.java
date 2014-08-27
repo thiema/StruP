@@ -244,7 +244,7 @@ public class EasyFlowCustomGraph extends mxGraph
 			}
 		}
 		
-		logger.trace("cannot retrieve label");
+		//logger.trace("cannot retrieve label");
 		return null;
 	}
 	

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.DataLink#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getParamStr <em>Param Str</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getParamNameStr <em>Param Name Str</em>}</li>
  *   <li>{@link easyflow.data.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
@@ -367,6 +368,32 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setParamStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Param Name Str</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Param Name Str</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Param Name Str</em>' attribute.
+	 * @see #setParamNameStr(String)
+	 * @see easyflow.data.DataPackage#getDataLink_ParamNameStr()
+	 * @model
+	 * @generated
+	 */
+	String getParamNameStr();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#getParamNameStr <em>Param Name Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Param Name Str</em>' attribute.
+	 * @see #getParamNameStr()
+	 * @generated
+	 */
+	void setParamNameStr(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

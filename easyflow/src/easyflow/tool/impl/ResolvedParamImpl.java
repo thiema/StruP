@@ -144,57 +144,10 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	
 	public EList<String> generateCommandString(EMap<String, Object> constraints, Parameter templateParam)
 	{
-		ResolvedParam p = this;
 		EList<String> res = getParameter().generateCommandString(constraints, getValue(), templateParam);
 		return res;
-		//return getParameter().generateCommandString(constraints, getValue(), templateParam);
 	}
-/*	
-	public String generateCommandString1(EMap<String, Object> constraints, Parameter templateParam) {
 
-		String cmd = "";
-		
-		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed()                 : null;
-		String  defaultPrefix            = templateParam != null ? templateParam.getPrefix(null)            : null;
-		
-		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter
-																		(null, templateParam.getNamed())    : null;
-		String  defaultArgValueDelimiter = templateParam != null ? templateParam.getArgValueDelimiter(null) : null;
-		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
-				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
-		
-		ResolvedParam p = this;
-		
-		String  argKey = "";
-		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
-			;
-		else
-			argKey = getParameter().getArgKey(defaultPrefix, defaultIsNamed);
-		
-		if (argKey != null && !argKey.equals(""))
-			cmd+=argKey + getParameter().getArgDelimiter(defaultArgDelimiter, defaultIsNamed);
-		else if (templateParam != null)
-		{
-			argKey = templateParam.getArgKey(defaultPrefix, defaultIsNamed);
-			if (argKey != null && !argKey.equals(""))
-				cmd+=argKey + templateParam.getArgDelimiter(defaultArgDelimiter, defaultIsNamed);
-		}
-		
-		if (constraints != null && constraints.containsKey("value"))
-			// if (constraints.get("value") )
-			cmd += constraints.get("value");
-		else if (!getArgValue().isEmpty())
-			cmd += StringUtils.join(getArgValue(), getParameter().getArgValueDelimiter(defaultArgValueDelimiter));
-		else
-		{
-			cmd = "";
-			logger.error("generateCommandString(): no argument set.");
-		}
-			
-
-		return cmd;
-	}
-*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

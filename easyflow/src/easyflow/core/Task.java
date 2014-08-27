@@ -27,6 +27,7 @@ import easyflow.traversal.TraversalEvent;
 
 import java.net.URI;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.jexl2.JexlEngine;
@@ -78,6 +79,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
  *   <li>{@link easyflow.core.Task#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.core.Task#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
+ *   <li>{@link easyflow.core.Task#getParams <em>Params</em>}</li>
+ *   <li>{@link easyflow.core.Task#getStaticParams <em>Static Params</em>}</li>
  * </ul>
  * </p>
  *
@@ -628,6 +631,40 @@ public interface Task extends EObject {
 	EList<DataPort> getUnresolvedOutDataPorts();
 
 	/**
+	 * Returns the value of the '<em><b>Params</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Params</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Params</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_Params()
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getParams();
+
+	/**
+	 * Returns the value of the '<em><b>Static Params</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Static Params</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Static Params</em>' map.
+	 * @see easyflow.core.CorePackage#getTask_StaticParams()
+	 * @model mapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<String, String> getStaticParams();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -1019,5 +1056,13 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	void resolveParams() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
 
 } // Task

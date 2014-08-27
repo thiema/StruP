@@ -275,6 +275,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		try {
 			task.resolveInputs();
 			task.resolveOutputs();
+			task.resolveParams();
 		} catch (DataLinkNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

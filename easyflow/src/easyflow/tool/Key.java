@@ -139,4 +139,12 @@ public interface Key extends DefaultToolElement {
 	 */
 	String resolveArgKey(String defaultPrefix);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getUniqueString();
+
 } // Key

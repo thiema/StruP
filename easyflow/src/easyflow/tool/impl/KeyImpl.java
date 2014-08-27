@@ -239,6 +239,16 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getUniqueString() {
+		return getName() != null ? getName() : getValue();
+	}
+	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

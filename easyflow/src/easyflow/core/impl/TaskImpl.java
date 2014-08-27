@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -111,6 +112,8 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link easyflow.core.impl.TaskImpl#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getParams <em>Params</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getStaticParams <em>Static Params</em>}</li>
  * </ul>
  * </p>
  *
@@ -452,6 +455,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EList<DataPort> unresolvedOutDataPorts;
+
+	/**
+	 * The cached value of the '{@link #getParams() <em>Params</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParams()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> params;
+
+	/**
+	 * The cached value of the '{@link #getStaticParams() <em>Static Params</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStaticParams()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, String> staticParams;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -867,6 +890,30 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return unresolvedOutDataPorts;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getParams() {
+		if (params == null) {
+			params = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.TASK__PARAMS);
+		}
+		return params;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getStaticParams() {
+		if (staticParams == null) {
+			staticParams = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.TASK__STATIC_PARAMS);
+		}
+		return staticParams;
+	}
+
 	/*
 	 * private EList<String> enumerateInstances(String regexp) { regexp =
 	 * "ab(c|d){2,3}"; RegExp r = new RegExp(regexp); Automaton a =
@@ -886,14 +933,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public void readTask(String wtplLine, String defaultMode,
 			EList<String> defaultGroupingCriteria) {
 
-		short taskField = 0;
-		short taskType = 1;
-		short toolField = 2;
-		short inDataPortField = 3;
-		short outDataPortField = 4;
-		short groupingCritField = 5;
-		short traversalCritField = 6;
-		short jexlField = 7;
+		short taskField          =  0;
+		short taskType           =  1;
+		short toolField          =  2;
+		short inDataPortField    =  3;
+		short outDataPortField   =  4;
+		short groupingCritField  =  5;
+		short traversalCritField =  6;
+		short preprocessField    =  7;
+		short jexlField          =  8;
+		short paramField         =  9;
+		short staticParamField   = 10;
 		// String[] defaultGroupingCriteria={};
 		// defaultGroupingCriteria=new String[] {"Sample"};
 		/**
@@ -1011,8 +1061,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 */
 
 		if (wtplArray.length > 6) {
-			if (!wtplArray[6].equals("")) {
-				tmp = wtplArray[6].split(";");
+			if (!wtplArray[traversalCritField].equals("")) {
+				tmp = wtplArray[traversalCritField].split(";");
 				// logger.debug(tmp.length);
 				for (int i = 0; i < tmp.length; i++) {
 					// travParamExp, expected of the form:
@@ -1029,7 +1079,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 					if (getInDataPorts().size() > i
 							&& getInDataPorts().get(i) != null) {
 						traversalCriterion.setDataPort(getInDataPorts().get(0));
-
 					}
 					traversalCriterion.setName(travParamExp[1]);
 					traversalCriterion.setMode("batch");
@@ -1095,8 +1144,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		/**
 		 * Read the preprocessing tasks
 		 */
-		if (wtplArray.length > 7 && !wtplArray[7].equals("")) {
-			tmp = wtplArray[7].split(";");
+		if (wtplArray.length > 7 && !wtplArray[preprocessField].equals("")) {
+			tmp = wtplArray[preprocessField].split(";");
 			for (String allPrepStr : tmp) {
 				String[] allPreps = allPrepStr.split(",");
 				for (String prepTaskStr : allPreps) {
@@ -1115,9 +1164,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 * Read JEXL
 		 */
 		if (wtplArray.length > 8) {
-			setJexlString(wtplArray[8]);
+			setJexlString(wtplArray[jexlField]);
 			// logger.debug(shallProcessJEXL);
-
+		}
+		
+		// read params
+		if (wtplArray.length > 9 && !wtplArray[paramField].equals(""))
+		{
+			tmp = wtplArray[paramField].split(":");
+			getParams().put(tmp[0], tmp.length > 1 ? tmp[1] : "");
+		}
+		
+		// read static param (optional first)
+		if (wtplArray.length > 10 && !wtplArray[staticParamField].equals(""))
+		{
+			getStaticParams().put(GlobalConstants.PARAM_OPTIONAL, wtplArray[staticParamField]);
+		}
+		// positional afterwards
+		if (wtplArray.length > 11 && !wtplArray[staticParamField+1].equals(""))
+		{
+			getStaticParams().put(GlobalConstants.PARAM_POSITIONAL, wtplArray[staticParamField+1]);
 		}
 		setPreviousTaskStr(getUniqueString());
 
@@ -1330,31 +1396,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return true;
 
 	}
-	
-	//private void shallProcess(Map<String, Object> metaDataMap) {
-		/*
-		 * =====EXAMPLES====
-		 */
-		/*
-		 * String jexlStr = "((G1 + G2 + G3) * 0.1) + G4=='9.541'"; Expression
-		 * e1 = jexl.createExpression( jexlStr );
-		 * 
-		 * // populate the context JexlContext context = new MapContext();
-		 * context.set("G1", 10); context.set("G2", 5.4); context.set("G3",
-		 * 0.01); context.set("G4", 8); // ... // work it out
-		 * System.out.println(""+e1.evaluate(context)); e1 =
-		 * jexl.createExpression
-		 * ("Platform =~ [\"Illumina\",'b',\"c\",\"d\",\"e\",\"f\"]"); context =
-		 * new MapContext(); context.set("Platform", "Illumina");
-		 * System.out.println(""+e1.evaluate(context));
-		 * 
-		 * jexlStr = "Platform =~ [ 3,4]"; //e1 =
-		 * jexl.createExpression(StringParser.buildString(jexlStr, true)); e1 =
-		 * jexl.createExpression(jexlStr); context = new MapContext();
-		 * context.set("Platform", 3);
-		 * System.out.println(""+e1.evaluate(context));
-		 */
-	//}
 
 	private String getUniqueString_(String sep1, String sep2, String sep3)
 	{
@@ -1413,6 +1454,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public boolean isCompatibleWithOutDataPortFor(DataPort dataPort) {
+		
 		Iterator<DataPort> it1 = getInDataPorts().iterator();
 		while (it1.hasNext()) {
 			DataPort parentDataPort = it1.next();
@@ -1429,6 +1471,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public boolean isCompatibleWithInDataPortFor(DataPort dataPort) {
+		
 		Iterator<DataPort> it1 = getOutDataPorts().iterator();
 		while (it1.hasNext()) {
 			DataPort parentDataPort = it1.next();
@@ -1596,6 +1639,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				isOutputDefined = true;
 		}
 		
+		resolveStaticParams();
+		
 		for (String commandLinePart : commandPatterns)
 		{
 			//logger.trace("createCommandLine(): "+commandLinePart);
@@ -1604,6 +1649,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 				String cmdPart = createCommandLinePart2(constraints, tool, isInputDefined, isOutputDefined, commandLinePart, tool.getTemplateParameter());
 				if (cmdPart != null && !cmdPart.equals(""))
 					commandLineParts.add(cmdPart);
+				// add static parts
+				if (getStaticParams().containsKey(commandLinePart))
+				{
+					String staticCmdPart = getStaticParams().get(commandLinePart);
+					if (staticCmdPart != null && !staticCmdPart.equals(""))
+						commandLineParts.add(staticCmdPart);
+				}
+				
 			}
 			else
 			{
@@ -1687,61 +1740,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 					tool.getCmdPartDelimiter())
 					);
 		}
-
-		
 		
 		return StringUtils.join(cmdParts, " ");
-	}
-	
-	private String createCommandLinePart1_(Tool tool, EMap<String, Object> constraints)
-	{
-		EList<String>  exe  = new BasicEList<String>();
-		EList<String>  cmd  = null;
-		// resolve Interpreter
-		Parameter     defaultParameter = GlobalConfig.getExeParameterTemplate();
-		ResolvedParam resolvedParam    = tool.getCommand().getInterperter();
-		if (resolvedParam == null)
-			resolvedParam = tool.getPackage().getInterpreter();
-		
-		if (resolvedParam != null && resolveStaticParam(resolvedParam))
-		{
-			cmd = resolvedParam.generateCommandString(constraints, defaultParameter);
-			if (cmd != null && !cmd.isEmpty())
-				exe.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
-		}
-		resolvedParam = tool.getCommand().getExe();
-		if (resolvedParam == null)
-			resolvedParam = tool.getPackage().getExe();
-
-		if (resolvedParam != null && resolveStaticParam(resolvedParam))
-		{
-			cmd = resolvedParam.generateCommandString(constraints, defaultParameter);
-			if (cmd != null && !cmd.isEmpty())
-				exe.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
-		}
-		
-			
-		if (exe.isEmpty())
-			logger.error("createCommandLinePart1(): no executables found for tool="+tool.getId());
-		
-		// check submodule
-		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
-		
-		if (anaType != null)
-		{
-			Parameter   param = anaType.parent;
-			OptionValue value = anaType.child;
-			logger.debug("add module="+param.getName()+" for tool="+tool.getName()
-					+" ("+tool.getId()+") cmdline="+param.generateCommandString(constraints, value, defaultParameter));
-			exe.add(StringUtils.join(
-					param.generateCommandString(constraints, value, defaultParameter),
-					tool.getCmdPartDelimiter())
-					);
-		}
-
-		
-		return StringUtils.join(exe, " ");
-
 	}
 	
 	/**
@@ -1783,17 +1783,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 	{
 		EList<String> commandLineList = new BasicEList<String>();
 		Parameter     effectiveTemplateParam;
-		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().entrySet().iterator();
 		if (tool == null)
 			tool = getPreferredTool();
+
+		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().entrySet().iterator();
 		
 		while (it.hasNext())
 		{
 			Entry<String, ResolvedParam> e      = it.next();
 			ResolvedParam    resolvedParam      = e.getValue();
 			Parameter        parameter          = resolvedParam.getParameter();
-			EList<Parameter> effectiveParams    = parameter.getEffectiveParameters(null);
 			Parameter        effectiveParameter = null;
+			EList<Parameter> effectiveParams    = parameter.getEffectiveParameters(null);
 			effectiveTemplateParam = null;
 			if (!effectiveParams.isEmpty())
 				effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
@@ -1824,23 +1825,25 @@ public class TaskImpl extends EObjectImpl implements Task {
 			}
 			else if (isInOutParam && !inOutParameter.isOutput())
 			{
-				if ("in".equals(type)) 
+				if (GlobalConstants.PARAM_INPUT.equals(type)) 
 					shallGenerate = true;
-				else if (!omitInput && (("opt".equals(type) && isOptional) || ("pos".equals(type) && !isOptional)))
+				else if (!omitInput && ((GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional) 
+						|| (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)))
 					shallGenerate = true;
 			}
 			else if (isInOutParam && inOutParameter.isOutput())
 			{
-				if ("out".equals(type)) 
+				if (GlobalConstants.PARAM_OUTPUT.equals(type)) 
 					shallGenerate = true;
-				else if (!omitOutput && (("opt".equals(type) && isOptional) || ("pos".equals(type) && !isOptional)))
+				else if (!omitOutput && ((GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional) 
+						|| (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)))
 					shallGenerate = true;
 			}
-			else if ("opt".equals(type) && isOptional)
+			else if (GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional)
 			{
 				shallGenerate = true;
 			}
-			else if ("pos".equals(type) && !isOptional)
+			else if (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)
 			{
 				shallGenerate = true;
 			}
@@ -1913,83 +1916,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return param;
 		}
 		return null;
-	}
-
-	private boolean resolveStaticParam(ResolvedParam resolvedParam)
-	{
-		boolean rc = false;
-		String cmdParts[] = {GlobalConstants.COMMAND_PART_VALUE_EXE, GlobalConstants.COMMAND_PART_VALUE_INTERPRETER, GlobalConstants.COMMAND_PART_VALUE_MODULE}; 
-		if (resolvedParam.getParameter().getCmdPart() != null
-				&& Arrays.asList(cmdParts).contains(resolvedParam.getParameter().getCmdPart()))
-		{
-			if (resolvedParam.getName() != null)
-			{
-				resolvedParam.getValue().add(resolvedParam.getName());
-				rc = true;
-			}
-			else if (resolvedParam.getParameter().getName() != null)
-			{
-				resolvedParam.getValue().add(resolvedParam.getParameter().getName());
-				rc = true;
-			}
-		}
-		return rc;
-	}
-	
-	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
-		
-		//EList<String> list = new BasicEList<String>();
-		
-		Iterator<Entry<String, DataLink>> it = map.iterator();
-		while (it.hasNext()) {
-			Entry<String, DataLink> e         = it.next();
-			DataLink                dataLink  = e.getValue();
-			Parameter               dataParam = dataLink.getData().getParameter().getEffectiveParentParameter(true); 
-			String                  paramName = null;
-			
-			if (isOutput)
-				paramName = dataLink.getInDataPort().getParameterName();
-				//paramName = dataParam.getName();
-			else
-			{
-				paramName = dataLink.getDataPort().getParameterName();
-				if (paramName == null)
-					paramName = dataParam.getName();
-			}
-			//dataLink.getData().getDataResourceName().getPath();
-			if (getCommand() == null)
-				logger.error("resolveDataPorts(): cmd null");
-			/*logger.debug("resolveDataPorts(): out="+isOutput
-					+" datalink="+dataLink.hashCode()+" "+dataLink.getDataPort().hashCode()+" "+dataLink.getInDataPort().hashCode()
-					+"\n dataLink="+dataLink.getUniqueString(true) 
-					+"; in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
-					+"; data param="+paramName+" (default="+dataParam.getName()+")"
-					+"; data resource="+dataLink.getData().getDataResourceName().toString()+" "+getInputs().hashCode());
-			Command cmd = getCommand();
-			logger.debug("tmp");*/
-			if (paramName == null || !getCommand().getResolvedParams().containsKey(paramName))
-			{
-				//throw new ParameterNotFoundException();
-				logger.warn("resolveDataPorts(): no parameter defined. This is ok for hidden/implicit input/output data."+
-						"in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
-						+" dataLink="+dataLink.getUniqueString(true)
-						+"; data resource="+dataLink.getData().getDataResourceName().toString());
-				continue;
-			}
-			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
-			
-			//logger.trace("resolveDataPorts(): cmd param keyset="+getCommand().getResolvedParams().keySet());
-			//parameter.getValue().clear();
-			if (dataLink.getData().getDataResourceName() == null)
-				throw new NoValidInOutDataException();
-			parameter.getValue().add(dataLink.getData().getDataResourceName());
-			//logger.debug("param id="+parameter.hashCode()
-				//	+" getParam()="+getCommand().getResolvedParams().get(paramName).hashCode()
-				//	+" map id="+getCommand().getResolvedParams().hashCode()
-				//	+" cmd id="+getCommand().hashCode()+" tool="+tool.hashCode()+" task="+hashCode());
-			//list.add(paramName);
-
-		}
 	}
 
 	/**
@@ -2515,6 +2441,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
+		
+		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString()) == null)
+			logger.error("resolveInputs(): no cell found for "+getUniqueString());
+
 		for (Object edge : GlobalVar
 				.getGraphUtil()
 					.getGraph()
@@ -2540,10 +2470,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
 		
-		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString())==null)
+		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString()) == null)
 			logger.error("resolveOutputs(): no cell found for "+getUniqueString());
-		if (!getOutputs().isEmpty())
-			return;
+		
+		//if (!getOutputs().isEmpty())
+			//return;
 		
 		Object edges[] = GlobalVar
 				.getGraphUtil()
@@ -2569,6 +2500,162 @@ public class TaskImpl extends EObjectImpl implements Task {
 		resolveDataPorts(getOutputs(), getPreferredTool(), true);
 	}
 
+	public void resolveParams() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException
+	{
+		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString()) == null)
+			logger.error("resolveParams(): no cell found for "+getUniqueString());
+		
+		EMap<String, DataLink> inputParams = new BasicEMap<String, DataLink>();
+		
+		for (Object edge : GlobalVar
+				.getGraphUtil()
+					.getGraph()
+						.getIncomingEdges(
+								GlobalVar.getGraphUtil().getCells()
+									.get(getUniqueString()))) 
+		{
+			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+			if (dataLink.getParamStr() != null && !dataLink.getParamStr().equals(""))
+				inputParams.put(new Integer(dataLink.getId()).toString(), dataLink);
+		}
+		resolveParams(inputParams, getPreferredTool(), false);
+
+		
+		EMap<String, DataLink> outputParams = new BasicEMap<String, DataLink>();
+		
+		Object edges[] = GlobalVar
+				.getGraphUtil()
+				.getGraph()
+					.getOutgoingEdges(
+							GlobalVar.getGraphUtil().getCells()
+								.get(getUniqueString()));
+		
+		EList<String> unique = new BasicEList<String>();
+		for (Object edge : edges) 
+		{
+			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+			if (dataLink.getParamStr() != null && !dataLink.getParamStr().equals("")
+					&& !unique.contains(dataLink.getParamStr()))
+			{
+				outputParams.put(new Integer(dataLink.getId()).toString(), dataLink);
+				unique.add(dataLink.getParamNameStr());
+			}
+		}
+		resolveParams(outputParams, getPreferredTool(), true);
+
+	}
+	
+	
+	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
+		
+		//EList<String> list = new BasicEList<String>();
+		
+		Iterator<Entry<String, DataLink>> it = map.iterator();
+		while (it.hasNext()) {
+			Entry<String, DataLink> e         = it.next();
+			DataLink                dataLink  = e.getValue();
+			//Parameter               dataParam = dataLink.getData().getParameter().getEffectiveParentParameter(true); 
+			String                  paramName = null;
+			
+			if (isOutput)
+				paramName = dataLink.getInDataPort().getParameterName();
+				//paramName = dataParam.getName();
+			else
+			{
+				paramName = dataLink.getDataPort().getParameterName();
+					//paramName = dataParam.getName();
+			}
+
+			if (paramName == null)
+				logger.error("resolveDataPorts(): could not retrieve parameter name");
+
+			//dataLink.getData().getDataResourceName().getPath();
+			if (getCommand() == null)
+				logger.error("resolveDataPorts(): cmd null");
+			
+			if (paramName == null || !getCommand().getResolvedParams().containsKey(paramName))
+			{
+				//throw new ParameterNotFoundException();
+				logger.warn("resolveDataPorts(): no parameter defined. This is ok for hidden/implicit input/output data."
+						+" param="+paramName+" in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
+						+" dataLink="+dataLink.getUniqueString(true)
+						+"; data resource="+dataLink.getData().getDataResourceName().toString());
+				continue;
+			}
+			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
+			if (dataLink.getData().getDataResourceName() == null)
+				throw new NoValidInOutDataException();
+				
+			parameter.getValue().add(dataLink.getData().getDataResourceName());
+
+		}
+	}
+	
+	private void resolveParams(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException
+	{
+		Iterator<Entry<String, DataLink>> it = map.iterator();
+		while (it.hasNext()) {
+			Entry<String, DataLink> e         = it.next();
+			DataLink                dataLink  = e.getValue();
+			String                  paramName = dataLink.getParamNameStr();
+			
+			if (!dataLink.getChunks().containsKey(dataLink.getParamStr()))
+			{
+				logger.error("resolveParams(): could not find chunks for param="+paramName+" ("+dataLink.getParamStr()+")");
+				//throw new ParameterNotFoundException();
+				continue;
+			}
+			
+			if (!getCommand().getResolvedParams().containsKey(paramName))
+			{
+				logger.error("resolveParams(): could not find param="+paramName+" ("+dataLink.getParamStr()+")");
+				//throw new ParameterNotFoundException();
+				continue;
+				
+			}
+			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
+			parameter.getValue().addAll(dataLink.getChunks().get(dataLink.getParamStr()));
+
+		}
+
+	}
+	
+	private void resolveStaticParams()
+	{
+		Iterator<Entry<String, String>> it = getParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, String> e = it.next();
+			if (getCommand().getResolvedParams().containsKey(e.getKey()))
+			{
+				ResolvedParam param = getCommand().getResolvedParams().get(e.getKey());
+				param.getValue().add(e.getValue());
+			}
+		}
+	}
+	
+	private boolean resolveCmdPartParam(ResolvedParam resolvedParam)
+	{
+		boolean rc = false;
+		String cmdParts[] = {GlobalConstants.COMMAND_PART_VALUE_EXE, GlobalConstants.COMMAND_PART_VALUE_INTERPRETER, GlobalConstants.COMMAND_PART_VALUE_MODULE}; 
+		if (resolvedParam.getParameter().getCmdPart() != null
+				&& Arrays.asList(cmdParts).contains(resolvedParam.getParameter().getCmdPart()))
+		{
+			if (resolvedParam.getName() != null)
+			{
+				resolvedParam.getValue().add(resolvedParam.getName());
+				rc = true;
+			}
+			else if (resolvedParam.getParameter().getName() != null)
+			{
+				resolvedParam.getValue().add(resolvedParam.getParameter().getName());
+				rc = true;
+			}
+		}
+		return rc;
+	}
+	
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -2840,6 +2927,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return ((InternalEList<?>)getOutputsByDataPort()).basicRemove(otherEnd, msgs);
 			case CorePackage.TASK__COMMAND:
 				return basicSetCommand(null, msgs);
+			case CorePackage.TASK__PARAMS:
+				return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
+			case CorePackage.TASK__STATIC_PARAMS:
+				return ((InternalEList<?>)getStaticParams()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -2918,6 +3009,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return getCommand();
 			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
 				return getUnresolvedOutDataPorts();
+			case CorePackage.TASK__PARAMS:
+				if (coreType) return getParams();
+				else return getParams().map();
+			case CorePackage.TASK__STATIC_PARAMS:
+				if (coreType) return getStaticParams();
+				else return getStaticParams().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -3023,6 +3120,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getUnresolvedOutDataPorts().clear();
 				getUnresolvedOutDataPorts().addAll((Collection<? extends DataPort>)newValue);
 				return;
+			case CorePackage.TASK__PARAMS:
+				((EStructuralFeature.Setting)getParams()).set(newValue);
+				return;
+			case CorePackage.TASK__STATIC_PARAMS:
+				((EStructuralFeature.Setting)getStaticParams()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -3118,6 +3221,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
 				getUnresolvedOutDataPorts().clear();
 				return;
+			case CorePackage.TASK__PARAMS:
+				getParams().clear();
+				return;
+			case CorePackage.TASK__STATIC_PARAMS:
+				getStaticParams().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -3185,6 +3294,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return command != null;
 			case CorePackage.TASK__UNRESOLVED_OUT_DATA_PORTS:
 				return unresolvedOutDataPorts != null && !unresolvedOutDataPorts.isEmpty();
+			case CorePackage.TASK__PARAMS:
+				return params != null && !params.isEmpty();
+			case CorePackage.TASK__STATIC_PARAMS:
+				return staticParams != null && !staticParams.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

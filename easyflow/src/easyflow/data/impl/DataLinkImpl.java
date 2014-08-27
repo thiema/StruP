@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamStr <em>Param Str</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamNameStr <em>Param Name Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
@@ -170,6 +171,26 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected String paramStr = PARAM_STR_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getParamNameStr() <em>Param Name Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParamNameStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PARAM_NAME_STR_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getParamNameStr() <em>Param Name Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParamNameStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected String paramNameStr = PARAM_NAME_STR_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isIdenticalGrouping() <em>Identical Grouping</em>}' attribute.
@@ -607,6 +628,27 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getParamNameStr() {
+		return paramNameStr;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParamNameStr(String newParamNameStr) {
+		String oldParamNameStr = paramNameStr;
+		paramNameStr = newParamNameStr;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PARAM_NAME_STR, oldParamNameStr, paramNameStr));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean isUnconditional() {
@@ -771,6 +813,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return getParentGroupingStr();
 			case DataPackage.DATA_LINK__PARAM_STR:
 				return getParamStr();
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				return getParamNameStr();
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				return isIdenticalGrouping();
 			case DataPackage.DATA_LINK__CONDITION:
@@ -818,6 +862,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return;
 			case DataPackage.DATA_LINK__PARAM_STR:
 				setParamStr((String)newValue);
+				return;
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				setParamNameStr((String)newValue);
 				return;
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping((Boolean)newValue);
@@ -871,6 +918,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__PARAM_STR:
 				setParamStr(PARAM_STR_EDEFAULT);
 				return;
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				setParamNameStr(PARAM_NAME_STR_EDEFAULT);
+				return;
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping(IDENTICAL_GROUPING_EDEFAULT);
 				return;
@@ -915,6 +965,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return PARENT_GROUPING_STR_EDEFAULT == null ? parentGroupingStr != null : !PARENT_GROUPING_STR_EDEFAULT.equals(parentGroupingStr);
 			case DataPackage.DATA_LINK__PARAM_STR:
 				return PARAM_STR_EDEFAULT == null ? paramStr != null : !PARAM_STR_EDEFAULT.equals(paramStr);
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				return PARAM_NAME_STR_EDEFAULT == null ? paramNameStr != null : !PARAM_NAME_STR_EDEFAULT.equals(paramNameStr);
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
 			case DataPackage.DATA_LINK__CONDITION:
@@ -949,6 +1001,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		result.append(parentGroupingStr);
 		result.append(", paramStr: ");
 		result.append(paramStr);
+		result.append(", paramNameStr: ");
+		result.append(paramNameStr);
 		result.append(", identicalGrouping: ");
 		result.append(identicalGrouping);
 		result.append(", terminal: ");

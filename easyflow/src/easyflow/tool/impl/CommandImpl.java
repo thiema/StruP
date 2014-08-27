@@ -14,6 +14,7 @@ import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
+import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import java.util.Collection;
@@ -459,6 +460,25 @@ public class CommandImpl extends EObjectImpl implements Command {
 	}
 
 	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveParameter(String paramName, EList<TraversalChunk> chunks) {
+		boolean rc = false;
+		
+		logger.debug("resolveParameter(): trying to resolve param="+paramName+". Available param set="+getResolvedParams().keySet());
+		if (getResolvedParams().containsKey(paramName))
+		{
+			ResolvedParam resolvedParam = getResolvedParams().get(paramName);
+			resolvedParam.getValue().addAll(chunks);
+			rc = true;
+		}
+		
+		return rc;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->

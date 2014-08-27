@@ -444,7 +444,7 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 */
 	public EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr) {
 
-		logger.debug("getInstances(groupingStr1="+groupingStr1+", groupingStr1="+groupingStr2+", instanceStr="+instanceStr);
+		logger.debug("getInstances(groupingStr1="+groupingStr1+", groupingStr1="+groupingStr2+", instanceStr="+instanceStr+")");
 		EList<String> records=getRecordsBy(groupingStr1, instanceStr);
 		logger.debug("getInstances(): found "+records.size()+" recs.");
 		EList<GroupingInstance> groupingInstances = getInstancesForRecords(groupingStr2, records);
@@ -489,22 +489,26 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 */
 	public EList<String> getRecordsBy(String groupingStr, String instanceStr) {
 		EList<String> records = new BasicEList<String>();
-		if (groupingStr.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
+		if (groupingStr == null)
+		{
+			logger.error("getRecordsBy(): no groupingStr defined. return no records.");
+			//return records;
+		}
+		if (GlobalConstants.TRAVERSAL_CRITERION_RECORD.equals(groupingStr))
 		{
 			if(!GlobalVarMetaData.getMetaDataTableRow(instanceStr).isEmpty())
 				records.add(instanceStr);
 		}
-		else if (groupingStr.equals(GlobalConstants.METADATA_INPUT))
+		else if (GlobalConstants.METADATA_INPUT.equals(groupingStr))
 		{
 			String res = GlobalVarMetaData.getRecordForMultiFieldValue(groupingStr, instanceStr);
 			if (res != null)
 				records.add(res);
 				
 		}
-		//else
-		if (records.isEmpty() && !groupingStr.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
-		{
 			
+		if (records.isEmpty() && !GlobalConstants.TRAVERSAL_CRITERION_RECORD.equals(groupingStr))
+		{
 			for (String rowHead:GlobalVarMetaData.getMetaDataRowHeader().keySet())
 			{
 				Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(rowHead);

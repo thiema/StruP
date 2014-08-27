@@ -1,8 +1,9 @@
-#0		1		2				3			4			5					6					7			8
-#task	parent	implementation	formatIn	formatOut	groupingCriterion	traversalExpression	preprocess	JEXL:process_task?
+#0		1		2				3			4			5					6					7			8					9						10							11
+#task	parent	implementation	formatIn	formatOut	groupingCriterion	parameterCriterion	preprocess	JEXL:process_task?	parameter definition	static params(opt)	static params(pos)
 _root_				FASTQ	InputFiles:joint
-#BwtAlignShort		bwa_aln	Reads:FASTQ;Reference:FASTA	SAI		ReadEnd:input:metadata=InputFiles;Param1:seed:values=[1,2]		Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
-BwtAlignShort		bwa_aln	Reads:FASTQ;Reference:FASTA	SAI	InputFiles			Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
+#BwtAlignShort		bwa_aln	Reads:FASTQ;Reference:FASTA	SAI		ReadEnd:input:metadata=InputFiles;Param1:seed_length:values=[1,2]		Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
+BwtAlignShort		bwa_aln	Reads:FASTQ;Reference:FASTA	SAI	InputFiles	Param1:seed_length:values=[1,2]		Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]	max_queue_entries:1	--opt dummy	pos_dummy_arg1
+#BwtAlignShort		bwa_aln	Reads:FASTQ;Reference:FASTA	SAI	InputFiles			Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
 BwtAlignLong		bwasw	FASTQ	SAM	InputFiles			Platform=~["ROCHE", "454", "PACBIO", "CAPILLARY"]
 #BwtAlignShort		bwa_aln	Reads:FASTQ;Reference:FASTA	SAI				Platform=~["ILLUMINA", "SOLID", "IONTORRENT"]
 #BwtAlignLong		bwasw	FASTQ	SAM				Platform=~["ROCHE", "454", "PACBIO", "CAPILLARY"]
@@ -11,13 +12,13 @@ Sampe	BwtAlignShort	bwa_xampe	FASTQ;SAI	SAM				size(InputFiles)>1&&Platform=~["I
 #ReadEnd:input:merge
 AddReadgroup		picard_ARRG	SAM	BAM	ReadGroup	
 #Param2:Locus:values=[chr1,chr2];ReadMappingFlag:flag:split	sort:Queryname
-RealignIndels		gatk2_indel_realigner	BAM	BAM	Group:joint		sort:Coordinate,index
-RmDup		samtools:rmdup	Alignment:BAM	BAM	Lib,Sample	
+##RealignIndels		gatk2_indel_realigner	BAM	BAM	Group:joint		sort:Coordinate,index
+##RmDup		samtools:rmdup	Alignment:BAM	BAM	Lib,Sample	
 #Param2:Locus:merge	sort:Coordinate,index
 #	size(InputFiles)>1
-#demonstrate situation with possibly multiple alternative paths due to JEXL (task requires certain metadata instances)
+#demonstrate situation with possibly multiple alternative paths due to JEXL (task requires appropriate metadata instances)
 #DemonstrateJEXL1		any	BAM	BAM	
-DetectVariants		gatk2_unified_genotyper	BAM	VCF	Group	
+##DetectVariants		gatk2_unified_genotyper	BAM	VCF	Group	
 #Param2:Locus:merge	sort:Coordinate
 ######
 ##Helper Functions/Tasks which helps to (pre)process/prepare (e.g. indexing, sorting, splitting, ...) data 

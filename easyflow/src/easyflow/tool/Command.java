@@ -6,6 +6,7 @@
  */
 package easyflow.tool;
 
+import easyflow.traversal.TraversalChunk;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.data.DataPort;
 import org.apache.log4j.Logger;
@@ -120,5 +121,13 @@ public interface Command extends IToolElement, DefaultToolElement, BaseCommand {
 	 * @generated
 	 */
 	ResolvedParam getExe();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model chunksMany="true"
+	 * @generated
+	 */
+	boolean resolveParameter(String paramName, EList<TraversalChunk> chunks);
 
 } // Command
