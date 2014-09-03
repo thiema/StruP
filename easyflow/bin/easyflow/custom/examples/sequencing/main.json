@@ -5,7 +5,6 @@
 	"workflowTemplateFile"       : "reseq_simple.workflow",
 	"#workflowTemplateFile"       : "reseq_full.workflow",
 	"metadataFile"               : "metadata_sequencing.tsv",
-	
 	"#workflowTemplateFile"       : "abstract_multiple_traversal_event.workflow",
 	"#workflowTemplateFile"       : "abstract1.workflow",
 	"#workflowTemplateFile"       : "abstract_simple1.workflow",
@@ -21,7 +20,7 @@
   "processing" : {
     "_target_enum"     : ["sge", "local", "aws", "pegasus"],
     "execution_system" : "makeflow",
-    "execution_system_output_file" : "makeflow.out",
+    "execution_system_output_file" : "reseq.makeflow",
     "mem"              : "1G",
     "target"           : "sge",
     "use_threads"       : "true",
@@ -38,9 +37,9 @@
     "append_stderr_operator"  : "2>>"
   },
 
-  "catalog":{
-	"reference"        : "human.fa",
-	"input_dir"        : "input_dir",
+  "catalog": {
+	"reference"        : "resources/exampleFASTA.fasta",
+	"input_dir"        : "resources",
 	"work_dir"         : "analysis_dir",
 	"tmp_dir"          : "tmp",
 	},
@@ -76,7 +75,19 @@
   				         "pavgi_picard", "gatk2", "bedtools-galaxy"],
   	"schemata"        : ["../../../tool/schema/Easyflow.xsd", 
   					     "../../../tool/schema/Easyflow_multiple.xsd", 
-  					     "../../../tool/schema/external/Galaxy.xsd"]
+  					     "../../../tool/schema/external/Galaxy.xsd"],
+  					     
+  	"var"          :  { "basepath" : "/home/heinz/tools/bio" },
+  	
+  	"interpreter"  :  { "java"        : "/path/to/java"},
+  	"pkg"          :  { "picard"      : "$basepath/picard",
+  				        "gatk_simple" : "$basepath/GATK",
+  				        "gatk"        : {"classpath" : "$basepath/GATK/"
+  				                        } 
+  				      },
+  	"tool"         :  { "toolname" : "/path/to/toolname" },
+  	
+  	"resolve_path" : "true"
   }
 
 }

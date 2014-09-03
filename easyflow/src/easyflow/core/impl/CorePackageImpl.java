@@ -468,17 +468,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_Tools() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(19);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getWorkflow_ExecutionSystem() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(20);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(19);
 	}
 
 	/**
@@ -1177,7 +1168,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(workflowEClass, WORKFLOW__PROCESSED_STATES);
 		createEReference(workflowEClass, WORKFLOW__PREVIOUS_TASK_NAME);
 		createEAttribute(workflowEClass, WORKFLOW__WORKER);
-		createEReference(workflowEClass, WORKFLOW__TOOLS);
 		createEReference(workflowEClass, WORKFLOW__EXECUTION_SYSTEM);
 
 		taskEClass = createEClass(TASK);
@@ -1329,7 +1319,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getWorkflow_ProcessedStates(), theMapsPackage.getStringToBooleanMap(), null, "processedStates", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_PreviousTaskName(), theMapsPackage.getStringToStringMap(), null, "previousTaskName", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkflow_Worker(), theEasyflowPackage.getEasyFlowOverallWorker(), "worker", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_Tools(), theMapsPackage.getStringToToolMap(), null, "tools", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_ExecutionSystem(), theExecutionPackage.getIExecutionSystem(), null, "executionSystem", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1459,6 +1448,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(workflowEClass, theMapsPackage.getStringToStringMap(), "getValidInOutDataPortCombinations", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(workflowEClass, null, "init", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTask_InDataPorts(), theDataPackage.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

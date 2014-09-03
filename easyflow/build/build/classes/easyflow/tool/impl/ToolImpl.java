@@ -14,7 +14,7 @@ import easyflow.data.Data;
 import easyflow.data.DataPort;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
-import easyflow.tool.Interpreter;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -69,6 +70,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getAnalysisType <em>Analysis Type</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getResolvedParams <em>Resolved Params</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#isRoot <em>Root</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getResolveUriMap <em>Resolve Uri Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -274,6 +277,36 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @ordered
 	 */
 	protected EMap<String, ResolvedParam> resolvedParams;
+
+	/**
+	 * The default value of the '{@link #isRoot() <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRoot()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ROOT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isRoot() <em>Root</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRoot()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean root = ROOT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getResolveUriMap() <em>Resolve Uri Map</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResolveUriMap()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, URI> resolveUriMap;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -558,25 +591,45 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isRoot() {
+		return root;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRoot(boolean newRoot) {
+		boolean oldRoot = root;
+		root = newRoot;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__ROOT, oldRoot, root));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, URI> getResolveUriMap() {
+		if (resolveUriMap == null) {
+			resolveUriMap = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, ToolPackage.TOOL__RESOLVE_URI_MAP);
+		}
+		return resolveUriMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void writeModelToXML() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean canProcessMultiplesInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		throw new UnsupportedOperationException();
-		/*
-		Data data = getData().get(dataPort.getName());
-		if (data==null)
-			throw new DataPortNotFoundException();
-		return false;*/
-	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -671,61 +724,61 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		//          tool=UnifiedGenotyper;
 		// Example2: package=bwa, with parameter analysisType and option values contain 
 		//              sampe with cond="size(InputFiles)==2" and samse with cond="size(InputFiles)==1"
-		String retString = null;
-		Tool t = this;
 		if (getPackage()!=null)
 		{
-			for (ResolvedParam resolvedParam : getPackage().getResolvedParams().values())
+			for (ResolvedParam resolvedParam : getPackage().getResolvedParams())
 			{
-				Parameter parameter = resolvedParam.getParameter(); 
+				Parameter parameter = resolvedParam.getParameter();
 				if (parameter.isAnalysisType())
 				{
 					String matchByNameStr = null;
 					String matchByCondStr = null;
-					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName());
+					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName()+" for anatype="+getAnalysisType());
 					for (OptionValue optionValue : parameter.getOptionValues())
 					{
 						logger.debug("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
-						if (getAnalysisType()!=null && optionValue.getName().equals(getAnalysisType()))
+						if (getAnalysisType() != null && optionValue.getName().equals(getAnalysisType()))
 						{
 							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getAnalysisType();
 							returnValue = optionValue;
 							returnValue.setExe(matchByNameStr);
+							break;
 						}
 						else if (optionValue.getName().equals(getId()))
 						{
-							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getId();
+							matchByNameStr = optionValue.getExe() != null ? optionValue.getExe() : getId();
 							returnValue = optionValue;
 							returnValue.setExe(matchByNameStr);
+							break;
 						}
 						else if (optionValue.getName().equals(getName()))
 						{
-							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getName();
+							matchByNameStr = optionValue.getExe() != null ? optionValue.getExe() : getName();
 							returnValue = optionValue;
 							returnValue.setExe(matchByNameStr);
+							break;
 						}	
-						else if (optionValue.getCondition()!=null)
+						else if (optionValue.getCondition() != null)
 						{
 							for (EMap<String, Object> map:easyflow.custom.util.Util.createMetaDataMapForJexl(
 									records))
 							{
-							Object evalObject = easyflow.custom.util.Util.evaluateJexl(
-									map, optionValue.getCondition());
-							if (evalObject instanceof Boolean) {
-								if (((Boolean) evalObject).booleanValue())
+								Object evalObject = easyflow.custom.util.Util.evaluateJexl(
+										map, optionValue.getCondition());
+								if (evalObject instanceof Boolean) 
 								{
-									matchByCondStr = optionValue.getExe()!=null ? optionValue.getExe() : optionValue.getName();
-									returnValue = optionValue;
-									break;
+									if (((Boolean) evalObject).booleanValue())
+									{
+										matchByCondStr = optionValue.getExe() != null ? optionValue.getExe() : optionValue.getName();
+										returnValue = optionValue;
+										break;
+									}
 								}
 							}
-							}
 						}
-						
 					}
 					if (matchByNameStr != null)
 					{
-						//return matchByNameStr;
 						return new Tuple<Parameter, OptionValue>(parameter, returnValue);
 					}
 					else if (matchByCondStr != null)
@@ -748,23 +801,175 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getTemplateParameter()
+	{
+		return getTemplateParameter(null);
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Parameter getTemplateParameter() {
+	public Parameter getTemplateParameter(Parameter parameter) {
+		
+		Parameter res = null;
+		if (!getCommand().getTemplateParams().isEmpty())
+			res = getMatchingParameter(getCommand().getTemplateParams(), parameter);
+		
+		else if (res == null && getPackage() != null && !getPackage().getTemplateParams().isEmpty())
+			res = getMatchingParameter(getPackage().getTemplateParams(), parameter);
+		
+		if (res == null && (parameter.isDataParam() && assumeDataParamPositional()))
+			res = GlobalConfig.getPositonalParamTemplate();
 
-		// check the tool for parameter of type template
-		if (getCommand().getTemplateParam() != null)
-			return getCommand().getTemplateParam();
+		return res;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getMatchingParameter(EList<Parameter> parameters, Parameter parameter) {
 		
-		// check the package
-		if (getPackage() != null && getPackage().getTemplateParam() != null)
-			return getPackage().getTemplateParam();
+		logger.trace("getMatchingParameter()");
+		if (parameter == null)
+			if (!parameters.isEmpty())
+				return parameters.get(0);
 		
-		return null;
+		Parameter      res      = null;
+		//InOutParameter resInOut = null;
+		InOutParameter dataParameter         = null;
+		if (parameter.isDataParam())
+		{
+			dataParameter = (InOutParameter) parameter;
+		}
+		Iterator<Parameter> it = parameters.iterator();
+		while (it.hasNext())
+		{
+			Parameter templateParameter = it.next();
+			
+			if (templateParameter != null)
+			{
+				boolean match = false;
+				InOutParameter templateDataParameter = null;
+
+				if (templateParameter.isDataParam())
+					templateDataParameter = (InOutParameter) templateParameter;
+
+				if (dataParameter != null && templateDataParameter != null)
+					match = dataParameter.matches(templateDataParameter);
+				else if (dataParameter == null && templateDataParameter == null)
+					match = parameter.matches(templateParameter);
+				// what should be done in a mixed (non-data/data) situation
+				else {
+					if (dataParameter != null && templateDataParameter == null) {
+						match = true;
+					} else
+						logger.trace("getTemplateParameter(): skip non-data/data parameter pair. "
+								+ " (test: "
+								+ parameter.getName()
+								+ " against "
+								+ templateParameter.getName()
+								+ ")");
+				}
+				if (match) {
+					logger.trace("getTemplateParameter(): found "
+							+ (res == null ? "" : "(add) ") + "template param="
+							+ templateParameter.getName() + " "
+							+ templateParameter.isNamed(null) + " "
+							+ templateParameter.getPrefix() + " "
+							+ templateParameter.getDelimiter());
+					if (res == null) {
+						res = EcoreUtil.copy(templateParameter);
+					} else
+						res.merge(templateParameter);
+				} else
+					logger.trace("getTemplateParameter(): skip template param="
+							+ templateParameter.getName() + " "
+							+ templateParameter.isNamed(null) + " "
+							+ templateParameter.getPrefix() + " "
+							+ templateParameter.getDelimiter());
+
+			} else {
+				logger.trace("getTemplateParameter(): in/out port not matching"
+						+ " (test: " + parameter.getName());
+			}
+		}
+		return res;
+
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Parameter getMatchingParameterByName(EList<Parameter> parameters, Parameter parameter) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<ResolvedParam> getInterpreterParams() {
+		
+		EList<ResolvedParam> paramList = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEList<ResolvedParam>();
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
+				paramList.add(e.getValue());
+		}
+		return paramList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getExe() {
+		
+		ResolvedParam param = getPackage() != null ? getPackage().getExe() : null;
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(e.getValue().getParameter().getCmdPart()))
+				param = e.getValue();
+		}
+		return param;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<ResolvedParam> getModuleParams() {
+		
+		EList<ResolvedParam> paramList = new BasicEList<ResolvedParam>();
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_MODULE.equals(e.getValue().getParameter().getCmdPart()))
+				paramList.add(e.getValue());
+		}
+		return paramList;
 	}
 
 	/**
@@ -822,22 +1027,41 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		return param;
 	}
 	
+	private Data getDataForDataPort(DataPort dataPort)
+	{
+		//EList<Data> dataList = getData().get(dataPort.getName());
+		//boolean found = false;
+		for (EList<Data> data : getData().values())
+		{
+			for (Data d : data)
+			{
+				if (d.getPort().isCompatible(dataPort))
+				{
+					return d;
+				}
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws DataPortNotFoundException 
 	 * @generated not
 	 */
-	public EMap<String, ResolvedParam> getInterpreterParams() {
+	public boolean canProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
 		
-		EMap<String, ResolvedParam> map = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEMap<String, ResolvedParam>();
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
-		while (it.hasNext())
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
 		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
+			if (isRoot())
+				return GlobalConfig.getMultipleInputsForRootTaskValue();
+			Parameter p = matchingData.getParameter();
+			return p.isMultiple(GlobalConfig.getMultipleInputsDefaultValue());
 		}
-		return map;
 	}
 
 	/**
@@ -845,17 +1069,17 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public ResolvedParam getExe() {
-		
-		ResolvedParam param = getPackage() != null ? getPackage().getExe() : null;
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
-		while (it.hasNext())
+	public boolean canProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
 		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(e.getValue().getParameter().getCmdPart()))
-				param = e.getValue();
+			if (isRoot())
+				return GlobalConfig.getMultipleInstancesForRootTaskValue();
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstances(GlobalConfig.getMultipleInstancesDefaultValue());
 		}
-		return param;
 	}
 
 	/**
@@ -863,17 +1087,142 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EMap<String, ResolvedParam> getModuleParams() {
-		
-		EMap<String, ResolvedParam> map = new BasicEMap<String, ResolvedParam>();
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
-		while (it.hasNext())
+	public boolean canProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
 		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_MODULE.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
+			if (isRoot())
+				return GlobalConfig.getMultipleInstancesForRootTaskValue();
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstancesPerInput(GlobalConfig.getMultipleInstancesPerInputDefaultValue());
 		}
-		return map;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			Parameter p = matchingData.getParameter();
+			return p.isMultiple(GlobalConfig.getMultipleInputsDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstances(GlobalConfig.getMultipleInstancesDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean canProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			Parameter p = matchingData.getParameter();
+			return p.isMultipleInstancesPerInput(GlobalConfig.getMultipleInstancesPerInputDefaultValue());
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public URI resolvePath() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -890,6 +1239,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return ((InternalEList<?>)getData()).basicRemove(otherEnd, msgs);
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				return ((InternalEList<?>)getResolvedParams()).basicRemove(otherEnd, msgs);
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				return ((InternalEList<?>)getResolveUriMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -933,6 +1284,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				if (coreType) return getResolvedParams();
 				else return getResolvedParams().map();
+			case ToolPackage.TOOL__ROOT:
+				return isRoot();
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				if (coreType) return getResolveUriMap();
+				else return getResolveUriMap().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -983,6 +1339,12 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
 				return;
+			case ToolPackage.TOOL__ROOT:
+				setRoot((Boolean)newValue);
+				return;
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				((EStructuralFeature.Setting)getResolveUriMap()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1031,6 +1393,12 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				getResolvedParams().clear();
 				return;
+			case ToolPackage.TOOL__ROOT:
+				setRoot(ROOT_EDEFAULT);
+				return;
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				getResolveUriMap().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1069,6 +1437,10 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return command != null;
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				return resolvedParams != null && !resolvedParams.isEmpty();
+			case ToolPackage.TOOL__ROOT:
+				return root != ROOT_EDEFAULT;
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				return resolveUriMap != null && !resolveUriMap.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1131,6 +1503,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		result.append(filenamePrefix);
 		result.append(", analysisType: ");
 		result.append(analysisType);
+		result.append(", root: ");
+		result.append(root);
 		result.append(')');
 		return result.toString();
 	}

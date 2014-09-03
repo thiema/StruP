@@ -20,6 +20,7 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
@@ -30,6 +31,7 @@ import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.Command;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
@@ -44,9 +46,6 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Stack;
-
-import javax.swing.JTextArea;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -92,7 +91,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessedStates <em>Processed States</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getWorker <em>Worker</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getExecutionSystem <em>Execution System</em>}</li>
  * </ul>
  * </p>
@@ -373,16 +371,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EasyFlowOverallWorker worker = WORKER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTools()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Tool> tools;
-
-	/**
 	 * The cached value of the '{@link #getExecutionSystem() <em>Execution System</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -658,18 +646,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Tool> getTools() {
-		if (tools == null) {
-			tools = new EcoreEMap<String,Tool>(MapsPackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.WORKFLOW__TOOLS);
-		}
-		return tools;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public IExecutionSystem getExecutionSystem() {
 		if (executionSystem != null && executionSystem.eIsProxy()) {
 			InternalEObject oldExecutionSystem = (InternalEObject)executionSystem;
@@ -854,7 +830,23 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return processedStates;
 	}
 
-	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void init()
+	{
+		getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, false);
+		getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, false);
+		getProcessedStates().put(GlobalConstants.PARAMETER_APPLIED, false);
+		getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, false);
+		getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, false);
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -890,15 +882,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			getGraphUtil().getUtilityTasks().clear();
 			if (getWorker() != null && getWorker().getComposeWorkflowPanel() != null)
 			{
-				
 				getWorker().getComposeWorkflowPanel().getTextAreaTaskProgress().setText("");
 			}
 			
 		}
 		getGraph().getModel().endUpdate();
-		
-		Workflow w = this;
-		getTools().clear();
+		GlobalConfig.getTools().clear();
 		getLastTasks().clear();
 		setFirstNode(null);
 		
@@ -1193,15 +1182,64 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public Task findUtilityTaskForAnalysisType(String analysisType) {
+	public Task findUtilityTaskForAnalysisType(String analysisType, DataPort dataPortIn, DataPort dataPortOut) {
 		
 		Task utilityTask=null;
 		for (Task task:getStaticTasks())
-			if (task.getAnalysisTypes().contains(analysisType))
+			if ((dataPortIn == null || task.isCompatibleWithInDataPortFor(dataPortIn)) 
+					&& (dataPortOut == null || task.isCompatibleWithOutDataPortFor(dataPortOut))
+					&& task.getAnalysisTypes().contains(analysisType))
 			{
 				utilityTask=task;
 			}
 		return utilityTask;
+	}
+	
+	public boolean registerUtilityTasks()
+	{
+		boolean rc = true;
+		
+		
+		/*
+    	// filter and merge must be defined, when PreprocessingTasks of Type 1 (grouping data dependent) should be resolved.
+    	String utilityTasks[] = {"filter", "merge", "index", "sort", "view"};
+    	Task utilTask = null;
+		for (String utility : utilityTasks)
+		{
+			utilTask = findUtilityTaskForAnalysisType(utility, null, null);
+			if (utilTask != null)
+			{	
+				for (Entry<DataPort, DataPort> e : utilTask.getValidInOutDataPortCombinations())
+				{
+				
+					getGraphUtil().getUtilityTasks().put(e.getKey().getName()
+							+"_"+e.getValue().getName()
+							+"_"+utility, utilTask);
+				}
+			}
+			else
+				logger.error("generateAbstractWorkflow(): no utility task found for utility="+utility);
+		}
+*/
+		for (Task utilTask : getStaticTasks())
+		{
+			for (Entry<String, String> e : ((TaskImpl)utilTask).getValidInOutDataPortCombinations())
+			{
+				for (String analysisType : utilTask.getAnalysisTypes())
+				{
+					String combi = e.getKey()+"_"+e.getValue();
+					getGraphUtil().getUtilityTasks().put(
+							combi+"_"+analysisType, utilTask);
+					logger.debug("generateAbstractWorkflow(): utility task "+analysisType+" for combination="+combi);
+				}
+			}
+		}
+		
+		// add the "input"-splitting task, which actually doesnt do anything
+		Task dummyTask = CoreFactory.eINSTANCE.createTask();
+		dummyTask.setUtil(true);
+		getGraphUtil().getUtilityTasks().put(GlobalConstants.METADATA_INPUT, dummyTask);
+		return rc;
 	}
 	
 	/**
@@ -1210,13 +1248,15 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @generated not
 	 */
 	public boolean readWorkfowTemplate() {
+		
 		EasyflowTemplate eTpl = (EasyflowTemplate) getWorkflowTemplate();
 		boolean rc = eTpl.readTemplate(getMode(), 
 				getDefaultGroupingCriteria());
+		
 		for (Task t:eTpl.getTasks())
 			if (GlobalConstants.ROOT_TASK_NAME.equals(t.getName()))
 				setRootTask(t);
-			
+		
 		return rc; 
 	}
 
@@ -1249,26 +1289,28 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, String> getValidInOutDataPortCombinations() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean generateAbstractWorkflow() {
 
 		//printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
-    	boolean res=generateGraphFromTemplate(getTools());
+    	boolean res=generateGraphFromTemplate(GlobalConfig.getTools());
 
-    	// filter and merge must be defined, when PreprocessingTasks of Type 1 (grouping data dependent) should be resolved.
-    	String utilityTasks[] = {"filter", "merge", "index", "sort", "view"};
+
     	if (res)
     	{
-    		Task utilTask = null;
-    		for (String utility : utilityTasks)
-    		{
-    			utilTask = findUtilityTaskForAnalysisType(utility);
-    			if (utilTask != null)
-    				getGraphUtil().getUtilityTasks().put(utility, utilTask);
-    			else
-    				logger.error("generateAbstractWorkflow(): no utility task found for utility="+utility);
-    		}
+    		registerUtilityTasks();
     		//printGraph();
     		generateAbstractGraphEdges();
     		//printGraph();
@@ -1344,6 +1386,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         		if (!task.isUtil())
         		{
 	        		Object target=getGraph().insertVertexEasyFlow(null, null, task);
+					for (DataPort dataPort:task.getOutDataPorts())
+					{
+						task.getUnresolvedOutDataPorts().add(dataPort);
+					}
 	        		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
 	        		logger.trace("generateGraphFromTemplate(): "
 	        				+"add to cell map: key="+task.getUniqueString()
@@ -1374,16 +1420,26 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         			getGraphUtil().getTasks().put(task.getUniqueString(), task);
         	}
         	
-        	Tool rootTool = ToolFactory.eINSTANCE.createTool();
+        	Tool    rootTool    = ToolFactory.eINSTANCE.createTool();
 			Command rootCommand = ToolFactory.eINSTANCE.createCommand();
-			rootTask.setCommand(rootCommand);
+			getRootTask().setCommand(rootCommand);
+			for (DataPort dataPort : getRootTask().getOutDataPorts())
+			{
+				logger.debug("generateGraphFromTemplate(): add data="+dataPort.getFormat()+" to root tool");
+				Data           data  = DataFactory.eINSTANCE.createData();
+				InOutParameter param = ToolFactory.eINSTANCE.createInOutParameter();
+				param.setDataParam(true);
+				param.setOutput(true);
+				data.setOutput(true);
+				data.setParameter(param);
+				data.setPort(dataPort);
+				EList<Data> dataList = new BasicEList<Data>();
+				dataList.add(data);
+				rootTool.getData().put(dataPort.getName(), dataList);
+				rootTool.setRoot(true);
+			}
 			getRootTask().getTools().put("rootTool", rootTool);
-        	
-        	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());
-        	//logger.trace("insert dedicated root cell"+" "+rootTask.getUniqueString());
-        	
-        	//logger.debug(getGraph().getLabel(rootCell));
-        	
+        	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());        	
         	getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, true);
 
         } finally {
@@ -1397,6 +1453,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	{
 		DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 		dataLink.setDataPort(dataPort);
+		dataLink.setParentGroupingStr(GlobalConstants.METADATA_INPUT);
 		return dataLink;
 	}
 	
@@ -1436,7 +1493,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 							getGraph().insertEdgeEasyFlow(null, null, rootCell, target, createDataLinkForRoot(getRootTask(), task, dataPort));
 						}
 					}
-					else 
+					else
 					{
 						for (Task pTask:parentTaskList.keySet())
 						{
@@ -1455,11 +1512,13 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 								for (DataLink dataLink:parentTaskList.get(pTask))
 								{
+									
 									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
 									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode()+" "+dataLink.getInDataPort());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
 										getGraph().setCellUnvisible(o);
+									pTask.getUnresolvedOutDataPorts().remove(dataLink.getInDataPort());
 								}
 							}
 						}
@@ -1672,6 +1731,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			{
 				DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 				dataLink.setDataPort(dataPort);
+				if (result.getParentTask().isRoot())
+					dataLink.setParentGroupingStr(GlobalConstants.METADATA_INPUT);
 				if (dataLink.getCondition()==null)
 					dataLink.setCondition(CoreFactory.eINSTANCE.createCondition());
 
@@ -1980,6 +2041,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				task.getInDataPorts().add(dataPort);
 				DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 				dataLink.setDataPort(dataPort);
+				
 				dataLink.setInDataPort(tmpTask.getDataPortByDataPort(dataPort, true));
 				getGraphUtil().getDataLinks().put(Integer.toString(dataLink.hashCode()), dataLink);
 				Object   o  = getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
@@ -2096,7 +2158,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				
 				if (printmode.equals("simple"))
 				{
-					System.out.println(task.getUniqueString()+" "+task.getCommand());
+					System.out.println(task.getUniqueString());
 				}
 				else
 				{
@@ -2148,9 +2210,30 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	private void printAllCells(Object root) {
 		logger.debug("Totalsize: "+getGraph().getVertices(root).size());
 		for (Object o:getGraph().getVertices(root))
-			logger.debug("label "+getGraph().getLabel(o)+" ");
+			logger.debug("label "+getGraph().getLabel(o)+" #out="+getGraph().getOutgoingEdges(o).length);
 	}
+
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @throws CellNotFoundException 
+	 * @generated not
+	 */
+	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
+		
+		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
+		{
+			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
+			return true;
+			
+		}
+		return false;
+			
+	}
+
+
 	
 	public boolean applyTraversalCriteria(boolean isGrouping) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		
@@ -2195,6 +2278,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
 		printWorkflowStepMsgOnEnd(rc, step);
 		setFirstNode(getGraphUtil().getDefaultRootCell());
+		//printGraph();
+		printAllCells(getGraphUtil().getDefaultRootCell());
 		return rc;
 
 		
@@ -2222,7 +2307,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		boolean rc = applyTraversalCriteria(true); 
 		if (rc)
 			getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, true);
-
 		return rc;
 	}
 	
@@ -2261,6 +2345,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return false;
 			
 			mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+		
 			getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
 			
 			if (subGraphRoot != null)
@@ -2275,7 +2360,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 							mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
 									traversalEvent, 
 									groupingInstance);
-							
+							//if (!traversalEvent.isGrouping())
+							//throw new UnsupportedOperationException();
 							getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
 									traversalEvent.getTraversalCriterion().getId(),
 									groupingInstance);
@@ -2302,27 +2388,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		return rc;
 	}	
-
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
-	 * @generated not
-	 */
-	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
-		
-		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
-		{
-			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
-			return true;
-			
-		}
-		return false;
-			
-	}
-
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2351,6 +2416,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		if (rc)
 			getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
+		//printAllCells(getGraphUtil().getDefaultRootCell());
 		return rc;
 	}
 
@@ -2399,8 +2465,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return ((InternalEList<?>)getProcessedStates()).basicRemove(otherEnd, msgs);
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				return ((InternalEList<?>)getPreviousTaskName()).basicRemove(otherEnd, msgs);
-			case CorePackage.WORKFLOW__TOOLS:
-				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -2458,9 +2522,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				else return getPreviousTaskName().map();
 			case CorePackage.WORKFLOW__WORKER:
 				return getWorker();
-			case CorePackage.WORKFLOW__TOOLS:
-				if (coreType) return getTools();
-				else return getTools().map();
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				if (resolve) return getExecutionSystem();
 				return basicGetExecutionSystem();
@@ -2535,9 +2596,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__WORKER:
 				setWorker((EasyFlowOverallWorker)newValue);
 				return;
-			case CorePackage.WORKFLOW__TOOLS:
-				((EStructuralFeature.Setting)getTools()).set(newValue);
-				return;
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				setExecutionSystem((IExecutionSystem)newValue);
 				return;
@@ -2607,9 +2665,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__WORKER:
 				setWorker(WORKER_EDEFAULT);
 				return;
-			case CorePackage.WORKFLOW__TOOLS:
-				getTools().clear();
-				return;
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				setExecutionSystem((IExecutionSystem)null);
 				return;
@@ -2663,8 +2718,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return previousTaskName != null && !previousTaskName.isEmpty();
 			case CorePackage.WORKFLOW__WORKER:
 				return WORKER_EDEFAULT == null ? worker != null : !WORKER_EDEFAULT.equals(worker);
-			case CorePackage.WORKFLOW__TOOLS:
-				return tools != null && !tools.isEmpty();
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				return executionSystem != null;
 		}

@@ -357,13 +357,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL__ROOT = ITOOL_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
+	 * The feature id for the '<em><b>Resolve Uri Map</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__RESOLVE_URI_MAP = ITOOL_ELEMENT_FEATURE_COUNT + 14;
+
+	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 14;
+	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -1394,7 +1403,7 @@ public interface ToolPackage extends EPackage {
 	int PACKAGE__CMD_PART_DELIMITER = ITOOL_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Resolved Params</b></em>' map.
+	 * The feature id for the '<em><b>Resolved Params</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1421,13 +1430,22 @@ public interface ToolPackage extends EPackage {
 	int PACKAGE__VERSION = ITOOL_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Resolve Uri Map</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__RESOLVE_URI_MAP = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>Package</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1556,13 +1574,22 @@ public interface ToolPackage extends EPackage {
 	int RESOLVED_PARAM__VALUE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Handle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__HANDLE = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Resolved Param</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESOLVED_PARAM_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 2;
+	int RESOLVED_PARAM_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
 
 
 	/**
@@ -1847,6 +1874,17 @@ public interface ToolPackage extends EPackage {
 	EAttribute getTool_Root();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.tool.Tool#getResolveUriMap <em>Resolve Uri Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Resolve Uri Map</em>'.
+	 * @see easyflow.tool.Tool#getResolveUriMap()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EReference getTool_ResolveUriMap();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Command <em>Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1920,6 +1958,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getResolvedParam_Value();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.ResolvedParam#getHandle <em>Handle</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Handle</em>'.
+	 * @see easyflow.tool.ResolvedParam#getHandle()
+	 * @see #getResolvedParam()
+	 * @generated
+	 */
+	EAttribute getResolvedParam_Handle();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Parameter <em>Parameter</em>}'.
@@ -2315,10 +2364,10 @@ public interface ToolPackage extends EPackage {
 	EClass getPackage();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.tool.Package#getResolvedParams <em>Resolved Params</em>}'.
+	 * Returns the meta object for the reference list '{@link easyflow.tool.Package#getResolvedParams <em>Resolved Params</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Resolved Params</em>'.
+	 * @return the meta object for the reference list '<em>Resolved Params</em>'.
 	 * @see easyflow.tool.Package#getResolvedParams()
 	 * @see #getPackage()
 	 * @generated
@@ -2346,6 +2395,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPackage_Version();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.tool.Package#getResolveUriMap <em>Resolve Uri Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Resolve Uri Map</em>'.
+	 * @see easyflow.tool.Package#getResolveUriMap()
+	 * @see #getPackage()
+	 * @generated
+	 */
+	EReference getPackage_ResolveUriMap();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Key <em>Key</em>}'.
@@ -2814,6 +2874,14 @@ public interface ToolPackage extends EPackage {
 		EAttribute TOOL__ROOT = eINSTANCE.getTool_Root();
 
 		/**
+		 * The meta object literal for the '<em><b>Resolve Uri Map</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL__RESOLVE_URI_MAP = eINSTANCE.getTool_ResolveUriMap();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2872,6 +2940,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RESOLVED_PARAM__VALUE = eINSTANCE.getResolvedParam_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Handle</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESOLVED_PARAM__HANDLE = eINSTANCE.getResolvedParam_Handle();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -3168,7 +3244,7 @@ public interface ToolPackage extends EPackage {
 		EClass PACKAGE = eINSTANCE.getPackage();
 
 		/**
-		 * The meta object literal for the '<em><b>Resolved Params</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Resolved Params</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -3190,6 +3266,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PACKAGE__VERSION = eINSTANCE.getPackage_Version();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Uri Map</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PACKAGE__RESOLVE_URI_MAP = eINSTANCE.getPackage_ResolveUriMap();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.KeyImpl <em>Key</em>}' class.

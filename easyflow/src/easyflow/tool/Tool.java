@@ -42,6 +42,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.Tool#isRoot <em>Root</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getResolveUriMap <em>Resolve Uri Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -224,6 +225,14 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.URI"
+	 * @generated
+	 */
+	URI resolvePath();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -439,6 +448,23 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	void setRoot(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Resolve Uri Map</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.net.URI},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Resolve Uri Map</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Resolve Uri Map</em>' map.
+	 * @see easyflow.tool.ToolPackage#getTool_ResolveUriMap()
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @generated
+	 */
+	EMap<String, URI> getResolveUriMap();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -545,10 +571,10 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation" mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @model kind="operation"
 	 * @generated
 	 */
-	EMap<String, ResolvedParam> getInterpreterParams();
+	EList<ResolvedParam> getInterpreterParams();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -561,9 +587,9 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation" mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @model kind="operation"
 	 * @generated
 	 */
-	EMap<String, ResolvedParam> getModuleParams();
+	EList<ResolvedParam> getModuleParams();
 
 } // Tool

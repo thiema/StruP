@@ -10,12 +10,9 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.tool.Key;
 import easyflow.tool.ToolPackage;
 
-import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -241,7 +238,7 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String getUniqueString() {
+	public String resolveName() {
 		return getName() != null ? getName() : getValue();
 	}
 	

@@ -13,16 +13,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map.Entry;
+
 import javax.xml.validation.Schema;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.context.Context;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -92,7 +98,6 @@ import easyflow.util.maps.impl.StringToToolMapImpl;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#isFromJar <em>From Jar</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getJsonObject <em>Json Object</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getPackages <em>Packages</em>}</li>
@@ -232,16 +237,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected JSONObject jsonObject = JSON_OBJECT_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTools()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Tool> tools;
 
 	/**
 	 * The default value of the '{@link #getDefaultConfigSourceString() <em>Default Config Source String</em>}' attribute.
@@ -523,18 +518,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Tool> getTools() {
-		if (tools == null) {
-			tools = new EcoreEMap<String,Tool>(MapsPackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, UiPackage.DEFAULT_PROJECT__TOOLS);
-		}
-		return tools;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getDefaultConfigSourceString() {
 		return defaultConfigSourceString;
 	}
@@ -650,6 +633,43 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	}
 	
 	
+	private EMap<String, String> readParamValues(JSONObject jsonObject)
+	{
+		
+		EMap<String, String> map = new BasicEMap<String, String>();
+		for (Object key : jsonObject.keySet())
+		{
+			String value = jsonObject.getString((String) key);
+			if (GlobalConfig.resolvePath())
+				value = GlobalConfig.resolveContextVars(value);
+			map.put((String) key, value);
+		}
+		return map;
+	}
+	
+	private void readParamValues(EMap<String, EMap<String, String>> map, JSONObject jsonObject)
+	{
+		
+		logger.debug(jsonObject+" "+jsonObject.isArray());
+		String defaultKey = "exe";
+		if (!jsonObject.isEmpty())
+			for (Object key : jsonObject.keySet())
+			{
+				Object o = jsonObject.get(key);
+				if (o instanceof String)
+				{
+					logger.debug(jsonObject.getString((String) key));
+					EMap<String, String> submap = new BasicEMap<String, String>();
+					submap.put(defaultKey, o.toString());
+					map.put((String)key, submap);
+				}
+				else
+					map.put((String)key, readParamValues(jsonObject.getJSONObject((String) key)));
+			}
+		//else
+			
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -666,15 +686,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
-		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, false);
-		workflow.getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, false);
-		workflow.getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, false);
-		workflow.getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, false);
-		workflow.getProcessedStates().put(GlobalConstants.PARAMETER_APPLIED, false);
-		workflow.getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
-		workflow.getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, false);
-		workflow.getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, false);
-		workflow.getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, false);
+		workflow.init();
 		
 		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
 		
@@ -792,8 +804,28 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 					(String) toolCfg.get("write_default_value_to_command_line"));
 		else
 			GlobalConfig.getToolConfig().put("write_default_value_to_command_line", "0");
-		//if (toolCfg.has(""))
-			//GlobalConfig.getToolConfig().put("", toolCfg.get(""));
+		
+		EMap<String, EMap<String, String>> interpreterMap = GlobalConfig.getInterpreterMap();
+		EMap<String, EMap<String, String>> pkgMap         = GlobalConfig.getPkgMap();
+		EMap<String, EMap<String, String>> toolMap        = GlobalConfig.getToolMap();
+		Context varMap = GlobalConfig.getVarMap();
+		if (toolCfg.has("var"))
+		{	
+			JSONObject jo = toolCfg.getJSONObject("var");
+			for (Object key : jo.keySet())
+			{
+				varMap.put((String)key, (String)jo.get(key));
+				logger.debug("added var "+key+"="+varMap.get((String)key));
+			}
+		}
+				
+		if (toolCfg.has("interpreter"))
+			readParamValues(interpreterMap, toolCfg.getJSONObject("interpreter"));
+		if (toolCfg.has("pkg"))
+			readParamValues(pkgMap, toolCfg.getJSONObject("pkg"));
+		if (toolCfg.has("tool"))
+			readParamValues(toolMap, toolCfg.getJSONObject("tool"));
+		
 		
 		
 		// ####### READ TOOL DEFINITIONS ########
@@ -850,10 +882,34 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 						//ToolContentHandler toolContentHandler = new ToolContentHandler();
 						for (Tool tool : ToolContentHandler.parse(source, documentProperties, null, null))
 						{
+							// check for configured package path
+							if (tool.getPackage() != null 
+									&& pkgMap.containsKey(tool.getPackage().getId()))
+							{
+								for (Entry<String, String> e : pkgMap.get(tool.getPackage().getId()))
+								{
+									tool.getPackage().getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+								}
+							}
+							// check for configured tool path
+							if (toolMap.containsKey(tool.getId()))
+							{
+								for (Entry<String, String> e : toolMap.get(tool.getId()))
+								{
+									tool.getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+								}
+							}
+							if (interpreterMap.containsKey(tool.getId()))
+							{
+								for (Entry<String, String> e : interpreterMap.get(tool.getId()))
+								{
+									tool.getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+								}								
+							}
 							logger.debug("SAX parser returned tool: "+tool.getId()
-									+" pkg="+(tool.getPackage()==null?null:tool.getPackage().getId())
+									+" pkg="+(tool.getPackage() == null ? null : tool.getPackage().getId())
 									+" params="+tool.getCommand().getResolvedParams().keySet());
-							getTools().put(tool.getId(), tool);
+							GlobalConfig.getTools().put(tool.getId(), tool);
 							
 						}
 					}
@@ -883,7 +939,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				e.printStackTrace();
 			}
 		
-		workflow.getTools().addAll(tools);
+		//workflow.getTools().addAll(tools);
 		getWorkflows().add(workflow);
 
 		/*JSONArray cms = jsonObject.getJSONArray("project");
@@ -1210,8 +1266,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case UiPackage.DEFAULT_PROJECT__TOOLS:
-				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 			case UiPackage.DEFAULT_PROJECT__PACKAGES:
 				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
 		}
@@ -1243,9 +1297,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return isFromJar();
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				return getJsonObject();
-			case UiPackage.DEFAULT_PROJECT__TOOLS:
-				if (coreType) return getTools();
-				else return getTools().map();
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
 				return getDefaultConfigSourceString();
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
@@ -1290,9 +1341,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				setJsonObject((JSONObject)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__TOOLS:
-				((EStructuralFeature.Setting)getTools()).set(newValue);
-				return;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				setToolDefinitions((ToolDefinitions)newValue);
 				return;
@@ -1332,9 +1380,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				setJsonObject(JSON_OBJECT_EDEFAULT);
 				return;
-			case UiPackage.DEFAULT_PROJECT__TOOLS:
-				getTools().clear();
-				return;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				setToolDefinitions((ToolDefinitions)null);
 				return;
@@ -1369,8 +1414,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return fromJar != FROM_JAR_EDEFAULT;
 			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
 				return JSON_OBJECT_EDEFAULT == null ? jsonObject != null : !JSON_OBJECT_EDEFAULT.equals(jsonObject);
-			case UiPackage.DEFAULT_PROJECT__TOOLS:
-				return tools != null && !tools.isEmpty();
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
 				return DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT == null ? defaultConfigSourceString != null : !DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT.equals(defaultConfigSourceString);
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:

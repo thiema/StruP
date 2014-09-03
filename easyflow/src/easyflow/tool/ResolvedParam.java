@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EMap;
  * <ul>
  *   <li>{@link easyflow.tool.ResolvedParam#getParameter <em>Parameter</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getValue <em>Value</em>}</li>
+ *   <li>{@link easyflow.tool.ResolvedParam#getHandle <em>Handle</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,6 +71,32 @@ public interface ResolvedParam extends DefaultToolElement {
 	EList<Object> getValue();
 
 	/**
+	 * Returns the value of the '<em><b>Handle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Handle</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Handle</em>' attribute.
+	 * @see #setHandle(String)
+	 * @see easyflow.tool.ToolPackage#getResolvedParam_Handle()
+	 * @model
+	 * @generated
+	 */
+	String getHandle();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.ResolvedParam#getHandle <em>Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Handle</em>' attribute.
+	 * @see #getHandle()
+	 * @generated
+	 */
+	void setHandle(String value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model constraintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
@@ -84,5 +111,13 @@ public interface ResolvedParam extends DefaultToolElement {
 	 * @generated
 	 */
 	EList<String> getArgValue();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	String resolveName();
 
 } // ResolvedParam

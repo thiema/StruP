@@ -16,6 +16,9 @@ public class GlobalConstants {
 	public static final String PARAM_POSITIONAL           = "pos";
 	public static final String PARAM_INPUT                = "in";
 	public static final String PARAM_OUTPUT               = "out";
+	
+	public static final String NAME_FILE_HANDLE = "file";
+	public static final String NAME_PIPE_HANDLE = "pipe";
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";
@@ -67,6 +70,10 @@ public class GlobalConstants {
 	public static final String TEMPLATE_DATA_PORT_NAME  = "_EasyFlowTemplatePort_";
 	public static final String ROOT_TASK_NAME           = "_root_";
 	
+	// error descriptions
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL    = "No valid data handle found for tool.";
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG  = "No valid data handle found due to configuration.";
+
 	public static final String TRAVERSAL_CHUNK_SOURCE_TYPE_METADATA = "metadata";
 	
 	public static final String VERTEX_STYLE = "EASYFLOW_VERTEX_STYLE";
@@ -79,5 +86,9 @@ public class GlobalConstants {
 	public static final String COMMAND_PART_VALUE_EXE               = "exe";
 	public static final String COMMAND_PART_VALUE_MODULE            = "module";
 	public static final String COMMAND_PART_VALUE_PARAM             = "param";
+	
+	public static final String DATA_INPUT_DIR    = "input_dir";
+	public static final String DATA_WORK_DIR     = "work_dir";
+	public static final String DATA_TMP_DIR      = "tmp_dir";
 
 }

@@ -619,6 +619,14 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @model
 	 * @generated
 	 */
+	String resolveName();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
 	boolean matches(Parameter templateParameter);
 
 	/**

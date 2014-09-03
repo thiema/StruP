@@ -63,7 +63,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getProcessedStates <em>Processed States</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getWorker <em>Worker</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}</li>
  * </ul>
  * </p>
@@ -490,23 +489,6 @@ public interface Workflow extends EObject {
 	void setWorker(EasyFlowOverallWorker value);
 
 	/**
-	 * Returns the value of the '<em><b>Tools</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.tool.Tool},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tools</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tools</em>' map.
-	 * @see easyflow.core.CorePackage#getWorkflow_Tools()
-	 * @model mapType="easyflow.util.maps.StringToToolMap<org.eclipse.emf.ecore.EString, easyflow.tool.Tool>"
-	 * @generated
-	 */
-	EMap<String, Tool> getTools();
-
-	/**
 	 * Returns the value of the '<em><b>Execution System</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -824,5 +806,13 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	EMap<String, String> getValidInOutDataPortCombinations();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void init();
 
 } // Workflow

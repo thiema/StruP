@@ -13,7 +13,6 @@ import easyflow.tool.ToolPackage;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -224,7 +223,6 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 	public String resolveArgKey(String defaultPrefix) {
 		String argKey = "";
 		String prefix = GlobalConfig.getArgPrefixForType(getType());
-		Key k = this;
 		if (getPrefix() != null)
 			argKey = getPrefix();
 		else if (prefix != null)
@@ -234,6 +232,16 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 		argKey+=getValue();
 		return argKey;
 	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String resolveName() {
+		return getName() != null ? getName() : getValue();
+	}
+	
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -165,6 +165,9 @@ public class URIUtil {
 	public static String createPath(String basePath, String fileName)
 	{
 		logger.trace("create path: "+basePath+" "+fileName);
+		if (basePath == null)
+			return fileName;
+		
 		return fileName == null ?
 								basePath :
 								new File(basePath +"/" +fileName).getPath();
@@ -270,5 +273,13 @@ public class URIUtil {
 		
 		str+="."+ext.toLowerCase();
 		return new URI(uri.getScheme(), uri.getHost(), str, uri.getFragment());
+	}
+	
+	public static URI addPathToUri(String path, URI uri) throws URISyntaxException
+	{
+		if (path != null && !path.isEmpty())
+			return new URI(uri.getScheme(), uri.getHost(), createPath(path, uri.getPath()), uri.getFragment());
+		else
+			return uri;
 	}
 }

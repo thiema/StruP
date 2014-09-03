@@ -142,9 +142,9 @@ public interface Key extends DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation"
+	 * @model
 	 * @generated
 	 */
-	String getUniqueString();
+	String resolveName();
 
 } // Key

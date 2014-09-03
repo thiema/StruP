@@ -1445,7 +1445,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @generated not
 	 */
 	public String getUniqueURIString() {
-		return getUniqueString_("-", "_", "=");
+		return getUniqueString_("-", "_", "_");
 	}
 
 	/**
@@ -1686,17 +1686,73 @@ public class TaskImpl extends EObjectImpl implements Task {
 	{
 		EList<String>  cmdParts         = new BasicEList<String>();
 		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
+		ResolvedParam  interpreter      = tool.getInterpreter();
 		EList<String>  cmd;
-		ResolvedParam interpreter = tool.getInterpreter();
+		Tool           interpreterTool  = null;
+		
+		String         defaultDelimiter = GlobalConfig.getArgDelimiter();
+		String         interpreterDelim = defaultDelimiter;
+		
+		
 		if (interpreter != null)
 		{
-			logger.debug(interpreter.getParameter().getName());
-			cmd = interpreter.generateCommandString(constraints, defaultParameter);
-			if (!cmd.isEmpty())
-				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
-			for (Entry<String, ResolvedParam> e : tool.getInterpreterParams())
+			String interpreterName = interpreter.getParameter().getName();
+			logger.debug("createCommandLinePart(): create cmd for interpreter="+interpreterName);
+			
+			EMap<String, URI>  resolvingMap = null;
+			if (GlobalConfig.getTools().containsKey(interpreterName))
 			{
-				logger.debug(e.getKey()+" "+e.getValue().getParameter().getName());
+				interpreterTool  = GlobalConfig.getTools().get(interpreterName);
+				resolvingMap     = interpreterTool.getResolveUriMap();
+				interpreterDelim = interpreterTool.getCmdPartDelimiter();
+			}
+			
+			
+			if (resolvingMap != null && resolvingMap.containsKey(GlobalConstants.COMMAND_PART_VALUE_EXE))
+				constraints.put("path", resolvingMap.get(GlobalConstants.COMMAND_PART_VALUE_EXE));
+			else
+				constraints.removeKey("path");
+			
+			cmd = interpreter.generateCommandString(constraints, defaultParameter);
+			
+			if (!cmd.isEmpty())
+				cmdParts.add(StringUtils.join(cmd, interpreterDelim));
+			
+			for (ResolvedParam param : tool.getInterpreterParams())
+			{
+				if (!cmd.isEmpty())
+				{
+					//Parameter curDefaultParam = tool.getTemplateParameter(param.getParameter()) 
+					Parameter curDefaultParam = interpreterTool.getTemplateParameter(param.getParameter());
+					
+					EMap<String, URI>  pkgResolvingMap = tool.getPackage() != null ? 
+							tool.getPackage().getResolveUriMap() : null;
+					logger.debug("#######param name="+param.resolveName()+" keys="+(pkgResolvingMap != null ? pkgResolvingMap.keySet() : null));
+					constraints.removeKey("path");
+					if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
+					{
+						if (param.getValue().isEmpty())
+							param.getValue().add(pkgResolvingMap.get(param.resolveName()));
+						else if (!param.getValue().contains(pkgResolvingMap.get(param.resolveName())))
+							constraints.put("path", pkgResolvingMap.get(param.resolveName()));
+					}
+					else if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
+					{
+						if (param.getValue().isEmpty())
+							param.getValue().add(resolvingMap.get(param.resolveName()));
+						else if (!param.getValue().contains(resolvingMap.get(param.resolveName())))
+							constraints.put("path", resolvingMap.get(param.resolveName()));
+					}
+					else
+						constraints.removeKey("path");
+
+					cmd = param.generateCommandString(constraints, curDefaultParam != null ? curDefaultParam : defaultParameter);
+					cmdParts.add(StringUtils.join(cmd, interpreterDelim));
+					
+				}
+				else
+					logger.debug("createCommandLinePart(): found interpreter param: "+param.resolveName()+" "
+							+param.getParameter().getName()+" (skip, because no interpreter found.)");
 			}
 		}
 		else
@@ -1707,7 +1763,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 		ResolvedParam exe = tool.getExe();
 		if (exe != null)
 		{
-			logger.debug("createCommandLinePart(): "+exe.getParameter().getName());
+			logger.debug("createCommandLinePart(): "+exe.resolveName());
+			
+			EMap<String, URI>  resolvingMap = tool.getPackage() != null ? 
+				tool.getPackage().getResolveUriMap() : null;
+			if (resolvingMap != null && resolvingMap.containsKey(exe.resolveName()))
+				constraints.put("path", resolvingMap.get(exe.resolveName()));
+			else
+				constraints.removeKey("path");
+			
 			cmd = exe.generateCommandString(constraints, defaultParameter);
 			if (!cmd.isEmpty())
 				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
@@ -1717,28 +1781,37 @@ public class TaskImpl extends EObjectImpl implements Task {
 			logger.error("createCommandLinePart(): neither interpreter nor exe defined. Cannot generate meaningful command line.");
 			
 		
-		for (Entry<String, ResolvedParam> e : tool.getModuleParams())
+		for (ResolvedParam param : tool.getModuleParams())
 		{
-			logger.debug(e.getKey()+" "+e.getValue().getParameter().getName());
-			cmd = e.getValue().generateCommandString(constraints, defaultParameter);
+			logger.debug(param.getName()+" "+param.resolveName());
+			cmd = param.generateCommandString(constraints, defaultParameter);
 			if (!cmd.isEmpty())
 				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
 		}
 		
 		// check submodule
 		
+		logger.debug("createCommandLinePart(): get analysis type with records="+Util.list2String(getRecords(), null));
 		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
 		
 		if (anaType != null)
 		{
 			Parameter   param = anaType.parent;
 			OptionValue value = anaType.child;
-			logger.debug("add module="+param.getName()+" for tool="+tool.getName()
+			
+			EMap<String, URI>  resolvingMap = tool.getResolveUriMap();
+			if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
+				constraints.put("path", resolvingMap.get(param.resolveName()));
+			else
+				constraints.removeKey("path");
+
+			logger.debug("add module="+param.resolveName()+" for tool="+tool.getName()
 					+" ("+tool.getId()+") cmdline="+param.generateCommandString(constraints, value, defaultParameter));
+
 			cmdParts.add(StringUtils.join(
 					param.generateCommandString(constraints, value, defaultParameter),
 					tool.getCmdPartDelimiter())
-					);
+				);
 		}
 		
 		return StringUtils.join(cmdParts, " ");
@@ -1849,7 +1922,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			}
 			
 			logger.trace("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
-					+" param type="+type+" of param="+resolvedParam.getParameter().getName()
+					+" param type="+type+" of param="+resolvedParam.getParameter().resolveName()
 					+" type="+resolvedParam.getParameter().getType()
 					//+" output="+parameter.isOutput()
 					//+" templatePrefix="+effectiveTemplateParam.getPrefix()
@@ -1861,13 +1934,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 				{
 					if (effectiveParameter.getDefaultValue() == null || effectiveParameter.getDefaultValue().equals(""))
 					{
-						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (unset default value)");
+						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.resolveName()+" (unset default value)");
 						continue;
 					}
 					// skip if default is not required
 					else if (!GlobalConfig.useDefaultValue())
 					{
-						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.getName()+" (omit default value)");
+						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.resolveName()+" (omit default value)");
 						continue;
 					}
 				}
@@ -1876,9 +1949,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 						//		+" cmd="+getCommand().hashCode()+" map="+getCommand().getResolvedParams().hashCode()+" "
 						//		+" resolvedparam="+resolvedParam.hashCode()+" param="+resolvedParam.getParameter().hashCode()
 					//			);
-				logger.debug("createCommandLinePart(): generate command line for parameter="+resolvedParam.getName()
+				logger.debug("createCommandLinePart(): generate command line for parameter="+resolvedParam.resolveName()
 						+" (using template: "+(effectiveTemplateParam != null ? 
-								(" name="+effectiveTemplateParam.getName()
+								(" name="+effectiveTemplateParam.resolveName()
 										+" named="+effectiveTemplateParam.isNamed(null)
 										+" prefix="+effectiveTemplateParam.getPrefix()
 										+" delimiter="+effectiveTemplateParam.getDelimiter()
@@ -2583,11 +2656,14 @@ public class TaskImpl extends EObjectImpl implements Task {
 				continue;
 			}
 			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
+			if (dataLink.getData().getPreferredHandle() != null 
+					&& parameter.getParameter().getValues() != null
+					&& parameter.getParameter().getValues().containsKey(dataLink.getData().getPreferredHandle()))
+				parameter.setHandle(dataLink.getData().getPreferredHandle());
 			if (dataLink.getData().getDataResourceName() == null)
 				throw new NoValidInOutDataException();
 				
 			parameter.getValue().add(dataLink.getData().getDataResourceName());
-
 		}
 	}
 	

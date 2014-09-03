@@ -6,6 +6,7 @@
 	
 	<xs:complexType name="Easyflow">
 		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="interpreter" type="Tool"/>
 			<xs:element maxOccurs="unbounded" name="package" type="Package"/>
 			<xs:element maxOccurs="unbounded" name="tool" type="Tool"/>
 		</xs:sequence>
@@ -72,6 +73,9 @@
 	</xs:complexType>
 
 	<xs:complexType name="Interpreter">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="param" type="Param"/>
+		</xs:sequence>
 		<xs:attribute name="exe" type="xs:string"/>
 	</xs:complexType>
 	

@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 
 /**

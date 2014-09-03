@@ -11,7 +11,6 @@ import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
-import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
@@ -22,13 +21,10 @@ import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**

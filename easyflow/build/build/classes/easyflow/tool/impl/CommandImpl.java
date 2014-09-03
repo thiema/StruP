@@ -6,12 +6,8 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.data.DataPort;
 import easyflow.tool.BaseCommand;
-import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.util.GlobalConstants;
-
-import java.util.Iterator;
 import java.util.Map.Entry;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
@@ -23,13 +19,10 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import java.util.Collection;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -52,7 +45,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.CommandImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getCommandPattern <em>Command Pattern</em>}</li>
- *   <li>{@link easyflow.tool.impl.CommandImpl#getTemplateParam <em>Template Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#isExecutable <em>Executable</em>}</li>
@@ -125,14 +118,14 @@ public class CommandImpl extends EObjectImpl implements Command {
 	protected String commandPattern = COMMAND_PATTERN_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTemplateParam() <em>Template Param</em>}' reference.
+	 * The cached value of the '{@link #getTemplateParams() <em>Template Params</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTemplateParam()
+	 * @see #getTemplateParams()
 	 * @generated
 	 * @ordered
 	 */
-	protected Parameter templateParam;
+	protected EList<Parameter> templateParams;
 
 	/**
 	 * The default value of the '{@link #getAssumeDataParamPositional() <em>Assume Data Param Positional</em>}' attribute.
@@ -311,6 +304,18 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Parameter> getTemplateParams() {
+		if (templateParams == null) {
+			templateParams = new EObjectResolvingEList<Parameter>(Parameter.class, this, ToolPackage.COMMAND__TEMPLATE_PARAMS);
+		}
+		return templateParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isExecutable() {
 		return executable;
 	}
@@ -346,44 +351,6 @@ public class CommandImpl extends EObjectImpl implements Command {
 			resolvedParams = new EcoreEMap<String,ResolvedParam>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP, StringToResolvedParamMapImpl.class, this, ToolPackage.COMMAND__RESOLVED_PARAMS);
 		}
 		return resolvedParams;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Parameter getTemplateParam() {
-		if (templateParam != null && templateParam.eIsProxy()) {
-			InternalEObject oldTemplateParam = (InternalEObject)templateParam;
-			templateParam = (Parameter)eResolveProxy(oldTemplateParam);
-			if (templateParam != oldTemplateParam) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.COMMAND__TEMPLATE_PARAM, oldTemplateParam, templateParam));
-			}
-		}
-		return templateParam;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Parameter basicGetTemplateParam() {
-		return templateParam;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTemplateParam(Parameter newTemplateParam) {
-		Parameter oldTemplateParam = templateParam;
-		templateParam = newTemplateParam;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__TEMPLATE_PARAM, oldTemplateParam, templateParam));
 	}
 
 	/**
@@ -497,6 +464,25 @@ public class CommandImpl extends EObjectImpl implements Command {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveParameter(String paramName, EList<TraversalChunk> chunks) {
+		boolean rc = false;
+		
+		logger.debug("resolveParameter(): trying to resolve param="+paramName+". Available param set="+getResolvedParams().keySet());
+		if (getResolvedParams().containsKey(paramName))
+		{
+			ResolvedParam resolvedParam = getResolvedParams().get(paramName);
+			resolvedParam.getValue().addAll(chunks);
+			rc = true;
+		}
+		
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -522,9 +508,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return getDescription();
 			case ToolPackage.COMMAND__COMMAND_PATTERN:
 				return getCommandPattern();
-			case ToolPackage.COMMAND__TEMPLATE_PARAM:
-				if (resolve) return getTemplateParam();
-				return basicGetTemplateParam();
+			case ToolPackage.COMMAND__TEMPLATE_PARAMS:
+				return getTemplateParams();
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return getAssumeDataParamPositional();
 			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
@@ -558,8 +543,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__COMMAND_PATTERN:
 				setCommandPattern((String)newValue);
 				return;
-			case ToolPackage.COMMAND__TEMPLATE_PARAM:
-				setTemplateParam((Parameter)newValue);
+			case ToolPackage.COMMAND__TEMPLATE_PARAMS:
+				getTemplateParams().clear();
+				getTemplateParams().addAll((Collection<? extends Parameter>)newValue);
 				return;
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional((Boolean)newValue);
@@ -594,8 +580,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__COMMAND_PATTERN:
 				setCommandPattern(COMMAND_PATTERN_EDEFAULT);
 				return;
-			case ToolPackage.COMMAND__TEMPLATE_PARAM:
-				setTemplateParam((Parameter)null);
+			case ToolPackage.COMMAND__TEMPLATE_PARAMS:
+				getTemplateParams().clear();
 				return;
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
@@ -627,8 +613,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case ToolPackage.COMMAND__COMMAND_PATTERN:
 				return COMMAND_PATTERN_EDEFAULT == null ? commandPattern != null : !COMMAND_PATTERN_EDEFAULT.equals(commandPattern);
-			case ToolPackage.COMMAND__TEMPLATE_PARAM:
-				return templateParam != null;
+			case ToolPackage.COMMAND__TEMPLATE_PARAMS:
+				return templateParams != null && !templateParams.isEmpty();
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
 			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
@@ -660,7 +646,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 		if (baseClass == BaseCommand.class) {
 			switch (derivedFeatureID) {
 				case ToolPackage.COMMAND__COMMAND_PATTERN: return ToolPackage.BASE_COMMAND__COMMAND_PATTERN;
-				case ToolPackage.COMMAND__TEMPLATE_PARAM: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAM;
+				case ToolPackage.COMMAND__TEMPLATE_PARAMS: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS;
 				case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
 				case ToolPackage.COMMAND__CMD_PART_DELIMITER: return ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER;
 				default: return -1;
@@ -686,7 +672,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 		if (baseClass == BaseCommand.class) {
 			switch (baseFeatureID) {
 				case ToolPackage.BASE_COMMAND__COMMAND_PATTERN: return ToolPackage.COMMAND__COMMAND_PATTERN;
-				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAM: return ToolPackage.COMMAND__TEMPLATE_PARAM;
+				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS: return ToolPackage.COMMAND__TEMPLATE_PARAMS;
 				case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
 				case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER: return ToolPackage.COMMAND__CMD_PART_DELIMITER;
 				default: return -1;

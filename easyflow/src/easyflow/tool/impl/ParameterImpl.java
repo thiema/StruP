@@ -9,6 +9,8 @@ package easyflow.tool.impl;
 import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.URIUtil;
+import easyflow.custom.util.Util;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
@@ -19,7 +21,7 @@ import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToParameterListMapImpl;
 import java.net.URI;
-import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -35,7 +37,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -1062,8 +1063,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		}
 		if (defaultKey != null)
 			return defaultKey.resolveArgKey(defaultPrefix);
+		
 		return getKeys().get(0).resolveArgKey(defaultPrefix);
-		//if (.equalsIgnoreCase("long"))
 	}
 	
 	private String resolveArgKeyDelimiter(String defaultDelimiter)
@@ -1306,23 +1307,43 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		
 		EList<String> argValue  = null;
 		Boolean defaultIsFixed  = templateParam != null ? templateParam.getFixedArgValue() : null;
+		String path             = resolvePath(constraints.containsKey("path") ? constraints.get("path") : null);
 		
+		try {
+			if (getCmdPart() != null && 
+					(GlobalConstants.COMMAND_PART_VALUE_EXE.equals(getCmdPart()) || 
+					 GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(getCmdPart())))
+			{
+				String res = null;
+				if (getDefaultValue() != null)
+					res = getDefaultValue();
+				else if (getName() != null)
+					res = getName();
+				return resolveValues(res, path);
+			}
+			
 		if (constraints != null && constraints.containsKey("value"))
 		{
-			argValue = resolveValues(constraints.get("value"));
+			argValue = resolveValues(constraints.get("value"), path);
 		}
 		else if (value != null && !value.isEmpty()) 
 		{
-			argValue = resolveValues(value);
+			argValue = resolveValues(value, path);
 		}
 		else if (getGeneralValue() != null && !getGeneralValue().isEmpty())
 		{
-			argValue = resolveValues(getGeneralValue());
+			argValue = resolveValues(getGeneralValue(), path);
 		}
 		else if (getDefaultValue() != null && !getDefaultValue().equals("") && isFixedArgValue(defaultIsFixed))
 		{
-			argValue = new BasicEList<String>();
-			argValue.add(getDefaultValue());
+			//argValue = new BasicEList<String>();
+			//argValue.add(resolveValues(getDefaultValue(), path));
+			
+			argValue = resolveValues(getDefaultValue(), path);
+		}
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed() : null;
@@ -1335,7 +1356,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		if (isAnalysisType())
 		{
 			EList<Parameter> pl = getEffectiveParameters(null);
-			logger.debug("generateCommandString(): param="+getName()+" no of effective params="+pl.size());
+			logger.debug("generateCommandString(): param="+resolveName()+" no of effective params="+pl.size());
 		}
 		// resolve prefix and key
 		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
@@ -1361,6 +1382,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		Boolean          defaultIsMultipleValue = templateParam != null ? templateParam.isMultipleValue(null) : null;
 		String         defaultArgValueDelimiter = templateParam != null ? templateParam.getArgValueDelimiter(null) : null;
 		EList<String>    res = new BasicEList<String>();
+		
 		if (isMultiple(defaultIsMultiple) && isMultipleValue(defaultIsMultipleValue))
 		{
 			String tmp  = StringUtils.join(cmdString, "");
@@ -1377,32 +1399,47 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				res.add(tmp);
 			}
 		}
+		
 		return res;
 	}
 	
-	private EList<String> resolveValues(Object value)
+	private String resolvePath(Object path)
+	{
+		if (path == null)
+			return null;
+		else if (path instanceof String)
+			return (String) path;
+		else if (path instanceof URI)
+			return path.toString();
+		else
+			return null;
+	}
+	
+	private EList<String> resolveValues(Object value, String path) throws URISyntaxException
 	{
 		EList<String> finalValue = new BasicEList<String>();
-		if (value instanceof EList)
+		if (value == null)
+			logger.error("generateCommandString(): couldnt resolve value. Null value given.");
+		else if (value instanceof EList)
 		{
 			Iterator<Object> it = ((EList<Object>) value).iterator();
 			while (it.hasNext())
 			{
 				Object v = it.next();
 				if (v instanceof String)
-					finalValue.add((String) v);
+					finalValue.add(URIUtil.createPath(path, (String) v));
 				else if (v instanceof URI)
-					finalValue.add(((URI)v).toString());
+					finalValue.add(URIUtil.addPathToUri(path, ((URI)v)).toString());
 				else if (v instanceof TraversalChunk)
-					finalValue.add(((TraversalChunk)v).getName());
+					finalValue.add(URIUtil.createPath(path, ((TraversalChunk)v).getName()));
 				else
 					logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
 			}
 		}
 		else if (value instanceof String)
-			finalValue.add((String) value);
+			finalValue.add(URIUtil.createPath(path, (String) value));
 		else if (value instanceof URI)
-			finalValue.add(((URI) value).toString());
+			finalValue.add(URIUtil.addPathToUri(path, (URI) value).toString());
 		else
 			logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
 		return finalValue;
@@ -1585,12 +1622,26 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		String uniqueString = getName() != null ? getName() : "noname";
 		if ("noname".equals(uniqueString))
 		{
-			Parameter p = this;
 			logger.debug("no name set.");
 		}
-		uniqueString += "_" + (getKeys().isEmpty() ? "nokey" : getKeys().get(0).getUniqueString());
+		uniqueString += "_" + (getKeys().isEmpty() ? "nokey" : getKeys().get(0).resolveName());
 		//uniqueString += "_" + (getLabel() != null ? getLabel(): "nolabel");
 		return uniqueString;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String resolveName() {
+		if (getName() != null)
+			return getName();
+		else if (!getKeys().isEmpty())
+			return getKeys().get(0).resolveName();
+		else
+			return null;
+
 	}
 
 	private void mergeKeys(EList<Key> newKeys)

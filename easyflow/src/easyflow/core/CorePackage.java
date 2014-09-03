@@ -241,22 +241,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__WORKER = 18;
 
 	/**
-	 * The feature id for the '<em><b>Tools</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__TOOLS = 19;
-
-	/**
 	 * The feature id for the '<em><b>Execution System</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__EXECUTION_SYSTEM = 20;
+	int WORKFLOW__EXECUTION_SYSTEM = 19;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -265,7 +256,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 21;
+	int WORKFLOW_FEATURE_COUNT = 20;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -1283,17 +1274,6 @@ public interface CorePackage extends EPackage {
 	EAttribute getWorkflow_Worker();
 
 	/**
-	 * Returns the meta object for the map '{@link easyflow.core.Workflow#getTools <em>Tools</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Tools</em>'.
-	 * @see easyflow.core.Workflow#getTools()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EReference getWorkflow_Tools();
-
-	/**
 	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2267,14 +2247,6 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute WORKFLOW__WORKER = eINSTANCE.getWorkflow_Worker();
-
-		/**
-		 * The meta object literal for the '<em><b>Tools</b></em>' map feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WORKFLOW__TOOLS = eINSTANCE.getWorkflow_Tools();
 
 		/**
 		 * The meta object literal for the '<em><b>Execution System</b></em>' reference feature.

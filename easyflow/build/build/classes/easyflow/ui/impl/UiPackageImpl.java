@@ -285,17 +285,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultProject_Tools() {
-		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getDefaultProject_DefaultConfigSourceString() {
-		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -304,7 +295,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getDefaultProject_ToolDefinitions() {
-		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(10);
+		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -313,7 +304,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getDefaultProject_Packages() {
-		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(11);
+		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -355,7 +346,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__GRAPH_UTIL);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__FROM_JAR);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__JSON_OBJECT);
-		createEReference(defaultProjectEClass, DEFAULT_PROJECT__TOOLS);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__TOOL_DEFINITIONS);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__PACKAGES);
@@ -390,8 +380,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
-		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
+		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -519,7 +509,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEReference(getDefaultProject_GraphUtil(), theJgraphxPackage.getUtil(), null, "graphUtil", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_FromJar(), ecorePackage.getEBoolean(), "fromJar", "true", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_JsonObject(), theEasyflowPackage.getJSONObject(), "jsonObject", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDefaultProject_Tools(), theMapsPackage.getStringToToolMap(), null, "tools", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_DefaultConfigSourceString(), ecorePackage.getEString(), "DefaultConfigSourceString", "main.json", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_ToolDefinitions(), theToolPackage.getToolDefinitions(), null, "toolDefinitions", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_Packages(), theMapsPackage.getStringToPackageMap(), null, "packages", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

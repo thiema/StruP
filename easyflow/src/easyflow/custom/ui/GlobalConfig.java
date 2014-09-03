@@ -1,5 +1,6 @@
 package easyflow.custom.ui;
 
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +8,9 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.context.Context;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
@@ -18,6 +22,7 @@ import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionFactory;
 import easyflow.execution.makeflow.MakeflowFactory;
 import easyflow.tool.Parameter;
+import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 import easyflow.ui.DefaultProject;
 
@@ -34,8 +39,8 @@ public class GlobalConfig {
 	public static final String   CONFIG_PROCESSING_ALLOW_PIPE           = "allow_pipe";
 
 	// processing options (defaults)
-	public  static final String   CONFIG_PROCESSING_HANDLE_FILE          = "file";
-	public  static final String   CONFIG_PROCESSING_HANDLE_PIPE          = "pipe";
+	public  static final String   CONFIG_PROCESSING_HANDLE_FILE          = GlobalConstants.NAME_FILE_HANDLE;
+	public  static final String   CONFIG_PROCESSING_HANDLE_PIPE          = GlobalConstants.NAME_PIPE_HANDLE;
 	public  static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE = CONFIG_PROCESSING_HANDLE_FILE;
 	public  static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE    = true;
 	public  static final String[] CONFIG_PROCESSING_HANDLES            = {
@@ -44,10 +49,6 @@ public class GlobalConfig {
 	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE = "execution_system_output_file";
 	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_VALUE = "exec_rules.txt";
 	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_OUTPUT_FILE_VALUE = "makeflow.out";
-
-	
-	public  static final String   ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL         = "No valid data handle found for tool.";
-	public  static final String   ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG       = "No valid data handle found due to configuration.";
 
 	// tool options	
 	public static final String   CONFIG_TOOL_DEFAULT_COMMAND_PATTERN_VALUE            = "pos opt in out";
@@ -96,9 +97,14 @@ public class GlobalConfig {
 	
 	// config maps
 	private static final EMap<String, String> toolConfig       = new BasicEMap<String, String>();
+	private static final EMap<String, EMap<String, String>> interpreterMap = new BasicEMap<String, EMap<String,String>>();
+	private static final EMap<String, EMap<String, String>> pkgMap         = new BasicEMap<String, EMap<String,String>>();
+	private static final EMap<String, Tool>                 tools          = new BasicEMap<String, Tool>();
+	private static final EMap<String, EMap<String, String>> toolMap        = new BasicEMap<String, EMap<String,String>>();
+	private static final Context varMap           = new VelocityContext();
 	private static final EMap<String, String> projectConfig    = new BasicEMap<String, String>();
 	private static final EMap<String, String> processingConfig = new BasicEMap<String, String>();
-	private static final EMap<String, String> catalogConfig    = new BasicEMap<String, String>();
+	//private static final EMap<String, String> catalogConfig    = new BasicEMap<String, String>();
 	private static final EMap<String, String> workflowConfig   = new BasicEMap<String, String>();
 
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE              = false;
@@ -108,6 +114,9 @@ public class GlobalConfig {
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INPUTS_DEFAULT_VALUE              = true;
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE           = true;
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
+	
+	private static final String  CONFIG_TOOL_RESOLVE_PATH_NAME          = "resolve_path";
+	private static final boolean CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE = true;
 	
 	private static       JSONObject           jsonConfig       = null; 
 	
@@ -119,6 +128,35 @@ public class GlobalConfig {
 		GlobalConfig.jsonConfig = jsonCfg;
 	}
 
+	public static EMap<String, EMap<String, String>> getInterpreterMap() {
+		return interpreterMap;
+	}
+
+	public static EMap<String, EMap<String, String>> getPkgMap() {
+		return pkgMap;
+	}
+
+	public static EMap<String, Tool> getTools()
+	{
+		return tools;
+	}
+	
+	public static EMap<String, EMap<String, String>> getToolMap() {
+		return toolMap;
+	}
+
+	public static Context getVarMap() {
+		return varMap;
+	}
+	
+	public static String resolveContextVars(String tpl)
+	{
+		StringWriter w = new StringWriter();
+		Velocity.evaluate(getVarMap(), w, "mystring", tpl);
+		logger.debug(w);
+		return w.toString();
+	}
+
 	public static EMap<String, String> getToolConfig() 
 	{
 		return toolConfig;
@@ -126,6 +164,10 @@ public class GlobalConfig {
 
 	public static EMap<String, String> getProcessingConfig() {
 		return processingConfig;
+	}
+
+	public static EMap<String, String> getProjectconfig() {
+		return projectConfig;
 	}
 
 	public static EMap<String, String> getWorkflowConfig()
@@ -435,5 +477,13 @@ public class GlobalConfig {
 	public static Boolean getMultipleInstancesPerInputForRootTaskValue()
 	{
 		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE;
+	}
+	
+	public static boolean resolvePath()
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_RESOLVE_PATH_NAME))
+			return getToolConfig().get(CONFIG_TOOL_RESOLVE_PATH_NAME).equals("true"); 
+		else
+			return CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE;
 	}
 }

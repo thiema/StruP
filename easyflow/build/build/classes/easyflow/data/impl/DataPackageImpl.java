@@ -368,7 +368,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	public EAttribute getDataLink_IdenticalGrouping() {
-		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -377,15 +377,6 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	public EReference getDataLink_Condition() {
-		return (EReference)dataLinkEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDataLink_IntermediateTasks() {
 		return (EReference)dataLinkEClass.getEStructuralFeatures().get(9);
 	}
 
@@ -394,8 +385,35 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDataLink_Data() {
+	public EReference getDataLink_IntermediateTasks() {
 		return (EReference)dataLinkEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataLink_Data() {
+		return (EReference)dataLinkEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataLink_Terminal() {
+		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataLink_Processed() {
+		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -405,6 +423,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 */
 	public EAttribute getDataLink_ParamStr() {
 		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataLink_ParamNameStr() {
+		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -562,10 +589,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(dataLinkEClass, DATA_LINK__GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__PARENT_GROUPING_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__PARAM_STR);
+		createEAttribute(dataLinkEClass, DATA_LINK__PARAM_NAME_STR);
 		createEAttribute(dataLinkEClass, DATA_LINK__IDENTICAL_GROUPING);
 		createEReference(dataLinkEClass, DATA_LINK__CONDITION);
 		createEReference(dataLinkEClass, DATA_LINK__INTERMEDIATE_TASKS);
 		createEReference(dataLinkEClass, DATA_LINK__DATA);
+		createEAttribute(dataLinkEClass, DATA_LINK__TERMINAL);
+		createEAttribute(dataLinkEClass, DATA_LINK__PROCESSED);
 
 		dataEClass = createEClass(DATA);
 		createEAttribute(dataEClass, DATA__LABEL);
@@ -646,10 +676,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEAttribute(getDataLink_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_ParentGroupingStr(), ecorePackage.getEString(), "parentGroupingStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_ParamStr(), ecorePackage.getEString(), "paramStr", "", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataLink_ParamNameStr(), ecorePackage.getEString(), "paramNameStr", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_IdenticalGrouping(), ecorePackage.getEBoolean(), "identicalGrouping", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataLink_Condition(), theCorePackage.getCondition(), null, "condition", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataLink_IntermediateTasks(), theCorePackage.getPreprocessingTask(), null, "intermediateTasks", null, 0, -1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataLink_Data(), this.getData(), null, "data", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataLink_Terminal(), ecorePackage.getEBoolean(), "terminal", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataLink_Processed(), ecorePackage.getEBoolean(), "processed", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(dataLinkEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 

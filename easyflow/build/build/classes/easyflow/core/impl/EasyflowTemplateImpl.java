@@ -18,6 +18,7 @@ import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.GlobalVar;
 
 import java.util.Collection;
 import org.apache.log4j.Logger;
@@ -221,7 +222,11 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					
-					Task task = CoreFactory.eINSTANCE.createTask();
+					Task task = null;
+					if (strLine.startsWith(GlobalConstants.ROOT_TASK_NAME) && GlobalVar.getRootTask() != null)
+						task = GlobalVar.getRootTask();
+					else
+						task = CoreFactory.eINSTANCE.createTask();
 					
 					task.readTask(strLine, mode, defaultGroupingCriteria);
 					tmpMap.put(task.getName(), task);
@@ -242,8 +247,11 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 							task.getParents().put("Root", tmpMap.get("Root"));
 						}
 					}
-					if (GlobalConstants.ROOT_TASK_NAME.equals(task.getName()))
+					if (GlobalVar.getRootTask() == null && GlobalConstants.ROOT_TASK_NAME.equals(task.getName()))
+					{
+						GlobalVar.setRootTask(task);
 						task.setRoot(true);
+					}
 					getTasks().add(task);
 					
 					//if (!task.getParents().isEmpty())

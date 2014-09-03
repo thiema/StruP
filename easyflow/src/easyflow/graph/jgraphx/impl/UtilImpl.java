@@ -2355,36 +2355,28 @@ public class UtilImpl extends EObjectImpl implements Util {
 			
 			if (outDataLink != null) {
 
+				/*EList<String> forbiddenInstances = outDataLink.getCondition() != null ? 
+							outDataLink.getCondition().getForbidden() : null;
+				boolean shallProcessFirstCircumventingParent = !outDataLink.isUnconditional() ? 
+						getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))
+											.shallProcess(groupingInstances, groupingStr, outDataLink.getCondition().getForbidden(), true)
+											:true;
+				boolean shallProcessChild = childTask.shallProcess(
+								groupingInstances, groupingStr, forbiddenInstances, true);
+				boolean shallProcessCircumventingParents = shallProcess(outDataLink.getCondition().getCircumventingParents(), 
+						groupingInstances, groupingStr, outDataLink.getCondition().getForbidden(), true);
+
 				logger.debug("applyMergingCriterion(): " 
 						+ groupingStr + " instances=(" + easyFlowUtil.list2String(groupingInstances, ", ")+")"
-						+ " shallProcess1="+((!outDataLink.isUnconditional()) ?
-										(
-										getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))
-										.shallProcess(groupingInstances, groupingStr, 
-												outDataLink.getCondition().getForbidden(),
-												true)
-										+"/"+
-										childTask
-										.shallProcess(
-												groupingInstances, groupingStr,
-												(outDataLink.getCondition() != null ? outDataLink
-														.getCondition().getForbidden()
-														: null), true)
-										+"/"+
-											shallProcess(outDataLink.getCondition().getCircumventingParents(), 
-													groupingInstances, groupingStr, 
-													outDataLink.getCondition().getForbidden(), 
-													true)
-										)
-									: "NA"
-									
-									)
-									
+						+ " shallProcessFirstCircumventingParent="+shallProcessFirstCircumventingParent
+						+ " shallProcessChild="+shallProcessChild
+						+ " shallProcessCircumventingParents="+shallProcessCircumventingParents
 						//+ " shallProcess="+task.shallProcess(groupingInstances, groupingStr)
 						//+ " shallProcess (child)="+childTask.shallProcess(groupingInstances, groupingStr)
 						+ " metadata="+!getMetaData().containsColumn(groupingStr)
 						//+ " cond="+outDataLink.getCondition()
 						);
+						*/
 				if (!isGrouping)
 				{
 					//logger.debug(" isProcessed="+outDataLink.isProcessed()+" ");
@@ -2394,17 +2386,14 @@ public class UtilImpl extends EObjectImpl implements Util {
 
 				if (
 				// test for conditional edges
-						(outDataLink.isUnconditional() ||
+						(outDataLink.isUnconditional() || !isGrouping ||
 						(outDataLink.getCondition() != null &&
-
 						
-								
-						
-							(!outDataLink.getCondition().getCircumventingParents().isEmpty() &&
+							(!outDataLink.getCondition().getCircumventingParents().isEmpty() && 
 									shallProcess(outDataLink.getCondition().getCircumventingParents(), 
 											groupingInstances, groupingStr, 
 											outDataLink.getCondition().getForbidden(), 
-											true) 
+											true)
 									&&
 
 						//	getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))

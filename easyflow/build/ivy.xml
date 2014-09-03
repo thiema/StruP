@@ -21,6 +21,7 @@
 		<!--dependency org="net.sf.ezmorph" name="ezmorph" rev="1.0.6"/ -->
 		<!--dependency org="com.google.code.gson" name="gson" rev="2.2.2"/ -->
 		<dependency org="net.sf.saxon" name="saxon" rev="8.7" />
-		<dependency org="dk.brics.automaton" name="automaton" rev="1.11-8"></dependency>
+		<!-- dependency org="dk.brics.automaton" name="automaton" rev="1.11-8"></dependency>-->
+		<dependency org="org.apache.velocity" name="velocity" rev="1.7"></dependency>
 	</dependencies>
 </ivy-module>

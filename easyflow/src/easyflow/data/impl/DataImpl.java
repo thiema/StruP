@@ -8,6 +8,7 @@ package easyflow.data.impl;
 
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
@@ -328,9 +329,9 @@ public class DataImpl extends EObjectImpl implements Data {
 		if (getSupportedHandles(true).isEmpty())
 		{
 			if (getSupportedHandles(false).isEmpty())
-				GlobalVar.setLastErrorString(GlobalConfig.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL);
+				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL);
 			else
-				GlobalVar.setLastErrorString(GlobalConfig.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG);
+				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG);
 			return false;
 		}
 		return true;
@@ -343,8 +344,6 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * @generated not
 	 */
 	public EList<String> getSupportedHandles(boolean applyConfig) {
-		Parameter tmp = getParameter();
-		//logger.debug(getParameter());
 		return getParameter().getSupportedHandles(applyConfig);
 	}
 

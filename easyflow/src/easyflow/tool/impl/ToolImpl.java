@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -70,6 +71,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getCommand <em>Command</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#isRoot <em>Root</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getResolveUriMap <em>Resolve Uri Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -295,6 +297,16 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * @ordered
 	 */
 	protected boolean root = ROOT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getResolveUriMap() <em>Resolve Uri Map</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResolveUriMap()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, URI> resolveUriMap;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -600,6 +612,18 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EMap<String, URI> getResolveUriMap() {
+		if (resolveUriMap == null) {
+			resolveUriMap = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, ToolPackage.TOOL__RESOLVE_URI_MAP);
+		}
+		return resolveUriMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void writeModelToXML() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -702,53 +726,56 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		//              sampe with cond="size(InputFiles)==2" and samse with cond="size(InputFiles)==1"
 		if (getPackage()!=null)
 		{
-			for (ResolvedParam resolvedParam : getPackage().getResolvedParams().values())
+			for (ResolvedParam resolvedParam : getPackage().getResolvedParams())
 			{
 				Parameter parameter = resolvedParam.getParameter();
 				if (parameter.isAnalysisType())
 				{
 					String matchByNameStr = null;
 					String matchByCondStr = null;
-					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName());
+					logger.debug("getAnalysisTypeOfPackage(): "+"tool="+getId()+"/"+getName()+" for anatype="+getAnalysisType());
 					for (OptionValue optionValue : parameter.getOptionValues())
 					{
-						logger.trace("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
-						if (getAnalysisType()!=null && optionValue.getName().equals(getAnalysisType()))
+						logger.debug("getAnalysisTypeOfPackage(): check option="+optionValue.getName()+" "+optionValue.getCondition());
+						if (getAnalysisType() != null && optionValue.getName().equals(getAnalysisType()))
 						{
 							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getAnalysisType();
 							returnValue = optionValue;
 							returnValue.setExe(matchByNameStr);
+							break;
 						}
 						else if (optionValue.getName().equals(getId()))
 						{
-							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getId();
+							matchByNameStr = optionValue.getExe() != null ? optionValue.getExe() : getId();
 							returnValue = optionValue;
 							returnValue.setExe(matchByNameStr);
+							break;
 						}
 						else if (optionValue.getName().equals(getName()))
 						{
-							matchByNameStr = optionValue.getExe()!=null ? optionValue.getExe() : getName();
+							matchByNameStr = optionValue.getExe() != null ? optionValue.getExe() : getName();
 							returnValue = optionValue;
 							returnValue.setExe(matchByNameStr);
+							break;
 						}	
-						else if (optionValue.getCondition()!=null)
+						else if (optionValue.getCondition() != null)
 						{
 							for (EMap<String, Object> map:easyflow.custom.util.Util.createMetaDataMapForJexl(
 									records))
 							{
-							Object evalObject = easyflow.custom.util.Util.evaluateJexl(
-									map, optionValue.getCondition());
-							if (evalObject instanceof Boolean) {
-								if (((Boolean) evalObject).booleanValue())
+								Object evalObject = easyflow.custom.util.Util.evaluateJexl(
+										map, optionValue.getCondition());
+								if (evalObject instanceof Boolean) 
 								{
-									matchByCondStr = optionValue.getExe()!=null ? optionValue.getExe() : optionValue.getName();
-									returnValue = optionValue;
-									break;
+									if (((Boolean) evalObject).booleanValue())
+									{
+										matchByCondStr = optionValue.getExe() != null ? optionValue.getExe() : optionValue.getName();
+										returnValue = optionValue;
+										break;
+									}
 								}
 							}
-							}
 						}
-						
 					}
 					if (matchByNameStr != null)
 					{
@@ -819,6 +846,11 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		
 		Parameter      res      = null;
 		//InOutParameter resInOut = null;
+		InOutParameter dataParameter         = null;
+		if (parameter.isDataParam())
+		{
+			dataParameter = (InOutParameter) parameter;
+		}
 		Iterator<Parameter> it = parameters.iterator();
 		while (it.hasNext())
 		{
@@ -826,67 +858,50 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			
 			if (templateParameter != null)
 			{
-					boolean   match             = false;
-					InOutParameter dataParameter         = null;
-					InOutParameter templateDataParameter = null;
-					if (parameter.isDataParam())
-					{
-						dataParameter = (InOutParameter) parameter;
-					}
-					if (templateParameter.isDataParam())
-					{
-						templateDataParameter = (InOutParameter) templateParameter;
-					}
-					
-					if (dataParameter != null && templateDataParameter != null)
-					{
-						if (dataParameter.matches(templateDataParameter))
-							match = true;
-							
-					}
-					else if (dataParameter == null && templateDataParameter == null)
-					{
-						if (parameter.matches(templateParameter))
-							match = true;
-					}
-					// what should be done in a mixed (non-data/data) situation
-					else
-					{
-						if (dataParameter != null && templateDataParameter == null)
-						{
-							match = true;
-						}
-						else
-							logger.trace("getTemplateParameter(): skip non-data/data parameter pair. "
-								+" (test: "+parameter.getName()+" against "+templateParameter.getName()+")");
-					}
-					if (match)
-					{
-						logger.trace("getTemplateParameter(): found "+(res==null ? "" : "(add) ")+"template param="
-								+templateParameter.getName()+" "
-								+templateParameter.isNamed(null)+" "
-								+templateParameter.getPrefix()+" "
-								+templateParameter.getDelimiter());
-						if (res == null)
-						{
-							res = EcoreUtil.copy(templateParameter);
-						}
-						else
-							res.merge(templateParameter);
-					}
-					else
-						logger.trace("getTemplateParameter(): skip template param="
-								+templateParameter.getName()+" "
-								+templateParameter.isNamed(null)+" "
-								+templateParameter.getPrefix()+" "
-								+templateParameter.getDelimiter());
-						
+				boolean match = false;
+				InOutParameter templateDataParameter = null;
+
+				if (templateParameter.isDataParam())
+					templateDataParameter = (InOutParameter) templateParameter;
+
+				if (dataParameter != null && templateDataParameter != null)
+					match = dataParameter.matches(templateDataParameter);
+				else if (dataParameter == null && templateDataParameter == null)
+					match = parameter.matches(templateParameter);
+				// what should be done in a mixed (non-data/data) situation
+				else {
+					if (dataParameter != null && templateDataParameter == null) {
+						match = true;
+					} else
+						logger.trace("getTemplateParameter(): skip non-data/data parameter pair. "
+								+ " (test: "
+								+ parameter.getName()
+								+ " against "
+								+ templateParameter.getName()
+								+ ")");
 				}
-				else
-				{
-					logger.trace("getTemplateParameter(): in/out port not matching"
-							+" (test: "+parameter.getName()+" against "+templateParameter.getName());
-				}
+				if (match) {
+					logger.trace("getTemplateParameter(): found "
+							+ (res == null ? "" : "(add) ") + "template param="
+							+ templateParameter.getName() + " "
+							+ templateParameter.isNamed(null) + " "
+							+ templateParameter.getPrefix() + " "
+							+ templateParameter.getDelimiter());
+					if (res == null) {
+						res = EcoreUtil.copy(templateParameter);
+					} else
+						res.merge(templateParameter);
+				} else
+					logger.trace("getTemplateParameter(): skip template param="
+							+ templateParameter.getName() + " "
+							+ templateParameter.isNamed(null) + " "
+							+ templateParameter.getPrefix() + " "
+							+ templateParameter.getDelimiter());
+
+			} else {
+				logger.trace("getTemplateParameter(): in/out port not matching"
+						+ " (test: " + parameter.getName());
+			}
 		}
 		return res;
 
@@ -908,17 +923,17 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EMap<String, ResolvedParam> getInterpreterParams() {
+	public EList<ResolvedParam> getInterpreterParams() {
 		
-		EMap<String, ResolvedParam> map = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEMap<String, ResolvedParam>();
+		EList<ResolvedParam> paramList = getPackage() != null ? getPackage().getInterpreterParams() : new BasicEList<ResolvedParam>();
 		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
 		while (it.hasNext())
 		{
 			Entry<String, ResolvedParam> e = it.next();
 			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
+				paramList.add(e.getValue());
 		}
-		return map;
+		return paramList;
 	}
 
 	/**
@@ -944,17 +959,17 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EMap<String, ResolvedParam> getModuleParams() {
+	public EList<ResolvedParam> getModuleParams() {
 		
-		EMap<String, ResolvedParam> map = new BasicEMap<String, ResolvedParam>();
+		EList<ResolvedParam> paramList = new BasicEList<ResolvedParam>();
 		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
 		while (it.hasNext())
 		{
 			Entry<String, ResolvedParam> e = it.next();
 			if (GlobalConstants.COMMAND_PART_VALUE_MODULE.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
+				paramList.add(e.getValue());
 		}
-		return map;
+		return paramList;
 	}
 
 	/**
@@ -1204,6 +1219,17 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public URI resolvePath() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -1213,6 +1239,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return ((InternalEList<?>)getData()).basicRemove(otherEnd, msgs);
 			case ToolPackage.TOOL__RESOLVED_PARAMS:
 				return ((InternalEList<?>)getResolvedParams()).basicRemove(otherEnd, msgs);
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				return ((InternalEList<?>)getResolveUriMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -1258,6 +1286,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				else return getResolvedParams().map();
 			case ToolPackage.TOOL__ROOT:
 				return isRoot();
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				if (coreType) return getResolveUriMap();
+				else return getResolveUriMap().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1311,6 +1342,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__ROOT:
 				setRoot((Boolean)newValue);
 				return;
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				((EStructuralFeature.Setting)getResolveUriMap()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1362,6 +1396,9 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			case ToolPackage.TOOL__ROOT:
 				setRoot(ROOT_EDEFAULT);
 				return;
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				getResolveUriMap().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1402,6 +1439,8 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				return resolvedParams != null && !resolvedParams.isEmpty();
 			case ToolPackage.TOOL__ROOT:
 				return root != ROOT_EDEFAULT;
+			case ToolPackage.TOOL__RESOLVE_URI_MAP:
+				return resolveUriMap != null && !resolveUriMap.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

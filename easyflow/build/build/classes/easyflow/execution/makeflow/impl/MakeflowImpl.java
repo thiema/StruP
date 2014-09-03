@@ -275,6 +275,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		try {
 			task.resolveInputs();
 			task.resolveOutputs();
+			task.resolveParams();
 		} catch (DataLinkNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -283,16 +284,14 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		
 		String targets = StringUtils.join(getFiles(task.getOutputs()), ' ');
 		String deps    = StringUtils.join(getFiles(task.getInputs()), ' ');
-		String rule    = targets+": "+deps;
-
 		String cmd;
 
 		cmd = createCommandLine(
 				GlobalConfig.getToolConfig().get("command_pattern"),
 				task);
 		logger.debug(cmd+" ("+targets+":"+deps+")");
-		rule+="\n\t"+cmd+"\n\n";
-				
+		String rule = targets+": "+deps+"\n\t"+cmd+"\n\n";
+		
 		return rule;
 	}
 	

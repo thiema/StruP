@@ -608,8 +608,10 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 							+(data.isOutput()?"output":"input")+" data="+data.getName());
 				}
 				else
-				{		
-					Boolean defaultIsOptional = tool.getCommand().getTemplateParam() != null ? tool.getCommand().getTemplateParam().getOptional() : null;
+				{	
+					Parameter templateParam   = tool.getTemplateParameter(parameter);
+					Boolean defaultIsOptional = templateParam != null ? templateParam.isOptional(null) : null;
+					
 				logger.trace("computeScore(): "+parameter != null ? (parameter.getName()+" "+((InOutParameter)parameter).getFormats()+" "
 						+parameter.isOptional(defaultIsOptional)):null);
 				

@@ -7,6 +7,7 @@
 package easyflow.tool.impl;
 
 import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <ul>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getHandle <em>Handle</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,6 +64,26 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	 * @ordered
 	 */
 	protected EList<Object> value;
+
+	/**
+	 * The default value of the '{@link #getHandle() <em>Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandle()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String HANDLE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getHandle() <em>Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandle()
+	 * @generated
+	 * @ordered
+	 */
+	protected String handle = HANDLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,6 +156,27 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getHandle() {
+		return handle;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHandle(String newHandle) {
+		String oldHandle = handle;
+		handle = newHandle;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__HANDLE, oldHandle, handle));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * to generate the prefix:
 	 * 1.) use parameter definition
 	 * 2.) use template definition (template param)
@@ -144,7 +188,14 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	
 	public EList<String> generateCommandString(EMap<String, Object> constraints, Parameter templateParam)
 	{
-		EList<String> res = getParameter().generateCommandString(constraints, getValue(), templateParam);
+		Parameter param = EcoreUtil.copy(getParameter());
+		Parameter p = getParameter();
+		if (GlobalConstants.NAME_FILE_HANDLE.equals(getHandle()))
+			param.merge(getParameter().getValues().get(GlobalConstants.NAME_FILE_HANDLE).get(0));
+		else if (GlobalConstants.NAME_PIPE_HANDLE.equals(getHandle()))
+			param.merge(getParameter().getValues().get(GlobalConstants.NAME_PIPE_HANDLE).get(0));
+		
+		EList<String> res = param.generateCommandString(constraints, getValue(), templateParam);
 		return res;
 	}
 
@@ -179,6 +230,21 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String resolveName() {
+		if (getName() != null)
+			return getName();
+		else if (getParameter() != null)
+		{
+			return getParameter().resolveName();
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -189,6 +255,8 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return basicGetParameter();
 			case ToolPackage.RESOLVED_PARAM__VALUE:
 				return getValue();
+			case ToolPackage.RESOLVED_PARAM__HANDLE:
+				return getHandle();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -209,6 +277,9 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				getValue().clear();
 				getValue().addAll((Collection<? extends Object>)newValue);
 				return;
+			case ToolPackage.RESOLVED_PARAM__HANDLE:
+				setHandle((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -227,6 +298,9 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			case ToolPackage.RESOLVED_PARAM__VALUE:
 				getValue().clear();
 				return;
+			case ToolPackage.RESOLVED_PARAM__HANDLE:
+				setHandle(HANDLE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -243,6 +317,8 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return parameter != null;
 			case ToolPackage.RESOLVED_PARAM__VALUE:
 				return value != null && !value.isEmpty();
+			case ToolPackage.RESOLVED_PARAM__HANDLE:
+				return HANDLE_EDEFAULT == null ? handle != null : !HANDLE_EDEFAULT.equals(handle);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -259,6 +335,8 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (value: ");
 		result.append(value);
+		result.append(", handle: ");
+		result.append(handle);
 		result.append(')');
 		return result.toString();
 	}

@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
 import easyflow.data.Data;
@@ -78,6 +79,8 @@ public class ToolContentHandler implements ContentHandler {
 	boolean withinParam       = false;
 	boolean withinData        = false;
 	boolean withinPackage     = false;
+	boolean withinTool        = false;
+	boolean withinInterpreter = false;
 	boolean withinConditional = false;
 	boolean withinMetadataMap = false;
 	boolean withinOption      = false;
@@ -195,6 +198,7 @@ public class ToolContentHandler implements ContentHandler {
 		formats.add(format);
 		setDataPort(formats);
 	}
+	
 	private void setDataPort(List<String> formats)
 	{
 		for (String format:formats)
@@ -225,7 +229,6 @@ public class ToolContentHandler implements ContentHandler {
 			param = ToolFactory.eINSTANCE.createParameter();
 		}
 		return param;
-		
 	}
 	
 	private void initParam(Parameter curParam)
@@ -234,7 +237,7 @@ public class ToolContentHandler implements ContentHandler {
 		curParam.setDelimiter     (null);
 		curParam.setValueDelimiter(null);
 	}
-	
+
 	private boolean setParam(Attributes atts, Parameter curParam)
 	{
 		initParam(curParam);
@@ -242,10 +245,10 @@ public class ToolContentHandler implements ContentHandler {
 		
 		if (atts.getValue("name") != null)
 			curParam.setName(atts.getValue("name"));
-		else if (!isAbstract)
+		else if (!isAbstract && !isAnalysisType(atts))
 		{
-			logger.error("cannot process parameter with undefined name. "
-					+(withinPackage ? pkg.getName() : tool.getName()));
+			logger.error("cannot process parameter with undefined name for "
+					+(withinPackage ? "pkg="+pkg.getName() : "tool="+tool.getName()));
 			return false;
 		}
 		if (atts.getValue("type") != null)
@@ -294,6 +297,7 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setDelimiter(atts.getValue("separator"));
 		if (atts.getValue("prefix") != null)
 			curParam.setPrefix(atts.getValue("prefix"));
+		
 		if (atts.getValue("key") != null)
 		{
 			Key newKey = ToolFactory.eINSTANCE.createKey();
@@ -343,6 +347,11 @@ public class ToolContentHandler implements ContentHandler {
 		if (atts.getValue("data") != null)
 			dataStrings.put(curParam.getName(), atts.getValue("data"));
 		
+		if (withinInterpreter)
+		{
+			curParam.setCmdPart(GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM);
+		}
+
 		if ("data".equals(atts.getValue("type")))
 		{
 			boolean isOutput   = false;
@@ -394,6 +403,35 @@ public class ToolContentHandler implements ContentHandler {
 		}
 		return true;
 	}
+
+	private void initTool(Tool curTool)
+	{
+		
+	}
+	
+	private void setTool(Attributes atts)
+	{
+		tool = ToolFactory.eINSTANCE.createTool();
+		initTool(tool);
+		tools.add(tool);
+		Command command = ToolFactory.eINSTANCE.createCommand();
+		tool.setCommand(command);
+		
+		tool.setName(atts.getValue("name"));
+		if (atts.getValue("id") == null)
+			tool.setId(tool.getName());
+		else
+			tool.setId(atts.getValue("id"));
+		if (tool.getName() == null)
+			tool.setName(tool.getId());
+		logger.debug("processing tool="+tool.getId());
+		tool.setVersion(atts.getValue("version"));
+		if (atts.getValue("package") != null && packages.containsKey(atts.getValue("package")))
+			tool.setPackage(packages.get(atts.getValue("package")));
+		if (atts.getValue("analysis_type") != null)
+			tool.setAnalysisType(atts.getValue("analysis_type"));
+
+	}
 	
 	Parameter getParamParent(Parameter curParam)
 	{
@@ -418,6 +456,10 @@ public class ToolContentHandler implements ContentHandler {
 	boolean isAbstract(Attributes atts)
 	{
 		return atts.getValue("abstract") != null && atts.getValue("abstract").equals("true");
+	}
+	boolean isAnalysisType(Attributes atts)
+	{
+		return atts.getValue("type") != null && atts.getValue("type").equals("analysis_type");
 	}
 	
 	@Override
@@ -449,25 +491,9 @@ public class ToolContentHandler implements ContentHandler {
 				withinPackage = true;
 				break;
 			case TOOL:
+				withinTool = true;
 				dataStrings.clear();
-				tool=ToolFactory.eINSTANCE.createTool();
-				tools.add(tool);
-				Command command=ToolFactory.eINSTANCE.createCommand();
-				tool.setCommand(command);
-				
-				tool.setName(atts.getValue("name"));
-				if (atts.getValue("id")==null)
-					tool.setId(tool.getName());
-				else
-					tool.setId(atts.getValue("id"));
-				if (tool.getName()==null)
-					tool.setName(tool.getId());
-				logger.debug("processing tool="+tool.getId());
-				tool.setVersion(atts.getValue("version"));
-				if (atts.getValue("package")!=null && packages.containsKey(atts.getValue("package")))
-					tool.setPackage(packages.get(atts.getValue("package")));
-				if (atts.getValue("analysis_type")!=null)
-					tool.setAnalysisType(atts.getValue("analysis_type"));
+				setTool(atts);
 				break;
 			case METADATA_MAP:
 				withinMetadataMap = true;
@@ -518,22 +544,26 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				else
 				{
-					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
-					if (atts.getValue("exe") != null)
+					if (atts.getValue("exe") != null || atts.getValue("name") != null)
 					{
-						resolvedParam.setName(atts.getValue("exe"));
+						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+						if (atts.getValue("exe") != null)
+						{
+							resolvedParam.setName(atts.getValue("exe"));
+						}
+						else if (atts.getValue("name") != null)
+						{
+							resolvedParam.setName(atts.getValue("name"));
+						}
+						//else					{						resolvedParam.setName(tool.getId());					}
+						
+						Parameter param = ToolFactory.eINSTANCE.createParameter();
+						param.setName(resolvedParam.getName());
+						param.setCmdPart(GlobalConstants.COMMAND_PART_VALUE_EXE);
+						resolvedParam.setParameter(param);
+						tool.getResolvedParams().put(resolvedParam.getName(), resolvedParam);
+						logger.debug("add tool param: "+resolvedParam.getName());
 					}
-					else if (atts.getValue("name") != null)
-					{
-						resolvedParam.setName(atts.getValue("name"));
-					}
-					
-					Parameter param = ToolFactory.eINSTANCE.createParameter();
-					param.setName(resolvedParam.getName());
-					param.setCmdPart("exe");
-					resolvedParam.setParameter(param);
-					tool.getResolvedParams().put(resolvedParam.getName(), resolvedParam);
-					logger.debug("add tool param: "+resolvedParam.getName());
 					if (atts.getValue("pattern") != null)
 						tool.getCommand().setCommandPattern(atts.getValue("pattern"));
 					if (atts.getValue("assume_data_param_positional") != null
@@ -550,21 +580,31 @@ public class ToolContentHandler implements ContentHandler {
 					resolvedParam.setName(atts.getValue("name"));
 					Parameter param = ToolFactory.eINSTANCE.createParameter();
 					param.setName(resolvedParam.getName());
-					param.setCmdPart("exe");
+					param.setCmdPart(GlobalConstants.COMMAND_PART_VALUE_EXE);
 					resolvedParam.setParameter(param);
-					pkg.getResolvedParams().put(atts.getValue("name"), resolvedParam);
+					pkg.getResolvedParams().add(resolvedParam);
 				}
 				break;
 			case INTERPRETER:
+				withinInterpreter = true;
 				if (withinPackage)
 				{
 					ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
 					resolvedParam.setName(atts.getValue("exe"));
 					Parameter param = ToolFactory.eINSTANCE.createParameter();
 					param.setName(resolvedParam.getName());
-					param.setCmdPart("interpreter");
+					param.setCmdPart(GlobalConstants.COMMAND_PART_VALUE_INTERPRETER);
 					resolvedParam.setParameter(param);
-					pkg.getResolvedParams().put(atts.getValue("exe"), resolvedParam);
+					pkg.getResolvedParams().add(resolvedParam);
+				}
+				else if (withinTool)
+				{
+					logger.warn("no handling defined for this tag within tool.");
+				}
+				else
+				{
+					// interpreter definition is treated as tool definitions
+					setTool(atts);	
 				}
 				break;
 			case PARAM:
@@ -574,6 +614,7 @@ public class ToolContentHandler implements ContentHandler {
 				
 				if (!setParam(atts, p))
 					break;
+				
 				if (withinConditional && condition != null && !withinPackage)
 				{
 					if (lastTag.equals(Tag.CONDITIONAL))
@@ -608,7 +649,7 @@ public class ToolContentHandler implements ContentHandler {
 					{
 						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
 						resolvedParam.setParameter(parameter);
-						pkg.getResolvedParams().put(parameter.getName(), resolvedParam);
+						pkg.getResolvedParams().add(resolvedParam);
 					}
 				}
 				else if (subParam!=p)
@@ -779,7 +820,6 @@ public class ToolContentHandler implements ContentHandler {
 					withinConditional = false;
 					parameter = null;
 				}
-				
 				break;
 			case METADATA_MAP:
 				withinMetadataMap = false;
@@ -793,7 +833,6 @@ public class ToolContentHandler implements ContentHandler {
 					setDataPort(format);
 				}
 				data = null;
-				
 				break;
 			case PARAM:
 				withinParam = false;
@@ -803,6 +842,9 @@ public class ToolContentHandler implements ContentHandler {
 				break;
 			case PACKAGE:
 				withinPackage = false;
+				break;
+			case INTERPRETER:
+				withinInterpreter = false;
 				break;
 			case TOOL:
 				// test all elements in dataStrings
@@ -851,6 +893,7 @@ public class ToolContentHandler implements ContentHandler {
 									}
 							}
 				logger.debug("");
+				withinTool = false;
 			default:
 				break;
 		}

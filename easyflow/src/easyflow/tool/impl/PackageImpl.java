@@ -18,12 +18,15 @@ import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
+import easyflow.util.maps.impl.StringToURIMapImpl;
+import java.net.URI;
 import java.util.Collection;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -53,6 +56,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.PackageImpl#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link easyflow.tool.impl.PackageImpl#getResolveUriMap <em>Resolve Uri Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -163,14 +167,14 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 */
 	protected String cmdPartDelimiter = CMD_PART_DELIMITER_EDEFAULT;
 	/**
-	 * The cached value of the '{@link #getResolvedParams() <em>Resolved Params</em>}' map.
+	 * The cached value of the '{@link #getResolvedParams() <em>Resolved Params</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getResolvedParams()
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<String, ResolvedParam> resolvedParams;
+	protected EList<ResolvedParam> resolvedParams;
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -208,6 +212,15 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 */
 	protected String version = VERSION_EDEFAULT;
 
+	/**
+	 * The cached value of the '{@link #getResolveUriMap() <em>Resolve Uri Map</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResolveUriMap()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, URI> resolveUriMap;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -307,9 +320,9 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, ResolvedParam> getResolvedParams() {
+	public EList<ResolvedParam> getResolvedParams() {
 		if (resolvedParams == null) {
-			resolvedParams = new EcoreEMap<String,ResolvedParam>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP, StringToResolvedParamMapImpl.class, this, ToolPackage.PACKAGE__RESOLVED_PARAMS);
+			resolvedParams = new EObjectResolvingEList<ResolvedParam>(ResolvedParam.class, this, ToolPackage.PACKAGE__RESOLVED_PARAMS);
 		}
 		return resolvedParams;
 	}
@@ -359,19 +372,31 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, URI> getResolveUriMap() {
+		if (resolveUriMap == null) {
+			resolveUriMap = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, ToolPackage.PACKAGE__RESOLVE_URI_MAP);
+		}
+		return resolveUriMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EMap<String, ResolvedParam> getInterpreterParams() {
+	public EList<ResolvedParam> getInterpreterParams() {
 
-		EMap<String, ResolvedParam> map = new BasicEMap<String, ResolvedParam>();
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		EList<ResolvedParam> paramList = new BasicEList<ResolvedParam>();
+		Iterator<ResolvedParam> it = getResolvedParams().iterator();
 		while (it.hasNext())
 		{
-			Entry<String, ResolvedParam> e = it.next();
-			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getValue().getParameter().getCmdPart()))
-				map.put(e.getKey(), e.getValue());
+			ResolvedParam e = it.next();
+			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER_PARAM.equals(e.getParameter().getCmdPart()))
+				paramList.add(e);
 		}
-		return map;
+		return paramList;
 	}	
 	
 	/**
@@ -381,7 +406,7 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 */
 	public ResolvedParam getInterpreter() {
 		
-		for (ResolvedParam resolvedParam : getResolvedParams().values())
+		for (ResolvedParam resolvedParam : getResolvedParams())
 			if (GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(resolvedParam.getParameter().getCmdPart()))
 				return resolvedParam;
 		return null;
@@ -394,7 +419,7 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 */
 	public ResolvedParam getExe() {
 		
-		for (ResolvedParam resolvedParam:getResolvedParams().values())
+		for (ResolvedParam resolvedParam : getResolvedParams())
 			if (GlobalConstants.COMMAND_PART_VALUE_EXE.equals(resolvedParam.getParameter().getCmdPart()))
 				return resolvedParam;
 		return null; 
@@ -450,8 +475,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ToolPackage.PACKAGE__RESOLVED_PARAMS:
-				return ((InternalEList<?>)getResolvedParams()).basicRemove(otherEnd, msgs);
+			case ToolPackage.PACKAGE__RESOLVE_URI_MAP:
+				return ((InternalEList<?>)getResolveUriMap()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -477,12 +502,14 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
 				return getCmdPartDelimiter();
 			case ToolPackage.PACKAGE__RESOLVED_PARAMS:
-				if (coreType) return getResolvedParams();
-				else return getResolvedParams().map();
+				return getResolvedParams();
 			case ToolPackage.PACKAGE__ID:
 				return getId();
 			case ToolPackage.PACKAGE__VERSION:
 				return getVersion();
+			case ToolPackage.PACKAGE__RESOLVE_URI_MAP:
+				if (coreType) return getResolveUriMap();
+				else return getResolveUriMap().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -516,13 +543,17 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				setCmdPartDelimiter((String)newValue);
 				return;
 			case ToolPackage.PACKAGE__RESOLVED_PARAMS:
-				((EStructuralFeature.Setting)getResolvedParams()).set(newValue);
+				getResolvedParams().clear();
+				getResolvedParams().addAll((Collection<? extends ResolvedParam>)newValue);
 				return;
 			case ToolPackage.PACKAGE__ID:
 				setId((String)newValue);
 				return;
 			case ToolPackage.PACKAGE__VERSION:
 				setVersion((String)newValue);
+				return;
+			case ToolPackage.PACKAGE__RESOLVE_URI_MAP:
+				((EStructuralFeature.Setting)getResolveUriMap()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -563,6 +594,9 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 			case ToolPackage.PACKAGE__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
+			case ToolPackage.PACKAGE__RESOLVE_URI_MAP:
+				getResolveUriMap().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -593,6 +627,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case ToolPackage.PACKAGE__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
+			case ToolPackage.PACKAGE__RESOLVE_URI_MAP:
+				return resolveUriMap != null && !resolveUriMap.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

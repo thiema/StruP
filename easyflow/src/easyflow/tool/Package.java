@@ -6,6 +6,8 @@
  */
 package easyflow.tool;
 
+import java.net.URI;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
 
@@ -20,6 +22,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Package#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.Package#getId <em>Id</em>}</li>
  *   <li>{@link easyflow.tool.Package#getVersion <em>Version</em>}</li>
+ *   <li>{@link easyflow.tool.Package#getResolveUriMap <em>Resolve Uri Map</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,21 +33,20 @@ import org.eclipse.emf.common.util.EMap;
 public interface Package extends IToolElement, DefaultToolElement, BaseCommand {
 
 	/**
-	 * Returns the value of the '<em><b>Resolved Params</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type {@link easyflow.tool.ResolvedParam},
+	 * Returns the value of the '<em><b>Resolved Params</b></em>' reference list.
+	 * The list contents are of type {@link easyflow.tool.ResolvedParam}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Resolved Params</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Resolved Params</em>' map.
+	 * @return the value of the '<em>Resolved Params</em>' reference list.
 	 * @see easyflow.tool.ToolPackage#getPackage_ResolvedParams()
-	 * @model mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @model
 	 * @generated
 	 */
-	EMap<String, ResolvedParam> getResolvedParams();
+	EList<ResolvedParam> getResolvedParams();
 
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
@@ -99,6 +101,23 @@ public interface Package extends IToolElement, DefaultToolElement, BaseCommand {
 	void setVersion(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Resolve Uri Map</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.net.URI},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Resolve Uri Map</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Resolve Uri Map</em>' map.
+	 * @see easyflow.tool.ToolPackage#getPackage_ResolveUriMap()
+	 * @model mapType="easyflow.util.maps.StringToURIMap<org.eclipse.emf.ecore.EString, easyflow.URI>"
+	 * @generated
+	 */
+	EMap<String, URI> getResolveUriMap();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Exe</em>' attribute isn't clear,
@@ -113,10 +132,10 @@ public interface Package extends IToolElement, DefaultToolElement, BaseCommand {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation" mapType="easyflow.util.maps.StringToResolvedParamMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @model kind="operation"
 	 * @generated
 	 */
-	EMap<String, ResolvedParam> getInterpreterParams();
+	EList<ResolvedParam> getInterpreterParams();
 
 	/**
 	 * <!-- begin-user-doc -->

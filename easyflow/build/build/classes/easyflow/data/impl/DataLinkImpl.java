@@ -49,10 +49,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamStr <em>Param Str</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamNameStr <em>Param Name Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#isTerminal <em>Terminal</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#isProcessed <em>Processed</em>}</li>
  * </ul>
  * </p>
  *
@@ -170,6 +173,26 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	protected String paramStr = PARAM_STR_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getParamNameStr() <em>Param Name Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParamNameStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PARAM_NAME_STR_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getParamNameStr() <em>Param Name Str</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParamNameStr()
+	 * @generated
+	 * @ordered
+	 */
+	protected String paramNameStr = PARAM_NAME_STR_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #isIdenticalGrouping() <em>Identical Grouping</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -218,6 +241,46 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected Data data;
+
+	/**
+	 * The default value of the '{@link #isTerminal() <em>Terminal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isTerminal()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean TERMINAL_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isTerminal() <em>Terminal</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isTerminal()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean terminal = TERMINAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isProcessed() <em>Processed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isProcessed()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean PROCESSED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isProcessed() <em>Processed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isProcessed()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean processed = PROCESSED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -504,6 +567,48 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isTerminal() {
+		return terminal;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTerminal(boolean newTerminal) {
+		boolean oldTerminal = terminal;
+		terminal = newTerminal;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__TERMINAL, oldTerminal, terminal));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isProcessed() {
+		return processed;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProcessed(boolean newProcessed) {
+		boolean oldProcessed = processed;
+		processed = newProcessed;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PROCESSED, oldProcessed, processed));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getParamStr() {
 		return paramStr;
 	}
@@ -518,6 +623,27 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		paramStr = newParamStr;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PARAM_STR, oldParamStr, paramStr));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getParamNameStr() {
+		return paramNameStr;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParamNameStr(String newParamNameStr) {
+		String oldParamNameStr = paramNameStr;
+		paramNameStr = newParamNameStr;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PARAM_NAME_STR, oldParamNameStr, paramNameStr));
 	}
 
 	/**
@@ -639,12 +765,15 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			{
 				format = getDataPort().getFormat();
 			}
-
+			else if (getInDataPort() != null && getInDataPort().getDataFormats() != null && !getInDataPort().getDataFormats().isEmpty())
+			{
+				format = getInDataPort().getFormat();
+			}
 		}
 		return format;
 			
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -684,6 +813,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return getParentGroupingStr();
 			case DataPackage.DATA_LINK__PARAM_STR:
 				return getParamStr();
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				return getParamNameStr();
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				return isIdenticalGrouping();
 			case DataPackage.DATA_LINK__CONDITION:
@@ -694,6 +825,10 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA:
 				if (resolve) return getData();
 				return basicGetData();
+			case DataPackage.DATA_LINK__TERMINAL:
+				return isTerminal();
+			case DataPackage.DATA_LINK__PROCESSED:
+				return isProcessed();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -728,6 +863,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__PARAM_STR:
 				setParamStr((String)newValue);
 				return;
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				setParamNameStr((String)newValue);
+				return;
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping((Boolean)newValue);
 				return;
@@ -740,6 +878,12 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return;
 			case DataPackage.DATA_LINK__DATA:
 				setData((Data)newValue);
+				return;
+			case DataPackage.DATA_LINK__TERMINAL:
+				setTerminal((Boolean)newValue);
+				return;
+			case DataPackage.DATA_LINK__PROCESSED:
+				setProcessed((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -774,6 +918,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__PARAM_STR:
 				setParamStr(PARAM_STR_EDEFAULT);
 				return;
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				setParamNameStr(PARAM_NAME_STR_EDEFAULT);
+				return;
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping(IDENTICAL_GROUPING_EDEFAULT);
 				return;
@@ -785,6 +932,12 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return;
 			case DataPackage.DATA_LINK__DATA:
 				setData((Data)null);
+				return;
+			case DataPackage.DATA_LINK__TERMINAL:
+				setTerminal(TERMINAL_EDEFAULT);
+				return;
+			case DataPackage.DATA_LINK__PROCESSED:
+				setProcessed(PROCESSED_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -812,6 +965,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return PARENT_GROUPING_STR_EDEFAULT == null ? parentGroupingStr != null : !PARENT_GROUPING_STR_EDEFAULT.equals(parentGroupingStr);
 			case DataPackage.DATA_LINK__PARAM_STR:
 				return PARAM_STR_EDEFAULT == null ? paramStr != null : !PARAM_STR_EDEFAULT.equals(paramStr);
+			case DataPackage.DATA_LINK__PARAM_NAME_STR:
+				return PARAM_NAME_STR_EDEFAULT == null ? paramNameStr != null : !PARAM_NAME_STR_EDEFAULT.equals(paramNameStr);
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
 			case DataPackage.DATA_LINK__CONDITION:
@@ -820,6 +975,10 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return intermediateTasks != null && !intermediateTasks.isEmpty();
 			case DataPackage.DATA_LINK__DATA:
 				return data != null;
+			case DataPackage.DATA_LINK__TERMINAL:
+				return terminal != TERMINAL_EDEFAULT;
+			case DataPackage.DATA_LINK__PROCESSED:
+				return processed != PROCESSED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -842,8 +1001,14 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		result.append(parentGroupingStr);
 		result.append(", paramStr: ");
 		result.append(paramStr);
+		result.append(", paramNameStr: ");
+		result.append(paramNameStr);
 		result.append(", identicalGrouping: ");
 		result.append(identicalGrouping);
+		result.append(", terminal: ");
+		result.append(terminal);
+		result.append(", processed: ");
+		result.append(processed);
 		result.append(')');
 		return result.toString();
 	}

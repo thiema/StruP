@@ -91,7 +91,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getProcessedStates <em>Processed States</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getWorker <em>Worker</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getTools <em>Tools</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getExecutionSystem <em>Execution System</em>}</li>
  * </ul>
  * </p>
@@ -372,16 +371,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EasyFlowOverallWorker worker = WORKER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getTools() <em>Tools</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTools()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, Tool> tools;
-
-	/**
 	 * The cached value of the '{@link #getExecutionSystem() <em>Execution System</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -657,18 +646,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, Tool> getTools() {
-		if (tools == null) {
-			tools = new EcoreEMap<String,Tool>(MapsPackage.Literals.STRING_TO_TOOL_MAP, StringToToolMapImpl.class, this, CorePackage.WORKFLOW__TOOLS);
-		}
-		return tools;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public IExecutionSystem getExecutionSystem() {
 		if (executionSystem != null && executionSystem.eIsProxy()) {
 			InternalEObject oldExecutionSystem = (InternalEObject)executionSystem;
@@ -853,7 +830,23 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		return processedStates;
 	}
 
-	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void init()
+	{
+		getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, false);
+		getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.GROUPING_APPLIED, false);
+		getProcessedStates().put(GlobalConstants.PARAMETER_APPLIED, false);
+		getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, false);
+		getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, false);
+		getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, false);
+	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -894,9 +887,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			
 		}
 		getGraph().getModel().endUpdate();
-		
-		Workflow w = this;
-		getTools().clear();
+		GlobalConfig.getTools().clear();
 		getLastTasks().clear();
 		setFirstNode(null);
 		
@@ -1314,7 +1305,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean generateAbstractWorkflow() {
 
 		//printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
-    	boolean res=generateGraphFromTemplate(getTools());
+    	boolean res=generateGraphFromTemplate(GlobalConfig.getTools());
 
 
     	if (res)
@@ -1502,7 +1493,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 							getGraph().insertEdgeEasyFlow(null, null, rootCell, target, createDataLinkForRoot(getRootTask(), task, dataPort));
 						}
 					}
-					else 
+					else
 					{
 						for (Task pTask:parentTaskList.keySet())
 						{
@@ -2474,8 +2465,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return ((InternalEList<?>)getProcessedStates()).basicRemove(otherEnd, msgs);
 			case CorePackage.WORKFLOW__PREVIOUS_TASK_NAME:
 				return ((InternalEList<?>)getPreviousTaskName()).basicRemove(otherEnd, msgs);
-			case CorePackage.WORKFLOW__TOOLS:
-				return ((InternalEList<?>)getTools()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -2533,9 +2522,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				else return getPreviousTaskName().map();
 			case CorePackage.WORKFLOW__WORKER:
 				return getWorker();
-			case CorePackage.WORKFLOW__TOOLS:
-				if (coreType) return getTools();
-				else return getTools().map();
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				if (resolve) return getExecutionSystem();
 				return basicGetExecutionSystem();
@@ -2610,9 +2596,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__WORKER:
 				setWorker((EasyFlowOverallWorker)newValue);
 				return;
-			case CorePackage.WORKFLOW__TOOLS:
-				((EStructuralFeature.Setting)getTools()).set(newValue);
-				return;
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				setExecutionSystem((IExecutionSystem)newValue);
 				return;
@@ -2682,9 +2665,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__WORKER:
 				setWorker(WORKER_EDEFAULT);
 				return;
-			case CorePackage.WORKFLOW__TOOLS:
-				getTools().clear();
-				return;
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				setExecutionSystem((IExecutionSystem)null);
 				return;
@@ -2738,8 +2718,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return previousTaskName != null && !previousTaskName.isEmpty();
 			case CorePackage.WORKFLOW__WORKER:
 				return WORKER_EDEFAULT == null ? worker != null : !WORKER_EDEFAULT.equals(worker);
-			case CorePackage.WORKFLOW__TOOLS:
-				return tools != null && !tools.isEmpty();
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				return executionSystem != null;
 		}
