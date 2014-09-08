@@ -11,6 +11,7 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.Util;
+import easyflow.metadata.GroupingInstance;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
@@ -1432,6 +1433,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 					finalValue.add(URIUtil.addPathToUri(path, ((URI)v)).toString());
 				else if (v instanceof TraversalChunk)
 					finalValue.add(URIUtil.createPath(path, ((TraversalChunk)v).getName()));
+				else if (v instanceof GroupingInstance)
+					finalValue.add(URIUtil.createPath(path, ((GroupingInstance)v).getName()));
 				else
 					logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
 			}
@@ -1440,6 +1443,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			finalValue.add(URIUtil.createPath(path, (String) value));
 		else if (value instanceof URI)
 			finalValue.add(URIUtil.addPathToUri(path, (URI) value).toString());
+		else if (value instanceof GroupingInstance)
+			finalValue.add(URIUtil.createPath(path, ((GroupingInstance)value).getName()));
+		else if (value instanceof TraversalChunk)
+			finalValue.add(URIUtil.createPath(path, ((TraversalChunk)value).getName()));
 		else
 			logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
 		return finalValue;

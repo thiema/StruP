@@ -90,5 +90,4 @@ public class GlobalConstants {
 	public static final String DATA_INPUT_DIR    = "input_dir";
 	public static final String DATA_WORK_DIR     = "work_dir";
 	public static final String DATA_TMP_DIR      = "tmp_dir";
-
 }

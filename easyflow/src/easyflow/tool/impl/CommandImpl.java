@@ -404,6 +404,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 	public EList<String> getPositionalParameterNames() {
 		
 		EList<String> paramNames = new BasicEList<String>();
+		
 		for (Entry<String, ResolvedParam> e:getResolvedParams())
 		{
 			ResolvedParam parameter = e.getValue();

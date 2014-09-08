@@ -79,8 +79,8 @@
   					     
   	"var"          :  { "basepath" : "/home/heinz/tools/bio" },
   	
-  	"interpreter"  :  { "java"        : "/path/to/java"},
-  	"pkg"          :  { "picard"      : "$basepath/picard",
+  	"interpreter"  :  { "java_"        : "/path/to/java"},
+  	"pkg"          :  { "picard"      : {"jar":"$basepath/picard"},
   				        "gatk_simple" : "$basepath/GATK",
   				        "gatk"        : {"classpath" : "$basepath/GATK/"
   				                        } 

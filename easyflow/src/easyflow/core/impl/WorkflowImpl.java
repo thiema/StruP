@@ -1480,7 +1480,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					continue;
 					
 				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" #in="+(task.getInDataPorts().size())+" "
-						+" first dataports first grouping="+task.getInDataPorts().get(0).getGroupingCriteria().get(0).getId());
+						+" first dataport="+task.getInDataPorts().get(0).getFormat().getName()
+						+" first dataports grouping="+easyflow.custom.util.Util.list2String(task.getInDataPorts().get(0).getGroupingCriteria(),null));
 				if (!task.isUtil()) 
 				{
 					Object target=getGraphUtil().getCells().get(task.getUniqueString());

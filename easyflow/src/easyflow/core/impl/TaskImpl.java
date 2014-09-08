@@ -45,6 +45,7 @@ import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.ui.Easyflow;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
@@ -55,6 +56,7 @@ import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
+import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
 import easyflow.tool.InOutParameter;
@@ -1229,8 +1231,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		traversalOperation.setType("grouping");
 		traversalCriterion.setOperation(traversalOperation);
 
-		traversalEvent
-				.setTraversalCriterion(traversalCriterion);
+		traversalEvent.setTraversalCriterion(traversalCriterion);
 		traversalEvent.setSplitTask(this);
 		logger.trace("readTask(): " + "adding travcrit: "
 				+ traversalCriterion.getId() + " ");
@@ -1692,7 +1693,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		String         defaultDelimiter = GlobalConfig.getArgDelimiter();
 		String         interpreterDelim = defaultDelimiter;
-		
+
+		EMap<String, URI>  pkgResolvingMap = tool.getPackage() != null ? 
+				tool.getPackage().getResolveUriMap() : null;
+
+
 		
 		if (interpreter != null)
 		{
@@ -1712,7 +1717,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				constraints.put("path", resolvingMap.get(GlobalConstants.COMMAND_PART_VALUE_EXE));
 			else
 				constraints.removeKey("path");
-			
+
 			cmd = interpreter.generateCommandString(constraints, defaultParameter);
 			
 			if (!cmd.isEmpty())
@@ -1725,8 +1730,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 					//Parameter curDefaultParam = tool.getTemplateParameter(param.getParameter()) 
 					Parameter curDefaultParam = interpreterTool.getTemplateParameter(param.getParameter());
 					
-					EMap<String, URI>  pkgResolvingMap = tool.getPackage() != null ? 
-							tool.getPackage().getResolveUriMap() : null;
 					logger.debug("#######param name="+param.resolveName()+" keys="+(pkgResolvingMap != null ? pkgResolvingMap.keySet() : null));
 					constraints.removeKey("path");
 					if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
@@ -1800,8 +1803,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 			OptionValue value = anaType.child;
 			
 			EMap<String, URI>  resolvingMap = tool.getResolveUriMap();
+			
 			if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
 				constraints.put("path", resolvingMap.get(param.resolveName()));
+			else if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
+				constraints.put("path", pkgResolvingMap.get(param.resolveName()));
 			else
 				constraints.removeKey("path");
 
@@ -1812,6 +1818,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 					param.generateCommandString(constraints, value, defaultParameter),
 					tool.getCmdPartDelimiter())
 				);
+			constraints.removeKey("path");
 		}
 		
 		return StringUtils.join(cmdParts, " ");
@@ -1859,7 +1866,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		if (tool == null)
 			tool = getPreferredTool();
 
-		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().entrySet().iterator();
+		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().iterator();
 		
 		while (it.hasNext())
 		{
@@ -2125,16 +2132,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 				inputs.add(traversalChunk);
 			}
 			else
-			for (String in:ina)
-			{
-				if (!processedSoFar.contains(in))
+				for (String in:ina)
 				{
-					processedSoFar.add(in);
-				TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
-				traversalChunk.setName(in);
-				inputs.add(traversalChunk);
+					if (!processedSoFar.contains(in))
+					{
+						processedSoFar.add(in);
+						TraversalChunk traversalChunk = TraversalFactory.eINSTANCE.createTraversalChunk();
+						traversalChunk.setName(in);
+						inputs.add(traversalChunk);
+					}
 				}
-			}
 		}
 		
 		logger.debug("getInputs(): retrieved "+inputs.size()+" inputs: "+processedSoFar);
@@ -2362,6 +2369,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		else if (grouping != null)
 		{
 			EList<TraversalChunk> recs = null;
+			logger.debug("canProvideDataPort(): "+Util.list2String(traversalChunks, null));
 			if (GlobalConstants.TRAVERSAL_CRITERION_RECORD.equals(grouping))
 			{
 				recs = getRecords(true);
@@ -2698,22 +2706,67 @@ public class TaskImpl extends EObjectImpl implements Task {
 	
 	private void resolveStaticParams()
 	{
-		Iterator<Entry<String, String>> it = getParams().iterator();
+		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().iterator();
+
 		while (it.hasNext())
 		{
-			Entry<String, String> e = it.next();
-			if (getCommand().getResolvedParams().containsKey(e.getKey()))
+			Entry<String, ResolvedParam> e = it.next();
+			ResolvedParam resolvedParam = e.getValue();
+			Parameter param = resolvedParam.getParameter();
+			if (!e.getValue().getParameter().getGrouping().isEmpty())
 			{
-				ResolvedParam param = getCommand().getResolvedParams().get(e.getKey());
-				param.getValue().add(e.getValue());
+				
+				logger.debug("resolveStaticParams(): grouping parameter found. name="+resolvedParam.resolveName()
+						+" "+param.getGrouping()+" "+getChunks().keySet());
+				
+				EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
+				EList<TraversalChunk> chunks = getRecords();
+				DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+				Iterator<String> groupingStrIt = param.getGrouping().iterator();
+				while (groupingStrIt.hasNext())
+				{
+					String groupingStr = groupingStrIt.next();
+					if (!groupingStr.equalsIgnoreCase(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
+						for (TraversalChunk chunk : chunks)
+						{
+							EList<GroupingInstance> tmp = metaData.getInstances(		
+									GlobalConstants.TRAVERSAL_CRITERION_RECORD,
+									groupingStr, 
+									chunk.getName());
+							if (!tmp.isEmpty())
+							{
+								logger.debug("param="+resolvedParam.resolveName()+" instance="
+										+easyflow.custom.util.Util.list2String(tmp, null)
+										+" found for grouping="+groupingStr);
+								
+							}
+							else
+							{
+								logger.debug("param="+resolvedParam.resolveName()+" no instances found for grouping="+groupingStr);
+							}
+
+							groupingInstances.addAll(tmp);
+							
+						}
+					//GlobalVarMetaData
+					
+					//if (getChunks().containsKey(groupingStr))
+				}
+				resolvedParam.getValue().addAll(groupingInstances);
+				
 			}
+
 		}
+		
+		
 	}
-	
+
+	/*
 	private boolean resolveCmdPartParam(ResolvedParam resolvedParam)
 	{
 		boolean rc = false;
-		String cmdParts[] = {GlobalConstants.COMMAND_PART_VALUE_EXE, GlobalConstants.COMMAND_PART_VALUE_INTERPRETER, GlobalConstants.COMMAND_PART_VALUE_MODULE}; 
+		String cmdParts[] = {GlobalConstants.COMMAND_PART_VALUE_EXE, 
+				GlobalConstants.COMMAND_PART_VALUE_INTERPRETER, GlobalConstants.COMMAND_PART_VALUE_MODULE}; 
 		if (resolvedParam.getParameter().getCmdPart() != null
 				&& Arrays.asList(cmdParts).contains(resolvedParam.getParameter().getCmdPart()))
 		{
@@ -2730,7 +2783,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		}
 		return rc;
 	}
-	
+	*/
 	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->

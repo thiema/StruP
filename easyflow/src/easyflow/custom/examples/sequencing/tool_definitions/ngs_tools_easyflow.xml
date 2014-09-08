@@ -18,19 +18,19 @@
 		<param type="analysis_type" named="true" name="jar" prefix="-"><!-- resolvePathRef="exe"> --> 
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
-					<map_entry key="readgroup" value="rgid"/>
-					<map_entry key="sample"    value="rgsm"/>
-					<map_entry key="library"   value="rglib"/>
-					<map_entry key="platform"  value="rgpl"/>
+					<map_entry key="ReadGroup" value="rgid"/>
+					<map_entry key="Sample"    value="rgsm"/>
+					<map_entry key="Library"   value="rglib"/>
+					<map_entry key="Platform"  value="rgpl"/>
 				</metadata_map>
 			</option>
-			<option value="picard_BamIndexStats" exe="BamIndexStats.jar"></option>
-			<option value="picard_FastqToSam" exe="FastqToSam.jar"></option>
-			<option value="picard_ReorderSam" exe="ReorderSam.jar"></option>
+			<option value="picard_BamIndexStats"    exe="BamIndexStats.jar"></option>
+			<option value="picard_FastqToSam"       exe="FastqToSam.jar"></option>
+			<option value="picard_ReorderSam"       exe="ReorderSam.jar"></option>
 			<option value="picard_ReplaceSamHeader" exe="ReplaceSamHeader.jar"></option>
-			<option value="picard_SamToFastq" exe="SamToFastq.jar"></option>
-			<option value="PicardASMetrics" exe="CollectAlignmentSummaryMetrics.jar"></option>
-			<option value="rgPicFixMate" exe="FixMateInformation.jar"></option>
+			<option value="picard_SamToFastq"       exe="SamToFastq.jar"></option>
+			<option value="PicardASMetrics"         exe="CollectAlignmentSummaryMetrics.jar"></option>
+			<option value="rgPicFixMate"            exe="FixMateInformation.jar"></option>
 			<option value="PicardGCBiasMetrics" exe="CollectGcBiasMetrics.jar"></option>
 			<option value="PicardHsMetrics" exe="CalculateHsMetrics.jar"></option>
 			<option value="PicardInsertSize" exe="CollectInsertSizeMetrics.jar"></option>
@@ -242,8 +242,8 @@ Command: view        SAM<->BAM conversion
 		</conditional>
 		
 		<param name="reference"   type="data" format="fasta" positional="true"/>
-		<param name="input"       type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
+		<param name="input"       type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<param name="output"      type="data" format="sam" output="true"/> 
 	</tool>
 	

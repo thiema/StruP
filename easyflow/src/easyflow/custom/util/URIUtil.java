@@ -165,7 +165,7 @@ public class URIUtil {
 	public static String createPath(String basePath, String fileName)
 	{
 		logger.trace("create path: "+basePath+" "+fileName);
-		if (basePath == null)
+		if (basePath == null || "".equals(basePath))
 			return fileName;
 		
 		return fileName == null ?
