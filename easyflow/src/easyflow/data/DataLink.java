@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.DataLink#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getParamStr <em>Param Str</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getParamNameStr <em>Param Name Str</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getParamChunks <em>Param Chunks</em>}</li>
  *   <li>{@link easyflow.data.DataLink#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
@@ -394,6 +395,23 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setParamNameStr(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Param Chunks</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link easyflow.traversal.TraversalChunk},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Param Chunks</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Param Chunks</em>' map.
+	 * @see easyflow.data.DataPackage#getDataLink_ParamChunks()
+	 * @model mapType="easyflow.util.maps.StringToChunksMap<org.eclipse.emf.ecore.EString, easyflow.traversal.TraversalChunk>"
+	 * @generated
+	 */
+	EMap<String, EList<TraversalChunk>> getParamChunks();
 
 	/**
 	 * <!-- begin-user-doc -->

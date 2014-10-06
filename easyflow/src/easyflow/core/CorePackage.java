@@ -585,13 +585,22 @@ public interface CorePackage extends EPackage {
 	int PREPROCESSING_TASK__EXPRESSION = 2;
 
 	/**
+	 * The feature id for the '<em><b>Data Port Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TASK__DATA_PORT_INDEX = 3;
+
+	/**
 	 * The number of structural features of the '<em>Preprocessing Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREPROCESSING_TASK_FEATURE_COUNT = 3;
+	int PREPROCESSING_TASK_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
@@ -1668,6 +1677,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getPreprocessingTask_Expression();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.PreprocessingTask#getDataPortIndex <em>Data Port Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Data Port Index</em>'.
+	 * @see easyflow.core.PreprocessingTask#getDataPortIndex()
+	 * @see #getPreprocessingTask()
+	 * @generated
+	 */
+	EAttribute getPreprocessingTask_DataPortIndex();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.ToolMatch <em>Tool Match</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2539,6 +2559,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PREPROCESSING_TASK__EXPRESSION = eINSTANCE.getPreprocessingTask_Expression();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Port Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_TASK__DATA_PORT_INDEX = eINSTANCE.getPreprocessingTask_DataPortIndex();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.

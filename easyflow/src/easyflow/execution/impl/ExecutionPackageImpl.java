@@ -318,13 +318,11 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		addEOperation(iExecutionSystemEClass, theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		EOperation op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
 		op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());

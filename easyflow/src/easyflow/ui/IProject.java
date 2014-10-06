@@ -21,6 +21,7 @@ import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.execution.IExecutionSystem;
 import java.io.FileNotFoundException;
 import java.net.URI;
+import net.sf.json.JSONObject;
 import javax.xml.validation.Schema;
 import org.eclipse.emf.ecore.EObject;
 import org.w3c.dom.Document;
@@ -62,10 +63,10 @@ public interface IProject extends EObject {
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
-	 * @model exceptions="easyflow.FileNotFoundException" sourceDataType="easyflow.URI"
+	 * @model dataType="easyflow.JSONObject" exceptions="easyflow.FileNotFoundException" sourceDataType="easyflow.URI"
 	 * @generated
 	 */
-	void readProjectJson(URI source) throws FileNotFoundException;
+	JSONObject readProjectJson(URI source) throws FileNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -100,18 +101,18 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation"
+	 * @model configDataType="easyflow.JSONObject"
 	 * @generated
 	 */
-	Workflow getActiveWorkflow();
+	boolean readConfiguration(JSONObject config, boolean isDefault);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model kind="operation"
 	 * @generated
 	 */
-	boolean readConfiguration() throws FileNotFoundException;
+	Workflow getActiveWorkflow();
 
 	/**
 	 * <!-- begin-user-doc -->

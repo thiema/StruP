@@ -6,6 +6,7 @@
  */
 package easyflow.execution.makeflow;
 
+import easyflow.core.Task;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.execution.DefaultExecutionSystem;
@@ -29,24 +30,8 @@ public interface Makeflow extends IExecutionSystem, DefaultExecutionSystem {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	EList<String> getDependencies(Tool tool);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	EList<String> getTargets(Tool tool);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	String createRule() throws ParameterNotFoundException, NoValidInOutDataException;
+	String createRule(Task task) throws ParameterNotFoundException, NoValidInOutDataException;
 } // Makeflow

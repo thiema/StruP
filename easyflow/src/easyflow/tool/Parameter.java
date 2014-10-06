@@ -52,6 +52,8 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getCmdPart <em>Cmd Part</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getMultipleInstances <em>Multiple Instances</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isHidden <em>Hidden</em>}</li>
  * </ul>
  * </p>
  *
@@ -438,6 +440,58 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setMultipleInstancesPerInput(Boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Output Arg Value For Boolean Param</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Output Arg Value For Boolean Param</em>' attribute.
+	 * @see #setOutputArgValueForBooleanParam(Boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_OutputArgValueForBooleanParam()
+	 * @model
+	 * @generated
+	 */
+	Boolean getOutputArgValueForBooleanParam();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Output Arg Value For Boolean Param</em>' attribute.
+	 * @see #getOutputArgValueForBooleanParam()
+	 * @generated
+	 */
+	void setOutputArgValueForBooleanParam(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Hidden</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Hidden</em>' attribute.
+	 * @see #setHidden(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Hidden()
+	 * @model
+	 * @generated
+	 */
+	boolean isHidden();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isHidden <em>Hidden</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Hidden</em>' attribute.
+	 * @see #isHidden()
+	 * @generated
+	 */
+	void setHidden(boolean value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -596,6 +650,14 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	boolean isMultipleValue(Boolean default_);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean shouldOutputArgValue(Boolean default_);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParentGroupingStr <em>Parent Grouping Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamStr <em>Param Str</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamNameStr <em>Param Name Str</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getParamChunks <em>Param Chunks</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#isIdenticalGrouping <em>Identical Grouping</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
@@ -191,6 +192,16 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected String paramNameStr = PARAM_NAME_STR_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getParamChunks() <em>Param Chunks</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getParamChunks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, EList<TraversalChunk>> paramChunks;
 
 	/**
 	 * The default value of the '{@link #isIdenticalGrouping() <em>Identical Grouping</em>}' attribute.
@@ -649,6 +660,18 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, EList<TraversalChunk>> getParamChunks() {
+		if (paramChunks == null) {
+			paramChunks = new EcoreEMap<String,EList<TraversalChunk>>(MapsPackage.Literals.STRING_TO_CHUNKS_MAP, StringToChunksMapImpl.class, this, DataPackage.DATA_LINK__PARAM_CHUNKS);
+		}
+		return paramChunks;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean isUnconditional() {
@@ -784,6 +807,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		switch (featureID) {
 			case DataPackage.DATA_LINK__CHUNKS:
 				return ((InternalEList<?>)getChunks()).basicRemove(otherEnd, msgs);
+			case DataPackage.DATA_LINK__PARAM_CHUNKS:
+				return ((InternalEList<?>)getParamChunks()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -815,6 +840,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return getParamStr();
 			case DataPackage.DATA_LINK__PARAM_NAME_STR:
 				return getParamNameStr();
+			case DataPackage.DATA_LINK__PARAM_CHUNKS:
+				if (coreType) return getParamChunks();
+				else return getParamChunks().map();
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				return isIdenticalGrouping();
 			case DataPackage.DATA_LINK__CONDITION:
@@ -865,6 +893,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return;
 			case DataPackage.DATA_LINK__PARAM_NAME_STR:
 				setParamNameStr((String)newValue);
+				return;
+			case DataPackage.DATA_LINK__PARAM_CHUNKS:
+				((EStructuralFeature.Setting)getParamChunks()).set(newValue);
 				return;
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping((Boolean)newValue);
@@ -921,6 +952,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__PARAM_NAME_STR:
 				setParamNameStr(PARAM_NAME_STR_EDEFAULT);
 				return;
+			case DataPackage.DATA_LINK__PARAM_CHUNKS:
+				getParamChunks().clear();
+				return;
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				setIdenticalGrouping(IDENTICAL_GROUPING_EDEFAULT);
 				return;
@@ -967,6 +1001,8 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return PARAM_STR_EDEFAULT == null ? paramStr != null : !PARAM_STR_EDEFAULT.equals(paramStr);
 			case DataPackage.DATA_LINK__PARAM_NAME_STR:
 				return PARAM_NAME_STR_EDEFAULT == null ? paramNameStr != null : !PARAM_NAME_STR_EDEFAULT.equals(paramNameStr);
+			case DataPackage.DATA_LINK__PARAM_CHUNKS:
+				return paramChunks != null && !paramChunks.isEmpty();
 			case DataPackage.DATA_LINK__IDENTICAL_GROUPING:
 				return identicalGrouping != IDENTICAL_GROUPING_EDEFAULT;
 			case DataPackage.DATA_LINK__CONDITION:

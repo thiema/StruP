@@ -356,29 +356,29 @@ public class PegasusImpl extends EObjectImpl implements Pegasus {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String createCommandLine(String commandPattern, Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public mxICellVisitor getJgraphxVisitor() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(Task task) throws ParameterNotFoundException, NoValidInOutDataException {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String createCommandLine(Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();

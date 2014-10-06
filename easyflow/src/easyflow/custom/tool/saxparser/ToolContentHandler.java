@@ -333,6 +333,11 @@ public class ToolContentHandler implements ContentHandler {
 		else
 			curParam.setNamed(null);
 		
+		if (atts.getValue("hidden") != null)
+			curParam.setHidden(atts.getValue("hidden").equals("true"));
+		else
+			curParam.setHidden(false);
+		
 		if (atts.getValue("advanced") != null)
 			curParam.setAdvanced(atts.getValue("advanced").equals("true") ? true : false);
 		
@@ -368,13 +373,24 @@ public class ToolContentHandler implements ContentHandler {
 			{
 				isOutput = true;
 			}
+			InOutParameter curInOutParam = (InOutParameter)curParam;
+			curInOutParam.setOutput(isOutput);
 			
-			((InOutParameter)curParam).setOutput(isOutput);
-			
-			if (atts.getValue("format")!=null)
+			if (atts.getValue("format") != null)
 				for (String format:atts.getValue("format").split(","))
-					((InOutParameter)curParam).getFormats().add(format);
-			
+					curInOutParam.getFormats().add(format);
+			if (atts.getValue("extension") != null)
+			{
+				if (atts.getValue("extension").equals("true"))
+					curInOutParam.setExtension(true);
+				else
+					curInOutParam.setExtension(false);
+			}
+			if (atts.getValue("filename_creation") != null)
+			{
+				curInOutParam.setFilenameCreation(atts.getValue("filename_creation"));
+			}
+				
 			if (!isAbstract)
 			{
 				Data data = DataFactory.eINSTANCE.createData();

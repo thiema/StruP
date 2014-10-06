@@ -83,7 +83,7 @@ public class Easyflow {
 				defaultProject.resolvePreprocessingTasks();
 				
 				// datalinks grouping criterion is possibly changed to param crit name   
-				defaultProject.applyParameterCriteria();
+				//defaultProject.applyParameterCriteria();
 				
 				defaultProject.resolveToolDependencies();
 				

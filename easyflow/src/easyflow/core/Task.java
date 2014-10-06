@@ -799,7 +799,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	String createCommandLine(String commandPattern) throws ParameterNotFoundException, NoValidInOutDataException;
+	String createCommandLine() throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1064,5 +1064,29 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void resolveParams() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isIdentityTransformation();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isIdentityTransformation(DataPort dataPort);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model dataType="easyflow.Object"
+	 * @generated
+	 */
+	EList<Object> resolveConditionalStaticParam(Parameter parameter);
 
 } // Task

@@ -11,6 +11,7 @@ import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 import java.util.Collection;
 
+import org.eclipse.core.runtime.content.IContentTypeManager.ISelectionPolicy;
 import org.eclipse.emf.common.notify.Notification;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
@@ -28,6 +29,8 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <ul>
  *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getFormats <em>Formats</em>}</li>
  *   <li>{@link easyflow.tool.impl.InOutParameterImpl#isOutput <em>Output</em>}</li>
+ *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getExtension <em>Extension</em>}</li>
+ *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getFilenameCreation <em>Filename Creation</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,6 +65,46 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	 * @ordered
 	 */
 	protected boolean output = OUTPUT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getExtension() <em>Extension</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExtension()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean EXTENSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getExtension() <em>Extension</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExtension()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean extension = EXTENSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFilenameCreation() <em>Filename Creation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFilenameCreation()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FILENAME_CREATION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFilenameCreation() <em>Filename Creation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFilenameCreation()
+	 * @generated
+	 * @ordered
+	 */
+	protected String filenameCreation = FILENAME_CREATION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -115,6 +158,60 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.IN_OUT_PARAMETER__OUTPUT, oldOutput, output));
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getExtension() {
+		return extension;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExtension(Boolean newExtension) {
+		Boolean oldExtension = extension;
+		extension = newExtension;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.IN_OUT_PARAMETER__EXTENSION, oldExtension, extension));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getFilenameCreation() {
+		return filenameCreation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFilenameCreation(String newFilenameCreation) {
+		String oldFilenameCreation = filenameCreation;
+		filenameCreation = newFilenameCreation;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.IN_OUT_PARAMETER__FILENAME_CREATION, oldFilenameCreation, filenameCreation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean omitExtension() {
+		if (getExtension() == null)
+			return false;
+		else
+			return !getExtension();
+	}
+
 	public boolean matches(InOutParameter templateParameter) {
 		
 		// ckeck format
@@ -141,6 +238,10 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 				return getFormats();
 			case ToolPackage.IN_OUT_PARAMETER__OUTPUT:
 				return isOutput();
+			case ToolPackage.IN_OUT_PARAMETER__EXTENSION:
+				return getExtension();
+			case ToolPackage.IN_OUT_PARAMETER__FILENAME_CREATION:
+				return getFilenameCreation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -161,6 +262,12 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 			case ToolPackage.IN_OUT_PARAMETER__OUTPUT:
 				setOutput((Boolean)newValue);
 				return;
+			case ToolPackage.IN_OUT_PARAMETER__EXTENSION:
+				setExtension((Boolean)newValue);
+				return;
+			case ToolPackage.IN_OUT_PARAMETER__FILENAME_CREATION:
+				setFilenameCreation((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -179,6 +286,12 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 			case ToolPackage.IN_OUT_PARAMETER__OUTPUT:
 				setOutput(OUTPUT_EDEFAULT);
 				return;
+			case ToolPackage.IN_OUT_PARAMETER__EXTENSION:
+				setExtension(EXTENSION_EDEFAULT);
+				return;
+			case ToolPackage.IN_OUT_PARAMETER__FILENAME_CREATION:
+				setFilenameCreation(FILENAME_CREATION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -195,6 +308,10 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 				return formats != null && !formats.isEmpty();
 			case ToolPackage.IN_OUT_PARAMETER__OUTPUT:
 				return output != OUTPUT_EDEFAULT;
+			case ToolPackage.IN_OUT_PARAMETER__EXTENSION:
+				return EXTENSION_EDEFAULT == null ? extension != null : !EXTENSION_EDEFAULT.equals(extension);
+			case ToolPackage.IN_OUT_PARAMETER__FILENAME_CREATION:
+				return FILENAME_CREATION_EDEFAULT == null ? filenameCreation != null : !FILENAME_CREATION_EDEFAULT.equals(filenameCreation);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -213,6 +330,10 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 		result.append(formats);
 		result.append(", output: ");
 		result.append(output);
+		result.append(", extension: ");
+		result.append(extension);
+		result.append(", filenameCreation: ");
+		result.append(filenameCreation);
 		result.append(')');
 		return result.toString();
 	}

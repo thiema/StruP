@@ -819,17 +819,32 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 */
 	public Parameter getTemplateParameter(Parameter parameter) {
 		
-		Parameter res = null;
+		Parameter toolParam = null;
+		Parameter pkgParam  = null;
+		Parameter dfltPosParam = null;
+		Parameter templateParam = null;
 		if (!getCommand().getTemplateParams().isEmpty())
-			res = getMatchingParameter(getCommand().getTemplateParams(), parameter);
+			toolParam = getMatchingParameter(getCommand().getTemplateParams(), parameter);
 		
-		else if (res == null && getPackage() != null && !getPackage().getTemplateParams().isEmpty())
-			res = getMatchingParameter(getPackage().getTemplateParams(), parameter);
+		if (getPackage() != null && !getPackage().getTemplateParams().isEmpty())
+			pkgParam = getMatchingParameter(getPackage().getTemplateParams(), parameter);
 		
-		if (res == null && (parameter.isDataParam() && assumeDataParamPositional()))
-			res = GlobalConfig.getPositonalParamTemplate();
+		if (parameter != null && parameter.isDataParam() && assumeDataParamPositional())
+			dfltPosParam = GlobalConfig.getPositonalParamTemplate();
 
-		return res;
+		// merging parameters
+		if (toolParam != null)
+			templateParam = toolParam;
+		if (templateParam != null && pkgParam != null)
+			templateParam.merge(pkgParam);
+		else if (pkgParam != null)
+			templateParam = pkgParam;
+		if (templateParam != null && dfltPosParam != null)
+			templateParam.merge(dfltPosParam);
+		else if (dfltPosParam != null)
+			templateParam = dfltPosParam;
+		
+		return templateParam;
 	}
 
 	/**

@@ -361,7 +361,8 @@ public class EasyFlowToolBar extends JToolBar
 		public void actionPerformed(ActionEvent ae) {
 			try {
 				if (GlobalVar.getDefaultProject().resolveUtilityTasks()
-					&& GlobalVar.getDefaultProject().resolvePreprocessingTasks())
+					&& GlobalVar.getDefaultProject().resolvePreprocessingTasks()
+					)
 				{
 					btnResolveToolDeps.setEnabled(true);
 					

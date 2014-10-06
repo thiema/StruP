@@ -38,7 +38,7 @@ public interface IExecutionSystem extends EObject {
 	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException;
+	String createCommandLine(Task task) throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -46,6 +46,6 @@ public interface IExecutionSystem extends EObject {
 	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
 	 * @generated
 	 */
-	String createCommandLine(String commandPattern, Tool tool) throws ParameterNotFoundException, NoValidInOutDataException;
+	String createCommandLine(Tool tool) throws ParameterNotFoundException, NoValidInOutDataException;
 
 } // IExecutionSystem

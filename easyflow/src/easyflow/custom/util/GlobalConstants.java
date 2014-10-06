@@ -90,4 +90,41 @@ public class GlobalConstants {
 	public static final String DATA_INPUT_DIR    = "input_dir";
 	public static final String DATA_WORK_DIR     = "work_dir";
 	public static final String DATA_TMP_DIR      = "tmp_dir";
+	public static final String ANALYSIS_TYPE_INDEX = "index";
+	
+	public static final String ADD_EXTENSION_TO_FILENAME      = "addExtensionToInput";
+	public static final String REPLACE_EXTENSION_OF_FILENAME  = "replaceExtensionOfInput";
+	
+	public static final String HOME_DIR         = ".strup";
+	public static final String DFLT_CONFIG_FILE = URIUtil.createPath(HOME_DIR, "config.json");
+	
+	public static final String WORKFLOW_TPL_FILE_PARAM_NAME = "workflow_template_file";
+	public static final String METADATA_FILE_PARAM_NAME     = "metadata_file";
+	public static final String WORKFLOW_DIR_PARAM_NAME      = "workflow_dir";
+	public static final String METADATA_DIR_PARAM_NAME      = "metadata_dir";
+	public static final String EXEC_SYS_PARAM_NAME          = "execution_system";
+	public static final String EXEC_SYS_OUT_FILE_PARAM_NAME = "execution_system_output_file";
+	public static final String INPUT_DIR_PARAM_NAME         = "input_dir";
+	public static final String WORK_DIR_PARAM_NAME          = "work_dir";
+	public static final String TMP_DIR_PARAM_NAME           = "tmp_dir";
+	public static final String CMD_PATTERN_PARAM_NAME       = "command_pattern";
+	public static final String TOOL_DEF_DIR_PARAM_NAME      = "def_dir";
+	public static final String TOOL_CFG_FILE_PARAM_NAME     = "tool_config_file";
+	public static final String PKG_CFG_FILE_PARAM_NAME      = "pkg_config_file";
+	public static final String TOOL_CFG_DIR_PARAM_NAME      = "config_dir";
+	public static final String DEFAULT_PKG_CONFIG_FILE_NAME           = "pkg_config.json";
+	public static final String DEFAULT_TOOL_CONFIG_FILE_NAME          = "tool_config.json";
+	public static final String DEFAULT_TOOL_CONFIG_DIR_NAME           = "tool_configuration";
+	public static final String DEFAULT_TOOL_DEF_DIR_NAME              = "tool_definition";
+	public static final String DEFAULT_TOOL_CONFIG_FILES_DIR_NAME     = "tool";
+	public static final String DEFAULT_PKG_CONFIG_FILES_DIR_NAME      = "pkg";
+	
+	public static final String DEFAULT_GROUPING_CRITERIA_PARAM_NAME   = "default_grouping_criteria";
+	public static final String DEFAULT_WORKFLOW_MODE_PARAM_NAME       = "default_mode";
+	public static final String IS_CONTRAST_PARAM_NAME                 = "is_contrast";
+	public static final String USE_INTERVAL_PARAM_NAME                = "use_interval_list";
+	public static final String SPLIT_BY_CHUNKS_PARAM_NAME             = "split_by_chunks";
+	
+	public static final String PARAM_TYPE_BOOLEAN_VALUE               = "boolean";
 }
+

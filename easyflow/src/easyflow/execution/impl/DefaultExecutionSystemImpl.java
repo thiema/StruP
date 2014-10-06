@@ -193,7 +193,7 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException {
+	public String createCommandLine(Task task) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -204,7 +204,7 @@ public class DefaultExecutionSystemImpl extends EObjectImpl implements DefaultEx
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
+	public String createCommandLine(Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();

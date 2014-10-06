@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
 import easyflow.core.Task;
+import easyflow.data.DataPort;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
 import easyflow.traversal.TraversalChunk;
@@ -270,6 +271,8 @@ public class Util {
 				s = (((TraversalCriterion)o).getId());
 			else if (o instanceof GroupingInstance)
 				s = (((GroupingInstance)o).getName());
+			else if (o instanceof DataPort)
+				s = ((DataPort)o).getFormat().getName();
 			else
 				s = o.toString();
 		return s;

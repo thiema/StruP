@@ -190,40 +190,6 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MakeflowPackage.MAKEFLOW__WRITER, oldWriter, writer));
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getDependencies(Tool tool) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getTargets(Tool tool) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String createRule() throws ParameterNotFoundException, NoValidInOutDataException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -232,16 +198,16 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 	 * @throws ParameterNotFoundException 
 	 * @generated not
 	 */
-	public String createCommandLine(String commandPattern, Task task) throws ParameterNotFoundException, NoValidInOutDataException 
+	public String createCommandLine(Task task) throws ParameterNotFoundException, NoValidInOutDataException 
 	{
-		return task.createCommandLine(commandPattern);
+		return task.createCommandLine();
 	}
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String createCommandLine(String commandPattern, Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
+	public String createCommandLine(Tool tool) throws ParameterNotFoundException, NoValidInOutDataException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -254,7 +220,8 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		while (it.hasNext())
 		{
 			Entry<String, DataLink> e = it.next();
-			files.add(e.getValue().getData().getDataResourceName().getPath());
+			//if (e.getValue().getData() != null && e.getValue().getData().getDataResourceName() !=  null)
+				files.add(e.getValue().getData().getDataResourceName().getPath());
 		}
 		return files;
 	}
@@ -286,9 +253,7 @@ public class MakeflowImpl extends EObjectImpl implements Makeflow {
 		String deps    = StringUtils.join(getFiles(task.getInputs()), ' ');
 		String cmd;
 
-		cmd = createCommandLine(
-				GlobalConfig.getToolConfig().get("command_pattern"),
-				task);
+		cmd = createCommandLine(task);
 		logger.debug(cmd+" ("+targets+":"+deps+")");
 		String rule = targets+": "+deps+"\n\t"+cmd+"\n\n";
 		

@@ -46,7 +46,6 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getPackages <em>Packages</em>}</li>
@@ -210,32 +209,6 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	void setFromJar(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Json Object</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Json Object</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Json Object</em>' attribute.
-	 * @see #setJsonObject(JSONObject)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_JsonObject()
-	 * @model dataType="easyflow.JSONObject"
-	 * @generated
-	 */
-	JSONObject getJsonObject();
-
-	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Json Object</em>' attribute.
-	 * @see #getJsonObject()
-	 * @generated
-	 */
-	void setJsonObject(JSONObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Default Config Source String</b></em>' attribute.

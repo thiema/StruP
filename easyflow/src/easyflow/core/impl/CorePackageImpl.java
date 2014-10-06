@@ -792,6 +792,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getPreprocessingTask_DataPortIndex() {
+		return (EAttribute)preprocessingTaskEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getToolMatch() {
 		return toolMatchEClass;
 	}
@@ -1206,6 +1215,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__NAME);
 		createEReference(preprocessingTaskEClass, PREPROCESSING_TASK__TASK);
 		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__EXPRESSION);
+		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__DATA_PORT_INDEX);
 
 		toolMatchEClass = createEClass(TOOL_MATCH);
 		createEAttribute(toolMatchEClass, TOOL_MATCH__LOGGER);
@@ -1532,7 +1542,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, theDataPackage.getDataPort(), "dataPorts2", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(taskEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
@@ -1696,10 +1705,19 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getParameterNotFoundException());
 		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 
+		addEOperation(taskEClass, ecorePackage.getEBoolean(), "isIdentityTransformation", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "isIdentityTransformation", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(taskEClass, theEasyflowPackage.getObject(), "resolveConditionalStaticParam", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theToolPackage.getParameter(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(preprocessingTaskEClass, PreprocessingTask.class, "PreprocessingTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPreprocessingTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPreprocessingTask_Task(), this.getTask(), null, "task", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPreprocessingTask_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPreprocessingTask_DataPortIndex(), ecorePackage.getEInt(), "dataPortIndex", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(toolMatchEClass, ToolMatch.class, "ToolMatch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getToolMatch_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, ToolMatch.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

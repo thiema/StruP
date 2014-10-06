@@ -1250,6 +1250,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean readWorkfowTemplate() {
 		
 		EasyflowTemplate eTpl = (EasyflowTemplate) getWorkflowTemplate();
+		logger.debug("readWorkfowTemplate(): read workflow template using defaults: mode="+getMode()+" grouping="+getDefaultGroupingCriteria());
+			
 		boolean rc = eTpl.readTemplate(getMode(), 
 				getDefaultGroupingCriteria());
 		
@@ -1381,7 +1383,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         					//logger.debug("validation result for tool="+toolName+" "+task.validateTool(tool));
         				}
         				else
-        					logger.warn("generateGraphFromTemplate(): no tool matching name="+toolName+" found.");
+        					logger.warn("generateGraphFromTemplate(): no tool matching name="+toolName+"for task="+task.getUniqueString()+" found.");
         			}
         		if (!task.isUtil())
         		{
@@ -1530,7 +1532,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						if (resolveMissingDataPortsByToolFor(task))
 							logger.debug("resolved data port by Tool !");
 					}
-					logger.debug(task.getUniqueString()+" cmd="+(task.getCommand()==null));
+					logger.debug(task.getUniqueString()+" cmd found="+(task.getCommand()!=null));
 					getLastTasks().add(task);
 					//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 				}
@@ -1614,7 +1616,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		// options:
 		boolean allowGenericParents = true;  // - must be true in order to search for parents by dataport
-		boolean pinPrimaryParents   = false; // - if true, only use the first/best (primary) parents. do
+		boolean pinPrimaryParents   = false; // - if true, only use the first/best (primary) parents
 		
 		// get parents as defined in the workflow template
 		EList<ParentTaskResult> results = getFixedParentTasksFor(task);
@@ -1622,15 +1624,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		if (allowGenericParents)
 		{
 			// get parents which cover at least one port
-			results.addAll(getParentTasksFor(task, getTasksFromParentTaskList(results)));
+			EList<Task> tmp = getTasksFromParentTaskList(results);
+			//logger.debug("getParentTasksFor(): found "+tmp.size()+" tasks from parents task list");
+			results.addAll(getParentTasksFor(task, tmp));
 		}
-		logger.trace("getParentTasksFor(): obtained "+results.size()+" fixed/generic parents");
+		logger.debug("getParentTasksFor(): obtained "+results.size()+" fixed/generic parents");
 		for (ParentTaskResult result:results)
 		{
 			logger.debug(result.getParentTask().getUniqueString()
 					+" condition="+result.getCondition()
 					+" potential circuments="+result.getPotentialCircumventingTasks()
-					+" #ports="    +result.getCoveredPorts().size()
+					+" ports="    +easyflow.custom.util.Util.list2String(result.getCoveredPorts(), null)
 					+" ");
 		}
 		
@@ -2403,8 +2407,10 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		EMap<mxICell, EList<mxICell>> untranslatedDLs = getGraphUtil().findCellsWithUntranslatedDataLinks();
 		ListIterator<Entry<mxICell, EList<mxICell>>> it = untranslatedDLs.listIterator(untranslatedDLs.size()); 
 		while (it.hasPrevious())
+		//while (it.hasNext())
 		{
-			Entry<mxICell, EList<mxICell>> entry = it.previous();
+			Entry<mxICell, EList<mxICell>> entry = //it.next(); 
+					it.previous();
 			logger.debug("resolveIncompatibleGroupings(): resolve for task="+getGraphUtil().loadTask(entry.getKey()).getUniqueString());
 			for (mxICell cell:entry.getValue())
 			{

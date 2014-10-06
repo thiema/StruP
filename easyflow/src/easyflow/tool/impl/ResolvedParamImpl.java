@@ -8,14 +8,18 @@ package easyflow.tool.impl;
 
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
+
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.content.IContentTypeManager.ISelectionPolicy;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -189,12 +193,13 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	public EList<String> generateCommandString(EMap<String, Object> constraints, Parameter templateParam)
 	{
 		Parameter param = EcoreUtil.copy(getParameter());
-		Parameter p = getParameter();
+		//Parameter p = getParameter();
 		if (GlobalConstants.NAME_FILE_HANDLE.equals(getHandle()))
 			param.merge(getParameter().getValues().get(GlobalConstants.NAME_FILE_HANDLE).get(0));
 		else if (GlobalConstants.NAME_PIPE_HANDLE.equals(getHandle()))
 			param.merge(getParameter().getValues().get(GlobalConstants.NAME_PIPE_HANDLE).get(0));
-		
+		//if ()
+		//for (getValue)
 		EList<String> res = param.generateCommandString(constraints, getValue(), templateParam);
 		return res;
 	}
@@ -205,25 +210,32 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	 * @generated not
 	 */
 	public EList<String> getArgValue() {
-		
+				
 		Iterator<Object> it = getValue().iterator();
 		EList<String> values = new BasicEList<String>();
 		int i=0;
 		while (it.hasNext())
 		{
 			Object v=it.next();
+			String stringValue = null;
 			if (v instanceof String)
 			//logger.debug(v.getClass().getCanonicalName());
 			//if (v.getClass().getCanonicalName().endsWith("java.lang.String"))
-				values.add((String) v);
+				stringValue = ((String) v);
 			else if (v instanceof URI)
-				values.add(((URI)v).getPath());
+				stringValue = ((URI)v).getPath();
+			
+				
+			if (stringValue != null)
+				values.add(stringValue);
+			i++;
 		}
+		/*
 		if (i==0 && getParameter().getDefaultValue() != null 
 				&& !getParameter().getDefaultValue().equals("")
 				&& GlobalConfig.useDefaultValue())
 			value.add(getParameter().getDefaultValue());
-		
+		*/
 		return values;
 	}
 

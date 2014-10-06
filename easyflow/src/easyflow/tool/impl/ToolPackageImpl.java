@@ -877,6 +877,24 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getParameter_OutputArgValueForBooleanParam() {
+		return (EAttribute)parameterEClass.getEStructuralFeatures().get(31);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParameter_Hidden() {
+		return (EAttribute)parameterEClass.getEStructuralFeatures().get(32);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getInOutParameter() {
 		return inOutParameterEClass;
 	}
@@ -897,6 +915,24 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 */
 	public EAttribute getInOutParameter_Output() {
 		return (EAttribute)inOutParameterEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInOutParameter_Extension() {
+		return (EAttribute)inOutParameterEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getInOutParameter_FilenameCreation() {
+		return (EAttribute)inOutParameterEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1225,10 +1261,14 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(parameterEClass, PARAMETER__CMD_PART);
 		createEAttribute(parameterEClass, PARAMETER__MULTIPLE_INSTANCES);
 		createEAttribute(parameterEClass, PARAMETER__MULTIPLE_INSTANCES_PER_INPUT);
+		createEAttribute(parameterEClass, PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM);
+		createEAttribute(parameterEClass, PARAMETER__HIDDEN);
 
 		inOutParameterEClass = createEClass(IN_OUT_PARAMETER);
 		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__FORMATS);
 		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__OUTPUT);
+		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__EXTENSION);
+		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__FILENAME_CREATION);
 
 		keyEClass = createEClass(KEY);
 		createEAttribute(keyEClass, KEY__VALUE);
@@ -1514,6 +1554,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getParameter_CmdPart(), ecorePackage.getEString(), "cmdPart", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_MultipleInstances(), ecorePackage.getEBooleanObject(), "multipleInstances", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_MultipleInstancesPerInput(), ecorePackage.getEBooleanObject(), "multipleInstancesPerInput", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_OutputArgValueForBooleanParam(), ecorePackage.getEBooleanObject(), "outputArgValueForBooleanParam", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_Hidden(), ecorePackage.getEBoolean(), "hidden", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(parameterEClass, ecorePackage.getEString(), "getArgKey", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultPrefix", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1597,6 +1639,9 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "isMultipleValue", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(parameterEClass, ecorePackage.getEBoolean(), "shouldOutputArgValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		op = addEOperation(parameterEClass, null, "merge", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getParameter(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1607,6 +1652,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEClass(inOutParameterEClass, InOutParameter.class, "InOutParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInOutParameter_Formats(), ecorePackage.getEString(), "formats", null, 0, -1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInOutParameter_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInOutParameter_Extension(), ecorePackage.getEBooleanObject(), "extension", null, 0, 1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInOutParameter_FilenameCreation(), ecorePackage.getEString(), "filenameCreation", null, 0, 1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(inOutParameterEClass, ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getInOutParameter(), "templateParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1616,6 +1663,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 
 		op = addEOperation(inOutParameterEClass, null, "merge", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getParameter(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(inOutParameterEClass, ecorePackage.getEBoolean(), "omitExtension", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(keyEClass, Key.class, "Key", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getKey_Value(), ecorePackage.getEString(), "value", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

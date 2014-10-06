@@ -18,21 +18,38 @@ import org.eclipse.emf.common.util.EMap;
 
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.URIUtil;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionFactory;
 import easyflow.execution.makeflow.MakeflowFactory;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
-import easyflow.ui.DefaultProject;
 
 public class GlobalConfig {
 
 	
 	protected static final Logger logger = Logger.getLogger(GlobalConfig.class);
+	
 	//##############################################################
-	// ############ configuration file (main.json) ##################
-	// ##############################################################
+	//######### global user configuration (default.json) ###########
+	//##############################################################
+	
+	public static final String WORKFLOW_DIR           = "workflow";
+	public static final String INPUT_DIR              = "input";
+	public static final String TOOL_CONFIG            = "tool_configuration";
+	public static final String TOOL_DEF               = "tool_definitions";
+	public static final String CONFIG_FILE            = "main.json";
+	public static final String WORKFLOW_TEMPLATE_FILE = "workflow.wtpl";
+	public static final String METADATA_FILE          = "metadata.tsv";
+	public static final String TOOL_CONFIG_FILE       = "tool_config.json";
+	public static final String PKG_CONFIG_FILE        = "pkg_config.json";
+	public static final String TOOL_CONFIG_DIR        = URIUtil.createPath(TOOL_CONFIG, "tool");
+	public static final String PKG_CONFIG_DIR         = URIUtil.createPath(TOOL_CONFIG, "pkg");
+	
+	//##############################################################
+	//############ configuration file (main.json) ##################
+	//##############################################################
 
 	// processing options (keys)
 	public static final String   CONFIG_PROCESSING_DEFAULT_HANDLE       = "default_handle";
@@ -54,45 +71,45 @@ public class GlobalConfig {
 	public static final String   CONFIG_TOOL_DEFAULT_COMMAND_PATTERN_VALUE            = "pos opt in out";
 	public static final String   CONFIG_TOOL_COMMAND_PATTERN                          = "command_pattern";
 	
-	public  static final String[]  CONFIG_TOOL_VALID_COMMAND_PATTERN_PARTS          = {"pos", "opt", "in", "out"};
+	public  static final String[]  CONFIG_TOOL_VALID_COMMAND_PATTERN_PARTS            = {"pos", "opt", "in", "out"};
 	
-	private static final String    CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER           = "default_cmd_part_delimiter";
-	private static final String    CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER_VALUE     = " ";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER          = "default_value_delimiter";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER_VALUE    = ",";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_DELIMITER                = "default_arg_delimiter";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_DELIMITER_VALUE          = " ";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX               = "default_arg_key_prefix";
-	private static final String    CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX          = "default_long_arg_key_prefix";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE         = "-";
-	private static final String    CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX_VALUE    = "--";
-	private static final String    CONFIG_TOOL_DEFAULT_WRITE_DEFAULT                = "default_write_default_value_to_command_line";
-	private static final boolean   CONFIG_TOOL_DEFAULT_WRITE_DEFAULT_VALUE          = false;
+	private static final String    CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER             = "cmd_part_delimiter";
+	private static final String    CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER_VALUE       = " ";
+	private static final String    CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER            = "value_delimiter";
+	private static final String    CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER_VALUE      = ",";
+	private static final String    CONFIG_TOOL_DEFAULT_ARG_DELIMITER                  = "arg_delimiter";
+	private static final String    CONFIG_TOOL_DEFAULT_ARG_DELIMITER_VALUE            = " ";
+	private static final String    CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX                 = "arg_key_prefix";
+	private static final String    CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX            = "long_arg_key_prefix";
+	private static final String    CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE           = "-";
+	private static final String    CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX_VALUE      = "--";
+	private static final String    CONFIG_TOOL_DEFAULT_WRITE_DEFAULT                  = "write_default_value_to_command_line";
+	private static final boolean   CONFIG_TOOL_DEFAULT_WRITE_DEFAULT_VALUE            = false;
 	
-	private static final String    CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE        = "default_multiple_arg_value";
-	private static final boolean   CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE_VALUE  = false;
+	private static final String    CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE          = "multiple_arg_value";
+	private static final boolean   CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE_VALUE    = false;
 	
-	private static final String    CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED       = "default_boolean_value_required";
-	private static final boolean   CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE = false;
+	private static final String    CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED         = "boolean_value_required";
+	private static final boolean   CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE   = false;
 
-	private static final String    CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL       = "default_assume_positional_data_param";
+	private static final String    CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME  = "output_value_for_boolean_param";
+	private static final boolean   CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_VALUE       = false;
+	
+	private static final String    CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL       = "assume_positional_data_param";
 	private static final boolean   CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL_VALUE = false; // true means that in/out data params are processed as postional param
 	                                                                                      // -> no key/prefix/delimiter by default, even if defined in pacakge/tool
 	private static final String    CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY          = "default_omit_prefix_if_no_arg_key";
 	private static final boolean   CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY_VALUE    = true;
 	public  static final String    CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY                  = "omit_prefix_if_no_arg_key";
 	
-	private static final String    CONFIG_TOOL_DEFAULT_OPTION_TYPE                  = "default_option_type";
-	private static final String    CONFIG_TOOL_DEFAULT_OPTION_TYPE_VALUE            = "long";//short
+	private static final String    CONFIG_TOOL_DEFAULT_OPTION_TYPE                        = "default_option_type";
+	private static final String    CONFIG_TOOL_DEFAULT_OPTION_TYPE_VALUE                  = "long";//short
 	
+	private static final String    CONFIG_TOOL_RESOLVE_PATH_NAME                          = "resolve_path";
+	private static final boolean   CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE                 = true;
+		
 	private static final Parameter positionalParamTemplate = ToolFactory.eINSTANCE.createParameter();
 	private static final Parameter exeParameterDefault     = positionalParamTemplate;
-	
-	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY                = "resolve_parent_task_strategy";
-	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT = "nearest_parents_first";
-	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK       = "max_rank_first";
-	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS    = "all_parents";
-	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE  = CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT;
 	
 	
 	// config maps
@@ -115,14 +132,18 @@ public class GlobalConfig {
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE           = true;
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
 	
-	private static final String  CONFIG_TOOL_RESOLVE_PATH_NAME          = "resolve_path";
-	private static final boolean CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE = true;
+	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY                = "resolve_parent_task_strategy";
+	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT = "nearest_parents_first";
+	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK       = "max_rank_first";
+	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS    = "all_parents";
+	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE  = CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT;
 	
+
 	private static       JSONObject           jsonConfig       = null; 
 	
-	public static JSONObject getJsonCfg() {
-		return jsonConfig;
-	}
+	//public static JSONObject getJsonCfg() {
+		//return jsonConfig;
+	//}
 
 	public static void setJsonCfg(JSONObject jsonCfg) {
 		GlobalConfig.jsonConfig = jsonCfg;
@@ -166,7 +187,7 @@ public class GlobalConfig {
 		return processingConfig;
 	}
 
-	public static EMap<String, String> getProjectconfig() {
+	public static EMap<String, String> getProjectConfig() {
 		return projectConfig;
 	}
 
@@ -347,7 +368,8 @@ public class GlobalConfig {
 		return CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER_VALUE;		
 	}
 	
-	public static Boolean isMultipleArgValue()
+	//changed from Boolean to boolean
+	public static boolean isMultipleArgValue()
 	{
 		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE))
 			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE));
@@ -363,6 +385,15 @@ public class GlobalConfig {
 			return CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE;
 	}
 	
+	public static boolean outputValueForBooleanParam()
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME));
+		else
+			return CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_VALUE;		
+	}
+	
+
 	public static String getPreferredOptionType()
 	{
 		String type = null;
@@ -485,5 +516,114 @@ public class GlobalConfig {
 			return getToolConfig().get(CONFIG_TOOL_RESOLVE_PATH_NAME).equals("true"); 
 		else
 			return CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE;
+	}
+	
+	private static String toolConfigFileName = null;
+	private static String toolConfigDirName  = null;
+	private static String pkgConfigFileName  = null;
+	private static String toolDefDirName     = null;
+	
+
+	
+	public static String getToolConfigFileName()
+	{
+		if (toolConfigFileName != null)
+			return toolConfigFileName;
+		else if (getToolConfig().containsKey(GlobalConstants.TOOL_CFG_FILE_PARAM_NAME))
+			return getToolConfig().get(GlobalConstants.TOOL_CFG_FILE_PARAM_NAME);
+		else
+			return GlobalConstants.DEFAULT_TOOL_CONFIG_FILE_NAME;
+	}
+
+	public static String getPkgConfigFileName()
+	{
+		if (pkgConfigFileName != null)
+			return pkgConfigFileName;
+		else if (getToolConfig().containsKey(GlobalConstants.PKG_CFG_FILE_PARAM_NAME))
+			return getToolConfig().get(GlobalConstants.PKG_CFG_FILE_PARAM_NAME);
+		else
+			return GlobalConstants.DEFAULT_PKG_CONFIG_FILE_NAME;
+	}
+	
+	public static String getToolConfigDirName()
+	{
+		if (toolConfigDirName != null)
+			return toolConfigDirName;
+		else if (getToolConfig().containsKey(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME))
+			return getToolConfig().get(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME);
+		else
+			return GlobalConstants.DEFAULT_TOOL_CONFIG_DIR_NAME;
+	}
+	
+	public static void setToolConfigFileName(String fileName)
+	{
+		toolConfigFileName = fileName;
+	}
+	public static void setPkgConfigFileName(String fileName)
+	{
+		pkgConfigFileName = fileName;
+	}
+	public static void setToolConfigDirName(String dirName)
+	{
+		toolConfigDirName = dirName;
+	}
+
+	public static void setToolDefDirName(String dirName) 
+	{
+		toolDefDirName = dirName;
+	}
+
+	public static String getToolDefDirName() 
+	{
+		if (toolDefDirName != null)
+			return toolDefDirName;
+		else if (getToolConfig().containsKey(GlobalConstants.TOOL_DEF_DIR_PARAM_NAME))
+			return getToolConfig().get(GlobalConstants.TOOL_DEF_DIR_PARAM_NAME);
+		else
+			return GlobalConstants.DEFAULT_TOOL_DEF_DIR_NAME;
+	}
+
+	public static String getToolConfigFilesDirName() {
+		return GlobalConstants.DEFAULT_TOOL_CONFIG_FILES_DIR_NAME;
+	}
+
+	public static String getPkgConfigFilesDirName() {
+		return GlobalConstants.DEFAULT_PKG_CONFIG_FILES_DIR_NAME;
+	}
+
+	public static String getWorkflowTemplateFileName()
+	{
+		if (getProjectConfig().containsKey(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME))
+			return getProjectConfig().get(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME);
+		else
+			return WORKFLOW_TEMPLATE_FILE;
+	}
+
+	public static String getWorkflowTemplateDirName()
+	{
+		if (getProjectConfig().containsKey(GlobalConstants.WORKFLOW_DIR_PARAM_NAME))
+			return getProjectConfig().get(GlobalConstants.WORKFLOW_DIR_PARAM_NAME);
+		else
+			return WORKFLOW_DIR;
+	}
+	
+	public static String getMetadataFileName()
+	{
+		if (getProjectConfig().containsKey(GlobalConstants.METADATA_FILE_PARAM_NAME))
+			return getProjectConfig().get(GlobalConstants.METADATA_FILE_PARAM_NAME);
+		else
+			return METADATA_FILE;		
+	}
+	
+	public static String getMetadataDirName()
+	{
+		if (getProjectConfig().containsKey(GlobalConstants.METADATA_DIR_PARAM_NAME))
+			return getProjectConfig().get(GlobalConstants.METADATA_DIR_PARAM_NAME);
+		else
+			return WORKFLOW_DIR;
+	}
+
+	public static String getDefaultGroupingCriterion() {
+		return GlobalConstants.TRAVERSAL_CRITERION_RECORD;
 	}
 }

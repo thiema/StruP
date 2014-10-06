@@ -242,13 +242,22 @@ public interface DataPackage extends EPackage {
 	int DATA_LINK__PARAM_NAME_STR = 7;
 
 	/**
+	 * The feature id for the '<em><b>Param Chunks</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__PARAM_CHUNKS = 8;
+
+	/**
 	 * The feature id for the '<em><b>Identical Grouping</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__IDENTICAL_GROUPING = 8;
+	int DATA_LINK__IDENTICAL_GROUPING = 9;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' reference.
@@ -257,7 +266,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__CONDITION = 9;
+	int DATA_LINK__CONDITION = 10;
 
 	/**
 	 * The feature id for the '<em><b>Intermediate Tasks</b></em>' reference list.
@@ -266,7 +275,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__INTERMEDIATE_TASKS = 10;
+	int DATA_LINK__INTERMEDIATE_TASKS = 11;
 
 	/**
 	 * The feature id for the '<em><b>Data</b></em>' reference.
@@ -275,7 +284,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__DATA = 11;
+	int DATA_LINK__DATA = 12;
 
 	/**
 	 * The feature id for the '<em><b>Terminal</b></em>' attribute.
@@ -284,7 +293,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__TERMINAL = 12;
+	int DATA_LINK__TERMINAL = 13;
 
 	/**
 	 * The feature id for the '<em><b>Processed</b></em>' attribute.
@@ -293,7 +302,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__PROCESSED = 13;
+	int DATA_LINK__PROCESSED = 14;
 
 	/**
 	 * The number of structural features of the '<em>Link</em>' class.
@@ -302,7 +311,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 14;
+	int DATA_LINK_FEATURE_COUNT = 15;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataImpl <em>Data</em>}' class.
@@ -707,6 +716,17 @@ public interface DataPackage extends EPackage {
 	EAttribute getDataLink_ParamNameStr();
 
 	/**
+	 * Returns the meta object for the map '{@link easyflow.data.DataLink#getParamChunks <em>Param Chunks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Param Chunks</em>'.
+	 * @see easyflow.data.DataLink#getParamChunks()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EReference getDataLink_ParamChunks();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.data.Data <em>Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1061,6 +1081,14 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_LINK__PARAM_NAME_STR = eINSTANCE.getDataLink_ParamNameStr();
+
+		/**
+		 * The meta object literal for the '<em><b>Param Chunks</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_LINK__PARAM_CHUNKS = eINSTANCE.getDataLink_ParamChunks();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataImpl <em>Data</em>}' class.

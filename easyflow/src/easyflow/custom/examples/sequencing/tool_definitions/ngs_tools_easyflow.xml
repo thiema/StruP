@@ -11,7 +11,7 @@
 	
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"/>
-		<command pattern="pos_arg opt_arg"/>
+		<command pattern="pos opt"/>
 		<param type="any" abstract="true" name="default_param" named="true" separator="=" prefix=""/>
 		<param type="data" abstract="true" name="inputFile" named="true" key="INPUT" format="bam,sam"/>
 		<param type="data" abstract="true" output="true" name="outFile" named="true" key="OUTPUT" format="bam,sam"/>
@@ -20,8 +20,9 @@
 				<metadata_map>
 					<map_entry key="ReadGroup" value="rgid"/>
 					<map_entry key="Sample"    value="rgsm"/>
-					<map_entry key="Library"   value="rglib"/>
+					<map_entry key="Lib"   value="rglb"/>
 					<map_entry key="Platform"  value="rgpl"/>
+					<map_entry key="PlatformUnit"  value="rgpu"/>
 				</metadata_map>
 			</option>
 			<option value="picard_BamIndexStats"    exe="BamIndexStats.jar"></option>
@@ -31,11 +32,11 @@
 			<option value="picard_SamToFastq"       exe="SamToFastq.jar"></option>
 			<option value="PicardASMetrics"         exe="CollectAlignmentSummaryMetrics.jar"></option>
 			<option value="rgPicFixMate"            exe="FixMateInformation.jar"></option>
-			<option value="PicardGCBiasMetrics" exe="CollectGcBiasMetrics.jar"></option>
-			<option value="PicardHsMetrics" exe="CalculateHsMetrics.jar"></option>
-			<option value="PicardInsertSize" exe="CollectInsertSizeMetrics.jar"></option>
-			<option value="rgEstLibComp" exe="EstimateLibraryComplexity.jar"></option>
-			<option value="rgPicardMarkDups" exe="MarkDuplicates.jar"></option>
+			<option value="PicardGCBiasMetrics"     exe="CollectGcBiasMetrics.jar"></option>
+			<option value="PicardHsMetrics"         exe="CalculateHsMetrics.jar"></option>
+			<option value="PicardInsertSize"        exe="CollectInsertSizeMetrics.jar"></option>
+			<option value="rgEstLibComp"            exe="EstimateLibraryComplexity.jar"></option>
+			<option value="rgPicardMarkDups"        exe="MarkDuplicates.jar"></option>
 		</param>
 	</package>
 	<!-- 
@@ -55,10 +56,11 @@ id="rgPicardMarkDups"
  -->
 	<package id="gatk" version="2.3">
 		<interpreter exe="java">
+			<param type="text" name="Xmx" prefix="-" separator="" default_value="256M" fixed="true" named="true"/>
 			<param type="text" name="classpath" prefix="-" key="cp"/>
 		</interpreter>
 		<param type="data" abstract="true" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
-		<param type="data" abstract="true" output="true"   multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf" named="true" key="o"/>
+		<param type="data" abstract="true" output="true"   multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf,gatk_interval" named="true" key="o"/>
 		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-"/>
 		
 		<!-- param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/> -->
@@ -151,6 +153,7 @@ Command: index         index sequences in the FASTA format
 			samtools package to manipulate (aligned) short reads.
 		</description>
 		<exe name="samtools"/>
+		<command pattern="opt pos" assume_data_param_positional="true"/>
 		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
 		<param type="analysis_type">
 			<option value="view" help="SAM-BAM conversion"/>
@@ -287,13 +290,14 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 
 	<tool id="merge_sam" name="merge_sam" version="0.1" package="samtools" analysis_type="merge"> 
 		<description>merge sam files</description>
-		<param name="input" type="data" format="bam" multiple="true"></param>
 		<param name="output" type="data" format="bam"></param>
+		<param name="input" type="data" format="bam" multiple="true"></param>
 	</tool>
 	<tool id="sort_sam" name="sort_sam" version="0.1" package="samtools" analysis_type="sort">
-		<description>remove duplcates</description>
+		<description>remove duplicates</description>
+		<command pattern="in out"/>
 		<param name="input" type="data" format="bam"></param>
-		<param name="output" type="data" format="bam" optional="true" output="true"/>
+		<param name="output" type="data" format="bam" optional="true" output="true" extension="false"/>
 	</tool>
 	<tool id="rmdup" name="rmdup" version="0.1" package="samtools">
 		<description>remove duplcates</description>
@@ -307,9 +311,15 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 	
 	<tool id="index_sam" analysis_type="index" name="index_sam" version="0.1" package="samtools">
 		<description>generate sam index</description>
-		<command>samtools index</command>
+		<command pattern="in out">samtools index</command>
 		<param name="input" type="data" format="bam"></param>
-		<param name="output" type="data" format="bai" optional="true" output="true"/>
+		<!-- 
+		explanation of special parameters:
+		hidden: the parameter is not used in the command line, though it specifies the port (e.g. the format)
+		filename: since it is hidden, the filename of the bai-index cannot be  directly specified. Though it is restricted 
+		(e.g. it is derived by the input filename by adding extension .bai to it) further possible values are: replace exten
+		 -->
+		<param name="output" type="data" format="bai" hidden="true" filename_creation="addExtensionToInput" output="true"/>
 	</tool>
 	
 	<tool id="index_fasta" name="index_fasta" version="0.1" package="samtools">
@@ -322,6 +332,9 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 	<tool id="view" package="samtools" analysis_type="view">
 		<!-- define tool specific default parameter layout (abstract param) -->
 		<param type="any" name="default_param" abstract="true" separator=" " />
+		
+		<param type="boolean" name="header" key="h" named="true" fixed="true"/>
+		
 		<!-- the optional grouping attribute tells us that this parameter
 		triggers processing (e.g. displaying) of only those data records 
 		matching the specified group. When attribute data is set, the grouping

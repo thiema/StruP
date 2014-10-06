@@ -116,7 +116,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		if (parent==null) parent=getDefaultParent();
 		//return insertVertex(parent, id, XMLUtil.getElement(task), 400, 100, defaultWidth, defaultHight);
 		//return setCellUnvisible(insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
-		Object cell=insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		Object cell = insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
 		return updateCellSize(cell);
 	}
 	
@@ -124,7 +124,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		if (value == null)
 			throw new NullPointerException();
 		if (parent==null) parent=getDefaultParent();
-		Object cell=insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		Object cell = insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
 		//return setCellUnvisible(insertVertex(parent, id, value, defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
 		return updateCellSize(cell);
 	}
@@ -132,7 +132,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 	public Object insertVertexEasyFlow(Object parent, String id, mxCell vertex) {
 		if (vertex == null)
 			throw new NullPointerException();
-		if (parent==null) parent=getDefaultParent();
+		if (parent == null) parent=getDefaultParent();
 		//return setCellUnvisible(insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
 		Object cell= insertVertex(parent, id, vertex.getValue(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
 		return updateCellSize(cell);
@@ -142,12 +142,12 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		
 		if (source == null)// || target == null)
 			throw new NullPointerException();
-		if (parent==null) parent=getDefaultParent();
-		if (dataLink!=null)
+		if (parent == null) parent=getDefaultParent();
+		if (dataLink != null)
 		{
 			//return insertEdge(parent, id, XMLUtil.getElement(dataPort), source, target);
 			//return insertEdge(parent, id, XMLUtil.getElement(dataLink), source, target);
-			if (dataLink.getId()==0)
+			if (dataLink.getId() == 0)
 				dataLink.setId(dataLink.hashCode());
 			if (!GlobalVar.getGraphUtil().getDataLinks().containsKey(Integer.toString(dataLink.getId())))
 				GlobalVar.getGraphUtil().getDataLinks().put(Integer.toString(dataLink.getId()), dataLink);

@@ -152,22 +152,13 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__FROM_JAR = IPROJECT_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Json Object</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_PROJECT__JSON_OBJECT = IPROJECT_FEATURE_COUNT + 7;
-
-	/**
 	 * The feature id for the '<em><b>Default Config Source String</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = IPROJECT_FEATURE_COUNT + 8;
+	int DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = IPROJECT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Tool Definitions</b></em>' reference.
@@ -176,7 +167,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 9;
+	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Packages</b></em>' map.
@@ -185,7 +176,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__PACKAGES = IPROJECT_FEATURE_COUNT + 10;
+	int DEFAULT_PROJECT__PACKAGES = IPROJECT_FEATURE_COUNT + 9;
 
 	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
@@ -194,7 +185,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 11;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 10;
 
 
 	/**
@@ -293,17 +284,6 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDefaultProject_FromJar();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getJsonObject <em>Json Object</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Json Object</em>'.
-	 * @see easyflow.ui.DefaultProject#getJsonObject()
-	 * @see #getDefaultProject()
-	 * @generated
-	 */
-	EAttribute getDefaultProject_JsonObject();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}'.
@@ -435,14 +415,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEFAULT_PROJECT__FROM_JAR = eINSTANCE.getDefaultProject_FromJar();
-
-		/**
-		 * The meta object literal for the '<em><b>Json Object</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DEFAULT_PROJECT__JSON_OBJECT = eINSTANCE.getDefaultProject_JsonObject();
 
 		/**
 		 * The meta object literal for the '<em><b>Default Config Source String</b></em>' attribute feature.

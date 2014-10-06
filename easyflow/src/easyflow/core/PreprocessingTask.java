@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.PreprocessingTask#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.core.PreprocessingTask#getTask <em>Task</em>}</li>
  *   <li>{@link easyflow.core.PreprocessingTask#getExpression <em>Expression</em>}</li>
+ *   <li>{@link easyflow.core.PreprocessingTask#getDataPortIndex <em>Data Port Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,5 +105,31 @@ public interface PreprocessingTask extends EObject {
 	 * @generated
 	 */
 	void setExpression(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Data Port Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Port Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Port Index</em>' attribute.
+	 * @see #setDataPortIndex(int)
+	 * @see easyflow.core.CorePackage#getPreprocessingTask_DataPortIndex()
+	 * @model
+	 * @generated
+	 */
+	int getDataPortIndex();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.PreprocessingTask#getDataPortIndex <em>Data Port Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data Port Index</em>' attribute.
+	 * @see #getDataPortIndex()
+	 * @generated
+	 */
+	void setDataPortIndex(int value);
 
 } // PreprocessingTask

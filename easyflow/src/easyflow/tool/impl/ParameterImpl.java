@@ -83,6 +83,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getCmdPart <em>Cmd Part</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstances <em>Multiple Instances</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isHidden <em>Hidden</em>}</li>
  * </ul>
  * </p>
  *
@@ -670,6 +672,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected Boolean multipleInstancesPerInput = MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getOutputArgValueForBooleanParam() <em>Output Arg Value For Boolean Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputArgValueForBooleanParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getOutputArgValueForBooleanParam() <em>Output Arg Value For Boolean Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputArgValueForBooleanParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean outputArgValueForBooleanParam = OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isHidden() <em>Hidden</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHidden()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean HIDDEN_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isHidden() <em>Hidden</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isHidden()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hidden = HIDDEN_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1032,6 +1074,48 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getOutputArgValueForBooleanParam() {
+		return outputArgValueForBooleanParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOutputArgValueForBooleanParam(Boolean newOutputArgValueForBooleanParam) {
+		Boolean oldOutputArgValueForBooleanParam = outputArgValueForBooleanParam;
+		outputArgValueForBooleanParam = newOutputArgValueForBooleanParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM, oldOutputArgValueForBooleanParam, outputArgValueForBooleanParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHidden(boolean newHidden) {
+		boolean oldHidden = hidden;
+		hidden = newHidden;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__HIDDEN, oldHidden, hidden));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public String getArgKey(String defaultPrefix, Key defaultKey) {
@@ -1306,6 +1390,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		
 		EList<String> cmdString = new BasicEList<String>();
 		
+		if (isHidden())
+			return cmdString;
+		
 		EList<String> argValue  = null;
 		Boolean defaultIsFixed  = templateParam != null ? templateParam.getFixedArgValue() : null;
 		String path             = resolvePath(constraints.containsKey("path") ? constraints.get("path") : null);
@@ -1323,25 +1410,24 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return resolveValues(res, path);
 			}
 			
-		if (constraints != null && constraints.containsKey("value"))
-		{
-			argValue = resolveValues(constraints.get("value"), path);
-		}
-		else if (value != null && !value.isEmpty()) 
-		{
-			argValue = resolveValues(value, path);
-		}
-		else if (getGeneralValue() != null && !getGeneralValue().isEmpty())
-		{
-			argValue = resolveValues(getGeneralValue(), path);
-		}
-		else if (getDefaultValue() != null && !getDefaultValue().equals("") && isFixedArgValue(defaultIsFixed))
-		{
-			//argValue = new BasicEList<String>();
-			//argValue.add(resolveValues(getDefaultValue(), path));
-			
-			argValue = resolveValues(getDefaultValue(), path);
-		}
+			if (constraints != null && constraints.containsKey("value"))
+			{
+				argValue = resolveValues(constraints.get("value"), path);
+			}
+			else if (value != null && !value.isEmpty()) 
+			{
+				argValue = resolveValues(value, path);
+			}
+			else if (getGeneralValue() != null && !getGeneralValue().isEmpty())
+			{
+				argValue = resolveValues(getGeneralValue(), path);
+			}
+			else if (getDefaultValue() != null && !getDefaultValue().equals("") && isFixedArgValue(defaultIsFixed))
+			{
+				//argValue = new BasicEList<String>();
+				//argValue.add(resolveValues(getDefaultValue(), path));
+				argValue = resolveValues(getDefaultValue(), path);
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1353,7 +1439,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		Key     defaultKey               = templateParam != null ? (templateParam.getKeys().isEmpty() ? null : templateParam.getKeys().get(0)) : null;
 		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
 				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
+		boolean outputValue              = templateParam != null ? templateParam.shouldOutputArgValue(!getType().equals(GlobalConstants.PARAM_TYPE_BOOLEAN_VALUE)) : true;
 		
+		if (!outputValue)
+			logger.debug(resolveName());
 		if (isAnalysisType())
 		{
 			EList<Parameter> pl = getEffectiveParameters(null);
@@ -1366,11 +1455,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		{
 			cmdString.add(getArgKey(defaultPrefix, defaultKey));
 		}
-		// resolve delimiter
-		if (argValue != null && isNamed(defaultIsNamed))
-			cmdString.add(getArgDelimiter(defaultArgDelimiter));
 		
-		if (argValue != null)
+		// resolve delimiter
+		if (outputValue && argValue != null && isNamed(defaultIsNamed))
+			cmdString.add(getArgDelimiter(defaultArgDelimiter));
+		// finally resolve argvalue
+		if (outputValue && argValue != null)
 			return resolveMultiplicity(cmdString, argValue, templateParam);
 		else
 			return cmdString;
@@ -1419,6 +1509,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	private EList<String> resolveValues(Object value, String path) throws URISyntaxException
 	{
 		EList<String> finalValue = new BasicEList<String>();
+		String stringValue;
 		if (value == null)
 			logger.error("generateCommandString(): couldnt resolve value. Null value given.");
 		else if (value instanceof EList)
@@ -1427,29 +1518,49 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			while (it.hasNext())
 			{
 				Object v = it.next();
-				if (v instanceof String)
-					finalValue.add(URIUtil.createPath(path, (String) v));
-				else if (v instanceof URI)
-					finalValue.add(URIUtil.addPathToUri(path, ((URI)v)).toString());
-				else if (v instanceof TraversalChunk)
-					finalValue.add(URIUtil.createPath(path, ((TraversalChunk)v).getName()));
-				else if (v instanceof GroupingInstance)
-					finalValue.add(URIUtil.createPath(path, ((GroupingInstance)v).getName()));
-				else
-					logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
+				stringValue = createStringValue(v, path);
+				if (stringValue != null)
+					finalValue.add(stringValue);
 			}
 		}
-		else if (value instanceof String)
-			finalValue.add(URIUtil.createPath(path, (String) value));
+		else
+		{
+			stringValue = createStringValue(value, path);
+			if (stringValue != null)
+				finalValue.add(stringValue);
+
+		}
+		return finalValue;
+	}
+	
+	private String createStringValue(Object value, String path) throws URISyntaxException
+	{
+		boolean omitExtension = false;
+		boolean isDataParam = isDataParam(); 
+		if (isDataParam)
+			omitExtension = ((InOutParameter)this).omitExtension();
+
+		String stringValue = null;
+		if (value instanceof String)
+			stringValue = URIUtil.createPath(path, (String) value);
 		else if (value instanceof URI)
-			finalValue.add(URIUtil.addPathToUri(path, (URI) value).toString());
+			stringValue = URIUtil.addPathToUri(path, (URI) value).toString();
 		else if (value instanceof GroupingInstance)
-			finalValue.add(URIUtil.createPath(path, ((GroupingInstance)value).getName()));
+			stringValue = URIUtil.createPath(path, ((GroupingInstance)value).getName());
 		else if (value instanceof TraversalChunk)
-			finalValue.add(URIUtil.createPath(path, ((TraversalChunk)value).getName()));
+			stringValue = URIUtil.createPath(path, ((TraversalChunk)value).getName());
 		else
 			logger.error("generateCommandString(): couldnt resolve value. Unknown instance.");
-		return finalValue;
+
+		if (stringValue != null && isDataParam && omitExtension)
+		{
+			int pos = stringValue.lastIndexOf('.');
+			stringValue = stringValue.substring(0, pos);
+			logger.debug("generateCommandString(): cut extension from path: ="+stringValue);
+		}
+
+		return stringValue;
+
 	}
 	
 
@@ -1600,6 +1711,20 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		else
 			return GlobalConfig.isMultipleArgValue();
 			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean shouldOutputArgValue(Boolean default_) {
+		if (getOutputArgValueForBooleanParam() != null)
+			return getOutputArgValueForBooleanParam();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.outputValueForBooleanParam();
 	}
 
 	/**
@@ -2089,6 +2214,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getMultipleInstances();
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
 				return getMultipleInstancesPerInput();
+			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
+				return getOutputArgValueForBooleanParam();
+			case ToolPackage.PARAMETER__HIDDEN:
+				return isHidden();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2204,6 +2333,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
 				setMultipleInstancesPerInput((Boolean)newValue);
 				return;
+			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
+				setOutputArgValueForBooleanParam((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__HIDDEN:
+				setHidden((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2312,6 +2447,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
 				setMultipleInstancesPerInput(MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
+				setOutputArgValueForBooleanParam(OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__HIDDEN:
+				setHidden(HIDDEN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2390,6 +2531,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return MULTIPLE_INSTANCES_EDEFAULT == null ? multipleInstances != null : !MULTIPLE_INSTANCES_EDEFAULT.equals(multipleInstances);
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
 				return MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT == null ? multipleInstancesPerInput != null : !MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT.equals(multipleInstancesPerInput);
+			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
+				return OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT == null ? outputArgValueForBooleanParam != null : !OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT.equals(outputArgValueForBooleanParam);
+			case ToolPackage.PARAMETER__HIDDEN:
+				return hidden != HIDDEN_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2494,6 +2639,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(multipleInstances);
 		result.append(", multipleInstancesPerInput: ");
 		result.append(multipleInstancesPerInput);
+		result.append(", outputArgValueForBooleanParam: ");
+		result.append(outputArgValueForBooleanParam);
+		result.append(", hidden: ");
+		result.append(hidden);
 		result.append(')');
 		return result.toString();
 	}

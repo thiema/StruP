@@ -6,8 +6,8 @@
 	
 	<xs:complexType name="Easyflow">
 		<xs:sequence>
-			<xs:element maxOccurs="unbounded" name="interpreter" type="Tool"/>
-			<xs:element maxOccurs="unbounded" name="package" type="Package"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="interpreter" type="Tool"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="package" type="Package"/>
 			<xs:element maxOccurs="unbounded" name="tool" type="Tool"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -74,7 +74,7 @@
 
 	<xs:complexType name="Interpreter">
 		<xs:sequence>
-			<xs:element minOccurs="0" name="param" type="Param"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="param" type="Param"/>
 		</xs:sequence>
 		<xs:attribute name="exe" type="xs:string"/>
 	</xs:complexType>
@@ -162,8 +162,18 @@
 		<xs:attribute name="cmd_part" type="CmdPartType" />
 		<xs:attribute name="fixed" type="xs:boolean"/>
 		<xs:attribute name="key" type="xs:string"/>
+		<xs:attribute name="extension" type="xs:boolean" />
+		<xs:attribute name="hidden" type="xs:boolean"/>
+		<xs:attribute name="filename_creation" type="FilenameCreationType"/>
 	</xs:complexType>
 
+	<xs:simpleType name="FilenameCreationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="replaceExtensionOfInput"/>
+			<xs:enumeration value="addExtensionToInput"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:simpleType name="CmdPartType">
 	    <xs:restriction base="xs:string">
 	    	<xs:enumeration value="interpreter"/>

@@ -946,8 +946,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		short jexlField          =  8;
 		short paramField         =  9;
 		short staticParamField   = 10;
-		// String[] defaultGroupingCriteria={};
-		// defaultGroupingCriteria=new String[] {"Sample"};
+
 		/**
 		 * Read string into an array of strings. Process array and set task
 		 * attributes appropriately.
@@ -1148,17 +1147,26 @@ public class TaskImpl extends EObjectImpl implements Task {
 		 */
 		if (wtplArray.length > 7 && !wtplArray[preprocessField].equals("")) {
 			tmp = wtplArray[preprocessField].split(";");
+			int dpIdx = 0;
 			for (String allPrepStr : tmp) {
+				
+				if (allPrepStr.equals(""))
+				{
+					dpIdx++;
+					continue;
+				}
 				String[] allPreps = allPrepStr.split(",");
 				for (String prepTaskStr : allPreps) {
 					String[] tmp2 = prepTaskStr.split(":");
 					PreprocessingTask prepTask = CoreFactory.eINSTANCE
 							.createPreprocessingTask();
 					prepTask.setName(tmp2[0]);
+					prepTask.setDataPortIndex(dpIdx);
 					if (tmp2.length > 1)
 						prepTask.setExpression(tmp2[1]);
 					getPreprocessingTasks().add(prepTask);
 				}
+				dpIdx++;
 			}
 		}
 
@@ -1277,6 +1285,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			if (dataPort.getName() == null || dataPort.getName().equals(""))
 				dataPort.setName(dataFormat.getName());
 		}
+		
 		DataPort knownDataPort = getDataPortByDataPort(dataPort, isOutDataPort);
 		if (knownDataPort != null)
 		{
@@ -1597,7 +1606,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		for (DataPort dataPort1 : dataPorts1)
 			for (DataPort dataPort2 : dataPorts2) {
 				logger.trace("getOverlappingDataPorts(): check "
-						+ dataPort1.getName() + " vs " + dataPort2.getName()+" "+dataPort2.isCompatible(dataPort1));
+						+ dataPort1.getName() + " "+dataPort1.getDataFormats().keySet() + " vs " + dataPort2.getName()+ " "+dataPort2.getDataFormats().keySet()+" "+dataPort2.isCompatible(dataPort1));
 				if (dataPort2.isCompatible(dataPort1))
 					dataPorts.add(dataPort1);
 			}
@@ -1605,6 +1614,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	}
 
+	public String getCommandLinePattern()
+	{
+		if (getCommand().getCommandPattern() != null)
+			return getCommand().getCommandPattern();
+		else if (getPreferredTool().getPackage().getCommandPattern() != null)
+			return getPreferredTool().getPackage().getCommandPattern();
+		else
+			return GlobalConfig.getCommandPattern();
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * produce the command line by evaluating the command pattern
@@ -1619,12 +1638,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public String createCommandLine(String commandPattern) {
+	public String createCommandLine() {
 
 		Tool           tool             = getPreferredTool();
 		EList<String>  commandLineParts = new BasicEList<String>();
 		EMap<String, Object> constraints= new BasicEMap<String, Object>();
 		constraints.put(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY, tool.omitPrefixIfNoArgKey());
+		String commandPattern = getCommandLinePattern();
 		String[] commandPatterns = commandPattern.split(" ");
 		logger.debug("createCommandLine(): create command line for tool="+tool.getId()+" and pattern="+commandPattern);
 		
@@ -1634,9 +1654,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 		boolean isOutputDefined = false;
 		for (String part : commandPatterns)
 		{
-			if (part.equalsIgnoreCase("in"))
+			if (part.equalsIgnoreCase(GlobalConstants.PARAM_INPUT))
 				isInputDefined = true;
-			else if (part.equalsIgnoreCase("out"))
+			else if (part.equalsIgnoreCase(GlobalConstants.PARAM_OUTPUT))
 				isOutputDefined = true;
 		}
 		
@@ -1865,7 +1885,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 		Parameter     effectiveTemplateParam;
 		if (tool == null)
 			tool = getPreferredTool();
-
+		Command c = getCommand();
+		if (tool.getName().equals("view"))
+		{
+			tool.getCommand();
+			
+		}
 		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().iterator();
 		
 		while (it.hasNext())
@@ -1928,7 +1953,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				shallGenerate = true;
 			}
 			
-			logger.trace("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
+			logger.debug("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
 					+" param type="+type+" of param="+resolvedParam.getParameter().resolveName()
 					+" type="+resolvedParam.getParameter().getType()
 					//+" output="+parameter.isOutput()
@@ -2627,6 +2652,38 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 	
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isIdentityTransformation() {
+		
+		return isCompatibleWithInDataPortFor(getOutDataPorts().get(0));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isIdentityTransformation(DataPort dataPort) {
+		
+		return (getDataPortByDataPort(dataPort, true)  != null &&
+				getDataPortByDataPort(dataPort, false) != null);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Object> resolveConditionalStaticParam(Parameter parameter) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
 	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
 		
 		//EList<String> list = new BasicEList<String>();
@@ -2660,7 +2717,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				logger.warn("resolveDataPorts(): no parameter defined. This is ok for hidden/implicit input/output data."
 						+" param="+paramName+" in="+dataLink.getInDataPort().getParameterName()+" out="+dataLink.getDataPort().getParameterName()
 						+" dataLink="+dataLink.getUniqueString(true)
-						+"; data resource="+dataLink.getData().getDataResourceName().toString());
+						+"; data resource="+(dataLink.getData() != null ?
+								dataLink.getData().getDataResourceName() != null ? dataLink.getData().getDataResourceName().toString():null:null));
 				continue;
 			}
 			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
@@ -2699,9 +2757,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			}
 			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
 			parameter.getValue().addAll(dataLink.getChunks().get(dataLink.getParamStr()));
-
 		}
-
 	}
 	
 	private void resolveStaticParams()
@@ -2713,14 +2769,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 			Entry<String, ResolvedParam> e = it.next();
 			ResolvedParam resolvedParam = e.getValue();
 			Parameter param = resolvedParam.getParameter();
-			if (!e.getValue().getParameter().getGrouping().isEmpty())
+			if ("view".equals(getPreferredTool().getName()))
+				logger.debug("");
+			
+			if (!param.getGrouping().isEmpty())
 			{
 				
 				logger.debug("resolveStaticParams(): grouping parameter found. name="+resolvedParam.resolveName()
 						+" "+param.getGrouping()+" "+getChunks().keySet());
 				
 				EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
-				EList<TraversalChunk> chunks = getRecords();
+				EList<TraversalChunk> chunks = getRecords(true);
 				DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
 				Iterator<String> groupingStrIt = param.getGrouping().iterator();
 				while (groupingStrIt.hasNext())
@@ -2753,12 +2812,33 @@ public class TaskImpl extends EObjectImpl implements Task {
 					//if (getChunks().containsKey(groupingStr))
 				}
 				resolvedParam.getValue().addAll(groupingInstances);
-				
 			}
+			
+			else if (param.getDefaultValue() != null)
+			{
+				resolvedParam.getValue().add(param.getDefaultValue());
+			}
+			else if (param.getGeneralValue() != null)
+			{
+				resolvedParam.getValue().add(param.getGeneralValue());
+			}
+				
 
+			
 		}
 		
-		
+		/*
+		Iterator<Entry<String, String>> it = getParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, String> e = it.next();
+			if (getCommand().getResolvedParams().containsKey(e.getKey()))
+			{
+				ResolvedParam param = getCommand().getResolvedParams().get(e.getKey());
+				param.getValue().add(e.getValue());
+			}
+		}
+		*/		
 	}
 
 	/*

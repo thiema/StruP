@@ -702,13 +702,31 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = ITOOL_ELEMENT_FEATURE_COUNT + 32;
 
 	/**
+	 * The feature id for the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM = ITOOL_ELEMENT_FEATURE_COUNT + 33;
+
+	/**
+	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__HIDDEN = ITOOL_ELEMENT_FEATURE_COUNT + 34;
+
+	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 33;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 35;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -1018,6 +1036,24 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = PARAMETER__MULTIPLE_INSTANCES_PER_INPUT;
 
 	/**
+	 * The feature id for the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM = PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM;
+
+	/**
+	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__HIDDEN = PARAMETER__HIDDEN;
+
+	/**
 	 * The feature id for the '<em><b>Formats</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1036,13 +1072,31 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__OUTPUT = PARAMETER_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Extension</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__EXTENSION = PARAMETER_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Filename Creation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__FILENAME_CREATION = PARAMETER_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>In Out Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 2;
+	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -2322,6 +2376,28 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_MultipleInstancesPerInput();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Output Arg Value For Boolean Param</em>'.
+	 * @see easyflow.tool.Parameter#getOutputArgValueForBooleanParam()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_OutputArgValueForBooleanParam();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isHidden <em>Hidden</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Hidden</em>'.
+	 * @see easyflow.tool.Parameter#isHidden()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Hidden();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2352,6 +2428,28 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getInOutParameter_Output();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.InOutParameter#getExtension <em>Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Extension</em>'.
+	 * @see easyflow.tool.InOutParameter#getExtension()
+	 * @see #getInOutParameter()
+	 * @generated
+	 */
+	EAttribute getInOutParameter_Extension();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.InOutParameter#getFilenameCreation <em>Filename Creation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Filename Creation</em>'.
+	 * @see easyflow.tool.InOutParameter#getFilenameCreation()
+	 * @see #getInOutParameter()
+	 * @generated
+	 */
+	EAttribute getInOutParameter_FilenameCreation();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Package <em>Package</em>}'.
@@ -3208,6 +3306,22 @@ public interface ToolPackage extends EPackage {
 		EAttribute PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = eINSTANCE.getParameter_MultipleInstancesPerInput();
 
 		/**
+		 * The meta object literal for the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM = eINSTANCE.getParameter_OutputArgValueForBooleanParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Hidden</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__HIDDEN = eINSTANCE.getParameter_Hidden();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3232,6 +3346,22 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute IN_OUT_PARAMETER__OUTPUT = eINSTANCE.getInOutParameter_Output();
+
+		/**
+		 * The meta object literal for the '<em><b>Extension</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IN_OUT_PARAMETER__EXTENSION = eINSTANCE.getInOutParameter_Extension();
+
+		/**
+		 * The meta object literal for the '<em><b>Filename Creation</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IN_OUT_PARAMETER__FILENAME_CREATION = eINSTANCE.getInOutParameter_FilenameCreation();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
