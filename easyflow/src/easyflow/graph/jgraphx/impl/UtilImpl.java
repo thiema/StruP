@@ -4351,9 +4351,9 @@ public class UtilImpl extends EObjectImpl implements Util {
 										{
 											if (catalog.getEntries().containsKey(dataLink.getData().getName()))
 											{
-											logger.debug("resolveToolDependencies(): "
-													+"set dataresource="+catalog.getEntries().get(dataLink.getData().getName())+" (catalog)");
-											dataLink.getData().setDataResourceName(getURIFromObject(catalog.getEntries().get(dataLink.getData().getName())));
+												logger.debug("resolveToolDependencies(): "
+														+"set dataresource="+catalog.getEntries().get(dataLink.getData().getName())+" (catalog)");
+												dataLink.getData().setDataResourceName(getURIFromObject(catalog.getEntries().get(dataLink.getData().getName())));
 											}
 											// try to get via data port
 											else

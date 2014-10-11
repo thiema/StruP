@@ -6,6 +6,7 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.data.DataFormat;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.InOutParameter;
@@ -18,6 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.content.IContentTypeManager.ISelectionPolicy;
 import org.eclipse.emf.common.notify.Notification;
@@ -40,6 +43,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getValue <em>Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getHandle <em>Handle</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getDataFormat <em>Data Format</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getConditionalParam <em>Conditional Param</em>}</li>
  * </ul>
  * </p>
  *
@@ -88,6 +93,36 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	 * @ordered
 	 */
 	protected String handle = HANDLE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getDataFormat() <em>Data Format</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataFormat()
+	 * @generated
+	 * @ordered
+	 */
+	protected DataFormat dataFormat;
+
+	/**
+	 * The default value of the '{@link #getConditionalParam() <em>Conditional Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConditionalParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONDITIONAL_PARAM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getConditionalParam() <em>Conditional Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConditionalParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected String conditionalParam = CONDITIONAL_PARAM_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -181,6 +216,65 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataFormat getDataFormat() {
+		if (dataFormat != null && dataFormat.eIsProxy()) {
+			InternalEObject oldDataFormat = (InternalEObject)dataFormat;
+			dataFormat = (DataFormat)eResolveProxy(oldDataFormat);
+			if (dataFormat != oldDataFormat) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.RESOLVED_PARAM__DATA_FORMAT, oldDataFormat, dataFormat));
+			}
+		}
+		return dataFormat;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataFormat basicGetDataFormat() {
+		return dataFormat;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataFormat(DataFormat newDataFormat) {
+		DataFormat oldDataFormat = dataFormat;
+		dataFormat = newDataFormat;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__DATA_FORMAT, oldDataFormat, dataFormat));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getConditionalParam() {
+		return conditionalParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConditionalParam(String newConditionalParam) {
+		String oldConditionalParam = conditionalParam;
+		conditionalParam = newConditionalParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM, oldConditionalParam, conditionalParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * to generate the prefix:
 	 * 1.) use parameter definition
 	 * 2.) use template definition (template param)
@@ -195,9 +289,11 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 		Parameter param = EcoreUtil.copy(getParameter());
 		//Parameter p = getParameter();
 		if (GlobalConstants.NAME_FILE_HANDLE.equals(getHandle()))
-			param.merge(getParameter().getValues().get(GlobalConstants.NAME_FILE_HANDLE).get(0));
+			param.merge(getParameter().getValues().get(GlobalConstants.NAME_FILE_HANDLE)
+					.get(0).getParameter());
 		else if (GlobalConstants.NAME_PIPE_HANDLE.equals(getHandle()))
-			param.merge(getParameter().getValues().get(GlobalConstants.NAME_PIPE_HANDLE).get(0));
+			param.merge(getParameter().getValues().get(GlobalConstants.NAME_PIPE_HANDLE)
+					.get(0).getParameter());
 		//if ()
 		//for (getValue)
 		EList<String> res = param.generateCommandString(constraints, getValue(), templateParam);
@@ -257,6 +353,51 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<ResolvedParam> getEffectiveParameters(EList<ResolvedParam> effectiveParams) {
+		
+		if (effectiveParams == null)
+			effectiveParams = new BasicEList<ResolvedParam>();
+		
+		if (getConditionalParam() != null && 
+				getParameter().getValues().containsKey(getConditionalParam()))
+		{
+			Iterator<ResolvedParam> it = getParameter().getValues().get(getConditionalParam()).iterator();
+			while (it.hasNext())
+			{
+				ResolvedParam rp = it.next();
+				rp.getEffectiveParameters(effectiveParams);
+			}
+			return effectiveParams;
+		}
+		
+		if (getParameter().getValues().isEmpty())
+		{
+			effectiveParams.add(this);
+			return effectiveParams;
+		}
+/*		else if (!isAbstract())
+		{
+			effectiveParams.add(getParameter());
+			return effectiveParams;			
+		}
+*/	
+		Iterator<Entry<String, EList<ResolvedParam>>> itValue = getParameter().getValues().iterator();
+		while (itValue.hasNext())
+		{
+			Iterator<ResolvedParam> itParam = itValue.next().getValue().iterator();
+			while (itParam.hasNext())
+			{
+				itParam.next().getEffectiveParameters(effectiveParams);
+			}
+		}
+		return effectiveParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -269,6 +410,11 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return getValue();
 			case ToolPackage.RESOLVED_PARAM__HANDLE:
 				return getHandle();
+			case ToolPackage.RESOLVED_PARAM__DATA_FORMAT:
+				if (resolve) return getDataFormat();
+				return basicGetDataFormat();
+			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
+				return getConditionalParam();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -292,6 +438,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			case ToolPackage.RESOLVED_PARAM__HANDLE:
 				setHandle((String)newValue);
 				return;
+			case ToolPackage.RESOLVED_PARAM__DATA_FORMAT:
+				setDataFormat((DataFormat)newValue);
+				return;
+			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
+				setConditionalParam((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -313,6 +465,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			case ToolPackage.RESOLVED_PARAM__HANDLE:
 				setHandle(HANDLE_EDEFAULT);
 				return;
+			case ToolPackage.RESOLVED_PARAM__DATA_FORMAT:
+				setDataFormat((DataFormat)null);
+				return;
+			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
+				setConditionalParam(CONDITIONAL_PARAM_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -331,6 +489,10 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return value != null && !value.isEmpty();
 			case ToolPackage.RESOLVED_PARAM__HANDLE:
 				return HANDLE_EDEFAULT == null ? handle != null : !HANDLE_EDEFAULT.equals(handle);
+			case ToolPackage.RESOLVED_PARAM__DATA_FORMAT:
+				return dataFormat != null;
+			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
+				return CONDITIONAL_PARAM_EDEFAULT == null ? conditionalParam != null : !CONDITIONAL_PARAM_EDEFAULT.equals(conditionalParam);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -349,6 +511,8 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 		result.append(value);
 		result.append(", handle: ");
 		result.append(handle);
+		result.append(", conditionalParam: ");
+		result.append(conditionalParam);
 		result.append(')');
 		return result.toString();
 	}

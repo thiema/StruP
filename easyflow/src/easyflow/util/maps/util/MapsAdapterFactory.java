@@ -190,6 +190,10 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 				return createStringToResolvedParamMapAdapter();
 			}
 			@Override
+			public Adapter caseStringToResolvedParamListMap(Map.Entry<String, EList<ResolvedParam>> object) {
+				return createStringToResolvedParamListMapAdapter();
+			}
+			@Override
 			public Adapter caseStringToStringListMap(Map.Entry<String, EList<String>> object) {
 				return createStringToStringListMapAdapter();
 			}
@@ -498,6 +502,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToResolvedParamMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Resolved Param List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToResolvedParamListMapAdapter() {
 		return null;
 	}
 

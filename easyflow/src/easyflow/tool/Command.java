@@ -130,4 +130,12 @@ public interface Command extends IToolElement, DefaultToolElement, BaseCommand {
 	 */
 	boolean resolveParameter(String paramName, EList<TraversalChunk> chunks);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput);
+
 } // Command

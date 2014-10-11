@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
@@ -72,6 +74,7 @@ public class ToolContentHandler implements ContentHandler {
 	String xmlKey           = null;
 	String condition        = null;
 	String conditionValue   = null;
+	String conditionType    = null;
 	String action           = null;
 	
 	boolean xmlKeyFound     = false;
@@ -224,6 +227,10 @@ public class ToolContentHandler implements ContentHandler {
 		{
 			param = ToolFactory.eINSTANCE.createInOutParameter();
 		}
+		else if (atts.getValue("dataport") != null || atts.getValue("format") != null)
+		{
+			param = ToolFactory.eINSTANCE.createInOutParameter();
+		}
 		else
 		{
 			param = ToolFactory.eINSTANCE.createParameter();
@@ -238,6 +245,32 @@ public class ToolContentHandler implements ContentHandler {
 		curParam.setValueDelimiter(null);
 	}
 
+	
+	private InOutParameter setInOutParam(Attributes atts, Parameter curParam)
+	{
+		InOutParameter curInOutParam = (InOutParameter)curParam;
+		boolean isOutput = false;
+		
+		if (atts.getValue("output") != null)
+		{
+			if (atts.getValue("output").equalsIgnoreCase("true"))
+				isOutput = true;
+		}
+		else if ("output".equalsIgnoreCase(curParam.getName()))
+		{
+			isOutput = true;
+		}
+		curInOutParam.setOutput(isOutput);
+		
+		if (atts.getValue("format") != null)
+			for (String format:atts.getValue("format").split(","))
+				curInOutParam.getFormats().add(format);
+		if (atts.getValue("dataport") != null)
+			curInOutParam.setDataPort(atts.getValue("dataport"));
+		
+		return curInOutParam;
+	}
+	
 	private boolean setParam(Attributes atts, Parameter curParam)
 	{
 		initParam(curParam);
@@ -264,18 +297,23 @@ public class ToolContentHandler implements ContentHandler {
 		else
 			curParam.setOptional(null);
 		
+		if (atts.getValue("positional") != null)
+			curParam.setPositional(atts.getValue("positional").equals("true") ? true : false);
+		else
+			curParam.setPositional(null);
+
 		if (atts.getValue("multiple") != null)
 			curParam.setMultiple(atts.getValue("multiple").equals("true") ? true : false);
 		else
 			curParam.setMultiple(null);
 		
-		if (atts.getValue("multipleInstances") != null)
-			curParam.setMultipleInstances(atts.getValue("multipleInstances").equals("true") ? true : false);
+		if (atts.getValue("multiple_instances") != null)
+			curParam.setMultipleInstances(atts.getValue("multiple_instances").equals("true") ? true : false);
 		else
 			curParam.setMultipleInstances(null);
 
-		if (atts.getValue("multipleInstancesPerInput") != null)
-			curParam.setMultipleInstancesPerInput(atts.getValue("multipleInstancesPerInput").equals("true") ? true : false);
+		if (atts.getValue("multiple_instances_per_input") != null)
+			curParam.setMultipleInstancesPerInput(atts.getValue("multiple_instances_per_input").equals("true") ? true : false);
 		else
 			curParam.setMultipleInstancesPerInput(null);
 
@@ -316,6 +354,15 @@ public class ToolContentHandler implements ContentHandler {
 		else
 			curParam.setFixedArgValue(null);
 		
+		if (atts.getValue("output_arg_value_for_boolean_param") != null)
+			curParam.setOutputArgValueForBooleanParam(atts.getValue("output_arg_value_for_boolean_param").equals("true") ? true : false);
+		else
+			curParam.setOutputArgValueForBooleanParam(null);
+		if (atts.getValue("output_default_param") != null)
+			curParam.setOutputDefaultParam(atts.getValue("output_default_param").equals("true") ? true : false);
+		else
+			curParam.setFixedArgValue(null);
+			
 		if (atts.getValue("label") != null)
 			curParam.setLabel(atts.getValue("label"));
 		if (atts.getValue("help") != null)
@@ -359,26 +406,14 @@ public class ToolContentHandler implements ContentHandler {
 
 		if ("data".equals(atts.getValue("type")))
 		{
-			boolean isOutput   = false;
+			//boolean isOutput   = false;
 
 			curParam.setDataParam(true);
 			if (!withinPackage)
 				logger.debug("param id="+curParam.hashCode()+" "+curParam.getName()+" ("+tool.getName()+")");
-			if (atts.getValue("output") != null)
-			{
-				if (atts.getValue("output").equalsIgnoreCase("true"))
-					isOutput = true;
-			}
-			else if ("output".equalsIgnoreCase(curParam.getName()))
-			{
-				isOutput = true;
-			}
-			InOutParameter curInOutParam = (InOutParameter)curParam;
-			curInOutParam.setOutput(isOutput);
 			
-			if (atts.getValue("format") != null)
-				for (String format:atts.getValue("format").split(","))
-					curInOutParam.getFormats().add(format);
+			InOutParameter curInOutParam = setInOutParam(atts, curParam);
+						
 			if (atts.getValue("extension") != null)
 			{
 				if (atts.getValue("extension").equals("true"))
@@ -394,7 +429,7 @@ public class ToolContentHandler implements ContentHandler {
 			if (!isAbstract)
 			{
 				Data data = DataFactory.eINSTANCE.createData();
-				data.setOutput(isOutput);
+				data.setOutput(curInOutParam.isOutput());
 				data.setName(curParam.getName());
 				data.setParameter(curParam);
 				
@@ -406,17 +441,23 @@ public class ToolContentHandler implements ContentHandler {
 						logger.debug("adding data="+data.getName()+ " for tool="+tool.getId());
 				}
 				
-				if (!withinPackage)
+				if (withinTool)
 					addToToolData(getParamParent(curParam), data, tool);
 	
 				dataPort = DataFactory.eINSTANCE.createDataPort();
 				dataPort.setName(curParam.getName());
-				if (!withinPackage)
+				if (withinTool)
 					dataPort.getTools().put(tool.getName(), tool);
 				data.setPort(dataPort);
-				setDataPort(((InOutParameter)curParam).getFormats());
+				setDataPort(((InOutParameter) curParam).getFormats());
 			}
 		}
+		else if (atts.getValue("format") != null || atts.getValue("dataport") != null)
+		{
+			setInOutParam(atts, curParam);
+			logger.debug("data specifying param found.");
+		}
+		
 		return true;
 	}
 
@@ -476,6 +517,14 @@ public class ToolContentHandler implements ContentHandler {
 	boolean isAnalysisType(Attributes atts)
 	{
 		return atts.getValue("type") != null && atts.getValue("type").equals("analysis_type");
+	}
+	
+	ResolvedParam createResolvedParam(Parameter param)
+	{
+		ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+		resolvedParam.setParameter(param);
+		
+		return resolvedParam;
 	}
 	
 	@Override
@@ -556,7 +605,9 @@ public class ToolContentHandler implements ContentHandler {
 					if (atts.getValue("assume_data_param_positional") != null
 							&& atts.getValue("assume_data_param_positional").equals("true"))
 						pkg.setAssumeDataParamPositional(true);
-						
+					if (atts.getValue("assume_param_positional") != null
+							&& atts.getValue("assume_param_positional").equals("true"))
+						pkg.setAssumeParamPositional(true);						
 				}
 				else
 				{
@@ -585,6 +636,10 @@ public class ToolContentHandler implements ContentHandler {
 					if (atts.getValue("assume_data_param_positional") != null
 							&& atts.getValue("assume_data_param_positional").equals("true"))
 						tool.getCommand().setAssumeDataParamPositional(true);
+					if (atts.getValue("assume_param_positional") != null
+							&& atts.getValue("assume_param_positional").equals("true"))
+						tool.getCommand().setAssumeParamPositional(true);						
+
 				}
 				break;
 			case REQUIREMENTS:
@@ -634,7 +689,11 @@ public class ToolContentHandler implements ContentHandler {
 				if (withinConditional && condition != null && !withinPackage)
 				{
 					if (lastTag.equals(Tag.CONDITIONAL))
+					{
+						if (conditionType != null)
+							p.setConditionType(conditionType);
 						paramStack.add(p);
+					}
 					if (parameter == null)
 						parameter=p;
 					else
@@ -642,11 +701,11 @@ public class ToolContentHandler implements ContentHandler {
 						subParam=p;
 						subParam.setParent(parameter);
 						if (parameter.getValues().containsKey(condition))
-							parameter.getValues().get(condition).add(subParam);
+							parameter.getValues().get(condition).add(createResolvedParam(subParam));
 						else
 						{
-							EList<Parameter> pl = new BasicEList<Parameter>();
-							pl.add(subParam);
+							EList<ResolvedParam> pl = new BasicEList<ResolvedParam>();
+							pl.add(createResolvedParam(subParam));
 							parameter.getValues().put(condition, pl);
 						}
 					}
@@ -663,9 +722,7 @@ public class ToolContentHandler implements ContentHandler {
 						pkg.getTemplateParams().add(parameter);
 					else
 					{
-						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
-						resolvedParam.setParameter(parameter);
-						pkg.getResolvedParams().add(resolvedParam);
+						pkg.getResolvedParams().add(createResolvedParam(parameter));
 					}
 				}
 				else if (subParam!=p)
@@ -677,9 +734,7 @@ public class ToolContentHandler implements ContentHandler {
 					}
 					else
 					{
-						ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
-						resolvedParam.setParameter(parameter);
-						tool.getCommand().getResolvedParams().put(parameter.getName(), resolvedParam);
+						tool.getCommand().getResolvedParams().put(parameter.getName(), createResolvedParam(parameter));
 					}
 				}
 				withinParam = true;
@@ -732,6 +787,8 @@ public class ToolContentHandler implements ContentHandler {
 			case CONDITIONAL:
 				//conditionalMap.put("name", atts.getValue("name"));
 				withinConditional = true;
+				if (atts.getValue("type") != null)
+					conditionType = atts.getValue("type");
 				break;
 			case WHEN:
 				//lastMainAttributeValue = atts.getValue("value");
@@ -836,6 +893,7 @@ public class ToolContentHandler implements ContentHandler {
 					withinConditional = false;
 					parameter = null;
 				}
+				conditionType = null;
 				break;
 			case METADATA_MAP:
 				withinMetadataMap = false;

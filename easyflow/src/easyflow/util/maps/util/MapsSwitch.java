@@ -230,6 +230,12 @@ public class MapsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case MapsPackage.STRING_TO_RESOLVED_PARAM_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<ResolvedParam>> stringToResolvedParamListMap = (Map.Entry<String, EList<ResolvedParam>>)theEObject;
+				T result = caseStringToResolvedParamListMap(stringToResolvedParamListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case MapsPackage.STRING_TO_STRING_LIST_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, EList<String>> stringToStringListMap = (Map.Entry<String, EList<String>>)theEObject;
 				T result = caseStringToStringListMap(stringToStringListMap);
@@ -561,6 +567,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToResolvedParamMap(Map.Entry<String, ResolvedParam> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Resolved Param List Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Resolved Param List Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToResolvedParamListMap(Map.Entry<String, EList<ResolvedParam>> object) {
 		return null;
 	}
 

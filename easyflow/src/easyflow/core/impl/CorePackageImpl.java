@@ -1710,8 +1710,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		op = addEOperation(taskEClass, ecorePackage.getEBoolean(), "isIdentityTransformation", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = addEOperation(taskEClass, theEasyflowPackage.getObject(), "resolveConditionalStaticParam", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theToolPackage.getParameter(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(taskEClass, null, "resolveConditionalStaticParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theToolPackage.getResolvedParam(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(preprocessingTaskEClass, PreprocessingTask.class, "PreprocessingTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPreprocessingTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

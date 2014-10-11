@@ -237,6 +237,14 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean assumeParamPositional();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model parametersMany="true"
 	 * @generated
 	 */
@@ -519,14 +527,6 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	Tuple getAnalysisTypeOfPackage(EList<TraversalChunk> records);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model constraintsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
-	 * @generated
-	 */
-	EList<Data> getDataForParam(Parameter parameter, Map.Entry<String, String> constraints);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -126,5 +126,8 @@ public class GlobalConstants {
 	public static final String SPLIT_BY_CHUNKS_PARAM_NAME             = "split_by_chunks";
 	
 	public static final String PARAM_TYPE_BOOLEAN_VALUE               = "boolean";
+	
+	public static final String CONDITION_TYPE_DATA_PORT               = "data_port";
+	public static final String CONDITION_TYPE_DATA_FORMAT             = "data_format";
 }
 

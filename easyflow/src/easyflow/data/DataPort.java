@@ -279,4 +279,44 @@ public interface DataPort extends EObject {
 	 */
 	DataFormat getFormat();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean matches(DataFormat dataFormat);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model formatsMany="true"
+	 * @generated
+	 */
+	boolean isCompatibleStr(EList<String> formats);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model formatsMany="true"
+	 * @generated
+	 */
+	boolean isCompatible(EList<DataFormat> formats);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isCompatible(String format);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isCompatible(DataFormat format);
+
 } // DataPort

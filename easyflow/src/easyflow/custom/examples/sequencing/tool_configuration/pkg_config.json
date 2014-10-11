@@ -1,0 +1,13 @@
+{
+"gatk" : {
+  "param" : {
+     "useOriginialBaseQualities" : "false"
+  },
+  "pkg" : "true",
+  "interpreter" : {
+     
+     "Xmx" : "124M"
+  }
+}
+
+}

@@ -12,31 +12,31 @@
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"/>
 		<command pattern="pos opt"/>
-		<param type="any" abstract="true" name="default_param" named="true" separator="=" prefix=""/>
+		<param type="any" abstract="true" name="default_param" named="true" separator="=" prefix="" output_default_param="false" />
 		<param type="data" abstract="true" name="inputFile" named="true" key="INPUT" format="bam,sam"/>
 		<param type="data" abstract="true" output="true" name="outFile" named="true" key="OUTPUT" format="bam,sam"/>
 		<param type="analysis_type" named="true" name="jar" prefix="-"><!-- resolvePathRef="exe"> --> 
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
-					<map_entry key="ReadGroup" value="rgid"/>
-					<map_entry key="Sample"    value="rgsm"/>
-					<map_entry key="Lib"   value="rglb"/>
-					<map_entry key="Platform"  value="rgpl"/>
-					<map_entry key="PlatformUnit"  value="rgpu"/>
+					<map_entry key="ReadGroup"    value="rgid"/>
+					<map_entry key="Sample"       value="rgsm"/>
+					<map_entry key="Lib"          value="rglb"/>
+					<map_entry key="Platform"     value="rgpl"/>
+					<map_entry key="PlatformUnit" value="rgpu"/>
 				</metadata_map>
 			</option>
-			<option value="picard_BamIndexStats"    exe="BamIndexStats.jar"></option>
-			<option value="picard_FastqToSam"       exe="FastqToSam.jar"></option>
-			<option value="picard_ReorderSam"       exe="ReorderSam.jar"></option>
-			<option value="picard_ReplaceSamHeader" exe="ReplaceSamHeader.jar"></option>
-			<option value="picard_SamToFastq"       exe="SamToFastq.jar"></option>
+			<option value="picard_BamIndexStats"    exe="BamIndexStats.jar">                 </option>
+			<option value="picard_FastqToSam"       exe="FastqToSam.jar">                    </option>
+			<option value="picard_ReorderSam"       exe="ReorderSam.jar">                    </option>
+			<option value="picard_ReplaceSamHeader" exe="ReplaceSamHeader.jar">              </option>
+			<option value="picard_SamToFastq"       exe="SamToFastq.jar">                    </option>
 			<option value="PicardASMetrics"         exe="CollectAlignmentSummaryMetrics.jar"></option>
-			<option value="rgPicFixMate"            exe="FixMateInformation.jar"></option>
-			<option value="PicardGCBiasMetrics"     exe="CollectGcBiasMetrics.jar"></option>
-			<option value="PicardHsMetrics"         exe="CalculateHsMetrics.jar"></option>
-			<option value="PicardInsertSize"        exe="CollectInsertSizeMetrics.jar"></option>
-			<option value="rgEstLibComp"            exe="EstimateLibraryComplexity.jar"></option>
-			<option value="rgPicardMarkDups"        exe="MarkDuplicates.jar"></option>
+			<option value="rgPicFixMate"            exe="FixMateInformation.jar">            </option>
+			<option value="PicardGCBiasMetrics"     exe="CollectGcBiasMetrics.jar">          </option>
+			<option value="PicardHsMetrics"         exe="CalculateHsMetrics.jar">            </option>
+			<option value="PicardInsertSize"        exe="CollectInsertSizeMetrics.jar">      </option>
+			<option value="rgEstLibComp"            exe="EstimateLibraryComplexity.jar">     </option>
+			<option value="rgPicardMarkDups"        exe="MarkDuplicates.jar">                </option>
 		</param>
 	</package>
 	<!-- 
@@ -59,9 +59,9 @@ id="rgPicardMarkDups"
 			<param type="text" name="Xmx" prefix="-" separator="" default_value="256M" fixed="true" named="true"/>
 			<param type="text" name="classpath" prefix="-" key="cp"/>
 		</interpreter>
-		<param type="data" abstract="true" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
-		<param type="data" abstract="true" output="true"   multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf,gatk_interval" named="true" key="o"/>
-		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-"/>
+		<param type="data" abstract="true" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" output="true"   multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf,gatk_interval" named="true" key="o"/>
+		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-" output_arg_value_for_boolean_param="false"/>
 		
 		<!-- param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/> -->
 		<param name="org.broadinstitute.gatk.engine.CommandLineGATK" type="binary" cmd_part="exe"/>
@@ -112,9 +112,9 @@ id="rgPicardMarkDups"
 		<exe name="bwa"/>
 		<command assume_data_param_positional="true"/>
 		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
-		<param type="data" abstract="true" name="input" multiple="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" name="input" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
 		<param type="data" abstract="true" name="input" format="fasta"/>
-		<param type="data" abstract="true" name="output" output="true" multipleInstances="true" multipleInstancesPerInput="true" format="bam,sam,vcf" key="f"/>
+		<param type="data" abstract="true" name="output" output="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf" key="f"/>
 		<param type="analysis_type">
 			<option value="aln"   help="gapped/ungapped alignment"/>
 			<option value="samse" condition="size(InputFiles)==1" help="generate alignment (single ended)"/>
@@ -155,19 +155,20 @@ Command: index         index sequences in the FASTA format
 		<exe name="samtools"/>
 		<command pattern="opt pos" assume_data_param_positional="true"/>
 		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		<param type="boolean" abstract="true" name="default_param" prefix="-"/>
 		<param type="analysis_type">
-			<option value="view" help="SAM-BAM conversion"/>
-			<option value="sort" help="sort alignment file"/>
-			<option value="mpileup" help="multi-way pileup"/>
-			<option value="index" help="index alignment"/>
-			<option value="faidx" help="index/extract FASTA"/>
-			<option value="depth" help="compute the depth"/>
-			<option value="tview" help="text alignment viewer"/>
+			<option value="view"     help="SAM-BAM conversion"/>
+			<option value="sort"     help="sort alignment file"/>
+			<option value="mpileup"  help="multi-way pileup"/>
+			<option value="index"    help="index alignment"/>
+			<option value="faidx"    help="index/extract FASTA"/>
+			<option value="depth"    help="compute the depth"/>
+			<option value="tview"    help="text alignment viewer"/>
 			<option value="idxstats" help="BAM index stats (r595 or later)"/>
-			<option value="fixmate" help="fix mate information"/>
+			<option value="fixmate"  help="fix mate information"/>
 			<option value="flagstat" help="simple stats"/>
-			<option value="rmdup" help="remove PCR duplicates"/>
-			<option value="merge" help="merge sorted alignments"/>
+			<option value="rmdup"    help="remove PCR duplicates"/>
+			<option value="merge"    help="merge sorted alignments"/>
 		</param>
 		<help>
 		<![CDATA[
@@ -225,8 +226,7 @@ Command: view        SAM<->BAM conversion
 		<param name="max_queue_entries" type="integer" key="m"/>
 	</tool>
 	
-	<tool id="bwa_xampe"
-		name="bwa_sam" version="0.1" package="bwa">
+	<tool id="bwa_xampe" name="bwa_sam" version="0.1" package="bwa">
 		<description>
 			map single/paired reads against reference using bwt index
 		</description>
@@ -252,8 +252,8 @@ Command: view        SAM<->BAM conversion
 	
 	<tool id="bwasw" name="bwasw" package="bwa">
 		<param name="reference" type="data" format="fasta" positional="true"/>
-		<param name="input" type="data" format="fastq" positional="true"/>
-		<param name="output" type="data" format="sam" output="true"/>
+		<param name="input"     type="data" format="fastq" positional="true"/>
+		<param name="output"    type="data" format="sam" output="true"/>
 		
 		<help><![CDATA[
  Usage:   bwa bwasw [options] <target.prefix> <query.fa> [query2.fa]
@@ -351,13 +351,13 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 		and
 		combined definition for input file  
 		 -->
-		<conditional name="input_format">
-			<param name="input_format" type="select"/>
+		<conditional name="input_format" type="data_format">
+			<param name="input_format" type="select" dataport="BAM"/>
 			<when value="BAM">
 				<!-- the default, nothing to do -->
 			</when>
 			<when value="SAM">
-				<param name="S" type="boolean"/>
+				<param name="S" type="boolean" named="true"/>
 			</when>
 		</conditional>
 		<param name="input" type="data" format="sam,bam" handle="file,stdin"/>
@@ -365,9 +365,9 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 				in this case there is nothing to do, just omitting the file name
 		-->
 		<conditional name="output_format">
-			<param name="output_format" type="select"/>
+			<param name="output_format" type="select" dataport="BAM" output="true"/>
 			<when value="BAM">
-				<param name="b" type="boolean"/>
+				<param name="b" type="boolean" named="true"/>
 			</when>
 			<when value="SAM">
 				<!-- the default, nothing to do -->

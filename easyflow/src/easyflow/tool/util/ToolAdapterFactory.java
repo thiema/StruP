@@ -115,6 +115,10 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createInOutParameterAdapter();
 			}
 			@Override
+			public Adapter caseResolvedParam(ResolvedParam object) {
+				return createResolvedParamAdapter();
+			}
+			@Override
 			public Adapter caseKey(Key object) {
 				return createKeyAdapter();
 			}
@@ -141,10 +145,6 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCommand(Command object) {
 				return createCommandAdapter();
-			}
-			@Override
-			public Adapter caseResolvedParam(ResolvedParam object) {
-				return createResolvedParamAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

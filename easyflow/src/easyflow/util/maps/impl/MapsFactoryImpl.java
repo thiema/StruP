@@ -115,6 +115,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP: return (EObject)createStringToParameterListMap();
 			case MapsPackage.STRING_TO_PROJECT_MAP: return (EObject)createStringToProjectMap();
 			case MapsPackage.STRING_TO_RESOLVED_PARAM_MAP: return (EObject)createStringToResolvedParamMap();
+			case MapsPackage.STRING_TO_RESOLVED_PARAM_LIST_MAP: return (EObject)createStringToResolvedParamListMap();
 			case MapsPackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
 			case MapsPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
 			case MapsPackage.STRING_TO_TASK_MAP: return (EObject)createStringToTaskMap();
@@ -308,6 +309,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, ResolvedParam> createStringToResolvedParamMap() {
 		StringToResolvedParamMapImpl stringToResolvedParamMap = new StringToResolvedParamMapImpl();
 		return stringToResolvedParamMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, EList<ResolvedParam>> createStringToResolvedParamListMap() {
+		StringToResolvedParamListMapImpl stringToResolvedParamListMap = new StringToResolvedParamListMapImpl();
+		return stringToResolvedParamListMap;
 	}
 
 	/**

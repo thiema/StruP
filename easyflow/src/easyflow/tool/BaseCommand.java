@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.tool.BaseCommand#getCommandPattern <em>Command Pattern</em>}</li>
  *   <li>{@link easyflow.tool.BaseCommand#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.BaseCommand#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
+ *   <li>{@link easyflow.tool.BaseCommand#getAssumeParamPositional <em>Assume Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.BaseCommand#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  * </ul>
  * </p>
@@ -96,6 +97,32 @@ public interface BaseCommand extends EObject {
 	 * @generated
 	 */
 	void setAssumeDataParamPositional(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Assume Param Positional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Assume Param Positional</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Assume Param Positional</em>' attribute.
+	 * @see #setAssumeParamPositional(Boolean)
+	 * @see easyflow.tool.ToolPackage#getBaseCommand_AssumeParamPositional()
+	 * @model
+	 * @generated
+	 */
+	Boolean getAssumeParamPositional();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.BaseCommand#getAssumeParamPositional <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Assume Param Positional</em>' attribute.
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 */
+	void setAssumeParamPositional(Boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Cmd Part Delimiter</b></em>' attribute.

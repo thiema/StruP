@@ -1011,6 +1011,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			EMap<String, EMap<String, String>> pkgMap         = GlobalConfig.getPkgMap();
 			EMap<String, EMap<String, String>> toolMap        = GlobalConfig.getToolMap();
 
+			readToolConfiguration(toolCfg);
 			if (toolCfg.has("interpreter"))
 				readParamValues(interpreterMap, toolCfg.getJSONObject("interpreter"));
 			if (toolCfg.has("pkg"))
@@ -1018,7 +1019,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			if (toolCfg.has("tool"))
 				readParamValues(toolMap, toolCfg.getJSONObject("tool"));
 			
-			readToolConfiguration(toolCfg);
 			
 			// ####### READ TOOL DEFINITIONS ########
 			

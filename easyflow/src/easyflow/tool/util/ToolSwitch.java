@@ -134,6 +134,13 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ToolPackage.RESOLVED_PARAM: {
+				ResolvedParam resolvedParam = (ResolvedParam)theEObject;
+				T result = caseResolvedParam(resolvedParam);
+				if (result == null) result = caseDefaultToolElement(resolvedParam);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ToolPackage.KEY: {
 				Key key = (Key)theEObject;
 				T result = caseKey(key);
@@ -182,13 +189,6 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = caseIToolElement(command);
 				if (result == null) result = caseDefaultToolElement(command);
 				if (result == null) result = caseBaseCommand(command);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ToolPackage.RESOLVED_PARAM: {
-				ResolvedParam resolvedParam = (ResolvedParam)theEObject;
-				T result = caseResolvedParam(resolvedParam);
-				if (result == null) result = caseDefaultToolElement(resolvedParam);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

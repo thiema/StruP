@@ -1640,12 +1640,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public String createCommandLine() {
 
-		Tool           tool             = getPreferredTool();
-		EList<String>  commandLineParts = new BasicEList<String>();
-		EMap<String, Object> constraints= new BasicEMap<String, Object>();
+		Tool                 tool             = getPreferredTool();
+		EList<String>        commandLineParts = new BasicEList<String>();
+		EMap<String, Object> constraints      = new BasicEMap<String, Object>();
 		constraints.put(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY, tool.omitPrefixIfNoArgKey());
-		String commandPattern = getCommandLinePattern();
-		String[] commandPatterns = commandPattern.split(" ");
+		String               commandPattern   = getCommandLinePattern();
+		String[]             commandPatterns  = commandPattern.split(" ");
+		
 		logger.debug("createCommandLine(): create command line for tool="+tool.getId()+" and pattern="+commandPattern);
 		
 		commandLineParts.add(createCommandLinePart1(tool, constraints));
@@ -1660,7 +1661,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				isOutputDefined = true;
 		}
 		
-		resolveStaticParams();
+		resolveStaticParams(getCommand().getResolvedParams());
 		
 		for (String commandLinePart : commandPatterns)
 		{
@@ -1677,7 +1678,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 					if (staticCmdPart != null && !staticCmdPart.equals(""))
 						commandLineParts.add(staticCmdPart);
 				}
-				
 			}
 			else
 			{
@@ -1850,12 +1850,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 *  
 	 * Example usage: 
 	 * 
-	 * -get input part of command line, the omit-params dont care:
-	 * 
+	 *  -get input part of command line, the omit-params dont care: 
 	 *     createCommandLinePart2(tool, constraints, xxx, xxx, "in")
 	 * 
 	 *  -get output part of command line, the omit-params dont care:
-	 *  
 	 *     createCommandLinePart2(tool, constraints, xxx, xxx, "out")
 	 *     
 	 *  -get optional params of command line:
@@ -1885,7 +1883,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		Parameter     effectiveTemplateParam;
 		if (tool == null)
 			tool = getPreferredTool();
-		Command c = getCommand();
+		//Command c = getCommand();
 		if (tool.getName().equals("view"))
 		{
 			tool.getCommand();
@@ -1897,14 +1895,22 @@ public class TaskImpl extends EObjectImpl implements Task {
 		{
 			Entry<String, ResolvedParam> e      = it.next();
 			ResolvedParam    resolvedParam      = e.getValue();
-			Parameter        parameter          = resolvedParam.getParameter();
-			Parameter        effectiveParameter = null;
-			EList<Parameter> effectiveParams    = parameter.getEffectiveParameters(null);
+			boolean          isConditional      = resolvedParam.getConditionalParam() != null && 
+					resolvedParam.getParameter().getValues().containsKey(resolvedParam.getConditionalParam());
+			//Parameter        parameter          = resolvedParam.getParameter();
+			//Parameter        effectiveParameter = null;
+			EList<ResolvedParam> effectiveResolvedParams    = resolvedParam.getEffectiveParameters(null);
 			effectiveTemplateParam = null;
-			if (!effectiveParams.isEmpty())
-				effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
+			//if (!effectiveParams.isEmpty())
+				//effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
 			
-			boolean          isOptional     = parameter.isOptional(templateParam != null ? templateParam.getOptional():null);
+			Iterator<ResolvedParam> itEffParam = effectiveResolvedParams.iterator();
+			while (itEffParam.hasNext())
+			{
+				ResolvedParam effectiveResolvedParam = itEffParam.next();
+			//overwrite current resolved param if conditional param occurred
+				Parameter parameter = effectiveResolvedParam.getParameter();
+			
 			InOutParameter   inOutParameter = null;
 			boolean          isInOutParam   = false;
 			boolean          shallGenerate  = false;
@@ -1914,15 +1920,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 				inOutParameter = (InOutParameter) parameter;
 				isInOutParam   = true;
 			}
-			else if (effectiveParameter.isDataParam())
+			/*else if (effectiveParameter.isDataParam())
 			{
 				inOutParameter = (InOutParameter) effectiveParameter;
 				isInOutParam   = true;
-			}
+			}*/
 			
 			effectiveTemplateParam = tool.getTemplateParameter(parameter);
 			if (effectiveTemplateParam == null)
 				effectiveTemplateParam = templateParam;
+			boolean  isOptional = parameter.isOptional(effectiveTemplateParam == null ? null : effectiveTemplateParam.isOptional(null));
 			
 			if (type == null)
 			{
@@ -1954,34 +1961,39 @@ public class TaskImpl extends EObjectImpl implements Task {
 			}
 			
 			logger.debug("shallGenerate="+shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
-					+" param type="+type+" of param="+resolvedParam.getParameter().resolveName()
-					+" type="+resolvedParam.getParameter().getType()
+					+" param type="+type+" of param="+effectiveResolvedParam.getParameter().resolveName()
+					+" type="+effectiveResolvedParam.getParameter().getType()
 					//+" output="+parameter.isOutput()
 					//+" templatePrefix="+effectiveTemplateParam.getPrefix()
 					);
 			if (shallGenerate)
 			{
 				// check if parameters value is set, if not, check default value
-				if (resolvedParam.getValue() == null || resolvedParam.getValue().isEmpty())
+				if (effectiveResolvedParam.getValue() == null || effectiveResolvedParam.getValue().isEmpty())
 				{
-					if (effectiveParameter.getDefaultValue() == null || effectiveParameter.getDefaultValue().equals(""))
+					/*if (effectiveParameter.getDefaultValue() == null || effectiveParameter.getDefaultValue().equals(""))
 					{
 						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.resolveName()+" (unset default value)");
 						continue;
 					}
 					// skip if default is not required
-					else if (!GlobalConfig.useDefaultValue())
+					//else 
+						if (!GlobalConfig.useDefaultValue())
 					{
 						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.resolveName()+" (omit default value)");
 						continue;
 					}
+					*/
+					if (isConditional && parameter.isBoolean())
+						effectiveResolvedParam.getValue().add("true");
 				}
 
 				//logger.trace("add param="+resolvedParam.getParameter().getName()+" "+parameter.getName()
 						//		+" cmd="+getCommand().hashCode()+" map="+getCommand().getResolvedParams().hashCode()+" "
 						//		+" resolvedparam="+resolvedParam.hashCode()+" param="+resolvedParam.getParameter().hashCode()
 					//			);
-				logger.debug("createCommandLinePart(): generate command line for parameter="+resolvedParam.resolveName()
+				logger.debug("createCommandLinePart(): generate command line for parameter="+effectiveResolvedParam.resolveName()
+						+" conditional="+isConditional
 						+" (using template: "+(effectiveTemplateParam != null ? 
 								(" name="+effectiveTemplateParam.resolveName()
 										+" named="+effectiveTemplateParam.isNamed(null)
@@ -1991,10 +2003,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 											("name="+effectiveTemplateParam.getKeys().get(0).getName())
 											+" value="+effectiveTemplateParam.getKeys().get(0).getValue()))
 								: null)+")");
-				String res = StringUtils.join(
-						resolvedParam.generateCommandString(constraints, effectiveTemplateParam),
-						tool.getCmdPartDelimiter());
 				
+				String res = StringUtils.join(
+						effectiveResolvedParam.generateCommandString(constraints, effectiveTemplateParam),
+						tool.getCmdPartDelimiter());
+
 				if (res != null && !res.equals(""))
 				{
 					logger.debug("createCommandLinePart(): cmd="+res);
@@ -2004,6 +2017,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				{
 					logger.warn("createCommandLinePart(): empty command line result");
 				}
+			}
 			}
 		}
 		return StringUtils.join(commandLineList, tool.getCmdPartDelimiter());
@@ -2673,17 +2687,149 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getDataPortByDataPort(dataPort, false) != null);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Object> resolveConditionalStaticParam(Parameter parameter) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
+	
+	private void resolveConditionalStaticParam_DataPort(ResolvedParam resolvedParam)
+	{
 		throw new UnsupportedOperationException();
 	}
+	
+	private void resolveConditionalStaticParam_DataFormat(ResolvedParam resolvedParam)
+	{
+		InOutParameter parameter = (InOutParameter) resolvedParam.getParameter();
+		DataPort dataPort = findDataPortForDataSpecifyingParam(parameter);
 
+		if (dataPort == null)
+		{
+			logger.error("resolveConditionalStaticParam_DataFormat(): could not find dataport.");
+			return;
+		}
+		ResolvedParam resolvedDataParam = getCommand().getDataParamForDataPort(dataPort, parameter.isOutput());
+		
+		if (resolvedDataParam == null)
+		{
+			logger.error("resolveConditionalStaticParam_DataFormat(): could not find corresponding param for dataport="+dataPort.getName());
+			return;			
+		}
+		else
+		{
+			logger.debug("resolveConditionalStaticParam_DataFormat(): found param="+resolvedDataParam.resolveName());
+		}
+		
+		for (String key : parameter.getValues().keySet())
+		{
+			if (key.equalsIgnoreCase(resolvedDataParam.getDataFormat().getName()))
+			{
+				resolvedParam.setConditionalParam(key);
+				logger.debug("resolveConditionalStaticParam_DataFormat(): set conditional param key="+key);
+				return;
+			}
+		}
+		logger.error("resolveConditionalStaticParam_DataFormat(): no key found matching condition");
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * choose the param (among param.getValues()) that matches the condition
+	 * and set attribute conditionalParam accordingly.
+	 * 
+	 * for data related param (param.isDataParam()) this means a parameter is only valid/should be applied if either 
+	 * case 1: dataport is resolved to a certain dataformat (condition == data_format) (default)
+	 *   1. retrieve the dataport, the parameter is related to
+	 *   2. get the corresponding InOutParameter
+	 *   3. check the format of this InOutParameter to decide which condition is held
+	 *   
+	 * or case 2: a certain dataport is required (condition == data_port)
+	 *   1. get all resolvedparams (which are data params) and evaluate dataport attribute  
+	 *   2. try to find a condition that matches the dataport attribute
+	 *   todo: how to behave in case where more than one condition can be fulfilled
+	 *   
+	 *   
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void resolveConditionalStaticParam(ResolvedParam resolvedParam) {
+		
+		Parameter                          param     = resolvedParam.getParameter();
+		//EMap<String, EList<ResolvedParam>> subParams = param.getValues();
+		if (param.isDataSpecifyingParam())
+		{
+			if (param.getConditionType() == null || param.getConditionType().equals(GlobalConstants.CONDITION_TYPE_DATA_FORMAT))
+			{
+				resolveConditionalStaticParam_DataFormat(resolvedParam);
+			}
+			else if (param.getConditionType().equals(GlobalConstants.CONDITION_TYPE_DATA_PORT))
+			{
+				resolveConditionalStaticParam_DataPort(resolvedParam);
+			}
+			else
+				logger.error("resolveConditionalStaticParam(): unknown condition type="+param.getConditionType()+" found.");
+			
+		}
+	}
+	
+	private DataPort getDataPortByFormats(EList<String> formats, boolean isOutDataPort)
+	{
+		DataPort dataPort;
+		for (String format: formats)
+		{
+			dataPort = getDataPortByNameOfFormat(format, isOutDataPort);
+			if (dataPort != null)
+				return dataPort;
+		}
+		return null;
+	}
+	/*
+	private boolean doesConditionalParameterMatchFormat(InOutParameter ioParam, String condition, DataFormat dataFormat)
+	{
+		DataPort dataPort = findDataPortForDataSpecifyingParam(ioParam);
+		
+		boolean matchFormat = false;
+		
+		if (ioParam.getFormats() != null && !ioParam.getFormats().isEmpty())
+		{
+			for (String formatStr : ioParam.getFormats())
+				if (formatStr.equalsIgnoreCase(dataFormat.getName()))
+					matchFormat = true;
+		}
+		else if (condition != null)
+		{
+			if (condition.equalsIgnoreCase(dataFormat.getName()))
+				matchFormat = true;
+		}
+		
+		if (dataPort != null && matchFormat && dataPort.matches(dataFormat))
+			return true;
+		
+		return false;
+					
+	}
+	*/
+	private DataPort findDataPortForDataSpecifyingParam(InOutParameter ioParam)
+	{
+		DataPort dataPort = null;
+		if (ioParam.getDataPort() != null)
+			dataPort = getDataPortByName(ioParam.getDataPort(), ioParam.isOutput());
+		
+		if (dataPort == null && ioParam.getFormats() != null && !ioParam.getFormats().isEmpty())
+		{
+			dataPort = getDataPortByFormats(ioParam.getFormats(), ioParam.isOutput());
+		}
+		//default to first tasks dataport
+		if (dataPort == null)
+			dataPort = ioParam.isOutput() ? 
+					(getOutDataPorts()!= null && !getOutDataPorts().isEmpty()) ? getOutDataPorts().get(0) : null :
+					(getInDataPorts() != null && !getInDataPorts().isEmpty() ? getInDataPorts().get(0) : null);
+		
+		if (dataPort == null)
+			logger.warn("findDataPortForDataSpecifyingParam(): could not find a data port for param="+ioParam.resolveName());
+		else
+		{
+			logger.debug("findDataPortForDataSpecifyingParam(): found data port="+dataPort.getName()+" for param="+ioParam.resolveName());
+		}
+		
+		return dataPort;
+	}
+	
 	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
 		
 		//EList<String> list = new BasicEList<String>();
@@ -2722,6 +2868,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 				continue;
 			}
 			ResolvedParam parameter = getCommand().getResolvedParams().get(paramName);
+			parameter.setDataFormat(dataLink.getData().getFormat());
+			logger.debug("resolveDataPorts(): set final dataformat for "
+							//+(((InOutParameter)parameter.getParameter()).isOutput() ? "output":"input")
+							+"parameter "+parameter.resolveName()+" to="+parameter.getDataFormat().getName()+" id="+parameter.hashCode());
+
 			if (dataLink.getData().getPreferredHandle() != null 
 					&& parameter.getParameter().getValues() != null
 					&& parameter.getParameter().getValues().containsKey(dataLink.getData().getPreferredHandle()))
@@ -2760,85 +2911,103 @@ public class TaskImpl extends EObjectImpl implements Task {
 		}
 	}
 	
-	private void resolveStaticParams()
+	private void resolveStaticParams(EMap<String, ResolvedParam> resolvedParams)
 	{
-		Iterator<Entry<String, ResolvedParam>> it = getCommand().getResolvedParams().iterator();
+		Iterator<Entry<String, ResolvedParam>> it = resolvedParams.iterator();
 
 		while (it.hasNext())
 		{
 			Entry<String, ResolvedParam> e = it.next();
 			ResolvedParam resolvedParam = e.getValue();
-			Parameter param = resolvedParam.getParameter();
-			if ("view".equals(getPreferredTool().getName()))
-				logger.debug("");
-			
-			if (!param.getGrouping().isEmpty())
-			{
-				
-				logger.debug("resolveStaticParams(): grouping parameter found. name="+resolvedParam.resolveName()
-						+" "+param.getGrouping()+" "+getChunks().keySet());
-				
-				EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
-				EList<TraversalChunk> chunks = getRecords(true);
-				DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
-				Iterator<String> groupingStrIt = param.getGrouping().iterator();
-				while (groupingStrIt.hasNext())
-				{
-					String groupingStr = groupingStrIt.next();
-					if (!groupingStr.equalsIgnoreCase(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
-						for (TraversalChunk chunk : chunks)
-						{
-							EList<GroupingInstance> tmp = metaData.getInstances(		
-									GlobalConstants.TRAVERSAL_CRITERION_RECORD,
-									groupingStr, 
-									chunk.getName());
-							if (!tmp.isEmpty())
-							{
-								logger.debug("param="+resolvedParam.resolveName()+" instance="
-										+easyflow.custom.util.Util.list2String(tmp, null)
-										+" found for grouping="+groupingStr);
-								
-							}
-							else
-							{
-								logger.debug("param="+resolvedParam.resolveName()+" no instances found for grouping="+groupingStr);
-							}
+			resolveNestedParams(resolvedParam.getParameter());
+			resolveStaticParam(resolvedParam);
+		}		
+	}
 
-							groupingInstances.addAll(tmp);
+	
+	private void resolveNestedParams(Parameter param)
+	{
+		// recursively resolve all nested parameters
+		if (param.getValues() != null && !param.getValues().isEmpty())
+		{
+			Iterator<Entry<String, EList<ResolvedParam>>> it = param.getValues().iterator();
+			while (it.hasNext())
+			{
+				Entry<String, EList<ResolvedParam>> e = it.next();
+				Iterator<ResolvedParam> itr = e.getValue().iterator();
+				while (itr.hasNext())
+					resolveStaticParam(itr.next());
+			}
+		}
+	}
+	
+	private void resolveStaticParam(ResolvedParam resolvedParam)
+	{
+		Parameter param = resolvedParam.getParameter();
+		if ("view".equals(getPreferredTool().getName()))
+			logger.debug("param="+resolvedParam.resolveName()+" grouping is empty="+param.getGrouping().isEmpty());
+		
+		if (param.isMetaDataParam())
+		{
+			logger.debug("resolveStaticParams(): grouping parameter found. name="+resolvedParam.resolveName()
+					+" "+param.getGrouping()+" "+getChunks().keySet());
+			
+			EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
+			EList<TraversalChunk> chunks = getRecords(true);
+			DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+			Iterator<String> groupingStrIt = param.getGrouping().iterator();
+			while (groupingStrIt.hasNext())
+			{
+				String groupingStr = groupingStrIt.next();
+				if (!groupingStr.equalsIgnoreCase(GlobalConstants.TRAVERSAL_CRITERION_RECORD))
+					for (TraversalChunk chunk : chunks)
+					{
+						EList<GroupingInstance> tmp = metaData.getInstances(		
+								GlobalConstants.TRAVERSAL_CRITERION_RECORD,
+								groupingStr, 
+								chunk.getName());
+						if (!tmp.isEmpty())
+						{
+							logger.debug("param="+resolvedParam.resolveName()+" instance="
+									+easyflow.custom.util.Util.list2String(tmp, null)
+									+" found for grouping="+groupingStr);
 							
 						}
-					//GlobalVarMetaData
-					
-					//if (getChunks().containsKey(groupingStr))
-				}
-				resolvedParam.getValue().addAll(groupingInstances);
-			}
-			
-			else if (param.getDefaultValue() != null)
-			{
-				resolvedParam.getValue().add(param.getDefaultValue());
-			}
-			else if (param.getGeneralValue() != null)
-			{
-				resolvedParam.getValue().add(param.getGeneralValue());
-			}
-				
+						else
+						{
+							logger.debug("param="+resolvedParam.resolveName()+" no instances found for grouping="+groupingStr);
+						}
 
-			
-		}
-		
-		/*
-		Iterator<Entry<String, String>> it = getParams().iterator();
-		while (it.hasNext())
-		{
-			Entry<String, String> e = it.next();
-			if (getCommand().getResolvedParams().containsKey(e.getKey()))
-			{
-				ResolvedParam param = getCommand().getResolvedParams().get(e.getKey());
-				param.getValue().add(e.getValue());
+						groupingInstances.addAll(tmp);
+						
+					}
+				//GlobalVarMetaData
+				
+				//if (getChunks().containsKey(groupingStr))
 			}
+			resolvedParam.getValue().addAll(groupingInstances);
 		}
-		*/		
+		else if (param.isDataSpecifyingParam())
+		{
+			if (param.getValues() != null && !param.getValues().isEmpty())
+				resolveConditionalStaticParam(resolvedParam);
+			else
+				logger.warn("no conditional params defined for param="+param.resolveName());
+			//else
+				//resolvedParam.getValue().addAll(resolveDataSpecifyingParam((InOutParameter) param));
+		}
+		else if (param.getDefaultValue() != null && !param.getDefaultValue().isEmpty())
+		{
+			//resolvedParam.getValue().add(param.getDefaultValue());
+		}
+		else if (param.getGeneralValue() != null && !param.getGeneralValue().isEmpty())
+		{
+			//resolvedParam.getValue().add(param.getGeneralValue());
+		}
+		else
+		{
+		}
+
 	}
 
 	/*

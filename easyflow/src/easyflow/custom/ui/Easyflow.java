@@ -2,7 +2,6 @@ package easyflow.custom.ui;
 
 import org.apache.log4j.Logger;
 
-import easyflow.core.impl.WorkflowImpl;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -15,7 +14,6 @@ import easyflow.custom.util.URIUtil;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 import easyflow.ui.DefaultProject;
-import easyflow.ui.UiFactory;
 
 public class Easyflow {
 	

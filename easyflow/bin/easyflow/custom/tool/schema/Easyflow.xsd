@@ -131,40 +131,42 @@
 				type="Sanitizer" />
 		</xs:sequence>
 
-		<xs:attribute name="name" type="xs:string" />
-		<xs:attribute name="format" type="xs:string" />
-		<xs:attribute name="output" type="xs:boolean" />
-		<xs:attribute name="abstract" type="xs:boolean"/>
-		<xs:attribute name="min_occur" type="xs:int" />
-		<xs:attribute name="max_occur" type="xs:int" />
+		<xs:attribute name="name"      type="xs:string" />
+		<xs:attribute name="format"    type="xs:string" />
+		<xs:attribute name="dataport"  type="xs:string" />
+		<xs:attribute name="output"    type="xs:boolean"/>
+		<xs:attribute name="abstract"  type="xs:boolean"/>
+		<xs:attribute name="min_occur" type="xs:int"    />
+		<xs:attribute name="max_occur" type="xs:int"    />
 
-		<xs:attribute name="named" type="xs:boolean" />
+		<xs:attribute name="named"     type="xs:boolean"/>
 		<!--		<xs:attribute name="key" type="xs:string"/>
 			<xs:attribute name="keyType" type="ParamKeyType"/> -->
 		<xs:attribute name="separator" type="xs:string" />
-		<xs:attribute name="prefix" type="xs:string" />
-
-		<xs:attribute name="arg_value_separator" type="xs:string"></xs:attribute>
-		<xs:attribute name="positional" type="xs:boolean" />
-		<xs:attribute name="type" type="ParamType" use="required" />
-		<xs:attribute name="label" type="xs:string" />
-		<xs:attribute name="help" type="xs:string" />
-		<xs:attribute name="optional" type="xs:boolean" />
-		<xs:attribute name="default_value" type="xs:string" />
-		<xs:attribute name="is_value_required" type="xs:boolean" />
-		<xs:attribute name="multiple" type="xs:boolean" />
-		<xs:attribute name="multipleInstances" type="xs:boolean" />
-		<xs:attribute name="multipleInstancesPerInput" type="xs:boolean" />
-		<xs:attribute name="multiple_value" type="xs:boolean" />
-		<xs:attribute name="grouping" type="xs:string" />
-		<xs:attribute name="handle" type="xs:string" />
-		<xs:attribute name="data" type="xs:string" />
-		<xs:attribute name="cmd_part" type="CmdPartType" />
-		<xs:attribute name="fixed" type="xs:boolean"/>
-		<xs:attribute name="key" type="xs:string"/>
-		<xs:attribute name="extension" type="xs:boolean" />
-		<xs:attribute name="hidden" type="xs:boolean"/>
-		<xs:attribute name="filename_creation" type="FilenameCreationType"/>
+		<xs:attribute name="prefix"    type="xs:string" />
+		<xs:attribute name="output_arg_value_for_boolean_param" type="xs:boolean"/>
+		<xs:attribute name="output_default_param"         type="xs:boolean"/>
+		<xs:attribute name="arg_value_separator"          type="xs:string"/>
+		<xs:attribute name="positional"                   type="xs:boolean" />
+		<xs:attribute name="type"                         type="ParamType" use="required" />
+		<xs:attribute name="label"                        type="xs:string" />
+		<xs:attribute name="help"                         type="xs:string" />
+		<xs:attribute name="optional"                     type="xs:boolean" />
+		<xs:attribute name="default_value"                type="xs:string" />
+		<xs:attribute name="is_value_required"            type="xs:boolean" />
+		<xs:attribute name="multiple"                     type="xs:boolean" />
+		<xs:attribute name="multiple_instances"           type="xs:boolean" />
+		<xs:attribute name="multiple_instances_per_input" type="xs:boolean" />
+		<xs:attribute name="multiple_value"               type="xs:boolean" />
+		<xs:attribute name="grouping"                     type="xs:string" />
+		<xs:attribute name="handle"                       type="xs:string" />
+		<xs:attribute name="data"                         type="xs:string" />
+		<xs:attribute name="cmd_part"                     type="CmdPartType" />
+		<xs:attribute name="fixed"                        type="xs:boolean"/>
+		<xs:attribute name="key"                          type="xs:string"/>
+		<xs:attribute name="extension"                    type="xs:boolean" />
+		<xs:attribute name="hidden"                       type="xs:boolean"/>
+		<xs:attribute name="filename_creation"            type="FilenameCreationType"/>
 	</xs:complexType>
 
 	<xs:simpleType name="FilenameCreationType">
@@ -283,6 +285,13 @@
     <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
   
+	<xs:simpleType name="ConditionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="data_format"/>
+			<xs:enumeration value="data_port"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 
   <xs:complexType name="Conditional">
     <xs:complexContent>
@@ -291,6 +300,7 @@
           <xs:group minOccurs="0" ref="InputElement"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="when" type="ConditionalWhen"/>
         </xs:sequence>
+        <xs:attribute name="type" type="ConditionType"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

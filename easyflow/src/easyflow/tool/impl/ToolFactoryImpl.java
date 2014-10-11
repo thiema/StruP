@@ -77,6 +77,7 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.TOOL: return createTool();
 			case ToolPackage.PARAMETER: return createParameter();
 			case ToolPackage.IN_OUT_PARAMETER: return createInOutParameter();
+			case ToolPackage.RESOLVED_PARAM: return createResolvedParam();
 			case ToolPackage.KEY: return createKey();
 			case ToolPackage.REQUIREMENT: return createRequirement();
 			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
@@ -84,7 +85,6 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.BASE_COMMAND: return createBaseCommand();
 			case ToolPackage.PACKAGE: return createPackage();
 			case ToolPackage.COMMAND: return createCommand();
-			case ToolPackage.RESOLVED_PARAM: return createResolvedParam();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

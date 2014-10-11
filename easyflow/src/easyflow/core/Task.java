@@ -19,6 +19,7 @@ import easyflow.data.DataPort;
 import easyflow.metadata.GroupingInstance;
 
 import easyflow.tool.Command;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
@@ -1084,9 +1085,9 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.Object"
+	 * @model
 	 * @generated
 	 */
-	EList<Object> resolveConditionalStaticParam(Parameter parameter);
+	void resolveConditionalStaticParam(ResolvedParam parameter);
 
 } // Task

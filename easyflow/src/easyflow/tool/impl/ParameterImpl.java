@@ -10,22 +10,23 @@ import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.URIUtil;
-import easyflow.custom.util.Util;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
-import easyflow.util.maps.impl.StringToParameterListMapImpl;
+import easyflow.util.maps.impl.StringToResolvedParamListMapImpl;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -85,6 +86,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isHidden <em>Hidden</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getOutputDefaultParam <em>Output Default Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getConditionType <em>Condition Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -179,7 +182,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap<String, EList<Parameter>> values;
+	protected EMap<String, EList<ResolvedParam>> values;
 
 	/**
 	 * The cached value of the '{@link #getOptionValues() <em>Option Values</em>}' reference list.
@@ -509,7 +512,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean POSITIONAL_EDEFAULT = Boolean.TRUE;
+	protected static final Boolean POSITIONAL_EDEFAULT = Boolean.FALSE;
 
 	/**
 	 * The cached value of the '{@link #getPositional() <em>Positional</em>}' attribute.
@@ -712,6 +715,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected boolean hidden = HIDDEN_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getOutputDefaultParam() <em>Output Default Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputDefaultParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean OUTPUT_DEFAULT_PARAM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getOutputDefaultParam() <em>Output Default Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputDefaultParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean outputDefaultParam = OUTPUT_DEFAULT_PARAM_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getConditionType() <em>Condition Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConditionType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONDITION_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getConditionType() <em>Condition Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConditionType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String conditionType = CONDITION_TYPE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -793,14 +836,16 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__TYPE, oldType, type));
 	}
 
+
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, EList<Parameter>> getValues() {
+	public EMap<String, EList<ResolvedParam>> getValues() {
 		if (values == null) {
-			values = new EcoreEMap<String,EList<Parameter>>(MapsPackage.Literals.STRING_TO_PARAMETER_LIST_MAP, StringToParameterListMapImpl.class, this, ToolPackage.PARAMETER__VALUES);
+			values = new EcoreEMap<String,EList<ResolvedParam>>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_LIST_MAP, StringToResolvedParamListMapImpl.class, this, ToolPackage.PARAMETER__VALUES);
 		}
 		return values;
 	}
@@ -1116,6 +1161,48 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getOutputDefaultParam() {
+		return outputDefaultParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOutputDefaultParam(Boolean newOutputDefaultParam) {
+		Boolean oldOutputDefaultParam = outputDefaultParam;
+		outputDefaultParam = newOutputDefaultParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__OUTPUT_DEFAULT_PARAM, oldOutputDefaultParam, outputDefaultParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getConditionType() {
+		return conditionType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConditionType(String newConditionType) {
+		String oldConditionType = conditionType;
+		conditionType = newConditionType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__CONDITION_TYPE, oldConditionType, conditionType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public String getArgKey(String defaultPrefix, Key defaultKey) {
@@ -1310,26 +1397,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public EList<Parameter> getEffectiveParameters(EList<Parameter> effectiveParams) {
-		if (effectiveParams == null)
-			effectiveParams = new BasicEList<Parameter>(); 
-		if (getValues().isEmpty())
-		{
-			effectiveParams.add(this);
-			return effectiveParams;
-		}
-		for (Entry<String, EList<Parameter>> parameters : getValues())
-			for (Parameter parameter:parameters.getValue())
-				parameter.getEffectiveParameters(effectiveParams);
-		
-		return effectiveParams;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EList<String> generateCommandStringURI(EMap<String, Object> constraints, EList<URI> value, Parameter templateParam) {
@@ -1389,12 +1456,13 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	public EList<String> generateCommandString(EMap<String, Object> constraints, EList<Object> value, Parameter templateParam) {
 		
 		EList<String> cmdString = new BasicEList<String>();
-		
 		if (isHidden())
 			return cmdString;
-		
+
 		EList<String> argValue  = null;
-		Boolean defaultIsFixed  = templateParam != null ? templateParam.getFixedArgValue() : null;
+		
+		//Boolean defaultIsFixed  = templateParam != null ? templateParam.getFixedArgValue() : null;
+		Boolean defaultOutput   = templateParam != null ? templateParam.getOutputDefaultParam() : null;
 		String path             = resolvePath(constraints.containsKey("path") ? constraints.get("path") : null);
 		
 		try {
@@ -1402,11 +1470,15 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 					(GlobalConstants.COMMAND_PART_VALUE_EXE.equals(getCmdPart()) || 
 					 GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(getCmdPart())))
 			{
+				if (getDefaultValue() != null && !shouldOutputArgValue(defaultOutput))
+					return cmdString;
+				
 				String res = null;
 				if (getDefaultValue() != null)
 					res = getDefaultValue();
 				else if (getName() != null)
 					res = getName();
+				
 				return resolveValues(res, path);
 			}
 			
@@ -1422,32 +1494,37 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			{
 				argValue = resolveValues(getGeneralValue(), path);
 			}
-			else if (getDefaultValue() != null && !getDefaultValue().equals("") && isFixedArgValue(defaultIsFixed))
+			else if (getDefaultValue() != null && !getDefaultValue().equals(""))
 			{
+			 //isFixedArgValue(defaultIsFixed)
 				//argValue = new BasicEList<String>();
 				//argValue.add(resolveValues(getDefaultValue(), path));
-				argValue = resolveValues(getDefaultValue(), path);
+				if (shouldOutputDefaultParam(defaultOutput))
+					argValue = resolveValues(getDefaultValue(), path);
 			}
+				
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		if (argValue == null || argValue.isEmpty() && !isBoolean())
+			return cmdString;
+		//Parameter p = this;
 		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed() : null;
 		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter(null) : null;
 		String  defaultPrefix            = templateParam != null ? templateParam.getPrefix() : null;
 		Key     defaultKey               = templateParam != null ? (templateParam.getKeys().isEmpty() ? null : templateParam.getKeys().get(0)) : null;
 		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
 				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
-		boolean outputValue              = templateParam != null ? templateParam.shouldOutputArgValue(!getType().equals(GlobalConstants.PARAM_TYPE_BOOLEAN_VALUE)) : true;
 		
-		if (!outputValue)
-			logger.debug(resolveName());
-		if (isAnalysisType())
+		boolean outputArgValue           = true;
+		if (isBoolean())
 		{
-			EList<Parameter> pl = getEffectiveParameters(null);
-			logger.debug("generateCommandString(): param="+resolveName()+" no of effective params="+pl.size());
+			outputArgValue = shouldOutputArgValue(templateParam != null ? templateParam.shouldOutputArgValue(null) : null);
 		}
+		if (!outputArgValue)
+			logger.debug("generateCommandString(): omit generation of param="+resolveName());
+
 		// resolve prefix and key
 		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
 			;
@@ -1457,10 +1534,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		}
 		
 		// resolve delimiter
-		if (outputValue && argValue != null && isNamed(defaultIsNamed))
+		if (outputArgValue && argValue != null && isNamed(defaultIsNamed))
 			cmdString.add(getArgDelimiter(defaultArgDelimiter));
 		// finally resolve argvalue
-		if (outputValue && argValue != null)
+		if (outputArgValue && argValue != null)
 			return resolveMultiplicity(cmdString, argValue, templateParam);
 		else
 			return cmdString;
@@ -1734,11 +1811,17 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 */
 	public void merge(Parameter parameter) {
 		
-		setNamed(parameter.isNamed(getNamed()));
-		if (getPrefix() == null)
+		if (getNamed()      == null)
+			setNamed(parameter.isNamed(getNamed()));
+		if (getPrefix()     == null)
 			setPrefix(parameter.getPrefix());
-		if (getDelimiter() == null)
+		if (getDelimiter()  == null)
 			setDelimiter(parameter.getDelimiter());
+		if (getOptional()   == null)
+			setOptional(parameter.getOptional());
+		if (getPositional() == null)
+			setPositional(parameter.getPositional());
+			
 		mergeKeys(parameter.getKeys());
 			
 		
@@ -1774,6 +1857,49 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		else
 			return null;
 
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean shouldOutputDefaultParam(Boolean default_) {
+		if (getOutputDefaultParam() != null)
+			return getOutputDefaultParam();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.outputDefaultParam();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isMetaDataParam() {
+		return getGrouping() != null && !getGrouping().isEmpty();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isDataSpecifyingParam() {
+		if (this instanceof InOutParameter)
+			return !isDataParam();
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isBoolean() {
+		return getType().equals(GlobalConstants.PARAM_TYPE_BOOLEAN_VALUE);
 	}
 
 	private void mergeKeys(EList<Key> newKeys)
@@ -2218,6 +2344,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getOutputArgValueForBooleanParam();
 			case ToolPackage.PARAMETER__HIDDEN:
 				return isHidden();
+			case ToolPackage.PARAMETER__OUTPUT_DEFAULT_PARAM:
+				return getOutputDefaultParam();
+			case ToolPackage.PARAMETER__CONDITION_TYPE:
+				return getConditionType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2339,6 +2469,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__HIDDEN:
 				setHidden((Boolean)newValue);
 				return;
+			case ToolPackage.PARAMETER__OUTPUT_DEFAULT_PARAM:
+				setOutputDefaultParam((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__CONDITION_TYPE:
+				setConditionType((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2453,6 +2589,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__HIDDEN:
 				setHidden(HIDDEN_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__OUTPUT_DEFAULT_PARAM:
+				setOutputDefaultParam(OUTPUT_DEFAULT_PARAM_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__CONDITION_TYPE:
+				setConditionType(CONDITION_TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2535,6 +2677,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT == null ? outputArgValueForBooleanParam != null : !OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT.equals(outputArgValueForBooleanParam);
 			case ToolPackage.PARAMETER__HIDDEN:
 				return hidden != HIDDEN_EDEFAULT;
+			case ToolPackage.PARAMETER__OUTPUT_DEFAULT_PARAM:
+				return OUTPUT_DEFAULT_PARAM_EDEFAULT == null ? outputDefaultParam != null : !OUTPUT_DEFAULT_PARAM_EDEFAULT.equals(outputDefaultParam);
+			case ToolPackage.PARAMETER__CONDITION_TYPE:
+				return CONDITION_TYPE_EDEFAULT == null ? conditionType != null : !CONDITION_TYPE_EDEFAULT.equals(conditionType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2643,6 +2789,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(outputArgValueForBooleanParam);
 		result.append(", hidden: ");
 		result.append(hidden);
+		result.append(", outputDefaultParam: ");
+		result.append(outputDefaultParam);
+		result.append(", conditionType: ");
+		result.append(conditionType);
 		result.append(')');
 		return result.toString();
 	}

@@ -62,9 +62,9 @@ public class GlobalConfig {
 	public  static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE    = true;
 	public  static final String[] CONFIG_PROCESSING_HANDLES            = {
 										CONFIG_PROCESSING_HANDLE_FILE, CONFIG_PROCESSING_HANDLE_FILE };
-	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM = "execution_system";
-	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE = "execution_system_output_file";
-	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_VALUE = "exec_rules.txt";
+	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM                           = "execution_system";
+	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE               = "execution_system_output_file";
+	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_VALUE             = "exec_rules.txt";
 	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_OUTPUT_FILE_VALUE = "makeflow.out";
 
 	// tool options	
@@ -89,15 +89,21 @@ public class GlobalConfig {
 	private static final String    CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE          = "multiple_arg_value";
 	private static final boolean   CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE_VALUE    = false;
 	
-	private static final String    CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED         = "boolean_value_required";
-	private static final boolean   CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE   = false;
+	//private static final String    CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED         = "boolean_value_required";
+	//private static final boolean   CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE   = false;
 
 	private static final String    CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME  = "output_value_for_boolean_param";
 	private static final boolean   CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_VALUE       = false;
 	
+	private static final String    CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME            = "output_default_param";
+	private static final boolean   CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_VALUE                 = true;
+	
 	private static final String    CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL       = "assume_positional_data_param";
 	private static final boolean   CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL_VALUE = false; // true means that in/out data params are processed as postional param
 	                                                                                      // -> no key/prefix/delimiter by default, even if defined in pacakge/tool
+	private static final String    CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL            = "assume_positional_param";
+	private static final boolean   CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL_VALUE      = false;
+	
 	private static final String    CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY          = "default_omit_prefix_if_no_arg_key";
 	private static final boolean   CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY_VALUE    = true;
 	public  static final String    CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY                  = "omit_prefix_if_no_arg_key";
@@ -109,6 +115,7 @@ public class GlobalConfig {
 	private static final boolean   CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE                 = true;
 		
 	private static final Parameter positionalParamTemplate = ToolFactory.eINSTANCE.createParameter();
+	private static final Parameter optionalParamTemplate   = ToolFactory.eINSTANCE.createParameter();
 	private static final Parameter exeParameterDefault     = positionalParamTemplate;
 	
 	
@@ -178,7 +185,7 @@ public class GlobalConfig {
 		return w.toString();
 	}
 
-	public static EMap<String, String> getToolConfig() 
+	public static EMap<String, String> getToolConfig()
 	{
 		return toolConfig;
 	}
@@ -329,14 +336,31 @@ public class GlobalConfig {
 		return false;
 	}
 	
+	public static final void initParameter(Parameter parameter)
+	{
+		parameter.setNamed(false);
+		parameter.setPrefix("");
+		parameter.setDelimiter("");
+	}
+	
+	public static final Parameter getOptionalParamTemplate()
+	{
+		if (!optionalParamTemplate.getOptional())
+		{
+			initParameter(optionalParamTemplate);
+			optionalParamTemplate.setPositional(false);
+			optionalParamTemplate.setOptional(true);
+		}
+		return optionalParamTemplate;
+	}
+	
 	public static final Parameter getPositonalParamTemplate()
 	{
 		if (!positionalParamTemplate.getPositional())
 		{
-			positionalParamTemplate.setNamed(false);
+			initParameter(positionalParamTemplate);
+			positionalParamTemplate.setOptional(false);
 			positionalParamTemplate.setPositional(true);
-			positionalParamTemplate.setPrefix("");
-			positionalParamTemplate.setDelimiter("");
 		}
 		return positionalParamTemplate;
 	}
@@ -348,6 +372,15 @@ public class GlobalConfig {
 		else
 			return CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL_VALUE;
 	}
+
+	public static boolean assumePositionalParam()
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL));
+		else
+			return CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL_VALUE;
+	}
+
 	
 	public static final Parameter getExeParameterTemplate()
 	{
@@ -377,13 +410,13 @@ public class GlobalConfig {
 			return CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE_VALUE; 
 	}
 	
-	public static Boolean isBooleanValueRequired()
+	/*public static Boolean isBooleanValueRequired()
 	{
 		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED))
 			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED));
 		else
 			return CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE;
-	}
+	}*/
 	
 	public static boolean outputValueForBooleanParam()
 	{
@@ -625,5 +658,13 @@ public class GlobalConfig {
 
 	public static String getDefaultGroupingCriterion() {
 		return GlobalConstants.TRAVERSAL_CRITERION_RECORD;
+	}
+	
+	public static boolean outputDefaultParam()
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME).equals("true");
+		else
+			return CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_VALUE;
 	}
 }

@@ -67,7 +67,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToTaskMap()
 	 * @generated
 	 */
-	int STRING_TO_TASK_MAP = 23;
+	int STRING_TO_TASK_MAP = 24;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToTraversalEventMapImpl <em>String To Traversal Event Map</em>}' class.
@@ -77,7 +77,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToTraversalEventMap()
 	 * @generated
 	 */
-	int STRING_TO_TRAVERSAL_EVENT_MAP = 25;
+	int STRING_TO_TRAVERSAL_EVENT_MAP = 26;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGraphCellMapImpl <em>String To Graph Cell Map</em>}' class.
@@ -97,7 +97,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToTraversalCriterionMap()
 	 * @generated
 	 */
-	int STRING_TO_TRAVERSAL_CRITERION_MAP = 26;
+	int STRING_TO_TRAVERSAL_CRITERION_MAP = 27;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToObjectMapImpl <em>String To Object Map</em>}' class.
@@ -137,7 +137,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMap()
 	 * @generated
 	 */
-	int STRING_TO_TOOL_MAP = 24;
+	int STRING_TO_TOOL_MAP = 25;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToStringMapImpl <em>String To String Map</em>}' class.
@@ -147,7 +147,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToStringMap()
 	 * @generated
 	 */
-	int STRING_TO_STRING_MAP = 22;
+	int STRING_TO_STRING_MAP = 23;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToGroupingMapImpl <em>String To Grouping Map</em>}' class.
@@ -197,7 +197,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToStringListMap()
 	 * @generated
 	 */
-	int STRING_TO_STRING_LIST_MAP = 21;
+	int STRING_TO_STRING_LIST_MAP = 22;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToURIMapImpl <em>String To URI Map</em>}' class.
@@ -207,7 +207,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToURIMap()
 	 * @generated
 	 */
-	int STRING_TO_URI_MAP = 27;
+	int STRING_TO_URI_MAP = 28;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToSchemaMapImpl <em>String To Schema Map</em>}' class.
@@ -297,7 +297,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToToolMatchMap()
 	 * @generated
 	 */
-	int STRING_TO_TOOL_MATCH_MAP = 28;
+	int STRING_TO_TOOL_MATCH_MAP = 29;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.TaskToDataPortsMapImpl <em>Task To Data Ports Map</em>}' class.
@@ -307,7 +307,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataPortsMap()
 	 * @generated
 	 */
-	int TASK_TO_DATA_PORTS_MAP = 29;
+	int TASK_TO_DATA_PORTS_MAP = 30;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToDataLinkMapImpl <em>String To Data Link Map</em>}' class.
@@ -833,7 +833,7 @@ public interface MapsPackage extends EPackage {
 	 * @see easyflow.util.maps.impl.MapsPackageImpl#getTaskToDataLinkListMap()
 	 * @generated
 	 */
-	int TASK_TO_DATA_LINK_LIST_MAP = 30;
+	int TASK_TO_DATA_LINK_LIST_MAP = 31;
 
 	/**
 	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToParameterListMapImpl <em>String To Parameter List Map</em>}' class.
@@ -935,6 +935,43 @@ public interface MapsPackage extends EPackage {
 	 * @ordered
 	 */
 	int STRING_TO_RESOLVED_PARAM_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToResolvedParamListMapImpl <em>String To Resolved Param List Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToResolvedParamListMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToResolvedParamListMap()
+	 * @generated
+	 */
+	int STRING_TO_RESOLVED_PARAM_LIST_MAP = 21;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_RESOLVED_PARAM_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_RESOLVED_PARAM_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Resolved Param List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_RESOLVED_PARAM_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1817,6 +1854,40 @@ public interface MapsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getStringToResolvedParamMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Resolved Param List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Resolved Param List Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.ResolvedParam" valueMany="true"
+	 * @generated
+	 */
+	EClass getStringToResolvedParamListMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToResolvedParamListMap()
+	 * @generated
+	 */
+	EAttribute getStringToResolvedParamListMap_Key();
+
+	/**
+	 * Returns the meta object for the reference list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToResolvedParamListMap()
+	 * @generated
+	 */
+	EReference getStringToResolvedParamListMap_Value();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Parameter Map</em>}'.
@@ -2749,6 +2820,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_RESOLVED_PARAM_MAP__VALUE = eINSTANCE.getStringToResolvedParamMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToResolvedParamListMapImpl <em>String To Resolved Param List Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToResolvedParamListMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToResolvedParamListMap()
+		 * @generated
+		 */
+		EClass STRING_TO_RESOLVED_PARAM_LIST_MAP = eINSTANCE.getStringToResolvedParamListMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_RESOLVED_PARAM_LIST_MAP__KEY = eINSTANCE.getStringToResolvedParamListMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_RESOLVED_PARAM_LIST_MAP__VALUE = eINSTANCE.getStringToResolvedParamListMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToParameterMapImpl <em>String To Parameter Map</em>}' class.

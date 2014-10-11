@@ -204,6 +204,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToResolvedParamListMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToParameterMapEClass = null;
 
 	/**
@@ -883,6 +890,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToResolvedParamListMap() {
+		return stringToResolvedParamListMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToResolvedParamListMap_Key() {
+		return (EAttribute)stringToResolvedParamListMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToResolvedParamListMap_Value() {
+		return (EReference)stringToResolvedParamListMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToParameterMap() {
 		return stringToParameterMapEClass;
 	}
@@ -1341,6 +1375,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		createEAttribute(stringToResolvedParamMapEClass, STRING_TO_RESOLVED_PARAM_MAP__KEY);
 		createEReference(stringToResolvedParamMapEClass, STRING_TO_RESOLVED_PARAM_MAP__VALUE);
 
+		stringToResolvedParamListMapEClass = createEClass(STRING_TO_RESOLVED_PARAM_LIST_MAP);
+		createEAttribute(stringToResolvedParamListMapEClass, STRING_TO_RESOLVED_PARAM_LIST_MAP__KEY);
+		createEReference(stringToResolvedParamListMapEClass, STRING_TO_RESOLVED_PARAM_LIST_MAP__VALUE);
+
 		stringToStringListMapEClass = createEClass(STRING_TO_STRING_LIST_MAP);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__KEY);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__VALUE);
@@ -1504,6 +1542,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToResolvedParamMapEClass, Map.Entry.class, "StringToResolvedParamMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToResolvedParamMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToResolvedParamMap_Value(), theToolPackage.getResolvedParam(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToResolvedParamListMapEClass, Map.Entry.class, "StringToResolvedParamListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToResolvedParamListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToResolvedParamListMap_Value(), theToolPackage.getResolvedParam(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stringToStringListMapEClass, Map.Entry.class, "StringToStringListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
