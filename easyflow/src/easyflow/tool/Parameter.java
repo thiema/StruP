@@ -27,7 +27,6 @@ import org.eclipse.emf.common.util.EMap;
  * <ul>
  *   <li>{@link easyflow.tool.Parameter#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getType <em>Type</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getOptionValues <em>Option Values</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getOptional <em>Optional</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getMultiple <em>Multiple</em>}</li>
@@ -108,23 +107,6 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setType(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Values</b></em>' map.
-	 * The key is of type {@link java.lang.String},
-	 * and the value is of type list of {@link easyflow.tool.ResolvedParam},
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Values</em>' map isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Values</em>' map.
-	 * @see easyflow.tool.ToolPackage#getParameter_Values()
-	 * @model mapType="easyflow.util.maps.StringToResolvedParamListMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
-	 * @generated
-	 */
-	EMap<String, EList<ResolvedParam>> getValues();
 
 	/**
 	 * Returns the value of the '<em><b>Option Values</b></em>' reference list.
@@ -971,6 +953,14 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	Parameter getEffectiveParentParameter(boolean first);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	Parameter getMergedParameter(Parameter parameter, boolean first);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -20,6 +20,7 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.Condition;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
@@ -126,6 +127,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
 			case MapsPackage.TASK_TO_DATA_PORTS_MAP: return (EObject)createTaskToDataPortsMap();
 			case MapsPackage.TASK_TO_DATA_LINK_LIST_MAP: return (EObject)createTaskToDataLinkListMap();
+			case MapsPackage.STRING_TO_CONDITION_MAP: return (EObject)createStringToConditionMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -439,6 +441,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<Task, EList<DataLink>> createTaskToDataLinkListMap() {
 		TaskToDataLinkListMapImpl taskToDataLinkListMap = new TaskToDataLinkListMapImpl();
 		return taskToDataLinkListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, Condition> createStringToConditionMap() {
+		StringToConditionMapImpl stringToConditionMap = new StringToConditionMapImpl();
+		return stringToConditionMap;
 	}
 
 	/**

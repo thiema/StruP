@@ -17,6 +17,7 @@ import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -55,7 +57,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getType <em>Type</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getValues <em>Values</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOptionValues <em>Option Values</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOptional <em>Optional</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultiple <em>Multiple</em>}</li>
@@ -173,16 +174,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @ordered
 	 */
 	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getValues() <em>Values</em>}' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValues()
-	 * @generated
-	 * @ordered
-	 */
-	protected EMap<String, EList<ResolvedParam>> values;
 
 	/**
 	 * The cached value of the '{@link #getOptionValues() <em>Option Values</em>}' reference list.
@@ -843,18 +834,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap<String, EList<ResolvedParam>> getValues() {
-		if (values == null) {
-			values = new EcoreEMap<String,EList<ResolvedParam>>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_LIST_MAP, StringToResolvedParamListMapImpl.class, this, ToolPackage.PARAMETER__VALUES);
-		}
-		return values;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<OptionValue> getOptionValues() {
 		if (optionValues == null) {
 			optionValues = new EObjectResolvingEList<OptionValue>(OptionValue.class, this, ToolPackage.PARAMETER__OPTION_VALUES);
@@ -1303,22 +1282,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	/*public boolean isOutput() {
-		
-		
-		for (Data data:getData())
-		{
-			if (data.isOutput())
-				return true;
-		}
-		return false;
-	}
-	*/
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
 	public Parameter getParameterForAnalysisType(EList<TraversalChunk> records) {
 		// check only tools parameter for type analysis type,
 		// if found, check if one of them is applicable
@@ -1340,9 +1303,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		if (getType()!=null && getType().equalsIgnoreCase("analysis_type"))
 			return true;
 		
-		return false;
-		
-			
+		return false;	
 	}
 
 	/**
@@ -1352,17 +1313,17 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 */
 	public EList<String> getSupportedHandles(boolean applyConfig) {
 
+		//String d;
 		EList<String> handles = new BasicEList<String>();
 		
-		if (getHandles()==null || getHandles().isEmpty())
+		if (getHandles() == null || getHandles().isEmpty())
 		{
 			handles.add(GlobalConfig.CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE);
 			return handles;
 		}
-
 		else if (applyConfig)
 		{
-			for (String handle:GlobalConfig.getAllowedHandles())
+			for (String handle : GlobalConfig.getAllowedHandles())
 			{
 				if (getHandles().contains(handle))
 				{
@@ -1392,6 +1353,28 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getParent();
 		
 		return getEffectiveParentParameter(first);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public Parameter getMergedParameter(Parameter parameter, boolean first) {
+		
+		if (parameter == null)
+			parameter = EcoreUtil.copy(this);
+		
+		Parameter parent = getParent(); 
+		while (parent != null)
+		{
+			Parameter copyParent = EcoreUtil.copy(parent); 
+			parameter.merge(copyParent);
+			
+			parent = parent.getParent();
+		}
+		
+		return parameter;
 	}
 
 	/**
@@ -1522,8 +1505,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		{
 			outputArgValue = shouldOutputArgValue(templateParam != null ? templateParam.shouldOutputArgValue(null) : null);
 		}
-		if (!outputArgValue)
-			logger.debug("generateCommandString(): omit generation of param="+resolveName());
+		//if (!outputArgValue)
+			//logger.debug("generateCommandString(): omit generation of param="+resolveName());
 
 		// resolve prefix and key
 		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
@@ -1902,6 +1885,23 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		return getType().equals(GlobalConstants.PARAM_TYPE_BOOLEAN_VALUE);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String renderToString() {
+		String res = "name="+resolveName()+" type="+getType()
+				+" condType="+getConditionType();
+		if (isDataParam())
+		{
+			InOutParameter iop = (InOutParameter) this; 
+			res += " formats="+iop.getFormats()+" dataport="+iop.getDataPort();
+		}
+		
+		return res;
+	}
+
 	private void mergeKeys(EList<Key> newKeys)
 	{
 		for (Key newKey:newKeys)
@@ -2256,20 +2256,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ToolPackage.PARAMETER__VALUES:
-				return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ToolPackage.PARAMETER__NAME:
@@ -2280,9 +2266,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getLogger();
 			case ToolPackage.PARAMETER__TYPE:
 				return getType();
-			case ToolPackage.PARAMETER__VALUES:
-				if (coreType) return getValues();
-				else return getValues().map();
 			case ToolPackage.PARAMETER__OPTION_VALUES:
 				return getOptionValues();
 			case ToolPackage.PARAMETER__OPTIONAL:
@@ -2369,9 +2352,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return;
 			case ToolPackage.PARAMETER__TYPE:
 				setType((String)newValue);
-				return;
-			case ToolPackage.PARAMETER__VALUES:
-				((EStructuralFeature.Setting)getValues()).set(newValue);
 				return;
 			case ToolPackage.PARAMETER__OPTION_VALUES:
 				getOptionValues().clear();
@@ -2496,9 +2476,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
-			case ToolPackage.PARAMETER__VALUES:
-				getValues().clear();
-				return;
 			case ToolPackage.PARAMETER__OPTION_VALUES:
 				getOptionValues().clear();
 				return;
@@ -2615,8 +2592,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case ToolPackage.PARAMETER__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case ToolPackage.PARAMETER__VALUES:
-				return values != null && !values.isEmpty();
 			case ToolPackage.PARAMETER__OPTION_VALUES:
 				return optionValues != null && !optionValues.isEmpty();
 			case ToolPackage.PARAMETER__OPTIONAL:

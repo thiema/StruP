@@ -17,7 +17,7 @@ RealignerTargetCreator		gatk2_realigner_target_creator	BAM;BAI	gatk_interval	Gro
 #sort:Coordinate,order;index
 RealignIndels		gatk2_indel_realigner	BAM;BAI;gatk_interval	BAM	Group:joint		sort:Coordinate;index
 #		sort:Coordinate,index
-RmDup		samtools:rmdup	Alignment:BAM;BAI	BAM	Lib,Sample		;index
+RmDup		samtools:rmdup	Alignment:BAM;BAI	BAM	Lib,Sample		sort;index
 #Param2:Locus:merge	sort:Coordinate,index
 #	size(InputFiles)>1
 #demonstrate situation with possibly multiple alternative paths due to JEXL (task requires appropriate metadata instances)

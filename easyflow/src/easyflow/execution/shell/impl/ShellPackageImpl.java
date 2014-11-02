@@ -237,7 +237,6 @@ public class ShellPackageImpl extends EPackageImpl implements ShellPackage {
 
 		// Obtain other dependent packages
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -249,9 +248,6 @@ public class ShellPackageImpl extends EPackageImpl implements ShellPackage {
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(shellEClass, Shell.class, "Shell", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		EOperation op = addEOperation(shellEClass, ecorePackage.getEString(), "generateCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //ShellPackageImpl

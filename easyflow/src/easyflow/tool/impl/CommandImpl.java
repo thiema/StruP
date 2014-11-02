@@ -532,28 +532,75 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput) {
+	public ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput, int strategy) {
 		
 		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
 		while (it.hasNext())
 		{
-			Entry<String, ResolvedParam> e = it.next();
-			
-			if (e.getValue().getParameter().isDataParam())
-			{
-				InOutParameter ioParam = (InOutParameter) e.getValue().getParameter();
-				if ((ioParam.isOutput() && isOutput) || (!ioParam.isOutput() && !isOutput))
-				{
-					if (ioParam.getDataPort() != null && ioParam.getDataPort().equals(dataPort.getName()))
-						return e.getValue();
-					else if (ioParam.getFormats() != null && dataPort.isCompatibleStr(ioParam.getFormats()))
-						return e.getValue();
-				}
-			}
+			Entry<String, ResolvedParam> e  = it.next();
+			ResolvedParam                rp = e.getValue();
+			if (getDataParamForDataPort(dataPort, isOutput, rp, strategy))
+				return rp;
 		}
 		return null;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput) {
+		
+		return getDataParamForDataPort(dataPort, isOutput, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY);
+	}
+	
+	private boolean getDataParamForDataPort(DataPort dataPort, boolean isOutput, ResolvedParam resolvedParam, int strategy)
+	{
+		if (resolvedParam.getParameter().isDataParam())
+		{
+			// assume data param
+			InOutParameter ioParam = (InOutParameter) resolvedParam.getParameter();
+			
+			if ((ioParam.isOutput() && isOutput) || (!ioParam.isOutput() && !isOutput))
+			{
+				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy ==  GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_PORT) &&
+					ioParam.getDataPort() != null && ioParam.getDataPort().equals(dataPort.getName()))
+					return true;
+				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy ==  GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT) &&
+					ioParam.getFormats() != null && dataPort.isCompatibleStr(ioParam.getFormats()))
+					return true;
+			}
+		}
+		else if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
+		{
+			Iterator<Entry<String, EList<ResolvedParam>>> it = resolvedParam.getChildParams().iterator();
+			while (it.hasNext())
+			{
+				Entry<String, EList<ResolvedParam>> e = it.next();
+				Iterator<ResolvedParam> it2 = e.getValue().iterator();
+				while (it2.hasNext())
+				{
+					ResolvedParam rp = it2.next();
+					if (getDataParamForDataPort(dataPort, isOutput, rp, strategy))
+						return true;
+				}
+			}
+		}
+			
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String renderToString() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * <!-- begin-user-doc -->

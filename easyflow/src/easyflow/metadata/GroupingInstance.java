@@ -6,6 +6,7 @@
  */
 package easyflow.metadata;
 
+import easyflow.traversal.TraversalChunk;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.metadata.GroupingInstance#getGrouping <em>Grouping</em>}</li>
  *   <li>{@link easyflow.metadata.GroupingInstance#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.metadata.GroupingInstance#getRecords <em>Records</em>}</li>
+ *   <li>{@link easyflow.metadata.GroupingInstance#getTraversalChunk <em>Traversal Chunk</em>}</li>
  * </ul>
  * </p>
  *
@@ -149,11 +151,45 @@ public interface GroupingInstance extends EObject {
 	EList<String> getRecords();
 
 	/**
+	 * Returns the value of the '<em><b>Traversal Chunk</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Traversal Chunk</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Traversal Chunk</em>' reference.
+	 * @see #setTraversalChunk(TraversalChunk)
+	 * @see easyflow.metadata.MetadataPackage#getGroupingInstance_TraversalChunk()
+	 * @model
+	 * @generated
+	 */
+	TraversalChunk getTraversalChunk();
+
+	/**
+	 * Sets the value of the '{@link easyflow.metadata.GroupingInstance#getTraversalChunk <em>Traversal Chunk</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Traversal Chunk</em>' reference.
+	 * @see #getTraversalChunk()
+	 * @generated
+	 */
+	void setTraversalChunk(TraversalChunk value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model recordsMany="true"
 	 * @generated
 	 */
 	EList<String> getOverlappingRecords(EList<String> records);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	TraversalChunk asTraversalChunk();
 
 } // GroupingInstance

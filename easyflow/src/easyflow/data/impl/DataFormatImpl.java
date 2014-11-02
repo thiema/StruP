@@ -144,6 +144,15 @@ public class DataFormatImpl extends EObjectImpl implements DataFormat {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String renderAsFileExtension() {
+		return getName() != null ? getName().toLowerCase() : null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override

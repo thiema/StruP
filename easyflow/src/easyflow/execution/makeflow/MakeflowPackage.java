@@ -71,22 +71,13 @@ public interface MakeflowPackage extends EPackage {
 	int MAKEFLOW = 0;
 
 	/**
-	 * The feature id for the '<em><b>Project</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAKEFLOW__PROJECT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAKEFLOW__LOGGER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
+	int MAKEFLOW__LOGGER = ExecutionPackage.IEXECUTION_SYSTEM__LOGGER;
 
 	/**
 	 * The feature id for the '<em><b>Writer</b></em>' attribute.
@@ -95,7 +86,7 @@ public interface MakeflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAKEFLOW__WRITER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+	int MAKEFLOW__WRITER = ExecutionPackage.IEXECUTION_SYSTEM__WRITER;
 
 	/**
 	 * The number of structural features of the '<em>Makeflow</em>' class.
@@ -104,7 +95,7 @@ public interface MakeflowPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MAKEFLOW_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
+	int MAKEFLOW_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
 
 
 	/**

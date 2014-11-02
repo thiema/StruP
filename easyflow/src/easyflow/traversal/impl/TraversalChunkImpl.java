@@ -6,11 +6,14 @@
  */
 package easyflow.traversal.impl;
 
+import easyflow.metadata.GroupingInstance;
+import easyflow.metadata.MetadataFactory;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalPackage;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -25,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link easyflow.traversal.impl.TraversalChunkImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalChunkImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalChunkImpl#isDerived1by1 <em>Derived1by1</em>}</li>
+ *   <li>{@link easyflow.traversal.impl.TraversalChunkImpl#getGroupingInstance <em>Grouping Instance</em>}</li>
  * </ul>
  * </p>
  *
@@ -90,6 +94,16 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 	 * @ordered
 	 */
 	protected boolean derived1by1 = DERIVED1BY1_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getGroupingInstance() <em>Grouping Instance</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGroupingInstance()
+	 * @generated
+	 * @ordered
+	 */
+	protected GroupingInstance groupingInstance;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,6 +192,57 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public GroupingInstance getGroupingInstance() {
+		if (groupingInstance != null && groupingInstance.eIsProxy()) {
+			InternalEObject oldGroupingInstance = (InternalEObject)groupingInstance;
+			groupingInstance = (GroupingInstance)eResolveProxy(oldGroupingInstance);
+			if (groupingInstance != oldGroupingInstance) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TraversalPackage.TRAVERSAL_CHUNK__GROUPING_INSTANCE, oldGroupingInstance, groupingInstance));
+			}
+		}
+		return groupingInstance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GroupingInstance basicGetGroupingInstance() {
+		return groupingInstance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGroupingInstance(GroupingInstance newGroupingInstance) {
+		GroupingInstance oldGroupingInstance = groupingInstance;
+		groupingInstance = newGroupingInstance;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TraversalPackage.TRAVERSAL_CHUNK__GROUPING_INSTANCE, oldGroupingInstance, groupingInstance));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public GroupingInstance asGroupingInstance() {
+
+		if (getGroupingInstance() == null)
+			setGroupingInstance(MetadataFactory.eINSTANCE.createGroupingInstance());
+		getGroupingInstance().setName(getName());
+		return getGroupingInstance();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -187,6 +252,9 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 				return getLogger();
 			case TraversalPackage.TRAVERSAL_CHUNK__DERIVED1BY1:
 				return isDerived1by1();
+			case TraversalPackage.TRAVERSAL_CHUNK__GROUPING_INSTANCE:
+				if (resolve) return getGroupingInstance();
+				return basicGetGroupingInstance();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -207,6 +275,9 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 				return;
 			case TraversalPackage.TRAVERSAL_CHUNK__DERIVED1BY1:
 				setDerived1by1((Boolean)newValue);
+				return;
+			case TraversalPackage.TRAVERSAL_CHUNK__GROUPING_INSTANCE:
+				setGroupingInstance((GroupingInstance)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -229,6 +300,9 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 			case TraversalPackage.TRAVERSAL_CHUNK__DERIVED1BY1:
 				setDerived1by1(DERIVED1BY1_EDEFAULT);
 				return;
+			case TraversalPackage.TRAVERSAL_CHUNK__GROUPING_INSTANCE:
+				setGroupingInstance((GroupingInstance)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -247,6 +321,8 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case TraversalPackage.TRAVERSAL_CHUNK__DERIVED1BY1:
 				return derived1by1 != DERIVED1BY1_EDEFAULT;
+			case TraversalPackage.TRAVERSAL_CHUNK__GROUPING_INSTANCE:
+				return groupingInstance != null;
 		}
 		return super.eIsSet(featureID);
 	}

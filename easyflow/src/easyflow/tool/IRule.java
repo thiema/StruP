@@ -10,22 +10,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>ITool Element</b></em>'.
+ * A representation of the model object '<em><b>IRule</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see easyflow.tool.ToolPackage#getIToolElement()
+ * @see easyflow.tool.ToolPackage#getIRule()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface IToolElement extends EObject {
-
+public interface IRule extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
-	String renderToString();
+	void clear();
 
-} // IToolElement
+} // IRule

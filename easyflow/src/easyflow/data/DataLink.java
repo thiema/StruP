@@ -11,6 +11,7 @@ import easyflow.core.PreprocessingTask;
 
 import easyflow.traversal.TraversalChunk;
 
+import java.net.URI;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -37,8 +38,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.DataLink#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getInData <em>In Data</em>}</li>
  *   <li>{@link easyflow.data.DataLink#isTerminal <em>Terminal</em>}</li>
  *   <li>{@link easyflow.data.DataLink#isProcessed <em>Processed</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getDataResourceName <em>Data Resource Name</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getPipe <em>Pipe</em>}</li>
  * </ul>
  * </p>
  *
@@ -290,6 +294,32 @@ public interface DataLink extends EObject {
 	void setData(Data value);
 
 	/**
+	 * Returns the value of the '<em><b>In Data</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>In Data</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>In Data</em>' reference.
+	 * @see #setInData(Data)
+	 * @see easyflow.data.DataPackage#getDataLink_InData()
+	 * @model
+	 * @generated
+	 */
+	Data getInData();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#getInData <em>In Data</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>In Data</em>' reference.
+	 * @see #getInData()
+	 * @generated
+	 */
+	void setInData(Data value);
+
+	/**
 	 * Returns the value of the '<em><b>Terminal</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
@@ -342,6 +372,58 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setProcessed(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Data Resource Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data Resource Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Resource Name</em>' attribute.
+	 * @see #setDataResourceName(URI)
+	 * @see easyflow.data.DataPackage#getDataLink_DataResourceName()
+	 * @model dataType="easyflow.URI"
+	 * @generated
+	 */
+	URI getDataResourceName();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#getDataResourceName <em>Data Resource Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data Resource Name</em>' attribute.
+	 * @see #getDataResourceName()
+	 * @generated
+	 */
+	void setDataResourceName(URI value);
+
+	/**
+	 * Returns the value of the '<em><b>Pipe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Pipe</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Pipe</em>' attribute.
+	 * @see #setPipe(Boolean)
+	 * @see easyflow.data.DataPackage#getDataLink_Pipe()
+	 * @model
+	 * @generated
+	 */
+	Boolean getPipe();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#getPipe <em>Pipe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Pipe</em>' attribute.
+	 * @see #getPipe()
+	 * @generated
+	 */
+	void setPipe(Boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Param Str</b></em>' attribute.
@@ -458,5 +540,13 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	DataFormat getFormat();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isPipeable();
 
 } // DataLink

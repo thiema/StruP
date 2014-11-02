@@ -21,12 +21,4 @@ import easyflow.execution.IExecutionSystem;
  * @generated
  */
 public interface Shell extends IExecutionSystem, DefaultExecutionSystem {
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	String generateCommandLine(Task task);
 } // Shell

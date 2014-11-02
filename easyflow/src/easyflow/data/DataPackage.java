@@ -287,13 +287,22 @@ public interface DataPackage extends EPackage {
 	int DATA_LINK__DATA = 12;
 
 	/**
+	 * The feature id for the '<em><b>In Data</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__IN_DATA = 13;
+
+	/**
 	 * The feature id for the '<em><b>Terminal</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__TERMINAL = 13;
+	int DATA_LINK__TERMINAL = 14;
 
 	/**
 	 * The feature id for the '<em><b>Processed</b></em>' attribute.
@@ -302,7 +311,25 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK__PROCESSED = 14;
+	int DATA_LINK__PROCESSED = 15;
+
+	/**
+	 * The feature id for the '<em><b>Data Resource Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__DATA_RESOURCE_NAME = 16;
+
+	/**
+	 * The feature id for the '<em><b>Pipe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__PIPE = 17;
 
 	/**
 	 * The number of structural features of the '<em>Link</em>' class.
@@ -311,7 +338,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 15;
+	int DATA_LINK_FEATURE_COUNT = 18;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataImpl <em>Data</em>}' class.
@@ -351,22 +378,13 @@ public interface DataPackage extends EPackage {
 	int DATA__OUTPUT = 2;
 
 	/**
-	 * The feature id for the '<em><b>Data Resource Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA__DATA_RESOURCE_NAME = 3;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA__NAME = 4;
+	int DATA__NAME = 3;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -375,7 +393,7 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA__DESCRIPTION = 5;
+	int DATA__DESCRIPTION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -384,16 +402,25 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA__PARAMETER = 6;
+	int DATA__PARAMETER = 5;
 
 	/**
-	 * The feature id for the '<em><b>Preferred Handle</b></em>' attribute.
+	 * The feature id for the '<em><b>Resolved Param</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA__PREFERRED_HANDLE = 7;
+	int DATA__RESOLVED_PARAM = 6;
+
+	/**
+	 * The feature id for the '<em><b>Handle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA__HANDLE = 7;
 
 	/**
 	 * The number of structural features of the '<em>Data</em>' class.
@@ -672,6 +699,17 @@ public interface DataPackage extends EPackage {
 	EReference getDataLink_Data();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.data.DataLink#getInData <em>In Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>In Data</em>'.
+	 * @see easyflow.data.DataLink#getInData()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EReference getDataLink_InData();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#isTerminal <em>Terminal</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -692,6 +730,28 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDataLink_Processed();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#getDataResourceName <em>Data Resource Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Data Resource Name</em>'.
+	 * @see easyflow.data.DataLink#getDataResourceName()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_DataResourceName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#getPipe <em>Pipe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Pipe</em>'.
+	 * @see easyflow.data.DataLink#getPipe()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_Pipe();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#getParamStr <em>Param Str</em>}'.
@@ -770,17 +830,6 @@ public interface DataPackage extends EPackage {
 	EAttribute getData_Output();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.data.Data#getDataResourceName <em>Data Resource Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Data Resource Name</em>'.
-	 * @see easyflow.data.Data#getDataResourceName()
-	 * @see #getData()
-	 * @generated
-	 */
-	EAttribute getData_DataResourceName();
-
-	/**
 	 * Returns the meta object for the attribute '{@link easyflow.data.Data#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -814,15 +863,26 @@ public interface DataPackage extends EPackage {
 	EReference getData_Parameter();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.data.Data#getPreferredHandle <em>Preferred Handle</em>}'.
+	 * Returns the meta object for the reference '{@link easyflow.data.Data#getResolvedParam <em>Resolved Param</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Preferred Handle</em>'.
-	 * @see easyflow.data.Data#getPreferredHandle()
+	 * @return the meta object for the reference '<em>Resolved Param</em>'.
+	 * @see easyflow.data.Data#getResolvedParam()
 	 * @see #getData()
 	 * @generated
 	 */
-	EAttribute getData_PreferredHandle();
+	EReference getData_ResolvedParam();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.Data#getHandle <em>Handle</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Handle</em>'.
+	 * @see easyflow.data.Data#getHandle()
+	 * @see #getData()
+	 * @generated
+	 */
+	EAttribute getData_Handle();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataFormat <em>Format</em>}'.
@@ -1051,6 +1111,14 @@ public interface DataPackage extends EPackage {
 		EReference DATA_LINK__DATA = eINSTANCE.getDataLink_Data();
 
 		/**
+		 * The meta object literal for the '<em><b>In Data</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_LINK__IN_DATA = eINSTANCE.getDataLink_InData();
+
+		/**
 		 * The meta object literal for the '<em><b>Terminal</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1065,6 +1133,22 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_LINK__PROCESSED = eINSTANCE.getDataLink_Processed();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Resource Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__DATA_RESOURCE_NAME = eINSTANCE.getDataLink_DataResourceName();
+
+		/**
+		 * The meta object literal for the '<em><b>Pipe</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__PIPE = eINSTANCE.getDataLink_Pipe();
 
 		/**
 		 * The meta object literal for the '<em><b>Param Str</b></em>' attribute feature.
@@ -1125,14 +1209,6 @@ public interface DataPackage extends EPackage {
 		EAttribute DATA__OUTPUT = eINSTANCE.getData_Output();
 
 		/**
-		 * The meta object literal for the '<em><b>Data Resource Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DATA__DATA_RESOURCE_NAME = eINSTANCE.getData_DataResourceName();
-
-		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1157,12 +1233,20 @@ public interface DataPackage extends EPackage {
 		EReference DATA__PARAMETER = eINSTANCE.getData_Parameter();
 
 		/**
-		 * The meta object literal for the '<em><b>Preferred Handle</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Resolved Param</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DATA__PREFERRED_HANDLE = eINSTANCE.getData_PreferredHandle();
+		EReference DATA__RESOLVED_PARAM = eINSTANCE.getData_ResolvedParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Handle</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA__HANDLE = eINSTANCE.getData_Handle();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.

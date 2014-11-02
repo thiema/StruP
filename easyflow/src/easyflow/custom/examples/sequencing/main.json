@@ -27,7 +27,7 @@
     "num_threads"                  : 10,
     "queue"                        : "bioinf.q",
     "handles"                 : "pipe,file",
-    "default_handle"          : "file",
+    "default_handle"          : "pipe",
     "stdin_operator"          : "|",
     "stdout_operator"         : "|",
     "stdin_file_operator"     : "<",

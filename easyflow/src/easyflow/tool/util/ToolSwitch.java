@@ -8,8 +8,10 @@ package easyflow.tool.util;
 
 import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
+import easyflow.tool.Condition;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
+import easyflow.tool.IRule;
 import easyflow.tool.IToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
@@ -18,6 +20,7 @@ import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.Rule;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
@@ -85,6 +88,12 @@ public class ToolSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case ToolPackage.IRULE: {
+				IRule iRule = (IRule)theEObject;
+				T result = caseIRule(iRule);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ToolPackage.TOOL_SCHEMATA: {
 				ToolSchemata toolSchemata = (ToolSchemata)theEObject;
 				T result = caseToolSchemata(toolSchemata);
@@ -137,6 +146,7 @@ public class ToolSwitch<T> extends Switch<T> {
 			case ToolPackage.RESOLVED_PARAM: {
 				ResolvedParam resolvedParam = (ResolvedParam)theEObject;
 				T result = caseResolvedParam(resolvedParam);
+				if (result == null) result = caseIToolElement(resolvedParam);
 				if (result == null) result = caseDefaultToolElement(resolvedParam);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -192,8 +202,36 @@ public class ToolSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ToolPackage.RULE: {
+				Rule rule = (Rule)theEObject;
+				T result = caseRule(rule);
+				if (result == null) result = caseIRule(rule);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ToolPackage.CONDITION: {
+				Condition condition = (Condition)theEObject;
+				T result = caseCondition(condition);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IRule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IRule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIRule(IRule object) {
+		return null;
 	}
 
 	/**
@@ -283,6 +321,36 @@ public class ToolSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCommand(Command object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Rule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRule(Rule object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Condition</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCondition(Condition object) {
 		return null;
 	}
 

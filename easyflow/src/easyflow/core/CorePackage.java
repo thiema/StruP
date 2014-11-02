@@ -250,13 +250,22 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__EXECUTION_SYSTEM = 19;
 
 	/**
+	 * The feature id for the '<em><b>Current Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__CURRENT_RULE = 20;
+
+	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 20;
+	int WORKFLOW_FEATURE_COUNT = 21;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -503,13 +512,13 @@ public interface CorePackage extends EPackage {
 	int TASK__PREPROCESSING_TASKS = 25;
 
 	/**
-	 * The feature id for the '<em><b>Command</b></em>' containment reference.
+	 * The feature id for the '<em><b>Resolved Command</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK__COMMAND = 26;
+	int TASK__RESOLVED_COMMAND = 26;
 
 	/**
 	 * The feature id for the '<em><b>Unresolved Out Data Ports</b></em>' reference list.
@@ -1294,6 +1303,17 @@ public interface CorePackage extends EPackage {
 	EReference getWorkflow_ExecutionSystem();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getCurrentRule <em>Current Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Current Rule</em>'.
+	 * @see easyflow.core.Workflow#getCurrentRule()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_CurrentRule();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1590,15 +1610,15 @@ public interface CorePackage extends EPackage {
 	EReference getTask_PreprocessingTasks();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link easyflow.core.Task#getCommand <em>Command</em>}'.
+	 * Returns the meta object for the containment reference '{@link easyflow.core.Task#getResolvedCommand <em>Resolved Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Command</em>'.
-	 * @see easyflow.core.Task#getCommand()
+	 * @return the meta object for the containment reference '<em>Resolved Command</em>'.
+	 * @see easyflow.core.Task#getResolvedCommand()
 	 * @see #getTask()
 	 * @generated
 	 */
-	EReference getTask_Command();
+	EReference getTask_ResolvedCommand();
 
 	/**
 	 * Returns the meta object for the reference list '{@link easyflow.core.Task#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}'.
@@ -2277,6 +2297,14 @@ public interface CorePackage extends EPackage {
 		EReference WORKFLOW__EXECUTION_SYSTEM = eINSTANCE.getWorkflow_ExecutionSystem();
 
 		/**
+		 * The meta object literal for the '<em><b>Current Rule</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__CURRENT_RULE = eINSTANCE.getWorkflow_CurrentRule();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2495,12 +2523,12 @@ public interface CorePackage extends EPackage {
 		EReference TASK__PREPROCESSING_TASKS = eINSTANCE.getTask_PreprocessingTasks();
 
 		/**
-		 * The meta object literal for the '<em><b>Command</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Resolved Command</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TASK__COMMAND = eINSTANCE.getTask_Command();
+		EReference TASK__RESOLVED_COMMAND = eINSTANCE.getTask_ResolvedCommand();
 
 		/**
 		 * The meta object literal for the '<em><b>Unresolved Out Data Ports</b></em>' reference list feature.

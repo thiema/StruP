@@ -2927,7 +2927,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 		{
 			traversalChunks.add(it.next());
 		}
-		logger.debug("createDataLink(): "+chunks.size()+" chunks added from parent.");
+		logger.trace("createDataLink(): "+chunks.size()+" chunks added from parent.");
 		dataLink.getChunks().put(parentGroupingStr, traversalChunks);
 		//newDataLink.setTraversalName(task.getChunks().get(i).getKey());
 	}
@@ -3092,23 +3092,23 @@ public class UtilImpl extends EObjectImpl implements Util {
 	}
 	
 	private void copyTask(Task fromTask, Task toTask)
-	{
-		
-		if (fromTask.getCommand() == null && fromTask.getPreferredTool() != null)
-			toTask.setCommand(EcoreUtil.copy(fromTask.getPreferredTool().getCommand()));
-		
-		Command cmd = fromTask.getCommand() != null ? fromTask.getCommand() : toTask.getCommand();
+	{		
+		Command cmd = fromTask.getResolvedCommand() != null ? fromTask.getResolvedCommand() : 
+						fromTask.getPreferredTool() != null ? fromTask.getPreferredTool().getCommand() : null; 
+								
 		if (cmd != null)
 		{
-			toTask.setCommand(EcoreUtil.copy(cmd));
+			toTask.setResolvedCommand(EcoreUtil.copy(cmd));
 			Iterator<Entry<String, ResolvedParam>> it1 = cmd.getResolvedParams().iterator();
 			while (it1.hasNext())
 			{
 				Entry<String, ResolvedParam> e = it1.next();
-				toTask.getCommand().getResolvedParams().put(e.getKey(), EcoreUtil.copy(e.getValue()));
+				toTask.getResolvedCommand().getResolvedParams().put(e.getKey(), e.getValue().deepCopy());
 			}
 		}
 	}
+	
+	
 
 	private Task createTask_Param(Task task, String groupingStr, EList<GroupingInstance> groupingInstances)
 	{
@@ -4203,21 +4203,47 @@ public class UtilImpl extends EObjectImpl implements Util {
 										logger.warn("resolveToolDependencies(): ambigous data port (found "+parentData.size()+" ports)");
 									}
 									
-									
 									// get the desired data matching both parent and child 
-									Tuple<Data, Data> matchingData = getMatchingData(parentData, childData, dataLink.getFormat());
+									Tuple<Data, Data> matchingData = findMatchingData(parentData, childData, dataLink.getFormat());
 									if (matchingData == null)
 										throw new NoValidInOutDataException();
-									else if (matchingData.parent != null)
+									//
+									if (matchingData.parent != null)
 									{
-										dataLink.setData(EcoreUtil.copy(matchingData.parent));
-									}
-									else if (matchingData.child != null)
-									{
-										dataLink.setData(EcoreUtil.copy(matchingData.child));
+										Data data = EcoreUtil.copy(matchingData.parent);
+										ResolvedParam rp = task.getResolvedCommand().getDataParamForDataPort(data.getPort(), true, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
+										if (rp == null)
+											logger.error("no valid parameter found.");
+										else
+										{
+											logger.debug(""+rp.renderToString());
+											data.setResolvedParam(rp);
+											//if (data.getSupportedHandles(true).contains(GlobalConstants.NAME_PIPE_HANDLE))
+												//isPipable = true;
+										}
+										dataLink.setInData(data);
 									}
 									else
-										throw new NoValidInOutDataException();
+										logger.error("Parent_NoValidInOutDataException");
+										//throw new NoValidInOutDataException();
+									
+									if (matchingData.child != null)
+									{
+										Data data = EcoreUtil.copy(matchingData.child);
+										ResolvedParam rp = child.getResolvedCommand().getDataParamForDataPort(data.getPort(), false, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
+										if (rp == null)
+											logger.error("no valid parameter found.");
+										else
+										{
+											logger.debug(""+rp.renderToString());
+											data.setResolvedParam(rp);
+											//if (!data.getSupportedHandles(true).contains(GlobalConstants.NAME_PIPE_HANDLE))
+												//isPipable = false;
+										}
+										dataLink.setData(data);
+									}
+									else
+										logger.error("Child_NoValidInOutDataException");
 									
 									if (matchingData.parent != null)
 										dataLink.getInDataPort().setParameterName(matchingData.parent.getParameter().getEffectiveParentParameter(true).getName());
@@ -4237,7 +4263,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 									{
 										logger.error("resolveToolDependencies(): child parametername could not be resolved.");
 										DataLink parentDataLink = getFirstParentDataLink(task, task.getInDataPorts().get(0));
-										if (parentDataLink != null && parentDataLink.getData().getDataResourceName() != null)
+										if (parentDataLink != null && parentDataLink.getDataResourceName() != null)
 										{
 											InOutParameter p = (InOutParameter) matchingData.parent.getParameter();
 											
@@ -4245,7 +4271,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 													+" assume parameter=" +p.resolveName()
 													+" to be hidden. use parent datalink="+parentDataLink.getUniqueString()+" to set resource."
 													+" output filename creation: "+p.getFilenameCreation());
-											URI uri = parentDataLink.getData().getDataResourceName();
+											URI uri = parentDataLink.getDataResourceName();
 											if (GlobalConstants.ADD_EXTENSION_TO_FILENAME.equals(p.getFilenameCreation()))
 											{
 												uri = URIUtil.addExtensionToURI(uri, 
@@ -4258,13 +4284,13 @@ public class UtilImpl extends EObjectImpl implements Util {
 														dataLink.getInDataPort().getFormat().getName(), true);
 												
 											}
-											dataLink.getData().setDataResourceName(uri);
+											dataLink.setDataResourceName(uri);
 											continue;
 										}
 									}
 									
-									// decide if the port is a static one if at least one 
-									boolean isStatic = isStaticPort(dataLink.getData(), task);
+									// decide if the port is a static one. assume non-static port if outgoing datalink is not set 
+									boolean isStatic = dataLink.getData() != null ? isStaticPort(dataLink.getData(), task) : false;
 
 									TraversalCriterion tc = dataLink.isTerminal() ?
 											(task.getTraversalEvents().containsKey(groupingStr) ? 
@@ -4279,19 +4305,19 @@ public class UtilImpl extends EObjectImpl implements Util {
 													(tc.getChunkSource()+" "+tc.getId()+" "+tc.getName()+" "+tc.getMode()+" "+tc.getOperation().getName()):null)+") all:"
 													+task.getTraversalEvents().keySet()+" childs:"+(child != null ? child.getTraversalEvents().keySet() : null)
 											+" static="+isStatic
-											+"\n datalink="+dataLink.getId()+" "+dataLink.getData().getDataResourceName()
+											+"\n datalink="+dataLink.getId()+" "+dataLink.getDataResourceName()
 											+"\n   ---paramName out="+dataLink.getInDataPort().getParameterName()+" in="+(dataLink.getDataPort() != null ? 
 													dataLink.getDataPort().getParameterName() : null)
 											+"\n   ---parent data=("+(matchingData.parent != null ?
 													("format="+matchingData.parent.getFormat().getName()+" name="+matchingData.parent.getName()
 															+" port="+matchingData.parent.getPort().getName()) 
 															+" param="+matchingData.parent.getPort().getParameterName()+" "
-															+" handle="+matchingData.parent.getPreferredHandle()+" isOutput="+matchingData.parent.isOutput() : null)+")"
+															+" handle="+matchingData.parent.getHandle()+" isOutput="+matchingData.parent.isOutput() : null)+")"
 											+"\n   ---child data=("+(matchingData.child != null ?
 													("format="+matchingData.child.getFormat().getName()+" name="+matchingData.child.getName()
 															+" port="+matchingData.child.getPort().getName()
 															+" param="+matchingData.child.getPort().getParameterName()
-															+" handle="+matchingData.child.getPreferredHandle())+" isOutput="+matchingData.child.isOutput() : null)+")"
+															+" handle="+matchingData.child.getHandle())+" isOutput="+matchingData.child.isOutput() : null)+")"
 									);
 									
 										// set inputs from DataLinks first instance
@@ -4299,7 +4325,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 												&& GlobalConstants.METADATA_INPUT.equalsIgnoreCase(tc.getChunkSource()) 
 												&& "metadata".equalsIgnoreCase(tc.getOperation().getName()))
 										{
-											dataLink.getData().setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, firstInstanceDL)));
+											dataLink.setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, firstInstanceDL)));
 											logger.debug("resolveToolDependencies(): set dataresource="+firstInstanceDL+" (metadata (cached))");
 										}
 /*										else if (!isStatic && paramStr != null && !paramStr.equals("") && firstInstanceDL != null)
@@ -4320,7 +4346,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 											else if (GlobalConstants.METADATA_INPUT.equals(groupingStr) || !getMetaData().containsColumn(groupingStr))
 											{
 												// try using the firstInstance
-												dataLink.getData().setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, firstInstanceDL)));
+												dataLink.setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, firstInstanceDL)));
 												logger.debug("resolveToolDependencies(): set dataresource="+firstInstanceDL+" (metadata (cached, directly resolve/unknown traversal criterion))");
 											}
 											else
@@ -4335,7 +4361,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 												if (inputFile != null)
 												{
 													logger.debug("resolveToolDependencies(): set dataresource="+inputFile+" (metadata)");
-													dataLink.getData().setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, inputFile)));
+													dataLink.setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, inputFile)));
 													// assume the first non-null-record in metadata has the correct inputfile name/uri
 													break;
 												}
@@ -4353,7 +4379,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 											{
 												logger.debug("resolveToolDependencies(): "
 														+"set dataresource="+catalog.getEntries().get(dataLink.getData().getName())+" (catalog)");
-												dataLink.getData().setDataResourceName(getURIFromObject(catalog.getEntries().get(dataLink.getData().getName())));
+												dataLink.setDataResourceName(getURIFromObject(catalog.getEntries().get(dataLink.getData().getName())));
 											}
 											// try to get via data port
 											else
@@ -4369,7 +4395,7 @@ public class UtilImpl extends EObjectImpl implements Util {
 														{
 															logger.debug("resolveToolDependencies(): "
 																	+"set dataresource="+catalog.getEntries().get(e.getKey())+" (catalog)");
-															dataLink.getData().setDataResourceName(getURIFromObject(
+															dataLink.setDataResourceName(getURIFromObject(
 																	URIUtil.createPath(resourceDir, 
 																	(String) catalog.getEntries().get(e.getKey()))));
 															found = true;
@@ -4385,15 +4411,14 @@ public class UtilImpl extends EObjectImpl implements Util {
 										else if (!isStatic)
 										{
 											//if (task.is)
-											String fileName = task.getUniqueURIString()+"."+dataLink.getFormat().getName();
+											String fileName = task.getUniqueURIString()+"."+dataLink.getFormat().renderAsFileExtension();
 											
-											dataLink.getData().setDataResourceName(getURIFromObject(
+											dataLink.setDataResourceName(getURIFromObject(
 													URIUtil.createPath(workDir, fileName)));
 											logger.debug("resolveToolDependencies(): "
 													+"set dataresource="+fileName+" (task's grouping)");
 											if (paramStr != null && !paramStr.equals(""))
 											{
-												
 												String paramNameStr = dataLink.getParamNameStr();
 												/*if (tool.getCommand().resolveParameter(paramNameStr, dataLink.getChunks().get(paramStr)))
 													logger.debug("resolveToolDependencies(): param="+paramNameStr+" resolved !");
@@ -4517,12 +4542,12 @@ public class UtilImpl extends EObjectImpl implements Util {
 	//  - resolve the handle -> set preferred handle
 	// if only one data is non-null check the only one return the non null data 
 	// in the correct tuples value 
-	private Tuple<Data,Data> getMatchingData(EList<Data> parentData,
+	private Tuple<Data,Data> findMatchingData(EList<Data> parentData,
 			EList<Data> childData,
 			DataFormat dataFormat) 
 	{
 		EList<Data> tmpData = null;
-		
+		String dummy;
 		if ((parentData == null || parentData.isEmpty()) && childData != null && !childData.isEmpty())
 			tmpData = childData;
 		else if ((childData == null || childData.isEmpty()) && parentData != null && !parentData.isEmpty())
@@ -4534,13 +4559,19 @@ public class UtilImpl extends EObjectImpl implements Util {
 			{
 				if (d.matchFormat(dataFormat))
 				{
-					EList<String> tmpHandleList = d.getSupportedHandles(false); 
+/*					EList<String> tmpHandleList = d.getSupportedHandles(false); 
 					if (tmpHandleList!=null && !tmpHandleList.isEmpty())
 					{
 						d.setPreferredHandle(tmpHandleList.get(0));
 						return new Tuple<Data, Data>((parentData == null || parentData.isEmpty())? null : d, 
 								(childData == null || childData.isEmpty()) ? null : d);
 					}
+					*/
+					
+					return new Tuple<Data, Data>(
+											(parentData == null || parentData.isEmpty()) ? null : d, 
+											(childData  == null || childData.isEmpty())  ? null : d
+												);
 				}
 			}
 		}
@@ -4558,24 +4589,26 @@ public class UtilImpl extends EObjectImpl implements Util {
 		}
 		else if (parentData == null)
 			return null;
+		
 		if (parentData != null)	
-		for (Data parent : parentData)
-		{
-			if (parent.matchFormat(dataFormat))
+			for (Data parent : parentData)
 			{
-				//get the first dataformat matching data
-				return new Tuple<Data, Data>(parent, null);
+				if (parent.matchFormat(dataFormat))
+				{
+					//get the first dataformat matching data
+					return new Tuple<Data, Data>(parent, null);
+				}
 			}
-		}
+
 		if (childData != null)
-		for (Data child : childData)
-		{
-			if (child.matchFormat(dataFormat))
+			for (Data child : childData)
 			{
-				//get the first dataformat matching data
-				return new easyflow.custom.util.Tuple<Data, Data>(null, child);
+				if (child.matchFormat(dataFormat))
+				{
+					//get the first dataformat matching data
+					return new easyflow.custom.util.Tuple<Data, Data>(null, child);
+				}
 			}
-		}
 		
 		return null;
 	}

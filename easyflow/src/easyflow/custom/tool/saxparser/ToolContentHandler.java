@@ -31,7 +31,9 @@ import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPort;
+import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Command;
+import easyflow.tool.Condition;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
@@ -45,19 +47,23 @@ import easyflow.tool.Package;
 
 public class ToolContentHandler implements ContentHandler {
 	
-	List<Tool> tools = new ArrayList<Tool>();
-	Map<String,Package> packages = GlobalVar.getPackages();
-	Logger logger = Logger.getLogger(ToolContentHandler.class);
-	Map<String, String> conditionalMap = new HashMap<String, String>();
-	Map<String, URI> importMap = new HashMap<String, URI>();
-	Map<String, DataFormat> dataFormatMap = new HashMap<String, DataFormat>();
-	Stack<Tag> tagStack = new Stack<Tag>();
-	Stack<Parameter> paramStack = new Stack<Parameter>();
+	Logger                  logger         = Logger.getLogger(ToolContentHandler.class);
+	
+	List<Tool>              tools          = new ArrayList<Tool>();
+	Map<String,Package>     packages       = GlobalVar.getPackages();
+	Map<String, String>     conditionalMap = new HashMap<String, String>();
+	Map<String, URI>        importMap      = new HashMap<String, URI>();
+	Map<String, DataFormat> dataFormatMap  = new HashMap<String, DataFormat>();
+	
+	Stack<Tag>              tagStack       = new Stack<Tag>();
+	Stack<ResolvedParam>    paramStack     = new Stack<ResolvedParam>();
 	
 	Package     pkg         = null;
 	Tool        tool        = null;
-	Parameter   parameter   = null;
-	Parameter   subParam    = null;
+	//Parameter   parameter   = null;
+	//Parameter   subParam    = null;
+	ResolvedParam subResolvedParam = null;
+	ResolvedParam resolvedParam = null;
 	OptionValue optionValue = null;
 	Data        data        = null;
 	DataPort    dataPort    = null;
@@ -75,6 +81,9 @@ public class ToolContentHandler implements ContentHandler {
 	String condition        = null;
 	String conditionValue   = null;
 	String conditionType    = null;
+	String conditionName    = null;
+	String conditionExp     = null;
+	String grouping         = null;
 	String action           = null;
 	
 	boolean xmlKeyFound     = false;
@@ -167,7 +176,9 @@ public class ToolContentHandler implements ContentHandler {
 	@Override
 	public void startDocument() throws SAXException {
 		masterMap = GlobalVar.getMasterMap();
-		logger.trace("startDoc: parentTag="+parentTag+" lastAttrib="+lastMainAttributeValue+" parameter="+parameter);
+		logger.trace("startDoc: parentTag="+parentTag
+				+" lastAttrib="+lastMainAttributeValue
+				+" parameter="+(resolvedParam != null ? resolvedParam.resolveName() : null));
 		no_requirement = 0;
 	}
 
@@ -271,6 +282,16 @@ public class ToolContentHandler implements ContentHandler {
 		return curInOutParam;
 	}
 	
+	private void setParamDefaults(Parameter curParam)
+	{
+		curParam.setOptional(null);
+		curParam.setPositional(null);
+		curParam.setMultiple(null);
+		curParam.setMultipleInstancesPerInput(null);
+		curParam.setMultipleInstances(null);
+		curParam.setMultipleValue(null);
+	}
+	
 	private boolean setParam(Attributes atts, Parameter curParam)
 	{
 		initParam(curParam);
@@ -358,10 +379,11 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setOutputArgValueForBooleanParam(atts.getValue("output_arg_value_for_boolean_param").equals("true") ? true : false);
 		else
 			curParam.setOutputArgValueForBooleanParam(null);
+		
 		if (atts.getValue("output_default_param") != null)
 			curParam.setOutputDefaultParam(atts.getValue("output_default_param").equals("true") ? true : false);
 		else
-			curParam.setFixedArgValue(null);
+			curParam.setOutputDefaultParam(null);
 			
 		if (atts.getValue("label") != null)
 			curParam.setLabel(atts.getValue("label"));
@@ -519,6 +541,19 @@ public class ToolContentHandler implements ContentHandler {
 		return atts.getValue("type") != null && atts.getValue("type").equals("analysis_type");
 	}
 	
+	void addParamToTool(boolean isAbstract)
+	{
+		if (isAbstract)
+		{
+			tool.getCommand().getTemplateParams().add(resolvedParam.getParameter());
+		}
+		else
+		{
+			tool.getCommand().getResolvedParams().put(resolvedParam.resolveName(), resolvedParam);
+		}
+
+	}
+	
 	ResolvedParam createResolvedParam(Parameter param)
 	{
 		ResolvedParam resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
@@ -622,7 +657,12 @@ public class ToolContentHandler implements ContentHandler {
 						{
 							resolvedParam.setName(atts.getValue("name"));
 						}
-						//else					{						resolvedParam.setName(tool.getId());					}
+						else
+						{
+							//resolvedParam.setName(tool.getId());
+							logger.warn("set to default.");
+							resolvedParam.setName("dummy_name");
+						}
 						
 						Parameter param = ToolFactory.eINSTANCE.createParameter();
 						param.setName(resolvedParam.getName());
@@ -679,63 +719,72 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				break;
 			case PARAM:
-				Parameter p = createParameter(atts);
-				if (parameter != null && condition != null)
-					p.setParent(parameter);
+				Parameter p_tmp = createParameter(atts);
+				ResolvedParam p = createResolvedParam(p_tmp);
 				
-				if (!setParam(atts, p))
+				if (resolvedParam != null && condition != null && (withinParam || withinConditional))
+					p_tmp.setParent(resolvedParam.getParameter());
+				
+				if (!setParam(atts, p_tmp))
 					break;
 				
+				if (withinConditional && conditionType != null && !withinPackage)
+					if (lastTag.equals(Tag.CONDITIONAL))
+						p_tmp.setConditionType(conditionType);
+
 				if (withinConditional && condition != null && !withinPackage)
 				{
 					if (lastTag.equals(Tag.CONDITIONAL))
 					{
-						if (conditionType != null)
-							p.setConditionType(conditionType);
 						paramStack.add(p);
 					}
-					if (parameter == null)
-						parameter=p;
+					if (resolvedParam == null)
+					{
+						resolvedParam = p;
+					}
 					else
 					{
-						subParam=p;
-						subParam.setParent(parameter);
-						if (parameter.getValues().containsKey(condition))
-							parameter.getValues().get(condition).add(createResolvedParam(subParam));
+						subResolvedParam = p;
+						subResolvedParam.getParameter().setParent(resolvedParam.getParameter());
+						if (grouping != null && !p_tmp.getGrouping().contains(grouping))
+							p_tmp.getGrouping().add(grouping);
+						
+						if (resolvedParam.getChildParams().containsKey(condition))
+							resolvedParam.getChildParams().get(condition).add(subResolvedParam);
 						else
 						{
 							EList<ResolvedParam> pl = new BasicEList<ResolvedParam>();
-							pl.add(createResolvedParam(subParam));
-							parameter.getValues().put(condition, pl);
+							pl.add(subResolvedParam);
+							resolvedParam.getChildParams().put(condition, pl);
+							if (conditionExp != null && !resolvedParam.getConditions().containsKey(condition))
+							{
+								Condition cond = ToolFactory.eINSTANCE.createCondition();
+								cond.setName(condition);
+								cond.setExpression(conditionExp);
+								resolvedParam.getConditions().put(condition, cond);
+							}
+
 						}
 					}
 				}
 				else
 				{
-					parameter=p;
+					resolvedParam=p;
 				}
 				boolean isAbstract = isAbstract(atts);
 				
 				if (withinPackage)
 				{
 					if (isAbstract)
-						pkg.getTemplateParams().add(parameter);
+						pkg.getTemplateParams().add(resolvedParam.getParameter());
 					else
 					{
-						pkg.getResolvedParams().add(createResolvedParam(parameter));
+						pkg.getResolvedParams().add(resolvedParam);
 					}
 				}
-				else if (subParam!=p)
+				else if (subResolvedParam != p)
 				{
-					logger.debug("put "+parameter.getName());
-					if (isAbstract)
-					{
-						tool.getCommand().getTemplateParams().add(parameter);
-					}
-					else
-					{
-						tool.getCommand().getResolvedParams().put(parameter.getName(), createResolvedParam(parameter));
-					}
+					addParamToTool(isAbstract);
 				}
 				withinParam = true;
 				break;
@@ -752,7 +801,7 @@ public class ToolContentHandler implements ContentHandler {
 					key.setPrefix(atts.getValue("prefix"));
 				if (atts.getValue("separator") != null)
 					key.setDelimiter(atts.getValue("separator"));
-				parameter.getKeys().add(key);
+				resolvedParam.getParameter().getKeys().add(key);
 				break;
 			case OPTION:
 				withinOption  = true;
@@ -777,7 +826,7 @@ public class ToolContentHandler implements ContentHandler {
 				}
 				else if (withinParam)
 				{
-					parameter.getOptionValues().add(optionValue);
+					resolvedParam.getParameter().getOptionValues().add(optionValue);
 					if (atts.getValue("exe")!=null)
 						optionValue.setExe(atts.getValue("exe"));
 				}
@@ -786,14 +835,35 @@ public class ToolContentHandler implements ContentHandler {
 				break;
 			case CONDITIONAL:
 				//conditionalMap.put("name", atts.getValue("name"));
+				conditionName = atts.getValue("name");
 				withinConditional = true;
 				if (atts.getValue("type") != null)
 					conditionType = atts.getValue("type");
+				if (atts.getValue("grouping") != null)
+					grouping = atts.getValue("grouping");
 				break;
 			case WHEN:
 				//lastMainAttributeValue = atts.getValue("value");
 				conditionalMap.put("when_value", atts.getValue("value"));
-				condition=atts.getValue("value");
+				condition = atts.getValue("value");
+				if (atts.getValue("condition") != null)
+					conditionExp = atts.getValue("condition");
+				if (lastTag.equals(Tag.CONDITIONAL) && withinConditional)
+				{
+					resolvedParam = ToolFactory.eINSTANCE.createResolvedParam();
+					resolvedParam.setName(conditionName);
+					
+					Parameter parameter = ToolFactory.eINSTANCE.createParameter();
+					initParam(parameter);
+					parameter.setName(resolvedParam.getName());
+					parameter.setType("select");
+					if (conditionType != null)
+						parameter.setConditionType(conditionType);
+					if (grouping != null)
+						parameter.getGrouping().add(grouping);
+					resolvedParam.setParameter(parameter);
+					addParamToTool(false);
+				}
 				break;
 			case ACTION:
 				conditionalMap.put("action_type", atts.getValue("type"));
@@ -884,16 +954,21 @@ public class ToolContentHandler implements ContentHandler {
 				condition=null;
 				break;
 			case CONDITIONAL:
+				
 				if (!paramStack.isEmpty())
 					paramStack.pop();
 				if (!paramStack.isEmpty())
-					parameter=paramStack.peek();
+					 resolvedParam = paramStack.peek();
+					
 				if (!tagStack.contains(Tag.CONDITIONAL))
 				{
 					withinConditional = false;
-					parameter = null;
+					resolvedParam = null;
 				}
 				conditionType = null;
+				conditionName = null;
+				conditionExp  = null; 
+				grouping      = null;
 				break;
 			case METADATA_MAP:
 				withinMetadataMap = false;
@@ -909,6 +984,9 @@ public class ToolContentHandler implements ContentHandler {
 				data = null;
 				break;
 			case PARAM:
+				logger.debug(resolvedParam.renderToString());
+				if (!withinConditional)
+					resolvedParam = null;
 				withinParam = false;
 				break;
 			case OPTION:
@@ -996,7 +1074,7 @@ public class ToolContentHandler implements ContentHandler {
 						key.setValue(curValue);
 						break;
 					case OPTION:
-						subParam.setName(curValue);
+						subResolvedParam.getParameter().setName(curValue);
 						break;
 					case REQUIREMENT:
 						requirement.setValue(curValue);

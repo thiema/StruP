@@ -489,6 +489,15 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTraversalChunk_GroupingInstance() {
+		return (EReference)traversalChunkEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TraversalFactory getTraversalFactory() {
 		return (TraversalFactory)getEFactoryInstance();
 	}
@@ -546,6 +555,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__NAME);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__LOGGER);
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__DERIVED1BY1);
+		createEReference(traversalChunkEClass, TRAVERSAL_CHUNK__GROUPING_INSTANCE);
 	}
 
 	/**
@@ -576,6 +586,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -631,6 +642,9 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEAttribute(getTraversalChunk_Name(), ecorePackage.getEString(), "name", null, 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalChunk_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalChunk.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalChunk_Derived1by1(), ecorePackage.getEBoolean(), "derived1by1", "false", 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTraversalChunk_GroupingInstance(), theMetadataPackage.getGroupingInstance(), null, "groupingInstance", null, 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(traversalChunkEClass, theMetadataPackage.getGroupingInstance(), "asGroupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //TraversalPackageImpl

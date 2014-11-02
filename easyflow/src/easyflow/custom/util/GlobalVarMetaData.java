@@ -110,7 +110,7 @@ public class GlobalVarMetaData {
 	public static void setMetaDataTableRow(String[] lina)
 	{
 		int row=rowHeaderMap.get(lina[0]);
-		for (int i=1;i<lina.length;i++)
+		for (int i = 1; i < lina.length; i++)
 			//metaDataTable[row][i-1]=lina[i];
 			setField(row, i-1, lina[i]);
 	}
@@ -127,8 +127,8 @@ public class GlobalVarMetaData {
 	public static Map<String, String> getMetaDataTableRow(String rowStr)
 	{
 		Map<String, String> tableRow = new HashMap<String, String>();
-		int row=rowHeaderMap.get(rowStr);
-		for (String col:colHeaderMap.keySet())
+		int row = rowHeaderMap.get(rowStr);
+		for (String col : colHeaderMap.keySet())
 		{
 			tableRow.put(col, metaDataTable[row][colHeaderMap.get(col)]);
 		}
@@ -138,8 +138,8 @@ public class GlobalVarMetaData {
 	public static Map<String, String> getMetaDataTableColumn(String columnStr)
 	{
 		Map<String, String> tableCol = new HashMap<String, String>();
-		int col=colHeaderMap.get(columnStr);
-		for (String row:rowHeaderMap.keySet())
+		int col = colHeaderMap.get(columnStr);
+		for (String row : rowHeaderMap.keySet())
 		{
 			tableCol.put(row, metaDataTable[rowHeaderMap.get(row)][col]);
 		}

@@ -1244,6 +1244,43 @@ public interface MapsPackage extends EPackage {
 	int TASK_TO_DATA_LINK_LIST_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToConditionMapImpl <em>String To Condition Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToConditionMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToConditionMap()
+	 * @generated
+	 */
+	int STRING_TO_CONDITION_MAP = 32;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CONDITION_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CONDITION_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Condition Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CONDITION_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2196,6 +2233,40 @@ public interface MapsPackage extends EPackage {
 	EReference getTaskToDataLinkListMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Condition Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Condition Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.tool.Condition"
+	 * @generated
+	 */
+	EClass getStringToConditionMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToConditionMap()
+	 * @generated
+	 */
+	EAttribute getStringToConditionMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToConditionMap()
+	 * @generated
+	 */
+	EReference getStringToConditionMap_Value();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Parameter List Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3080,6 +3151,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK_TO_DATA_LINK_LIST_MAP__VALUE = eINSTANCE.getTaskToDataLinkListMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToConditionMapImpl <em>String To Condition Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToConditionMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToConditionMap()
+		 * @generated
+		 */
+		EClass STRING_TO_CONDITION_MAP = eINSTANCE.getStringToConditionMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_CONDITION_MAP__KEY = eINSTANCE.getStringToConditionMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_CONDITION_MAP__VALUE = eINSTANCE.getStringToConditionMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToParameterListMapImpl <em>String To Parameter List Map</em>}' class.

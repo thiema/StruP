@@ -10,6 +10,8 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.MetadataPackage;
+import easyflow.traversal.TraversalChunk;
+import easyflow.traversal.TraversalFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToGroupingFeatureMapImpl;
 import java.lang.reflect.InvocationTargetException;
@@ -41,6 +43,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.metadata.impl.GroupingInstanceImpl#getGrouping <em>Grouping</em>}</li>
  *   <li>{@link easyflow.metadata.impl.GroupingInstanceImpl#getGroupingStr <em>Grouping Str</em>}</li>
  *   <li>{@link easyflow.metadata.impl.GroupingInstanceImpl#getRecords <em>Records</em>}</li>
+ *   <li>{@link easyflow.metadata.impl.GroupingInstanceImpl#getTraversalChunk <em>Traversal Chunk</em>}</li>
  * </ul>
  * </p>
  *
@@ -116,6 +119,16 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 	 * @ordered
 	 */
 	protected EList<String> records;
+
+	/**
+	 * The cached value of the '{@link #getTraversalChunk() <em>Traversal Chunk</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTraversalChunk()
+	 * @generated
+	 * @ordered
+	 */
+	protected TraversalChunk traversalChunk;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -243,6 +256,44 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TraversalChunk getTraversalChunk() {
+		if (traversalChunk != null && traversalChunk.eIsProxy()) {
+			InternalEObject oldTraversalChunk = (InternalEObject)traversalChunk;
+			traversalChunk = (TraversalChunk)eResolveProxy(oldTraversalChunk);
+			if (traversalChunk != oldTraversalChunk) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MetadataPackage.GROUPING_INSTANCE__TRAVERSAL_CHUNK, oldTraversalChunk, traversalChunk));
+			}
+		}
+		return traversalChunk;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TraversalChunk basicGetTraversalChunk() {
+		return traversalChunk;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTraversalChunk(TraversalChunk newTraversalChunk) {
+		TraversalChunk oldTraversalChunk = traversalChunk;
+		traversalChunk = newTraversalChunk;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MetadataPackage.GROUPING_INSTANCE__TRAVERSAL_CHUNK, oldTraversalChunk, traversalChunk));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public EList<String> getOverlappingRecords(EList<String> records) {
@@ -251,6 +302,19 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 			if (getRecords().contains(rec1))
 				overlaps.add(rec1);
 		return overlaps;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public TraversalChunk asTraversalChunk() {
+		
+		if (getTraversalChunk() == null)
+			setTraversalChunk(TraversalFactory.eINSTANCE.createTraversalChunk());
+		getTraversalChunk().setName(getName());
+		return getTraversalChunk();
 	}
 
 	/**
@@ -287,6 +351,9 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 				return getGroupingStr();
 			case MetadataPackage.GROUPING_INSTANCE__RECORDS:
 				return getRecords();
+			case MetadataPackage.GROUPING_INSTANCE__TRAVERSAL_CHUNK:
+				if (resolve) return getTraversalChunk();
+				return basicGetTraversalChunk();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -316,6 +383,9 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 				getRecords().clear();
 				getRecords().addAll((Collection<? extends String>)newValue);
 				return;
+			case MetadataPackage.GROUPING_INSTANCE__TRAVERSAL_CHUNK:
+				setTraversalChunk((TraversalChunk)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -343,6 +413,9 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 			case MetadataPackage.GROUPING_INSTANCE__RECORDS:
 				getRecords().clear();
 				return;
+			case MetadataPackage.GROUPING_INSTANCE__TRAVERSAL_CHUNK:
+				setTraversalChunk((TraversalChunk)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -365,6 +438,8 @@ public class GroupingInstanceImpl extends EObjectImpl implements GroupingInstanc
 				return GROUPING_STR_EDEFAULT == null ? groupingStr != null : !GROUPING_STR_EDEFAULT.equals(groupingStr);
 			case MetadataPackage.GROUPING_INSTANCE__RECORDS:
 				return records != null && !records.isEmpty();
+			case MetadataPackage.GROUPING_INSTANCE__TRAVERSAL_CHUNK:
+				return traversalChunk != null;
 		}
 		return super.eIsSet(featureID);
 	}

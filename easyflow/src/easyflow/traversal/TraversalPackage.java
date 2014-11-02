@@ -444,13 +444,22 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_CHUNK__DERIVED1BY1 = 2;
 
 	/**
+	 * The feature id for the '<em><b>Grouping Instance</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_CHUNK__GROUPING_INSTANCE = 3;
+
+	/**
 	 * The number of structural features of the '<em>Chunk</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_CHUNK_FEATURE_COUNT = 3;
+	int TRAVERSAL_CHUNK_FEATURE_COUNT = 4;
 
 
 	/**
@@ -779,6 +788,17 @@ public interface TraversalPackage extends EPackage {
 	EAttribute getTraversalChunk_Derived1by1();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.traversal.TraversalChunk#getGroupingInstance <em>Grouping Instance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Grouping Instance</em>'.
+	 * @see easyflow.traversal.TraversalChunk#getGroupingInstance()
+	 * @see #getTraversalChunk()
+	 * @generated
+	 */
+	EReference getTraversalChunk_GroupingInstance();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1049,6 +1069,14 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TRAVERSAL_CHUNK__DERIVED1BY1 = eINSTANCE.getTraversalChunk_Derived1by1();
+
+		/**
+		 * The meta object literal for the '<em><b>Grouping Instance</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRAVERSAL_CHUNK__GROUPING_INSTANCE = eINSTANCE.getTraversalChunk_GroupingInstance();
 
 	}
 

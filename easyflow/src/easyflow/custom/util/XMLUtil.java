@@ -386,12 +386,12 @@ public class XMLUtil {
 		while (it2.hasNext())
 		{
 			Tool tool = it2.next();
-			if (task.getCommand() != null)
+			if (task.getResolvedCommand() != null)
 			{
-				if (task.getCommand().getResolvedParams() != null)
+				if (task.getResolvedCommand().getResolvedParams() != null)
 				{
-					resource.getContents().addAll(task.getCommand().getResolvedParams().values());
-					for (ResolvedParam param:task.getCommand().getResolvedParams().values())
+					resource.getContents().addAll(task.getResolvedCommand().getResolvedParams().values());
+					for (ResolvedParam param:task.getResolvedCommand().getResolvedParams().values())
 					{
 						if (param.getParameter().getKeys()!=null)
 							resource.getContents().addAll(param.getParameter().getKeys());

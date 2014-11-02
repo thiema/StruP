@@ -586,10 +586,11 @@ public class DefaultMetaDataImpl extends EObjectImpl implements DefaultMetaData 
 	 * @generated not
 	 */
 	public EMap<String, Object> getRecord(TraversalChunk record) {
-		Map<String, String> map=GlobalVarMetaData.getMetaDataTableRow(record.getName());
-		EMap<String, Object> emap=new BasicEMap<String, Object>();
+		
+		Map<String, String>   map = GlobalVarMetaData.getMetaDataTableRow(record.getName());
+		EMap<String, Object> emap = new BasicEMap<String, Object>();
 		//logger.debug(map.values());
-		for (Entry<String, String> e:map.entrySet())
+		for (Entry<String, String> e : map.entrySet())
 		{
 			if (e.getValue()!=null)
 				emap.put(e.getKey(), parseString(e.getKey(), e.getValue()));

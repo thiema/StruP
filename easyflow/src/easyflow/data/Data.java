@@ -8,6 +8,7 @@ package easyflow.data;
 
 import easyflow.tool.Parameter;
 
+import easyflow.tool.ResolvedParam;
 import java.net.URI;
 
 import org.eclipse.emf.common.util.EList;
@@ -25,11 +26,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.Data#getLabel <em>Label</em>}</li>
  *   <li>{@link easyflow.data.Data#getPort <em>Port</em>}</li>
  *   <li>{@link easyflow.data.Data#isOutput <em>Output</em>}</li>
- *   <li>{@link easyflow.data.Data#getDataResourceName <em>Data Resource Name</em>}</li>
  *   <li>{@link easyflow.data.Data#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.data.Data#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.data.Data#getParameter <em>Parameter</em>}</li>
- *   <li>{@link easyflow.data.Data#getPreferredHandle <em>Preferred Handle</em>}</li>
+ *   <li>{@link easyflow.data.Data#getResolvedParam <em>Resolved Param</em>}</li>
+ *   <li>{@link easyflow.data.Data#getHandle <em>Handle</em>}</li>
  * </ul>
  * </p>
  *
@@ -118,32 +119,6 @@ public interface Data extends EObject {
 	void setOutput(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Data Resource Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Data Resource Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Data Resource Name</em>' attribute.
-	 * @see #setDataResourceName(URI)
-	 * @see easyflow.data.DataPackage#getData_DataResourceName()
-	 * @model dataType="easyflow.URI"
-	 * @generated
-	 */
-	URI getDataResourceName();
-
-	/**
-	 * Sets the value of the '{@link easyflow.data.Data#getDataResourceName <em>Data Resource Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Data Resource Name</em>' attribute.
-	 * @see #getDataResourceName()
-	 * @generated
-	 */
-	void setDataResourceName(URI value);
-
-	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -222,30 +197,56 @@ public interface Data extends EObject {
 	void setParameter(Parameter value);
 
 	/**
-	 * Returns the value of the '<em><b>Preferred Handle</b></em>' attribute.
+	 * Returns the value of the '<em><b>Resolved Param</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Preferred Handle</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Resolved Param</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Preferred Handle</em>' attribute.
-	 * @see #setPreferredHandle(String)
-	 * @see easyflow.data.DataPackage#getData_PreferredHandle()
+	 * @return the value of the '<em>Resolved Param</em>' reference.
+	 * @see #setResolvedParam(ResolvedParam)
+	 * @see easyflow.data.DataPackage#getData_ResolvedParam()
 	 * @model
 	 * @generated
 	 */
-	String getPreferredHandle();
+	ResolvedParam getResolvedParam();
 
 	/**
-	 * Sets the value of the '{@link easyflow.data.Data#getPreferredHandle <em>Preferred Handle</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.data.Data#getResolvedParam <em>Resolved Param</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Preferred Handle</em>' attribute.
-	 * @see #getPreferredHandle()
+	 * @param value the new value of the '<em>Resolved Param</em>' reference.
+	 * @see #getResolvedParam()
 	 * @generated
 	 */
-	void setPreferredHandle(String value);
+	void setResolvedParam(ResolvedParam value);
+
+	/**
+	 * Returns the value of the '<em><b>Handle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Handle</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Handle</em>' attribute.
+	 * @see #setHandle(String)
+	 * @see easyflow.data.DataPackage#getData_Handle()
+	 * @model
+	 * @generated
+	 */
+	String getHandle();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.Data#getHandle <em>Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Handle</em>' attribute.
+	 * @see #getHandle()
+	 * @generated
+	 */
+	void setHandle(String value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -294,5 +295,29 @@ public interface Data extends EObject {
 	 * @generated
 	 */
 	boolean matchFormat(DataFormat testDataFormat);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveHandle(Data testData);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean resolveHandle(String handle);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	EList<String> resolveSupportedHandles();
 
 } // Data

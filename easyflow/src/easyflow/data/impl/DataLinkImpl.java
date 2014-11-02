@@ -8,6 +8,7 @@ package easyflow.data.impl;
 
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Util;
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
@@ -17,9 +18,11 @@ import easyflow.data.DataPort;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
+import java.net.URI;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
@@ -55,14 +58,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getCondition <em>Condition</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getIntermediateTasks <em>Intermediate Tasks</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getData <em>Data</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getInData <em>In Data</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#isTerminal <em>Terminal</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#isProcessed <em>Processed</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getDataResourceName <em>Data Resource Name</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getPipe <em>Pipe</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class DataLinkImpl extends EObjectImpl implements DataLink {
+	
+	Logger logger = Logger.getLogger(DataLink.class);
 	/**
 	 * The cached value of the '{@link #getDataPort() <em>Data Port</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -254,6 +262,16 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	protected Data data;
 
 	/**
+	 * The cached value of the '{@link #getInData() <em>In Data</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInData()
+	 * @generated
+	 * @ordered
+	 */
+	protected Data inData;
+
+	/**
 	 * The default value of the '{@link #isTerminal() <em>Terminal</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -292,6 +310,46 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @ordered
 	 */
 	protected boolean processed = PROCESSED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDataResourceName() <em>Data Resource Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataResourceName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final URI DATA_RESOURCE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDataResourceName() <em>Data Resource Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataResourceName()
+	 * @generated
+	 * @ordered
+	 */
+	protected URI dataResourceName = DATA_RESOURCE_NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getPipe() <em>Pipe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPipe()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean PIPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPipe() <em>Pipe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPipe()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean pipe = PIPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -578,6 +636,44 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Data getInData() {
+		if (inData != null && inData.eIsProxy()) {
+			InternalEObject oldInData = (InternalEObject)inData;
+			inData = (Data)eResolveProxy(oldInData);
+			if (inData != oldInData) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataPackage.DATA_LINK__IN_DATA, oldInData, inData));
+			}
+		}
+		return inData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Data basicGetInData() {
+		return inData;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setInData(Data newInData) {
+		Data oldInData = inData;
+		inData = newInData;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__IN_DATA, oldInData, inData));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isTerminal() {
 		return terminal;
 	}
@@ -613,6 +709,48 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		processed = newProcessed;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PROCESSED, oldProcessed, processed));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public URI getDataResourceName() {
+		return dataResourceName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataResourceName(URI newDataResourceName) {
+		URI oldDataResourceName = dataResourceName;
+		dataResourceName = newDataResourceName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__DATA_RESOURCE_NAME, oldDataResourceName, dataResourceName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getPipe() {
+		return pipe;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPipe(Boolean newPipe) {
+		Boolean oldPipe = pipe;
+		pipe = newPipe;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PIPE, oldPipe, pipe));
 	}
 
 	/**
@@ -745,7 +883,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		String sep2="=";
 		String sep3="-";
 		
-		
 		if (getParamStr()!=null && !getParamStr().equals(""))
 		{
 			uniqueStr1+=getParamStr();
@@ -753,6 +890,7 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				uniqueStr1+=sep2+Util.list2String(getChunks().get(getParamStr()), sep3);
 			uniqueStrs.add(uniqueStr1);
 		}
+		
 		if (getGroupingStr() != null && !getGroupingStr().equals(""))
 		{
 			uniqueStr2+=getGroupingStr();
@@ -762,7 +900,6 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		}
 		
 		return StringUtils.join(uniqueStrs, sep1);
-				
 	}
 
 	/**
@@ -771,11 +908,54 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * @generated not
 	 */
 	public DataFormat getFormat() {
+		
 		DataFormat format = null;
+		
+		boolean formatInAvail = false;
+		boolean formatOutAvail= false;
+		
+		if (getDataPort() != null)
+			formatOutAvail = true;
+		if (getInDataPort() != null)
+			formatInAvail = true;
+		
+		if (formatInAvail && formatOutAvail)
+			for (DataFormat in : getInDataPort().getDataFormats().values())
+				for (DataFormat out : getDataPort().getDataFormats().values())
+					if (in.match(out))
+						format = in;
+		
+		if (format == null)
+		{
+			formatInAvail = false;
+			formatOutAvail= false;
+		
+		logger.debug((getData() != null ? getData().getFormat() : "no out data defined ")
+				+" -- "
+				+(getInData() != null ? getInData().getFormat() : "no in data defined"));
+		
 		if (getData() != null && getData().getFormat() != null && !"".equals(getData().getFormat()))
 		{
-			format = getData().getFormat();
+			formatOutAvail = true;
 		}
+		else if (getInData() != null && getInData().getFormat() != null && !"".equals(getInData().getFormat()))
+		{
+			formatInAvail = true;
+		}
+		
+		if (formatOutAvail && formatInAvail)
+		{
+			for (DataFormat in : getInData().getPort().getDataFormats().values())
+				for (DataFormat out : getData().getPort().getDataFormats().values())
+					if (in.match(out))
+						format = in;
+			if (format == null)
+				format = getInData().getFormat();
+		}
+		else if (formatInAvail)
+			format = getInData().getFormat();
+		else if (formatOutAvail)
+			format = getData().getFormat();
 		else 
 		{
 			if (getData() != null && getData().getPort() != null 
@@ -793,10 +973,47 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				format = getInDataPort().getFormat();
 			}
 		}
-		return format;
-			
+		}
+		return format;		
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isPipeable() {
+		
+		//boolean applyConfig = true;
+		boolean isPipeable = false;
+		boolean rootProvidesPipe = false;
+		EList<String> handles;
+		if (getInData() != null)
+		{
+			handles = getInData().resolveSupportedHandles();
+			if (//getInData().getSupportedHandles(applyConfig).contains(GlobalConstants.NAME_PIPE_HANDLE))
+				handles.contains(GlobalConstants.NAME_PIPE_HANDLE))
+				isPipeable = true;
+		}
+		else
+		{
+			isPipeable = rootProvidesPipe;
+		}
+		
+		if (getData() != null)
+		{
+			handles = getData().resolveSupportedHandles();
+			if (//!getData().getSupportedHandles(applyConfig).contains(GlobalConstants.NAME_PIPE_HANDLE))
+				!handles.contains(GlobalConstants.NAME_PIPE_HANDLE))
+			isPipeable = false;
+		}
+		else if (getInData() == null)
+			isPipeable = false;
+		
+		return isPipeable;
+			
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -853,10 +1070,17 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA:
 				if (resolve) return getData();
 				return basicGetData();
+			case DataPackage.DATA_LINK__IN_DATA:
+				if (resolve) return getInData();
+				return basicGetInData();
 			case DataPackage.DATA_LINK__TERMINAL:
 				return isTerminal();
 			case DataPackage.DATA_LINK__PROCESSED:
 				return isProcessed();
+			case DataPackage.DATA_LINK__DATA_RESOURCE_NAME:
+				return getDataResourceName();
+			case DataPackage.DATA_LINK__PIPE:
+				return getPipe();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -910,11 +1134,20 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA:
 				setData((Data)newValue);
 				return;
+			case DataPackage.DATA_LINK__IN_DATA:
+				setInData((Data)newValue);
+				return;
 			case DataPackage.DATA_LINK__TERMINAL:
 				setTerminal((Boolean)newValue);
 				return;
 			case DataPackage.DATA_LINK__PROCESSED:
 				setProcessed((Boolean)newValue);
+				return;
+			case DataPackage.DATA_LINK__DATA_RESOURCE_NAME:
+				setDataResourceName((URI)newValue);
+				return;
+			case DataPackage.DATA_LINK__PIPE:
+				setPipe((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -967,11 +1200,20 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			case DataPackage.DATA_LINK__DATA:
 				setData((Data)null);
 				return;
+			case DataPackage.DATA_LINK__IN_DATA:
+				setInData((Data)null);
+				return;
 			case DataPackage.DATA_LINK__TERMINAL:
 				setTerminal(TERMINAL_EDEFAULT);
 				return;
 			case DataPackage.DATA_LINK__PROCESSED:
 				setProcessed(PROCESSED_EDEFAULT);
+				return;
+			case DataPackage.DATA_LINK__DATA_RESOURCE_NAME:
+				setDataResourceName(DATA_RESOURCE_NAME_EDEFAULT);
+				return;
+			case DataPackage.DATA_LINK__PIPE:
+				setPipe(PIPE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1011,10 +1253,16 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return intermediateTasks != null && !intermediateTasks.isEmpty();
 			case DataPackage.DATA_LINK__DATA:
 				return data != null;
+			case DataPackage.DATA_LINK__IN_DATA:
+				return inData != null;
 			case DataPackage.DATA_LINK__TERMINAL:
 				return terminal != TERMINAL_EDEFAULT;
 			case DataPackage.DATA_LINK__PROCESSED:
 				return processed != PROCESSED_EDEFAULT;
+			case DataPackage.DATA_LINK__DATA_RESOURCE_NAME:
+				return DATA_RESOURCE_NAME_EDEFAULT == null ? dataResourceName != null : !DATA_RESOURCE_NAME_EDEFAULT.equals(dataResourceName);
+			case DataPackage.DATA_LINK__PIPE:
+				return PIPE_EDEFAULT == null ? pipe != null : !PIPE_EDEFAULT.equals(pipe);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1045,6 +1293,10 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		result.append(terminal);
 		result.append(", processed: ");
 		result.append(processed);
+		result.append(", dataResourceName: ");
+		result.append(dataResourceName);
+		result.append(", pipe: ");
+		result.append(pipe);
 		result.append(')');
 		return result.toString();
 	}

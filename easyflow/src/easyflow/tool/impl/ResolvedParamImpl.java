@@ -6,32 +6,39 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.data.DataFormat;
-import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
-import easyflow.tool.InOutParameter;
+import easyflow.data.DataFormat;
+import easyflow.tool.Condition;
+import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import easyflow.util.maps.MapsPackage;
+import easyflow.util.maps.impl.StringToConditionMapImpl;
+import easyflow.util.maps.impl.StringToResolvedParamListMapImpl;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.content.IContentTypeManager.ISelectionPolicy;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,18 +47,62 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getName <em>Name</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getValue <em>Value</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getHandle <em>Handle</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getConditionalParam <em>Conditional Param</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getChildParams <em>Child Params</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getConditions <em>Conditions</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ResolvedParamImpl extends DefaultToolElementImpl implements ResolvedParam {
+public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 	
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
+
 	protected static final Logger logger = Logger.getLogger(ResolvedParam.class);
 	
 	/**
@@ -125,6 +176,26 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	protected String conditionalParam = CONDITIONAL_PARAM_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getChildParams() <em>Child Params</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChildParams()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, EList<ResolvedParam>> childParams;
+
+	/**
+	 * The cached value of the '{@link #getConditions() <em>Conditions</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConditions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<String, Condition> conditions;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -141,6 +212,48 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	@Override
 	protected EClass eStaticClass() {
 		return ToolPackage.Literals.RESOLVED_PARAM;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -275,6 +388,30 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, EList<ResolvedParam>> getChildParams() {
+		if (childParams == null) {
+			childParams = new EcoreEMap<String,EList<ResolvedParam>>(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_LIST_MAP, StringToResolvedParamListMapImpl.class, this, ToolPackage.RESOLVED_PARAM__CHILD_PARAMS);
+		}
+		return childParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EMap<String, Condition> getConditions() {
+		if (conditions == null) {
+			conditions = new EcoreEMap<String,Condition>(MapsPackage.Literals.STRING_TO_CONDITION_MAP, StringToConditionMapImpl.class, this, ToolPackage.RESOLVED_PARAM__CONDITIONS);
+		}
+		return conditions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * to generate the prefix:
 	 * 1.) use parameter definition
 	 * 2.) use template definition (template param)
@@ -286,20 +423,11 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	
 	public EList<String> generateCommandString(EMap<String, Object> constraints, Parameter templateParam)
 	{
-		Parameter param = EcoreUtil.copy(getParameter());
-		//Parameter p = getParameter();
-		if (GlobalConstants.NAME_FILE_HANDLE.equals(getHandle()))
-			param.merge(getParameter().getValues().get(GlobalConstants.NAME_FILE_HANDLE)
-					.get(0).getParameter());
-		else if (GlobalConstants.NAME_PIPE_HANDLE.equals(getHandle()))
-			param.merge(getParameter().getValues().get(GlobalConstants.NAME_PIPE_HANDLE)
-					.get(0).getParameter());
-		//if ()
-		//for (getValue)
+		Parameter param = getParameter();
 		EList<String> res = param.generateCommandString(constraints, getValue(), templateParam);
 		return res;
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -309,7 +437,7 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				
 		Iterator<Object> it = getValue().iterator();
 		EList<String> values = new BasicEList<String>();
-		int i=0;
+		//int i=0;
 		while (it.hasNext())
 		{
 			Object v=it.next();
@@ -321,10 +449,9 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			else if (v instanceof URI)
 				stringValue = ((URI)v).getPath();
 			
-				
 			if (stringValue != null)
 				values.add(stringValue);
-			i++;
+			//i++;
 		}
 		/*
 		if (i==0 && getParameter().getDefaultValue() != null 
@@ -355,24 +482,37 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EList<ResolvedParam> getEffectiveParameters(EList<ResolvedParam> effectiveParams) {
+	public EList<ResolvedParam> getEffectiveParameters(EList<ResolvedParam> effectiveParams, EMap<String, String> constraints) {
 		
+		//boolean onlyLeaves = true;
+		ResolvedParam tmp = this;
 		if (effectiveParams == null)
-			effectiveParams = new BasicEList<ResolvedParam>();
-		
-		if (getConditionalParam() != null && 
-				getParameter().getValues().containsKey(getConditionalParam()))
 		{
-			Iterator<ResolvedParam> it = getParameter().getValues().get(getConditionalParam()).iterator();
+			effectiveParams = new BasicEList<ResolvedParam>();
+		}
+		
+		String key = null;
+		if (constraints           == null && 
+			getConditionalParam() != null && 
+			getChildParams().containsKey(getConditionalParam()))
+			key = getConditionalParam();
+		else if (constraints                       != null &&
+				 getParameter().getConditionType() != null &&
+				 constraints.containsKey(getParameter().getConditionType()))
+			 key = constraints.get(getParameter().getConditionType());
+			 
+		if (key != null)
+		{
+			Iterator<ResolvedParam> it = getChildParams().get(key).iterator();
 			while (it.hasNext())
 			{
 				ResolvedParam rp = it.next();
-				rp.getEffectiveParameters(effectiveParams);
+				rp.getEffectiveParameters(effectiveParams, constraints);
 			}
 			return effectiveParams;
 		}
 		
-		if (getParameter().getValues().isEmpty())
+		if (getChildParams().isEmpty())
 		{
 			effectiveParams.add(this);
 			return effectiveParams;
@@ -383,16 +523,131 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			return effectiveParams;			
 		}
 */	
-		Iterator<Entry<String, EList<ResolvedParam>>> itValue = getParameter().getValues().iterator();
+		Iterator<Entry<String, EList<ResolvedParam>>> itValue = getChildParams().iterator();
 		while (itValue.hasNext())
 		{
-			Iterator<ResolvedParam> itParam = itValue.next().getValue().iterator();
+			Entry<String, EList<ResolvedParam>> e = itValue.next();
+			if (!e.getKey().equals(key))
+				continue;
+			Iterator<ResolvedParam> itParam = e.getValue().iterator();
 			while (itParam.hasNext())
 			{
-				itParam.next().getEffectiveParameters(effectiveParams);
+				itParam.next().getEffectiveParameters(effectiveParams, constraints);
 			}
 		}
 		return effectiveParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getSupportedHandles() {
+		
+		logger.debug(renderToString()+" "+getParameter().renderToString());
+		//EList<String> handles = new BasicEList<String>();
+		
+		//case 1: conditionType=="file_handle"
+		if (getParameter().getConditionType() != null && getParameter().getConditionType().equals(GlobalConstants.CONDITION_TYPE_FILE_HANDLE))
+			return getSupportedHandles_();
+		//case 2: condition==file/pipe/... or handle==
+		if (getParameter().getHandles() != null && !getParameter().getHandles().isEmpty())
+			return getParameter().getHandles();
+		
+		return new BasicEList<String>();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam deepCopy() {
+		
+		ResolvedParam rp = EcoreUtil.copy(this);
+		
+		if (getChildParams() != null)
+		{
+			Iterator<Entry<String, EList<ResolvedParam>>> it = getChildParams().iterator();
+			while (it.hasNext())
+			{
+				Entry<String, EList<ResolvedParam>> e = it.next();
+				rp.getChildParams().put(e.getKey(), deepCopy(e.getValue()));
+			}
+		}
+		return rp;
+	}
+
+	EList<ResolvedParam> deepCopy(EList<ResolvedParam> rps)
+	{
+		EList<ResolvedParam> rpsCopy = new BasicEList<ResolvedParam>();
+		Iterator<ResolvedParam> it = rps.iterator();
+		while (it.hasNext())
+		{
+			rpsCopy.add(it.next().deepCopy());
+		}
+		return rpsCopy;
+	}
+	private EList<String> getSupportedHandles_()
+	{
+		EList<String> handles = new BasicEList<String>();
+		Iterator<Entry<String, EList<ResolvedParam>>> it = getChildParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, EList<ResolvedParam>> e = it.next();
+			handles.add(e.getKey());
+			/*
+			Iterator<ResolvedParam> it2 = e.getValue().iterator();
+			while (it2.hasNext())
+			{
+				ResolvedParam child = it2.next();
+				logger.debug(child.renderToString());
+				if (child.getConditionalParam() != null)
+					handles.add(child.getConditionalParam());
+
+				else if (child.getParameter().getHandles() != null)
+					for (String handle : child.getParameter().getHandles())
+						if (!handles.contains(handle))
+							handles.add(handle);
+
+				
+				handles.addAll(((ResolvedParamImpl)child).getSupportedHandles_());
+				
+			}
+			*/
+		}
+		return handles;
+		
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String renderToString() {
+		String res = "name="+resolveName()
+				+" cond="+getConditionalParam()
+				+" handle="+getHandle()
+				+" childs="+(getChildParams() != null ? getChildParams().keySet() : null);
+		return res;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ToolPackage.RESOLVED_PARAM__CHILD_PARAMS:
+				return ((InternalEList<?>)getChildParams()).basicRemove(otherEnd, msgs);
+			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
+				return ((InternalEList<?>)getConditions()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -403,6 +658,10 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ToolPackage.RESOLVED_PARAM__NAME:
+				return getName();
+			case ToolPackage.RESOLVED_PARAM__DESCRIPTION:
+				return getDescription();
 			case ToolPackage.RESOLVED_PARAM__PARAMETER:
 				if (resolve) return getParameter();
 				return basicGetParameter();
@@ -415,6 +674,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return basicGetDataFormat();
 			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
 				return getConditionalParam();
+			case ToolPackage.RESOLVED_PARAM__CHILD_PARAMS:
+				if (coreType) return getChildParams();
+				else return getChildParams().map();
+			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
+				if (coreType) return getConditions();
+				else return getConditions().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -428,6 +693,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ToolPackage.RESOLVED_PARAM__NAME:
+				setName((String)newValue);
+				return;
+			case ToolPackage.RESOLVED_PARAM__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
 			case ToolPackage.RESOLVED_PARAM__PARAMETER:
 				setParameter((Parameter)newValue);
 				return;
@@ -444,6 +715,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
 				setConditionalParam((String)newValue);
 				return;
+			case ToolPackage.RESOLVED_PARAM__CHILD_PARAMS:
+				((EStructuralFeature.Setting)getChildParams()).set(newValue);
+				return;
+			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
+				((EStructuralFeature.Setting)getConditions()).set(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -456,6 +733,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ToolPackage.RESOLVED_PARAM__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case ToolPackage.RESOLVED_PARAM__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
 			case ToolPackage.RESOLVED_PARAM__PARAMETER:
 				setParameter((Parameter)null);
 				return;
@@ -471,6 +754,12 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
 				setConditionalParam(CONDITIONAL_PARAM_EDEFAULT);
 				return;
+			case ToolPackage.RESOLVED_PARAM__CHILD_PARAMS:
+				getChildParams().clear();
+				return;
+			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
+				getConditions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -483,6 +772,10 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ToolPackage.RESOLVED_PARAM__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ToolPackage.RESOLVED_PARAM__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case ToolPackage.RESOLVED_PARAM__PARAMETER:
 				return parameter != null;
 			case ToolPackage.RESOLVED_PARAM__VALUE:
@@ -493,8 +786,46 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 				return dataFormat != null;
 			case ToolPackage.RESOLVED_PARAM__CONDITIONAL_PARAM:
 				return CONDITIONAL_PARAM_EDEFAULT == null ? conditionalParam != null : !CONDITIONAL_PARAM_EDEFAULT.equals(conditionalParam);
+			case ToolPackage.RESOLVED_PARAM__CHILD_PARAMS:
+				return childParams != null && !childParams.isEmpty();
+			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
+				return conditions != null && !conditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == DefaultToolElement.class) {
+			switch (derivedFeatureID) {
+				case ToolPackage.RESOLVED_PARAM__NAME: return ToolPackage.DEFAULT_TOOL_ELEMENT__NAME;
+				case ToolPackage.RESOLVED_PARAM__DESCRIPTION: return ToolPackage.DEFAULT_TOOL_ELEMENT__DESCRIPTION;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == DefaultToolElement.class) {
+			switch (baseFeatureID) {
+				case ToolPackage.DEFAULT_TOOL_ELEMENT__NAME: return ToolPackage.RESOLVED_PARAM__NAME;
+				case ToolPackage.DEFAULT_TOOL_ELEMENT__DESCRIPTION: return ToolPackage.RESOLVED_PARAM__DESCRIPTION;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -507,7 +838,11 @@ public class ResolvedParamImpl extends DefaultToolElementImpl implements Resolve
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", value: ");
 		result.append(value);
 		result.append(", handle: ");
 		result.append(handle);

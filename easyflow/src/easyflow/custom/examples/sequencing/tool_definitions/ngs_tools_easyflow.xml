@@ -15,7 +15,7 @@
 		<param type="any" abstract="true" name="default_param" named="true" separator="=" prefix="" output_default_param="false" />
 		<param type="data" abstract="true" name="inputFile" named="true" key="INPUT" format="bam,sam"/>
 		<param type="data" abstract="true" output="true" name="outFile" named="true" key="OUTPUT" format="bam,sam"/>
-		<param type="analysis_type" named="true" name="jar" prefix="-"><!-- resolvePathRef="exe"> --> 
+		<param type="analysis_type" named="true" name="jar" prefix="-" separator=" "><!-- resolvePathRef="exe"> --> 
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
 					<map_entry key="ReadGroup"    value="rgid"/>
@@ -39,26 +39,12 @@
 			<option value="rgPicardMarkDups"        exe="MarkDuplicates.jar">                </option>
 		</param>
 	</package>
-	<!-- 
-id="picard_ARRG"
-id="picard_BamIndexStats"
-id="picard_FastqToSam"
-id="picard_ReorderSam"
-id="picard_ReplaceSamHeader"
-id="picard_SamToFastq"
-id="PicardASMetrics"
-id="rgPicFixMate"
-id="PicardGCBiasMetrics"
-id="PicardHsMetrics"
-id="PicardInsertSize"
-id="rgEstLibComp"
-id="rgPicardMarkDups"
- -->
 	<package id="gatk" version="2.3">
 		<interpreter exe="java">
 			<param type="text" name="Xmx" prefix="-" separator="" default_value="256M" fixed="true" named="true"/>
-			<param type="text" name="classpath" prefix="-" key="cp"/>
+			<param type="text" name="classpath" prefix="-" key="cp" separator=" "/>
 		</interpreter>
+		<param type="data" abstract="true" optional="false" format="fasta"/>
 		<param type="data" abstract="true" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
 		<param type="data" abstract="true" output="true"   multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf,gatk_interval" named="true" key="o"/>
 		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-" output_arg_value_for_boolean_param="false"/>
@@ -83,24 +69,6 @@ id="rgPicardMarkDups"
 			<option value="Variant Recalibrator"        exe="VariantRecalibrator"/>
 			<option value="Select Variants"             exe="SelectVariants"/>
 			<option value="Validate Variants"           exe="ValidateVariants"/>
-			<!-- 
-			<option value="BaseRecalibrator"></option>
-			<option value="DepthOfCoverage"></option>
-			<option value="HaplotypeCaller"></option>
-			<option value="IndelRealigner"></option>
-			<option value="PrintReads"></option>
-			<option value="RealignerTargetCreator"></option>
-			<option value="ReduceReads"></option>
-			<option value="UnifiedGenotyper"></option>
-			<option value="VariantAnnotator"></option>
-			<option value="ApplyRecalibration"></option>
-			<option value="CombineVariants"></option>
-			<option value="VariantEval"></option>
-			<option value="VariantFiltration"></option>
-			<option value="VariantRecalibrator"></option>
-			<option value="SelectVariants"></option>
-			<option value="ValidateVariants"></option>			
-			 -->			
 		</param>
 	</package>
 
@@ -213,7 +181,7 @@ Command: view        SAM<->BAM conversion
 		<param name="reference" type="data" format="fasta" positional="true"/>
 		<param name="input" type="data" label="ReadEnd" format="fastq" positional="true"/>
 		<!-- param name="output" type="data" format="sai" output="true"/ -->
-		<conditional name="output_file">
+		<conditional name="output_file" type="file_handle">
 			<param name="output_file" type="select"/>
 			<when value="file">
 				<param name="out_file" label="output" type="data" output="true" format="sai" named="true" prefix="-" key="f" separator=" "/>
@@ -301,8 +269,16 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 	</tool>
 	<tool id="rmdup" name="rmdup" version="0.1" package="samtools">
 		<description>remove duplcates</description>
+		<conditional name="number_of_readends" type="metadata" grouping="InputFiles">
+			<when value="SE" condition="size(InputFiles)==1">
+				<!-- no more options for paried end reads -->
+			</when>
+			<when value="PE" condition="size(InputFiles)>1">
+				<param name="paired_end" key="s" type="boolean" named="true"/>
+			</when>
+		</conditional>
 		<param name="input" type="data" format="bam"></param>
-		<param name="output" type="data" format="bam" optional="true" output="true"/>
+		<param name="output" type="data" format="bam" output="true"/>
 	</tool>
 
 	<tool id="flagstat" name="flagstat" version="0.1" package="samtools">
@@ -373,7 +349,7 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 				<!-- the default, nothing to do -->
 			</when>
 		</conditional>
-		<conditional name="handle">
+		<conditional name="handle" type="file_handle">
 			<when value="file">
 				<param name="o" label="output" type="data" format="bam" output="true" named="true"/>
 			</when>

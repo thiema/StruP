@@ -27,7 +27,9 @@ import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.GlobalVar;
 import easyflow.graph.jgraphx.Util;
+import easyflow.tool.Rule;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.Command;
@@ -92,6 +94,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getWorker <em>Worker</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getExecutionSystem <em>Execution System</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getCurrentRule <em>Current Rule</em>}</li>
  * </ul>
  * </p>
  *
@@ -379,6 +382,16 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected IExecutionSystem executionSystem;
+
+	/**
+	 * The cached value of the '{@link #getCurrentRule() <em>Current Rule</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCurrentRule()
+	 * @generated
+	 * @ordered
+	 */
+	protected Rule currentRule;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -684,6 +697,44 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Rule getCurrentRule() {
+		if (currentRule != null && currentRule.eIsProxy()) {
+			InternalEObject oldCurrentRule = (InternalEObject)currentRule;
+			currentRule = (Rule)eResolveProxy(oldCurrentRule);
+			if (currentRule != oldCurrentRule) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__CURRENT_RULE, oldCurrentRule, currentRule));
+			}
+		}
+		return currentRule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rule basicGetCurrentRule() {
+		return currentRule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCurrentRule(Rule newCurrentRule) {
+		Rule oldCurrentRule = currentRule;
+		currentRule = newCurrentRule;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__CURRENT_RULE, oldCurrentRule, currentRule));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMap<String, Object> getGenericAttributes() {
 		if (genericAttributes == null) {
 			genericAttributes = new EcoreEMap<String,Object>(MapsPackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.WORKFLOW__GENERIC_ATTRIBUTES);
@@ -846,6 +897,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, false);
 		getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, false);
 		getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, false);
+		
+		setCurrentRule(ToolFactory.eINSTANCE.createRule());
 	}
 	/**
 	 * <!-- begin-user-doc -->
@@ -1395,7 +1448,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	        		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
 	        		logger.trace("generateGraphFromTemplate(): "
 	        				+"add to cell map: key="+task.getUniqueString()
-	        				+" cmd="+task.getCommand()
+	        				+" cmd="+task.getResolvedCommand()
 	        				+" cell="+getGraph().getLabel(target));
 	        		//map.put(task.getName(), target);
         		}
@@ -1424,7 +1477,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         	
         	Tool    rootTool    = ToolFactory.eINSTANCE.createTool();
 			Command rootCommand = ToolFactory.eINSTANCE.createCommand();
-			getRootTask().setCommand(rootCommand);
+			getRootTask().setResolvedCommand(rootCommand);
 			for (DataPort dataPort : getRootTask().getOutDataPorts())
 			{
 				logger.debug("generateGraphFromTemplate(): add data="+dataPort.getFormat()+" to root tool");
@@ -1532,7 +1585,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						if (resolveMissingDataPortsByToolFor(task))
 							logger.debug("resolved data port by Tool !");
 					}
-					logger.debug(task.getUniqueString()+" cmd found="+(task.getCommand()!=null));
+					logger.debug(task.getUniqueString()+" cmd found="+(task.getResolvedCommand()!=null));
 					getLastTasks().add(task);
 					//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 				}
@@ -2532,6 +2585,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				if (resolve) return getExecutionSystem();
 				return basicGetExecutionSystem();
+			case CorePackage.WORKFLOW__CURRENT_RULE:
+				if (resolve) return getCurrentRule();
+				return basicGetCurrentRule();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2606,6 +2662,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				setExecutionSystem((IExecutionSystem)newValue);
 				return;
+			case CorePackage.WORKFLOW__CURRENT_RULE:
+				setCurrentRule((Rule)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2675,6 +2734,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				setExecutionSystem((IExecutionSystem)null);
 				return;
+			case CorePackage.WORKFLOW__CURRENT_RULE:
+				setCurrentRule((Rule)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2727,6 +2789,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return WORKER_EDEFAULT == null ? worker != null : !WORKER_EDEFAULT.equals(worker);
 			case CorePackage.WORKFLOW__EXECUTION_SYSTEM:
 				return executionSystem != null;
+			case CorePackage.WORKFLOW__CURRENT_RULE:
+				return currentRule != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -373,6 +373,15 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getGroupingInstance_TraversalChunk() {
+		return (EReference)groupingInstanceEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGroupingFeature() {
 		return groupingFeatureEClass;
 	}
@@ -463,6 +472,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEReference(groupingInstanceEClass, GROUPING_INSTANCE__GROUPING);
 		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__GROUPING_STR);
 		createEAttribute(groupingInstanceEClass, GROUPING_INSTANCE__RECORDS);
+		createEReference(groupingInstanceEClass, GROUPING_INSTANCE__TRAVERSAL_CHUNK);
 
 		groupingFeatureEClass = createEClass(GROUPING_FEATURE);
 		createEAttribute(groupingFeatureEClass, GROUPING_FEATURE__NAME);
@@ -575,9 +585,12 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		initEReference(getGroupingInstance_Grouping(), this.getGrouping(), null, "grouping", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingInstance_GroupingStr(), ecorePackage.getEString(), "groupingStr", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroupingInstance_Records(), ecorePackage.getEString(), "records", null, 0, -1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGroupingInstance_TraversalChunk(), theTraversalPackage.getTraversalChunk(), null, "traversalChunk", null, 0, 1, GroupingInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(groupingInstanceEClass, ecorePackage.getEString(), "getOverlappingRecords", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "records", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(groupingInstanceEClass, theTraversalPackage.getTraversalChunk(), "asTraversalChunk", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(groupingFeatureEClass, GroupingFeature.class, "GroupingFeature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroupingFeature_Name(), ecorePackage.getEString(), "name", null, 0, 1, GroupingFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

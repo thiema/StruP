@@ -7,6 +7,7 @@
 package easyflow.tool;
 
 import easyflow.data.DataFormat;
+import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -23,6 +24,8 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.ResolvedParam#getHandle <em>Handle</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getDataFormat <em>Data Format</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getConditionalParam <em>Conditional Param</em>}</li>
+ *   <li>{@link easyflow.tool.ResolvedParam#getChildParams <em>Child Params</em>}</li>
+ *   <li>{@link easyflow.tool.ResolvedParam#getConditions <em>Conditions</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,7 +33,7 @@ import org.eclipse.emf.common.util.EMap;
  * @model
  * @generated
  */
-public interface ResolvedParam extends DefaultToolElement {
+public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	/**
 	 * Returns the value of the '<em><b>Parameter</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -152,6 +155,40 @@ public interface ResolvedParam extends DefaultToolElement {
 	void setConditionalParam(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Child Params</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type list of {@link easyflow.tool.ResolvedParam},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Child Params</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Child Params</em>' map.
+	 * @see easyflow.tool.ToolPackage#getResolvedParam_ChildParams()
+	 * @model mapType="easyflow.util.maps.StringToResolvedParamListMap<org.eclipse.emf.ecore.EString, easyflow.tool.ResolvedParam>"
+	 * @generated
+	 */
+	EMap<String, EList<ResolvedParam>> getChildParams();
+
+	/**
+	 * Returns the value of the '<em><b>Conditions</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link easyflow.tool.Condition},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Conditions</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Conditions</em>' map.
+	 * @see easyflow.tool.ToolPackage#getResolvedParam_Conditions()
+	 * @model mapType="easyflow.util.maps.StringToConditionMap<org.eclipse.emf.ecore.EString, easyflow.tool.Condition>"
+	 * @generated
+	 */
+	EMap<String, Condition> getConditions();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model constraintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
@@ -178,9 +215,25 @@ public interface ResolvedParam extends DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model effectiveParamsMany="true"
+	 * @model effectiveParamsMany="true" constraintsMapType="easyflow.util.maps.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EList<ResolvedParam> getEffectiveParameters(EList<ResolvedParam> effectiveParams);
+	EList<ResolvedParam> getEffectiveParameters(EList<ResolvedParam> effectiveParams, EMap<String, String> constraints);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	EList<String> getSupportedHandles();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	ResolvedParam deepCopy();
 
 } // ResolvedParam

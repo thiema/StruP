@@ -70,22 +70,13 @@ public interface ShellPackage extends EPackage {
 	int SHELL = 0;
 
 	/**
-	 * The feature id for the '<em><b>Project</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SHELL__PROJECT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHELL__LOGGER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
+	int SHELL__LOGGER = ExecutionPackage.IEXECUTION_SYSTEM__LOGGER;
 
 	/**
 	 * The feature id for the '<em><b>Writer</b></em>' attribute.
@@ -94,7 +85,7 @@ public interface ShellPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHELL__WRITER = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+	int SHELL__WRITER = ExecutionPackage.IEXECUTION_SYSTEM__WRITER;
 
 	/**
 	 * The number of structural features of the '<em>Shell</em>' class.
@@ -103,7 +94,7 @@ public interface ShellPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHELL_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
+	int SHELL_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
 
 
 	/**

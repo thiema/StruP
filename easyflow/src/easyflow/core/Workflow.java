@@ -19,6 +19,7 @@ import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
 import easyflow.graph.jgraphx.Util;
 
+import easyflow.tool.Rule;
 import easyflow.tool.Tool;
 
 import easyflow.traversal.TraversalEvent;
@@ -64,6 +65,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getPreviousTaskName <em>Previous Task Name</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getWorker <em>Worker</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getCurrentRule <em>Current Rule</em>}</li>
  * </ul>
  * </p>
  *
@@ -513,6 +515,32 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	void setExecutionSystem(IExecutionSystem value);
+
+	/**
+	 * Returns the value of the '<em><b>Current Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Current Rule</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Current Rule</em>' reference.
+	 * @see #setCurrentRule(Rule)
+	 * @see easyflow.core.CorePackage#getWorkflow_CurrentRule()
+	 * @model
+	 * @generated
+	 */
+	Rule getCurrentRule();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Workflow#getCurrentRule <em>Current Rule</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Current Rule</em>' reference.
+	 * @see #getCurrentRule()
+	 * @generated
+	 */
+	void setCurrentRule(Rule value);
 
 	/**
 	 * <!-- begin-user-doc -->

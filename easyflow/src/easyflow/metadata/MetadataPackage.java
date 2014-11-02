@@ -264,13 +264,22 @@ public interface MetadataPackage extends EPackage {
 	int GROUPING_INSTANCE__RECORDS = 4;
 
 	/**
+	 * The feature id for the '<em><b>Traversal Chunk</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE__TRAVERSAL_CHUNK = 5;
+
+	/**
 	 * The number of structural features of the '<em>Grouping Instance</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPING_INSTANCE_FEATURE_COUNT = 5;
+	int GROUPING_INSTANCE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.
@@ -532,6 +541,17 @@ public interface MetadataPackage extends EPackage {
 	EAttribute getGroupingInstance_Records();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.metadata.GroupingInstance#getTraversalChunk <em>Traversal Chunk</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Traversal Chunk</em>'.
+	 * @see easyflow.metadata.GroupingInstance#getTraversalChunk()
+	 * @see #getGroupingInstance()
+	 * @generated
+	 */
+	EReference getGroupingInstance_TraversalChunk();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.GroupingFeature <em>Grouping Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -759,6 +779,14 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GROUPING_INSTANCE__RECORDS = eINSTANCE.getGroupingInstance_Records();
+
+		/**
+		 * The meta object literal for the '<em><b>Traversal Chunk</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GROUPING_INSTANCE__TRAVERSAL_CHUNK = eINSTANCE.getGroupingInstance_TraversalChunk();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.

@@ -1312,7 +1312,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		boolean rc = true;
 		clearWorkflows();
-		
+		GlobalVar.setDefaultProject(this);
 		if (getGraphUtil() == null)
 			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
 		if (graph != null) //&& getGraphUtil().getGraph() == null)

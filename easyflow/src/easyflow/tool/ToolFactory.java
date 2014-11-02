@@ -71,6 +71,24 @@ public interface ToolFactory extends EFactory {
 	Command createCommand();
 
 	/**
+	 * Returns a new object of class '<em>Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Rule</em>'.
+	 * @generated
+	 */
+	Rule createRule();
+
+	/**
+	 * Returns a new object of class '<em>Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Condition</em>'.
+	 * @generated
+	 */
+	Condition createCondition();
+
+	/**
 	 * Returns a new object of class '<em>Resolved Param</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

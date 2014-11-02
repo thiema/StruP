@@ -138,4 +138,12 @@ public interface Command extends IToolElement, DefaultToolElement, BaseCommand {
 	 */
 	ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput, int strategy);
+
 } // Command

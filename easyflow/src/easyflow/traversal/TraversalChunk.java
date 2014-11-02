@@ -6,6 +6,7 @@
  */
 package easyflow.traversal;
 
+import easyflow.metadata.GroupingInstance;
 import org.apache.log4j.Logger;
 
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.traversal.TraversalChunk#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalChunk#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalChunk#isDerived1by1 <em>Derived1by1</em>}</li>
+ *   <li>{@link easyflow.traversal.TraversalChunk#getGroupingInstance <em>Grouping Instance</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,5 +113,39 @@ public interface TraversalChunk extends EObject {
 	 * @generated
 	 */
 	void setDerived1by1(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Grouping Instance</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Grouping Instance</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Grouping Instance</em>' reference.
+	 * @see #setGroupingInstance(GroupingInstance)
+	 * @see easyflow.traversal.TraversalPackage#getTraversalChunk_GroupingInstance()
+	 * @model
+	 * @generated
+	 */
+	GroupingInstance getGroupingInstance();
+
+	/**
+	 * Sets the value of the '{@link easyflow.traversal.TraversalChunk#getGroupingInstance <em>Grouping Instance</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Grouping Instance</em>' reference.
+	 * @see #getGroupingInstance()
+	 * @generated
+	 */
+	void setGroupingInstance(GroupingInstance value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	GroupingInstance asGroupingInstance();
 
 } // TraversalChunk

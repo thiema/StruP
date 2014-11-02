@@ -8,8 +8,10 @@ package easyflow.tool.util;
 
 import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
+import easyflow.tool.Condition;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
+import easyflow.tool.IRule;
 import easyflow.tool.IToolElement;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Interpreter;
@@ -18,6 +20,7 @@ import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.Rule;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
@@ -87,6 +90,10 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	protected ToolSwitch<Adapter> modelSwitch =
 		new ToolSwitch<Adapter>() {
 			@Override
+			public Adapter caseIRule(IRule object) {
+				return createIRuleAdapter();
+			}
+			@Override
 			public Adapter caseToolSchemata(ToolSchemata object) {
 				return createToolSchemataAdapter();
 			}
@@ -147,6 +154,14 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 				return createCommandAdapter();
 			}
 			@Override
+			public Adapter caseRule(Rule object) {
+				return createRuleAdapter();
+			}
+			@Override
+			public Adapter caseCondition(Condition object) {
+				return createConditionAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -165,6 +180,20 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.IRule <em>IRule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.IRule
+	 * @generated
+	 */
+	public Adapter createIRuleAdapter() {
+		return null;
+	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link easyflow.tool.ToolSchemata <em>Schemata</em>}'.
@@ -247,6 +276,34 @@ public class ToolAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCommandAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.Rule <em>Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.Rule
+	 * @generated
+	 */
+	public Adapter createRuleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.tool.Condition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.tool.Condition
+	 * @generated
+	 */
+	public Adapter createConditionAdapter() {
 		return null;
 	}
 

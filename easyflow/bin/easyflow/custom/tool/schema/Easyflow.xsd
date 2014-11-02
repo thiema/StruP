@@ -227,10 +227,10 @@
 		<xs:sequence>
 			<xs:element maxOccurs="1" minOccurs="0" name="metadata_map" type="MetadataMap"/>
 		</xs:sequence>
-		<xs:attribute name="value" type="xs:string"/>
-		<xs:attribute name="exe" type="xs:string"/>
-		<xs:attribute default="false" name="selected" type="PermissiveBoolean"/>
-		<xs:attribute name="help" type="xs:string"/>
+		<xs:attribute name="value"     type="xs:string"/>
+		<xs:attribute name="exe"       type="xs:string"/>
+		<xs:attribute name="selected"  type="PermissiveBoolean" default="false"/>
+		<xs:attribute name="help"      type="xs:string"/>
 		<xs:attribute name="condition" type="xs:string"/>
 
 <!-- 		<xs:simpleContent>
@@ -289,6 +289,8 @@
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="data_format"/>
 			<xs:enumeration value="data_port"/>
+			<xs:enumeration value="file_handle"/>
+			<xs:enumeration value="metadata"/>
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -300,7 +302,8 @@
           <xs:group minOccurs="0" ref="InputElement"/>
           <xs:element maxOccurs="unbounded" minOccurs="0" name="when" type="ConditionalWhen"/>
         </xs:sequence>
-        <xs:attribute name="type" type="ConditionType"/>
+        <xs:attribute name="type"     type="ConditionType"/>
+        <xs:attribute name="grouping" type="xs:string"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -309,7 +312,8 @@
     <xs:sequence>
       <xs:group maxOccurs="unbounded" minOccurs="0" ref="InputElement"/>
     </xs:sequence>
-    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="value"     type="xs:string" use="required"/>
+    <xs:attribute name="condition" type="xs:string"/>
   </xs:complexType>
   
   <xs:complexType name="Repeat">

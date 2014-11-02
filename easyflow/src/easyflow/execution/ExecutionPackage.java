@@ -71,32 +71,14 @@ public interface ExecutionPackage extends EPackage {
 	int DEFAULT_EXECUTION_SYSTEM = 0;
 
 	/**
-	 * The meta object id for the '{@link easyflow.execution.IExecutionSystem <em>IExecution System</em>}' class.
+	 * The meta object id for the '{@link easyflow.execution.impl.IExecutionSystemImpl <em>IExecution System</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.execution.IExecutionSystem
+	 * @see easyflow.execution.impl.IExecutionSystemImpl
 	 * @see easyflow.execution.impl.ExecutionPackageImpl#getIExecutionSystem()
 	 * @generated
 	 */
 	int IEXECUTION_SYSTEM = 1;
-
-	/**
-	 * The number of structural features of the '<em>IExecution System</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IEXECUTION_SYSTEM_FEATURE_COUNT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Project</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_EXECUTION_SYSTEM__PROJECT = IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
@@ -105,7 +87,7 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_EXECUTION_SYSTEM__LOGGER = IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
+	int IEXECUTION_SYSTEM__LOGGER = 0;
 
 	/**
 	 * The feature id for the '<em><b>Writer</b></em>' attribute.
@@ -114,7 +96,34 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_EXECUTION_SYSTEM__WRITER = IEXECUTION_SYSTEM_FEATURE_COUNT + 2;
+	int IEXECUTION_SYSTEM__WRITER = 1;
+
+	/**
+	 * The number of structural features of the '<em>IExecution System</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IEXECUTION_SYSTEM_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_EXECUTION_SYSTEM__LOGGER = IEXECUTION_SYSTEM__LOGGER;
+
+	/**
+	 * The feature id for the '<em><b>Writer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_EXECUTION_SYSTEM__WRITER = IEXECUTION_SYSTEM__WRITER;
 
 	/**
 	 * The number of structural features of the '<em>Default Execution System</em>' class.
@@ -123,7 +132,7 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_EXECUTION_SYSTEM_FEATURE_COUNT = IEXECUTION_SYSTEM_FEATURE_COUNT + 3;
+	int DEFAULT_EXECUTION_SYSTEM_FEATURE_COUNT = IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
 
 
 	/**
@@ -137,39 +146,6 @@ public interface ExecutionPackage extends EPackage {
 	EClass getDefaultExecutionSystem();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.execution.DefaultExecutionSystem#getProject <em>Project</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Project</em>'.
-	 * @see easyflow.execution.DefaultExecutionSystem#getProject()
-	 * @see #getDefaultExecutionSystem()
-	 * @generated
-	 */
-	EReference getDefaultExecutionSystem_Project();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.execution.DefaultExecutionSystem#getLogger <em>Logger</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Logger</em>'.
-	 * @see easyflow.execution.DefaultExecutionSystem#getLogger()
-	 * @see #getDefaultExecutionSystem()
-	 * @generated
-	 */
-	EAttribute getDefaultExecutionSystem_Logger();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.execution.DefaultExecutionSystem#getWriter <em>Writer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Writer</em>'.
-	 * @see easyflow.execution.DefaultExecutionSystem#getWriter()
-	 * @see #getDefaultExecutionSystem()
-	 * @generated
-	 */
-	EAttribute getDefaultExecutionSystem_Writer();
-
-	/**
 	 * Returns the meta object for class '{@link easyflow.execution.IExecutionSystem <em>IExecution System</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -178,6 +154,28 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIExecutionSystem();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.execution.IExecutionSystem#getLogger <em>Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.execution.IExecutionSystem#getLogger()
+	 * @see #getIExecutionSystem()
+	 * @generated
+	 */
+	EAttribute getIExecutionSystem_Logger();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.execution.IExecutionSystem#getWriter <em>Writer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Writer</em>'.
+	 * @see easyflow.execution.IExecutionSystem#getWriter()
+	 * @see #getIExecutionSystem()
+	 * @generated
+	 */
+	EAttribute getIExecutionSystem_Writer();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -212,12 +210,14 @@ public interface ExecutionPackage extends EPackage {
 		EClass DEFAULT_EXECUTION_SYSTEM = eINSTANCE.getDefaultExecutionSystem();
 
 		/**
-		 * The meta object literal for the '<em><b>Project</b></em>' reference feature.
+		 * The meta object literal for the '{@link easyflow.execution.impl.IExecutionSystemImpl <em>IExecution System</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see easyflow.execution.impl.IExecutionSystemImpl
+		 * @see easyflow.execution.impl.ExecutionPackageImpl#getIExecutionSystem()
 		 * @generated
 		 */
-		EReference DEFAULT_EXECUTION_SYSTEM__PROJECT = eINSTANCE.getDefaultExecutionSystem_Project();
+		EClass IEXECUTION_SYSTEM = eINSTANCE.getIExecutionSystem();
 
 		/**
 		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
@@ -225,7 +225,7 @@ public interface ExecutionPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DEFAULT_EXECUTION_SYSTEM__LOGGER = eINSTANCE.getDefaultExecutionSystem_Logger();
+		EAttribute IEXECUTION_SYSTEM__LOGGER = eINSTANCE.getIExecutionSystem_Logger();
 
 		/**
 		 * The meta object literal for the '<em><b>Writer</b></em>' attribute feature.
@@ -233,17 +233,7 @@ public interface ExecutionPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DEFAULT_EXECUTION_SYSTEM__WRITER = eINSTANCE.getDefaultExecutionSystem_Writer();
-
-		/**
-		 * The meta object literal for the '{@link easyflow.execution.IExecutionSystem <em>IExecution System</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see easyflow.execution.IExecutionSystem
-		 * @see easyflow.execution.impl.ExecutionPackageImpl#getIExecutionSystem()
-		 * @generated
-		 */
-		EClass IEXECUTION_SYSTEM = eINSTANCE.getIExecutionSystem();
+		EAttribute IEXECUTION_SYSTEM__WRITER = eINSTANCE.getIExecutionSystem_Writer();
 
 	}
 

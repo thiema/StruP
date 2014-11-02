@@ -54,14 +54,17 @@ public class GlobalConfig {
 	// processing options (keys)
 	public static final String   CONFIG_PROCESSING_DEFAULT_HANDLE       = "default_handle";
 	public static final String   CONFIG_PROCESSING_ALLOW_PIPE           = "allow_pipe";
+	public static final String   CONFIG_PROCESSING_ALLOW_FILE           = "allow_file";
+	
 
 	// processing options (defaults)
 	public  static final String   CONFIG_PROCESSING_HANDLE_FILE          = GlobalConstants.NAME_FILE_HANDLE;
 	public  static final String   CONFIG_PROCESSING_HANDLE_PIPE          = GlobalConstants.NAME_PIPE_HANDLE;
 	public  static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE = CONFIG_PROCESSING_HANDLE_FILE;
-	public  static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE    = true;
+	public  static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE     = true;
+	public  static final boolean  CONFIG_PROCESSING_ALLOW_FILE_VALUE     = true;
 	public  static final String[] CONFIG_PROCESSING_HANDLES            = {
-										CONFIG_PROCESSING_HANDLE_FILE, CONFIG_PROCESSING_HANDLE_FILE };
+										CONFIG_PROCESSING_HANDLE_FILE, CONFIG_PROCESSING_HANDLE_PIPE };
 	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM                           = "execution_system";
 	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE               = "execution_system_output_file";
 	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_VALUE             = "exec_rules.txt";
@@ -116,7 +119,7 @@ public class GlobalConfig {
 		
 	private static final Parameter positionalParamTemplate = ToolFactory.eINSTANCE.createParameter();
 	private static final Parameter optionalParamTemplate   = ToolFactory.eINSTANCE.createParameter();
-	private static final Parameter exeParameterDefault     = positionalParamTemplate;
+	private static Parameter exeParameterDefault     = null;
 	
 	
 	// config maps
@@ -231,9 +234,18 @@ public class GlobalConfig {
 			return CONFIG_PROCESSING_ALLOW_PIPE_VALUE;
 	}
 	
+	public static boolean isFileAllowed()
+	{
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_ALLOW_FILE))
+			return string2bool(getProcessingConfig().get(CONFIG_PROCESSING_ALLOW_FILE));
+		else
+			return CONFIG_PROCESSING_ALLOW_FILE_VALUE;
+	}
+
 	public static EList<String> getAllowedHandles()
 	{
 		EList<String> allowedHandles = new BasicEList<String>();
+		
 		for (String handle : CONFIG_PROCESSING_HANDLES)
 		{
 			if (getDefaultHandle().equals(handle))
@@ -241,7 +253,11 @@ public class GlobalConfig {
 			else if (handle.equals(CONFIG_PROCESSING_HANDLE_PIPE) 
 					&& isPipeAllowed())
 				allowedHandles.add(handle);
+			else if (handle.equals(CONFIG_PROCESSING_HANDLE_FILE)
+					&& isFileAllowed())
+				allowedHandles.add(handle);
 		}
+		
 		return allowedHandles;
 	}
 	
@@ -381,9 +397,20 @@ public class GlobalConfig {
 			return CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL_VALUE;
 	}
 
+	private static void applyExeParameterDefaultConfiguration(Parameter parameter)
+	{
+		parameter.setDelimiter(getCmdPartDelimiter());
+		parameter.setPrefix(CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE);
+	}
 	
 	public static final Parameter getExeParameterTemplate()
 	{
+		
+		if (exeParameterDefault == null)
+		{
+			exeParameterDefault = ToolFactory.eINSTANCE.createParameter();
+			applyExeParameterDefaultConfiguration(exeParameterDefault);
+		}
 		return exeParameterDefault;
 	}
 	

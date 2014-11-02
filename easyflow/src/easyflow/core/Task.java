@@ -20,6 +20,7 @@ import easyflow.metadata.GroupingInstance;
 
 import easyflow.tool.Command;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.Rule;
 import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
 
@@ -78,7 +79,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getCircumventingParents <em>Circumventing Parents</em>}</li>
  *   <li>{@link easyflow.core.Task#getRecords <em>Records</em>}</li>
  *   <li>{@link easyflow.core.Task#getPreprocessingTasks <em>Preprocessing Tasks</em>}</li>
- *   <li>{@link easyflow.core.Task#getCommand <em>Command</em>}</li>
+ *   <li>{@link easyflow.core.Task#getResolvedCommand <em>Resolved Command</em>}</li>
  *   <li>{@link easyflow.core.Task#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.Task#getParams <em>Params</em>}</li>
  *   <li>{@link easyflow.core.Task#getStaticParams <em>Static Params</em>}</li>
@@ -590,30 +591,30 @@ public interface Task extends EObject {
 	EList<PreprocessingTask> getPreprocessingTasks();
 
 	/**
-	 * Returns the value of the '<em><b>Command</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Resolved Command</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Command</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Resolved Command</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Command</em>' containment reference.
-	 * @see #setCommand(Command)
-	 * @see easyflow.core.CorePackage#getTask_Command()
+	 * @return the value of the '<em>Resolved Command</em>' containment reference.
+	 * @see #setResolvedCommand(Command)
+	 * @see easyflow.core.CorePackage#getTask_ResolvedCommand()
 	 * @model containment="true"
 	 * @generated
 	 */
-	Command getCommand();
+	Command getResolvedCommand();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.Task#getCommand <em>Command</em>}' containment reference.
+	 * Sets the value of the '{@link easyflow.core.Task#getResolvedCommand <em>Resolved Command</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Command</em>' containment reference.
-	 * @see #getCommand()
+	 * @param value the new value of the '<em>Resolved Command</em>' containment reference.
+	 * @see #getResolvedCommand()
 	 * @generated
 	 */
-	void setCommand(Command value);
+	void setResolvedCommand(Command value);
 
 	/**
 	 * Returns the value of the '<em><b>Unresolved Out Data Ports</b></em>' reference list.
@@ -1089,5 +1090,37 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void resolveConditionalStaticParam(ResolvedParam parameter);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean readFromPipe();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean writeToPipe();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	Rule createRule() throws ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	DataPort retrieveDataPort(boolean isOutput, int strategy);
 
 } // Task

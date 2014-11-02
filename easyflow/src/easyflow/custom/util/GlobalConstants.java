@@ -1,7 +1,12 @@
 package easyflow.custom.util;
 
+import easyflow.tool.ResolvedParam;
+
 public class GlobalConstants {
 
+	private static final String METADATA = "metadata";
+	
+	
 	public static final double defaultCellXPos   = 400;
 	public static final double defaultCellYPos   = 100;
 	public static final double defaultCellWidth  = 200;
@@ -19,6 +24,8 @@ public class GlobalConstants {
 	
 	public static final String NAME_FILE_HANDLE = "file";
 	public static final String NAME_PIPE_HANDLE = "pipe";
+	
+	
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";
@@ -74,7 +81,7 @@ public class GlobalConstants {
 	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL    = "No valid data handle found for tool.";
 	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG  = "No valid data handle found due to configuration.";
 
-	public static final String TRAVERSAL_CHUNK_SOURCE_TYPE_METADATA = "metadata";
+	public static final String TRAVERSAL_CHUNK_SOURCE_TYPE_METADATA = METADATA;
 	
 	public static final String VERTEX_STYLE = "EASYFLOW_VERTEX_STYLE";
 	public static final String EDGE_STYLE   = "EASYFLOW_EDGE_STYLE";
@@ -129,5 +136,18 @@ public class GlobalConstants {
 	
 	public static final String CONDITION_TYPE_DATA_PORT               = "data_port";
 	public static final String CONDITION_TYPE_DATA_FORMAT             = "data_format";
+	public static final String CONDITION_TYPE_FILE_HANDLE             = "file_handle";
+	public static final String CONDITION_TYPE_METADATA                = METADATA;
+	public static final int ANY_HANDLE  = 0;
+	public static final int FILE_HANDLE = 1;
+	public static final int PIPE_HANDLE = 2;
+	public static final int PARAM_DATA_MATCH_STRATEGY_ANY         = 0;
+	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_PORT   = 1;
+	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT = 2;
+	public static final int RETRIEVE_DATA_PORT_STRATEGY_FIRST     = 0;
+	public static final int RETRIEVE_DATA_PORT_STRATEGY_LAST      = 1;
+	public static final int RETRIEVE_DATA_PORT_STRATEGY_PRIMARY   = 2;
+	
+	
 }
 

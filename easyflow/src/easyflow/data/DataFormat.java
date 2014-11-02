@@ -90,4 +90,12 @@ public interface DataFormat extends EObject {
 	 */
 	boolean match(DataFormat testDataFormat);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	String renderAsFileExtension();
+
 } // DataFormat

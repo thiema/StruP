@@ -20,6 +20,7 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.Condition;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
@@ -293,6 +294,12 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.TASK_TO_DATA_LINK_LIST_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<Task, EList<DataLink>> taskToDataLinkListMap = (Map.Entry<Task, EList<DataLink>>)theEObject;
 				T result = caseTaskToDataLinkListMap(taskToDataLinkListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_CONDITION_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, Condition> stringToConditionMap = (Map.Entry<String, Condition>)theEObject;
+				T result = caseStringToConditionMap(stringToConditionMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -762,6 +769,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTaskToDataLinkListMap(Map.Entry<Task, EList<DataLink>> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Condition Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Condition Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToConditionMap(Map.Entry<String, Condition> object) {
 		return null;
 	}
 

@@ -135,10 +135,11 @@ public class Util {
 		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
 		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
 		
-		for (Entry<String, Object> entry : metaData.getRecord(
-				record).entrySet()) {
+		for (Entry<String, Object> entry : metaData.getRecord(record).entrySet()) 
+		{
 			Object value = entry.getValue();
-			if (metaDataMap.containsKey(entry.getKey())) {
+			if (metaDataMap.containsKey(entry.getKey())) 
+			{
 				mergeValue(metaDataMap.get(entry.getKey()), value);
 			}
 			metaDataMap.put(entry.getKey(), value);
@@ -146,8 +147,7 @@ public class Util {
 		return metaDataMap;
 	}
 	
-	public static EList<EMap<String, Object>> createMetaDataMapForJexl(
-			EList<TraversalChunk> records) {
+	public static EList<EMap<String, Object>> createMetaDataMapForJexl(EList<TraversalChunk> records) {
 
 		EList<EMap<String, Object>> list = new BasicEList<EMap<String, Object>>();
 		
