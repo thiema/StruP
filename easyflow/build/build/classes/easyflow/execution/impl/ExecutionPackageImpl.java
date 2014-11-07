@@ -196,35 +196,26 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultExecutionSystem_Project() {
-		return (EReference)defaultExecutionSystemEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDefaultExecutionSystem_Logger() {
-		return (EAttribute)defaultExecutionSystemEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDefaultExecutionSystem_Writer() {
-		return (EAttribute)defaultExecutionSystemEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getIExecutionSystem() {
 		return iExecutionSystemEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getIExecutionSystem_Logger() {
+		return (EAttribute)iExecutionSystemEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getIExecutionSystem_Writer() {
+		return (EAttribute)iExecutionSystemEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -256,11 +247,10 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 
 		// Create classes and their features
 		defaultExecutionSystemEClass = createEClass(DEFAULT_EXECUTION_SYSTEM);
-		createEReference(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__PROJECT);
-		createEAttribute(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__LOGGER);
-		createEAttribute(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__WRITER);
 
 		iExecutionSystemEClass = createEClass(IEXECUTION_SYSTEM);
+		createEAttribute(iExecutionSystemEClass, IEXECUTION_SYSTEM__LOGGER);
+		createEAttribute(iExecutionSystemEClass, IEXECUTION_SYSTEM__WRITER);
 	}
 
 	/**
@@ -290,9 +280,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		PegasusPackage thePegasusPackage = (PegasusPackage)EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI);
 		ShellPackage theShellPackage = (ShellPackage)EPackage.Registry.INSTANCE.getEPackage(ShellPackage.eNS_URI);
 		MakeflowPackage theMakeflowPackage = (MakeflowPackage)EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI);
-		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 
 		// Add subpackages
@@ -309,25 +297,15 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(defaultExecutionSystemEClass, DefaultExecutionSystem.class, "DefaultExecutionSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDefaultExecutionSystem_Project(), theUiPackage.getDefaultProject(), null, "project", null, 0, 1, DefaultExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultExecutionSystem_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultExecutionSystem.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultExecutionSystem_Writer(), theEasyflowPackage.getBufferedWriter(), "writer", null, 0, 1, DefaultExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(iExecutionSystemEClass, IExecutionSystem.class, "IExecutionSystem", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(iExecutionSystemEClass, IExecutionSystem.class, "IExecutionSystem", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getIExecutionSystem_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, IExecutionSystem.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getIExecutionSystem_Writer(), theEasyflowPackage.getBufferedWriter(), "writer", null, 0, 1, IExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(iExecutionSystemEClass, theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theCorePackage.getTask(), "task", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getParameterNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
-
-		op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "createCommandLine", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "commandPattern", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getParameterNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
+		EOperation op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "generateExecutionString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theToolPackage.getRule(), "rule", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //ExecutionPackageImpl

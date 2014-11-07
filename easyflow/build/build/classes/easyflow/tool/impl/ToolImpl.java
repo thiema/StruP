@@ -794,17 +794,6 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Data> getDataForParam(Parameter parameter, Map.Entry<String, String> constraints) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public Parameter getTemplateParameter()
@@ -819,17 +808,40 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 */
 	public Parameter getTemplateParameter(Parameter parameter) {
 		
-		Parameter res = null;
+		Parameter toolParam     = null;
+		Parameter pkgParam      = null;
+		Parameter dfltParam     = null;
+		//String s;
+		Parameter templateParam = null;
+		easyflow.tool.Package pkg = getPackage();
 		if (!getCommand().getTemplateParams().isEmpty())
-			res = getMatchingParameter(getCommand().getTemplateParams(), parameter);
+			toolParam = getMatchingParameter(getCommand().getTemplateParams(), parameter);
 		
-		else if (res == null && getPackage() != null && !getPackage().getTemplateParams().isEmpty())
-			res = getMatchingParameter(getPackage().getTemplateParams(), parameter);
+		if (getPackage() != null && !getPackage().getTemplateParams().isEmpty())
+			pkgParam = getMatchingParameter(getPackage().getTemplateParams(), parameter);
 		
-		if (res == null && (parameter.isDataParam() && assumeDataParamPositional()))
-			res = GlobalConfig.getPositonalParamTemplate();
+		if (parameter != null)
+		{
+			if ((parameter.isDataParam() && assumeDataParamPositional()) ||
+				(!parameter.isDataParam()) && assumeParamPositional())
+				dfltParam = GlobalConfig.getPositonalParamTemplate();
+			else
+				dfltParam = GlobalConfig.getOptionalParamTemplate();
+		}
 
-		return res;
+		// merging parameters
+		if (toolParam != null)
+			templateParam = toolParam;
+		if (templateParam != null && pkgParam != null)
+			templateParam.merge(pkgParam);
+		else if (pkgParam != null)
+			templateParam = pkgParam;
+		if (templateParam != null && dfltParam != null)
+			templateParam.merge(dfltParam);
+		else if (dfltParam != null)
+			templateParam = dfltParam;
+		
+		return templateParam;
 	}
 
 	/**
@@ -985,6 +997,32 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			return getPackage().getAssumeDataParamPositional();
 		else
 			return GlobalConfig.assumePositionalDataParam();
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean assumeParamPositional() {
+		
+		if (getCommand().getAssumeParamPositional() != null)
+			return getCommand().getAssumeParamPositional();
+		else if (getPackage() != null && getPackage().getAssumeParamPositional() != null)
+			return getPackage().getAssumeParamPositional();
+		else
+			return GlobalConfig.assumePositionalParam();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String renderToString() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**

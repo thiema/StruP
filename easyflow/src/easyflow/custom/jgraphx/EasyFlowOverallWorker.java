@@ -1,9 +1,8 @@
 package easyflow.custom.jgraphx;
 
 import org.apache.log4j.Logger;
-import org.codehaus.groovy.tools.shell.commands.SetCommand;
 
-import easyflow.custom.util.GlobalVar;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.ui.DefaultProject;
 
 public class EasyFlowOverallWorker extends EasyFlowWorker {
@@ -130,7 +129,7 @@ public class EasyFlowOverallWorker extends EasyFlowWorker {
 			}
 			updateProgress(++i,numberOfTasks);
 			rc = getDefaultProject().runNextWorkflowStep();
-			GlobalVar.getGraphUtil().layoutGraph();
+			JGraphXUtil.layoutGraph();
 			if (rc != 0)
 				break;
 			if (isProcessNextStepOnly())

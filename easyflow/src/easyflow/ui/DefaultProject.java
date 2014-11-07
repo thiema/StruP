@@ -8,17 +8,11 @@ package easyflow.ui;
 
 import easyflow.core.Workflow;
 
-import easyflow.execution.IExecutionSystem;
-import easyflow.graph.jgraphx.Util;
-
 import easyflow.metadata.IMetaData;
 
-import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 
 import java.net.URI;
-
-import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
@@ -44,7 +38,6 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.ui.DefaultProject#getConfigSource <em>Config Source</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getBaseURI <em>Base URI</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
@@ -156,32 +149,6 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	Logger getLogger();
-
-	/**
-	 * Returns the value of the '<em><b>Graph Util</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Graph Util</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Graph Util</em>' reference.
-	 * @see #setGraphUtil(Util)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_GraphUtil()
-	 * @model
-	 * @generated
-	 */
-	Util getGraphUtil();
-
-	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Graph Util</em>' reference.
-	 * @see #getGraphUtil()
-	 * @generated
-	 */
-	void setGraphUtil(Util value);
 
 	/**
 	 * Returns the value of the '<em><b>From Jar</b></em>' attribute.

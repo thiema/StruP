@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getCommandPattern <em>Command Pattern</em>}</li>
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getAssumeParamPositional <em>Assume Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.BaseCommandImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  * </ul>
  * </p>
@@ -85,6 +86,26 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 	 * @ordered
 	 */
 	protected Boolean assumeDataParamPositional = ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getAssumeParamPositional() <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean ASSUME_PARAM_POSITIONAL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAssumeParamPositional() <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean assumeParamPositional = ASSUME_PARAM_POSITIONAL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getCmdPartDelimiter() <em>Cmd Part Delimiter</em>}' attribute.
@@ -184,6 +205,27 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Boolean getAssumeParamPositional() {
+		return assumeParamPositional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAssumeParamPositional(Boolean newAssumeParamPositional) {
+		Boolean oldAssumeParamPositional = assumeParamPositional;
+		assumeParamPositional = newAssumeParamPositional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL, oldAssumeParamPositional, assumeParamPositional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getCmdPartDelimiter() {
 		return cmdPartDelimiter;
 	}
@@ -214,6 +256,8 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 				return getTemplateParams();
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return getAssumeDataParamPositional();
+			case ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL:
+				return getAssumeParamPositional();
 			case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER:
 				return getCmdPartDelimiter();
 		}
@@ -239,6 +283,9 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional((Boolean)newValue);
 				return;
+			case ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL:
+				setAssumeParamPositional((Boolean)newValue);
+				return;
 			case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER:
 				setCmdPartDelimiter((String)newValue);
 				return;
@@ -263,6 +310,9 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
 				return;
+			case ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL:
+				setAssumeParamPositional(ASSUME_PARAM_POSITIONAL_EDEFAULT);
+				return;
 			case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER:
 				setCmdPartDelimiter(CMD_PART_DELIMITER_EDEFAULT);
 				return;
@@ -284,6 +334,8 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 				return templateParams != null && !templateParams.isEmpty();
 			case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
+			case ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL:
+				return ASSUME_PARAM_POSITIONAL_EDEFAULT == null ? assumeParamPositional != null : !ASSUME_PARAM_POSITIONAL_EDEFAULT.equals(assumeParamPositional);
 			case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER:
 				return CMD_PART_DELIMITER_EDEFAULT == null ? cmdPartDelimiter != null : !CMD_PART_DELIMITER_EDEFAULT.equals(cmdPartDelimiter);
 		}
@@ -304,6 +356,8 @@ public class BaseCommandImpl extends EObjectImpl implements BaseCommand {
 		result.append(commandPattern);
 		result.append(", assumeDataParamPositional: ");
 		result.append(assumeDataParamPositional);
+		result.append(", assumeParamPositional: ");
+		result.append(assumeParamPositional);
 		result.append(", cmdPartDelimiter: ");
 		result.append(cmdPartDelimiter);
 		result.append(')');

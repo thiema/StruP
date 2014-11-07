@@ -8,6 +8,7 @@ package easyflow.tool.impl;
 
 import easyflow.tool.BaseCommand;
 import easyflow.tool.Command;
+import easyflow.tool.Condition;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.InOutParameter;
@@ -16,6 +17,7 @@ import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.Requirement;
 import easyflow.tool.ResolvedParam;
+import easyflow.tool.Rule;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
@@ -77,6 +79,7 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.TOOL: return createTool();
 			case ToolPackage.PARAMETER: return createParameter();
 			case ToolPackage.IN_OUT_PARAMETER: return createInOutParameter();
+			case ToolPackage.RESOLVED_PARAM: return createResolvedParam();
 			case ToolPackage.KEY: return createKey();
 			case ToolPackage.REQUIREMENT: return createRequirement();
 			case ToolPackage.DOCUMENT_PROPERTIES: return createDocumentProperties();
@@ -84,7 +87,8 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 			case ToolPackage.BASE_COMMAND: return createBaseCommand();
 			case ToolPackage.PACKAGE: return createPackage();
 			case ToolPackage.COMMAND: return createCommand();
-			case ToolPackage.RESOLVED_PARAM: return createResolvedParam();
+			case ToolPackage.RULE: return createRule();
+			case ToolPackage.CONDITION: return createCondition();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -138,6 +142,26 @@ public class ToolFactoryImpl extends EFactoryImpl implements ToolFactory {
 	public Command createCommand() {
 		CommandImpl command = new CommandImpl();
 		return command;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rule createRule() {
+		RuleImpl rule = new RuleImpl();
+		return rule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Condition createCondition() {
+		ConditionImpl condition = new ConditionImpl();
+		return condition;
 	}
 
 	/**

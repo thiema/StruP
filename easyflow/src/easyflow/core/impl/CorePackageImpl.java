@@ -405,7 +405,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_GraphUtil() {
+	public EReference getWorkflow_Catalog() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(12);
 	}
 
@@ -414,7 +414,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_Catalog() {
+	public EReference getWorkflow_RootTask() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(13);
 	}
 
@@ -423,7 +423,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_RootTask() {
+	public EReference getWorkflow_StaticTasks() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(14);
 	}
 
@@ -432,7 +432,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_StaticTasks() {
+	public EReference getWorkflow_ProcessedStates() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(15);
 	}
 
@@ -441,7 +441,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_ProcessedStates() {
+	public EReference getWorkflow_PreviousTaskName() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(16);
 	}
 
@@ -450,17 +450,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_PreviousTaskName() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(17);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getWorkflow_Worker() {
-		return (EAttribute)workflowEClass.getEStructuralFeatures().get(18);
+		return (EAttribute)workflowEClass.getEStructuralFeatures().get(17);
 	}
 
 	/**
@@ -469,7 +460,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getWorkflow_ExecutionSystem() {
-		return (EReference)workflowEClass.getEStructuralFeatures().get(19);
+		return (EReference)workflowEClass.getEStructuralFeatures().get(18);
 	}
 
 	/**
@@ -478,6 +469,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	public EReference getWorkflow_CurrentRule() {
+		return (EReference)workflowEClass.getEStructuralFeatures().get(19);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getWorkflow_Jgraph() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(20);
 	}
 
@@ -1179,7 +1179,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(workflowEClass, WORKFLOW__MODE);
 		createEAttribute(workflowEClass, WORKFLOW__DEFAULT_GROUPING_CRITERIA);
 		createEReference(workflowEClass, WORKFLOW__GENERIC_ATTRIBUTES);
-		createEReference(workflowEClass, WORKFLOW__GRAPH_UTIL);
 		createEReference(workflowEClass, WORKFLOW__CATALOG);
 		createEReference(workflowEClass, WORKFLOW__ROOT_TASK);
 		createEReference(workflowEClass, WORKFLOW__STATIC_TASKS);
@@ -1188,6 +1187,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(workflowEClass, WORKFLOW__WORKER);
 		createEReference(workflowEClass, WORKFLOW__EXECUTION_SYSTEM);
 		createEReference(workflowEClass, WORKFLOW__CURRENT_RULE);
+		createEReference(workflowEClass, WORKFLOW__JGRAPH);
 
 		taskEClass = createEClass(TASK);
 		createEReference(taskEClass, TASK__IN_DATA_PORTS);
@@ -1301,9 +1301,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		// Obtain other dependent packages
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
-		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
+		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
 		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
@@ -1332,7 +1332,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getWorkflow_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkflow_DefaultGroupingCriteria(), ecorePackage.getEString(), "defaultGroupingCriteria", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_GenericAttributes(), theMapsPackage.getStringToObjectMap(), null, "genericAttributes", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_GraphUtil(), theJgraphxPackage.getUtil(), null, "graphUtil", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_Catalog(), this.getCatalog(), null, "catalog", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_RootTask(), this.getTask(), null, "rootTask", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_StaticTasks(), this.getTask(), null, "staticTasks", null, 0, -1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1341,6 +1340,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getWorkflow_Worker(), theEasyflowPackage.getEasyFlowOverallWorker(), "worker", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_ExecutionSystem(), theExecutionPackage.getIExecutionSystem(), null, "executionSystem", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_CurrentRule(), theToolPackage.getRule(), null, "currentRule", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_Jgraph(), theJgraphxPackage.getGraph(), null, "jgraph", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(workflowEClass, ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToToolMap(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);

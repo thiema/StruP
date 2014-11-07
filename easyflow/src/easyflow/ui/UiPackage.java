@@ -134,22 +134,13 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__LOGGER = IPROJECT_FEATURE_COUNT + 4;
 
 	/**
-	 * The feature id for the '<em><b>Graph Util</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DEFAULT_PROJECT__GRAPH_UTIL = IPROJECT_FEATURE_COUNT + 5;
-
-	/**
 	 * The feature id for the '<em><b>From Jar</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__FROM_JAR = IPROJECT_FEATURE_COUNT + 6;
+	int DEFAULT_PROJECT__FROM_JAR = IPROJECT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Default Config Source String</b></em>' attribute.
@@ -158,7 +149,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = IPROJECT_FEATURE_COUNT + 7;
+	int DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING = IPROJECT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Tool Definitions</b></em>' reference.
@@ -167,7 +158,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 8;
+	int DEFAULT_PROJECT__TOOL_DEFINITIONS = IPROJECT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Packages</b></em>' map.
@@ -176,7 +167,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__PACKAGES = IPROJECT_FEATURE_COUNT + 9;
+	int DEFAULT_PROJECT__PACKAGES = IPROJECT_FEATURE_COUNT + 8;
 
 	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
@@ -185,7 +176,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 10;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 9;
 
 
 	/**
@@ -262,17 +253,6 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDefaultProject_Logger();
-
-	/**
-	 * Returns the meta object for the reference '{@link easyflow.ui.DefaultProject#getGraphUtil <em>Graph Util</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Graph Util</em>'.
-	 * @see easyflow.ui.DefaultProject#getGraphUtil()
-	 * @see #getDefaultProject()
-	 * @generated
-	 */
-	EReference getDefaultProject_GraphUtil();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#isFromJar <em>From Jar</em>}'.
@@ -399,14 +379,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEFAULT_PROJECT__LOGGER = eINSTANCE.getDefaultProject_Logger();
-
-		/**
-		 * The meta object literal for the '<em><b>Graph Util</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DEFAULT_PROJECT__GRAPH_UTIL = eINSTANCE.getDefaultProject_GraphUtil();
 
 		/**
 		 * The meta object literal for the '<em><b>From Jar</b></em>' attribute feature.

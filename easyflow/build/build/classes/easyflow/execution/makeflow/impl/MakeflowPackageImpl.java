@@ -247,8 +247,6 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 
 		// Obtain other dependent packages
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
-		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
-		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -260,16 +258,6 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(makeflowEClass, Makeflow.class, "Makeflow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		EOperation op = addEOperation(makeflowEClass, ecorePackage.getEString(), "getDependencies", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(makeflowEClass, ecorePackage.getEString(), "getTargets", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(makeflowEClass, ecorePackage.getEString(), "createRule", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getParameterNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
 	}
 
 } //MakeflowPackageImpl

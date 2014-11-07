@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.w3c.dom.Element;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -21,6 +20,7 @@ import com.mxgraph.view.mxGraphView;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.DataLink;
 
@@ -191,10 +191,10 @@ public class EasyFlowCustomGraph extends mxGraph
 			if (cell.isVertex())
 			{
 				try {
-					if (GlobalVar.getGraphUtil()!=null)
+					if (GlobalVar.getGraph()!=null)
 					{
 						
-						Task task = GlobalVar.getGraphUtil().loadTask(cell);
+						Task task = JGraphXUtil.loadTask(cell);
 						
 						if (task != null)
 						{
@@ -210,9 +210,9 @@ public class EasyFlowCustomGraph extends mxGraph
 			else if (cell.isEdge())
 			{
 				try {
-					if (GlobalVar.getGraphUtil()!=null)
+					if (GlobalVar.getGraph()!=null)
 					{
-						DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(cell);
+						DataLink dataLink = JGraphXUtil.loadDataLink(cell);
 						if (dataLink!=null && dataLink.getDataPort()!=null)
 						{
 							String labelName = dataLink.getDataPort().getName();

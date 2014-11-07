@@ -14,11 +14,10 @@ import easyflow.core.Task;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.util.GlobalVar;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.execution.ExecutionPackage;
 import easyflow.execution.IExecutionSystem;
 
-import easyflow.tool.Command;
 import easyflow.tool.Rule;
 
 import java.io.BufferedWriter;
@@ -150,7 +149,7 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 				
 				Task task;
 				try {
-					task = GlobalVar.getGraphUtil().loadTask(vertex);
+					task = JGraphXUtil.loadTask(vertex);
 				if (task.getTools().isEmpty())
 					logger.warn("no tool definition available for "+task.getUniqueString());
 				else

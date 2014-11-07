@@ -8,9 +8,12 @@ package easyflow.tool.impl;
 
 import easyflow.tool.BaseCommand;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.data.DataPort;
+
 import java.util.Map.Entry;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
+import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.ToolPackage;
@@ -18,7 +21,8 @@ import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import java.util.Collection;
-import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -47,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.CommandImpl#getCommandPattern <em>Command Pattern</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.CommandImpl#getAssumeParamPositional <em>Assume Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#isExecutable <em>Executable</em>}</li>
  *   <li>{@link easyflow.tool.impl.CommandImpl#getLogger <em>Logger</em>}</li>
@@ -146,6 +151,26 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * @ordered
 	 */
 	protected Boolean assumeDataParamPositional = ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getAssumeParamPositional() <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean ASSUME_PARAM_POSITIONAL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getAssumeParamPositional() <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean assumeParamPositional = ASSUME_PARAM_POSITIONAL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getCmdPartDelimiter() <em>Cmd Part Delimiter</em>}' attribute.
@@ -379,6 +404,27 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Boolean getAssumeParamPositional() {
+		return assumeParamPositional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAssumeParamPositional(Boolean newAssumeParamPositional) {
+		Boolean oldAssumeParamPositional = assumeParamPositional;
+		assumeParamPositional = newAssumeParamPositional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL, oldAssumeParamPositional, assumeParamPositional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getCmdPartDelimiter() {
 		return cmdPartDelimiter;
 	}
@@ -404,6 +450,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 	public EList<String> getPositionalParameterNames() {
 		
 		EList<String> paramNames = new BasicEList<String>();
+		
 		for (Entry<String, ResolvedParam> e:getResolvedParams())
 		{
 			ResolvedParam parameter = e.getValue();
@@ -483,6 +530,81 @@ public class CommandImpl extends EObjectImpl implements Command {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput, int strategy) {
+		
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e  = it.next();
+			ResolvedParam                rp = e.getValue();
+			if (getDataParamForDataPort(dataPort, isOutput, rp, strategy))
+				return rp;
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput) {
+		
+		return getDataParamForDataPort(dataPort, isOutput, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY);
+	}
+	
+	private boolean getDataParamForDataPort(DataPort dataPort, boolean isOutput, ResolvedParam resolvedParam, int strategy)
+	{
+		if (resolvedParam.getParameter().isDataParam())
+		{
+			// assume data param
+			InOutParameter ioParam = (InOutParameter) resolvedParam.getParameter();
+			
+			if ((ioParam.isOutput() && isOutput) || (!ioParam.isOutput() && !isOutput))
+			{
+				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy ==  GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_PORT) &&
+					ioParam.getDataPort() != null && ioParam.getDataPort().equals(dataPort.getName()))
+					return true;
+				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy ==  GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT) &&
+					ioParam.getFormats() != null && dataPort.isCompatibleStr(ioParam.getFormats()))
+					return true;
+			}
+		}
+		else if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
+		{
+			Iterator<Entry<String, EList<ResolvedParam>>> it = resolvedParam.getChildParams().iterator();
+			while (it.hasNext())
+			{
+				Entry<String, EList<ResolvedParam>> e = it.next();
+				Iterator<ResolvedParam> it2 = e.getValue().iterator();
+				while (it2.hasNext())
+				{
+					ResolvedParam rp = it2.next();
+					if (getDataParamForDataPort(dataPort, isOutput, rp, strategy))
+						return true;
+				}
+			}
+		}
+			
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String renderToString() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -512,6 +634,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return getTemplateParams();
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return getAssumeDataParamPositional();
+			case ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL:
+				return getAssumeParamPositional();
 			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
 				return getCmdPartDelimiter();
 			case ToolPackage.COMMAND__EXECUTABLE:
@@ -550,6 +674,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional((Boolean)newValue);
 				return;
+			case ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL:
+				setAssumeParamPositional((Boolean)newValue);
+				return;
 			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
 				setCmdPartDelimiter((String)newValue);
 				return;
@@ -586,6 +713,9 @@ public class CommandImpl extends EObjectImpl implements Command {
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
 				return;
+			case ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL:
+				setAssumeParamPositional(ASSUME_PARAM_POSITIONAL_EDEFAULT);
+				return;
 			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
 				setCmdPartDelimiter(CMD_PART_DELIMITER_EDEFAULT);
 				return;
@@ -617,6 +747,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 				return templateParams != null && !templateParams.isEmpty();
 			case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL:
 				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
+			case ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL:
+				return ASSUME_PARAM_POSITIONAL_EDEFAULT == null ? assumeParamPositional != null : !ASSUME_PARAM_POSITIONAL_EDEFAULT.equals(assumeParamPositional);
 			case ToolPackage.COMMAND__CMD_PART_DELIMITER:
 				return CMD_PART_DELIMITER_EDEFAULT == null ? cmdPartDelimiter != null : !CMD_PART_DELIMITER_EDEFAULT.equals(cmdPartDelimiter);
 			case ToolPackage.COMMAND__EXECUTABLE:
@@ -648,6 +780,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 				case ToolPackage.COMMAND__COMMAND_PATTERN: return ToolPackage.BASE_COMMAND__COMMAND_PATTERN;
 				case ToolPackage.COMMAND__TEMPLATE_PARAMS: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS;
 				case ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
+				case ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL;
 				case ToolPackage.COMMAND__CMD_PART_DELIMITER: return ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER;
 				default: return -1;
 			}
@@ -674,6 +807,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 				case ToolPackage.BASE_COMMAND__COMMAND_PATTERN: return ToolPackage.COMMAND__COMMAND_PATTERN;
 				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS: return ToolPackage.COMMAND__TEMPLATE_PARAMS;
 				case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
+				case ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL: return ToolPackage.COMMAND__ASSUME_PARAM_POSITIONAL;
 				case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER: return ToolPackage.COMMAND__CMD_PART_DELIMITER;
 				default: return -1;
 			}
@@ -699,6 +833,8 @@ public class CommandImpl extends EObjectImpl implements Command {
 		result.append(commandPattern);
 		result.append(", assumeDataParamPositional: ");
 		result.append(assumeDataParamPositional);
+		result.append(", assumeParamPositional: ");
+		result.append(assumeParamPositional);
 		result.append(", cmdPartDelimiter: ");
 		result.append(cmdPartDelimiter);
 		result.append(", executable: ");

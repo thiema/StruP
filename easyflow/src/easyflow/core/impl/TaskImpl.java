@@ -46,6 +46,7 @@ import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.ui.Easyflow;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
@@ -1664,14 +1665,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 			else if (part.equalsIgnoreCase(GlobalConstants.PARAM_OUTPUT))
 				isOutputDefined = true;
 		}
-		if ("view".equals(getPreferredTool().getName()))
+		
+		String debugTool = "rmdup";
+		//String debugTool = "view"; 
+		if (debugTool.equals(getPreferredTool().getName()))
 		{
 			
 			Command cmd = getResolvedCommand();
-			logger.debug("debug tool=view");
+			logger.debug("debug tool="+debugTool);
 		}
-		resolveStaticParams(getResolvedCommand().getResolvedParams());
 		
+		resolveStaticParams(getResolvedCommand().getResolvedParams());
 		
 		for (String commandLinePart : commandPatterns)
 		{
@@ -2093,7 +2097,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
 		
 
-		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString()) == null)
+		if (GlobalVar.getCells().get(getUniqueString()) == null)
 			logger.error("resolveInputs(): no cell found for "+getUniqueString());
 		
 		//int strategy = GlobalConstants.RETRIEVE_DATA_PORT_STRATEGY_FIRST;
@@ -2103,13 +2107,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 
 		for (Object edge : GlobalVar
-				.getGraphUtil()
 					.getGraph()
 						.getIncomingEdges(
-								GlobalVar.getGraphUtil().getCells()
+								GlobalVar.getCells()
 									.get(getUniqueString()))) 
 		{
-			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+			DataLink dataLink = JGraphXUtil.loadDataLink(edge);
 			if (dataLink.getPipe() == null                        && 
 				dataLink.getDataPort().isCompatible(pipeDataPort) && 
 				dataLink.isPipeable()
@@ -2132,7 +2135,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 */
 	public void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
 		
-		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString()) == null)
+		if (GlobalVar.getCells().get(getUniqueString()) == null)
 			logger.error("resolveOutputs(): no cell found for "+getUniqueString());
 		
 		int strategy = GlobalConstants.RETRIEVE_DATA_PORT_STRATEGY_PRIMARY;
@@ -2142,16 +2145,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 			//return;
 		
 		Object edges[] = GlobalVar
-				.getGraphUtil()
 				.getGraph()
 					.getOutgoingEdges(
-							GlobalVar.getGraphUtil().getCells()
+							GlobalVar.getCells()
 								.get(getUniqueString()));
 		
 		EList<String> unique = new BasicEList<String>();
 		for (Object edge : edges) 
 		{
-			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+			DataLink dataLink = JGraphXUtil.loadDataLink(edge);
 			DataPort dataPort = dataLink.isTerminal() ? dataLink.getInDataPort() : dataLink.getDataPort(); 
 			logger.debug("check output for dataport="+dataPort.getName());
 			if (dataPort.getName() == null)
@@ -2174,19 +2176,18 @@ public class TaskImpl extends EObjectImpl implements Task {
 
 	public void resolveParams() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException
 	{
-		if (GlobalVar.getGraphUtil().getCells().get(getUniqueString()) == null)
+		if (GlobalVar.getCells().get(getUniqueString()) == null)
 			logger.error("resolveParams(): no cell found for "+getUniqueString());
 		
 		EMap<String, DataLink> inputParams = new BasicEMap<String, DataLink>();
 		
 		for (Object edge : GlobalVar
-				.getGraphUtil()
 					.getGraph()
 						.getIncomingEdges(
-								GlobalVar.getGraphUtil().getCells()
+								GlobalVar.getCells()
 									.get(getUniqueString()))) 
 		{
-			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+			DataLink dataLink = JGraphXUtil.loadDataLink(edge);
 			if (dataLink.getParamStr() != null && !dataLink.getParamStr().equals(""))
 				inputParams.put(new Integer(dataLink.getId()).toString(), dataLink);
 		}
@@ -2196,16 +2197,15 @@ public class TaskImpl extends EObjectImpl implements Task {
 		EMap<String, DataLink> outputParams = new BasicEMap<String, DataLink>();
 		
 		Object edges[] = GlobalVar
-				.getGraphUtil()
 				.getGraph()
 					.getOutgoingEdges(
-							GlobalVar.getGraphUtil().getCells()
+							GlobalVar.getCells()
 								.get(getUniqueString()));
 		
 		EList<String> unique = new BasicEList<String>();
 		for (Object edge : edges) 
 		{
-			DataLink dataLink = GlobalVar.getGraphUtil().loadDataLink(edge);
+			DataLink dataLink = JGraphXUtil.loadDataLink(edge);
 			if (dataLink.getParamStr() != null && !dataLink.getParamStr().equals("")
 					&& !unique.contains(dataLink.getParamStr()))
 			{
@@ -2342,7 +2342,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 *   1. get all resolvedparams (which are data params) and evaluate dataport attribute  
 	 *   2. try to find a condition that matches the dataport attribute
 	 *   todo: how to behave in case where more than one condition can be fulfilled
-	 *   
 	 *   
 	 * <!-- end-user-doc -->
 	 * @generated not
@@ -2581,7 +2580,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		EList<TraversalChunk>   chunks            = getRecords(true);
-		DefaultMetaData         metaData          = GlobalVar.getGraphUtil().getMetaData();
+		DefaultMetaData         metaData          = GlobalVar.getMetaData();
 		Iterator<String>        groupingStrIt     = param.getGrouping().iterator();
 		while (groupingStrIt.hasNext())
 		{
@@ -3002,9 +3001,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 					+ " of task"
 					+ getUniqueString()
 					+ " (is contained="
-					+ GlobalVar.getGraphUtil().getMetaData()
+					+ GlobalVar.getMetaData()
 							.containsColumn(groupingStr) + ")");
-			if (GlobalVar.getGraphUtil().getMetaData()
+			if (GlobalVar.getMetaData()
 					.containsColumn(groupingStr)) {
 				if (!groupingStr.equals(GlobalConstants.TRAVERSAL_CRITERION_RECORD)) {
 					if (modeUnion || firstTC) {
@@ -3012,7 +3011,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 						for (TraversalChunk traversalChunk : getChunks().get(
 								groupingStr)) {
 							EList<String> recs = GlobalVar
-									.getGraphUtil()
 									.getMetaData()
 									.getRecordsBy(groupingStr,
 											traversalChunk.getName());
@@ -3044,13 +3042,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 							logger.trace("getRecords(): traversalChunk="
 									+ traversalChunk.getName()
 									+ " resolved to records=("
-									+ StringUtils.join(GlobalVar.getGraphUtil()
+									+ StringUtils.join(GlobalVar
 														.getMetaData().getRecordsBy(groupingStr,
 															traversalChunk.getName())
 															.iterator(),
 															", ") + ")");
 							for (String rec : GlobalVar
-									.getGraphUtil()
 									.getMetaData()
 									.getRecordsBy(groupingStr,
 											traversalChunk.getName())) {

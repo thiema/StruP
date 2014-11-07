@@ -4,23 +4,26 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.jexl2.JexlEngine;
-import org.apache.commons.lang.StringUtils;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+
+import com.mxgraph.model.mxICell;
 
 import easyflow.data.DataLink;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowGraphEditor;
-import easyflow.graph.jgraphx.Util;
+import easyflow.metadata.DefaultMetaData;
+import easyflow.traversal.TraversalChunk;
 import easyflow.ui.DefaultProject;
-
-import sun.security.action.GetLongAction;
 
 public class GlobalVar {
 
@@ -37,7 +40,7 @@ public class GlobalVar {
 	
 	private static final JexlEngine jexlEngine = new JexlEngine();
 	
-	private static Util graphUtil = null;
+	
 	private static Util util      = null;
 	
 	private static Map<String, easyflow.tool.Package> packages = new HashMap<String, easyflow.tool.Package>();
@@ -48,19 +51,18 @@ public class GlobalVar {
 	private static Task     templateTask = null;
 	private static DataLink templateLink = null;
 	
+	private static DefaultMetaData metaData     = null;
+	private static EasyFlowGraph   graph        = null;
+	static EMap<String, Task>      tasks        = new BasicEMap<String, Task>();
+	static EMap<String, Task>      utilityTasks = new BasicEMap<String, Task>();
+	static EMap<String, Object>    cells        = new BasicEMap<String, Object>();
+	static EMap<String, DataLink>  dataLinks    = new BasicEMap<String, DataLink>();
+	static EList<Object>           utilityCells = new BasicEList<Object>();
+	
+	
 	
 	private static boolean guiMode = false;
 	
-	public static Util getGraphUtil()
-	{
-		return graphUtil;
-	}
-	
-	public static void setGraphUtil (
-			Util newGraphUtil)
-	{
-		graphUtil=newGraphUtil;
-	}
 	
 	public static DefaultProject getDefaultProject() {
 		return defaultProject;
@@ -137,14 +139,17 @@ public class GlobalVar {
 
 	public static Task getRootTask()
 	{
-		return getGraphUtil().getTasks().get(GlobalConstants.ROOT_TASK_NAME);
+		return getTasks().get(GlobalConstants.ROOT_TASK_NAME);
 	}
 
 	public static void setRootTask(Task task) {
-		getGraphUtil().getTasks().put(GlobalConstants.ROOT_TASK_NAME, task);		
+		getTasks().put(GlobalConstants.ROOT_TASK_NAME, task);		
+	}
+	
+	public static EMap<String, Task> getTasks() {
+		return tasks;
 	}
 
-	
 	public static String getExecutionSystemOutputFileName() {
 		return executionSystemFileName;
 	}
@@ -197,5 +202,49 @@ public class GlobalVar {
 		GlobalVar.masterMap = masterMap;
 	}
 
+	public static DefaultMetaData getMetaData() {
+		return metaData;
+	}
+
+	public static EMap<String, EList<TraversalChunk>> getTraversalChunks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static EMap<String, Object> getCells() {
+		return cells;
+	}
+
+	public static EMap<String, DataLink> getDataLinks() {
+		return dataLinks;
+	}
+
+	public static EasyFlowGraph getGraph() {
+		return graph;
+	}
+
+	public static EMap<String, Task> getUtilityTasks() {
+		return utilityTasks;
+	}
+	
+	public static EList<Object> getUtilityTaskCells() {
+		return utilityCells;
+	}
+
+	/*
+	public static void setDefaultRootCell(mxICell rootCell) {
+		// TODO Auto-generated method stub
+		
+	}
+*/
+	public static void setMetaData(DefaultMetaData metaData_) {
+		metaData = metaData_;
+		
+	}
+
+	public static void setGraph(EasyFlowGraph graph_) {
+
+		graph = graph_;
+	}
 
 }

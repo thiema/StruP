@@ -20,15 +20,17 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
+import easyflow.graph.jgraphx.Graph;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
-import easyflow.graph.jgraphx.Util;
+import easyflow.custom.util.GraphUtil;
 import easyflow.tool.Rule;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
@@ -86,7 +88,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getMode <em>Mode</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getGenericAttributes <em>Generic Attributes</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getRootTask <em>Root Task</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getStaticTasks <em>Static Tasks</em>}</li>
@@ -95,6 +96,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getWorker <em>Worker</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getExecutionSystem <em>Execution System</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCurrentRule <em>Current Rule</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getJgraph <em>Jgraph</em>}</li>
  * </ul>
  * </p>
  *
@@ -294,16 +296,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	protected EMap<String, Object> genericAttributes;
 
 	/**
-	 * The cached value of the '{@link #getGraphUtil() <em>Graph Util</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGraphUtil()
-	 * @generated
-	 * @ordered
-	 */
-	protected Util graphUtil;
-
-	/**
 	 * The cached value of the '{@link #getCatalog() <em>Catalog</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -392,6 +384,16 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * @ordered
 	 */
 	protected Rule currentRule;
+
+	/**
+	 * The cached value of the '{@link #getJgraph() <em>Jgraph</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getJgraph()
+	 * @generated
+	 * @ordered
+	 */
+	protected Graph jgraph;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -735,51 +737,50 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Graph getJgraph() {
+		if (jgraph != null && jgraph.eIsProxy()) {
+			InternalEObject oldJgraph = (InternalEObject)jgraph;
+			jgraph = (Graph)eResolveProxy(oldJgraph);
+			if (jgraph != oldJgraph) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__JGRAPH, oldJgraph, jgraph));
+			}
+		}
+		return jgraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Graph basicGetJgraph() {
+		return jgraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setJgraph(Graph newJgraph) {
+		Graph oldJgraph = jgraph;
+		jgraph = newJgraph;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__JGRAPH, oldJgraph, jgraph));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EMap<String, Object> getGenericAttributes() {
 		if (genericAttributes == null) {
 			genericAttributes = new EcoreEMap<String,Object>(MapsPackage.Literals.STRING_TO_OBJECT_MAP, StringToObjectMapImpl.class, this, CorePackage.WORKFLOW__GENERIC_ATTRIBUTES);
 		}
 		return genericAttributes;
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Util getGraphUtil() {
-		if (graphUtil != null && graphUtil.eIsProxy()) {
-			InternalEObject oldGraphUtil = (InternalEObject)graphUtil;
-			graphUtil = (Util)eResolveProxy(oldGraphUtil);
-			if (graphUtil != oldGraphUtil) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__GRAPH_UTIL, oldGraphUtil, graphUtil));
-			}
-		}
-		return graphUtil;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Util basicGetGraphUtil() {
-		return graphUtil;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGraphUtil(Util newGraphUtil) {
-		Util oldGraphUtil = graphUtil;
-		graphUtil = newGraphUtil;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__GRAPH_UTIL, oldGraphUtil, graphUtil));
-	}
-
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -903,6 +904,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String renderToString() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean delete() {
@@ -912,27 +924,23 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		try
 		{
 			//graph.removeCells(cells, true);
-			Object[] cells=getGraph().removeCells(getGraphUtil().getCells().keySet().toArray(), true);
+			Object[] cells=getGraph().removeCells(GlobalVar.getCells().keySet().toArray(), true);
 			logger.debug("removed "+cells.length+ " cells.");
 			//graph.getView().clear(defaultProject.getActiveWorkflow().getFirstNode(), true, true);
 			getGraph().removeCells(getGraph().getChildVertices(graph.getDefaultParent()));
-			getGraph().removeCells(getGraphUtil().getUtilityTaskCells().toArray());
+			getGraph().removeCells(GlobalVar.getUtilityTaskCells().toArray());
 		}
 		finally
 		{
-			getGraphUtil().getCells().clear();
-			getGraphUtil().getTasks().clear();
-			getGraphUtil().getCopiedCells().clear();
-			getGraphUtil().getCurrentSubGraphs().clear();
-			getGraphUtil().setDefaultRootCell(null);
-			getGraphUtil().setMetaData(null);
-			getGraphUtil().getMostProcessedTasks().clear();
-			getGraphUtil().getNewTraversalEvents().clear();
-			getGraphUtil().getDeprecatedEdges().clear();
-			//getGraphUtil().getProcessedEdgesCopyGraph().clear();
-			getGraphUtil().getTraversalEvents().clear();
-			getGraphUtil().getUtilityTaskCells().clear();
-			getGraphUtil().getUtilityTasks().clear();
+			GlobalVar.getCells().clear();
+			GlobalVar.getTasks().clear();
+			GlobalVar.getUtilityTaskCells().clear();
+//			GlobalVar.setDefaultRootCell(null);
+			GlobalVar.setMetaData(null);
+			GlobalVar.getUtilityTasks().clear();
+			GlobalVar.getUtilityTaskCells().clear();
+			
+			getJgraph().clear();
 			if (getWorker() != null && getWorker().getComposeWorkflowPanel() != null)
 			{
 				getWorker().getComposeWorkflowPanel().getTextAreaTaskProgress().setText("");
@@ -1281,7 +1289,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				for (String analysisType : utilTask.getAnalysisTypes())
 				{
 					String combi = e.getKey()+"_"+e.getValue();
-					getGraphUtil().getUtilityTasks().put(
+					GlobalVar.getUtilityTasks().put(
 							combi+"_"+analysisType, utilTask);
 					logger.debug("generateAbstractWorkflow(): utility task "+analysisType+" for combination="+combi);
 				}
@@ -1291,7 +1299,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		// add the "input"-splitting task, which actually doesnt do anything
 		Task dummyTask = CoreFactory.eINSTANCE.createTask();
 		dummyTask.setUtil(true);
-		getGraphUtil().getUtilityTasks().put(GlobalConstants.METADATA_INPUT, dummyTask);
+		GlobalVar.getUtilityTasks().put(GlobalConstants.METADATA_INPUT, dummyTask);
 		return rc;
 	}
 	
@@ -1372,8 +1380,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 
 	        Task tmp;
 			try {
-				tmp = getGraphUtil().loadTask(getFirstNode());
-				logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()+" graphsize="+getGraphUtil().getTasks().size());
+				tmp = JGraphXUtil.loadTask(getFirstNode());
+				logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()
+						+" graphsize="+GlobalVar.getTasks().size());
 			} catch (TaskNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1445,7 +1454,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					{
 						task.getUnresolvedOutDataPorts().add(dataPort);
 					}
-	        		getGraphUtil().getCells().put(task.getUniqueString(), (mxICell)target);
+					GlobalVar.getCells().put(task.getUniqueString(), (mxICell)target);
 	        		logger.trace("generateGraphFromTemplate(): "
 	        				+"add to cell map: key="+task.getUniqueString()
 	        				+" cmd="+task.getResolvedCommand()
@@ -1472,7 +1481,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
         			
         		}
         		else
-        			getGraphUtil().getTasks().put(task.getUniqueString(), task);
+        			GlobalVar.getTasks().put(task.getUniqueString(), task);
         	}
         	
         	Tool    rootTool    = ToolFactory.eINSTANCE.createTool();
@@ -1494,7 +1503,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				rootTool.setRoot(true);
 			}
 			getRootTask().getTools().put("rootTool", rootTool);
-        	getGraphUtil().getTasks().put(getRootTask().getUniqueString(), getRootTask());        	
+			GlobalVar.getTasks().put(getRootTask().getUniqueString(), getRootTask());        	
         	getProcessedStates().put(GlobalConstants.ABSTRACT_NODES_RESOLVED, true);
 
         } finally {
@@ -1515,15 +1524,15 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	private void generateAbstractGraphEdges()
 	{
 		try {
-			Object rootCell = getGraphUtil().getCells().get(getRootTask().getUniqueString());
+			Object rootCell = GlobalVar.getCells().get(getRootTask().getUniqueString());
 			if (rootCell==null)
 			{
 				rootCell=getGraph().insertVertexEasyFlow(null, null, getRootTask());
 				//map.put(getRootTask().getName(), rootCell);
-				getGraphUtil().getCells().put(getRootTask().getUniqueString(), (mxICell)rootCell);
+				GlobalVar.getCells().put(getRootTask().getUniqueString(), (mxICell)rootCell);
 			}
 	    	setFirstNode(rootCell);
-	    	getGraphUtil().setDefaultRootCell((mxICell) rootCell);
+	    	getJgraph().setDefaultRootCell((mxICell) rootCell);
 	    	if (!getLastTasks().contains(getRootTask()))
 	    		getLastTasks().add(getRootTask());
 	        logger.trace(getWorkflowTemplate().getTasks());
@@ -1539,7 +1548,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						+" first dataports grouping="+easyflow.custom.util.Util.list2String(task.getInDataPorts().get(0).getGroupingCriteria(),null));
 				if (!task.isUtil()) 
 				{
-					Object target=getGraphUtil().getCells().get(task.getUniqueString());
+					Object target = GlobalVar.getCells().get(task.getUniqueString());
 					EMap<Task, EList<DataLink>> parentTaskList=getParentTasksFor(task);
 					if (parentTaskList.isEmpty())
 					{
@@ -1554,7 +1563,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						for (Task pTask:parentTaskList.keySet())
 						{
 							//Object source=map.get(pTask.getName());
-							Object source=getGraphUtil().getCells().get(pTask.getUniqueString());
+							Object source=GlobalVar.getCells().get(pTask.getUniqueString());
 							/*if (parentTaskList.get(pTask)==null)
 							{
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+") (no edge label)");
@@ -1592,7 +1601,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			}
 		} finally {
         	getGraph().getModel().endUpdate();
-        	getGraphUtil().layoutGraph();
+        	JGraphXUtil.layoutGraph();
         }
 		getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, true);
 
@@ -2053,7 +2062,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW);
 		boolean rc = false;
-		rc = getGraphUtil().generateWorkflowForExecutionSystem((mxICell) getFirstNode(), getExecutionSystem());
+		rc = getJgraph().generateWorkflowForExecutionSystem((mxICell) getFirstNode(), getExecutionSystem());
 		if (rc)
 			getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, true);
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW);
@@ -2069,7 +2078,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean resolveToolDependencies() throws NoValidInOutDataException {
 		
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_TOOL_DEPS);
-		boolean rc = getGraphUtil().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
+		boolean rc = getJgraph().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_TOOL_DEPS);
 		if (rc)
 			getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, true);
@@ -2083,7 +2092,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean resolveMissingDataPortsByToolFor(Task task) {
 		
-		mxICell target = getGraphUtil().getCells().get(task.getUniqueString());
+		Object target = GlobalVar.getCells().get(task.getUniqueString());
 		EList<Task> defaultTasks = new BasicEList<Task>();
 		defaultTasks.add(getRootTask());
 		EMap<Task,EList<DataPort>> tasks = task.resolveMissingDataPortsByTool(defaultTasks);
@@ -2092,7 +2101,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		for (Task tmpTask:tasks.keySet())
 		{
-			mxICell source = getGraphUtil().getCells().get(tmpTask.getUniqueString());
+			Object source = GlobalVar.getCells().get(tmpTask.getUniqueString());
 			for (DataPort dataPort:tasks.get(tmpTask))
 			{
 				
@@ -2101,7 +2110,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				dataLink.setDataPort(dataPort);
 				
 				dataLink.setInDataPort(tmpTask.getDataPortByDataPort(dataPort, true));
-				getGraphUtil().getDataLinks().put(Integer.toString(dataLink.hashCode()), dataLink);
+				GlobalVar.getDataLinks().put(Integer.toString(dataLink.hashCode()), dataLink);
 				Object   o  = getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 				DataPort dp = tmpTask.getDataPortByDataPort(dataPort, true);
 				if (dp!=null)
@@ -2212,7 +2221,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				// set the current task
 				Task task;
 				try {
-					task = getGraphUtil().loadTask(vertex);
+					task = JGraphXUtil.loadTask(vertex);
 				
 				if (printmode.equals("simple"))
 				{
@@ -2227,7 +2236,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				if (edge != null)
 				{
 					try {
-						parentTask = getGraphUtil().loadTask(getGraph().getView().getVisibleTerminal(edge, true));
+						parentTask = JGraphXUtil.loadTask(getGraph().getView().getVisibleTerminal(edge, true));
 					} catch (TaskNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -2281,11 +2290,11 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
 		
-		if (getGraphUtil().resolveTraversalEvents((mxICell)getFirstNode()))
+		
+		if (getJgraph().resolveTraversalEvents((mxICell)getFirstNode()))
 		{
 			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
 			return true;
-			
 		}
 		return false;
 			
@@ -2300,12 +2309,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		printWorkflowStepMsgOnStart(step);
 		boolean rc = true;
 		
-		TraversalEvent traversalEvent = getGraphUtil().getNextTraversalEvent(isGrouping);
-		logger.debug("applyTraversalCriteria(): found "+getGraphUtil().getTraversalEvents().size()+" traversal events. Grouping="+isGrouping);
+		TraversalEvent traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
+		logger.debug("applyTraversalCriteria(): found "+getJgraph().getTraversalEvents().size()+" traversal events. Grouping="+isGrouping);
 		
 		while (traversalEvent != null)
 		{
-			logger.debug("applyTraversalCriteria(): te="+getGraphUtil().traversalEventToString(traversalEvent)
+			logger.debug("applyTraversalCriteria(): te="+GraphUtil.traversalEventToString(traversalEvent)
 					+" empty id?="+traversalEvent.getTraversalCriterion().getId().isEmpty());
 			
 			boolean cont = false;
@@ -2319,25 +2328,25 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 						+traversalEvent.getSplitTask().getUniqueString()
 						);
 			}
-			traversalEvent = getGraphUtil().getNextTraversalEvent(isGrouping);
+			traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
 			
 			if (cont)
 				continue;
-			for (mxICell subGraphRoot1 : getGraphUtil().getCurrentSubGraphs())
+			for (mxICell subGraphRoot1 : getJgraph().getCurrentSubGraphs())
 			{
-				getGraphUtil().removeSubGraph(
+				getJgraph().removeSubGraph(
 						subGraphRoot1, 
 						traversalEvent);
 			}
-			getGraphUtil().resetFlags();
-			getGraphUtil().getCurrentSubGraphs().clear();
+			getJgraph().resetFlags();
+			getJgraph().getCurrentSubGraphs().clear();
 			
 		}
 		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
 		printWorkflowStepMsgOnEnd(rc, step);
-		setFirstNode(getGraphUtil().getDefaultRootCell());
+		setFirstNode(getJgraph().getDefaultRootCell());
 		//printGraph();
-		printAllCells(getGraphUtil().getDefaultRootCell());
+		printAllCells(getJgraph().getDefaultRootCell());
 		return rc;
 
 		
@@ -2396,15 +2405,15 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		boolean rc = true;
 		
-		try {
+		
 			
-			EList<GroupingInstance> groupingInstances = getGraphUtil().getGroupingInstances(traversalEvent);
+			EList<GroupingInstance> groupingInstances = getJgraph().getGroupingInstances(traversalEvent);
 			if (groupingInstances.isEmpty())
 				return false;
 			
-			mxICell subGraphRoot = getGraphUtil().computeSubgraph(traversalEvent, true);
+			mxICell subGraphRoot = getJgraph().computeSubgraph(traversalEvent, true);
 		
-			getGraphUtil().getCurrentSubGraphs().add(subGraphRoot);
+			getJgraph().getCurrentSubGraphs().add(subGraphRoot);
 			
 			if (subGraphRoot != null)
 			{				
@@ -2415,12 +2424,12 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 							logger.debug("applyTraversalEvents(): applying grouping instance="+groupingInstance.getName()+" with features="+
 									groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId());
 							
-							mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+							mxICell copyRoot = getJgraph().applyTraversalEventCopyGraph(subGraphRoot, 
 									traversalEvent, 
 									groupingInstance);
 							//if (!traversalEvent.isGrouping())
 							//throw new UnsupportedOperationException();
-							getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+							getJgraph().applyTraversalEvent(copyRoot, traversalEvent, 
 									traversalEvent.getTraversalCriterion().getId(),
 									groupingInstance);
 						}
@@ -2428,21 +2437,17 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 					else
 					{
 						logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
-						mxICell copyRoot = getGraphUtil().applyTraversalEventCopyGraph(subGraphRoot, 
+						mxICell copyRoot = getJgraph().applyTraversalEventCopyGraph(subGraphRoot, 
 								traversalEvent, 
 								groupingInstances);
 						logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
-						getGraphUtil().applyTraversalEvent(copyRoot, traversalEvent, 
+						getJgraph().applyTraversalEvent(copyRoot, traversalEvent, 
 								traversalEvent.getTraversalCriterion().getId(),
 								groupingInstances);
 						logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
 					}
 			}
-			
-		} catch (GroupingCriterionInstanceNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		return rc;
 	}	
@@ -2457,22 +2462,22 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
 		boolean rc = true;
 		//Iterator<Entry<mxICell, EList<mxICell>>> it = getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet().iterator();
-		EMap<mxICell, EList<mxICell>> untranslatedDLs = getGraphUtil().findCellsWithUntranslatedDataLinks();
+		EMap<mxICell, EList<mxICell>> untranslatedDLs = getJgraph().findCellsWithUntranslatedDataLinks();
 		ListIterator<Entry<mxICell, EList<mxICell>>> it = untranslatedDLs.listIterator(untranslatedDLs.size()); 
 		while (it.hasPrevious())
 		//while (it.hasNext())
 		{
 			Entry<mxICell, EList<mxICell>> entry = //it.next(); 
 					it.previous();
-			logger.debug("resolveIncompatibleGroupings(): resolve for task="+getGraphUtil().loadTask(entry.getKey()).getUniqueString());
+			logger.debug("resolveIncompatibleGroupings(): resolve for task="+JGraphXUtil.loadTask(entry.getKey()).getUniqueString());
 			for (mxICell cell:entry.getValue())
 			{
-				DataLink dataLink = getGraphUtil().loadDataLink(cell);
+				DataLink dataLink = JGraphXUtil.loadDataLink(cell);
 				logger.debug("resolveIncompatibleGroupings(): "+dataLink.getParentGroupingStr()+"->"+dataLink.getGroupingStr());
 			}
-			rc=getGraphUtil().resolveEdge(entry);
+			rc=getJgraph().resolveEdge(entry);
 		}
-		getGraphUtil().layoutGraph();
+		JGraphXUtil.layoutGraph();
 		if (rc)
 			getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
@@ -2491,7 +2496,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 		
 		boolean rc = true;
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_PREPROCESSING_TASKS);
-		EMap<mxICell, EList<mxICell>> prepRequired = getGraphUtil().findCellsWherePreprocessingIsRequired();
+		EMap<mxICell, EList<mxICell>> prepRequired = getJgraph().findCellsWherePreprocessingIsRequired();
 		logger.debug("resolvePreprocessingTasks(): found "+prepRequired.size()+" tasks with unresolved preprocessings");
 		Iterator<Entry<mxICell, EList<mxICell>>> it = prepRequired.iterator(); 
 		while (it.hasNext())
@@ -2499,7 +2504,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			Entry<mxICell, EList<mxICell>> entry = it.next();
 			for (mxICell edge:entry.getValue())
 			{
-				rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), edge);
+				rc = getJgraph().resolvePreprocessingTask(entry.getKey(), edge);
 				logger.debug("resolvePreprocessingTasks(): rc="+rc);
 			}
 			//rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), null);
@@ -2563,9 +2568,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				if (coreType) return getGenericAttributes();
 				else return getGenericAttributes().map();
-			case CorePackage.WORKFLOW__GRAPH_UTIL:
-				if (resolve) return getGraphUtil();
-				return basicGetGraphUtil();
 			case CorePackage.WORKFLOW__CATALOG:
 				if (resolve) return getCatalog();
 				return basicGetCatalog();
@@ -2588,6 +2590,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__CURRENT_RULE:
 				if (resolve) return getCurrentRule();
 				return basicGetCurrentRule();
+			case CorePackage.WORKFLOW__JGRAPH:
+				if (resolve) return getJgraph();
+				return basicGetJgraph();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2637,9 +2642,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				((EStructuralFeature.Setting)getGenericAttributes()).set(newValue);
 				return;
-			case CorePackage.WORKFLOW__GRAPH_UTIL:
-				setGraphUtil((Util)newValue);
-				return;
 			case CorePackage.WORKFLOW__CATALOG:
 				setCatalog((Catalog)newValue);
 				return;
@@ -2664,6 +2666,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return;
 			case CorePackage.WORKFLOW__CURRENT_RULE:
 				setCurrentRule((Rule)newValue);
+				return;
+			case CorePackage.WORKFLOW__JGRAPH:
+				setJgraph((Graph)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -2710,9 +2715,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				getGenericAttributes().clear();
 				return;
-			case CorePackage.WORKFLOW__GRAPH_UTIL:
-				setGraphUtil((Util)null);
-				return;
 			case CorePackage.WORKFLOW__CATALOG:
 				setCatalog((Catalog)null);
 				return;
@@ -2736,6 +2738,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return;
 			case CorePackage.WORKFLOW__CURRENT_RULE:
 				setCurrentRule((Rule)null);
+				return;
+			case CorePackage.WORKFLOW__JGRAPH:
+				setJgraph((Graph)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -2773,8 +2778,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return defaultGroupingCriteria != null && !defaultGroupingCriteria.isEmpty();
 			case CorePackage.WORKFLOW__GENERIC_ATTRIBUTES:
 				return genericAttributes != null && !genericAttributes.isEmpty();
-			case CorePackage.WORKFLOW__GRAPH_UTIL:
-				return graphUtil != null;
 			case CorePackage.WORKFLOW__CATALOG:
 				return catalog != null;
 			case CorePackage.WORKFLOW__ROOT_TASK:
@@ -2791,6 +2794,8 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 				return executionSystem != null;
 			case CorePackage.WORKFLOW__CURRENT_RULE:
 				return currentRule != null;
+			case CorePackage.WORKFLOW__JGRAPH:
+				return jgraph != null;
 		}
 		return super.eIsSet(featureID);
 	}

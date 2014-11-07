@@ -299,7 +299,7 @@ public class XMLUtil {
 			((XMLResource) resource).load(element, options);
 			DataLink dataLink = (DataLink) resource.getContents().get(0);
 			
-			dataLink=GlobalVar.getGraphUtil().getDataLinks().get(Integer.toString(dataLink.getId()));
+			dataLink=GlobalVar.getDataLinks().get(Integer.toString(dataLink.getId()));
 			return dataLink;
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block

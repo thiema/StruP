@@ -1,6 +1,14 @@
 package easyflow.custom.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.Properties;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -10,21 +18,96 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.util.URIUtil;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 import easyflow.ui.DefaultProject;
+import easyflow.ui.UiFactory;
 
 public class Easyflow {
 	
 	private static boolean isFromJar;
+	//private static final Logger logger = Logger.getRootLogger();
 	private static final Logger logger = Logger.getLogger(Easyflow.class);
 	
 	public static void main(String args[]) {
 		
-		Examples examples = ExampleFactory.eINSTANCE.createExamples();
+		CmdLineParser cmdLineParser = new CmdLineParser();
+		cmdLineParser.initOptions();
+		cmdLineParser.parseOptions(args);
+		boolean readFromExamples = false;
+
+		if (cmdLineParser.getLogLevel() != null)
+		{
 			
-		if (URIUtil.isFromJar("easyflow/custom/ui/Easyflow.class"))
+			String loglevel = cmdLineParser.getLogLevel();
+			Level level = null;
+			if (loglevel.equalsIgnoreCase("FATAL"))
+				level = Level.FATAL;
+			else if (loglevel.equalsIgnoreCase("ERROR"))
+				level = Level.ERROR;
+			else if (loglevel.equalsIgnoreCase("WARN"))
+				level = Level.WARN;
+			else if (loglevel.equalsIgnoreCase("INFO"))
+				level = Level.INFO;
+			else if (loglevel.equalsIgnoreCase("DEBUG"))
+				level = Level.DEBUG;
+			else if (loglevel.equalsIgnoreCase("TRACE"))
+				level = Level.TRACE;
+			if (level != null)
+			{
+				//LogManager.getRootLogger().setLevel((Level) Level.ERROR);
+/*				System.setProperty("log4j.defaultInitOverride", "true");
+				BasicConfigurator.configure();
+				File log4jPropertiesFile = new File("dummy.log4j");
+				PropertyConfigurator.configure(log4jPropertiesFile.getAbsolutePath());
+				Logger.getRootLogger().setLevel(level);*/
+				//logger.setLevel(level);
+				//logger.debug("set loglevel to value="+level);
+				//System.exit(1);
+				Properties props = new Properties();
+				try {
+					InputStream configStream = Easyflow.class
+							.getResourceAsStream("/log4j.properties");
+					props.load(configStream);
+					configStream.close();
+				} catch (IOException e) {
+					System.out
+							.println("Error: Cannot laod configuration file ");
+				}
+				// props.setProperty("log4j.rootLogger","DEBUG, file");
+				// props.setProperty("log4j.appender.file.File","out.log");
+				props.setProperty("log4j.rootLogger", level.toString()
+						+ ", stdout");
+				props.setProperty("log4j.logger.easyflow", level.toString());
+				LogManager.resetConfiguration();
+				PropertyConfigurator.configure(props);
+			}
+			else
+				logger.warn("did not understand loglevel value="+loglevel);
+			
+		}
+		//System.exit(1);
+		logger.debug("loglevel="+logger.getLevel()+" "+Logger.getRootLogger().getLevel()+" logger="+logger.hashCode()+" rootLogger="+Logger.getRootLogger().hashCode());
+		Examples examples = ExampleFactory.eINSTANCE.createExamples();
+		
+		DefaultProject defaultProject = null;
+		if (cmdLineParser.getConfigFile() != null)
+		{
+			defaultProject = UiFactory.eINSTANCE.createDefaultProject();
+			
+			//defaultProject.setConfigAndBasePath("./");
+			try {
+				defaultProject.setConfigSource(URIUtil.createURI(cmdLineParser.getConfigFile(), null));
+				if (cmdLineParser.getBasePath() != null)
+					defaultProject.setBaseURI(URIUtil.createURI(cmdLineParser.getBasePath(), null));
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (URIUtil.isFromJar("easyflow/custom/ui/Easyflow.class"))
 		{
 			// when this program is started as a jar (i.e. not within eclipse) this behaviour should be applied:
 			
@@ -44,6 +127,7 @@ public class Easyflow {
 			examples.setLocator("./examples");
 			examples.setFromJar(false);
 			isFromJar = false;
+			readFromExamples = true;
 		}
 		else
 		{
@@ -51,25 +135,32 @@ public class Easyflow {
 			examples.setLocator("./src/easyflow/custom/examples");
 			examples.setFromJar(false);
 			isFromJar = false;
+			readFromExamples = true;
 		}
 		
-		examples.readRepository();
-		logger.debug("Available projects:"+examples.getExamples().keySet());
-		//DefaultProject defaultProject = UiFactory.eINSTANCE.createDefaultProject();
-		//defaultProject.setBasePath("/easyflow/custom/examples/sequencing/");
-		if (!examples.getExamples().isEmpty())
+		if (readFromExamples)
 		{
-			
-			DefaultProject defaultProject = examples.getExamples().get(0).getValue();
-			//DefaultProject defaultProject = examples.getExamples().get("abstract_simple");
-			//DefaultProject defaultProject = examples.getExamples().get("abstract1");
-			//DefaultProject defaultProject = examples.getExamples().get("abstract2");
-			if (defaultProject != null)
+			examples.readRepository();
+			logger.debug("Available projects:"+examples.getExamples().keySet());
+			if (!examples.getExamples().isEmpty())
 			{
-			
+				defaultProject = examples.getExamples().get(0).getValue();
+				//DefaultProject defaultProject = examples.getExamples().get("abstract_simple");
+				//DefaultProject defaultProject = examples.getExamples().get("abstract1");
+				//DefaultProject defaultProject = examples.getExamples().get("abstract2");
+			}
+		}
+		else
+		{
+		}
+		logger.debug("logger name="+logger.getName()+" level="+logger.getLevel());
+		
+		if (defaultProject != null)
+		{
 			defaultProject.setFromJar(isFromJar);
 			try {
-				defaultProject.init(null);
+				EasyFlowGraph graph = new EasyFlowGraph();
+				defaultProject.init(graph);
 				defaultProject.generateAbstractGraph();
 				//((WorkflowImpl)defaultProject.getActiveWorkflow()).printGraph();
 				defaultProject.resolveTraversalCriteria();
@@ -86,27 +177,15 @@ public class Easyflow {
 				defaultProject.resolveToolDependencies();
 				
 				defaultProject.generateWorklowForExecutionSystem();
-			} catch (CellNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (GroupingCriterionInstanceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			catch (DataLinkNotFoundException e) {	e.printStackTrace();}
-			catch (DataPortNotFoundException e) {e.printStackTrace();}
-			catch (ToolNotFoundException e) {e.printStackTrace();}
-			catch (UtilityTaskNotFoundException e) {e.printStackTrace();}
-			catch (NoValidInOutDataException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			}
-
-			}
+			} 
+			catch (CellNotFoundException        e)        { e.printStackTrace();} 
+			catch (TaskNotFoundException        e)        { e.printStackTrace();}
+			catch (DataLinkNotFoundException    e)        { e.printStackTrace();}
+			catch (DataPortNotFoundException    e)        { e.printStackTrace();}
+			catch (ToolNotFoundException        e)        { e.printStackTrace();}
+			catch (UtilityTaskNotFoundException e)        { e.printStackTrace();}
+			catch (NoValidInOutDataException    e)        { e.printStackTrace();}
+			catch (GroupingCriterionInstanceNotFoundException e) { e.printStackTrace();}
 		}
 	}	
 }

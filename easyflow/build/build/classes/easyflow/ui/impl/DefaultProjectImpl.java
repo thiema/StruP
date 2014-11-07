@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -25,8 +24,10 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.velocity.context.Context;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -35,7 +36,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -44,11 +44,11 @@ import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.Workflow;
-import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
 import easyflow.tool.DocumentProperties;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
@@ -64,6 +64,7 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.execution.IExecutionSystem;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
@@ -72,12 +73,12 @@ import easyflow.custom.util.URIUtil;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPort;
+import easyflow.graph.jgraphx.Graph;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToPackageMapImpl;
-import easyflow.util.maps.impl.StringToToolMapImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,9 +92,7 @@ import easyflow.util.maps.impl.StringToToolMapImpl;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigSource <em>Config Source</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getBaseURI <em>Base URI</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#isFromJar <em>From Jar</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getJsonObject <em>Json Object</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getPackages <em>Packages</em>}</li>
@@ -185,16 +184,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getGraphUtil() <em>Graph Util</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGraphUtil()
-	 * @generated
-	 * @ordered
-	 */
-	protected Util graphUtil;
-
-	/**
 	 * The default value of the '{@link #isFromJar() <em>From Jar</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -213,26 +202,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected boolean fromJar = FROM_JAR_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getJsonObject() <em>Json Object</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getJsonObject()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final JSONObject JSON_OBJECT_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getJsonObject() <em>Json Object</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getJsonObject()
-	 * @generated
-	 * @ordered
-	 */
-	protected JSONObject jsonObject = JSON_OBJECT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDefaultConfigSourceString() <em>Default Config Source String</em>}' attribute.
@@ -373,44 +342,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Util getGraphUtil() {
-		if (graphUtil != null && graphUtil.eIsProxy()) {
-			InternalEObject oldGraphUtil = (InternalEObject)graphUtil;
-			graphUtil = (Util)eResolveProxy(oldGraphUtil);
-			if (graphUtil != oldGraphUtil) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__GRAPH_UTIL, oldGraphUtil, graphUtil));
-			}
-		}
-		return graphUtil;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Util basicGetGraphUtil() {
-		return graphUtil;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGraphUtil(Util newGraphUtil) {
-		Util oldGraphUtil = graphUtil;
-		graphUtil = newGraphUtil;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__GRAPH_UTIL, oldGraphUtil, graphUtil));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isFromJar() {
 		return fromJar;
 	}
@@ -493,27 +424,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public JSONObject getJsonObject() {
-		return jsonObject;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setJsonObject(JSONObject newJsonObject) {
-		JSONObject oldJsonObject = jsonObject;
-		jsonObject = newJsonObject;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__JSON_OBJECT, oldJsonObject, jsonObject));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getDefaultConfigSourceString() {
 		return defaultConfigSourceString;
 	}
@@ -537,9 +447,9 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void readProjectJson(URI source) {
+	public JSONObject readProjectJson(URI source) {
 		
-		//JSONObject jsonObject=null;
+		JSONObject jsonObject=null;
 		if (source == null)
 			source = getConfigSource();
 		try {
@@ -554,13 +464,15 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			else if (schema.equals("http") || schema.equals("https"))
 				is = source.toURL().openStream();
 			if (is != null)
-				setJsonObject(JSONObject.fromObject(IOUtils.toString(is)));
+				//setJsonObject(JSONObject.fromObject(IOUtils.toString(is)));
+				return JSONObject.fromObject(IOUtils.toString(is));
 			else
 				logger.warn("no Input stream found.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	
@@ -634,8 +546,12 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		EMap<String, String> map = new BasicEMap<String, String>();
 		for (Object key : jsonObject.keySet())
-			map.put((String) key, jsonObject.getString((String) key));
-		
+		{
+			String value = jsonObject.getString((String) key);
+			if (GlobalConfig.resolvePath())
+				value = GlobalConfig.resolveContextVars(value);
+			map.put((String) key, value);
+		}
 		return map;
 	}
 	
@@ -662,132 +578,51 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean readConfiguration() {
+	
+	private boolean readMainConfig(JSONObject object)
+	{
 		boolean rc = true;
-		// general (project) config
-		logger.debug(jsonObject);
-		logger.debug(jsonObject.entrySet());
-		JSONObject projectCfg=jsonObject.getJSONObject("project");
-		GlobalConfig.setJsonCfg(jsonObject);
+		return rc;
+	}
 		
-		logger.debug(projectCfg.get("workflowTemplateFile")+" "+getConfigSource()+" "+getBaseURI());
+	private EasyflowTemplate readWorkflowTemplate(String workflowTplFile)
+	{
 		
-		Workflow workflow=CoreFactory.eINSTANCE.createWorkflow();
-		workflow.init();
+		EasyflowTemplate workflowTemplate = CoreFactory.eINSTANCE.createEasyflowTemplate();
 		
-		EasyflowTemplate workflowTemplate=CoreFactory.eINSTANCE.createEasyflowTemplate();
-		
-		InputStreamReader isReader;
-		try {
-			isReader = URIUtil.getInputStreamReader(URIUtil.addToURI(
-					getBaseURI(), projectCfg.getString("workflowTemplateFile"))
-					, isFromJar());
-			workflowTemplate.setReader(new BufferedReader(isReader));
-		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			rc = false;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			rc = false;
+		BufferedReader bfReader = getReader(getBaseURI(), workflowTplFile, true);
+		if (bfReader != null)
+		{
+			workflowTemplate.setReader(bfReader);
+			return workflowTemplate;
 		}
 		
-		workflow.setWorkflowTemplate(workflowTemplate);
-		logger.debug(workflow.getWorkflowTemplate()+" "+workflow.getLastTasks().size());
+		return null;
+	}
+	
+	private DefaultMetaData readMetadata(String metadataFile)
+	{
+		DefaultMetaData metaData = MetadataFactory.eINSTANCE.createDefaultMetaData();		
 
-		DefaultMetaData metaData=MetadataFactory.eINSTANCE.createDefaultMetaData();		
-		//metaData.setFileName(URIUtil.createPath(getBasePath(), projectCfg.getString("metadataFile")));
-		try {
-			isReader = URIUtil.getInputStreamReader(
-					URIUtil.addToURI(getBaseURI(), projectCfg.getString("metadataFile"))
-					, isFromJar());
-			metaData.setReader(new BufferedReader(isReader));
+		BufferedReader bfReader;
+		bfReader = getReader(getBaseURI(), metadataFile, true);
+		if (bfReader != null)
+		{
+			metaData.setReader(bfReader);
 			metaData.initMetaData();
-			
-			isReader = URIUtil.getInputStreamReader(
-					URIUtil.addToURI(getBaseURI(), projectCfg.getString("metadataFile"))
-					, isFromJar());
-			metaData.setReader(new BufferedReader(isReader));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+				
+			bfReader = getReader(getBaseURI(), metadataFile, true);
+				
+			metaData.setReader(bfReader);
+			return metaData;
 		}
-		workflow.setMetaData(metaData);
-
+		return null;
+	}
+	
+	private boolean readToolConfiguration(JSONObject toolCfg)
+	{
+		boolean rc = true;
 		
-		// ####### READ PROECESSING CONFIGURATION ########
-		if (jsonObject.has("processing"))
-		{
-			JSONObject processingCfg=jsonObject.getJSONObject("processing");
-			Iterator<String> it = processingCfg.keys();
-			while (it.hasNext())
-			{
-				String key = it.next();
-				logger.trace("read processing config key="+key);
-				GlobalConfig.getProcessingConfig().put(key, processingCfg.getString(key));
-			}
-		}
-		workflow.setExecutionSystem(GlobalConfig.getExecutionSystem());
-		
-		// ####### READ CATALOG CONFIGURATION ########
-		if (jsonObject.has("catalog"))
-		{
-			JSONObject catalogCfg=jsonObject.getJSONObject("catalog");
-			
-			Catalog catalog = CoreFactory.eINSTANCE.createCatalog();
-			workflow.setCatalog(catalog);
-			Iterator<String> it = catalogCfg.keys();
-			while (it.hasNext())
-			{
-				String key = it.next();
-				logger.trace("read catalog key="+key);
-				catalog.getEntries().put(key, catalogCfg.getString(key));
-			}
-		}		
-		
-		
-		// ####### READ WORKFLOW CONFIGURATION ########
-		JSONObject workflowCfg = jsonObject.getJSONObject("workflow");
-		workflow.setMode(workflowCfg.getString("defaultMode"));
-		
-		
-    	// create the special root task/cell which is the root
-    	// in all subsequent processed graphs, the root should link any
-    	// task from the workflow template that has no incoming task
-		Task rootTask = workflow.getRootTask();
-		if (rootTask == null)
-		{
-	    	rootTask = CoreFactory.eINSTANCE.createTask();
-	    	rootTask.setName(GlobalConstants.ROOT_TASK_NAME);
-	    	rootTask.setRoot(true);
-	    	workflow.setRootTask(rootTask);
-	    	GlobalVar.setRootTask(rootTask);
-		}
-    	//rootTask.getGroupingCriteria().put(, value)
-    	readInputs(workflowCfg, rootTask);
-		
-		for (int i=0; i<workflowCfg.getJSONArray("defaultGroupingCriteria").size();i++)
-			workflow.getDefaultGroupingCriteria().add(workflowCfg.getJSONArray("defaultGroupingCriteria").getString(i));
-		
-		logger.debug(projectCfg.keySet()+" "+workflow.getGraphUtil());
-		
-		for (Object key:projectCfg.keySet()) {
-			workflow.getGenericAttributes().put((String) key, projectCfg.get(key));	
-		}
-
-		
-		// ####### READ TOOL CONFIGURATION ########
-		// tool config (dir, tools, schemata)
-		JSONObject toolCfg = jsonObject.getJSONObject("tool");
 		if (toolCfg.has("command_pattern"))
 			GlobalConfig.getToolConfig().put("command_pattern", 
 					(String) toolCfg.get("command_pattern"));
@@ -797,44 +632,55 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		else
 			GlobalConfig.getToolConfig().put("write_default_value_to_command_line", "0");
 		
-		EMap<String, EMap<String, String>> interpreterMap = GlobalConfig.getInterpreterMap();
-		EMap<String, EMap<String, String>> pkgMap         = GlobalConfig.getPkgMap();
-		EMap<String, EMap<String, String>> toolMap        = GlobalConfig.getToolMap();
-		
-		if (toolCfg.has("interpreter"))
-			readParamValues(interpreterMap, toolCfg.getJSONObject("interpreter"));
-		if (toolCfg.has("pkg"))
-			readParamValues(pkgMap, toolCfg.getJSONObject("pkg"));
-		if (toolCfg.has("tool"))
-			readParamValues(toolMap, toolCfg.getJSONObject("tool"));
-		
+		Context varMap = GlobalConfig.getVarMap();
 		if (toolCfg.has("var"))
-		{
+		{	
 			JSONObject jo = toolCfg.getJSONObject("var");
 			for (Object key : jo.keySet())
 			{
-				GlobalConfig.getVarMap().put((String)key, (String)jo.get(key));
+				varMap.put((String)key, (String)jo.get(key));
+				logger.debug("added var "+key+"="+varMap.get((String)key));
 			}
 		}
+
+		return rc;		
+	}
+
+	private boolean readProcessingConfiguration(JSONObject jsonObject)
+	{
+		boolean rc = true;
+		return rc;		
+	}
+
+	private Catalog readCatalogConfiguration(JSONObject jsonObject)
+	{
+		Catalog catalog = CoreFactory.eINSTANCE.createCatalog();
 		
-		
-		// ####### READ TOOL DEFINITIONS ########
-		JSONArray schemata = toolCfg.getJSONArray("schemata");
-		// String toolDefPath = basePath;
-		URI toolDefPath = getBaseURI();
-		if (toolCfg.has("dir"))
+		Iterator<String> it = jsonObject.keys();
+		while (it.hasNext())
 		{
-			//toolDefPath = new File(basePath+"/"+toolCfg.getString("dir")).getPath();
-			try {
-				toolDefPath = URIUtil.addToURI(toolDefPath, toolCfg.getString("dir"));
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}		
-		
+			String key = it.next();
+			logger.trace("read catalog key="+key);
+			catalog.getEntries().put(key, jsonObject.getString(key));
+		}
+
+		return catalog;		
+	}
+
+	private boolean readWorkflowConfiguration(JSONObject jsonObject)
+	{
+		boolean rc = true;
+		return rc;		
+	}
+	
+	
+	private ToolSchemata readToolSchemata(JSONObject toolCfg, URI toolDefPath)
+	{
+		if (!toolCfg.has("schemata"))
+			return null;
+		JSONArray schemata = toolCfg.getJSONArray("schemata");
 		ToolSchemata    toolSchemata   = ToolFactory.eINSTANCE.createToolSchemata();
-		ToolDefinitions toolDefintions = ToolFactory.eINSTANCE.createToolDefinitions();
+
 		
 		// read schemata one by one
 		for (int i=0; i<schemata.size(); i++)
@@ -855,9 +701,22 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			}
 			
 		}
-		
+		return toolSchemata;
+	}
+
+	private boolean readToolDefinition(JSONObject toolCfg, URI toolDefPath, ToolSchemata toolSchemata,
+			EMap<String, EMap<String, String>> interpreterMap,
+			EMap<String, EMap<String, String>> toolMap,
+			EMap<String, EMap<String, String>> pkgMap)
+	{
+		boolean rc = true;
+		ToolDefinitions toolDefintions = ToolFactory.eINSTANCE.createToolDefinitions();
 		// read tool definitions
 		toolDefintions.setToolSchemata(toolSchemata);
+		if (!toolCfg.has("tools"))
+			rc = false;
+		else
+		{
 		JSONArray toolsArray = toolCfg.getJSONArray("tools");
 		//EList<Tool> tools = new BasicEList<Tool>();
 		for (int i=0; i<toolsArray.size(); i++)
@@ -922,24 +781,430 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				*/
 
 			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				rc = false;
 			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				rc = false;
+			}
+		}
+		return rc;
+
+		
+	}
+	
+	
+	private boolean readToolParamValues()
+	{
+		boolean rc = true;
+		return rc;		
+	}
+
+	private boolean readPkgParamValues()
+	{
+		boolean rc = true;
+		return rc;		
+	}
+
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean readConfiguration(JSONObject config, boolean isDefault) {
+		
+		boolean rc = true;
+		
+		// general (project) config
+
+		logger.debug(config.entrySet());
+		
+		// ####### READ PROJECT CONFIGURATION ########
+		JSONObject projectCfg=config.getJSONObject("project");
+		
+		logger.debug(projectCfg.get(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME)+" "+getConfigSource()+" "+getBaseURI());
+		
+		Workflow workflow = getActiveWorkflow();
+		
+		// ####### read workflow base-config ######
+		if (projectCfg.has(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME))
+			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME));
+		if (projectCfg.has(GlobalConstants.WORKFLOW_DIR_PARAM_NAME))
+			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DIR_PARAM_NAME));
+		if (projectCfg.has(GlobalConstants.METADATA_FILE_PARAM_NAME))
+			GlobalConfig.getProjectConfig().put(GlobalConstants.METADATA_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.METADATA_FILE_PARAM_NAME));
+		if (projectCfg.has(GlobalConstants.METADATA_DIR_PARAM_NAME))
+			GlobalConfig.getProjectConfig().put(GlobalConstants.METADATA_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.METADATA_DIR_PARAM_NAME));
+		//GlobalConfig.getProjectconfig().put(GlobalConstants.IS_CONTRAST, projectCfg.getString(GlobalConstants.IS_CONTRAST));
+		
+		// ####### set workflow ########
+		
+		if (!isDefault)
+		{
+			String workflowTplFile = GlobalConfig.getWorkflowTemplateFileName();
+			workflowTplFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), workflowTplFile);
+			EasyflowTemplate workflowTemplate = readWorkflowTemplate(workflowTplFile);
+			if (workflowTemplate != null)
+			{
+				workflow.setWorkflowTemplate(workflowTemplate);
+				logger.debug(workflow.getWorkflowTemplate()+" "+workflow.getLastTasks().size());
+			}
+			else
+			{
+				logger.error("Could not read workflow template from file: "+workflowTplFile);
+			}
+	
+			
+			// ####### set metadata ########
+			String metadataFile = GlobalConfig.getMetadataFileName();
+			
+			metadataFile = URIUtil.createPath(GlobalConfig.getMetadataDirName(), metadataFile);
+			DefaultMetaData metaData = readMetadata(metadataFile);
+			if (metaData != null)
+			{
+				workflow.setMetaData(metaData);
+			}
+			else
+			{
+				logger.error("Could not read metadata from file: "+metadataFile+"");
+				rc = false;
+			}
+		}
+		
+		// ####### READ PROECESSING CONFIGURATION ########
+		if (config.has("processing"))
+		{
+			JSONObject processingCfg=config.getJSONObject("processing");
+			Iterator<String> it = processingCfg.keys();
+			while (it.hasNext())
+			{
+				String key = it.next();
+				logger.trace("read processing config key="+key);
+				GlobalConfig.getProcessingConfig().put(key, processingCfg.getString(key));
+			}
+		}
+		workflow.setExecutionSystem(GlobalConfig.getExecutionSystem());
+		
+		// ####### READ CATALOG CONFIGURATION ########
+		if (config.has("catalog"))
+		{
+			Catalog catalog = readCatalogConfiguration(config.getJSONObject("catalog"));
+			if (catalog != null)
+				workflow.setCatalog(catalog);
+		}
+		else
+		{
+			logger.info("No catalog section configured.");
+		}
+		
+		
+		// ####### READ WORKFLOW CONFIGURATION ########
+		JSONObject workflowCfg = config.getJSONObject("workflow");
+		if (workflowCfg.has(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME))
+			workflow.setMode(workflowCfg.getString(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME));
+		
+		
+    	// create the special root task/cell which is the root
+    	// in all subsequent processed graphs, the root should link any
+    	// task from the workflow template that has no incoming task
+		Task rootTask = workflow.getRootTask();
+		if (rootTask == null)
+		{
+	    	rootTask = CoreFactory.eINSTANCE.createTask();
+	    	rootTask.setName(GlobalConstants.ROOT_TASK_NAME);
+	    	rootTask.setRoot(true);
+	    	workflow.setRootTask(rootTask);
+	    	GlobalVar.setRootTask(rootTask);
+		}
+    	if (!isDefault)
+    		readInputs(workflowCfg, rootTask);
+    	
+		if (workflowCfg.has(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME))
+			for (int i=0; i<workflowCfg.getJSONArray(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME).size();i++)
+				workflow.getDefaultGroupingCriteria().add(workflowCfg.getJSONArray(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME).getString(i));
+		else
+		{
+			logger.info("readConfiguration(): no default grouping criteria defined. Set default automatically.");
+			workflow.getDefaultGroupingCriteria().add(GlobalConfig.getDefaultGroupingCriterion());
+		}
+		
+		logger.debug("project configuration keys="+projectCfg.keySet());
+		
+		for (Object key:projectCfg.keySet()) {
+			workflow.getGenericAttributes().put((String) key, projectCfg.get(key));	
+		}
+
+		
+		// ####### READ TOOL CONFIGURATION ########		
+		
+		// tool config (dir, tools, schemata)
+		if (config.has("tool"))
+		{
+		
+			JSONObject toolCfg = config.getJSONObject("tool");
+			
+			EMap<String, EMap<String, String>> interpreterMap = GlobalConfig.getInterpreterMap();
+			EMap<String, EMap<String, String>> pkgMap         = GlobalConfig.getPkgMap();
+			EMap<String, EMap<String, String>> toolMap        = GlobalConfig.getToolMap();
+
+			readToolConfiguration(toolCfg);
+			if (toolCfg.has("interpreter"))
+				readParamValues(interpreterMap, toolCfg.getJSONObject("interpreter"));
+			if (toolCfg.has("pkg"))
+				readParamValues(pkgMap, toolCfg.getJSONObject("pkg"));
+			if (toolCfg.has("tool"))
+				readParamValues(toolMap, toolCfg.getJSONObject("tool"));
+			
+			
+			// ####### READ TOOL DEFINITIONS ########
+			
+			if (toolCfg.has(GlobalConstants.TOOL_DEF_DIR_PARAM_NAME))
+			{
+				GlobalConfig.setToolDefDirName(toolCfg.getString(GlobalConstants.TOOL_DEF_DIR_PARAM_NAME));
+			}
+			
+			URI toolDefPath = getBaseURI();
+			try {
+				toolDefPath = URIUtil.addToURI(toolDefPath, GlobalConfig.getToolDefDirName());
+				
+			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			ToolSchemata toolSchemata = readToolSchemata(toolCfg, toolDefPath);
+			if (toolSchemata == null)
+				logger.info("No tool schemata read.");
+			boolean toolsDefined = readToolDefinition(toolCfg, toolDefPath, toolSchemata, interpreterMap, toolMap, pkgMap);
+			
+			
+			if (toolCfg.has(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME))
+			{
+				GlobalConfig.setToolConfigDirName(toolCfg.getString(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME));
+			}
+		}
+		else
+		{
+			logger.error("No tool section configured");
+			rc = false;
+		}
 		
-		//workflow.getTools().addAll(tools);
+		//############# read constant param values for tool/pkg ################
+		
+		
+		if (!isDefault)
+		{
+			URI toolConfigPath  = getBaseURI();
+			URI pkgFilesPath    = getBaseURI();
+			URI toolFilesPath   = getBaseURI();
+
+			try {
+				toolConfigPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getToolConfigDirName());
+				
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try 
+			{
+				toolFilesPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getToolConfigFilesDirName());
+			} 
+			catch (URISyntaxException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try 
+			{
+				pkgFilesPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getPkgConfigFilesDirName());
+			} 
+			catch (URISyntaxException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+		BufferedReader bfReader;
+		JSONObject     toolCfg;
+		// try to find tool_config.json
+		bfReader = getReader(toolConfigPath, GlobalConfig.getToolConfigFileName(), true);
+		try {
+			toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+			readToolConfig(toolCfg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// try to find pkg_config.json
+		bfReader = getReader(toolConfigPath, GlobalConfig.getPkgConfigFileName(), true);
+		try {
+			toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+			readPkgConfig(toolCfg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// try to find <toolname>_config.json
+		for (Tool tool : GlobalConfig.getTools().values())
+		{
+			bfReader = getReader(toolFilesPath, tool.getId(), false);
+			
+			if (tool.getPackage() != null)
+			{
+				bfReader = getReader(pkgFilesPath, tool.getPackage().getId(), false);
+			}
+		}
+		}
 		getWorkflows().add(workflow);
 
-		/*JSONArray cms = jsonObject.getJSONArray("project");
-		for (Object o : cms) {
-		   JSONObject cm = (JSONObject) o;
-		   logger.debug(cm.get(0));
-		}*/
-		
-		// read examples
 		return rc;
+	}
+	
+	private boolean readToolConfig(JSONObject toolCfg)
+	{
+		boolean rc = true;
+		logger.debug(GlobalConfig.getTools().keySet());
+		Iterator<String> it = toolCfg.keys();
+		for (String key = null; it.hasNext(); key=it.next())
+		{
+			if (key == null)
+				continue;
+			if (GlobalConfig.getTools().keySet().contains(key))
+			{
+				Tool t = GlobalConfig.getTools().get(key);
+				logger.debug("found configuration for tool="+key);
+				JSONObject to = toolCfg.getJSONObject(key);
+				Iterator<String> pit = to.keys();
+				while (pit.hasNext())
+				{
+					String pkey = pit.next();
+					toolConfigController(to.getJSONObject(pkey), new BasicEList<ResolvedParam>(t.getCommand().getResolvedParams().values()));
+				}
+			}
+			//if (o.a)
+		}
+		//if ()
+		return rc;
+	}
+	private boolean readPkgConfig(JSONObject pkgCfg)
+	{
+		boolean rc = true;
+		logger.debug(GlobalConfig.getTools().keySet());
+		Iterator<Entry<String, Tool>> it = GlobalConfig.getTools().iterator();
+		
+		for (Entry<String, Tool> key = null; it.hasNext(); key=it.next())
+		{
+			if (key == null)
+				continue;
+			easyflow.tool.Package pkg = key.getValue().getPackage();
+			if (pkg != null)
+				if (pkgCfg.containsKey(pkg.getId()))
+				{
+					JSONObject o = pkgCfg.getJSONObject(pkg.getId());
+					toolConfigController(o, pkg.getResolvedParams());
+				}
+
+			
+		}
+		return rc;
+	}
+	
+	private boolean toolConfigController(JSONObject o, EList<ResolvedParam> rpList)
+	{
+		boolean rc = true;
+		
+		if (o.has("param"))
+		{
+			JSONObject p = o.getJSONObject("param");
+			enumerateToolConfigParameter(p, rpList);
+			
+			// do something with the remaining sections/properties
+			if (o.has("interpreter"))
+			{
+					
+			}
+			if (o.has("pkg"))
+			{
+					
+			}
+		}			
+		else
+			enumerateToolConfigParameter(o, rpList);
+		
+		return rc;
+	}
+	
+	private void enumerateToolConfigParameter(JSONObject params, EList<ResolvedParam> rpList)
+	{
+		
+		Iterator<String> pit = params.keys();
+		while (pit.hasNext())
+		{
+			String param = pit.next();
+			ResolvedParam rp = findParamByName(param, rpList);
+			if (rp != null)
+			{
+				logger.debug("found config for known parameter="+rp.resolveName());
+				resolveToolConfigParameter(params, param, rp);
+			}
+			else
+				logger.debug("config for unknown parameter="+param+" detected");
+		
+		}
+
+	}
+	
+	private ResolvedParam findParamByName(String paramName, EList<ResolvedParam> rpList)
+	{
+		for (ResolvedParam rp : rpList)
+			if (rp.resolveName().equals(paramName))
+				return rp;
+		return null;
+	}
+	
+	private boolean resolveToolConfigParameter(JSONObject o, String paramName, ResolvedParam rp)
+	{
+		boolean rc = true;
+		logger.debug("resolve parameter="+rp.resolveName()+" with config="+o);
+		//check what kind of object we have:
+		//1. string:
+		Object value = o.getString(paramName);
+		if (value instanceof String)
+			rp.getValue().add(value);
+		else
+		{
+			logger.warn("no handling for value="+value+" implemented.");
+			rc = false;
+		}
+		return rc;
+	}
+	
+	private BufferedReader getReader(URI baseUri, String path, boolean createWarning)
+	{
+		try {
+			InputStreamReader isReader;
+			URI uri = URIUtil.addToURI(baseUri, path);
+			try 
+			{
+				isReader = URIUtil.getInputStreamReader(uri, isFromJar());
+				return new BufferedReader(isReader);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				if (createWarning)
+					logger.info("Could not read resource with uri="+uri.toString());
+			}
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		return null;
 	}
 
 	/**
@@ -983,21 +1248,64 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public boolean init(EasyFlowGraph graph) {
 		
+		logger.debug("loglevel of logger="+logger.getName()+" "+logger.getLevel()+" "+logger.hashCode()+" "+Logger.getRootLogger().hashCode());
+		//System.exit(1);
+		boolean rc = true;
 		clearWorkflows();
-		readProjectJson(getConfigSource());	
-		if (getGraphUtil() == null)
-			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
-		if (graph != null) //&& getGraphUtil().getGraph() == null)
-			getGraphUtil().setGraph(graph);
-        GlobalVar.setGraphUtil(getGraphUtil());
-        boolean rc = readConfiguration();
-		getActiveWorkflow().setGraphUtil(getGraphUtil());
-		getActiveWorkflow().setGraph(getGraphUtil().getGraph());
-		getActiveWorkflow().readWorkfowTemplate();
+		GlobalVar.setDefaultProject(this);
 		
-		getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
 		
-		applyMetaData();
+		Workflow workflow;
+		if (getActiveWorkflow() != null)
+			workflow = getActiveWorkflow();
+		else
+		{
+			workflow = CoreFactory.eINSTANCE.createWorkflow();
+			workflow.init();
+			getWorkflows().add(workflow);
+		}
+
+		if (getActiveWorkflow().getJgraph() == null)
+		{
+			Graph jGraph = JgraphxFactory.eINSTANCE.createGraph();
+			getActiveWorkflow().setJgraph(jGraph);
+			jGraph.init();
+			jGraph.setGraph(graph);
+			JGraphXUtil.setGraph(jGraph);
+		}
+		if (getActiveWorkflow().getGraph() == null)
+			getActiveWorkflow().setGraph(graph);
+		if (GlobalVar.getGraph() == null)
+			GlobalVar.setGraph(graph);
+		
+		JSONObject dfltConfig;
+		try {
+			URI dfltSrc = URIUtil.createURI(System.getProperty("user.home"), GlobalConstants.DFLT_CONFIG_FILE);
+			//if (F)
+			dfltConfig = readProjectJson(dfltSrc);
+			if (dfltConfig != null)
+			{
+				rc = readConfiguration(dfltConfig, true);
+			}
+			JSONObject mainConfig = readProjectJson(getConfigSource());	
+			GlobalConfig.setJsonCfg(mainConfig);
+	        if (readConfiguration(mainConfig, false))
+	        {
+				if (getActiveWorkflow().readWorkfowTemplate())
+				{	
+					GlobalVar.setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+					getActiveWorkflow().getJgraph().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+					applyMetaData();
+				}
+				else
+					rc = false;
+	        }
+	        else
+	        	rc = false;
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return rc;
 		
@@ -1280,13 +1588,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return getBaseURI();
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return getLogger();
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				if (resolve) return getGraphUtil();
-				return basicGetGraphUtil();
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return isFromJar();
-			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
-				return getJsonObject();
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
 				return getDefaultConfigSourceString();
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
@@ -1322,14 +1625,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__BASE_URI:
 				setBaseURI((URI)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				setGraphUtil((Util)newValue);
-				return;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar((Boolean)newValue);
-				return;
-			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
-				setJsonObject((JSONObject)newValue);
 				return;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				setToolDefinitions((ToolDefinitions)newValue);
@@ -1361,14 +1658,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__BASE_URI:
 				setBaseURI(BASE_URI_EDEFAULT);
 				return;
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				setGraphUtil((Util)null);
-				return;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar(FROM_JAR_EDEFAULT);
-				return;
-			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
-				setJsonObject(JSON_OBJECT_EDEFAULT);
 				return;
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
 				setToolDefinitions((ToolDefinitions)null);
@@ -1398,12 +1689,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return BASE_URI_EDEFAULT == null ? baseURI != null : !BASE_URI_EDEFAULT.equals(baseURI);
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				return graphUtil != null;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return fromJar != FROM_JAR_EDEFAULT;
-			case UiPackage.DEFAULT_PROJECT__JSON_OBJECT:
-				return JSON_OBJECT_EDEFAULT == null ? jsonObject != null : !JSON_OBJECT_EDEFAULT.equals(jsonObject);
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
 				return DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT == null ? defaultConfigSourceString != null : !DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT.equals(defaultConfigSourceString);
 			case UiPackage.DEFAULT_PROJECT__TOOL_DEFINITIONS:
@@ -1432,8 +1719,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		result.append(logger);
 		result.append(", fromJar: ");
 		result.append(fromJar);
-		result.append(", jsonObject: ");
-		result.append(jsonObject);
 		result.append(", DefaultConfigSourceString: ");
 		result.append(defaultConfigSourceString);
 		result.append(')');

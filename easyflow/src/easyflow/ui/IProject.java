@@ -22,9 +22,8 @@ import easyflow.execution.IExecutionSystem;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import net.sf.json.JSONObject;
-import javax.xml.validation.Schema;
 import org.eclipse.emf.ecore.EObject;
-import org.w3c.dom.Document;
+
 
 /**
  * <!-- begin-user-doc -->

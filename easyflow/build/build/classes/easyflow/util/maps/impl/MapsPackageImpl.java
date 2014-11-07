@@ -204,6 +204,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToResolvedParamListMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToParameterMapEClass = null;
 
 	/**
@@ -261,6 +268,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * @generated
 	 */
 	private EClass taskToDataLinkListMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringToConditionMapEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -883,6 +897,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToResolvedParamListMap() {
+		return stringToResolvedParamListMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToResolvedParamListMap_Key() {
+		return (EAttribute)stringToResolvedParamListMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToResolvedParamListMap_Value() {
+		return (EReference)stringToResolvedParamListMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToParameterMap() {
 		return stringToParameterMapEClass;
 	}
@@ -1126,6 +1167,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToConditionMap() {
+		return stringToConditionMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToConditionMap_Key() {
+		return (EAttribute)stringToConditionMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToConditionMap_Value() {
+		return (EReference)stringToConditionMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToParameterListMap() {
 		return stringToParameterListMapEClass;
 	}
@@ -1341,6 +1409,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		createEAttribute(stringToResolvedParamMapEClass, STRING_TO_RESOLVED_PARAM_MAP__KEY);
 		createEReference(stringToResolvedParamMapEClass, STRING_TO_RESOLVED_PARAM_MAP__VALUE);
 
+		stringToResolvedParamListMapEClass = createEClass(STRING_TO_RESOLVED_PARAM_LIST_MAP);
+		createEAttribute(stringToResolvedParamListMapEClass, STRING_TO_RESOLVED_PARAM_LIST_MAP__KEY);
+		createEReference(stringToResolvedParamListMapEClass, STRING_TO_RESOLVED_PARAM_LIST_MAP__VALUE);
+
 		stringToStringListMapEClass = createEClass(STRING_TO_STRING_LIST_MAP);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__KEY);
 		createEAttribute(stringToStringListMapEClass, STRING_TO_STRING_LIST_MAP__VALUE);
@@ -1380,6 +1452,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		taskToDataLinkListMapEClass = createEClass(TASK_TO_DATA_LINK_LIST_MAP);
 		createEReference(taskToDataLinkListMapEClass, TASK_TO_DATA_LINK_LIST_MAP__KEY);
 		createEReference(taskToDataLinkListMapEClass, TASK_TO_DATA_LINK_LIST_MAP__VALUE);
+
+		stringToConditionMapEClass = createEClass(STRING_TO_CONDITION_MAP);
+		createEAttribute(stringToConditionMapEClass, STRING_TO_CONDITION_MAP__KEY);
+		createEReference(stringToConditionMapEClass, STRING_TO_CONDITION_MAP__VALUE);
 	}
 
 	/**
@@ -1505,6 +1581,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEAttribute(getStringToResolvedParamMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToResolvedParamMap_Value(), theToolPackage.getResolvedParam(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(stringToResolvedParamListMapEClass, Map.Entry.class, "StringToResolvedParamListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToResolvedParamListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToResolvedParamListMap_Value(), theToolPackage.getResolvedParam(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(stringToStringListMapEClass, Map.Entry.class, "StringToStringListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToStringListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStringToStringListMap_Value(), ecorePackage.getEString(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1544,6 +1624,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(taskToDataLinkListMapEClass, Map.Entry.class, "TaskToDataLinkListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTaskToDataLinkListMap_Key(), theCorePackage.getTask(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTaskToDataLinkListMap_Value(), theDataPackage.getDataLink(), null, "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToConditionMapEClass, Map.Entry.class, "StringToConditionMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToConditionMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToConditionMap_Value(), theToolPackage.getCondition(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

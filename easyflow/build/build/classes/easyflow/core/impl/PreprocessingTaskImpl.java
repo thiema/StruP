@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link easyflow.core.impl.PreprocessingTaskImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.core.impl.PreprocessingTaskImpl#getTask <em>Task</em>}</li>
  *   <li>{@link easyflow.core.impl.PreprocessingTaskImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link easyflow.core.impl.PreprocessingTaskImpl#getDataPortIndex <em>Data Port Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -81,6 +82,26 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 	 * @ordered
 	 */
 	protected String expression = EXPRESSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDataPortIndex() <em>Data Port Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataPortIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int DATA_PORT_INDEX_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getDataPortIndex() <em>Data Port Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataPortIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected int dataPortIndex = DATA_PORT_INDEX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -186,6 +207,27 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getDataPortIndex() {
+		return dataPortIndex;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataPortIndex(int newDataPortIndex) {
+		int oldDataPortIndex = dataPortIndex;
+		dataPortIndex = newDataPortIndex;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.PREPROCESSING_TASK__DATA_PORT_INDEX, oldDataPortIndex, dataPortIndex));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -196,6 +238,8 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 				return basicGetTask();
 			case CorePackage.PREPROCESSING_TASK__EXPRESSION:
 				return getExpression();
+			case CorePackage.PREPROCESSING_TASK__DATA_PORT_INDEX:
+				return getDataPortIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -216,6 +260,9 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 				return;
 			case CorePackage.PREPROCESSING_TASK__EXPRESSION:
 				setExpression((String)newValue);
+				return;
+			case CorePackage.PREPROCESSING_TASK__DATA_PORT_INDEX:
+				setDataPortIndex((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -238,6 +285,9 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 			case CorePackage.PREPROCESSING_TASK__EXPRESSION:
 				setExpression(EXPRESSION_EDEFAULT);
 				return;
+			case CorePackage.PREPROCESSING_TASK__DATA_PORT_INDEX:
+				setDataPortIndex(DATA_PORT_INDEX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -256,6 +306,8 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 				return task != null;
 			case CorePackage.PREPROCESSING_TASK__EXPRESSION:
 				return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
+			case CorePackage.PREPROCESSING_TASK__DATA_PORT_INDEX:
+				return dataPortIndex != DATA_PORT_INDEX_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -274,6 +326,8 @@ public class PreprocessingTaskImpl extends EObjectImpl implements PreprocessingT
 		result.append(name);
 		result.append(", expression: ");
 		result.append(expression);
+		result.append(", dataPortIndex: ");
+		result.append(dataPortIndex);
 		result.append(')');
 		return result.toString();
 	}

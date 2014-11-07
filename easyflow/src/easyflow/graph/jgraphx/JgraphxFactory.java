@@ -26,13 +26,67 @@ public interface JgraphxFactory extends EFactory {
 	JgraphxFactory eINSTANCE = easyflow.graph.jgraphx.impl.JgraphxFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Util</em>'.
+	 * Returns a new object of class '<em>Abstract Graph</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Util</em>'.
+	 * @return a new object of class '<em>Abstract Graph</em>'.
 	 * @generated
 	 */
-	Util createUtil();
+	AbstractGraph createAbstractGraph();
+
+	/**
+	 * Returns a new object of class '<em>Traversal Event Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Traversal Event Graph</em>'.
+	 * @generated
+	 */
+	TraversalEventGraph createTraversalEventGraph();
+
+	/**
+	 * Returns a new object of class '<em>Preprocessing Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Preprocessing Graph</em>'.
+	 * @generated
+	 */
+	PreprocessingGraph createPreprocessingGraph();
+
+	/**
+	 * Returns a new object of class '<em>Tool Dependency Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Tool Dependency Graph</em>'.
+	 * @generated
+	 */
+	ToolDependencyGraph createToolDependencyGraph();
+
+	/**
+	 * Returns a new object of class '<em>Execution Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Execution Graph</em>'.
+	 * @generated
+	 */
+	ExecutionGraph createExecutionGraph();
+
+	/**
+	 * Returns a new object of class '<em>Sub Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Sub Graph</em>'.
+	 * @generated
+	 */
+	SubGraph createSubGraph();
+
+	/**
+	 * Returns a new object of class '<em>Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph</em>'.
+	 * @generated
+	 */
+	Graph createGraph();
 
 	/**
 	 * Returns the package supported by this factory.

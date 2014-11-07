@@ -70,9 +70,45 @@ public class JgraphxSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case JgraphxPackage.UTIL: {
-				Util util = (Util)theEObject;
-				T result = caseUtil(util);
+			case JgraphxPackage.ABSTRACT_GRAPH: {
+				AbstractGraph abstractGraph = (AbstractGraph)theEObject;
+				T result = caseAbstractGraph(abstractGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH: {
+				TraversalEventGraph traversalEventGraph = (TraversalEventGraph)theEObject;
+				T result = caseTraversalEventGraph(traversalEventGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JgraphxPackage.PREPROCESSING_GRAPH: {
+				PreprocessingGraph preprocessingGraph = (PreprocessingGraph)theEObject;
+				T result = casePreprocessingGraph(preprocessingGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH: {
+				ToolDependencyGraph toolDependencyGraph = (ToolDependencyGraph)theEObject;
+				T result = caseToolDependencyGraph(toolDependencyGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JgraphxPackage.EXECUTION_GRAPH: {
+				ExecutionGraph executionGraph = (ExecutionGraph)theEObject;
+				T result = caseExecutionGraph(executionGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JgraphxPackage.SUB_GRAPH: {
+				SubGraph subGraph = (SubGraph)theEObject;
+				T result = caseSubGraph(subGraph);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JgraphxPackage.GRAPH: {
+				Graph graph = (Graph)theEObject;
+				T result = caseGraph(graph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -81,17 +117,107 @@ public class JgraphxSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Util</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Abstract Graph</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Util</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Abstract Graph</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseUtil(Util object) {
+	public T caseAbstractGraph(AbstractGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Traversal Event Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Traversal Event Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTraversalEventGraph(TraversalEventGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Preprocessing Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Preprocessing Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePreprocessingGraph(PreprocessingGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Tool Dependency Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Tool Dependency Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseToolDependencyGraph(ToolDependencyGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Execution Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Execution Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExecutionGraph(ExecutionGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sub Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sub Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSubGraph(SubGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGraph(Graph object) {
 		return null;
 	}
 

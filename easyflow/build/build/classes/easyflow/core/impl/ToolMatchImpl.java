@@ -612,8 +612,8 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 					Parameter templateParam   = tool.getTemplateParameter(parameter);
 					Boolean defaultIsOptional = templateParam != null ? templateParam.isOptional(null) : null;
 					
-				logger.trace("computeScore(): "+parameter != null ? (parameter.getName()+" "+((InOutParameter)parameter).getFormats()+" "
-						+parameter.isOptional(defaultIsOptional)):null);
+				logger.debug("computeScore(): "+parameter != null ? (parameter.getName()+" "+((InOutParameter)parameter).getFormats()
+						+" optional="+parameter.isOptional(defaultIsOptional)):null);
 				
 				//if (getTool().getData().containsKey(parameterEntry.getKey()))
 				
@@ -652,7 +652,7 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 							//dataPort.setParameterName(parameter.getName());
 							logger.debug("computeScore(): input parameter="+parameter.getName());
 							taskMissingInDataPorts.remove(dataPort);
-						} 
+						}
 						else if (!parameter.isOptional(defaultIsOptional))
 						{
 							getReverseMissingInDataPorts().add(data.getPort());

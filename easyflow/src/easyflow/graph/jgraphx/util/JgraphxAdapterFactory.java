@@ -72,8 +72,32 @@ public class JgraphxAdapterFactory extends AdapterFactoryImpl {
 	protected JgraphxSwitch<Adapter> modelSwitch =
 		new JgraphxSwitch<Adapter>() {
 			@Override
-			public Adapter caseUtil(Util object) {
-				return createUtilAdapter();
+			public Adapter caseAbstractGraph(AbstractGraph object) {
+				return createAbstractGraphAdapter();
+			}
+			@Override
+			public Adapter caseTraversalEventGraph(TraversalEventGraph object) {
+				return createTraversalEventGraphAdapter();
+			}
+			@Override
+			public Adapter casePreprocessingGraph(PreprocessingGraph object) {
+				return createPreprocessingGraphAdapter();
+			}
+			@Override
+			public Adapter caseToolDependencyGraph(ToolDependencyGraph object) {
+				return createToolDependencyGraphAdapter();
+			}
+			@Override
+			public Adapter caseExecutionGraph(ExecutionGraph object) {
+				return createExecutionGraphAdapter();
+			}
+			@Override
+			public Adapter caseSubGraph(SubGraph object) {
+				return createSubGraphAdapter();
+			}
+			@Override
+			public Adapter caseGraph(Graph object) {
+				return createGraphAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -96,16 +120,100 @@ public class JgraphxAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.Util <em>Util</em>}'.
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.AbstractGraph <em>Abstract Graph</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see easyflow.graph.jgraphx.Util
+	 * @see easyflow.graph.jgraphx.AbstractGraph
 	 * @generated
 	 */
-	public Adapter createUtilAdapter() {
+	public Adapter createAbstractGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.TraversalEventGraph <em>Traversal Event Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.TraversalEventGraph
+	 * @generated
+	 */
+	public Adapter createTraversalEventGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.PreprocessingGraph <em>Preprocessing Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.PreprocessingGraph
+	 * @generated
+	 */
+	public Adapter createPreprocessingGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.ToolDependencyGraph <em>Tool Dependency Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.ToolDependencyGraph
+	 * @generated
+	 */
+	public Adapter createToolDependencyGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.ExecutionGraph <em>Execution Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.ExecutionGraph
+	 * @generated
+	 */
+	public Adapter createExecutionGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.SubGraph <em>Sub Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.SubGraph
+	 * @generated
+	 */
+	public Adapter createSubGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.Graph <em>Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.Graph
+	 * @generated
+	 */
+	public Adapter createGraphAdapter() {
 		return null;
 	}
 

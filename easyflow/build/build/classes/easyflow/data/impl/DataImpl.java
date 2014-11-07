@@ -16,6 +16,7 @@ import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
 import easyflow.tool.Parameter;
 
+import easyflow.tool.ResolvedParam;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Iterator;
@@ -23,6 +24,7 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -40,11 +42,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link easyflow.data.impl.DataImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getPort <em>Port</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#isOutput <em>Output</em>}</li>
- *   <li>{@link easyflow.data.impl.DataImpl#getDataResourceName <em>Data Resource Name</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link easyflow.data.impl.DataImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link easyflow.data.impl.DataImpl#getPreferredHandle <em>Preferred Handle</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataImpl#getResolvedParam <em>Resolved Param</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataImpl#getHandle <em>Handle</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,26 +106,6 @@ public class DataImpl extends EObjectImpl implements Data {
 	protected boolean output = OUTPUT_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getDataResourceName() <em>Data Resource Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDataResourceName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final URI DATA_RESOURCE_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getDataResourceName() <em>Data Resource Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDataResourceName()
-	 * @generated
-	 * @ordered
-	 */
-	protected URI dataResourceName = DATA_RESOURCE_NAME_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -172,27 +154,33 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * @ordered
 	 */
 	protected Parameter parameter;
-
 	/**
-	 * The default value of the '{@link #getPreferredHandle() <em>Preferred Handle</em>}' attribute.
+	 * The cached value of the '{@link #getResolvedParam() <em>Resolved Param</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPreferredHandle()
+	 * @see #getResolvedParam()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PREFERRED_HANDLE_EDEFAULT = null;
-
+	protected ResolvedParam resolvedParam;
 	/**
-	 * The cached value of the '{@link #getPreferredHandle() <em>Preferred Handle</em>}' attribute.
+	 * The default value of the '{@link #getHandle() <em>Handle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPreferredHandle()
+	 * @see #getHandle()
 	 * @generated
 	 * @ordered
 	 */
-	protected String preferredHandle = PREFERRED_HANDLE_EDEFAULT;
-
+	protected static final String HANDLE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getHandle() <em>Handle</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHandle()
+	 * @generated
+	 * @ordered
+	 */
+	protected String handle = HANDLE_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -304,6 +292,7 @@ public class DataImpl extends EObjectImpl implements Data {
 			return it.next();
 		return dataFormat;
 	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -313,7 +302,6 @@ public class DataImpl extends EObjectImpl implements Data {
 		DataFormat format = getFormat();
 		return format == null ? null : format.getName();
 	}
-
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -344,9 +332,52 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * @generated not
 	 */
 	public EList<String> getSupportedHandles(boolean applyConfig) {
+		//if (resolveHandle((String)null))
+			//return getResolvedParam().getHandle();
 		return getParameter().getSupportedHandles(applyConfig);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveHandle(Data testData)
+	{
+		ResolvedParam rp = getResolvedParam();
+		if (rp != null)
+		{
+			getResolvedParam().getHandle();
+			//setHandle();
+		}
+		return false;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveHandle(String handle) {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> resolveSupportedHandles() {
+		
+		if (getResolvedParam() != null)
+			return getResolvedParam().getSupportedHandles();
+		return new BasicEList<String>();
+			
+	}
+
+	
 	/**
 	 * TODO check formats defined by parameter
 	 * <!-- begin-user-doc -->
@@ -358,10 +389,10 @@ public class DataImpl extends EObjectImpl implements Data {
 		boolean match = false;
 		//check formats defined by parameter
 		
-		
 		// check handles
 		EList<String>  handles1 = getSupportedHandles(true);
 		EList<String>  handles2 = testData.getSupportedHandles(true);
+		
 		if (getParameter() != null && testData.getParameter()!=null)
 		{
 			if (handles1.isEmpty() && handles2.isEmpty())
@@ -374,8 +405,8 @@ public class DataImpl extends EObjectImpl implements Data {
 					if (handles2.contains(handle))
 					{
 						match = true;
-						setPreferredHandle(handle);
-						testData.setPreferredHandle(handle);
+						setHandle(handle);
+						testData.setHandle(handle);
 					}
 			}
 			else
@@ -409,27 +440,6 @@ public class DataImpl extends EObjectImpl implements Data {
 				return true;
 		}
 		return false;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public URI getDataResourceName() {
-		return dataResourceName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDataResourceName(URI newDataResourceName) {
-		URI oldDataResourceName = dataResourceName;
-		dataResourceName = newDataResourceName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA__DATA_RESOURCE_NAME, oldDataResourceName, dataResourceName));
 	}
 
 	/**
@@ -517,8 +527,16 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPreferredHandle() {
-		return preferredHandle;
+	public ResolvedParam getResolvedParam() {
+		if (resolvedParam != null && resolvedParam.eIsProxy()) {
+			InternalEObject oldResolvedParam = (InternalEObject)resolvedParam;
+			resolvedParam = (ResolvedParam)eResolveProxy(oldResolvedParam);
+			if (resolvedParam != oldResolvedParam) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, DataPackage.DATA__RESOLVED_PARAM, oldResolvedParam, resolvedParam));
+			}
+		}
+		return resolvedParam;
 	}
 
 	/**
@@ -526,11 +544,41 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPreferredHandle(String newPreferredHandle) {
-		String oldPreferredHandle = preferredHandle;
-		preferredHandle = newPreferredHandle;
+	public ResolvedParam basicGetResolvedParam() {
+		return resolvedParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setResolvedParam(ResolvedParam newResolvedParam) {
+		ResolvedParam oldResolvedParam = resolvedParam;
+		resolvedParam = newResolvedParam;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA__PREFERRED_HANDLE, oldPreferredHandle, preferredHandle));
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA__RESOLVED_PARAM, oldResolvedParam, resolvedParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getHandle() {
+		return handle;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setHandle(String newHandle) {
+		String oldHandle = handle;
+		handle = newHandle;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA__HANDLE, oldHandle, handle));
 	}
 
 	/**
@@ -548,8 +596,6 @@ public class DataImpl extends EObjectImpl implements Data {
 				return basicGetPort();
 			case DataPackage.DATA__OUTPUT:
 				return isOutput();
-			case DataPackage.DATA__DATA_RESOURCE_NAME:
-				return getDataResourceName();
 			case DataPackage.DATA__NAME:
 				return getName();
 			case DataPackage.DATA__DESCRIPTION:
@@ -557,8 +603,11 @@ public class DataImpl extends EObjectImpl implements Data {
 			case DataPackage.DATA__PARAMETER:
 				if (resolve) return getParameter();
 				return basicGetParameter();
-			case DataPackage.DATA__PREFERRED_HANDLE:
-				return getPreferredHandle();
+			case DataPackage.DATA__RESOLVED_PARAM:
+				if (resolve) return getResolvedParam();
+				return basicGetResolvedParam();
+			case DataPackage.DATA__HANDLE:
+				return getHandle();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -580,9 +629,6 @@ public class DataImpl extends EObjectImpl implements Data {
 			case DataPackage.DATA__OUTPUT:
 				setOutput((Boolean)newValue);
 				return;
-			case DataPackage.DATA__DATA_RESOURCE_NAME:
-				setDataResourceName((URI)newValue);
-				return;
 			case DataPackage.DATA__NAME:
 				setName((String)newValue);
 				return;
@@ -592,8 +638,11 @@ public class DataImpl extends EObjectImpl implements Data {
 			case DataPackage.DATA__PARAMETER:
 				setParameter((Parameter)newValue);
 				return;
-			case DataPackage.DATA__PREFERRED_HANDLE:
-				setPreferredHandle((String)newValue);
+			case DataPackage.DATA__RESOLVED_PARAM:
+				setResolvedParam((ResolvedParam)newValue);
+				return;
+			case DataPackage.DATA__HANDLE:
+				setHandle((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -616,9 +665,6 @@ public class DataImpl extends EObjectImpl implements Data {
 			case DataPackage.DATA__OUTPUT:
 				setOutput(OUTPUT_EDEFAULT);
 				return;
-			case DataPackage.DATA__DATA_RESOURCE_NAME:
-				setDataResourceName(DATA_RESOURCE_NAME_EDEFAULT);
-				return;
 			case DataPackage.DATA__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -628,8 +674,11 @@ public class DataImpl extends EObjectImpl implements Data {
 			case DataPackage.DATA__PARAMETER:
 				setParameter((Parameter)null);
 				return;
-			case DataPackage.DATA__PREFERRED_HANDLE:
-				setPreferredHandle(PREFERRED_HANDLE_EDEFAULT);
+			case DataPackage.DATA__RESOLVED_PARAM:
+				setResolvedParam((ResolvedParam)null);
+				return;
+			case DataPackage.DATA__HANDLE:
+				setHandle(HANDLE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -649,16 +698,16 @@ public class DataImpl extends EObjectImpl implements Data {
 				return port != null;
 			case DataPackage.DATA__OUTPUT:
 				return output != OUTPUT_EDEFAULT;
-			case DataPackage.DATA__DATA_RESOURCE_NAME:
-				return DATA_RESOURCE_NAME_EDEFAULT == null ? dataResourceName != null : !DATA_RESOURCE_NAME_EDEFAULT.equals(dataResourceName);
 			case DataPackage.DATA__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case DataPackage.DATA__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case DataPackage.DATA__PARAMETER:
 				return parameter != null;
-			case DataPackage.DATA__PREFERRED_HANDLE:
-				return PREFERRED_HANDLE_EDEFAULT == null ? preferredHandle != null : !PREFERRED_HANDLE_EDEFAULT.equals(preferredHandle);
+			case DataPackage.DATA__RESOLVED_PARAM:
+				return resolvedParam != null;
+			case DataPackage.DATA__HANDLE:
+				return HANDLE_EDEFAULT == null ? handle != null : !HANDLE_EDEFAULT.equals(handle);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -677,14 +726,12 @@ public class DataImpl extends EObjectImpl implements Data {
 		result.append(label);
 		result.append(", output: ");
 		result.append(output);
-		result.append(", dataResourceName: ");
-		result.append(dataResourceName);
 		result.append(", name: ");
 		result.append(name);
 		result.append(", description: ");
 		result.append(description);
-		result.append(", preferredHandle: ");
-		result.append(preferredHandle);
+		result.append(", handle: ");
+		result.append(handle);
 		result.append(')');
 		return result.toString();
 	}

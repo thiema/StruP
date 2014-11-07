@@ -52,6 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.PackageImpl#getCommandPattern <em>Command Pattern</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getTemplateParams <em>Template Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getAssumeDataParamPositional <em>Assume Data Param Positional</em>}</li>
+ *   <li>{@link easyflow.tool.impl.PackageImpl#getAssumeParamPositional <em>Assume Param Positional</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getCmdPartDelimiter <em>Cmd Part Delimiter</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.PackageImpl#getId <em>Id</em>}</li>
@@ -148,6 +149,24 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	 */
 	protected Boolean assumeDataParamPositional = ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT;
 
+	/**
+	 * The default value of the '{@link #getAssumeParamPositional() <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean ASSUME_PARAM_POSITIONAL_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getAssumeParamPositional() <em>Assume Param Positional</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAssumeParamPositional()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean assumeParamPositional = ASSUME_PARAM_POSITIONAL_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getCmdPartDelimiter() <em>Cmd Part Delimiter</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -402,6 +421,17 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String renderToString() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public ResolvedParam getInterpreter() {
@@ -444,6 +474,27 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 		assumeDataParamPositional = newAssumeDataParamPositional;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL, oldAssumeDataParamPositional, assumeDataParamPositional));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getAssumeParamPositional() {
+		return assumeParamPositional;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAssumeParamPositional(Boolean newAssumeParamPositional) {
+		Boolean oldAssumeParamPositional = assumeParamPositional;
+		assumeParamPositional = newAssumeParamPositional;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL, oldAssumeParamPositional, assumeParamPositional));
 	}
 
 	/**
@@ -499,6 +550,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return getTemplateParams();
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				return getAssumeDataParamPositional();
+			case ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL:
+				return getAssumeParamPositional();
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
 				return getCmdPartDelimiter();
 			case ToolPackage.PACKAGE__RESOLVED_PARAMS:
@@ -538,6 +591,9 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return;
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional((Boolean)newValue);
+				return;
+			case ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL:
+				setAssumeParamPositional((Boolean)newValue);
 				return;
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
 				setCmdPartDelimiter((String)newValue);
@@ -582,6 +638,9 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				setAssumeDataParamPositional(ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT);
 				return;
+			case ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL:
+				setAssumeParamPositional(ASSUME_PARAM_POSITIONAL_EDEFAULT);
+				return;
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
 				setCmdPartDelimiter(CMD_PART_DELIMITER_EDEFAULT);
 				return;
@@ -619,6 +678,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				return templateParams != null && !templateParams.isEmpty();
 			case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL:
 				return ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT == null ? assumeDataParamPositional != null : !ASSUME_DATA_PARAM_POSITIONAL_EDEFAULT.equals(assumeDataParamPositional);
+			case ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL:
+				return ASSUME_PARAM_POSITIONAL_EDEFAULT == null ? assumeParamPositional != null : !ASSUME_PARAM_POSITIONAL_EDEFAULT.equals(assumeParamPositional);
 			case ToolPackage.PACKAGE__CMD_PART_DELIMITER:
 				return CMD_PART_DELIMITER_EDEFAULT == null ? cmdPartDelimiter != null : !CMD_PART_DELIMITER_EDEFAULT.equals(cmdPartDelimiter);
 			case ToolPackage.PACKAGE__RESOLVED_PARAMS:
@@ -652,6 +713,7 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				case ToolPackage.PACKAGE__COMMAND_PATTERN: return ToolPackage.BASE_COMMAND__COMMAND_PATTERN;
 				case ToolPackage.PACKAGE__TEMPLATE_PARAMS: return ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS;
 				case ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL;
+				case ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL: return ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL;
 				case ToolPackage.PACKAGE__CMD_PART_DELIMITER: return ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER;
 				default: return -1;
 			}
@@ -678,6 +740,7 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 				case ToolPackage.BASE_COMMAND__COMMAND_PATTERN: return ToolPackage.PACKAGE__COMMAND_PATTERN;
 				case ToolPackage.BASE_COMMAND__TEMPLATE_PARAMS: return ToolPackage.PACKAGE__TEMPLATE_PARAMS;
 				case ToolPackage.BASE_COMMAND__ASSUME_DATA_PARAM_POSITIONAL: return ToolPackage.PACKAGE__ASSUME_DATA_PARAM_POSITIONAL;
+				case ToolPackage.BASE_COMMAND__ASSUME_PARAM_POSITIONAL: return ToolPackage.PACKAGE__ASSUME_PARAM_POSITIONAL;
 				case ToolPackage.BASE_COMMAND__CMD_PART_DELIMITER: return ToolPackage.PACKAGE__CMD_PART_DELIMITER;
 				default: return -1;
 			}
@@ -703,6 +766,8 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 		result.append(commandPattern);
 		result.append(", assumeDataParamPositional: ");
 		result.append(assumeDataParamPositional);
+		result.append(", assumeParamPositional: ");
+		result.append(assumeParamPositional);
 		result.append(", cmdPartDelimiter: ");
 		result.append(cmdPartDelimiter);
 		result.append(", id: ");

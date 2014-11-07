@@ -1,4 +1,8 @@
 /**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
  */
 package easyflow.core;
 
@@ -12,12 +16,15 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
+
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
+
 import easyflow.execution.IExecutionSystem;
-import easyflow.graph.jgraphx.Util;
+
+import easyflow.graph.jgraphx.Graph;
 
 import easyflow.tool.Rule;
 import easyflow.tool.Tool;
@@ -57,7 +64,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getMode <em>Mode</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getDefaultGroupingCriteria <em>Default Grouping Criteria</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getGenericAttributes <em>Generic Attributes</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getRootTask <em>Root Task</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getStaticTasks <em>Static Tasks</em>}</li>
@@ -66,6 +72,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getWorker <em>Worker</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCurrentRule <em>Current Rule</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getJgraph <em>Jgraph</em>}</li>
  * </ul>
  * </p>
  *
@@ -337,32 +344,6 @@ public interface Workflow extends EObject {
 	EMap<String, Object> getGenericAttributes();
 
 	/**
-	 * Returns the value of the '<em><b>Graph Util</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Graph Util</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Graph Util</em>' reference.
-	 * @see #setGraphUtil(Util)
-	 * @see easyflow.core.CorePackage#getWorkflow_GraphUtil()
-	 * @model
-	 * @generated
-	 */
-	Util getGraphUtil();
-
-	/**
-	 * Sets the value of the '{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Graph Util</em>' reference.
-	 * @see #getGraphUtil()
-	 * @generated
-	 */
-	void setGraphUtil(Util value);
-
-	/**
 	 * Returns the value of the '<em><b>Catalog</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -543,6 +524,32 @@ public interface Workflow extends EObject {
 	void setCurrentRule(Rule value);
 
 	/**
+	 * Returns the value of the '<em><b>Jgraph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Jgraph</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Jgraph</em>' reference.
+	 * @see #setJgraph(Graph)
+	 * @see easyflow.core.CorePackage#getWorkflow_Jgraph()
+	 * @model
+	 * @generated
+	 */
+	Graph getJgraph();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Workflow#getJgraph <em>Jgraph</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Jgraph</em>' reference.
+	 * @see #getJgraph()
+	 * @generated
+	 */
+	void setJgraph(Graph value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -612,24 +619,18 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
+	 * @model mapType="easyflow.util.maps.TaskToDataLinkListMap<easyflow.core.Task, easyflow.data.DataLink>"
 	 * @generated
 	 */
-	boolean applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
+	EMap<Task, EList<DataLink>> getParentTasksFor(Task task);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * breadth first iteration of graph and completing/checking the traversal events of each task
-	 * in order to combine splitting and merging events into a single events. Usually each
-	 * merging event complements a splitting event.
-	 * Moreover the parent for each splitting event is set.
-	 * <!-- end-model-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
+	boolean resolveMissingDataPortsByToolFor(Task task);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -662,26 +663,32 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model mapType="easyflow.util.maps.TaskToDataLinkListMap<easyflow.core.Task, easyflow.data.DataLink>"
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	EMap<Task, EList<DataLink>> getParentTasksFor(Task task);
+	boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
 	 * @generated
 	 */
-	boolean generateWorklowForExecutionSystem();
+	boolean applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * <!-- begin-model-doc -->
+	 * breadth first iteration of graph and completing/checking the traversal events of each task
+	 * in order to combine splitting and merging events into a single events. Usually each
+	 * merging event complements a splitting event.
+	 * Moreover the parent for each splitting event is set.
+	 * <!-- end-model-doc -->
+	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
 	 * @generated
 	 */
-	boolean resolveMissingDataPortsByToolFor(Task task);
+	boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -710,10 +717,10 @@ public interface Workflow extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
+	boolean generateWorklowForExecutionSystem();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -842,5 +849,13 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	void init();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	String renderToString();
 
 } // Workflow

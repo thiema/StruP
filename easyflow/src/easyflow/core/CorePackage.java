@@ -178,22 +178,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__GENERIC_ATTRIBUTES = 11;
 
 	/**
-	 * The feature id for the '<em><b>Graph Util</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW__GRAPH_UTIL = 12;
-
-	/**
 	 * The feature id for the '<em><b>Catalog</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__CATALOG = 13;
+	int WORKFLOW__CATALOG = 12;
 
 	/**
 	 * The feature id for the '<em><b>Root Task</b></em>' reference.
@@ -202,7 +193,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__ROOT_TASK = 14;
+	int WORKFLOW__ROOT_TASK = 13;
 
 	/**
 	 * The feature id for the '<em><b>Static Tasks</b></em>' reference list.
@@ -211,7 +202,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__STATIC_TASKS = 15;
+	int WORKFLOW__STATIC_TASKS = 14;
 
 	/**
 	 * The feature id for the '<em><b>Processed States</b></em>' map.
@@ -220,7 +211,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__PROCESSED_STATES = 16;
+	int WORKFLOW__PROCESSED_STATES = 15;
 
 	/**
 	 * The feature id for the '<em><b>Previous Task Name</b></em>' map.
@@ -229,7 +220,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__PREVIOUS_TASK_NAME = 17;
+	int WORKFLOW__PREVIOUS_TASK_NAME = 16;
 
 	/**
 	 * The feature id for the '<em><b>Worker</b></em>' attribute.
@@ -238,7 +229,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__WORKER = 18;
+	int WORKFLOW__WORKER = 17;
 
 	/**
 	 * The feature id for the '<em><b>Execution System</b></em>' reference.
@@ -247,7 +238,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__EXECUTION_SYSTEM = 19;
+	int WORKFLOW__EXECUTION_SYSTEM = 18;
 
 	/**
 	 * The feature id for the '<em><b>Current Rule</b></em>' reference.
@@ -256,7 +247,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__CURRENT_RULE = 20;
+	int WORKFLOW__CURRENT_RULE = 19;
+
+	/**
+	 * The feature id for the '<em><b>Jgraph</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__JGRAPH = 20;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -1215,17 +1215,6 @@ public interface CorePackage extends EPackage {
 	EReference getWorkflow_GenericAttributes();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getGraphUtil <em>Graph Util</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Graph Util</em>'.
-	 * @see easyflow.core.Workflow#getGraphUtil()
-	 * @see #getWorkflow()
-	 * @generated
-	 */
-	EReference getWorkflow_GraphUtil();
-
-	/**
 	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getCatalog <em>Catalog</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1312,6 +1301,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_CurrentRule();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getJgraph <em>Jgraph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Jgraph</em>'.
+	 * @see easyflow.core.Workflow#getJgraph()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_Jgraph();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
@@ -2233,14 +2233,6 @@ public interface CorePackage extends EPackage {
 		EReference WORKFLOW__GENERIC_ATTRIBUTES = eINSTANCE.getWorkflow_GenericAttributes();
 
 		/**
-		 * The meta object literal for the '<em><b>Graph Util</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WORKFLOW__GRAPH_UTIL = eINSTANCE.getWorkflow_GraphUtil();
-
-		/**
 		 * The meta object literal for the '<em><b>Catalog</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2303,6 +2295,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__CURRENT_RULE = eINSTANCE.getWorkflow_CurrentRule();
+
+		/**
+		 * The meta object literal for the '<em><b>Jgraph</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__JGRAPH = eINSTANCE.getWorkflow_Jgraph();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.

@@ -349,7 +349,8 @@ public class DataImpl extends EObjectImpl implements Data {
 		{
 			getResolvedParam().getHandle();
 			//setHandle();
-		}		
+		}
+		return false;
 	}
 	
 	/**

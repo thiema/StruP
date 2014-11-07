@@ -13,9 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -27,8 +24,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.context.Context;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -41,7 +36,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -50,7 +44,6 @@ import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.Workflow;
-import easyflow.graph.jgraphx.Util;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
@@ -71,6 +64,7 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.execution.IExecutionSystem;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.tool.saxparser.ToolContentHandler;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
@@ -79,12 +73,12 @@ import easyflow.custom.util.URIUtil;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPort;
+import easyflow.graph.jgraphx.Graph;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToPackageMapImpl;
-import easyflow.util.maps.impl.StringToToolMapImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,7 +92,6 @@ import easyflow.util.maps.impl.StringToToolMapImpl;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigSource <em>Config Source</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getBaseURI <em>Base URI</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getGraphUtil <em>Graph Util</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#isFromJar <em>From Jar</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getToolDefinitions <em>Tool Definitions</em>}</li>
@@ -189,16 +182,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getGraphUtil() <em>Graph Util</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGraphUtil()
-	 * @generated
-	 * @ordered
-	 */
-	protected Util graphUtil;
 
 	/**
 	 * The default value of the '{@link #isFromJar() <em>From Jar</em>}' attribute.
@@ -352,44 +335,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public Logger getLogger() {
 		return logger;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Util getGraphUtil() {
-		if (graphUtil != null && graphUtil.eIsProxy()) {
-			InternalEObject oldGraphUtil = (InternalEObject)graphUtil;
-			graphUtil = (Util)eResolveProxy(oldGraphUtil);
-			if (graphUtil != oldGraphUtil) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__GRAPH_UTIL, oldGraphUtil, graphUtil));
-			}
-		}
-		return graphUtil;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Util basicGetGraphUtil() {
-		return graphUtil;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGraphUtil(Util newGraphUtil) {
-		Util oldGraphUtil = graphUtil;
-		graphUtil = newGraphUtil;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__GRAPH_UTIL, oldGraphUtil, graphUtil));
 	}
 
 	/**
@@ -881,14 +826,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		
 		logger.debug(projectCfg.get(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME)+" "+getConfigSource()+" "+getBaseURI());
 		
-		Workflow workflow;
-		if (getActiveWorkflow() != null)
-			workflow = getActiveWorkflow();
-		else
-		{
-			workflow = CoreFactory.eINSTANCE.createWorkflow();
-			workflow.init();
-		}
+		Workflow workflow = getActiveWorkflow();
 		
 		// ####### read workflow base-config ######
 		if (projectCfg.has(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME))
@@ -992,7 +930,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			workflow.getDefaultGroupingCriteria().add(GlobalConfig.getDefaultGroupingCriterion());
 		}
 		
-		logger.debug(projectCfg.keySet()+" "+workflow.getGraphUtil());
+		logger.debug("project configuration keys="+projectCfg.keySet());
 		
 		for (Object key:projectCfg.keySet()) {
 			workflow.getGenericAttributes().put((String) key, projectCfg.get(key));	
@@ -1310,29 +1248,53 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 */
 	public boolean init(EasyFlowGraph graph) {
 		
+		logger.debug("loglevel of logger="+logger.getName()+" "+logger.getLevel()+" "+logger.hashCode()+" "+Logger.getRootLogger().hashCode());
+		//System.exit(1);
 		boolean rc = true;
 		clearWorkflows();
 		GlobalVar.setDefaultProject(this);
-		if (getGraphUtil() == null)
-			setGraphUtil(JgraphxFactory.eINSTANCE.createUtil());
-		if (graph != null) //&& getGraphUtil().getGraph() == null)
-			getGraphUtil().setGraph(graph);
-		GlobalVar.setGraphUtil(getGraphUtil());
+		
+		
+		Workflow workflow;
+		if (getActiveWorkflow() != null)
+			workflow = getActiveWorkflow();
+		else
+		{
+			workflow = CoreFactory.eINSTANCE.createWorkflow();
+			workflow.init();
+			getWorkflows().add(workflow);
+		}
+
+		if (getActiveWorkflow().getJgraph() == null)
+		{
+			Graph jGraph = JgraphxFactory.eINSTANCE.createGraph();
+			getActiveWorkflow().setJgraph(jGraph);
+			jGraph.init();
+			jGraph.setGraph(graph);
+			JGraphXUtil.setGraph(jGraph);
+		}
+		if (getActiveWorkflow().getGraph() == null)
+			getActiveWorkflow().setGraph(graph);
+		if (GlobalVar.getGraph() == null)
+			GlobalVar.setGraph(graph);
 		
 		JSONObject dfltConfig;
 		try {
 			URI dfltSrc = URIUtil.createURI(System.getProperty("user.home"), GlobalConstants.DFLT_CONFIG_FILE);
+			//if (F)
 			dfltConfig = readProjectJson(dfltSrc);
-	        rc = readConfiguration(dfltConfig, true);
+			if (dfltConfig != null)
+			{
+				rc = readConfiguration(dfltConfig, true);
+			}
 			JSONObject mainConfig = readProjectJson(getConfigSource());	
 			GlobalConfig.setJsonCfg(mainConfig);
 	        if (readConfiguration(mainConfig, false))
 	        {
-				getActiveWorkflow().setGraphUtil(getGraphUtil());
-				getActiveWorkflow().setGraph(getGraphUtil().getGraph());
 				if (getActiveWorkflow().readWorkfowTemplate())
 				{	
-					getGraphUtil().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+					GlobalVar.setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+					getActiveWorkflow().getJgraph().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
 					applyMetaData();
 				}
 				else
@@ -1626,9 +1588,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return getBaseURI();
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return getLogger();
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				if (resolve) return getGraphUtil();
-				return basicGetGraphUtil();
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return isFromJar();
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:
@@ -1666,9 +1625,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__BASE_URI:
 				setBaseURI((URI)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				setGraphUtil((Util)newValue);
-				return;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar((Boolean)newValue);
 				return;
@@ -1702,9 +1658,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			case UiPackage.DEFAULT_PROJECT__BASE_URI:
 				setBaseURI(BASE_URI_EDEFAULT);
 				return;
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				setGraphUtil((Util)null);
-				return;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				setFromJar(FROM_JAR_EDEFAULT);
 				return;
@@ -1736,8 +1689,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				return BASE_URI_EDEFAULT == null ? baseURI != null : !BASE_URI_EDEFAULT.equals(baseURI);
 			case UiPackage.DEFAULT_PROJECT__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
-			case UiPackage.DEFAULT_PROJECT__GRAPH_UTIL:
-				return graphUtil != null;
 			case UiPackage.DEFAULT_PROJECT__FROM_JAR:
 				return fromJar != FROM_JAR_EDEFAULT;
 			case UiPackage.DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING:

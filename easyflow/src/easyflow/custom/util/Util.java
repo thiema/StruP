@@ -91,7 +91,7 @@ public class Util {
 		EList<EMap<String, Object>> list = new BasicEList<EMap<String, Object>>();
 		
 
-		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+		DefaultMetaData metaData = GlobalVar.getMetaData();
 		for (GroupingInstance groupingInstance : groupingInstances) {
 			EList<GroupingInstance> recordInstances = metaData.getInstances(
 					groupingInstance, 
@@ -112,7 +112,7 @@ public class Util {
 	
 	public static EMap<String, Object> createMetaDataMapForJexlForRecordInstance(GroupingInstance recordInstance)
 	{
-		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+		DefaultMetaData metaData = GlobalVar.getMetaData();
 		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
 		//logger.debug("createMetaDataMapForJexl(): found "+recordInstances.size()+" records for grouping instance="+groupingInstance.getName()+" "+groupingInstance.getGroupingStr());
 		
@@ -133,7 +133,7 @@ public class Util {
 	public static EMap<String, Object> createMetaDataMapForJexlForTraversalChunk(TraversalChunk record)
 	{
 		EMap<String, Object> metaDataMap = new BasicEMap<String, Object>();
-		DefaultMetaData metaData = GlobalVar.getGraphUtil().getMetaData();
+		DefaultMetaData metaData = GlobalVar.getMetaData();
 		
 		for (Entry<String, Object> entry : metaData.getRecord(record).entrySet()) 
 		{

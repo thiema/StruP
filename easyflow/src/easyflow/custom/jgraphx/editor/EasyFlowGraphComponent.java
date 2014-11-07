@@ -3,52 +3,39 @@ package easyflow.custom.jgraphx.editor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JViewport;
 import javax.swing.border.BevelBorder;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.JTableRenderer;
 import com.mxgraph.examples.swing.editor.ShadowBorder;
-import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
 
-import easyflow.core.CorePackage;
+
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
-import easyflow.custom.exception.DataPortNotFoundException;
+
 import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.util.GlobalVar;
-import easyflow.custom.util.XMLUtil;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
+
+
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 
@@ -235,7 +222,7 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 			//setMaximumSize(dim);
 			Task task;
 			try {
-				task = GlobalVar.getGraphUtil().loadTask(cell);
+				task = JGraphXUtil.loadTask(cell);
 				label= new JLabel(task.getUniqueString());
 				label.setForeground(Color.BLACK);
 				label.setFont(panel.getFont().deriveFont(Font.BOLD, 8));
@@ -295,7 +282,7 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			try {
-				DataLink dataLink=GlobalVar.getGraphUtil().loadDataLink(cell);
+				DataLink dataLink = JGraphXUtil.loadDataLink(cell);
 				if (dataLink!=null && dataLink.getDataPort()!=null)
 				{
 					JLabel label = new JLabel(dataLink.getDataPort().getName()+"_dummy");

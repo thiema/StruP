@@ -1,12 +1,9 @@
 package easyflow.custom.jgraphx.editor;
 
-import java.awt.Point;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -20,8 +17,6 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 
 import com.mxgraph.model.mxICell;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.view.mxGraph;
 
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
@@ -149,8 +144,8 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 			//return insertEdge(parent, id, XMLUtil.getElement(dataLink), source, target);
 			if (dataLink.getId() == 0)
 				dataLink.setId(dataLink.hashCode());
-			if (!GlobalVar.getGraphUtil().getDataLinks().containsKey(Integer.toString(dataLink.getId())))
-				GlobalVar.getGraphUtil().getDataLinks().put(Integer.toString(dataLink.getId()), dataLink);
+			if (!GlobalVar.getDataLinks().containsKey(Integer.toString(dataLink.getId())))
+				GlobalVar.getDataLinks().put(Integer.toString(dataLink.getId()), dataLink);
 			Object cell=insertEdge(parent, id, dataLink.getId(), source, target, getStyleForEdge(dataLink));
 			//Object cell=insertEdge(parent, id, dataLink.getId(), source, target, edgeStyle);
 			

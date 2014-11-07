@@ -60,7 +60,13 @@ public class JgraphxFactoryImpl extends EFactoryImpl implements JgraphxFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case JgraphxPackage.UTIL: return createUtil();
+			case JgraphxPackage.ABSTRACT_GRAPH: return createAbstractGraph();
+			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH: return createTraversalEventGraph();
+			case JgraphxPackage.PREPROCESSING_GRAPH: return createPreprocessingGraph();
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH: return createToolDependencyGraph();
+			case JgraphxPackage.EXECUTION_GRAPH: return createExecutionGraph();
+			case JgraphxPackage.SUB_GRAPH: return createSubGraph();
+			case JgraphxPackage.GRAPH: return createGraph();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -71,9 +77,69 @@ public class JgraphxFactoryImpl extends EFactoryImpl implements JgraphxFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Util createUtil() {
-		UtilImpl util = new UtilImpl();
-		return util;
+	public AbstractGraph createAbstractGraph() {
+		AbstractGraphImpl abstractGraph = new AbstractGraphImpl();
+		return abstractGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TraversalEventGraph createTraversalEventGraph() {
+		TraversalEventGraphImpl traversalEventGraph = new TraversalEventGraphImpl();
+		return traversalEventGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PreprocessingGraph createPreprocessingGraph() {
+		PreprocessingGraphImpl preprocessingGraph = new PreprocessingGraphImpl();
+		return preprocessingGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ToolDependencyGraph createToolDependencyGraph() {
+		ToolDependencyGraphImpl toolDependencyGraph = new ToolDependencyGraphImpl();
+		return toolDependencyGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ExecutionGraph createExecutionGraph() {
+		ExecutionGraphImpl executionGraph = new ExecutionGraphImpl();
+		return executionGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SubGraph createSubGraph() {
+		SubGraphImpl subGraph = new SubGraphImpl();
+		return subGraph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Graph createGraph() {
+		GraphImpl graph = new GraphImpl();
+		return graph;
 	}
 
 	/**

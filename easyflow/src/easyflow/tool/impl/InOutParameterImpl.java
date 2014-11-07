@@ -11,9 +11,7 @@ import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 import java.util.Collection;
 
-import org.eclipse.core.runtime.content.IContentTypeManager.ISelectionPolicy;
 import org.eclipse.emf.common.notify.Notification;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;

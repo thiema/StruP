@@ -23,5 +23,6 @@
 		<dependency org="net.sf.saxon" name="saxon" rev="8.7" />
 		<!-- dependency org="dk.brics.automaton" name="automaton" rev="1.11-8"></dependency>-->
 		<dependency org="org.apache.velocity" name="velocity" rev="1.7"></dependency>
+		<dependency org="commons-cli" name="commons-cli" rev="1.2" />
 	</dependencies>
 </ivy-module>

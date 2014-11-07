@@ -20,6 +20,7 @@ import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
 
+import easyflow.tool.Condition;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
@@ -115,6 +116,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_PARAMETER_LIST_MAP: return (EObject)createStringToParameterListMap();
 			case MapsPackage.STRING_TO_PROJECT_MAP: return (EObject)createStringToProjectMap();
 			case MapsPackage.STRING_TO_RESOLVED_PARAM_MAP: return (EObject)createStringToResolvedParamMap();
+			case MapsPackage.STRING_TO_RESOLVED_PARAM_LIST_MAP: return (EObject)createStringToResolvedParamListMap();
 			case MapsPackage.STRING_TO_STRING_LIST_MAP: return (EObject)createStringToStringListMap();
 			case MapsPackage.STRING_TO_STRING_MAP: return (EObject)createStringToStringMap();
 			case MapsPackage.STRING_TO_TASK_MAP: return (EObject)createStringToTaskMap();
@@ -125,6 +127,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_TOOL_MATCH_MAP: return (EObject)createStringToToolMatchMap();
 			case MapsPackage.TASK_TO_DATA_PORTS_MAP: return (EObject)createTaskToDataPortsMap();
 			case MapsPackage.TASK_TO_DATA_LINK_LIST_MAP: return (EObject)createTaskToDataLinkListMap();
+			case MapsPackage.STRING_TO_CONDITION_MAP: return (EObject)createStringToConditionMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -315,6 +318,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Map.Entry<String, EList<ResolvedParam>> createStringToResolvedParamListMap() {
+		StringToResolvedParamListMapImpl stringToResolvedParamListMap = new StringToResolvedParamListMapImpl();
+		return stringToResolvedParamListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Map.Entry<String, Parameter> createStringToParameterMap() {
 		StringToParameterMapImpl stringToParameterMap = new StringToParameterMapImpl();
 		return stringToParameterMap;
@@ -428,6 +441,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<Task, EList<DataLink>> createTaskToDataLinkListMap() {
 		TaskToDataLinkListMapImpl taskToDataLinkListMap = new TaskToDataLinkListMapImpl();
 		return taskToDataLinkListMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, Condition> createStringToConditionMap() {
+		StringToConditionMapImpl stringToConditionMap = new StringToConditionMapImpl();
+		return stringToConditionMap;
 	}
 
 	/**

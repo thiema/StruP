@@ -16,6 +16,7 @@ import easyflow.util.maps.impl.StringToDataFormatMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -429,6 +430,88 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 		if (!getDataFormats().isEmpty())
 			return getDataFormats().get(0).getValue();
 		else return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean matches(DataFormat dataFormat) {
+		
+		for (DataFormat curFormat: getDataFormats().values())
+			if (curFormat.getName().equalsIgnoreCase(dataFormat.getName()))
+				return true;
+		
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isCompatibleStr(EList<String> formats) {
+		
+		Iterator<String> it = formats.iterator();
+		while (it.hasNext())
+		{
+			String dataFormat = it.next();
+			if (!isCompatible(dataFormat))
+				return false;
+		}
+		return true;		
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isCompatible(EList<DataFormat> formats) {
+		
+		Iterator<DataFormat> it = formats.iterator();
+		while (it.hasNext())
+		{
+			DataFormat dataFormat = it.next();
+			if (!isCompatible(dataFormat))
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isCompatible(String format) {
+		
+		Iterator<Entry<String, DataFormat>> it = getDataFormats().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, DataFormat> e = it.next();
+			if (e.getValue().getName().equalsIgnoreCase(format))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isCompatible(DataFormat format) {
+		
+		Iterator<Entry<String, DataFormat>> it = getDataFormats().iterator();
+		while (it.hasNext())
+		{
+			Entry<String, DataFormat> e = it.next();
+			if (e.getValue().getName().equalsIgnoreCase(format.getName()))
+				return true;
+		}
+		return false;
 	}
 
 	/**
