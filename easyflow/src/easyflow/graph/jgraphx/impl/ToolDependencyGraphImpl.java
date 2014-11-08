@@ -216,6 +216,9 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 									EList<Data> parentData = new BasicEList<Data>();
 									try
 									{
+										// retrieve the parent tool data
+										// ParentTool -----------> ChildTool
+										// tool       dataLink---> childTool 
 										parentData = getToolDataForDataLink(tool.getData(), dataLink, false);
 									}
 									catch (NoValidInOutDataException e)
@@ -661,6 +664,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 		
 		EList<Data> data = new BasicEList<Data>();
 		
+		String s;
 		if (dataMap.isEmpty() && dataLink.getData() != null)
 			data.add(dataLink.getData());
 		else if (dataMap.isEmpty())
@@ -675,13 +679,15 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 				{
 					DataPort tmp = useOutDataPort ? dataLink.getDataPort() : dataLink.getInDataPort();
 					logger.debug(curData.getPort().getFormat().getName()+" ("+curData.getPort().getName()+") vs: "
-								+tmp.getFormat().getName()+"("+tmp.getName()+") iscompatible="+(curData.getPort().isCompatible(
-							tmp))+" isAllowed="+curData.isAllowed()+" isOutput="+curData.isOutput()
+								+tmp.getFormat().getName()+"("+tmp.getName()+") iscompatible="+(curData.getPort().isCompatible(tmp))
+							+" isAllowed="+curData.isAllowed()+" isOutput="+curData.isOutput()
+							+" matching in-out port="+((useOutDataPort && !curData.isOutput()) || (!useOutDataPort && curData.isOutput()))
 							);
-					if ((useOutDataPort && !curData.isOutput()) || (!useOutDataPort && curData.isOutput())
-							&& curData.isAllowed() 
-							&& curData.getPort().isCompatible(
-									useOutDataPort ? dataLink.getDataPort() : dataLink.getInDataPort()))
+					if (
+							((useOutDataPort && !curData.isOutput()) || (!useOutDataPort && curData.isOutput())) &&
+							curData.isAllowed() && 
+							curData.getPort().isCompatible(tmp)
+					   )
 						data.add(curData);
 				}
 			}

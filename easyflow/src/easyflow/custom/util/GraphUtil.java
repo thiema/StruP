@@ -81,7 +81,7 @@ public class GraphUtil {
 		return newDataLink;
 	}
 	
-	private static DataLink createDataLinkGrouping(DataLink dataLink, Task task, String groupingStr, String parentGroupingStr)
+	private static DataLink createDataLinkGrouping(DataLink dataLink, Task task, String groupingStr, String parentGroupingStr, DataPort dataPort)
 	{
 		DataLink newDataLink = null;
 		newDataLink = DataFactory.eINSTANCE.createDataLink();
@@ -103,8 +103,16 @@ public class GraphUtil {
 					newDataLink.setGroupingStr(null);
 				}
 			}
+			if (dataPort != null)
+			{
+				newDataLink.setDataPort(EcoreUtil.copy(dataPort));
+				newDataLink.setInDataPort(EcoreUtil.copy(dataPort));
+			}
+			else
+			{
 			newDataLink.setDataPort(EcoreUtil.copy(dataLink.getDataPort()));
 			newDataLink.setInDataPort(EcoreUtil.copy(dataLink.getInDataPort()));
+			}
 
 		logger.debug("groupcrit assigend to dataport: size="+dataLink.getInDataPort().getGroupingCriteria().size()
 				+" new size="+newDataLink.getInDataPort().getGroupingCriteria().size());
@@ -157,17 +165,18 @@ public class GraphUtil {
 	}
 */	
 	
-	public static DataLink createDataLink(DataLink dataLink, Task task, boolean checkDataPort) throws DataLinkNotFoundException
+	public static DataLink createDataLink(DataLink dataLink, Task task, DataPort dataPort) throws DataLinkNotFoundException
 	{
 		EList<TraversalChunk> chunks = dataLink.getChunks().get(dataLink.getParentGroupingStr());
-		if (checkDataPort)
+		//if (checkDataPort)
 			logger.debug("createDataLink(): datalink port="+dataLink.getInDataPort().getFormat().getName()+" tasks outport="+task.getOutDataPorts());
-		if (task.isUtil() && !task.getOutDataPorts().isEmpty())
+		
+		/*if (task.isUtil() && !task.getOutDataPorts().isEmpty())
 		{
 			dataLink.setInDataPort(task.getOutDataPorts().get(0));
 			dataLink.setDataPort(task.getOutDataPorts().get(0));
-		}
-		return createDataLink(dataLink, task, dataLink.getGroupingStr(), dataLink.getParentGroupingStr(), chunks, null);
+		}*/
+		return createDataLink(dataLink, task, dataLink.getGroupingStr(), dataLink.getParentGroupingStr(), chunks, null, dataPort);
 	}
 	
 	public static DataLink createDataLink(Object edge, Task task, 
@@ -177,7 +186,7 @@ public class GraphUtil {
 			) throws DataLinkNotFoundException
 	{
 		DataLink dataLink = JGraphXUtil.loadDataLink(edge);
-		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, null);
+		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, null, null);
 	}
 	
 	public static DataLink createDataLink(DataLink dataLink, Task task, 
@@ -186,7 +195,7 @@ public class GraphUtil {
 			EList<TraversalChunk> chunks
 			) throws DataLinkNotFoundException
 	{
-		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, null);
+		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, null, null);
 	}
 
 	public static DataLink createDataLink_Param_GroupingInstances(Object edge, Task task, 
@@ -201,7 +210,7 @@ public class GraphUtil {
 		}
 
 		EList<TraversalChunk> chunks = groupingInstances2TraversalChunks(groupingInstances);
-		DataLink newDataLink = createDataLink(dataLink, task, null, null, chunks, paramStr);
+		DataLink newDataLink = createDataLink(dataLink, task, null, null, chunks, paramStr, null);
 		if (!newDataLink.getDataPort().getFormat().match(newDataLink.getInDataPort().getFormat()))
 		{
 			logger.error("invalid data formats foudn for datalink="+newDataLink.getUniqueString(true));
@@ -218,7 +227,7 @@ public class GraphUtil {
 			String paramStr) throws DataLinkNotFoundException
 	{
 		DataLink dataLink = JGraphXUtil.loadDataLink(edge);
-		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, paramStr);
+		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, paramStr, null);
 	}
 	
 	public static DataLink createDataLink(DataLink dataLink, Task task, 
@@ -228,7 +237,7 @@ public class GraphUtil {
 	{
 		EList<TraversalChunk> chunks = new BasicEList<TraversalChunk>();
 		chunks.add(chunk);
-		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, null);
+		return createDataLink(dataLink, task, groupingStr, parentGroupingStr, chunks, null, null);
 	}
 	
 	// if no chunks provided, fallback to all tasks chunks.
@@ -236,25 +245,12 @@ public class GraphUtil {
 			String groupingStr, 
 			String parentGroupingStr, 
 			EList<TraversalChunk> chunks,
-			String paramStr) throws DataLinkNotFoundException
+			String paramStr,
+			DataPort dataPort) throws DataLinkNotFoundException
 	{
 		boolean isGrouping      = paramStr == null;
 		boolean isSplittingTask = parentGroupingStr == null;
 		
-		if (dataLink.getDataPort() == null)
-		{
-			logger.warn("data port not defined");
-		}
-		else if (dataLink.getInDataPort() == null)
-		{
-			logger.warn("in data port not defined");
-		}
-		else if (!dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
-		{
-			logger.error("invalid data formats foudn for datalink="+dataLink.getUniqueString(true));
-		}
-
-
 		if (parentGroupingStr == null)
 			parentGroupingStr = dataLink.getParentGroupingStr();
 		if (parentGroupingStr == null)
@@ -275,9 +271,22 @@ public class GraphUtil {
 			logger.debug("param");
 		DataLink newDataLink =
 				isGrouping ?
-				createDataLinkGrouping(dataLink, task, groupingStr, parentGroupingStr) :
+				createDataLinkGrouping(dataLink, task, groupingStr, parentGroupingStr, dataPort) :
 				createDataLinkParam(dataLink, task, paramStr);
-					
+				
+		if (dataLink.getDataPort() == null)
+		{
+			logger.warn("data port not defined");
+		}
+		else if (dataLink.getInDataPort() == null)
+		{
+			logger.warn("in data port not defined");
+		}
+		else if (!dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
+		{
+			logger.error("invalid data formats foudn for datalink="+dataLink.getUniqueString(true));
+		}
+		
 		if (chunks != null)
 			addTraversalChunksToDataLink(newDataLink, parentGroupingStr, chunks);
 		//else if (!isGrouping)
@@ -316,7 +325,6 @@ public class GraphUtil {
 		{
 			logger.error("invalid data formats foudn for datalink="+newDataLink.getUniqueString(true));
 		}
-
 		
 		return newDataLink;
 

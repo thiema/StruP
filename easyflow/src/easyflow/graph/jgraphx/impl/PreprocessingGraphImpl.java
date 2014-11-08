@@ -8,6 +8,8 @@ package easyflow.graph.jgraphx.impl;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.common.notify.Notification;
 import java.util.Map.Entry;
 
@@ -172,8 +174,11 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 										{
 											dataLink = DataFactory.eINSTANCE.createDataLink();
 											dataLink.setInDataPort(requiredDataPort);
-											dataLink.setId(0);
+											//dataLink.setDataPort(requiredDataPort);
+											//dataLink.setInDataPort(testDataPort);
 											dataLink.setDataPort(testDataPort);
+											dataLink.setId(0);
+											
 											dataLink.getIntermediateTasks().add(prepTask);
 											Object e = getGraph().getGraph().insertEdgeEasyFlow(null, null, JGraphXUtil.getSource((mxCell) edgeIn), vertex, dataLink);
 											prepEdges.add((mxICell) e);
@@ -281,8 +286,8 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 	
 	private Task findExistingUtilityTaskFor(String utilTaskString, Object edge) throws TaskNotFoundException, DataLinkNotFoundException
 	{
-		Task utilityTask = null;
-		Object prepVertex = null;
+		Task   utilityTask = null;
+		Object prepVertex  = null;
 		Task source = JGraphXUtil.getSourceTask((mxCell) edge);
 		Task target = JGraphXUtil.getTargetTask((mxCell) edge);
 		mxICell sourceVertex = JGraphXUtil.getSource((mxCell) edge);
@@ -381,20 +386,23 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 		
 		while (it.hasNext())
 		{
-			mxICell source = first ? JGraphXUtil.getSource((mxCell) edge) : last;
-			first = false;
-			PreprocessingTask prepTask = it.next();
-			Task newPrepTask = prepTask.getTask();
+			mxICell           source      = first ? JGraphXUtil.getSource((mxCell) edge) : last;
+			                  first       = false;
+			PreprocessingTask prepTask    = it.next();
+			Task              newPrepTask = prepTask.getTask();
+			
 			logger.debug("resolvePreprocessingTask(): insertPrepTask="+newPrepTask.getUniqueString()
 					+" type="+newPrepTask.getAnalysisTypes()
 					+" for "+task.getUniqueString()+" "
 					+prepTask.getTask().getPreferredTool().getId()
-					+" output compatibility to port="+dataLink.getInDataPort().getFormat().getName()+" ("+
-					newPrepTask.isCompatibleWithInDataPortFor(dataLink.getInDataPort())+")");
-			rc = true;
+					+" output compatibility to port="+dataLink.getInDataPort().getFormat().getName()
+					+" ("+newPrepTask.isCompatibleWithInDataPortFor(dataLink.getInDataPort())+")"
+					+" prep tasks dataport="+task.getInDataPorts().get(prepTask.getDataPortIndex()).getName());
+			
+			        rc             = true;
 			boolean reusedPrepTask = false;
-			Object newVertex = null;
-			Object newSource = null;
+			Object  newVertex      = null;
+			Object  newSource      = null;
 			// check if this preprocessing task is already inserted
 			if (incompatibleParentFound)
 			{
@@ -434,7 +442,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 				incompatibleParentFound = false;
 				getGraph().getGraph().insertEdgeEasyFlow(null, null, lastCompatibleVertex, newVertex, 
 						//copyDataLink(dataLink)
-						GraphUtil.createDataLink(dataLink, JGraphXUtil.loadTask(lastCompatibleVertex), false)
+						GraphUtil.createDataLink(dataLink, JGraphXUtil.loadTask(lastCompatibleVertex), dataLink.getInDataPort())
 						);
 				logger.debug("resolvePreprocessingTask(): insert edge: "+JGraphXUtil.loadTask(lastCompatibleVertex).getUniqueString()+" => "+newPrepTask.getUniqueString());
 			}
@@ -450,12 +458,12 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 			{
 				GlobalVar.getCells().put(newPrepTask.getUniqueString(), (mxICell) newVertex);
 			
-			// link with parent
-			getGraph().getGraph().insertEdgeEasyFlow(null, null, source, newVertex, 
-					//copyDataLink(dataLink, loadTask(source))
-					GraphUtil.createDataLink(dataLink, JGraphXUtil.loadTask(source), false)
-					);
-			logger.debug("resolvePreprocessingTask(): insert edge: "+JGraphXUtil.loadTask(source).getUniqueString()+" => "+newPrepTask.getUniqueString());
+				// link with parent
+				getGraph().getGraph().insertEdgeEasyFlow(null, null, source, newVertex, 
+						//copyDataLink(dataLink, loadTask(source))
+						GraphUtil.createDataLink(dataLink, JGraphXUtil.loadTask(source), dataLink.getDataPort())
+						);
+				logger.debug("resolvePreprocessingTask(): insert edge: "+JGraphXUtil.loadTask(source).getUniqueString()+" => "+newPrepTask.getUniqueString());
 			}
 			last = (mxICell) newVertex;
 			
@@ -465,20 +473,20 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 		{		 
 			Task lastCompatibleTask = JGraphXUtil.loadTask(lastCompatibleVertex);
 			logger.debug("trying to link with last compatible task="+lastCompatibleTask.getUniqueString()+"("+lastCompatibleVertex+")");
+			DataLink newDataLink = GraphUtil.createDataLink(dataLink, lastCompatibleTask, dataLink.getInDataPort());
 			getGraph().getGraph().insertEdgeEasyFlow(null, null, lastCompatibleVertex, vertex, 
-					//copyDataLink(dataLink)
-					GraphUtil.createDataLink(dataLink, lastCompatibleTask, false)
+					newDataLink
 					);
 			logger.debug("resolvePreprocessingTask(): insert edge:"+lastCompatibleTask.getUniqueString()+"=>"+JGraphXUtil.loadTask(vertex).getUniqueString());
 		}
 		Task lastTask = JGraphXUtil.loadTask(last);
 		logger.debug("resolvePreprocessingTask(): trying to link with last task="+lastTask.getUniqueString()+"("+last+")");
-		getGraph().getGraph().insertEdgeEasyFlow(null, null, last, vertex, 
-				//copyDataLink(dataLink, loadTask(last))
-				GraphUtil.createDataLink(dataLink, lastTask, incompatibleParentFound)
+		DataLink newDataLink = GraphUtil.createDataLink(dataLink, lastTask, dataLink.getInDataPort()); 
+		Object o = getGraph().getGraph().insertEdgeEasyFlow(null, null, last, vertex, 
+				newDataLink
 				);
+		DataLink testdl = JGraphXUtil.loadDataLink(o);
 		logger.debug("resolvePreprocessingTask(): insert edge:"+lastTask.getUniqueString()+"=>"+JGraphXUtil.loadTask(vertex).getUniqueString());
-		
 		// remove obsolet parent and child edge		
 		getGraph().getGraph().removeCells(new Object[]{edge}, true);
 		
@@ -767,7 +775,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 									mergeCell, 
 									//e.getValue()
 									//copyDataLink(e.getValue())
-									GraphUtil.createDataLink(e.getValue(), task, false)
+									GraphUtil.createDataLink(e.getValue(), task, null)
 									);
 						}
 						
@@ -944,7 +952,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 						logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()
 								+"->"+newTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
 						DataLink dataLinkCopy = //copyDataLink(dataLink);
-								GraphUtil.createDataLink(dataLink, newTask, false);
+								GraphUtil.createDataLink(dataLink, newTask, null);
 						mxICell newEdge       = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
 								JGraphXUtil.getSource((mxCell) edge), newCell, dataLinkCopy);
 						cells.put(newCell, dataLinkCopy);
