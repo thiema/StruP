@@ -23,6 +23,7 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
@@ -1109,6 +1110,8 @@ public class GraphImpl extends EObjectImpl implements Graph {
 	public boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem) {
 		
 		getExecutionGraph().resolveDataPorts(root);
+		if (GlobalConfig.isPipeAllowed())
+			getExecutionGraph().resolvePipes(root);
 		getExecutionGraph().resolveToolParams(root);
 		return getExecutionGraph().generateWorkflowForExecutionSystem(root, executionSystem);
 	}

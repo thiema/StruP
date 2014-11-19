@@ -766,6 +766,9 @@
         <eOperations name="resolveToolParams" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
+        <eOperations name="resolvePipes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+          <eParameters name="root" eType="#//mxICell"/>
+        </eOperations>
         <eOperations name="resolveDataPorts" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>

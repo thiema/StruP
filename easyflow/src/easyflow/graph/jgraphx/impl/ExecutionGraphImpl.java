@@ -6,6 +6,7 @@
  */
 package easyflow.graph.jgraphx.impl;
 
+import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
@@ -25,6 +26,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 import easyflow.graph.jgraphx.ToolDependencies;
+import easyflow.tool.ToolFactory;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
@@ -106,7 +109,6 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 					Task task = JGraphXUtil.loadTask(vertex);
 					task.resolveInputs();
 					task.resolveOutputs();
-					task.resolveParams();
 				}
 				catch (TaskNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -142,7 +144,7 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean resolveToolParams(mxICell root) {
+	public boolean resolvePipes(mxICell root) {
 
 		boolean rc = true;
 		mxICellVisitor visitor=new mxICellVisitor()
@@ -154,6 +156,7 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 					Task task = JGraphXUtil.loadTask(vertex);
 
 					EList<DataLink> dataLinks = new BasicEList<DataLink>();
+					EList<Task>     parents   = new BasicEList<Task>();
 					Object edges[] = GlobalVar
 							.getGraph()
 								.getIncomingEdges(
@@ -162,15 +165,23 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 					for (Object inEdge : edges)
 					{
 						DataLink dataLink = JGraphXUtil.loadDataLink(inEdge);
+						Task     parent   = JGraphXUtil.getSourceTask((mxCell) inEdge);
 						if (dataLink.getPipe() != null && dataLink.getPipe())
 						{
 							dataLinks.add(dataLink);
+							parents.add(parent);
 						}
 					}
 					if (dataLinks.size() > 1)
 						for (DataLink dataLink : dataLinks)
 							dataLink.setPipe(false);
-
+					else if (dataLinks.size() == 1)
+					{
+						if (parents.get(0).getRule() == null)
+							parents.get(0).setRule(ToolFactory.eINSTANCE.createRule());
+						task.setRule(parents.get(0).getRule());
+					}
+					
 					dataLinks.clear();
 					edges = GlobalVar
 							.getGraph()
@@ -188,11 +199,47 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 					if (dataLinks.size() > 1)
 						for (DataLink dataLink : dataLinks)
 							dataLink.setPipe(false);
-					
+										
+				} catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return true;
+			}
+		};
+		
+		getGraph().getGraph().getModel().beginUpdate();		try		{
+			getGraph().getGraph().traverseTopologicalOrder(root, visitor);
+			JGraphXUtil.layoutGraph();
+			
+		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
+	
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveToolParams(mxICell root) {
+
+		boolean rc = true;
+		mxICellVisitor visitor=new mxICellVisitor()
+		{
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				
+				try {
+					Task task = JGraphXUtil.loadTask(vertex);
 					task.resolveDataPorts(task.getOutputs(), task.getPreferredTool(), true);
 					task.resolveDataPorts(task.getInputs(),  task.getPreferredTool(), false);
-				}
-				catch (TaskNotFoundException e1) {
+					task.resolveParams();
+
+				} catch (TaskNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (ParameterNotFoundException e) {
@@ -217,10 +264,10 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 			JGraphXUtil.layoutGraph();
 			
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
-	
+		
 		return rc;
 	}
-
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
