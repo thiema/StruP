@@ -22,6 +22,7 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterCriterionInstanceNotFoundException;
 import easyflow.custom.exception.ParameterCriterionNotFoundException;
 import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.custom.exception.ResolvingParameterFailedException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
@@ -169,6 +170,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createNoValidInOutDataExceptionFromString(eDataType, initialValue);
 			case EasyflowPackage.TUPLE:
 				return createTupleFromString(eDataType, initialValue);
+			case EasyflowPackage.RESOLVING_PARAMETER_FAILED_EXCEPTION:
+				return createResolvingParameterFailedExceptionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -244,6 +247,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertNoValidInOutDataExceptionToString(eDataType, instanceValue);
 			case EasyflowPackage.TUPLE:
 				return convertTupleToString(eDataType, instanceValue);
+			case EasyflowPackage.RESOLVING_PARAMETER_FAILED_EXCEPTION:
+				return convertResolvingParameterFailedExceptionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -786,6 +791,24 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertTupleToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ResolvingParameterFailedException createResolvingParameterFailedExceptionFromString(EDataType eDataType, String initialValue) {
+		return (ResolvingParameterFailedException)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertResolvingParameterFailedExceptionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

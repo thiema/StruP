@@ -664,7 +664,6 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 		
 		EList<Data> data = new BasicEList<Data>();
 		
-		String s;
 		if (dataMap.isEmpty() && dataLink.getData() != null)
 			data.add(dataLink.getData());
 		else if (dataMap.isEmpty())
@@ -746,7 +745,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 				if (!child.isOutput())				
 					for (Data parent : parentData)
 					{
-						if (parent.isOutput() && child.match(parent, false))
+						if (parent.isOutput() && child.match(parent))
 							return new Tuple<Data, Data>(parent, child);
 					}
 			}

@@ -1286,13 +1286,22 @@ public interface ToolPackage extends EPackage {
 	int RESOLVED_PARAM__CONDITIONS = ITOOL_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Pipe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__PIPE = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
 	 * The number of structural features of the '<em>Resolved Param</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESOLVED_PARAM_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+	int RESOLVED_PARAM_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1774,13 +1783,22 @@ public interface ToolPackage extends EPackage {
 	int RULE__CMD_LINE = IRULE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__TASK = IRULE_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Dependencies</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__DEPENDENCIES = IRULE_FEATURE_COUNT + 1;
+	int RULE__DEPENDENCIES = IRULE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Targets</b></em>' attribute list.
@@ -1789,7 +1807,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__TARGETS = IRULE_FEATURE_COUNT + 2;
+	int RULE__TARGETS = IRULE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Read From Pipe</b></em>' attribute.
@@ -1798,7 +1816,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__READ_FROM_PIPE = IRULE_FEATURE_COUNT + 3;
+	int RULE__READ_FROM_PIPE = IRULE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Write To Pipe</b></em>' attribute.
@@ -1807,7 +1825,79 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__WRITE_TO_PIPE = IRULE_FEATURE_COUNT + 4;
+	int RULE__WRITE_TO_PIPE = IRULE_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Input Params</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__INPUT_PARAMS = IRULE_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Output Params</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__OUTPUT_PARAMS = IRULE_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Opt Params</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__OPT_PARAMS = IRULE_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Pos Params</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__POS_PARAMS = IRULE_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Exe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__EXE = IRULE_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Exe Params</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__EXE_PARAMS = IRULE_FEATURE_COUNT + 11;
+
+	/**
+	 * The feature id for the '<em><b>Interpreter</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__INTERPRETER = IRULE_FEATURE_COUNT + 12;
+
+	/**
+	 * The feature id for the '<em><b>Interpreter Params</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE__INTERPRETER_PARAMS = IRULE_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of structural features of the '<em>Rule</em>' class.
@@ -1816,7 +1906,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_FEATURE_COUNT = IRULE_FEATURE_COUNT + 5;
+	int RULE_FEATURE_COUNT = IRULE_FEATURE_COUNT + 14;
 
 
 	/**
@@ -2268,6 +2358,105 @@ public interface ToolPackage extends EPackage {
 	EAttribute getRule_WriteToPipe();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Rule#getInputParams <em>Input Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Input Params</em>'.
+	 * @see easyflow.tool.Rule#getInputParams()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_InputParams();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Rule#getOutputParams <em>Output Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Output Params</em>'.
+	 * @see easyflow.tool.Rule#getOutputParams()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_OutputParams();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Rule#getOptParams <em>Opt Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Opt Params</em>'.
+	 * @see easyflow.tool.Rule#getOptParams()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_OptParams();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Rule#getPosParams <em>Pos Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Pos Params</em>'.
+	 * @see easyflow.tool.Rule#getPosParams()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_PosParams();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Rule#getExe <em>Exe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Exe</em>'.
+	 * @see easyflow.tool.Rule#getExe()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_Exe();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Rule#getExeParams <em>Exe Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Exe Params</em>'.
+	 * @see easyflow.tool.Rule#getExeParams()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_ExeParams();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Rule#getInterpreter <em>Interpreter</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Interpreter</em>'.
+	 * @see easyflow.tool.Rule#getInterpreter()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_Interpreter();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Rule#getInterpreterParams <em>Interpreter Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Interpreter Params</em>'.
+	 * @see easyflow.tool.Rule#getInterpreterParams()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EAttribute getRule_InterpreterParams();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.tool.Rule#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Task</em>'.
+	 * @see easyflow.tool.Rule#getTask()
+	 * @see #getRule()
+	 * @generated
+	 */
+	EReference getRule_Task();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2385,6 +2574,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getResolvedParam_Conditions();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.ResolvedParam#isPipe <em>Pipe</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Pipe</em>'.
+	 * @see easyflow.tool.ResolvedParam#isPipe()
+	 * @see #getResolvedParam()
+	 * @generated
+	 */
+	EAttribute getResolvedParam_Pipe();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Parameter <em>Parameter</em>}'.
@@ -3469,6 +3669,78 @@ public interface ToolPackage extends EPackage {
 		EAttribute RULE__WRITE_TO_PIPE = eINSTANCE.getRule_WriteToPipe();
 
 		/**
+		 * The meta object literal for the '<em><b>Input Params</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__INPUT_PARAMS = eINSTANCE.getRule_InputParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Output Params</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__OUTPUT_PARAMS = eINSTANCE.getRule_OutputParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Opt Params</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__OPT_PARAMS = eINSTANCE.getRule_OptParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Pos Params</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__POS_PARAMS = eINSTANCE.getRule_PosParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Exe</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__EXE = eINSTANCE.getRule_Exe();
+
+		/**
+		 * The meta object literal for the '<em><b>Exe Params</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__EXE_PARAMS = eINSTANCE.getRule_ExeParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Interpreter</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__INTERPRETER = eINSTANCE.getRule_Interpreter();
+
+		/**
+		 * The meta object literal for the '<em><b>Interpreter Params</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RULE__INTERPRETER_PARAMS = eINSTANCE.getRule_InterpreterParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RULE__TASK = eINSTANCE.getRule_Task();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ConditionImpl <em>Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3559,6 +3831,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RESOLVED_PARAM__CONDITIONS = eINSTANCE.getResolvedParam_Conditions();
+
+		/**
+		 * The meta object literal for the '<em><b>Pipe</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESOLVED_PARAM__PIPE = eINSTANCE.getResolvedParam_Pipe();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ParameterImpl <em>Parameter</em>}' class.

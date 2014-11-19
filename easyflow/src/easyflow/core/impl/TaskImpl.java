@@ -7,11 +7,8 @@
 package easyflow.core.impl;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -29,7 +26,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -40,14 +36,13 @@ import easyflow.core.CorePackage;
 import easyflow.core.PreprocessingTask;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
-import easyflow.core.Workflow;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.custom.exception.ResolvingParameterFailedException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
-import easyflow.custom.ui.Easyflow;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
@@ -83,7 +78,6 @@ import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -121,6 +115,7 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link easyflow.core.impl.TaskImpl#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getParams <em>Params</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getStaticParams <em>Static Params</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getRule <em>Rule</em>}</li>
  * </ul>
  * </p>
  *
@@ -482,6 +477,16 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @ordered
 	 */
 	protected EMap<String, String> staticParams;
+
+	/**
+	 * The cached value of the '{@link #getRule() <em>Rule</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRule()
+	 * @generated
+	 * @ordered
+	 */
+	protected Rule rule;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -919,6 +924,44 @@ public class TaskImpl extends EObjectImpl implements Task {
 			staticParams = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, CorePackage.TASK__STATIC_PARAMS);
 		}
 		return staticParams;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rule getRule() {
+		if (rule != null && rule.eIsProxy()) {
+			InternalEObject oldRule = (InternalEObject)rule;
+			rule = (Rule)eResolveProxy(oldRule);
+			if (rule != oldRule) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.TASK__RULE, oldRule, rule));
+			}
+		}
+		return rule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Rule basicGetRule() {
+		return rule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRule(Rule newRule) {
+		Rule oldRule = rule;
+		rule = newRule;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__RULE, oldRule, rule));
 	}
 
 	/*
@@ -1630,429 +1673,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 	}
 	
 	/**
-	 * <!-- begin-user-doc -->
-	 * produce the command line by evaluating the command pattern
-	 * 
-	 * the following patterns are understood:
-	 *  1.) in out opt pos (and any permuation) //meaning: makes sure that in/out/opt/pos params come at it proposed position
-	 *                                          //         input parameter come at it proposed position, even if they are optional/positional 
-	 *  2.) opt pos                             //meaning: optional params first, positional params afterwards
-	 *                                          //         inputs and outputs are mapped to opt and pos, depending on
-	 *                                          //         whether they are optional ore positional
-	 *  3.) pos in out                          //meaning: no optional parameters are produced
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public String createCommandLine() {
-
-		Tool                 tool             = getPreferredTool();
-		EList<String>        commandLineParts = new BasicEList<String>();
-		EMap<String, Object> constraints      = new BasicEMap<String, Object>();
-		constraints.put(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY, tool.omitPrefixIfNoArgKey());
-		String               commandPattern   = getCommandLinePattern();
-		String[]             commandPatterns  = commandPattern.split(" ");
-		
-		logger.debug("createCommandLine(): create command line for tool="+tool.getId()+" and pattern="+commandPattern);
-		
-		commandLineParts.add(createCommandLinePart1(tool, constraints));
-		// check if commandpatterns contains input and or output 
-		boolean isInputDefined  = false;
-		boolean isOutputDefined = false;
-		for (String part : commandPatterns)
-		{
-			if (part.equalsIgnoreCase(GlobalConstants.PARAM_INPUT))
-				isInputDefined = true;
-			else if (part.equalsIgnoreCase(GlobalConstants.PARAM_OUTPUT))
-				isOutputDefined = true;
-		}
-		
-		String debugTool = "rmdup";
-		//String debugTool = "view"; 
-		if (debugTool.equals(getPreferredTool().getName()))
-		{
-			
-			Command cmd = getResolvedCommand();
-			logger.debug("debug tool="+debugTool);
-		}
-		
-		resolveStaticParams(getResolvedCommand().getResolvedParams());
-		
-		for (String commandLinePart : commandPatterns)
-		{
-			//logger.trace("createCommandLine(): "+commandLinePart);
-			if (GlobalConfig.getValidCommandPatternParts().contains(commandLinePart))
-			{
-				String cmdPart = createCommandLinePart2(constraints, tool, isInputDefined, isOutputDefined, commandLinePart, tool.getTemplateParameter());
-				if (cmdPart != null && !cmdPart.equals(""))
-					commandLineParts.add(cmdPart);
-				// add static parts
-				if (getStaticParams().containsKey(commandLinePart))
-				{
-					String staticCmdPart = getStaticParams().get(commandLinePart);
-					if (staticCmdPart != null && !staticCmdPart.equals(""))
-						commandLineParts.add(staticCmdPart);
-				}
-			}
-			else
-			{
-				logger.error("createCommandLine(): invalid command part "+commandLinePart+" found for tool="+tool.getId());
-			}
-			/*
-			if (commandLineParts.containsKey(commandLinePart))
-			{
-				EList<String> keys = commandLineParts.get(commandLinePart);
-				
-					for (String key : keys)
-					{
-					
-							String tmp = getCommand().getResolvedParams().
-							get(key).generateCommandString(null);
-							logger.debug("process cmd part="+commandLinePart+" "+key+"="+tmp);
-							commandLine += " "+tmp;
-
-					}
-			}
-			*/
-		}
-		logger.debug(commandLineParts);
-		return StringUtils.join(commandLineParts, tool.getCmdPartDelimiter());
-	}
-
-	private String createCommandLinePart1(Tool tool, EMap<String, Object> constraints)
-	{
-		EList<String>  cmdParts         = new BasicEList<String>();
-		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
-		ResolvedParam  interpreter      = tool.getInterpreter();
-		EList<String>  cmd;
-		Tool           interpreterTool  = null;
-		
-		String         defaultDelimiter = GlobalConfig.getArgDelimiter();
-		String         interpreterDelim = defaultDelimiter;
-
-		EMap<String, URI>  pkgResolvingMap = tool.getPackage() != null ? 
-				tool.getPackage().getResolveUriMap() : null;
-
-		if (interpreter != null)
-		{
-			String interpreterName = interpreter.getParameter().getName();
-			logger.debug("createCommandLinePart(): create cmd for interpreter="+interpreterName);
-			
-			EMap<String, URI>  resolvingMap = null;
-			if (GlobalConfig.getTools().containsKey(interpreterName))
-			{
-				interpreterTool  = GlobalConfig.getTools().get(interpreterName);
-				resolvingMap     = interpreterTool.getResolveUriMap();
-				interpreterDelim = interpreterTool.getCmdPartDelimiter();
-			}
-			
-			
-			if (resolvingMap != null && resolvingMap.containsKey(GlobalConstants.COMMAND_PART_VALUE_EXE))
-				constraints.put("path", resolvingMap.get(GlobalConstants.COMMAND_PART_VALUE_EXE));
-			else
-				constraints.removeKey("path");
-
-			cmd = interpreter.generateCommandString(constraints, defaultParameter);
-			
-			if (!cmd.isEmpty())
-				cmdParts.add(StringUtils.join(cmd, interpreterDelim));
-			
-			for (ResolvedParam param : tool.getInterpreterParams())
-			{
-				if (!cmd.isEmpty())
-				{
-					//Parameter curDefaultParam = tool.getTemplateParameter(param.getParameter()) 
-					Parameter curDefaultParam = interpreterTool.getTemplateParameter(param.getParameter());
-					
-					logger.debug("#######param name="+param.resolveName()+" keys="+(pkgResolvingMap != null ? pkgResolvingMap.keySet() : null));
-					constraints.removeKey("path");
-					if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
-					{
-						if (param.getValue().isEmpty())
-							param.getValue().add(pkgResolvingMap.get(param.resolveName()));
-						else if (!param.getValue().contains(pkgResolvingMap.get(param.resolveName())))
-							constraints.put("path", pkgResolvingMap.get(param.resolveName()));
-					}
-					else if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
-					{
-						if (param.getValue().isEmpty())
-							param.getValue().add(resolvingMap.get(param.resolveName()));
-						else if (!param.getValue().contains(resolvingMap.get(param.resolveName())))
-							constraints.put("path", resolvingMap.get(param.resolveName()));
-					}
-					else
-						constraints.removeKey("path");
-
-					cmd = param.generateCommandString(constraints, curDefaultParam != null ? curDefaultParam : defaultParameter);
-					cmdParts.add(StringUtils.join(cmd, interpreterDelim));
-					
-				}
-				else
-					logger.debug("createCommandLinePart(): found interpreter param: "+param.resolveName()+" "
-							+param.getParameter().getName()+" (skip, because no interpreter found.)");
-			}
-		}
-		else
-		{
-			logger.debug("createCommandLinePart(): no interpreter defined.");
-		}
-		
-		ResolvedParam exe = tool.getExe();
-		if (exe != null)
-		{
-			logger.debug("createCommandLinePart(): "+exe.resolveName());
-			
-			EMap<String, URI>  resolvingMap = tool.getPackage() != null ? 
-				tool.getPackage().getResolveUriMap() : null;
-			if (resolvingMap != null && resolvingMap.containsKey(exe.resolveName()))
-				constraints.put("path", resolvingMap.get(exe.resolveName()));
-			else
-				constraints.removeKey("path");
-			
-			cmd = exe.generateCommandString(constraints, defaultParameter);
-			if (!cmd.isEmpty())
-				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
-
-		}
-		else if (interpreter == null)
-			logger.error("createCommandLinePart(): neither interpreter nor exe defined. Cannot generate meaningful command line.");
-			
-		
-		for (ResolvedParam param : tool.getModuleParams())
-		{
-			logger.debug(param.getName()+" "+param.resolveName());
-			cmd = param.generateCommandString(constraints, defaultParameter);
-			if (!cmd.isEmpty())
-				cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
-		}
-		
-		// check submodule
-		
-		logger.debug("createCommandLinePart(): get analysis type with records="+Util.list2String(getRecords(), null));
-		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
-		
-		if (anaType != null)
-		{
-			Parameter   param = anaType.parent;
-			OptionValue value = anaType.child;
-			
-			EMap<String, URI>  resolvingMap = tool.getResolveUriMap();
-			
-			if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
-				constraints.put("path", resolvingMap.get(param.resolveName()));
-			else if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
-				constraints.put("path", pkgResolvingMap.get(param.resolveName()));
-			else
-				constraints.removeKey("path");
-
-			logger.debug("add module="+param.resolveName()+" for tool="+tool.getName()
-					+" ("+tool.getId()+") cmdline="+param.generateCommandString(constraints, value, defaultParameter));
-
-			cmdParts.add(StringUtils.join(
-					param.generateCommandString(constraints, value, defaultParameter),
-					tool.getCmdPartDelimiter())
-				);
-			constraints.removeKey("path");
-		}
-		
-		return StringUtils.join(cmdParts, " ");
-	}
-	
-	/**
-	 * creates commandline or parts of it with respect to the requested part (type). 
-	 * 
-	 *  
-	 * Example usage: 
-	 * 
-	 *  -get input part of command line, the omit-params dont care: 
-	 *     createCommandLinePart2(tool, constraints, xxx, xxx, "in")
-	 * 
-	 *  -get output part of command line, the omit-params dont care:
-	 *     createCommandLinePart2(tool, constraints, xxx, xxx, "out")
-	 *     
-	 *  -get optional params of command line:
-	 *     createCommandLinePart2(tool, constraints, true, true, "opt")   - omit any inputs/output parameter
-	 *     createCommandLinePart2(tool, constraints, false, false, "opt") - include in/out
-	 *     
-	 *  -get positional part of command line:
-	 *     createCommandLinePart2(tool, constraints, true, false, "pos")  - include input, exclude output
-	 *     createCommandLinePart2(tool, constraints, false, true, "pos")  - ...
-	 * 
-	 * @param tool
-	 * @param constaints
-	 * @param omitInput
-	 * @param omitOutput
-	 * @param type
-	 * @return
-	 */
-	private String createCommandLinePart2(
-			EMap<String, Object> constraints,
-			Tool tool,
-			boolean omitInput,
-			boolean omitOutput,
-			String type,
-			Parameter templateParam)
-	{
-		EList<String> commandLineList = new BasicEList<String>();
-		Parameter     effectiveTemplateParam;
-		if (tool == null)
-			tool = getPreferredTool();
-		//Command c = getCommand();
-		if (tool.getName().equals("view"))
-		{
-			tool.getCommand();
-		}
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedCommand().getResolvedParams().iterator();
-		
-		while (it.hasNext())
-		{
-			Entry<String, ResolvedParam> e      = it.next();
-			ResolvedParam    resolvedParam      = e.getValue();
-			boolean          isConditional      = resolvedParam.getConditionalParam() != null && 
-					resolvedParam.getChildParams().containsKey(resolvedParam.getConditionalParam());
-			//Parameter        parameter          = resolvedParam.getParameter();
-			//Parameter        effectiveParameter = null;
-			EList<ResolvedParam> effectiveResolvedParams    = resolvedParam.getEffectiveParameters(null, null);
-			effectiveTemplateParam = null;
-			//if (!effectiveParams.isEmpty())
-				//effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
-			String s = null;
-			Iterator<ResolvedParam> itEffParam = effectiveResolvedParams.iterator();
-			while (itEffParam.hasNext())
-			{
-				ResolvedParam effectiveResolvedParam = itEffParam.next();
-				if (effectiveResolvedParam.getValue() == null || effectiveResolvedParam.getValue().isEmpty())
-					effectiveResolvedParam.getValue().addAll(resolvedParam.getValue());
-			//overwrite current resolved param if conditional param occurred
-				Parameter parameter = effectiveResolvedParam.getParameter().getMergedParameter(null, false);
-			
-			InOutParameter   inOutParameter = null;
-			boolean          isInOutParam   = false;
-			boolean          shallGenerate  = false;
-			
-			if (parameter instanceof InOutParameter)
-			{
-				inOutParameter = (InOutParameter) parameter;
-				isInOutParam   = true;
-			}
-			/*else if (effectiveParameter.isDataParam())
-			{
-				inOutParameter = (InOutParameter) effectiveParameter;
-				isInOutParam   = true;
-			}*/
-			
-			effectiveTemplateParam = tool.getTemplateParameter(parameter);
-			if (effectiveTemplateParam == null)
-				effectiveTemplateParam = templateParam;
-			boolean  isOptional = parameter.isOptional(effectiveTemplateParam == null ? null : effectiveTemplateParam.isOptional(null));
-			
-			if (type == null)
-			{
-				shallGenerate = true;
-			}
-			else if (isInOutParam && !inOutParameter.isOutput())
-			{
-				if (GlobalConstants.PARAM_INPUT.equals(type)) 
-					shallGenerate = true;
-				else if (!omitInput && ((GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional) 
-						|| (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)))
-					shallGenerate = true;
-			}
-			else if (isInOutParam && inOutParameter.isOutput())
-			{
-				if (GlobalConstants.PARAM_OUTPUT.equals(type)) 
-					shallGenerate = true;
-				else if (!omitOutput && ((GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional) 
-						|| (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)))
-					shallGenerate = true;
-			}
-			else if (GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional)
-			{
-				shallGenerate = true;
-			}
-			else if (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)
-			{
-				shallGenerate = true;
-			}
-			
-			logger.debug("createCommandLinePart(): generate cmd for param="+effectiveResolvedParam.resolveName()+": " +shallGenerate+" omitIn="+omitInput+" omitOut="+omitOutput
-					+" param type="+type+" of param="+effectiveResolvedParam.getParameter().resolveName()
-					+" type="+effectiveResolvedParam.getParameter().getType()
-					//+" output="+parameter.isOutput()
-					//+" templatePrefix="+effectiveTemplateParam.getPrefix()
-					);
-			if (shallGenerate)
-			{
-				// check if parameters value is set, if not, check default value
-				if (effectiveResolvedParam.getValue() == null || effectiveResolvedParam.getValue().isEmpty())
-				{
-					/*if (effectiveParameter.getDefaultValue() == null || effectiveParameter.getDefaultValue().equals(""))
-					{
-						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.resolveName()+" (unset default value)");
-						continue;
-					}
-					// skip if default is not required
-					//else 
-						if (!GlobalConfig.useDefaultValue())
-					{
-						logger.trace("createCommandLinePart(): skip generation of parameter="+effectiveParameter.resolveName()+" (omit default value)");
-						continue;
-					}
-					*/
-					if (isConditional && parameter.isBoolean())
-						effectiveResolvedParam.getValue().add("true");
-				}
-
-				//logger.trace("add param="+resolvedParam.getParameter().getName()+" "+parameter.getName()
-						//		+" cmd="+getCommand().hashCode()+" map="+getCommand().getResolvedParams().hashCode()+" "
-						//		+" resolvedparam="+resolvedParam.hashCode()+" param="+resolvedParam.getParameter().hashCode()
-					//			);
-				logger.debug("createCommandLinePart(): generate command line for parameter="+effectiveResolvedParam.resolveName()
-						+" conditional="+isConditional
-						+" (using template: "+(effectiveTemplateParam != null ? 
-								(" name="+effectiveTemplateParam.resolveName()
-										+" named="+effectiveTemplateParam.isNamed(null)
-										+" prefix="+effectiveTemplateParam.getPrefix()
-										+" delimiter="+effectiveTemplateParam.getDelimiter()
-										+" first key:"+(effectiveTemplateParam.getKeys().isEmpty() ? null : 
-											("name="+effectiveTemplateParam.getKeys().get(0).getName())
-											+" value="+effectiveTemplateParam.getKeys().get(0).getValue()))
-								: null)+")");
-				
-				String res = StringUtils.join(
-						effectiveResolvedParam.generateCommandString(constraints, effectiveTemplateParam),
-						tool.getCmdPartDelimiter());
-
-				if (res != null && !res.equals(""))
-				{
-					logger.debug("createCommandLinePart(): cmd="+res);
-					commandLineList.add(res);
-				}
-				else
-				{
-					logger.warn("createCommandLinePart(): empty command line result");
-				}
-			}
-			}
-		}
-		return StringUtils.join(commandLineList, tool.getCmdPartDelimiter());
-	}
-	
-	/*
-	private Parameter retrieveEffectiveParam(EList<Parameter> effectiveParams, EMap<String, Object> constraints) {
-		for (Parameter param:effectiveParams)
-		{
-			if (constraints != null && 
-				constraints.containsKey("handle") && 
-				param.getSupportedHandles(true).contains(constraints.get("handle")))
-				return param;
-			else
-				return param;
-		}
-		return null;
-	}
-*/
-	
-	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated not
@@ -2092,9 +1712,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * @throws DataLinkNotFoundException
 	 * @throws NoValidInOutDataException 
 	 * @throws ParameterNotFoundException 
+	 * @throws ResolvingParameterFailedException 
 	 * @generated not
 	 */
-	public void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
+	public void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException {
 		
 
 		if (GlobalVar.getCells().get(getUniqueString()) == null)
@@ -2117,23 +1738,22 @@ public class TaskImpl extends EObjectImpl implements Task {
 				dataLink.getDataPort().isCompatible(pipeDataPort) && 
 				dataLink.isPipeable()
 				)
+			{
 				dataLink.setPipe(true);
-			// getInputs().put(dataLink.getUniqueString(null, null, null),
-			// dataLink);
+			}
 			getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 		}
-		resolveDataPorts(getInputs(), getPreferredTool(), false);
-
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @throws NoValidInOutDataException 
 	 * @throws ParameterNotFoundException 
+	 * @throws ResolvingParameterFailedException 
 	 * 
 	 * @generated not
 	 */
-	public void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException {
+	public void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException {
 		
 		if (GlobalVar.getCells().get(getUniqueString()) == null)
 			logger.error("resolveOutputs(): no cell found for "+getUniqueString());
@@ -2155,7 +1775,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		{
 			DataLink dataLink = JGraphXUtil.loadDataLink(edge);
 			DataPort dataPort = dataLink.isTerminal() ? dataLink.getInDataPort() : dataLink.getDataPort(); 
-			logger.debug("check output for dataport="+dataPort.getName());
+			//logger.debug("check output for dataport="+dataPort.getName());
 			if (dataPort.getName() == null)
 				logger.error("undefined dataport name");
 			if (!unique.contains(dataPort.getName()))
@@ -2165,13 +1785,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 					dataLink.getDataPort().isCompatible(pipeDataPort) && 
 					dataLink.isPipeable()
 					)
+				{
 					dataLink.setPipe(true);
-
+				}
 				getOutputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 				unique.add(dataPort.getName());
 			}
 		}
-		resolveDataPorts(getOutputs(), getPreferredTool(), true);
 	}
 
 	public void resolveParams() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException
@@ -2287,12 +1907,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			)
 		{
 			logger.debug(resolvedParam.getConditions().keySet()+" "+getChunks().keySet());
-		for (String key : resolvedParam.getConditions().keySet())
-		{
-			Condition c = resolvedParam.getConditions().get(key); 
-			boolean conditionHeld = false;
-			if (resolvedParam.getParameter().getGrouping() != null && !resolvedParam.getParameter().getGrouping().isEmpty())
+			for (String key : resolvedParam.getConditions().keySet())
 			{
+				Condition c = resolvedParam.getConditions().get(key); 
+				boolean conditionHeld = false;
+				if (resolvedParam.getParameter().getGrouping() != null && !resolvedParam.getParameter().getGrouping().isEmpty())
+				{
 				//for (String group : resolvedParam.getParameter().getGrouping())
 				//{
 					
@@ -2322,8 +1942,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 						break;
 					}
 				//}
+				}
 			}
-		}
 		}
 	}
 	
@@ -2393,6 +2013,369 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return null;
 	}	
 
+	
+	static EMap<String, Object> constraints = new BasicEMap<String, Object>();
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> resolveCommandLinePartExe() {
+		
+		//EMap<String, Object> constraints = new BasicEMap<String, Object>();
+		Tool           tool = getPreferredTool();
+		ResolvedParam  exe              = tool.getExe();
+		EList<String>  cmdParts         = new BasicEList<String>();
+		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
+		EList<String>  cmd;
+		
+				
+		if (exe != null)
+		{
+			logger.debug("createCommandLinePart(): "+exe.resolveName());
+			
+			EMap<String, URI>  resolvingMap = tool.getPackage() != null ? 
+				tool.getPackage().getResolveUriMap() : null;
+			if (resolvingMap != null && resolvingMap.containsKey(exe.resolveName()))
+				constraints.put("path", resolvingMap.get(exe.resolveName()));
+			else
+				constraints.removeKey("path");
+			
+			cmd = exe.generateCommandString(constraints, defaultParameter);
+			if (!cmd.isEmpty())
+				//cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+				cmdParts.addAll(cmd);
+
+			for (ResolvedParam param : tool.getModuleParams())
+			{
+				logger.debug(param.getName()+" "+param.resolveName());
+				cmd = param.generateCommandString(constraints, defaultParameter);
+				if (!cmd.isEmpty())
+					cmdParts.add(StringUtils.join(cmd, tool.getCmdPartDelimiter()));
+					//cmdParts.addAll(cmd);
+			}
+			
+			// check submodule
+		}
+		else
+		{
+			logger.debug("resolveCommandLinePartExe(): no exe part defined.");
+		}
+		
+		if (!cmdParts.isEmpty())
+		{
+		} 
+		else if (exe != null)
+		{
+			logger.warn("resolveCommandLinePartExe(): could not resolve exe part.");
+		}
+		
+		return cmdParts;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String resolveCommandLinePartAnalysisType() throws ParameterNotFoundException, NoValidInOutDataException {
+		
+		//EList<String>  cmdParts         = new BasicEList<String>();
+		EList<String>  cmd;
+		Tool tool = getPreferredTool();
+		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
+		EMap<String, URI>  pkgResolvingMap = tool.getPackage() != null ? 
+				tool.getPackage().getResolveUriMap() : null;
+		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
+		//logger.debug("createCommandLinePart(): get analysis type with records="+Util.list2String(getRecords(), null));
+		
+		
+		if (anaType != null)
+		{
+			Parameter   param = anaType.parent;
+			OptionValue value = anaType.child;
+			
+			EMap<String, URI>  resolvingMap = tool.getResolveUriMap();
+			
+			if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
+				constraints.put("path", resolvingMap.get(param.resolveName()));
+			else if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
+				constraints.put("path", pkgResolvingMap.get(param.resolveName()));
+			else
+				constraints.removeKey("path");
+
+			logger.debug("add module="+param.resolveName()+" for tool="+tool.getName()
+					+" ("+tool.getId()+") cmdline="+param.generateCommandString(constraints, value, defaultParameter));
+
+			cmd = param.generateCommandString(constraints, value, defaultParameter);
+			if (!cmd.isEmpty())
+				return StringUtils.join(cmd, tool.getCmdPartDelimiter());
+
+		}
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> resolveCommandLinePartInterpreter() {
+
+		//EMap<String, Object> constraints = new BasicEMap<String, Object>();
+		Tool           tool = getPreferredTool();
+		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
+		EList<String>  cmdParts         = new BasicEList<String>();
+		ResolvedParam  interpreter      = tool.getInterpreter();
+		
+		EList<String>  cmd;
+		Tool           interpreterTool  = null;
+		
+		String         defaultDelimiter = GlobalConfig.getArgDelimiter();
+		String         interpreterDelim = defaultDelimiter;
+
+		EMap<String, URI>  pkgResolvingMap = tool.getPackage() != null ? 
+				tool.getPackage().getResolveUriMap() : null;
+
+		if (interpreter != null)
+		{
+			String interpreterName = interpreter.getParameter().getName();
+			logger.debug("createCommandLinePart(): create cmd for interpreter="+interpreterName);
+			
+			EMap<String, URI>  resolvingMap = null;
+			if (GlobalConfig.getTools().containsKey(interpreterName))
+			{
+				interpreterTool  = GlobalConfig.getTools().get(interpreterName);
+				resolvingMap     = interpreterTool.getResolveUriMap();
+				interpreterDelim = interpreterTool.getCmdPartDelimiter();
+			}
+			
+			
+			if (resolvingMap != null && resolvingMap.containsKey(GlobalConstants.COMMAND_PART_VALUE_EXE))
+				constraints.put("path", resolvingMap.get(GlobalConstants.COMMAND_PART_VALUE_EXE));
+			else
+				constraints.removeKey("path");
+
+			cmd = interpreter.generateCommandString(constraints, defaultParameter);
+			
+			if (!cmd.isEmpty())
+			{
+				cmdParts.addAll(cmd);
+				for (ResolvedParam param : tool.getInterpreterParams())
+				{
+					if (!cmd.isEmpty())
+					{
+						//Parameter curDefaultParam = tool.getTemplateParameter(param.getParameter()) 
+						Parameter curDefaultParam = interpreterTool.getTemplateParameter(param.getParameter());
+						
+						logger.debug("#######param name="+param.resolveName()+" keys="+(pkgResolvingMap != null ? pkgResolvingMap.keySet() : null));
+						constraints.removeKey("path");
+						if (pkgResolvingMap != null && pkgResolvingMap.containsKey(param.resolveName()))
+						{
+							if (param.getValue().isEmpty())
+								param.getValue().add(pkgResolvingMap.get(param.resolveName()));
+							else if (!param.getValue().contains(pkgResolvingMap.get(param.resolveName())))
+								constraints.put("path", pkgResolvingMap.get(param.resolveName()));
+						}
+						else if (resolvingMap != null && resolvingMap.containsKey(param.resolveName()))
+						{
+							if (param.getValue().isEmpty())
+								param.getValue().add(resolvingMap.get(param.resolveName()));
+							else if (!param.getValue().contains(resolvingMap.get(param.resolveName())))
+								constraints.put("path", resolvingMap.get(param.resolveName()));
+						}
+						else
+							constraints.removeKey("path");
+	
+						cmd = param.generateCommandString(constraints, curDefaultParam != null ? curDefaultParam : defaultParameter);
+						if (cmd != null && !cmd.isEmpty())
+							cmdParts.add(StringUtils.join(cmd, interpreterDelim));						
+							//cmdParts.addAll(cmd);
+						
+					}
+					else
+						logger.debug("createCommandLinePart(): found interpreter param: "+param.resolveName()+" "
+								+param.getParameter().getName()+" (skip, because no interpreter found.)");
+				}					
+			}
+			else
+			{
+				logger.debug("createCommandLinePart(): could not resolve interpreter part.");
+			}
+		}
+		else
+		{
+			logger.debug("createCommandLinePart(): no interpreter defined.");
+		}
+		
+		return cmdParts;
+	}
+
+	/**
+	 * creates commandline or parts of it with respect to the requested part (type). 
+	 * 
+	 *  
+	 * Example usage: 
+	 * 
+	 *  -get input part of command line, the omit-params dont care: 
+	 *     createCommandLinePart2("in", xxx, xxx)
+	 * 
+	 *  -get output part of command line, the omit-params dont care:
+	 *     createCommandLinePart2("out", xxx, xxx)
+	 *     
+	 *  -get optional params of command line:
+	 *     createCommandLinePart2("opt", true, true)   - omit any inputs/output parameter
+	 *     createCommandLinePart2("opt", false, false) - include in/out
+	 *     
+	 *  -get positional part of command line:
+	 *     createCommandLinePart2("pos", true, false)  - include input, exclude output
+	 *     createCommandLinePart2("pos", false, true)  - ...
+	 * 
+	 * @param tool
+	 * @param constaints
+	 * @param omitInput
+	 * @param omitOutput
+	 * @param type
+
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> resolveCommandLinePart(String cmdLinePart, boolean omitInput, boolean omitOutput) throws ParameterNotFoundException, NoValidInOutDataException 
+	{
+		//EMap<String, Object> constraints = new BasicEMap<String, Object>();
+		EList<String> commandLinePart = new BasicEList<String>();
+		Parameter     effectiveTemplateParam;
+		Tool          tool = getPreferredTool();
+		String        type = cmdLinePart;
+		
+		if (type == null)
+		{
+			logger.error("resolveCommandLinePart(): command line part specifier empty.");
+			return commandLinePart;
+		}
+		
+		
+		if (tool == null)
+			tool = getPreferredTool();
+		//Command c = getCommand();
+		if (tool.getName().equals("view"))
+		{
+			tool.getCommand();
+		}
+		Iterator<Entry<String, ResolvedParam>> it = getResolvedCommand().getResolvedParams().iterator();
+		
+		while (it.hasNext())
+		{
+			Entry<String, ResolvedParam> e      = it.next();
+			ResolvedParam    resolvedParam      = e.getValue();
+			boolean          isConditional      = resolvedParam.getConditionalParam() != null && 
+					resolvedParam.getChildParams().containsKey(resolvedParam.getConditionalParam());
+			//Parameter        parameter          = resolvedParam.getParameter();
+			//Parameter        effectiveParameter = null;
+			EList<ResolvedParam> effectiveResolvedParams    = resolvedParam.getEffectiveParameters(null, null);
+			effectiveTemplateParam = null;
+			//if (!effectiveParams.isEmpty())
+				//effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
+			String s = null;
+			Iterator<ResolvedParam> itEffParam = effectiveResolvedParams.iterator();
+			while (itEffParam.hasNext())
+			{
+				ResolvedParam effectiveResolvedParam = itEffParam.next();
+				if (effectiveResolvedParam.getValue() == null || effectiveResolvedParam.getValue().isEmpty())
+					effectiveResolvedParam.getValue().addAll(resolvedParam.getValue());
+			//overwrite current resolved param if conditional param occurred
+				Parameter parameter = effectiveResolvedParam.getParameter().getMergedParameter(null, false);
+				
+				InOutParameter   inOutParameter = null;
+				boolean          isInOutParam   = false;
+				boolean          shallGenerate  = false;
+				
+				if (parameter instanceof InOutParameter)
+				{
+					inOutParameter = (InOutParameter) parameter;
+					isInOutParam   = true;
+				}
+				/*else if (effectiveParameter.isDataParam())
+				{
+					inOutParameter = (InOutParameter) effectiveParameter;
+					isInOutParam   = true;
+				}*/
+				
+				effectiveTemplateParam = tool.getTemplateParameter(parameter);
+				if (effectiveTemplateParam == null)
+					effectiveTemplateParam = tool.getTemplateParameter();
+				
+				boolean  isOptional = parameter.isOptional(effectiveTemplateParam == null ? null : effectiveTemplateParam.isOptional(null));
+				
+				if (isInOutParam && !inOutParameter.isOutput())
+				{
+					if (GlobalConstants.PARAM_INPUT.equals(type)) 
+						shallGenerate = true;
+					else if (!omitInput && ((GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional) 
+							|| (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)))
+						shallGenerate = true;
+				}
+				else if (isInOutParam && inOutParameter.isOutput())
+				{
+					if (GlobalConstants.PARAM_OUTPUT.equals(type)) 
+						shallGenerate = true;
+					else if (!omitOutput && ((GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional) 
+							|| (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)))
+						shallGenerate = true;
+				}
+				else if (GlobalConstants.PARAM_OPTIONAL.equals(type) && isOptional)
+				{
+					shallGenerate = true;
+				}
+				else if (GlobalConstants.PARAM_POSITIONAL.equals(type) && !isOptional)
+				{
+					shallGenerate = true;
+				}
+				
+				if (shallGenerate)
+				{
+					// check if parameters value is set, if not, check default value
+					if (effectiveResolvedParam.getValue() == null || effectiveResolvedParam.getValue().isEmpty())
+					{
+						if (isConditional && parameter.isBoolean())
+							effectiveResolvedParam.getValue().add("true");
+					}
+					logger.debug("createCommandLinePart(): generate command line for parameter="+effectiveResolvedParam.resolveName()
+							+" conditional="+isConditional
+							+" (using template: "+(effectiveTemplateParam != null ? 
+									(" name="+effectiveTemplateParam.resolveName()
+											+" named="+effectiveTemplateParam.isNamed(null)
+											+" prefix="+effectiveTemplateParam.getPrefix()
+											+" delimiter="+effectiveTemplateParam.getDelimiter()
+											+" fileHandle="+effectiveTemplateParam.getHandles()
+											+" first key:"+(effectiveTemplateParam.getKeys().isEmpty() ? null : 
+												("name="+effectiveTemplateParam.getKeys().get(0).getName())
+												+" value="+effectiveTemplateParam.getKeys().get(0).getValue()))
+											
+									: null)+")");
+
+						
+						String res = StringUtils.join(
+								effectiveResolvedParam.generateCommandString(constraints, effectiveTemplateParam),
+								tool.getCmdPartDelimiter());
+						if (res != null && !"".equals(res))
+						{
+							logger.debug("resolveCommandLinePart(): param "+effectiveResolvedParam.resolveName()+" resolved to "+res);
+							commandLinePart.add(res);
+						}
+						else
+							logger.warn("resolveCommandLinePart(): could not resolve parameter "+effectiveResolvedParam.resolveName());
+
+				}
+			}
+		}
+		return commandLinePart;
+
+	}
+
+
 	private DataPort getDataPortByFormats(EList<String> formats, boolean isOutDataPort)
 	{
 		DataPort dataPort;
@@ -2456,30 +2439,20 @@ public class TaskImpl extends EObjectImpl implements Task {
 		return dataPort;
 	}
 	
-	private void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException {
-		
-		//EList<String> list = new BasicEList<String>();
+	public void resolveDataPorts(EMap<String, DataLink> map, Tool tool, boolean isOutput) 
+			throws ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException {
 		
 		Iterator<Entry<String, DataLink>> it = map.iterator();
 		while (it.hasNext()) {
 			Entry<String, DataLink> e         = it.next();
-			DataLink                dataLink  = e.getValue();
-			//Parameter               dataParam = dataLink.getData().getParameter().getEffectiveParentParameter(true); 
-			String                  paramName = null;
+			DataLink                dataLink  = e.getValue(); 
+			String                  paramName = isOutput ? 
+					dataLink.getInDataPort().getParameterName() :
+					dataLink.getDataPort().getParameterName();
 			
-			if (isOutput)
-				paramName = dataLink.getInDataPort().getParameterName();
-				//paramName = dataParam.getName();
-			else
-			{
-				paramName = dataLink.getDataPort().getParameterName();
-					//paramName = dataParam.getName();
-			}
-
 			if (paramName == null)
 				logger.error("resolveDataPorts(): could not retrieve parameter name");
 
-			//dataLink.getData().getDataResourceName().getPath();
 			if (getResolvedCommand() == null)
 				logger.error("resolveDataPorts(): cmd null");
 			
@@ -2495,27 +2468,51 @@ public class TaskImpl extends EObjectImpl implements Task {
 			}
 			ResolvedParam parameter = getResolvedCommand().getResolvedParams().get(paramName);
 			parameter.setDataFormat(dataLink.getFormat());
+			EList<String> supportedHandles = parameter.getSupportedHandles();
+			//parameter.setHandle();
+			logger.debug("resolveDataPorts(): param="+parameter.resolveName()+" set data port to:"+parameter.getDataFormat().getName()+" childs="
+					+(parameter.getChildParams() != null && !parameter.getChildParams().isEmpty() ? 
+							(parameter.getChildParams().keySet()+" "+parameter.getChildParams().containsKey(GlobalConstants.NAME_FILE_HANDLE)) 
+							: null)
+					+"\n\t\t use pipe="+dataLink.getPipe()
+					+" handle: in="+(dataLink.getData() != null ? dataLink.getData().getHandle() : null)
+					+" out="+(dataLink.getInData() != null ? dataLink.getInData().getHandle() : null)
+					+" resolved handle="+parameter.getHandle()+" sup. handles: "+supportedHandles+" params handles: "+parameter.getParameter().getHandles());
 			
-			logger.debug((parameter.getChildParams() != null ? (parameter.getChildParams().keySet()+" "+parameter.getChildParams().containsKey(GlobalConstants.NAME_FILE_HANDLE)) : null));
+			
+			boolean resolvedFileHandle = true;
 			if (dataLink.getPipe() != null && dataLink.getPipe())
 			{
-				if (parameter.getChildParams() != null && parameter.getChildParams().containsKey(GlobalConstants.NAME_PIPE_HANDLE))
-					parameter.setConditionalParam(GlobalConstants.NAME_PIPE_HANDLE);
+				if (!GlobalConfig.isPipeAllowed())
+					resolvedFileHandle = false;
+				
+				else if (isOutput)
+				{
+					if (supportedHandles.contains(GlobalConstants.NAME_STDOUT_HANDLE) || supportedHandles.contains(GlobalConstants.NAME_PIPE_HANDLE))
+						parameter.resolveCondititionalParam(GlobalConstants.NAME_PIPE_HANDLE, "setHandle", GlobalConstants.NAME_STDOUT_HANDLE);		
+					else
+						resolvedFileHandle = false;
+				}
+				else
+				{
+					if (supportedHandles.contains(GlobalConstants.NAME_STDIN_HANDLE) || supportedHandles.contains(GlobalConstants.NAME_PIPE_HANDLE))
+						parameter.resolveCondititionalParam(GlobalConstants.NAME_PIPE_HANDLE, "setHandle", GlobalConstants.NAME_STDIN_HANDLE);		
+					else
+						resolvedFileHandle = false;
+				}
+				
 			}
 			else
 			{
-				if (parameter.getChildParams() != null && parameter.getChildParams().containsKey(GlobalConstants.NAME_FILE_HANDLE))
-					parameter.setConditionalParam(GlobalConstants.NAME_FILE_HANDLE);
+				if (!GlobalConfig.isFileAllowed())
+					resolvedFileHandle = false;
+				else
+					parameter.resolveCondititionalParam(GlobalConstants.NAME_FILE_HANDLE, "setHandle", null);
 			}
 			
-			logger.debug("resolveDataPorts(): set final dataformat for "
-							//+(((InOutParameter)parameter.getParameter()).isOutput() ? "output":"input")
-							+"parameter "+parameter.resolveName()+" to="+parameter.getDataFormat().getName()+" id="+parameter.hashCode());
-
-			/*if (dataLink.getData().getHandle() != null 
-					&& parameter.getChildParams() != null
-					&& parameter.getChildParams().containsKey(dataLink.getData().getHandle()))
-				parameter.setHandle(dataLink.getData().getHandle());*/
+			if (!resolvedFileHandle)
+				throw new ResolvingParameterFailedException();
+			
 			if (dataLink.getDataResourceName() == null)
 				throw new NoValidInOutDataException();
 				
@@ -2740,12 +2737,28 @@ public class TaskImpl extends EObjectImpl implements Task {
 				add = true;
 			else 
 			{
-				if (fileHandleStrategy == GlobalConstants.FILE_HANDLE &&
-					e.getValue().getData().getHandle().equals(GlobalConstants.NAME_FILE_HANDLE))
+				/*Data d = e.getValue().getData();
+				if (d != null)
+				{
+					EList<String> h = d.resolveSupportedHandles();
+					
+					if (fileHandleStrategy == GlobalConstants.FILE_HANDLE &&
+						h.contains(GlobalConstants.NAME_FILE_HANDLE))
+						add = true;
+					if (fileHandleStrategy == GlobalConstants.PIPE_HANDLE &&
+						//e.getValue().getData().getHandle().equals(GlobalConstants.NAME_PIPE_HANDLE))
+						h.contains(GlobalConstants.NAME_PIPE_HANDLE))
+						add = true;
+				}
+				else*/
+				if (e.getValue().getPipe() == null)
 					add = true;
-				if (fileHandleStrategy == GlobalConstants.PIPE_HANDLE &&
-					e.getValue().getData().getHandle().equals(GlobalConstants.NAME_PIPE_HANDLE))
-					add = true;
+				else if (!e.getValue().getPipe())
+				{
+					if (fileHandleStrategy == GlobalConstants.FILE_HANDLE)
+						add = true;
+				}
+				
 			}
 				
 			//if (e.getValue().getData() != null && e.getValue().getData().getDataResourceName() !=  null)
@@ -2758,27 +2771,25 @@ public class TaskImpl extends EObjectImpl implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws ResolvingParameterFailedException 
+	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public Rule createRule() throws ParameterNotFoundException, NoValidInOutDataException
+	public Rule createRule()
 	{
 
 		logger.trace("createRule(): task="+getUniqueString()+" preferredTool="+getPreferredTool().getName()
 				+" (all: "+getTools().keySet().toString()+") "
 		);
-		
-		try {
-			resolveInputs();
-			resolveOutputs();
-			resolveParams();
-		} catch (DataLinkNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		//resolveInputs();
+		//resolveOutputs();
+		//resolveParams();
 		
 		int fileHandleStrategy = GlobalConstants.ANY_HANDLE;
 		
-		Rule rule = GlobalVar.getDefaultProject().getActiveWorkflow().getCurrentRule();
+		Rule rule = getRule() == null ? GlobalVar.getDefaultProject().getActiveWorkflow().getCurrentRule() : getRule();
+		//rule.setTask(this);
 		rule.setReadFromPipe(readFromPipe());
 		rule.setWriteToPipe(writeToPipe());
 		
@@ -2794,9 +2805,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			fileHandleStrategy = GlobalConstants.ANY_HANDLE;
 		
 		rule.getTargets().addAll(getFiles(getOutputs(), fileHandleStrategy));
-		rule.getCmdLine().add(createCommandLine());
-		
-		logger.debug(rule.getCmdLine()+" ("+rule.getTargets()+":"+rule.getDependencies()+")");
+				
+		logger.debug("createRule(): cmd="+rule.getCmdLine()+" targets="+rule.getTargets()+" deps="+rule.getDependencies());
 		return rule;
 	}
 	
@@ -3593,6 +3603,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__STATIC_PARAMS:
 				if (coreType) return getStaticParams();
 				else return getStaticParams().map();
+			case CorePackage.TASK__RULE:
+				if (resolve) return getRule();
+				return basicGetRule();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -3704,6 +3717,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__STATIC_PARAMS:
 				((EStructuralFeature.Setting)getStaticParams()).set(newValue);
 				return;
+			case CorePackage.TASK__RULE:
+				setRule((Rule)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -3805,6 +3821,9 @@ public class TaskImpl extends EObjectImpl implements Task {
 			case CorePackage.TASK__STATIC_PARAMS:
 				getStaticParams().clear();
 				return;
+			case CorePackage.TASK__RULE:
+				setRule((Rule)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -3876,6 +3895,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return params != null && !params.isEmpty();
 			case CorePackage.TASK__STATIC_PARAMS:
 				return staticParams != null && !staticParams.isEmpty();
+			case CorePackage.TASK__RULE:
+				return rule != null;
 		}
 		return super.eIsSet(featureID);
 	}

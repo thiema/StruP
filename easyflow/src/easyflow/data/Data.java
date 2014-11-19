@@ -275,10 +275,10 @@ public interface Data extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model kind="operation"
 	 * @generated
 	 */
-	EList<String> getSupportedHandles(boolean applyConfig);
+	EList<String> getSupportedHandles();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -286,7 +286,7 @@ public interface Data extends EObject {
 	 * @model
 	 * @generated
 	 */
-	boolean match(Data testData, boolean applyConfig);
+	boolean match(Data testData);
 
 	/**
 	 * <!-- begin-user-doc -->

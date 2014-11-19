@@ -1,7 +1,5 @@
 package easyflow.custom.util;
 
-import easyflow.tool.ResolvedParam;
-
 public class GlobalConstants {
 
 	private static final String METADATA = "metadata";
@@ -22,10 +20,15 @@ public class GlobalConstants {
 	public static final String PARAM_INPUT                = "in";
 	public static final String PARAM_OUTPUT               = "out";
 	
-	public static final String NAME_FILE_HANDLE = "file";
-	public static final String NAME_PIPE_HANDLE = "pipe";
-	
-	
+	public static final String NAME_FILE_HANDLE           = "file";
+	public static final String NAME_PIPE_HANDLE           = "pipe";
+	public static final String NAME_STDIN_HANDLE          = "stdin";
+	public static final String NAME_STDOUT_HANDLE         = "stdout";
+	public static final String DEFAULT_PIPE_OPERATOR      = "|";
+	public static final String FILE_HANDLE_PARAM_NAME     = "file_handle";
+	public static final String DEFAULT_STDOUT_HANDLE      = "";
+	public static final String DEFAULT_STDIN_HANDLE       = "-";
+
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";
@@ -94,9 +97,9 @@ public class GlobalConstants {
 	public static final String COMMAND_PART_VALUE_MODULE            = "module";
 	public static final String COMMAND_PART_VALUE_PARAM             = "param";
 	
-	public static final String DATA_INPUT_DIR    = "input_dir";
-	public static final String DATA_WORK_DIR     = "work_dir";
-	public static final String DATA_TMP_DIR      = "tmp_dir";
+	public static final String DATA_INPUT_DIR      = "input_dir";
+	public static final String DATA_WORK_DIR       = "work_dir";
+	public static final String DATA_TMP_DIR        = "tmp_dir";
 	public static final String ANALYSIS_TYPE_INDEX = "index";
 	
 	public static final String ADD_EXTENSION_TO_FILENAME      = "addExtensionToInput";
@@ -137,6 +140,7 @@ public class GlobalConstants {
 	public static final String CONDITION_TYPE_DATA_PORT               = "data_port";
 	public static final String CONDITION_TYPE_DATA_FORMAT             = "data_format";
 	public static final String CONDITION_TYPE_FILE_HANDLE             = "file_handle";
+	
 	public static final String CONDITION_TYPE_METADATA                = METADATA;
 	public static final int ANY_HANDLE  = 0;
 	public static final int FILE_HANDLE = 1;
@@ -147,7 +151,12 @@ public class GlobalConstants {
 	public static final int RETRIEVE_DATA_PORT_STRATEGY_FIRST     = 0;
 	public static final int RETRIEVE_DATA_PORT_STRATEGY_LAST      = 1;
 	public static final int RETRIEVE_DATA_PORT_STRATEGY_PRIMARY   = 2;
-	
+
+
+	public static final String COMMAND_LINE_PART_INPUT      = PARAM_INPUT;
+	public static final String COMMAND_LINE_PART_OUTPUT     = PARAM_OUTPUT;
+	public static final String COMMAND_LINE_PART_OPT_PARAMS = PARAM_OPTIONAL;
+	public static final String COMMAND_LINE_PART_POS_PARAMS = PARAM_POSITIONAL;	
 	
 }
 

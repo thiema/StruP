@@ -6,29 +6,14 @@
  */
 package easyflow.execution.makeflow.impl;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import com.mxgraph.view.mxGraph.mxICellVisitor;
-import easyflow.core.Task;
-import easyflow.custom.exception.NoValidInOutDataException;
-import easyflow.custom.exception.ParameterNotFoundException;
-import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.util.GlobalVar;
-import easyflow.execution.DefaultExecutionSystem;
-import easyflow.execution.ExecutionPackage;
 import easyflow.execution.impl.IExecutionSystemImpl;
 import easyflow.execution.makeflow.Makeflow;
 import easyflow.execution.makeflow.MakeflowPackage;
 import easyflow.tool.Rule;
-import easyflow.ui.DefaultProject;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -80,10 +65,16 @@ public class MakeflowImpl extends IExecutionSystemImpl implements Makeflow {
 	 * @generated not
 	 */
 	public String generateExecutionString(Rule rule) {
+		
+		String cmd     = rule.createCommandLine();
+		
+		if (rule.isWriteToPipe())
+			return null;
+		
 		String delim   = " ";
 		String targets = StringUtils.join(rule.getTargets(), delim);
 		String deps    = StringUtils.join(rule.getDependencies(), delim);
-		String cmd     = StringUtils.join(rule.getCmdLine(), delim);
+		
 		return targets+": "+deps+"\n\t"+cmd+"\n\n";
 	}
 

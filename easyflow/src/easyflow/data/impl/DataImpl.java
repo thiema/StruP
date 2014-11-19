@@ -323,7 +323,15 @@ public class DataImpl extends EObjectImpl implements Data {
 			return false;
 		}
 		return true;
-			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public EList<String> getSupportedHandles() {
+		return getParameter().getSupportedHandles(true);	
 	}
 
 	/**
@@ -379,19 +387,20 @@ public class DataImpl extends EObjectImpl implements Data {
 
 	
 	/**
-	 * TODO check formats defined by parameter
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean match(Data testData, boolean applyConfig) {
+	public boolean match(Data testData) {
 
-		boolean match = false;
+		boolean requireAll = false;
+		boolean match      = requireAll;
+		String  tmpHandle  = null;
 		//check formats defined by parameter
 		
 		// check handles
-		EList<String>  handles1 = getSupportedHandles(true);
-		EList<String>  handles2 = testData.getSupportedHandles(true);
+		EList<String>  handles1 = getSupportedHandles();
+		EList<String>  handles2 = testData.getSupportedHandles();
 		
 		if (getParameter() != null && testData.getParameter()!=null)
 		{
@@ -405,8 +414,15 @@ public class DataImpl extends EObjectImpl implements Data {
 					if (handles2.contains(handle))
 					{
 						match = true;
-						setHandle(handle);
-						testData.setHandle(handle);
+						if (tmpHandle == null)
+							tmpHandle = getHandle();
+						if (!requireAll)
+							break;
+					}
+					else if (requireAll)
+					{
+						match = false;
+						break;
 					}
 			}
 			else
@@ -414,6 +430,8 @@ public class DataImpl extends EObjectImpl implements Data {
 				
 			}
 		}
+		
+		// match formats
 		if (match)
 		{
 			match = false;
@@ -423,6 +441,13 @@ public class DataImpl extends EObjectImpl implements Data {
 					match = true;
 			}
 		}
+		
+		if (match && tmpHandle != null)
+		{
+			setHandle(tmpHandle);
+			testData.setHandle(tmpHandle);
+		}
+		
 		return match;
 	}
 

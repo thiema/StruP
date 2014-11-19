@@ -548,13 +548,22 @@ public interface CorePackage extends EPackage {
 	int TASK__STATIC_PARAMS = 29;
 
 	/**
+	 * The feature id for the '<em><b>Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__RULE = 30;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 30;
+	int TASK_FEATURE_COUNT = 31;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
@@ -1654,6 +1663,17 @@ public interface CorePackage extends EPackage {
 	EReference getTask_StaticParams();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Task#getRule <em>Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Rule</em>'.
+	 * @see easyflow.core.Task#getRule()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_Rule();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2553,6 +2573,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK__STATIC_PARAMS = eINSTANCE.getTask_StaticParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Rule</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__RULE = eINSTANCE.getTask_Rule();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.

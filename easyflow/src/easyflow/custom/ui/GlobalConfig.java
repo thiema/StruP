@@ -147,6 +147,10 @@ public class GlobalConfig {
 	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK       = "max_rank_first";
 	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS    = "all_parents";
 	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE  = CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT;
+
+	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_VALUE_DFLT = "|";
+
+	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME = "pipe_operator";
 	
 
 	private static       JSONObject           jsonConfig       = null; 
@@ -693,5 +697,14 @@ public class GlobalConfig {
 			return getToolConfig().get(CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME).equals("true");
 		else
 			return CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_VALUE;
+	}
+	
+	public static String getPipeOperator()
+	{
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME))
+			return getProcessingConfig().get(CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME);
+		else
+			return CONFIG_PROCESSING_PIPE_OPERATOR_VALUE_DFLT;
+
 	}
 }

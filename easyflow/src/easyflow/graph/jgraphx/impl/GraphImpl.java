@@ -118,8 +118,8 @@ public class GraphImpl extends EObjectImpl implements Graph {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLogger()
-	 * @generated
-	 * @ordered not
+	 * @generated not
+	 * @ordered
 	 */
 	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(Graph.class);
 
@@ -1108,6 +1108,8 @@ public class GraphImpl extends EObjectImpl implements Graph {
 	 */
 	public boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem) {
 		
+		getExecutionGraph().resolveDataPorts(root);
+		getExecutionGraph().resolveToolParams(root);
 		return getExecutionGraph().generateWorkflowForExecutionSystem(root, executionSystem);
 	}
 

@@ -6,13 +6,24 @@
  */
 package easyflow.graph.jgraphx.impl;
 
+import easyflow.core.Task;
+import easyflow.custom.exception.DataLinkNotFoundException;
+import easyflow.custom.exception.NoValidInOutDataException;
+import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.custom.exception.ResolvingParameterFailedException;
+import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
+import easyflow.custom.util.GlobalVar;
+import easyflow.data.DataLink;
 import easyflow.execution.IExecutionSystem;
 import easyflow.graph.jgraphx.ExecutionGraph;
 import easyflow.graph.jgraphx.Execution;
 import easyflow.graph.jgraphx.Graph;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+
 import easyflow.graph.jgraphx.ToolDependencies;
 
 import org.apache.log4j.Logger;
@@ -23,6 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import com.mxgraph.model.mxICell;
+import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -77,8 +89,138 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 		return true;
 	}	
 	
-
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveDataPorts(mxICell root)
+	{
+		boolean rc = true;
+		mxICellVisitor visitor=new mxICellVisitor()
+		{
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				
+				try {
+					Task task = JGraphXUtil.loadTask(vertex);
+					task.resolveInputs();
+					task.resolveOutputs();
+					task.resolveParams();
+				}
+				catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParameterNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoValidInOutDataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ResolvingParameterFailedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				return true;
+			}
+		};
+		getGraph().getGraph().getModel().beginUpdate();		try		{
+			getGraph().getGraph().traverseTopologicalOrder(root, visitor);
+			JGraphXUtil.layoutGraph();
+			
+		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 	
+		return rc;
+
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveToolParams(mxICell root) {
+
+		boolean rc = true;
+		mxICellVisitor visitor=new mxICellVisitor()
+		{
+			@Override
+			public boolean visit(Object vertex, Object edge) {
+				
+				try {
+					Task task = JGraphXUtil.loadTask(vertex);
+
+					EList<DataLink> dataLinks = new BasicEList<DataLink>();
+					Object edges[] = GlobalVar
+							.getGraph()
+								.getIncomingEdges(
+										GlobalVar.getCells()
+											.get(task.getUniqueString()));
+					for (Object inEdge : edges)
+					{
+						DataLink dataLink = JGraphXUtil.loadDataLink(inEdge);
+						if (dataLink.getPipe() != null && dataLink.getPipe())
+						{
+							dataLinks.add(dataLink);
+						}
+					}
+					if (dataLinks.size() > 1)
+						for (DataLink dataLink : dataLinks)
+							dataLink.setPipe(false);
+
+					dataLinks.clear();
+					edges = GlobalVar
+							.getGraph()
+								.getOutgoingEdges(
+										GlobalVar.getCells()
+											.get(task.getUniqueString()));
+					for (Object outEdge : edges)
+					{
+						DataLink dataLink = JGraphXUtil.loadDataLink(outEdge);
+						if (dataLink.getPipe() != null && dataLink.getPipe())
+						{
+							dataLinks.add(dataLink);
+						}						
+					}
+					if (dataLinks.size() > 1)
+						for (DataLink dataLink : dataLinks)
+							dataLink.setPipe(false);
+					
+					task.resolveDataPorts(task.getOutputs(), task.getPreferredTool(), true);
+					task.resolveDataPorts(task.getInputs(),  task.getPreferredTool(), false);
+				}
+				catch (TaskNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ParameterNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoValidInOutDataException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ResolvingParameterFailedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return true;
+			}
+		};
+		
+		getGraph().getGraph().getModel().beginUpdate();		try		{
+			getGraph().getGraph().traverseTopologicalOrder(root, visitor);
+			JGraphXUtil.layoutGraph();
+			
+		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
+	
+		return rc;
+	}
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -12,10 +12,12 @@
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"/>
 		<command pattern="pos opt"/>
-		<param type="any" abstract="true" name="default_param" named="true" separator="=" prefix="" output_default_param="false" />
-		<param type="data" abstract="true" name="inputFile" named="true" key="INPUT" format="bam,sam"/>
-		<param type="data" abstract="true" output="true" name="outFile" named="true" key="OUTPUT" format="bam,sam"/>
-		<param type="analysis_type" named="true" name="jar" prefix="-" separator=" "><!-- resolvePathRef="exe"> --> 
+		<param type="any"  abstract="true"               name="default_param" named="true" prefix="" separator="=" output_default_param="false" />
+		<param type="data" abstract="true"               name="inputFile"     named="true" handle="stdin" default_value="/dev/stdin"/>
+		<param type="data" abstract="true" output="true" name="outputFile"    named="true" handle="stdout" default_value="/dev/stdout"/>
+		<param type="data" abstract="true"               name="inputFile"     named="true" key="INPUT"  format="bam,sam"/>
+		<param type="data" abstract="true" output="true" name="outFile"       named="true" key="OUTPUT" format="bam,sam"/>
+		<param type="analysis_type"                      name="jar"           named="true" prefix="-" separator=" "><!-- resolvePathRef="exe"> --> 
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
 					<map_entry key="ReadGroup"    value="rgid"/>
@@ -79,7 +81,11 @@
 		</description>
 		<exe name="bwa"/>
 		<command assume_data_param_positional="true"/>
+		
 		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		
+		<param type="data" abstract="true" name="output" output="true" handle="stdout" default_value="-" prefix=""/>
+		
 		<param type="data" abstract="true" name="input" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
 		<param type="data" abstract="true" name="input" format="fasta"/>
 		<param type="data" abstract="true" name="output" output="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf" key="f"/>
@@ -122,6 +128,7 @@ Command: index         index sequences in the FASTA format
 		</description>
 		<exe name="samtools"/>
 		<command pattern="opt pos" assume_data_param_positional="true"/>
+		<param type="data" abstract="true" output="true" handle="stdout" key="-" prefix=""/>
 		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
 		<param type="boolean" abstract="true" name="default_param" prefix="-"/>
 		<param type="analysis_type">
@@ -213,7 +220,9 @@ Command: view        SAM<->BAM conversion
 		</conditional>
 		
 		<param name="reference"   type="data" format="fasta" positional="true"/>
-		<param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
+		
+		<!-- param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/-->
+		<param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" handle="stdin"/>
 		<param name="input"       type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<param name="output"      type="data" format="sam" output="true"/> 
 	</tool>

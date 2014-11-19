@@ -1314,6 +1314,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	public EList<String> getSupportedHandles(boolean applyConfig) {
 
 		//String d;
+		logger.debug("getSupportedHandles(): handles so far="+getHandles());
 		EList<String> handles = new BasicEList<String>();
 		
 		if (getHandles() == null || getHandles().isEmpty())
@@ -1327,9 +1328,13 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			{
 				if (getHandles().contains(handle))
 				{
-					handles.add(handle);
-					
+					handles.add(handle);					
 				}
+				else if (handle.equals(GlobalConstants.NAME_PIPE_HANDLE))
+					if (getHandles().contains(GlobalConstants.NAME_STDIN_HANDLE) ||
+						getHandles().contains(GlobalConstants.NAME_STDOUT_HANDLE))
+						handles.add(handle);
+
 			}
 			return handles;
 		}
@@ -1450,8 +1455,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		
 		try {
 			if (getCmdPart() != null && 
-					(GlobalConstants.COMMAND_PART_VALUE_EXE.equals(getCmdPart()) || 
-					 GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(getCmdPart())))
+				(GlobalConstants.COMMAND_PART_VALUE_EXE.equals(getCmdPart()) || 
+				 GlobalConstants.COMMAND_PART_VALUE_INTERPRETER.equals(getCmdPart())))
 			{
 				if (getDefaultValue() != null && !shouldOutputArgValue(defaultOutput))
 					return cmdString;
@@ -1465,6 +1470,18 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return resolveValues(res, path);
 			}
 			
+			boolean argValResolved = true;
+			if (constraints != null && constraints.containsKey(GlobalConstants.FILE_HANDLE_PARAM_NAME))
+			{
+				if (GlobalConstants.NAME_STDIN_HANDLE.equals(constraints.get(GlobalConstants.FILE_HANDLE_PARAM_NAME)))
+					argValue = resolveValues(GlobalConstants.DEFAULT_STDIN_HANDLE, "");
+				else if (GlobalConstants.NAME_STDOUT_HANDLE.equals(constraints.get(GlobalConstants.FILE_HANDLE_PARAM_NAME)))
+					argValue = resolveValues(GlobalConstants.DEFAULT_STDOUT_HANDLE, "");
+				else
+					argValResolved = false;
+			}
+			if (!argValResolved) {
+				
 			if (constraints != null && constraints.containsKey("value"))
 			{
 				argValue = resolveValues(constraints.get("value"), path);
@@ -1479,19 +1496,25 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			}
 			else if (getDefaultValue() != null && !getDefaultValue().equals(""))
 			{
-			 //isFixedArgValue(defaultIsFixed)
-				//argValue = new BasicEList<String>();
-				//argValue.add(resolveValues(getDefaultValue(), path));
+				//if (constraints.containsKey(GlobalConstants.FILE_HANDLE_PARAM_NAME))
+					//argValue = resolveValues(getDefaultValue(), "");
+				//else 
 				if (shouldOutputDefaultParam(defaultOutput))
 					argValue = resolveValues(getDefaultValue(), path);
 			}
+			}
+			
 				
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (argValue == null || argValue.isEmpty() && !isBoolean())
+		
+
+		
+		if ((argValue == null || argValue.isEmpty()) && !isBoolean())
 			return cmdString;
+		
 		//Parameter p = this;
 		Boolean defaultIsNamed           = templateParam != null ? templateParam.getNamed() : null;
 		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter(null) : null;
@@ -1507,14 +1530,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		}
 		//if (!outputArgValue)
 			//logger.debug("generateCommandString(): omit generation of param="+resolveName());
-
+		
 		// resolve prefix and key
-		if ((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey)
-			;
+		if (((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey))
+			logger.debug("generateCommandString(): keep cmd untouched.");
 		else if (isNamed(defaultIsNamed) || argValue == null)
-		{
 			cmdString.add(getArgKey(defaultPrefix, defaultKey));
-		}
 		
 		// resolve delimiter
 		if (outputArgValue && argValue != null && isNamed(defaultIsNamed))
@@ -1804,6 +1825,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			setOptional(parameter.getOptional());
 		if (getPositional() == null)
 			setPositional(parameter.getPositional());
+		if (parameter.getHandles() != null)
+			getHandles().addAll(parameter.getHandles());
+			
 			
 		mergeKeys(parameter.getKeys());
 			
@@ -1927,6 +1951,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		
 		boolean doesNameMatch = true;
 		boolean doesTypeMatch = false;
+		boolean doesFileHandleMatch = false;
 		
 		if (templateParameter.getType().equals(getType()) || 
 				templateParameter.getType().equals(GlobalConstants.ANY_TEMPLATE_PARAM_NAME))
@@ -1937,12 +1962,15 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			if (!templateParameter.getName().equals(getName()))
 				doesNameMatch = false;
 		}
+		
+		if (templateParameter.getHandles().containsAll(getHandles()))
+			doesFileHandleMatch = true;
 
 		if (!doesNameMatch && (GlobalConstants.DEFAULT_TEMPLATE_PARAM_NAME.equals(templateParameter.getName())
 				|| GlobalConstants.ANY_TEMPLATE_PARAM_NAME.equals(templateParameter.getName())))
 			doesNameMatch = true;
 		
-		return doesNameMatch && doesTypeMatch;
+		return doesNameMatch && doesTypeMatch && doesFileHandleMatch;
 	}
 
 	/**

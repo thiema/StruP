@@ -63,4 +63,20 @@ public interface ExecutionGraph extends EObject {
 	 */
 	boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean resolveToolParams(mxICell root);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model rootDataType="easyflow.mxICell"
+	 * @generated
+	 */
+	boolean resolveDataPorts(mxICell root);
+
 } // ExecutionGraph

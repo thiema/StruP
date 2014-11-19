@@ -984,6 +984,9 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 */
 	public boolean isPipeable() {
 		
+		if (getPipe() != null)
+			return getPipe();
+		
 		//boolean applyConfig = true;
 		boolean isPipeable = false;
 		boolean rootProvidesPipe = false;
@@ -991,8 +994,7 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		if (getInData() != null)
 		{
 			handles = getInData().resolveSupportedHandles();
-			if (//getInData().getSupportedHandles(applyConfig).contains(GlobalConstants.NAME_PIPE_HANDLE))
-				handles.contains(GlobalConstants.NAME_PIPE_HANDLE))
+			if (handles.contains(GlobalConstants.NAME_PIPE_HANDLE) || handles.contains(GlobalConstants.NAME_STDOUT_HANDLE))
 				isPipeable = true;
 		}
 		else
@@ -1003,8 +1005,7 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		if (getData() != null)
 		{
 			handles = getData().resolveSupportedHandles();
-			if (//!getData().getSupportedHandles(applyConfig).contains(GlobalConstants.NAME_PIPE_HANDLE))
-				!handles.contains(GlobalConstants.NAME_PIPE_HANDLE))
+			if (!(handles.contains(GlobalConstants.NAME_PIPE_HANDLE) || handles.contains(GlobalConstants.NAME_STDIN_HANDLE)))
 			isPipeable = false;
 		}
 		else if (getInData() == null)

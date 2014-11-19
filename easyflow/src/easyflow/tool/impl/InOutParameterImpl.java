@@ -254,7 +254,9 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 		
 		// ckeck format
 		boolean doesFormatMatch = 
+				templateParameter.getFormats().isEmpty() ||
 				templateParameter.getFormats().containsAll(getFormats());
+				
 		// check output/input match
 		boolean doesInOutDataMatch = false;
 		if (isOutput() && templateParameter.isOutput() ||

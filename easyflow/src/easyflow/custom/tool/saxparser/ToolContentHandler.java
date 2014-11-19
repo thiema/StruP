@@ -413,7 +413,9 @@ public class ToolContentHandler implements ContentHandler {
 		if (atts.getValue("handle") != null)
 			for (String handle:atts.getValue("handle").split(","))
 				(curParam).getHandles().add(handle);
-
+		else
+			curParam.getHandles().add(GlobalConstants.NAME_FILE_HANDLE);
+		
 		if (atts.getValue("grouping") != null)
 			for (String group:atts.getValue("grouping").split(","))
 				curParam.getGrouping().add(group);

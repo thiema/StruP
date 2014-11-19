@@ -10,6 +10,7 @@ import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.custom.exception.ResolvingParameterFailedException;
 import easyflow.custom.exception.ToolNotFoundException;
 
 import easyflow.data.DataFormat;
@@ -83,6 +84,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getUnresolvedOutDataPorts <em>Unresolved Out Data Ports</em>}</li>
  *   <li>{@link easyflow.core.Task#getParams <em>Params</em>}</li>
  *   <li>{@link easyflow.core.Task#getStaticParams <em>Static Params</em>}</li>
+ *   <li>{@link easyflow.core.Task#getRule <em>Rule</em>}</li>
  * </ul>
  * </p>
  *
@@ -667,6 +669,32 @@ public interface Task extends EObject {
 	EMap<String, String> getStaticParams();
 
 	/**
+	 * Returns the value of the '<em><b>Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Rule</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Rule</em>' reference.
+	 * @see #setRule(Rule)
+	 * @see easyflow.core.CorePackage#getTask_Rule()
+	 * @model
+	 * @generated
+	 */
+	Rule getRule();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getRule <em>Rule</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Rule</em>' reference.
+	 * @see #getRule()
+	 * @generated
+	 */
+	void setRule(Rule value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -794,14 +822,6 @@ public interface Task extends EObject {
 	 */
 	EList<DataPort> getOverlappingDataPorts(EList<DataPort> dataPorts1, EList<DataPort> dataPorts2);
 
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
-	 * @generated
-	 */
-	String createCommandLine() throws ParameterNotFoundException, NoValidInOutDataException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1046,18 +1066,18 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException"
 	 * @generated
 	 */
-	void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
+	void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException"
 	 * @generated
 	 */
-	void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException;
+	void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1110,10 +1130,10 @@ public interface Task extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException easyflow.DataLinkNotFoundException"
 	 * @generated
 	 */
-	Rule createRule() throws ParameterNotFoundException, NoValidInOutDataException;
+	Rule createRule() throws ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException, DataLinkNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1122,5 +1142,53 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	DataPort retrieveDataPort(boolean isOutput, int strategy);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException" dataLinksMapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.data.DataLink>"
+	 * @generated
+	 */
+	void resolveDataPorts(EMap<String, DataLink> dataLinks, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	EList<String> resolveCommandLinePartExe() throws ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	String resolveCommandLinePartAnalysisType() throws ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	EList<String> resolveCommandLinePartInterpreter() throws ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException"
+	 * @generated
+	 */
+	EList<String> resolveCommandLinePart(String cmdLinePart, boolean omitInput, boolean omitOutput) throws ParameterNotFoundException, NoValidInOutDataException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	String getCommandLinePattern();
 
 } // Task

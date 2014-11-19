@@ -11,8 +11,10 @@ import java.io.IOException;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.core.Task;
+import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
+import easyflow.custom.exception.ResolvingParameterFailedException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.execution.ExecutionPackage;
@@ -21,7 +23,6 @@ import easyflow.execution.IExecutionSystem;
 import easyflow.tool.Rule;
 
 import java.io.BufferedWriter;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -53,7 +54,7 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 	 * @generated not
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(IExecutionSystem.class);;
+	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(IExecutionSystem.class);
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -150,25 +151,23 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 				Task task;
 				try {
 					task = JGraphXUtil.loadTask(vertex);
-				if (task.getTools().isEmpty())
-					logger.warn("no tool definition available for "+task.getUniqueString());
-				else
-				{
-					Rule   rule = task.createRule();
-					String cmd  = generateExecutionString(rule);
-					try {
+					if (task.getTools().isEmpty())
+					{
+						logger.warn("no tool definition available for "+task.getUniqueString());
+					}
+					else
+					{
+						Rule rule = task.createRule();
+						rule.setTask(task);
+						String cmd  = generateExecutionString(rule);
+
 						if (cmd != null)
 						{
-							//logger.info("write rule:\n"+cmd);
+							logger.info("write rule:\n"+cmd);
 							getWriter().write(cmd);
 							getWriter().flush();
 						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
-				}
-				
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -178,7 +177,17 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 				} catch (NoValidInOutDataException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				} catch (ResolvingParameterFailedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DataLinkNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}						
+
 				
 				return true;
 			}
@@ -192,7 +201,12 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 	 * @generated not
 	 */
 	public String generateExecutionString(Rule rule) {
-		return StringUtils.join(rule.getCmdLine(), " ");
+		// generate/extend command-line in any case
+		String cmd = rule.createCommandLine();
+		if (rule.isWriteToPipe())
+			return null;
+		else
+			return cmd;
 	}
 
 	/**

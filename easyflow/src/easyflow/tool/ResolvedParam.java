@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.ResolvedParam#getConditionalParam <em>Conditional Param</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getChildParams <em>Child Params</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getConditions <em>Conditions</em>}</li>
+ *   <li>{@link easyflow.tool.ResolvedParam#isPipe <em>Pipe</em>}</li>
  * </ul>
  * </p>
  *
@@ -189,6 +190,32 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	EMap<String, Condition> getConditions();
 
 	/**
+	 * Returns the value of the '<em><b>Pipe</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Pipe</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Pipe</em>' attribute.
+	 * @see #setPipe(boolean)
+	 * @see easyflow.tool.ToolPackage#getResolvedParam_Pipe()
+	 * @model
+	 * @generated
+	 */
+	boolean isPipe();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.ResolvedParam#isPipe <em>Pipe</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Pipe</em>' attribute.
+	 * @see #isPipe()
+	 * @generated
+	 */
+	void setPipe(boolean value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model constraintsMapType="easyflow.util.maps.StringToObjectMap<org.eclipse.emf.ecore.EString, easyflow.Object>"
@@ -227,6 +254,14 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<String> getSupportedHandles();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void resolveCondititionalParam(String param, String setter, String value);
 
 	/**
 	 * <!-- begin-user-doc -->
