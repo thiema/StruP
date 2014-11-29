@@ -59,6 +59,9 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#isHidden <em>Hidden</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getOutputDefaultParam <em>Output Default Param</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getConditionType <em>Condition Type</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getOverrideAttributes <em>Override Attributes</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#isAbstract <em>Abstract</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getToolRefs <em>Tool Refs</em>}</li>
  * </ul>
  * </p>
  *
@@ -889,6 +892,64 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setConditionType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Override Attributes</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Override Attributes</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Override Attributes</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_OverrideAttributes()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getOverrideAttributes();
+
+	/**
+	 * Returns the value of the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Abstract</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Abstract</em>' attribute.
+	 * @see #setAbstract(boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_Abstract()
+	 * @model
+	 * @generated
+	 */
+	boolean isAbstract();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#isAbstract <em>Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Abstract</em>' attribute.
+	 * @see #isAbstract()
+	 * @generated
+	 */
+	void setAbstract(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Tool Refs</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tool Refs</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tool Refs</em>' attribute list.
+	 * @see easyflow.tool.ToolPackage#getParameter_ToolRefs()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getToolRefs();
 
 	/**
 	 * <!-- begin-user-doc -->

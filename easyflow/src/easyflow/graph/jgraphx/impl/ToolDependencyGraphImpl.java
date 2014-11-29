@@ -282,7 +282,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 											+" dataPort (In)="+(dataLink.getInDataPort() != null ?
 													(dataLink.getInDataPort().getName()+" "+dataLink.getInDataPort().getParameterName()
 												+" "+dataLink.getInDataPort().hashCode()):null)
-												+" found "+parentData.size()+" ports (for tool)"
+												+" found "+parentData.size()+" ports (for tool="+tool.getName()+")"
 									);
 									
 									//EList<Data> parentData = getToolDataForDataLink(tool.getData(), dataLink, task.isRoot());

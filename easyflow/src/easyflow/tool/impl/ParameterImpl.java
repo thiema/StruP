@@ -89,6 +89,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOutputDefaultParam <em>Output Default Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getConditionType <em>Condition Type</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getOverrideAttributes <em>Override Attributes</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#isAbstract <em>Abstract</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getToolRefs <em>Tool Refs</em>}</li>
  * </ul>
  * </p>
  *
@@ -746,6 +749,46 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected String conditionType = CONDITION_TYPE_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getOverrideAttributes() <em>Override Attributes</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOverrideAttributes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> overrideAttributes;
+
+	/**
+	 * The default value of the '{@link #isAbstract() <em>Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAbstract()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ABSTRACT_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isAbstract() <em>Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAbstract()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean abstract_ = ABSTRACT_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getToolRefs() <em>Tool Refs</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getToolRefs()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> toolRefs;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1182,6 +1225,51 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getOverrideAttributes() {
+		if (overrideAttributes == null) {
+			overrideAttributes = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__OVERRIDE_ATTRIBUTES);
+		}
+		return overrideAttributes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isAbstract() {
+		return abstract_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAbstract(boolean newAbstract) {
+		boolean oldAbstract = abstract_;
+		abstract_ = newAbstract;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__ABSTRACT, oldAbstract, abstract_));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getToolRefs() {
+		if (toolRefs == null) {
+			toolRefs = new EDataTypeUniqueEList<String>(String.class, this, ToolPackage.PARAMETER__TOOL_REFS);
+		}
+		return toolRefs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public String getArgKey(String defaultPrefix, Key defaultKey) {
@@ -1480,28 +1568,28 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				else
 					argValResolved = false;
 			}
+
 			if (!argValResolved) {
-				
-			if (constraints != null && constraints.containsKey("value"))
-			{
-				argValue = resolveValues(constraints.get("value"), path);
-			}
-			else if (value != null && !value.isEmpty()) 
-			{
-				argValue = resolveValues(value, path);
-			}
-			else if (getGeneralValue() != null && !getGeneralValue().isEmpty())
-			{
-				argValue = resolveValues(getGeneralValue(), path);
-			}
-			else if (getDefaultValue() != null && !getDefaultValue().equals(""))
-			{
-				//if (constraints.containsKey(GlobalConstants.FILE_HANDLE_PARAM_NAME))
-					//argValue = resolveValues(getDefaultValue(), "");
-				//else 
-				if (shouldOutputDefaultParam(defaultOutput))
-					argValue = resolveValues(getDefaultValue(), path);
-			}
+				if (constraints != null && constraints.containsKey("value"))
+				{
+					argValue = resolveValues(constraints.get("value"), path);
+				}
+				else if (value != null && !value.isEmpty()) 
+				{
+					argValue = resolveValues(value, path);
+				}
+				else if (getGeneralValue() != null && !getGeneralValue().isEmpty())
+				{
+					argValue = resolveValues(getGeneralValue(), path);
+				}
+				else if (getDefaultValue() != null && !getDefaultValue().equals(""))
+				{
+					//if (constraints.containsKey(GlobalConstants.FILE_HANDLE_PARAM_NAME))
+						//argValue = resolveValues(getDefaultValue(), "");
+					//else 
+					if (shouldOutputDefaultParam(defaultOutput))
+						argValue = resolveValues(getDefaultValue(), path);
+				}
 			}
 			
 				
@@ -1528,9 +1616,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		{
 			outputArgValue = shouldOutputArgValue(templateParam != null ? templateParam.shouldOutputArgValue(null) : null);
 		}
-		//if (!outputArgValue)
-			//logger.debug("generateCommandString(): omit generation of param="+resolveName());
-		
+		if (!outputArgValue)
+		{
+			logger.debug("generateCommandString(): omit generation of param="+resolveName());
+			return cmdString;
+		}
 		// resolve prefix and key
 		if (((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey))
 			logger.debug("generateCommandString(): keep cmd untouched.");
@@ -1815,6 +1905,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 */
 	public void merge(Parameter parameter) {
 		
+		logger.trace("merge(): merge: this="+renderToString()+" and param="+parameter.renderToString());
 		if (getNamed()      == null)
 			setNamed(parameter.isNamed(getNamed()));
 		if (getPrefix()     == null)
@@ -1916,7 +2007,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 */
 	public String renderToString() {
 		String res = "name="+resolveName()+" type="+getType()
-				+" condType="+getConditionType();
+				+" condType="+getConditionType()+" handles="+getHandles();
 		if (isDataParam())
 		{
 			InOutParameter iop = (InOutParameter) this; 
@@ -1943,6 +2034,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * object is tested whether it is 'compliant' with given parameter >templateParameter<
+	 * compliance is defined as follows:
+	 *  - same name, if template's name is set or name is ANY_TEMPALTE_PARAM_NAME/DEFAULT_TEMPALTE_PARAM_NAME
+	 *  - same type or template's type is ANY_TEMPALTE_PARAM_NAME
+	 *  - template's handles contains all the object's handles
+	 *  
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
@@ -1962,10 +2059,10 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			if (!templateParameter.getName().equals(getName()))
 				doesNameMatch = false;
 		}
-		
+				
 		if (templateParameter.getHandles().containsAll(getHandles()))
 			doesFileHandleMatch = true;
-
+		
 		if (!doesNameMatch && (GlobalConstants.DEFAULT_TEMPLATE_PARAM_NAME.equals(templateParameter.getName())
 				|| GlobalConstants.ANY_TEMPLATE_PARAM_NAME.equals(templateParameter.getName())))
 			doesNameMatch = true;
@@ -2359,6 +2456,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return getOutputDefaultParam();
 			case ToolPackage.PARAMETER__CONDITION_TYPE:
 				return getConditionType();
+			case ToolPackage.PARAMETER__OVERRIDE_ATTRIBUTES:
+				return getOverrideAttributes();
+			case ToolPackage.PARAMETER__ABSTRACT:
+				return isAbstract();
+			case ToolPackage.PARAMETER__TOOL_REFS:
+				return getToolRefs();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2483,6 +2586,17 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__CONDITION_TYPE:
 				setConditionType((String)newValue);
 				return;
+			case ToolPackage.PARAMETER__OVERRIDE_ATTRIBUTES:
+				getOverrideAttributes().clear();
+				getOverrideAttributes().addAll((Collection<? extends String>)newValue);
+				return;
+			case ToolPackage.PARAMETER__ABSTRACT:
+				setAbstract((Boolean)newValue);
+				return;
+			case ToolPackage.PARAMETER__TOOL_REFS:
+				getToolRefs().clear();
+				getToolRefs().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2600,6 +2714,15 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__CONDITION_TYPE:
 				setConditionType(CONDITION_TYPE_EDEFAULT);
 				return;
+			case ToolPackage.PARAMETER__OVERRIDE_ATTRIBUTES:
+				getOverrideAttributes().clear();
+				return;
+			case ToolPackage.PARAMETER__ABSTRACT:
+				setAbstract(ABSTRACT_EDEFAULT);
+				return;
+			case ToolPackage.PARAMETER__TOOL_REFS:
+				getToolRefs().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2684,6 +2807,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return OUTPUT_DEFAULT_PARAM_EDEFAULT == null ? outputDefaultParam != null : !OUTPUT_DEFAULT_PARAM_EDEFAULT.equals(outputDefaultParam);
 			case ToolPackage.PARAMETER__CONDITION_TYPE:
 				return CONDITION_TYPE_EDEFAULT == null ? conditionType != null : !CONDITION_TYPE_EDEFAULT.equals(conditionType);
+			case ToolPackage.PARAMETER__OVERRIDE_ATTRIBUTES:
+				return overrideAttributes != null && !overrideAttributes.isEmpty();
+			case ToolPackage.PARAMETER__ABSTRACT:
+				return abstract_ != ABSTRACT_EDEFAULT;
+			case ToolPackage.PARAMETER__TOOL_REFS:
+				return toolRefs != null && !toolRefs.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2796,6 +2925,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(outputDefaultParam);
 		result.append(", conditionType: ");
 		result.append(conditionType);
+		result.append(", overrideAttributes: ");
+		result.append(overrideAttributes);
+		result.append(", abstract: ");
+		result.append(abstract_);
+		result.append(", toolRefs: ");
+		result.append(toolRefs);
 		result.append(')');
 		return result.toString();
 	}

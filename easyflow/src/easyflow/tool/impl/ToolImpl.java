@@ -11,6 +11,7 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Tuple;
 import easyflow.data.Data;
+import easyflow.data.DataFactory;
 import easyflow.data.DataPort;
 import easyflow.tool.Command;
 import easyflow.tool.DefaultToolElement;
@@ -813,7 +814,7 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		Parameter dfltParam     = null;
 		//String s;
 		Parameter templateParam = null;
-		easyflow.tool.Package pkg = getPackage();
+		//easyflow.tool.Package pkg = getPackage();
 		if (!getCommand().getTemplateParams().isEmpty())
 			toolParam = getMatchingParameter(getCommand().getTemplateParams(), parameter);
 		
@@ -851,18 +852,16 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 */
 	public Parameter getMatchingParameter(EList<Parameter> parameters, Parameter parameter) {
 		
-		logger.trace("getMatchingParameter()");
-		if (parameter == null)
-			if (!parameters.isEmpty())
-				return parameters.get(0);
+		//logger.trace("getMatchingParameter()");
+		if (parameter == null && !parameters.isEmpty())
+			return parameters.get(0);
 		
 		Parameter      res      = null;
 		//InOutParameter resInOut = null;
 		InOutParameter dataParameter         = null;
 		if (parameter.isDataParam())
-		{
 			dataParameter = (InOutParameter) parameter;
-		}
+		
 		Iterator<Parameter> it = parameters.iterator();
 		while (it.hasNext())
 		{
@@ -881,37 +880,45 @@ public class ToolImpl extends EObjectImpl implements Tool {
 				else if (dataParameter == null && templateDataParameter == null)
 					match = parameter.matches(templateParameter);
 				// what should be done in a mixed (non-data/data) situation
-				else {
-					if (dataParameter != null && templateDataParameter == null) {
+				else
+				{
+					if (dataParameter != null && templateDataParameter == null)
 						match = true;
-					} else
-						logger.trace("getTemplateParameter(): skip non-data/data parameter pair. "
+					else
+						logger.trace("getMatchingParameter(): skip non-data/data parameter pair. "
 								+ " (test: "
 								+ parameter.getName()
 								+ " against "
 								+ templateParameter.getName()
 								+ ")");
 				}
-				if (match) {
-					logger.trace("getTemplateParameter(): found "
+				
+				if (match) 
+				{
+					logger.trace("getMatchingParameter(): found "
 							+ (res == null ? "" : "(add) ") + "template param="
-							+ templateParameter.getName() + " "
-							+ templateParameter.isNamed(null) + " "
-							+ templateParameter.getPrefix() + " "
-							+ templateParameter.getDelimiter());
-					if (res == null) {
+							+ " "+ templateParameter.getName()
+							+ " "+ templateParameter.isNamed(null)
+							+ " "+ templateParameter.getPrefix()
+							+ " "+ templateParameter.getDelimiter()
+							+ " "+ templateParameter.getHandles());
+					if (res == null)
 						res = EcoreUtil.copy(templateParameter);
-					} else
+					else
 						res.merge(templateParameter);
-				} else
-					logger.trace("getTemplateParameter(): skip template param="
+				} 
+				else
+				{
+					logger.trace("getMatchingParameter(): skip template param="
 							+ templateParameter.getName() + " "
 							+ templateParameter.isNamed(null) + " "
 							+ templateParameter.getPrefix() + " "
-							+ templateParameter.getDelimiter());
+							+ templateParameter.getDelimiter()+ " "
+							+ templateParameter.hashCode());
+				}
 
 			} else {
-				logger.trace("getTemplateParameter(): in/out port not matching"
+				logger.trace("getMatchingParameter(): in/out port not matching"
 						+ " (test: " + parameter.getName());
 			}
 		}
@@ -1017,12 +1024,54 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
+	 */
+	public void createData(InOutParameter parameter) {
+		Data data = DataFactory.eINSTANCE.createData();
+		data.setOutput(parameter.isOutput());
+		data.setName(parameter.getName());
+		data.setParameter(parameter);
+		
+		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
+		dataPort.setName(parameter.getName());
+		//if (withinTool)
+			//dataPort.getTools().put(getName(), this);
+		data.setPort(dataPort);
+		dataPort.setFormats(((InOutParameter) parameter).getFormats());
+		
+		EList<Data> dataList = getData().get(parameter.getName());
+		if (dataList == null)
+		{
+			dataList = new BasicEList<Data>();
+			getData().put(parameter.getName(), dataList);
+		}
+		getData().get(parameter.getName()).add(data);
+
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void createData(ResolvedParam resolvedParameter) {
+		
+		if (resolvedParameter.getParameter().isDataParam())
+			createData((InOutParameter) resolvedParameter.getParameter());
+		
+		if (resolvedParameter.getChildParams() != null)
+			for (EList<ResolvedParam> childParams : resolvedParameter.getChildParams().values())
+				for (ResolvedParam resolvedChildParam : childParams)
+					createData(resolvedChildParam);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
 	 */
 	public String renderToString() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return getId();
 	}
 
 	/**

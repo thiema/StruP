@@ -748,13 +748,40 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__CONDITION_TYPE = ITOOL_ELEMENT_FEATURE_COUNT + 35;
 
 	/**
+	 * The feature id for the '<em><b>Override Attributes</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__OVERRIDE_ATTRIBUTES = ITOOL_ELEMENT_FEATURE_COUNT + 36;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__ABSTRACT = ITOOL_ELEMENT_FEATURE_COUNT + 37;
+
+	/**
+	 * The feature id for the '<em><b>Tool Refs</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__TOOL_REFS = ITOOL_ELEMENT_FEATURE_COUNT + 38;
+
+	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 36;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 39;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -1089,6 +1116,33 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int IN_OUT_PARAMETER__CONDITION_TYPE = PARAMETER__CONDITION_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Override Attributes</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__OVERRIDE_ATTRIBUTES = PARAMETER__OVERRIDE_ATTRIBUTES;
+
+	/**
+	 * The feature id for the '<em><b>Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__ABSTRACT = PARAMETER__ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Tool Refs</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__TOOL_REFS = PARAMETER__TOOL_REFS;
 
 	/**
 	 * The feature id for the '<em><b>Output</b></em>' attribute.
@@ -2971,6 +3025,39 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_ConditionType();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getOverrideAttributes <em>Override Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Override Attributes</em>'.
+	 * @see easyflow.tool.Parameter#getOverrideAttributes()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_OverrideAttributes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#isAbstract <em>Abstract</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Abstract</em>'.
+	 * @see easyflow.tool.Parameter#isAbstract()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_Abstract();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.tool.Parameter#getToolRefs <em>Tool Refs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Tool Refs</em>'.
+	 * @see easyflow.tool.Parameter#getToolRefs()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_ToolRefs();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4121,6 +4208,30 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER__CONDITION_TYPE = eINSTANCE.getParameter_ConditionType();
+
+		/**
+		 * The meta object literal for the '<em><b>Override Attributes</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__OVERRIDE_ATTRIBUTES = eINSTANCE.getParameter_OverrideAttributes();
+
+		/**
+		 * The meta object literal for the '<em><b>Abstract</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__ABSTRACT = eINSTANCE.getParameter_Abstract();
+
+		/**
+		 * The meta object literal for the '<em><b>Tool Refs</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__TOOL_REFS = eINSTANCE.getParameter_ToolRefs();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.

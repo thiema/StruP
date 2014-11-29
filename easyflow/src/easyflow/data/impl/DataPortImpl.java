@@ -6,6 +6,7 @@
  */
 package easyflow.data.impl;
 
+import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
@@ -16,10 +17,13 @@ import easyflow.util.maps.impl.StringToDataFormatMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -512,6 +516,41 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 				return true;
 		}
 		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void setFormat(String format) {
+		EList<String> formats = new BasicEList<String>();
+		formats.add(format);
+		setFormats(formats);
+	}
+
+	static Map<String, DataFormat> dataFormatMap  = new HashMap<String, DataFormat>();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void setFormats(EList<String> formats) {
+		for (String format:formats)
+		{
+			DataFormat dataFormat = null;
+			if (dataFormatMap.containsKey(format))
+			{
+				dataFormat = dataFormatMap.get(format);
+			}
+			else
+			{
+				dataFormat = DataFactory.eINSTANCE.createDataFormat();
+				dataFormat.setName(format);
+			}
+			getDataFormats().put(dataFormat.getName(), dataFormat);
+		}
+
 	}
 
 	/**

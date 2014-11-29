@@ -19,7 +19,6 @@ import java.util.Collection;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -535,6 +534,8 @@ public class RuleImpl extends EObjectImpl implements Rule {
 			e1.printStackTrace();
 		}
 
+		getTask().resolveStaticParams(getTask().getResolvedCommand().getResolvedParams());
+		
 		boolean isInputDefined  = false;
 		boolean isOutputDefined = false;
 		for (String part : commandPatterns)
@@ -583,6 +584,7 @@ public class RuleImpl extends EObjectImpl implements Rule {
 				}
 			}	
 		}
+		
 		logger.debug("Interpreter="+getInterpreter()+"/"+getInterpreterParams()+" Exe="+getExe()+"/"+getExeParams()
 				+" Pos="+getPosParams()+" Opt="+getOptParams()
 				+" In="+getInputParams()+" Out="+getOutputParams());

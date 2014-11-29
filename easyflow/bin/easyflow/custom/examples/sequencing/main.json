@@ -26,7 +26,7 @@
     "use_threads"                  : "true",
     "num_threads"                  : 10,
     "queue"                        : "bioinf.q",
-    "allow_pipe"              : "true",
+    "allow_pipe"              : "false",
     "handles"                 : "pipe,file",
     "default_handle"          : "pipe",
     "stdin_operator"          : "|",
@@ -90,7 +90,8 @@
   				      },
   	"tool"         :  { "toolname" : "/path/to/toolname" },
   	
-  	"resolve_path" : "true"
+  	"resolve_path" : "true",
+  	"output_default_param" : "false"
   }
 
 }

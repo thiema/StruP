@@ -13,16 +13,16 @@ Sampe	BwtAlignShort	bwa_xampe	FASTQ;SAI	SAM				size(InputFiles)>1&&Platform=~["I
 #ReadEnd:input:merge
 AddReadgroup		picard_ARRG	SAM	BAM	ReadGroup	
 #Param2:Locus:values=[chr1,chr2];ReadMappingFlag:flag:split	sort:Queryname
-RealignerTargetCreator		gatk2_realigner_target_creator	BAM;BAI	gatk_interval	Group:joint		sort:Coordinate;index		
+##RealignerTargetCreator		gatk2_realigner_target_creator	BAM;BAI	gatk_interval	Group:joint		sort:Coordinate;index		
 #sort:Coordinate,order;index
-RealignIndels		gatk2_indel_realigner	BAM;BAI;gatk_interval	BAM	Group:joint		sort:Coordinate;index
+##RealignIndels		gatk2_indel_realigner	BAM;BAI;gatk_interval	BAM	Group:joint		sort:Coordinate;index
 #		sort:Coordinate,index
-RmDup		samtools:rmdup	Alignment:BAM;BAI	BAM	Lib,Sample		sort;index
+##RmDup		samtools:rmdup	Alignment:BAM;BAI	BAM	Lib,Sample		sort;index
 #Param2:Locus:merge	sort:Coordinate,index
 #	size(InputFiles)>1
 #demonstrate situation with possibly multiple alternative paths due to JEXL (task requires appropriate metadata instances)
 #DemonstrateJEXL1		any	BAM	BAM	
-DetectVariants		gatk2_unified_genotyper	BAM;BAI	VCF	Group		;index	
+##DetectVariants		gatk2_unified_genotyper	BAM;BAI	VCF	Group		;index	
 #Param2:Locus:merge	sort:Coordinate
 ######
 ##Helper Functions/Tasks which helps to (pre)process/prepare (e.g. indexing, sorting, splitting, ...) data 

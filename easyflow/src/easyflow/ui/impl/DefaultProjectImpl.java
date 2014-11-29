@@ -48,6 +48,8 @@ import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
 import easyflow.tool.DocumentProperties;
+import easyflow.tool.InOutParameter;
+import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
@@ -788,6 +790,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				rc = false;
 			}
 		}
+		
 		return rc;
 
 		
@@ -966,7 +969,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			}
 			
 			URI toolDefPath = getBaseURI();
-			try {
+			try 
+			{
 				toolDefPath = URIUtil.addToURI(toolDefPath, GlobalConfig.getToolDefDirName());
 				
 			} catch (URISyntaxException e) {
@@ -977,8 +981,44 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			ToolSchemata toolSchemata = readToolSchemata(toolCfg, toolDefPath);
 			if (toolSchemata == null)
 				logger.info("No tool schemata read.");
-			boolean toolsDefined = readToolDefinition(toolCfg, toolDefPath, toolSchemata, interpreterMap, toolMap, pkgMap);
-			
+			boolean toolsOK = readToolDefinition(toolCfg, toolDefPath, toolSchemata, interpreterMap, toolMap, pkgMap);
+			logger.debug(GlobalConfig.getTools().keySet());
+			if (toolsOK)
+				for (String toolId : GlobalConfig.getTools().keySet())
+				{
+					Tool tool = GlobalConfig.getTools().get(toolId);
+					logger.debug("check for additional parameters of tool="+tool.getId());
+					easyflow.tool.Package pkg = tool.getPackage();
+					if (pkg != null)
+						logger.debug("check for additional parameters of tool="+tool.getId()+" as defined by package="+pkg.getName());
+					else
+						continue;
+					
+					if (pkg != null && false)
+					{
+						for (ResolvedParam rp : pkg.getResolvedParams())
+						{
+							Parameter p = rp.getParameter(); 
+							if (!p.isAbstract() && !p.getToolRefs().isEmpty())
+							{
+								if (p.getToolRefs().get(0).equalsIgnoreCase("All")
+										|| p.getToolRefs().contains(tool.getId()))
+								{
+									logger.debug("param "+rp.renderToString()
+											+" (dataparam="+p.isDataParam()+")"
+											+" refers to tool="+tool.renderToString());
+									tool.createData(rp);
+									tool.getCommand().getResolvedParams().put(rp.getName(), rp);
+								}
+								else
+								{
+									logger.debug("param "+rp.renderToString()+" does not refer to tool="+tool.renderToString());
+								}
+
+							}
+						}
+					}
+				}
 			
 			if (toolCfg.has(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME))
 			{
@@ -1000,13 +1040,15 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			URI pkgFilesPath    = getBaseURI();
 			URI toolFilesPath   = getBaseURI();
 
-			try {
+			try 
+			{
 				toolConfigPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getToolConfigDirName());
 				
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			try 
 			{
 				toolFilesPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getToolConfigFilesDirName());
@@ -1028,38 +1070,38 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			}
 
 			
-		BufferedReader bfReader;
-		JSONObject     toolCfg;
-		// try to find tool_config.json
-		bfReader = getReader(toolConfigPath, GlobalConfig.getToolConfigFileName(), true);
-		try {
-			toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
-			readToolConfig(toolCfg);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// try to find pkg_config.json
-		bfReader = getReader(toolConfigPath, GlobalConfig.getPkgConfigFileName(), true);
-		try {
-			toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
-			readPkgConfig(toolCfg);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// try to find <toolname>_config.json
-		for (Tool tool : GlobalConfig.getTools().values())
-		{
-			bfReader = getReader(toolFilesPath, tool.getId(), false);
-			
-			if (tool.getPackage() != null)
-			{
-				bfReader = getReader(pkgFilesPath, tool.getPackage().getId(), false);
+			BufferedReader bfReader;
+			JSONObject     toolCfg;
+			// try to find tool_config.json
+			bfReader = getReader(toolConfigPath, GlobalConfig.getToolConfigFileName(), true);
+			try {
+				toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+				readToolConfig(toolCfg);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
+	
+			// try to find pkg_config.json
+			bfReader = getReader(toolConfigPath, GlobalConfig.getPkgConfigFileName(), true);
+			try {
+				toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+				readPkgConfig(toolCfg);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			// try to find <toolname>_config.json
+			for (Tool tool : GlobalConfig.getTools().values())
+			{
+				bfReader = getReader(toolFilesPath, tool.getId(), false);
+				
+				if (tool.getPackage() != null)
+				{
+					bfReader = getReader(pkgFilesPath, tool.getPackage().getId(), false);
+				}
+			}
 		}
 		getWorkflows().add(workflow);
 

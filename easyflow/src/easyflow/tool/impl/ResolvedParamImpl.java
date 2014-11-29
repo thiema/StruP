@@ -529,7 +529,7 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 	public EList<ResolvedParam> getEffectiveParameters(EList<ResolvedParam> effectiveParams, EMap<String, String> constraints) {
 		
 		//boolean onlyLeaves = true;
-		ResolvedParam tmp = this;
+		//ResolvedParam tmp = this;
 		if (effectiveParams == null)
 		{
 			effectiveParams = new BasicEList<ResolvedParam>();

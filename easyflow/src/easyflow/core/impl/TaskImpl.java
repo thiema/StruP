@@ -2245,6 +2245,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public EList<String> resolveCommandLinePart(String cmdLinePart, boolean omitInput, boolean omitOutput) throws ParameterNotFoundException, NoValidInOutDataException 
 	{
 		//EMap<String, Object> constraints = new BasicEMap<String, Object>();
+		constraints.removeKey("path");
 		EList<String> commandLinePart = new BasicEList<String>();
 		Parameter     effectiveTemplateParam;
 		Tool          tool = getPreferredTool();
@@ -2278,7 +2279,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			effectiveTemplateParam = null;
 			//if (!effectiveParams.isEmpty())
 				//effectiveParameter = retrieveEffectiveParam(effectiveParams, constraints);
-			String s = null;
+			//String s = null;
 			Iterator<ResolvedParam> itEffParam = effectiveResolvedParams.iterator();
 			while (itEffParam.hasNext())
 			{
@@ -2302,10 +2303,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 					inOutParameter = (InOutParameter) effectiveParameter;
 					isInOutParam   = true;
 				}*/
-				
+				logger.trace("createCommandLinePart(): search template param for param="+parameter.renderToString());
+				{}
 				effectiveTemplateParam = tool.getTemplateParameter(parameter);
 				if (effectiveTemplateParam == null)
 					effectiveTemplateParam = tool.getTemplateParameter();
+				else
+					logger.trace("createCommandLinePart(): found template param="+effectiveTemplateParam.renderToString());
 				
 				boolean  isOptional = parameter.isOptional(effectiveTemplateParam == null ? null : effectiveTemplateParam.isOptional(null));
 				
@@ -2349,7 +2353,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 											+" named="+effectiveTemplateParam.isNamed(null)
 											+" prefix="+effectiveTemplateParam.getPrefix()
 											+" delimiter="+effectiveTemplateParam.getDelimiter()
-											+" fileHandle="+effectiveTemplateParam.getHandles()
+											+" fileHandle="+effectiveTemplateParam.getHandles()+" ("+effectiveResolvedParam.getParameter().getHandles()+")"
 											+" first key:"+(effectiveTemplateParam.getKeys().isEmpty() ? null : 
 												("name="+effectiveTemplateParam.getKeys().get(0).getName())
 												+" value="+effectiveTemplateParam.getKeys().get(0).getValue()))
@@ -2367,7 +2371,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 						}
 						else
 							logger.warn("resolveCommandLinePart(): could not resolve parameter "+effectiveResolvedParam.resolveName());
-
 				}
 			}
 		}
@@ -2420,9 +2423,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			dataPort = getDataPortByName(ioParam.getDataPort(), ioParam.isOutput());
 		
 		if (dataPort == null && ioParam.getFormats() != null && !ioParam.getFormats().isEmpty())
-		{
 			dataPort = getDataPortByFormats(ioParam.getFormats(), ioParam.isOutput());
-		}
+		
 		//default to first tasks dataport
 		if (dataPort == null)
 			dataPort = ioParam.isOutput() ? 
@@ -2432,9 +2434,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		if (dataPort == null)
 			logger.warn("findDataPortForDataSpecifyingParam(): could not find a data port for param="+ioParam.resolveName());
 		else
-		{
 			logger.debug("findDataPortForDataSpecifyingParam(): found data port="+dataPort.getName()+" for param="+ioParam.resolveName());
-		}
 		
 		return dataPort;
 	}
@@ -2547,7 +2547,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 		}
 	}
 	
-	private void resolveStaticParams(EMap<String, ResolvedParam> resolvedParams)
+	
+	public void resolveStaticParams(EMap<String, ResolvedParam> resolvedParams)
 	{
 		Iterator<Entry<String, ResolvedParam>> it = resolvedParams.iterator();
 
@@ -2557,16 +2558,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 			ResolvedParam resolvedParam = e.getValue();
 			resolveNestedParams(resolvedParam);
 			resolveStaticParam(resolvedParam);
-			
-			/*Iterator<ResolvedParam> it2 = e.getValue().getEffectiveParameters(null, null).iterator();
+			/*
+			Iterator<ResolvedParam> it2 = e.getValue().getEffectiveParameters(null, null).iterator();
 			while (it2.hasNext())
 			{
 				ResolvedParam rp = it2.next();
 				resolveStaticParam(rp);
 			}
 			*/
+
 		}		
-	}
+	}	
 	
 	private void resolveMetadataParam(ResolvedParam resolvedParam)
 	{
@@ -2649,6 +2651,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 			else
 				resolveMetadataParam(resolvedParam);
 		}
+		
 /*		else if (param.isDataSpecifyingParam())
 		{
 			//else
@@ -2663,14 +2666,12 @@ public class TaskImpl extends EObjectImpl implements Task {
 			//resolvedParam.getValue().add(param.getGeneralValue());
 		}
 		*/
+		
+		else if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
+			resolveConditionalStaticParam(resolvedParam);
 		else
-		{
-			if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
-				resolveConditionalStaticParam(resolvedParam);
-			else
-				logger.warn("no conditional params defined for param="+param.resolveName());
-		}
-
+			logger.trace("no conditional params defined for param="+param.resolveName());
+		
 	}
 
 	/**

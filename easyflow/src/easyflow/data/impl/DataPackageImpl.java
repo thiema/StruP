@@ -723,6 +723,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataFormat(), "format", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(dataPortEClass, null, "setFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "format", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(dataPortEClass, null, "setFormats", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "formats", 0, -1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(dataLinkEClass, DataLink.class, "DataLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDataLink_DataPort(), this.getDataPort(), null, "dataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataLink_InDataPort(), this.getDataPort(), null, "inDataPort", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

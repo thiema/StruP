@@ -114,59 +114,57 @@
 
 
 	<xs:complexType name="Param">
+	
 		<xs:sequence>
-			<xs:element maxOccurs="unbounded" minOccurs="0" name="key"
-				type="ParamKey" />
-			<xs:element maxOccurs="unbounded" minOccurs="0"
-				name="option" type="ParamOption" />
-			<xs:element maxOccurs="unbounded" minOccurs="0" name="name"
-				type="ParamName" />
-			<xs:element maxOccurs="unbounded" minOccurs="0"
-				name="dependency" type="Dependency" />
-			<xs:element maxOccurs="1" minOccurs="0" name="options"
-				type="Options" />
-			<xs:element maxOccurs="unbounded" minOccurs="0"
-				name="validator" type="Validator" />
-			<xs:element maxOccurs="1" minOccurs="0" name="sanitizer"
-				type="Sanitizer" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="key"	      type="ParamKey"   />
+			<xs:element maxOccurs="unbounded" minOccurs="0"	name="option"     type="ParamOption"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="name"       type="ParamName"  />
+			<xs:element maxOccurs="unbounded" minOccurs="0"	name="dependency" type="Dependency" />
+			<xs:element maxOccurs="1"         minOccurs="0" name="options"    type="Options"    />
+			<xs:element maxOccurs="unbounded" minOccurs="0"	name="validator"  type="Validator"  />
+			<xs:element maxOccurs="1"         minOccurs="0" name="sanitizer"  type="Sanitizer"  />
 		</xs:sequence>
 
-		<xs:attribute name="name"      type="xs:string" />
-		<xs:attribute name="format"    type="xs:string" />
-		<xs:attribute name="dataport"  type="xs:string" />
-		<xs:attribute name="output"    type="xs:boolean"/>
-		<xs:attribute name="abstract"  type="xs:boolean"/>
-		<xs:attribute name="min_occur" type="xs:int"    />
-		<xs:attribute name="max_occur" type="xs:int"    />
+		<xs:attribute name="name"                               type="xs:string"   />
+		<xs:attribute name="format"                             type="xs:string"   />
+		<xs:attribute name="dataport"                           type="xs:string"   />
+		<xs:attribute name="output"                             type="xs:boolean"  />
+		<xs:attribute name="abstract"                           type="xs:boolean"  />
+		<xs:attribute name="min_occur"                          type="xs:int"      />
+		<xs:attribute name="max_occur"                          type="xs:int"      />
+		<xs:attribute name="named"                              type="xs:boolean"  />
+		<xs:attribute name="separator"                          type="xs:string"   />
+		<xs:attribute name="prefix"                             type="xs:string"   />
+		<xs:attribute name="output_arg_value_for_boolean_param" type="xs:boolean"  />
+		<xs:attribute name="output_default_param"               type="xs:boolean"  />
+		<xs:attribute name="arg_value_separator"                type="xs:string"   />
+		<xs:attribute name="positional"                         type="xs:boolean"  />
+		<xs:attribute name="type"                               type="ParamType" use="required" />
+		<xs:attribute name="label"                              type="xs:string"   />
+		<xs:attribute name="help"                               type="xs:string"   />
+		<xs:attribute name="optional"                           type="xs:boolean"  />
+		<xs:attribute name="default_value"                      type="xs:string"   />
+		<xs:attribute name="is_value_required"                  type="xs:boolean"  />
+		<xs:attribute name="multiple"                           type="xs:boolean"  />
+		<xs:attribute name="multiple_instances"                 type="xs:boolean"  />
+		<xs:attribute name="multiple_instances_per_input"       type="xs:boolean"  />
+		<xs:attribute name="multiple_value"                     type="xs:boolean"  />
+		<xs:attribute name="grouping"                           type="xs:string"   />
+		<xs:attribute name="handle"                             type="xs:string"   />
+		<xs:attribute name="data"                               type="xs:string"   />
+		<xs:attribute name="cmd_part"                           type="CmdPartType" />
+		<xs:attribute name="fixed"                              type="xs:boolean"  />
+		<xs:attribute name="key"                                type="xs:string"   />
+		<xs:attribute name="extension"                          type="xs:boolean"  />
+		<xs:attribute name="hidden"                             type="xs:boolean"  />
+		<xs:attribute name="tool_ref"                           type="xs:string"   />
+		<xs:attribute name="filename_creation"                  type="FilenameCreationType"/>
+		<!--
+		<xs:attribute name="overrideAttributes"  type="xs:string" />		
+		<xs:attribute name="key" type="xs:string"/>
+			<xs:attribute name="keyType" type="ParamKeyType"/>
+			 -->
 
-		<xs:attribute name="named"     type="xs:boolean"/>
-		<!--		<xs:attribute name="key" type="xs:string"/>
-			<xs:attribute name="keyType" type="ParamKeyType"/> -->
-		<xs:attribute name="separator" type="xs:string" />
-		<xs:attribute name="prefix"    type="xs:string" />
-		<xs:attribute name="output_arg_value_for_boolean_param" type="xs:boolean"/>
-		<xs:attribute name="output_default_param"         type="xs:boolean"/>
-		<xs:attribute name="arg_value_separator"          type="xs:string"/>
-		<xs:attribute name="positional"                   type="xs:boolean" />
-		<xs:attribute name="type"                         type="ParamType" use="required" />
-		<xs:attribute name="label"                        type="xs:string" />
-		<xs:attribute name="help"                         type="xs:string" />
-		<xs:attribute name="optional"                     type="xs:boolean" />
-		<xs:attribute name="default_value"                type="xs:string" />
-		<xs:attribute name="is_value_required"            type="xs:boolean" />
-		<xs:attribute name="multiple"                     type="xs:boolean" />
-		<xs:attribute name="multiple_instances"           type="xs:boolean" />
-		<xs:attribute name="multiple_instances_per_input" type="xs:boolean" />
-		<xs:attribute name="multiple_value"               type="xs:boolean" />
-		<xs:attribute name="grouping"                     type="xs:string" />
-		<xs:attribute name="handle"                       type="xs:string" />
-		<xs:attribute name="data"                         type="xs:string" />
-		<xs:attribute name="cmd_part"                     type="CmdPartType" />
-		<xs:attribute name="fixed"                        type="xs:boolean"/>
-		<xs:attribute name="key"                          type="xs:string"/>
-		<xs:attribute name="extension"                    type="xs:boolean" />
-		<xs:attribute name="hidden"                       type="xs:boolean"/>
-		<xs:attribute name="filename_creation"            type="FilenameCreationType"/>
 	</xs:complexType>
 
 	<xs:simpleType name="FilenameCreationType">

@@ -1,14 +1,9 @@
 package easyflow.custom.jgraphx.graph;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -25,7 +20,6 @@ import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
-import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
@@ -33,9 +27,7 @@ import easyflow.custom.util.XMLUtil;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.graph.jgraphx.Graph;
-import easyflow.graph.jgraphx.ToolDependencies;
 import easyflow.traversal.TraversalChunk;
-import easyflow.traversal.TraversalEvent;
 
 public class JGraphXUtil {
 
@@ -379,7 +371,7 @@ public class JGraphXUtil {
 		if (GlobalVar.getTasks().containsKey(parentTaskName) && GlobalVar.getCells().containsKey(parentTaskName))
 		{
 			mxICell parentVertex = (mxICell) GlobalVar.getCells().get(parentTaskName);
-			for (Object edgeOut:graph.getGraph().getOutgoingEdges(parentVertex))
+			for (Object edgeOut : graph.getGraph().getOutgoingEdges(parentVertex))
 			{
 				if (getTargetTask((mxCell) edgeOut).getUniqueString().equals(childTaskName))
 				{
