@@ -6,8 +6,6 @@
  */
 package easyflow.ui.impl;
 
-import easyflow.EasyflowFactory;
-import easyflow.EasyflowPackage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Map.Entry;
 
 import javax.xml.validation.Schema;
@@ -38,9 +37,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
+import easyflow.core.CorePackage;
 import easyflow.core.Task;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.Workflow;
@@ -48,7 +49,6 @@ import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
 import easyflow.metadata.MetadataFactory;
 import easyflow.tool.DocumentProperties;
-import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
@@ -81,6 +81,7 @@ import easyflow.ui.DefaultProject;
 import easyflow.ui.UiPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToPackageMapImpl;
+import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -625,6 +626,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	{
 		boolean rc = true;
 		
+		
+		/*
 		if (toolCfg.has("command_pattern"))
 			GlobalConfig.getToolConfig().put("command_pattern", 
 					(String) toolCfg.get("command_pattern"));
@@ -633,6 +636,13 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 					(String) toolCfg.get("write_default_value_to_command_line"));
 		else
 			GlobalConfig.getToolConfig().put("write_default_value_to_command_line", "0");
+*/
+		for (String paramName : GlobalConfig.getToolConfigParams())
+		{
+			if (toolCfg.has(paramName))
+				GlobalConfig.getToolConfig().put(paramName, (String) toolCfg.get(paramName));
+		}
+
 		
 		Context varMap = GlobalConfig.getVarMap();
 		if (toolCfg.has("var"))
@@ -648,9 +658,16 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		return rc;		
 	}
 
-	private boolean readProcessingConfiguration(JSONObject jsonObject)
+	private boolean readProcessingConfiguration(JSONObject processingCfg)
 	{
 		boolean rc = true;
+		
+		for (String paramName : GlobalConfig.getProcessingConfigParams())
+		{
+			if (processingCfg.has(paramName))
+				GlobalConfig.getToolConfig().put(paramName, (String) processingCfg.get(paramName));
+		}
+
 		return rc;		
 	}
 
@@ -669,9 +686,16 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		return catalog;		
 	}
 
-	private boolean readWorkflowConfiguration(JSONObject jsonObject)
+	private boolean readWorkflowConfiguration(JSONObject workflowCfg)
 	{
 		boolean rc = true;
+		
+		for (String paramName : GlobalConfig.getWorkflowConfigParams())
+		{
+			if (workflowCfg.has(paramName))
+				GlobalConfig.getToolConfig().put(paramName, (String) workflowCfg.get(paramName));
+		}
+
 		return rc;		
 	}
 	
@@ -984,6 +1008,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			boolean toolsOK = readToolDefinition(toolCfg, toolDefPath, toolSchemata, interpreterMap, toolMap, pkgMap);
 			logger.debug(GlobalConfig.getTools().keySet());
 			if (toolsOK)
+			{
 				for (String toolId : GlobalConfig.getTools().keySet())
 				{
 					Tool tool = GlobalConfig.getTools().get(toolId);
@@ -994,8 +1019,11 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 					else
 						continue;
 					
-					if (pkg != null && false)
+					if (pkg != null)
 					{
+						int i = 0;
+						EMap<String, Integer> indexMap        = new BasicEMap<String, Integer>();
+						EMap<String, Integer> byParamIndexMap = new BasicEMap<String, Integer>();
 						for (ResolvedParam rp : pkg.getResolvedParams())
 						{
 							Parameter p = rp.getParameter(); 
@@ -1006,19 +1034,35 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 								{
 									logger.debug("param "+rp.renderToString()
 											+" (dataparam="+p.isDataParam()+")"
-											+" refers to tool="+tool.renderToString());
-									tool.createData(rp);
-									tool.getCommand().getResolvedParams().put(rp.getName(), rp);
+											+" refers to tool="+tool.renderToString()
+											);
+									
+									if (p.isPreferred())
+										tool.createData(rp, indexMap, byParamIndexMap);
+									else
+										tool.createData(rp, null, null);
+									//logger.debug(""+tool.getCommand().getResolvedParams().keySet());
+									
+									StringToResolvedParamMapImpl entry = 
+											(StringToResolvedParamMapImpl)EcoreUtil.create(MapsPackage.Literals.STRING_TO_RESOLVED_PARAM_MAP);
+									entry.setKey(rp.resolveName());
+									entry.setValue(rp);
+									if (p.isPreferred())
+										tool.getCommand().getResolvedParams().add(i++, entry);
+									else
+										tool.getCommand().getResolvedParams().add(entry);
+									
+									//logger.debug(""+tool.getCommand().getResolvedParams().keySet());
 								}
 								else
 								{
 									logger.debug("param "+rp.renderToString()+" does not refer to tool="+tool.renderToString());
 								}
-
 							}
 						}
 					}
 				}
+			}
 			
 			if (toolCfg.has(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME))
 			{

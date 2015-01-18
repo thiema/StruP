@@ -72,19 +72,19 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 	//o-              output ports
 	//g-              gropuing crits
 	//t-              traversal crits
-	//                                   iogt
-	//                                   ||||
-	static final long defaultScore   = 0x0000;
+	//                                      iogt
+	//                                      ||||
+	static final long defaultScore      = 0x0000;
 
-	static final int     inputOffset = 24;
-	static final int    outputOffset = 16;
-	static final int  groupingOffset =  8;
-	static final int traversalOffset =  0;
+	static final int     inputOffset    =     24;
+	static final int    outputOffset    =     16;
+	static final int  groupingOffset    =      8;
+	static final int traversalOffset    =      0;
 	
-	static final int  matchingPortOffset= 24;
-	static final int  distanceOffset    = 16;
-	static final int  propAOffset       = 8;
-	static final int  propBOffset       = 0;
+	static final int  matchingPortOffset=     24;
+	static final int  distanceOffset    =     16;
+	static final int  propAOffset       =      8;
+	static final int  propBOffset       =      0;
 	static final long matchingPortMask  = 0x1000;
 	static final long distantOffsetMask = 0x0100;
 	static final long propAOffsetMask   = 0x0010;

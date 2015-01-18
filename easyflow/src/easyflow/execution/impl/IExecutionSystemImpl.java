@@ -159,7 +159,7 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 					{
 						Rule rule = task.createRule();
 						rule.setTask(task);
-						String cmd  = generateExecutionString(rule);
+						String cmd = generateExecutionString(rule);
 
 						if (cmd != null)
 						{

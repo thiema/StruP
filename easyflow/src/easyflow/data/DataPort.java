@@ -293,7 +293,23 @@ public interface DataPort extends EObject {
 	 * @model formatsMany="true"
 	 * @generated
 	 */
+	boolean isCompatibleStr(EList<String> formats, boolean requireAll);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model formatsMany="true"
+	 * @generated
+	 */
 	boolean isCompatibleStr(EList<String> formats);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model formatsMany="true"
+	 * @generated
+	 */
+	boolean isCompatible(EList<DataFormat> formats, boolean requireAll);
 
 	/**
 	 * <!-- begin-user-doc -->

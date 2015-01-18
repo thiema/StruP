@@ -775,13 +775,22 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__TOOL_REFS = ITOOL_ELEMENT_FEATURE_COUNT + 38;
 
 	/**
+	 * The feature id for the '<em><b>Prefer Pkg Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__PREFER_PKG_PARAM = ITOOL_ELEMENT_FEATURE_COUNT + 39;
+
+	/**
 	 * The number of structural features of the '<em>Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 39;
+	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 40;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -1145,6 +1154,15 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__TOOL_REFS = PARAMETER__TOOL_REFS;
 
 	/**
+	 * The feature id for the '<em><b>Prefer Pkg Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__PREFER_PKG_PARAM = PARAMETER__PREFER_PKG_PARAM;
+
+	/**
 	 * The feature id for the '<em><b>Output</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1340,13 +1358,31 @@ public interface ToolPackage extends EPackage {
 	int RESOLVED_PARAM__CONDITIONS = ITOOL_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Resolved</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__RESOLVED = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
 	 * The feature id for the '<em><b>Pipe</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESOLVED_PARAM__PIPE = ITOOL_ELEMENT_FEATURE_COUNT + 9;
+	int RESOLVED_PARAM__PIPE = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Condition Resolving</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM__CONDITION_RESOLVING = ITOOL_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The number of structural features of the '<em>Resolved Param</em>' class.
@@ -1355,7 +1391,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOLVED_PARAM_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 10;
+	int RESOLVED_PARAM_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2641,6 +2677,28 @@ public interface ToolPackage extends EPackage {
 	EAttribute getResolvedParam_Pipe();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.ResolvedParam#isConditionResolving <em>Condition Resolving</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Condition Resolving</em>'.
+	 * @see easyflow.tool.ResolvedParam#isConditionResolving()
+	 * @see #getResolvedParam()
+	 * @generated
+	 */
+	EAttribute getResolvedParam_ConditionResolving();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.ResolvedParam#isResolved <em>Resolved</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Resolved</em>'.
+	 * @see easyflow.tool.ResolvedParam#isResolved()
+	 * @see #getResolvedParam()
+	 * @generated
+	 */
+	EAttribute getResolvedParam_Resolved();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Parameter <em>Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3056,6 +3114,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameter_ToolRefs();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getPreferPkgParam <em>Prefer Pkg Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Prefer Pkg Param</em>'.
+	 * @see easyflow.tool.Parameter#getPreferPkgParam()
+	 * @see #getParameter()
+	 * @generated
+	 */
+	EAttribute getParameter_PreferPkgParam();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
@@ -3928,6 +3997,22 @@ public interface ToolPackage extends EPackage {
 		EAttribute RESOLVED_PARAM__PIPE = eINSTANCE.getResolvedParam_Pipe();
 
 		/**
+		 * The meta object literal for the '<em><b>Condition Resolving</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESOLVED_PARAM__CONDITION_RESOLVING = eINSTANCE.getResolvedParam_ConditionResolving();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolved</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESOLVED_PARAM__RESOLVED = eINSTANCE.getResolvedParam_Resolved();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ParameterImpl <em>Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4232,6 +4317,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER__TOOL_REFS = eINSTANCE.getParameter_ToolRefs();
+
+		/**
+		 * The meta object literal for the '<em><b>Prefer Pkg Param</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAMETER__PREFER_PKG_PARAM = eINSTANCE.getParameter_PreferPkgParam();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.

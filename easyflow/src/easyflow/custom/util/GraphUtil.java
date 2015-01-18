@@ -85,6 +85,8 @@ public class GraphUtil {
 	{
 		DataLink newDataLink = null;
 		newDataLink = DataFactory.eINSTANCE.createDataLink();
+		newDataLink.setTerminal(dataLink.isTerminal());
+		
 			/*if (groupingStr == null)
 				newDataLink.setTerminal(true);
 			else*/
@@ -313,7 +315,7 @@ public class GraphUtil {
 			logger.error("no chunks for grouping "+parentGroupingStr+" found.");
 		
 		
-		if (newDataLink.getDataPort() == null)
+		if (!newDataLink.isTerminal() && newDataLink.getDataPort() == null)
 		{
 			logger.warn("data port not defined");
 		}
@@ -321,7 +323,7 @@ public class GraphUtil {
 		{
 			logger.warn("in data port not defined");
 		}
-		else if (!newDataLink.getDataPort().getFormat().match(newDataLink.getInDataPort().getFormat()))
+		else if (!newDataLink.isTerminal() && !newDataLink.getDataPort().getFormat().match(newDataLink.getInDataPort().getFormat()))
 		{
 			logger.error("invalid data formats foudn for datalink="+newDataLink.getUniqueString(true));
 		}

@@ -12,32 +12,37 @@
 	<package name="picard" version="1.56.0">
 		<interpreter exe="java"/>
 		<command pattern="pos opt"/>
-		<param type="any"  abstract="true"               name="default_param" named="true" prefix=""       separator="="     output_default_param="false" />
-		<!-- define input/output params globally for the package (type priority)
+		<param type="any"  abstract="true"               name="default_param" named="true" prefix="" separator="=" output_default_param="false" />
 		
 		<conditional name="input_file" type="file_handle">
 			<param name="input_file" type="select" tool_ref="All"/>
 			<when value="file">
-				<param type="data" name="inputFile" named="true" key="INPUT"     format="bam,sam"/>
+				<param type="data" name="inputFile" named="true" key="INPUT" format="bam,sam"/>
 			</when>
 			<when value="pipe">
-				<param type="data" name="inputPipe" named="true" handle="stdin"  format="bam,sam"  default_value="/dev/stdin"/>
+				<param type="data" name="inputPipe" named="true" key="INPUT" format="bam,sam" handle="stdin" default_value="/dev/stdin"/>
+				<param type="boolean" name="enablePiping" prefix="--" named="true"/>
 			</when>
 		</conditional>
 		
 		<conditional name="output_file" type="file_handle">
 			<param name="output_file" type="select" tool_ref="All"/>
 			<when value="file">
-				<param type="data" output="true" name="outFile"   named="true" key="OUTPUT"    format="bam,sam"/>
+				<param type="data" output="true" name="outputFile"   named="true" key="OUTPUT" format="bam,sam"/>
 			</when>
 			<when value="pipe">
-				<param type="data" output="true" name="outPipe"   named="true" handle="stdout" format="bam,sam"  default_value="/dev/stdout"/>		
+				<param type="data" output="true" name="outputPipe"   named="true" key="OUTPUT" format="bam,sam" handle="stdout" default_value="/dev/stdout"/>
 			</when>
 		</conditional>
-		 -->
 		
+		<!-- 
+		<param type="data" abstract="true"               name="inputFile"     named="true" handle="stdin" default_value="/dev/stdin"/>
+		<param type="data" abstract="true" output="true" name="outputFile"    named="true" handle="stdout" default_value="/dev/stdout"/>
 		
-		<param type="analysis_type"                      name="jar"           named="true" prefix="-"      separator=" "><!-- resolvePathRef="exe"> --> 
+		<param type="data" abstract="true"               name="inputFile"     named="true" key="INPUT"  format="bam,sam"/>
+		<param type="data" abstract="true" output="true" name="outFile"       named="true" key="OUTPUT" format="bam,sam"/>
+		--> 
+		<param type="analysis_type"                      name="jar"           named="true" prefix="-" separator=" "><!-- resolvePathRef="exe"> --> 
 			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
 				<metadata_map>
 					<map_entry key="ReadGroup"    value="rgid"/>
@@ -61,14 +66,15 @@
 			<option value="rgPicardMarkDups"        exe="MarkDuplicates.jar">                </option>
 		</param>
 	</package>
+	
 	<package id="gatk" version="2.3">
 		<interpreter exe="java">
 			<param type="text" name="Xmx"       prefix="-"          separator="" default_value="256M" fixed="true" named="true"/>
 			<param type="text" name="classpath" prefix="-" key="cp" separator=" "/>
 		</interpreter>
-		<param type="data" abstract="true"                         optional="false"                                                                      format="fasta"/>
-		<param type="data" abstract="true"                                 multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
-		<param type="data" abstract="true"            named="true" key="o" output="true"   multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf,gatk_interval"/>
+		<param type="data" abstract="true" optional="false" format="fasta"/>
+		<param type="data" abstract="true" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" output="true"   multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf,gatk_interval" named="true" key="o"/>
 		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-" output_arg_value_for_boolean_param="false"/>
 		
 		<!-- param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/> -->
@@ -109,7 +115,6 @@
 		<param type="data" abstract="true" name="input" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
 		<param type="data" abstract="true" name="input" format="fasta"/>
 		<param type="data" abstract="true" name="output" output="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf" key="f"/>
-		
 		<param type="analysis_type">
 			<option value="aln"   help="gapped/ungapped alignment"/>
 			<option value="samse" condition="size(InputFiles)==1" help="generate alignment (single ended)"/>
@@ -246,7 +251,7 @@ Command: view        SAM<->BAM conversion
 		<!-- param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" handle="stdin"/-->
 		<param name="input"       type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
 		<!-- param name="output"      type="data" format="sam" output="true"/-->
-		<param name="output"      type="data" format="sam" output="true" handle="stdout"/>
+		<param name="output"      type="data" format="sam" output="true" handle="stdout"/>  
 	</tool>
 	
 	<tool id="bwasw" name="bwasw" package="bwa">
@@ -367,6 +372,7 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 				<param name="S" type="boolean" named="true"/>
 			</when>
 		</conditional>
+		
 		<param name="input" type="data" format="sam,bam" handle="file,stdin"/>
 		<!-- specify parameters separately, related to the pipe and to the file handle.
 				in this case there is nothing to do, just omitting the file name
@@ -380,6 +386,7 @@ Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
 				<!-- the default, nothing to do -->
 			</when>
 		</conditional>
+		
 		<conditional name="handle" type="file_handle">
 			<when value="file">
 				<param name="o" label="output" type="data" format="bam" output="true" named="true"/>

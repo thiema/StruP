@@ -62,6 +62,15 @@ public interface DataFactory extends EFactory {
 	DataFormat createDataFormat();
 
 	/**
+	 * Returns a new object of class '<em>Match</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Match</em>'.
+	 * @generated
+	 */
+	DataMatch createDataMatch();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

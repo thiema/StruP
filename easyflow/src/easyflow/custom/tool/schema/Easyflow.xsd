@@ -158,6 +158,7 @@
 		<xs:attribute name="extension"                          type="xs:boolean"  />
 		<xs:attribute name="hidden"                             type="xs:boolean"  />
 		<xs:attribute name="tool_ref"                           type="xs:string"   />
+		<xs:attribute name="is_preferred"                       type="xs:boolean"  />
 		<xs:attribute name="filename_creation"                  type="FilenameCreationType"/>
 		<!--
 		<xs:attribute name="overrideAttributes"  type="xs:string" />		

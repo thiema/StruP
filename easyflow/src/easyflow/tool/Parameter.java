@@ -62,6 +62,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#getOverrideAttributes <em>Override Attributes</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isAbstract <em>Abstract</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getToolRefs <em>Tool Refs</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getPreferPkgParam <em>Prefer Pkg Param</em>}</li>
  * </ul>
  * </p>
  *
@@ -950,6 +951,44 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EList<String> getToolRefs();
+
+	/**
+	 * Returns the value of the '<em><b>Prefer Pkg Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Prefer Pkg Param</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Prefer Pkg Param</em>' attribute.
+	 * @see #setPreferPkgParam(Boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_PreferPkgParam()
+	 * @model
+	 * @generated
+	 */
+	Boolean getPreferPkgParam();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getPreferPkgParam <em>Prefer Pkg Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Prefer Pkg Param</em>' attribute.
+	 * @see #getPreferPkgParam()
+	 * @generated
+	 */
+	void setPreferPkgParam(Boolean value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Preferred</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isPreferred();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -320,4 +320,12 @@ public interface Data extends EObject {
 	 */
 	EList<String> resolveSupportedHandles();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isPipable();
+
 } // Data

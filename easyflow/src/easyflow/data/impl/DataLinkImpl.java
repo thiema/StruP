@@ -8,6 +8,7 @@ package easyflow.data.impl;
 
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Util;
 import easyflow.data.Data;
@@ -21,6 +22,8 @@ import easyflow.util.maps.impl.StringToChunksMapImpl;
 import java.net.URI;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Iterator;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -1006,13 +1009,63 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 		{
 			handles = getData().resolveSupportedHandles();
 			if (!(handles.contains(GlobalConstants.NAME_PIPE_HANDLE) || handles.contains(GlobalConstants.NAME_STDIN_HANDLE)))
-			isPipeable = false;
+				isPipeable = false;
 		}
 		else if (getInData() == null)
 			isPipeable = false;
 		
 		return isPipeable;
 			
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
+	 * @generated not
+	 */
+	public EList<Data> getMatchingDataFor(EList<Data> dataList, EList<String> allowedHandles, boolean useOutDataPort) throws NoValidInOutDataException {
+		
+		EList<Data> data = new BasicEList<Data>();
+		
+		if (dataList.isEmpty())
+		{
+			logger.error("getMatchingDataFor(): to tool-data provied.");
+		}
+		else
+		{
+			Iterator<Data> it = dataList.iterator();
+			while (it.hasNext())
+			{
+				Data curData = it.next();
+					DataPort tmp = useOutDataPort ? getDataPort() : getInDataPort();
+					boolean add = (((useOutDataPort && !curData.isOutput()) || (!useOutDataPort && curData.isOutput())) &&
+								   curData.isAllowed() && 
+								   curData.getPort().isCompatible(tmp));
+					logger.debug("getToolDataForDataLink(): "+curData.getPort().getFormat().getName()+" ("+curData.getPort().getName()+") vs: "
+								+tmp.getFormat().getName()+"("+tmp.getName()+") iscompatible="+(curData.getPort().isCompatible(tmp))
+							+" isAllowed="+curData.isAllowed()+" isOutput="+curData.isOutput()
+							+" matching in-out port="+((useOutDataPort && !curData.isOutput()) || (!useOutDataPort && curData.isOutput()))
+							+" add to list="+add
+							);
+					if (add)
+					{
+						if (curData.getParameter().getToolRefs() != null && !curData.getParameter().getToolRefs().isEmpty())
+							data.add(0, curData);
+						else
+							data.add(curData);
+					}
+			}
+
+			/*if (data.isEmpty())
+			{
+				throw new NoValidInOutDataException();
+			}*/
+		}
+		//if (data.size()==0)
+			//logger.error("getMatchingDataFor(): could not find tool for datalink="+getUniqueString(true));
+		
+		return data;	
 	}
 
 	/**

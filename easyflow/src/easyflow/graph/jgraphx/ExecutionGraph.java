@@ -79,12 +79,4 @@ public interface ExecutionGraph extends EObject {
 	 */
 	boolean resolvePipes(mxICell root);
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model rootDataType="easyflow.mxICell"
-	 * @generated
-	 */
-	boolean resolveDataPorts(mxICell root);
-
 } // ExecutionGraph

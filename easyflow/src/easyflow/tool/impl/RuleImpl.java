@@ -11,6 +11,8 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.data.DataLink;
+import easyflow.tool.ResolvedParam;
 import easyflow.tool.Rule;
 import easyflow.tool.ToolPackage;
 
@@ -495,6 +497,7 @@ public class RuleImpl extends EObjectImpl implements Rule {
 	 */
 	public void resolveCommandLineParts() {
 		
+		//Task           task            = getTask();
 		String         commandPattern  = getTask().getCommandLinePattern();
 		String[]       commandPatterns = commandPattern.split(" ");
 		EList<String>  commandLineParts;// = new BasicEList<String>();
@@ -534,6 +537,21 @@ public class RuleImpl extends EObjectImpl implements Rule {
 			e1.printStackTrace();
 		}
 
+		logger.debug(getTask().getUniqueString());
+		for (DataLink dataLink : getTask().getInputs().values())
+			logger.debug(" in="+dataLink.getData().getResolvedParam().resolveName()+" "+dataLink.getData().getResolvedParam().hashCode());
+		for (DataLink dataLink : getTask().getOutputs().values())
+			logger.debug("out="+dataLink.getInData().getResolvedParam().resolveName()+" "+dataLink.getInData().getResolvedParam().hashCode());
+
+		for (ResolvedParam resolvedParam : getTask().getResolvedCommand().getResolvedParams().values())
+		{
+			if (resolvedParam.getParameter().isDataParam() ||
+					(!resolvedParam.getParameter().isDataParam() && resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty()))
+				logger.debug("rp="+resolvedParam.resolveName()+"  "+resolvedParam.hashCode());
+			if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
+				for (ResolvedParam child : resolvedParam.getEffectiveParameters(null, null))
+					logger.debug("--child: "+child.resolveName()+" "+child.hashCode());
+		}
 		getTask().resolveStaticParams(getTask().getResolvedCommand().getResolvedParams());
 		
 		boolean isInputDefined  = false;
@@ -606,7 +624,7 @@ public class RuleImpl extends EObjectImpl implements Rule {
 		if (isReadFromPipe())
 		{
 			if (getCmdLine() == null || getCmdLine().isEmpty())
-				logger.warn("empty command line found but expect input from from pipe ");
+				logger.warn("createCommandLine(): empty command line found while input from from pipe expected");
 			else
 				// add pipe operator to cmd
 				getCmdLine().add(GlobalConfig.getPipeOperator());
@@ -652,7 +670,6 @@ public class RuleImpl extends EObjectImpl implements Rule {
 					//getCmdLine().add(StringUtils.join(getPosParams(), cmdWithinPartsSep));
 				else
 					logger.error("createCommandLine(): Part "+commandLinePart+" not known. Skipping");
-
 			}
 		}
 		logger.debug(getCmdLine());
@@ -668,16 +685,8 @@ public class RuleImpl extends EObjectImpl implements Rule {
 			getCmdLine().add(StringUtils.join(cmd, sep));
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public void clear() {
-		
-		getTargets().clear();
-		getDependencies().clear();
-		
+	public void clearCmdParts()
+	{
 		setExe(null);
 		setInterpreter(null);
 		
@@ -688,8 +697,21 @@ public class RuleImpl extends EObjectImpl implements Rule {
 		getPosParams().clear();
 		getInputParams().clear();
 		getOutputParams().clear();
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void clear() {
+		
+		clearCmdParts();
+		getTargets().clear();
+		getDependencies().clear();
 		
 		getCmdLine().clear();
+
 	}
 
 	/**

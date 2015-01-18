@@ -453,18 +453,51 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
-	public boolean isCompatibleStr(EList<String> formats) {
-		
+	public boolean isCompatibleStr(EList<String> formats, boolean requireAll) {
 		Iterator<String> it = formats.iterator();
 		while (it.hasNext())
 		{
 			String dataFormat = it.next();
-			if (!isCompatible(dataFormat))
+			
+			if (!requireAll && isCompatible(dataFormat))
+				return true;
+			
+			if (requireAll && !isCompatible(dataFormat))
 				return false;
 		}
-		return true;		
+		return requireAll;		
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isCompatibleStr(EList<String> formats) {
+		return isCompatibleStr(formats, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isCompatible(EList<DataFormat> formats, boolean requireAll) {
+		Iterator<DataFormat> it = formats.iterator();
+		while (it.hasNext())
+		{
+			DataFormat dataFormat = it.next();
+
+			if (!requireAll && isCompatible(dataFormat))
+				return true;
+
+			if (requireAll && !isCompatible(dataFormat))
+				return false;
+		}
+		return requireAll;
+
 	}
 
 	/**
@@ -473,15 +506,7 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	 * @generated not
 	 */
 	public boolean isCompatible(EList<DataFormat> formats) {
-		
-		Iterator<DataFormat> it = formats.iterator();
-		while (it.hasNext())
-		{
-			DataFormat dataFormat = it.next();
-			if (!isCompatible(dataFormat))
-				return false;
-		}
-		return true;
+		return isCompatible(formats, true);
 	}
 
 	/**

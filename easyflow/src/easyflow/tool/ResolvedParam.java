@@ -26,7 +26,9 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.ResolvedParam#getConditionalParam <em>Conditional Param</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getChildParams <em>Child Params</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#getConditions <em>Conditions</em>}</li>
+ *   <li>{@link easyflow.tool.ResolvedParam#isResolved <em>Resolved</em>}</li>
  *   <li>{@link easyflow.tool.ResolvedParam#isPipe <em>Pipe</em>}</li>
+ *   <li>{@link easyflow.tool.ResolvedParam#isConditionResolving <em>Condition Resolving</em>}</li>
  * </ul>
  * </p>
  *
@@ -191,6 +193,7 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 
 	/**
 	 * Returns the value of the '<em><b>Pipe</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Pipe</em>' attribute isn't clear,
@@ -200,7 +203,7 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	 * @return the value of the '<em>Pipe</em>' attribute.
 	 * @see #setPipe(boolean)
 	 * @see easyflow.tool.ToolPackage#getResolvedParam_Pipe()
-	 * @model
+	 * @model default="false"
 	 * @generated
 	 */
 	boolean isPipe();
@@ -214,6 +217,60 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void setPipe(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Condition Resolving</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Condition Resolving</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Condition Resolving</em>' attribute.
+	 * @see #setConditionResolving(boolean)
+	 * @see easyflow.tool.ToolPackage#getResolvedParam_ConditionResolving()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isConditionResolving();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.ResolvedParam#isConditionResolving <em>Condition Resolving</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Condition Resolving</em>' attribute.
+	 * @see #isConditionResolving()
+	 * @generated
+	 */
+	void setConditionResolving(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Resolved</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Resolved</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Resolved</em>' attribute.
+	 * @see #setResolved(boolean)
+	 * @see easyflow.tool.ToolPackage#getResolvedParam_Resolved()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isResolved();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.ResolvedParam#isResolved <em>Resolved</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Resolved</em>' attribute.
+	 * @see #isResolved()
+	 * @generated
+	 */
+	void setResolved(boolean value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -261,7 +318,7 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	 * @model
 	 * @generated
 	 */
-	void resolveCondititionalParam(String param, String setter, String value);
+	ResolvedParam deepCopy();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -269,6 +326,30 @@ public interface ResolvedParam extends IToolElement, DefaultToolElement {
 	 * @model
 	 * @generated
 	 */
-	ResolvedParam deepCopy();
+	String resolvePipe(String handle);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void resolveCondititionalParam(String param, String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	ResolvedParam getChildParam(String paramName, String condition);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	ResolvedParam getConditionResolvingChildParam(String condition, boolean isMatch);
 
 } // ResolvedParam

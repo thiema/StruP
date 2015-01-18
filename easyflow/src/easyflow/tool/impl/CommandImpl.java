@@ -22,6 +22,7 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -35,7 +36,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -534,7 +534,17 @@ public class CommandImpl extends EObjectImpl implements Command {
 	 */
 	public ResolvedParam getDataParamForDataPort(DataPort dataPort, boolean isOutput, int strategy) {
 		
-		Iterator<Entry<String, ResolvedParam>> it = getResolvedParams().iterator();
+		logger.debug("getDataParamForDataPort(): "+dataPort.getName()+" "+dataPort.getParameterName()+" "+getResolvedParams().keySet());
+		if (strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_PARAM_KEY || strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY)
+			if (getResolvedParams().containsKey(dataPort.getName()))
+			{
+				ResolvedParam resolvedParam = getResolvedParams().get(dataPort.getName());
+				InOutParameter ioParam = (InOutParameter) resolvedParam.getParameter();
+				if (ioParam.isOutput() == isOutput)
+					return resolvedParam;
+			}
+		
+		ListIterator<Entry<String, ResolvedParam>> it = getResolvedParams().listIterator();
 		while (it.hasNext())
 		{
 			Entry<String, ResolvedParam> e  = it.next();
@@ -542,6 +552,7 @@ public class CommandImpl extends EObjectImpl implements Command {
 			if (getDataParamForDataPort(dataPort, isOutput, rp, strategy))
 				return rp;
 		}
+		
 		return null;
 	}
 
@@ -557,22 +568,26 @@ public class CommandImpl extends EObjectImpl implements Command {
 	
 	private boolean getDataParamForDataPort(DataPort dataPort, boolean isOutput, ResolvedParam resolvedParam, int strategy)
 	{
+		logger.debug("getDataParamForDataPort(): check param="+resolvedParam.resolveName());
+		
 		if (resolvedParam.getParameter().isDataParam())
 		{
 			// assume data param
 			InOutParameter ioParam = (InOutParameter) resolvedParam.getParameter();
 			
-			if ((ioParam.isOutput() && isOutput) || (!ioParam.isOutput() && !isOutput))
+			if (ioParam.isOutput() == isOutput)
 			{
-				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy ==  GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_PORT) &&
+				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_PORT)   &&
 					ioParam.getDataPort() != null && ioParam.getDataPort().equals(dataPort.getName()))
 					return true;
-				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy ==  GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT) &&
-					ioParam.getFormats() != null && dataPort.isCompatibleStr(ioParam.getFormats()))
+				if ((strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_ANY || strategy == GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT) &&
+					ioParam.getFormats()  != null && dataPort.isCompatibleStr(ioParam.getFormats(), false))
 					return true;
 			}
 		}
-		else if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
+		
+		//else 
+			if (resolvedParam.getChildParams() != null && !resolvedParam.getChildParams().isEmpty())
 		{
 			Iterator<Entry<String, EList<ResolvedParam>>> it = resolvedParam.getChildParams().iterator();
 			while (it.hasNext())
@@ -582,12 +597,13 @@ public class CommandImpl extends EObjectImpl implements Command {
 				while (it2.hasNext())
 				{
 					ResolvedParam rp = it2.next();
+					//logger.debug("getDataParamForDataPort(): check child param="+rp.resolveName());
 					if (getDataParamForDataPort(dataPort, isOutput, rp, strategy))
 						return true;
 				}
 			}
 		}
-			
+		
 		return false;
 	}
 

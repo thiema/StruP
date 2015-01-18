@@ -64,6 +64,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 			case DataPackage.DATA_LINK: return createDataLink();
 			case DataPackage.DATA: return createData();
 			case DataPackage.DATA_FORMAT: return createDataFormat();
+			case DataPackage.DATA_MATCH: return createDataMatch();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -107,6 +108,16 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	public DataFormat createDataFormat() {
 		DataFormatImpl dataFormat = new DataFormatImpl();
 		return dataFormat;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataMatch createDataMatch() {
+		DataMatchImpl dataMatch = new DataMatchImpl();
+		return dataMatch;
 	}
 
 	/**

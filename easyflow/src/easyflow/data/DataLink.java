@@ -9,6 +9,7 @@ package easyflow.data;
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
 
+import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.traversal.TraversalChunk;
 
 import java.net.URI;
@@ -548,5 +549,13 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	boolean isPipeable();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.NoValidInOutDataException" dataListMany="true" allowedHandlesMany="true"
+	 * @generated
+	 */
+	EList<Data> getMatchingDataFor(EList<Data> dataList, EList<String> allowedHandles, boolean useOutDataPort) throws NoValidInOutDataException;
 
 } // DataLink

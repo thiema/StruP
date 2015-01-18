@@ -470,6 +470,53 @@ public interface DataPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.data.impl.DataMatchImpl <em>Match</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.data.impl.DataMatchImpl
+	 * @see easyflow.data.impl.DataPackageImpl#getDataMatch()
+	 * @generated
+	 */
+	int DATA_MATCH = 4;
+
+	/**
+	 * The feature id for the '<em><b>Parent Data</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH__PARENT_DATA = 0;
+
+	/**
+	 * The feature id for the '<em><b>Child Data</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH__CHILD_DATA = 1;
+
+	/**
+	 * The feature id for the '<em><b>Score</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH__SCORE = 2;
+
+	/**
+	 * The number of structural features of the '<em>Match</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH_FEATURE_COUNT = 3;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataPort <em>Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -917,6 +964,49 @@ public interface DataPackage extends EPackage {
 	EAttribute getDataFormat_Description();
 
 	/**
+	 * Returns the meta object for class '{@link easyflow.data.DataMatch <em>Match</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Match</em>'.
+	 * @see easyflow.data.DataMatch
+	 * @generated
+	 */
+	EClass getDataMatch();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.data.DataMatch#getParentData <em>Parent Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent Data</em>'.
+	 * @see easyflow.data.DataMatch#getParentData()
+	 * @see #getDataMatch()
+	 * @generated
+	 */
+	EReference getDataMatch_ParentData();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.data.DataMatch#getChildData <em>Child Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Child Data</em>'.
+	 * @see easyflow.data.DataMatch#getChildData()
+	 * @see #getDataMatch()
+	 * @generated
+	 */
+	EReference getDataMatch_ChildData();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.DataMatch#getScore <em>Score</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Score</em>'.
+	 * @see easyflow.data.DataMatch#getScore()
+	 * @see #getDataMatch()
+	 * @generated
+	 */
+	EAttribute getDataMatch_Score();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1273,6 +1363,40 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_FORMAT__DESCRIPTION = eINSTANCE.getDataFormat_Description();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.data.impl.DataMatchImpl <em>Match</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.data.impl.DataMatchImpl
+		 * @see easyflow.data.impl.DataPackageImpl#getDataMatch()
+		 * @generated
+		 */
+		EClass DATA_MATCH = eINSTANCE.getDataMatch();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent Data</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MATCH__PARENT_DATA = eINSTANCE.getDataMatch_ParentData();
+
+		/**
+		 * The meta object literal for the '<em><b>Child Data</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATA_MATCH__CHILD_DATA = eINSTANCE.getDataMatch_ChildData();
+
+		/**
+		 * The meta object literal for the '<em><b>Score</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_MATCH__SCORE = eINSTANCE.getDataMatch_Score();
 
 	}
 

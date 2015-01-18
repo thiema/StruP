@@ -1109,7 +1109,7 @@ public class GraphImpl extends EObjectImpl implements Graph {
 	 */
 	public boolean generateWorkflowForExecutionSystem(mxICell root, IExecutionSystem executionSystem) {
 		
-		getExecutionGraph().resolveDataPorts(root);
+		//getExecutionGraph().resolveDataPorts(root);
 		if (GlobalConfig.isPipeAllowed())
 			getExecutionGraph().resolvePipes(root);
 		getExecutionGraph().resolveToolParams(root);

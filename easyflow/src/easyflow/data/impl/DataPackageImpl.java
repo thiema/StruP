@@ -15,6 +15,7 @@ import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
+import easyflow.data.DataMatch;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
 
@@ -106,6 +107,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	private EClass dataFormatEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dataMatchEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -583,6 +591,42 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDataMatch() {
+		return dataMatchEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataMatch_ParentData() {
+		return (EReference)dataMatchEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDataMatch_ChildData() {
+		return (EReference)dataMatchEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDataMatch_Score() {
+		return (EAttribute)dataMatchEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DataFactory getDataFactory() {
 		return (DataFactory)getEFactoryInstance();
 	}
@@ -650,6 +694,11 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		dataFormatEClass = createEClass(DATA_FORMAT);
 		createEAttribute(dataFormatEClass, DATA_FORMAT__NAME);
 		createEAttribute(dataFormatEClass, DATA_FORMAT__DESCRIPTION);
+
+		dataMatchEClass = createEClass(DATA_MATCH);
+		createEReference(dataMatchEClass, DATA_MATCH__PARENT_DATA);
+		createEReference(dataMatchEClass, DATA_MATCH__CHILD_DATA);
+		createEAttribute(dataMatchEClass, DATA_MATCH__SCORE);
 	}
 
 	/**
@@ -713,6 +762,14 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatibleStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "formats", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "requireAll", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatibleStr", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "formats", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getDataFormat(), "formats", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "requireAll", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = addEOperation(dataPortEClass, ecorePackage.getEBoolean(), "isCompatible", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getDataFormat(), "formats", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -765,6 +822,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		addEOperation(dataLinkEClass, ecorePackage.getEBoolean(), "isPipeable", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = addEOperation(dataLinkEClass, this.getData(), "getMatchingDataFor", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getData(), "dataList", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "allowedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "useOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
+
 		initEClass(dataEClass, Data.class, "Data", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getData_Label(), ecorePackage.getEString(), "label", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getData_Port(), this.getDataPort(), null, "port", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -797,6 +860,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
 		addEOperation(dataEClass, ecorePackage.getEString(), "resolveSupportedHandles", 0, -1, IS_UNIQUE, IS_ORDERED);
 
+		addEOperation(dataEClass, ecorePackage.getEBoolean(), "isPipable", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(dataFormatEClass, DataFormat.class, "DataFormat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDataFormat_Name(), ecorePackage.getEString(), "name", null, 0, 1, DataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataFormat_Description(), ecorePackage.getEString(), "description", null, 0, 1, DataFormat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -805,6 +870,16 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		addEParameter(op, this.getDataFormat(), "testDataFormat", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(dataFormatEClass, ecorePackage.getEString(), "renderAsFileExtension", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(dataMatchEClass, DataMatch.class, "DataMatch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDataMatch_ParentData(), this.getData(), null, "parentData", null, 0, 1, DataMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDataMatch_ChildData(), this.getData(), null, "childData", null, 0, 1, DataMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataMatch_Score(), ecorePackage.getELong(), "score", "0", 0, 1, DataMatch.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = addEOperation(dataMatchEClass, ecorePackage.getELong(), "computeScore", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theMapsPackage.getStringToStringMap(), "constraints", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(dataMatchEClass, ecorePackage.getEBoolean(), "isPipable", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //DataPackageImpl

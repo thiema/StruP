@@ -52,71 +52,73 @@ public class GlobalConfig {
 	//##############################################################
 
 	// processing options (keys)
-	public static final String   CONFIG_PROCESSING_DEFAULT_HANDLE       = "default_handle";
-	public static final String   CONFIG_PROCESSING_ALLOW_PIPE           = "allow_pipe";
-	public static final String   CONFIG_PROCESSING_ALLOW_FILE           = "allow_file";
+	public static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_PARAM_NAME       = "default_handle";
+	public static final String   CONFIG_PROCESSING_ALLOW_PIPE_PARAM_NAME           = "allow_pipe";
+	public static final String   CONFIG_PROCESSING_ALLOW_FILE_PARAM_NAME           = "allow_file";
 	
 
 	// processing options (defaults)
 	public  static final String   CONFIG_PROCESSING_HANDLE_FILE          = GlobalConstants.NAME_FILE_HANDLE;
 	public  static final String   CONFIG_PROCESSING_HANDLE_PIPE          = GlobalConstants.NAME_PIPE_HANDLE;
-	public  static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE = CONFIG_PROCESSING_HANDLE_FILE;
-	public  static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_VALUE     = true;
-	public  static final boolean  CONFIG_PROCESSING_ALLOW_FILE_VALUE     = true;
+	public  static final String   CONFIG_PROCESSING_DEFAULT_HANDLE_DEFAULT_VALUE = CONFIG_PROCESSING_HANDLE_FILE;
+	public  static final boolean  CONFIG_PROCESSING_ALLOW_PIPE_DEAFULT_VALUE     = true;
+	public  static final boolean  CONFIG_PROCESSING_ALLOW_FILE_DEFAULT_VALUE     = true;
 	public  static final String[] CONFIG_PROCESSING_HANDLES            = {
 										CONFIG_PROCESSING_HANDLE_FILE, CONFIG_PROCESSING_HANDLE_PIPE };
-	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM                           = "execution_system";
-	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE               = "execution_system_output_file";
-	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_VALUE             = "exec_rules.txt";
-	private static final String   CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_OUTPUT_FILE_VALUE = "makeflow.out";
+	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_PARAM_NAME                           = "execution_system";
+	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE_PARAM_NAME               = "execution_system_output_file";
+	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_DEFAULT_VALUE             = "exec_rules.txt";
+	private static final String   CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE_DEFAULT_VALUE = "makeflow.out";
 
 	// tool options	
-	public static final String   CONFIG_TOOL_DEFAULT_COMMAND_PATTERN_VALUE            = "pos opt in out";
-	public static final String   CONFIG_TOOL_COMMAND_PATTERN                          = "command_pattern";
+	public static final String   CONFIG_TOOL_COMMAND_PATTERN_DEFAULT_VALUE            = "pos opt in out";
+	public static final String   CONFIG_TOOL_COMMAND_PATTERN_PARAM_NAME                          = "command_pattern";
 	
 	public  static final String[]  CONFIG_TOOL_VALID_COMMAND_PATTERN_PARTS            = {"pos", "opt", "in", "out"};
 	
-	private static final String    CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER             = "cmd_part_delimiter";
-	private static final String    CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER_VALUE       = " ";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER            = "value_delimiter";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER_VALUE      = ",";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_DELIMITER                  = "arg_delimiter";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_DELIMITER_VALUE            = " ";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX                 = "arg_key_prefix";
-	private static final String    CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX            = "long_arg_key_prefix";
-	private static final String    CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE           = "-";
-	private static final String    CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX_VALUE      = "--";
-	private static final String    CONFIG_TOOL_DEFAULT_WRITE_DEFAULT                  = "write_default_value_to_command_line";
-	private static final boolean   CONFIG_TOOL_DEFAULT_WRITE_DEFAULT_VALUE            = false;
+	private static final String    CONFIG_TOOL_CMD_PART_DELIMITER_PARAM_NAME             = "cmd_part_delimiter";
+	private static final String    CONFIG_TOOL_CMD_PART_DELIMITER_DEFAULT_VALUE       = " ";
+	private static final String    CONFIG_TOOL_ARG_VALUE_DELIMITER_PARAM_NAME            = "value_delimiter";
+	private static final String    CONFIG_TOOL_ARG_VALUE_DELIMITER_DEFAULT_VALUE      = ",";
+	private static final String    CONFIG_TOOL_ARG_DELIMITER_PARAM_NAME                  = "arg_delimiter";
+	private static final String    CONFIG_TOOL_ARG_DELIMITER_DEFAULT_VALUE            = " ";
+	private static final String    CONFIG_TOOL_ARG_KEY_PREFIX_PARAM_NAME                 = "arg_key_prefix";
+	private static final String    CONFIG_TOOL_LONG_ARG_KEY_PREFIX_PARAM_NAME            = "long_arg_key_prefix";
+	private static final String    CONFIG_TOOL_ARG_KEY_PREFIX_DEFAULT_VALUE           = "-";
+	private static final String    CONFIG_TOOL_LONG_ARG_KEY_PREFIX_DEFAULT_VALUE      = "--";
+	private static final String    CONFIG_TOOL_WRITE_DEFAULT_VALUE_PARAM_NAME                  = "write_default_value_to_command_line";
+	private static final boolean   CONFIG_TOOL_WRITE_DEFAULT_VALUE_DEFAULT_VALUE            = false;
 	
-	private static final String    CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE          = "multiple_arg_value";
-	private static final boolean   CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE_VALUE    = false;
+	private static final String    CONFIG_TOOL_IS_MULTIPLE_ARG_VALUE_PARAM_NAME          = "multiple_arg_value";
+	private static final boolean   CONFIG_TOOL_IS_MULTIPLE_ARG_VALUE_DEFAULT_VALUE    = false;
 	
 	//private static final String    CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED         = "boolean_value_required";
 	//private static final boolean   CONFIG_TOOL_DEFAULT_BOOLEAN_VALUE_REQUIRED_VALUE   = false;
 
 	private static final String    CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME  = "output_value_for_boolean_param";
-	private static final boolean   CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_VALUE       = false;
+	private static final boolean   CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_DEAFULT_VALUE       = false;
 	
 	private static final String    CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME            = "output_default_param";
-	private static final boolean   CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_VALUE                 = true;
+	private static final boolean   CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_DEFAULT_VALUE         = true;
 	
-	private static final String    CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL       = "assume_positional_data_param";
-	private static final boolean   CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL_VALUE = false; // true means that in/out data params are processed as postional param
+	private static final String    CONFIG_TOOL_ASSUME_DATA_PARAM_POSITIONAL_PARAM_NAME    = "assume_positional_data_param";
+	private static final boolean   CONFIG_TOOL_ASSUME_DATA_PARAM_POSITIONAL_DEFAULT_VALUE = false; // true means that in/out data params are processed as postional param
 	                                                                                      // -> no key/prefix/delimiter by default, even if defined in pacakge/tool
-	private static final String    CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL            = "assume_positional_param";
-	private static final boolean   CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL_VALUE      = false;
+	private static final String    CONFIG_TOOL_ASSUME_PARAM_POSITIONAL_PARAM_NAME            = "assume_positional_param";
+	private static final boolean   CONFIG_TOOL_ASSUME_PARAM_POSITIONAL_DEFAULT_VALUE      = false;
 	
-	private static final String    CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY          = "default_omit_prefix_if_no_arg_key";
-	private static final boolean   CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY_VALUE    = true;
-	public  static final String    CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY                  = "omit_prefix_if_no_arg_key";
+	private static final boolean   CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_DEFAULT_VALUE    = true;
+	public  static final String    CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME       = "omit_prefix_if_no_arg_key";
 	
-	private static final String    CONFIG_TOOL_DEFAULT_OPTION_TYPE                        = "default_option_type";
-	private static final String    CONFIG_TOOL_DEFAULT_OPTION_TYPE_VALUE                  = "long";//short
+	private static final String    CONFIG_TOOL_OPTION_TYPE_PARAM_NAME             = "option_type";
+	private static final String    CONFIG_TOOL_OPTION_TYPE_DEAFULT_VALUE                  = "long";//short
 	
-	private static final String    CONFIG_TOOL_RESOLVE_PATH_NAME                          = "resolve_path";
+	private static final String    CONFIG_TOOL_RESOLVE_PATH_PARAM_NAME                          = "resolve_path";
 	private static final boolean   CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE                 = true;
-		
+	
+	private static final String    CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_PARAM_NAME      = "pkg_param_preferred";
+	private static final boolean   CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_DEFAULT_VALUE = true;
+	
 	private static final Parameter positionalParamTemplate = ToolFactory.eINSTANCE.createParameter();
 	private static final Parameter optionalParamTemplate   = ToolFactory.eINSTANCE.createParameter();
 	private static Parameter exeParameterDefault     = null;
@@ -133,6 +135,9 @@ public class GlobalConfig {
 	private static final EMap<String, String> processingConfig = new BasicEMap<String, String>();
 	//private static final EMap<String, String> catalogConfig    = new BasicEMap<String, String>();
 	private static final EMap<String, String> workflowConfig   = new BasicEMap<String, String>();
+	private static final EList<String> toolCfgParams              = new BasicEList<String>();
+	private static final EList<String> workflowCfgParams              = new BasicEList<String>();
+	private static final EList<String> processingCfgParams              = new BasicEList<String>();
 
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE              = false;
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_DEFAULT_VALUE           = false;
@@ -142,13 +147,13 @@ public class GlobalConfig {
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE           = true;
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
 	
-	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY                = "resolve_parent_task_strategy";
+	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_PARAM_NAME                = "resolve_parent_task_strategy";
 	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT = "nearest_parents_first";
 	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK       = "max_rank_first";
 	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS    = "all_parents";
 	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE  = CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT;
 
-	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_VALUE_DFLT = "|";
+	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_DEFAULT_VALUE = "|";
 
 	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME = "pipe_operator";
 	
@@ -184,6 +189,57 @@ public class GlobalConfig {
 		return varMap;
 	}
 	
+	private static boolean initToolCfgParams = true;
+	private static boolean initProcessingCfgParams = true;
+	private static boolean initWorkflowCfgParams = true;
+	
+	public static EList<String> getProcessingConfigParams()
+	{
+		if (initProcessingCfgParams)
+		{
+			//processingCfgParams.add();
+			initProcessingCfgParams = false;
+		}
+		return processingCfgParams;
+	}
+
+	public static EList<String> getWorkflowConfigParams()
+	{
+		if (initWorkflowCfgParams)
+		{
+			initWorkflowCfgParams = false;
+			//workflowCfgParams.add();
+		}
+		return workflowCfgParams;
+	}
+	
+	public static EList<String> getToolConfigParams()
+	{
+		if (initToolCfgParams)
+		{
+		toolCfgParams.add(CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_ASSUME_DATA_PARAM_POSITIONAL_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_ASSUME_PARAM_POSITIONAL_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_OPTION_TYPE_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_RESOLVE_PATH_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_IS_MULTIPLE_ARG_VALUE_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_WRITE_DEFAULT_VALUE_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_CMD_PART_DELIMITER_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_ARG_VALUE_DELIMITER_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_ARG_DELIMITER_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_ARG_KEY_PREFIX_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_LONG_ARG_KEY_PREFIX_PARAM_NAME);
+		toolCfgParams.add(CONFIG_TOOL_COMMAND_PATTERN_PARAM_NAME);
+		//toolCfgParams.add();
+		initToolCfgParams = false;
+		}
+		return toolCfgParams;
+	}
+	
 	public static String resolveContextVars(String tpl)
 	{
 		StringWriter w = new StringWriter();
@@ -213,10 +269,10 @@ public class GlobalConfig {
 	// processing
 	public static String getDefaultHandle()
 	{
-		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_DEFAULT_HANDLE))
-			return getProcessingConfig().get(CONFIG_PROCESSING_DEFAULT_HANDLE);
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_DEFAULT_HANDLE_PARAM_NAME))
+			return getProcessingConfig().get(CONFIG_PROCESSING_DEFAULT_HANDLE_PARAM_NAME);
 		else
-			return CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE;
+			return CONFIG_PROCESSING_DEFAULT_HANDLE_DEFAULT_VALUE;
 	}
 	
 	public static boolean string2bool(String string)
@@ -232,18 +288,18 @@ public class GlobalConfig {
 	
 	public static boolean isPipeAllowed()
 	{
-		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_ALLOW_PIPE))
-			return string2bool(getProcessingConfig().get(CONFIG_PROCESSING_ALLOW_PIPE));
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_ALLOW_PIPE_PARAM_NAME))
+			return string2bool(getProcessingConfig().get(CONFIG_PROCESSING_ALLOW_PIPE_PARAM_NAME));
 		else
-			return CONFIG_PROCESSING_ALLOW_PIPE_VALUE;
+			return CONFIG_PROCESSING_ALLOW_PIPE_DEAFULT_VALUE;
 	}
 	
 	public static boolean isFileAllowed()
 	{
-		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_ALLOW_FILE))
-			return string2bool(getProcessingConfig().get(CONFIG_PROCESSING_ALLOW_FILE));
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_ALLOW_FILE_PARAM_NAME))
+			return string2bool(getProcessingConfig().get(CONFIG_PROCESSING_ALLOW_FILE_PARAM_NAME));
 		else
-			return CONFIG_PROCESSING_ALLOW_FILE_VALUE;
+			return CONFIG_PROCESSING_ALLOW_FILE_DEFAULT_VALUE;
 	}
 
 	public static EList<String> getAllowedHandles()
@@ -268,12 +324,10 @@ public class GlobalConfig {
 	// tool
 	public static String getCommandPattern()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_COMMAND_PATTERN))
-		{
-			return getToolConfig().get(CONFIG_TOOL_COMMAND_PATTERN);
-		}
+		if (getToolConfig().containsKey(CONFIG_TOOL_COMMAND_PATTERN_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_COMMAND_PATTERN_PARAM_NAME);
 		else
-			return CONFIG_TOOL_DEFAULT_COMMAND_PATTERN_VALUE;
+			return CONFIG_TOOL_COMMAND_PATTERN_DEFAULT_VALUE;
 	}
 	
 	public static EList<String> getValidCommandPatternParts()
@@ -283,42 +337,42 @@ public class GlobalConfig {
 	
 	public static String getArgValueDelimiter()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER))
-			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER);
+		if (getToolConfig().containsKey(CONFIG_TOOL_ARG_VALUE_DELIMITER_PARAM_NAME))
+			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_ARG_VALUE_DELIMITER_PARAM_NAME);
 		else
-			return CONFIG_TOOL_DEFAULT_ARG_VALUE_DELIMITER_VALUE;
+			return CONFIG_TOOL_ARG_VALUE_DELIMITER_DEFAULT_VALUE;
 	}
 	
 	public static String getArgDelimiter()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_ARG_DELIMITER))
-			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_DEFAULT_ARG_DELIMITER);
+		if (getToolConfig().containsKey(CONFIG_TOOL_ARG_DELIMITER_PARAM_NAME))
+			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_ARG_DELIMITER_PARAM_NAME);
 		else
-			return CONFIG_TOOL_DEFAULT_ARG_DELIMITER_VALUE;		
+			return CONFIG_TOOL_ARG_DELIMITER_DEFAULT_VALUE;		
 	}
 	
 	public static String getArgPrefix()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX))
-			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX);
+		if (getToolConfig().containsKey(CONFIG_TOOL_ARG_KEY_PREFIX_PARAM_NAME))
+			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_ARG_KEY_PREFIX_PARAM_NAME);
 		else
-			return CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE;
+			return CONFIG_TOOL_ARG_KEY_PREFIX_DEFAULT_VALUE;
 	}
 	
 	public static String getLongArgPrefix()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX))
-			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX);
+		if (getToolConfig().containsKey(CONFIG_TOOL_LONG_ARG_KEY_PREFIX_PARAM_NAME))
+			return GlobalConfig.getToolConfig().get(CONFIG_TOOL_LONG_ARG_KEY_PREFIX_PARAM_NAME);
 		else
-			return CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX_VALUE;
+			return CONFIG_TOOL_LONG_ARG_KEY_PREFIX_DEFAULT_VALUE;
 	}
 	
 	public static boolean useDefaultValue()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_WRITE_DEFAULT))
-			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_WRITE_DEFAULT));
+		if (getToolConfig().containsKey(CONFIG_TOOL_WRITE_DEFAULT_VALUE_PARAM_NAME))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_WRITE_DEFAULT_VALUE_PARAM_NAME));
 		else
-			return CONFIG_TOOL_DEFAULT_WRITE_DEFAULT_VALUE;
+			return CONFIG_TOOL_WRITE_DEFAULT_VALUE_DEFAULT_VALUE;
 	}
 
 	public static boolean paramIsPositional() {
@@ -387,24 +441,24 @@ public class GlobalConfig {
 	
 	public static boolean assumePositionalDataParam()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL))
-			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL));
+		if (getToolConfig().containsKey(CONFIG_TOOL_ASSUME_DATA_PARAM_POSITIONAL_PARAM_NAME))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_ASSUME_DATA_PARAM_POSITIONAL_PARAM_NAME));
 		else
-			return CONFIG_TOOL_DEFAULT_ASSUME_DATA_PARAM_POSITIONAL_VALUE;
+			return CONFIG_TOOL_ASSUME_DATA_PARAM_POSITIONAL_DEFAULT_VALUE;
 	}
 
 	public static boolean assumePositionalParam()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL))
-			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL));
+		if (getToolConfig().containsKey(CONFIG_TOOL_ASSUME_PARAM_POSITIONAL_PARAM_NAME))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_ASSUME_PARAM_POSITIONAL_PARAM_NAME));
 		else
-			return CONFIG_TOOL_DEFAULT_ASSUME_PARAM_POSITIONAL_VALUE;
+			return CONFIG_TOOL_ASSUME_PARAM_POSITIONAL_DEFAULT_VALUE;
 	}
 
 	private static void applyExeParameterDefaultConfiguration(Parameter parameter)
 	{
 		parameter.setDelimiter(getCmdPartDelimiter());
-		parameter.setPrefix(CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE);
+		parameter.setPrefix(CONFIG_TOOL_ARG_KEY_PREFIX_DEFAULT_VALUE);
 	}
 	
 	public static final Parameter getExeParameterTemplate()
@@ -420,25 +474,25 @@ public class GlobalConfig {
 	
 	public static boolean omitPrefixIfNoArgKey()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY))
-			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY));
-		return CONFIG_TOOL_DEFAULT_OMIT_PREFIX_IF_NO_ARG_KEY_VALUE;
+		if (getToolConfig().containsKey(CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME));
+		return CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_DEFAULT_VALUE;
 	}
 	
 	public static String getCmdPartDelimiter()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER))
-			return getToolConfig().get(CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER);
-		return CONFIG_TOOL_DEFAULT_CMD_PART_DELIMITER_VALUE;		
+		if (getToolConfig().containsKey(CONFIG_TOOL_CMD_PART_DELIMITER_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_CMD_PART_DELIMITER_PARAM_NAME);
+		return CONFIG_TOOL_CMD_PART_DELIMITER_DEFAULT_VALUE;
 	}
 	
 	//changed from Boolean to boolean
 	public static boolean isMultipleArgValue()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE))
-			return new Boolean(getToolConfig().get(CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE));
+		if (getToolConfig().containsKey(CONFIG_TOOL_IS_MULTIPLE_ARG_VALUE_PARAM_NAME))
+			return new Boolean(getToolConfig().get(CONFIG_TOOL_IS_MULTIPLE_ARG_VALUE_PARAM_NAME));
 		else
-			return CONFIG_TOOL_DEFAULT_IS_MULTIPLE_ARG_VALUE_VALUE; 
+			return CONFIG_TOOL_IS_MULTIPLE_ARG_VALUE_DEFAULT_VALUE; 
 	}
 	
 	/*public static Boolean isBooleanValueRequired()
@@ -454,29 +508,29 @@ public class GlobalConfig {
 		if (getToolConfig().containsKey(CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME))
 			return new Boolean(getToolConfig().get(CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_PARAM_NAME));
 		else
-			return CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_VALUE;		
+			return CONFIG_TOOL_OUTPUT_VALUE_FOR_BOOLEAN_PARAM_DEAFULT_VALUE;		
 	}
 	
 
 	public static String getPreferredOptionType()
 	{
 		String type = null;
-		if (getToolConfig().containsKey(CONFIG_TOOL_DEFAULT_OPTION_TYPE))
-			type = getToolConfig().get(CONFIG_TOOL_DEFAULT_OPTION_TYPE);
+		if (getToolConfig().containsKey(CONFIG_TOOL_OPTION_TYPE_PARAM_NAME))
+			type = getToolConfig().get(CONFIG_TOOL_OPTION_TYPE_PARAM_NAME);
 		else
-			type = CONFIG_TOOL_DEFAULT_OPTION_TYPE_VALUE;
+			type = CONFIG_TOOL_OPTION_TYPE_DEAFULT_VALUE;
 		
 		return type;
 	}
 
 	public static String getShortPrefix()
 	{
-		return CONFIG_TOOL_DEFAULT_ARG_KEY_PREFIX_VALUE;
+		return CONFIG_TOOL_ARG_KEY_PREFIX_DEFAULT_VALUE;
 	}
 
 	public static String getLongPrefix()
 	{
-		return CONFIG_TOOL_DEFAULT_LONG_ARG_KEY_PREFIX_VALUE;
+		return CONFIG_TOOL_LONG_ARG_KEY_PREFIX_DEFAULT_VALUE;
 	}
 	
 	public static String getArgPrefixForType(String type) {
@@ -489,13 +543,21 @@ public class GlobalConfig {
 			return null;
 	}
 	
+	public static boolean isPkgParameterPreferred()
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_PARAM_NAME).equalsIgnoreCase("true");
+		else
+			return CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_DEFAULT_VALUE;
+	}
+	
 	public static DefaultExecutionSystem getExecutionSystem()
 	{
 		DefaultExecutionSystem executionSystem = null;
-		String exeSystem = CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_VALUE;
+		String exeSystem = CONFIG_PROCESSING_EXECUTION_SYSTEM_DEFAULT_VALUE;
 		
-		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_EXECUTION_SYSTEM))
-			exeSystem = getProcessingConfig().get(CONFIG_PROCESSING_EXECUTION_SYSTEM);
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_EXECUTION_SYSTEM_PARAM_NAME))
+			exeSystem = getProcessingConfig().get(CONFIG_PROCESSING_EXECUTION_SYSTEM_PARAM_NAME);
 		
 		GlobalVar.setExecutionSystemOutputFileName(getExecutionSystemOutputFile());
 		
@@ -524,17 +586,17 @@ public class GlobalConfig {
 	
 	public static String getExecutionSystemOutputFile()
 	{
-		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE))
-			return getProcessingConfig().get(CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE);
+		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE_PARAM_NAME))
+			return getProcessingConfig().get(CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE_PARAM_NAME);
 		else
-			return CONFIG_PROCESSING_DEFAULT_EXECUTION_SYSTEM_OUTPUT_FILE_VALUE;
+			return CONFIG_PROCESSING_EXECUTION_SYSTEM_OUTPUT_FILE_DEFAULT_VALUE;
 		
 	}
 	
 	public static String getResolveParentTasksStrategy()
 	{
-		if (getWorkflowConfig().containsKey(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY))
-			return getWorkflowConfig().get(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY);
+		if (getWorkflowConfig().containsKey(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_PARAM_NAME))
+			return getWorkflowConfig().get(CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_PARAM_NAME);
 		else
 			return CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_DEFAULT_VALUE;
 	}
@@ -576,8 +638,8 @@ public class GlobalConfig {
 	
 	public static boolean resolvePath()
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_RESOLVE_PATH_NAME))
-			return getToolConfig().get(CONFIG_TOOL_RESOLVE_PATH_NAME).equals("true"); 
+		if (getToolConfig().containsKey(CONFIG_TOOL_RESOLVE_PATH_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_RESOLVE_PATH_PARAM_NAME).equals("true"); 
 		else
 			return CONFIG_TOOL_RESOLVE_PATH_DEFAULT_VALUE;
 	}
@@ -586,8 +648,6 @@ public class GlobalConfig {
 	private static String toolConfigDirName  = null;
 	private static String pkgConfigFileName  = null;
 	private static String toolDefDirName     = null;
-	
-
 	
 	public static String getToolConfigFileName()
 	{
@@ -696,7 +756,7 @@ public class GlobalConfig {
 		if (getToolConfig().containsKey(CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME))
 			return getToolConfig().get(CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_PARAM_NAME).equals("true");
 		else
-			return CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_VALUE;
+			return CONFIG_TOOL_OUTPUT_DEFAULT_PARAM_DEFAULT_VALUE;
 	}
 	
 	public static String getPipeOperator()
@@ -704,7 +764,7 @@ public class GlobalConfig {
 		if (getProcessingConfig().containsKey(CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME))
 			return getProcessingConfig().get(CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME);
 		else
-			return CONFIG_PROCESSING_PIPE_OPERATOR_VALUE_DFLT;
+			return CONFIG_PROCESSING_PIPE_OPERATOR_DEFAULT_VALUE;
 
 	}
 }

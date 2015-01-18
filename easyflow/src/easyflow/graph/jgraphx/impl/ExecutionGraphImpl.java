@@ -6,7 +6,6 @@
  */
 package easyflow.graph.jgraphx.impl;
 
-import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
@@ -25,7 +24,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
-import easyflow.graph.jgraphx.ToolDependencies;
 import easyflow.tool.ToolFactory;
 
 import org.apache.log4j.Logger;
@@ -91,53 +89,6 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 
 		return true;
 	}	
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean resolveDataPorts(mxICell root)
-	{
-		boolean rc = true;
-		mxICellVisitor visitor=new mxICellVisitor()
-		{
-			@Override
-			public boolean visit(Object vertex, Object edge) {
-				
-				try {
-					Task task = JGraphXUtil.loadTask(vertex);
-					task.resolveInputs();
-					task.resolveOutputs();
-				}
-				catch (TaskNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DataLinkNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParameterNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NoValidInOutDataException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ResolvingParameterFailedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-				return true;
-			}
-		};
-		getGraph().getGraph().getModel().beginUpdate();		try		{
-			getGraph().getGraph().traverseTopologicalOrder(root, visitor);
-			JGraphXUtil.layoutGraph();
-			
-		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
-	
-		return rc;
-
-	}
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -235,9 +186,9 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 				
 				try {
 					Task task = JGraphXUtil.loadTask(vertex);
-					task.resolveDataPorts(task.getOutputs(), task.getPreferredTool(), true);
-					task.resolveDataPorts(task.getInputs(),  task.getPreferredTool(), false);
-					task.resolveParams();
+					task.resolveDataPortParams(task.getOutputs(), task.getPreferredTool(), true);
+					task.resolveDataPortParams(task.getInputs(),  task.getPreferredTool(), false);
+					//task.resolveParams();
 
 				} catch (TaskNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -251,10 +202,10 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 				} catch (ResolvingParameterFailedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (DataLinkNotFoundException e) {
+				}/* catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				return true;
 			}
 		};

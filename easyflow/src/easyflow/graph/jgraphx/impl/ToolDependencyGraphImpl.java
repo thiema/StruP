@@ -8,6 +8,8 @@ package easyflow.graph.jgraphx.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Map.Entry;
 
 import easyflow.core.Catalog;
@@ -17,13 +19,16 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.graph.jgraphx.Graph;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.Tuple;
 import easyflow.custom.util.URIUtil;
 import easyflow.data.Data;
+import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
+import easyflow.data.DataMatch;
 import easyflow.data.DataPort;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
@@ -134,6 +139,9 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 		return isStatic;
 	}
 	
+	static String debugTool = "rmdup";
+	//static String debugTool = "view";
+	
 	public boolean resolveToolDependencies(mxICell root, final Catalog catalog) throws NoValidInOutDataException
 	{
 		boolean rc = true;
@@ -196,19 +204,35 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 							{
 								i++;
 								try {
-									Task     child         = JGraphXUtil.getTargetTask((mxCell) edgeOut);
-									Tool     childTool     = child == null ? null : child.getPreferredTool();
-									DataLink dataLink      = JGraphXUtil.loadDataLink(edgeOut);
+									Task     childTask       = JGraphXUtil.getTargetTask((mxCell) edgeOut);
+									Tool     childTool       = childTask == null ? null : childTask.getPreferredTool();
+									DataLink dataLink        = JGraphXUtil.loadDataLink(edgeOut);
 									//DataPort dataPort      = null;
 									//String   firstInstance = getFirstInstance(task, dataLink);
-									String   groupingStr   = dataLink.getParentGroupingStr();
-									String   paramStr      = dataLink.getParamStr();
+									String   groupingStr     = dataLink.getParentGroupingStr();
+									String   paramStr        = dataLink.getParamStr();
 									String   firstInstanceDL = null;
-									String   chunksResult  ="";
+									String   chunksResult    = "";
 									
-									String debugTool = "rmdup";
-									//String debugTool = "view";
-									if (debugTool.equals(tool.getName()))
+									String   specString    = "========= resolve datalink #"+(i)
+											+" (Tool="+tool.getName()+")=>"+(childTask!=null?childTask.getUniqueString():null)
+											+" (Tool="+(childTool!=null?childTool.getName():null)+")"
+											+" ===================";
+									logger.debug("resolveToolDependencies(): "+specString
+											+" datalink="+dataLink.getId()+" "+dataLink.getFormat().getName()
+										+"\n   group="+groupingStr+" firstInstance="+firstInstanceDL+" "+chunksResult
+											+task.getTraversalEvents().keySet()+" childs:"+(childTask == null ? "null":childTask.getTraversalEvents().keySet())
+										+"\n   dataPort (Out)="+(dataLink.getDataPort() != null ? (dataLink.getDataPort().getName()
+											+" "+dataLink.getDataPort().getParameterName()+" "+dataLink.getDataPort().hashCode()) : null)
+										+" dataPort (In)="+(dataLink.getInDataPort() != null ?
+												(dataLink.getInDataPort().getName()+" "+dataLink.getInDataPort().getParameterName()
+											+" "+dataLink.getInDataPort().hashCode()):null)
+								);
+
+									
+									
+
+									if (debugTool.equals(tool.getName()) || debugTool.equalsIgnoreCase(tool.getId()))
 									{
 										logger.debug("debug tool="+debugTool);
 									}
@@ -219,7 +243,21 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										// retrieve the parent tool data
 										// ParentTool -----------> ChildTool
 										// tool       dataLink---> childTool 
-										parentData = getToolDataForDataLink(tool.getData(), dataLink, false);
+										//parentData = getToolDataForDataLink(tool.getData(), dataLink, false);
+										ListIterator<Entry<String, EList<Data>>> it = tool.getData().listIterator();
+										while (it.hasNext())
+										{
+											Entry<String, EList<Data>> e = it.next();
+											parentData.addAll(dataLink.getMatchingDataFor(e.getValue(), GlobalConfig.getAllowedHandles(), false));
+											//ListIterator<Data> it1 = e.getValue().listIterator(e.getValue().size());
+											//while (it1.hasPrevious()){	}
+										}
+										//for (EList<Data> curParentData : tool.getData().values())
+											//parentData.addAll(dataLink.getMatchingDataFor(curParentData, GlobalConfig.getAllowedHandles(), false));
+										
+										if (parentData.isEmpty())
+											logger.warn("resolveToolDependencies(): no ingoing tool data found.");
+
 									}
 									catch (NoValidInOutDataException e)
 									{
@@ -230,11 +268,11 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 									
 									if (parentData.size() == 0)
 									{
-										logger.warn("resolveToolDependencies(): no data port found");
+										//logger.warn("resolveToolDependencies(): no data port found");
 									}
 									else if (parentData.size() > 1)
 									{
-										logger.warn("resolveToolDependencies(): ambigous data port (found "+parentData.size()+" ports)");
+										//logger.warn("resolveToolDependencies(): ambigous data port (found "+parentData.size()+" ports)");
 									}
 									
 									if (!dataLink.getChunks().isEmpty())
@@ -264,50 +302,58 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										chunksResult ="no chunk found in datalink";
 									
 									//boolean  isMetadata    = false;
-									boolean  isStaticInput = false;
-									boolean  isGenericInput= false;
-									
-									String   specString    = "========= resolve datalink #"+(i)
-											+" (Tool="+tool.getName()+")=>"+(child!=null?child.getUniqueString():null)
-											+" (Tool="+(childTool!=null?childTool.getName():null)+")"
-											+" ===================";
+									//boolean  isStaticInput = false;
+									//boolean  isGenericInput= false;
 									//boolean  assumeHiddenInput = false;
 									
-									logger.debug("resolveToolDependencies(): "+specString
-												+" datalink="+dataLink.getId()+" "+dataLink.getFormat().getName()
-											+"\n   ---group="+groupingStr+" firstInstance="+firstInstanceDL+" "+chunksResult
-												+task.getTraversalEvents().keySet()+" childs:"+(child == null ? "null":child.getTraversalEvents().keySet())
-											+"\n   ---dataPort (Out)="+(dataLink.getDataPort() != null ? (dataLink.getDataPort().getName()
-												+" "+dataLink.getDataPort().getParameterName()+" "+dataLink.getDataPort().hashCode()) : null)
-											+" dataPort (In)="+(dataLink.getInDataPort() != null ?
-													(dataLink.getInDataPort().getName()+" "+dataLink.getInDataPort().getParameterName()
-												+" "+dataLink.getInDataPort().hashCode()):null)
-												+" found "+parentData.size()+" ports (for tool="+tool.getName()+")"
-									);
-									
 									//EList<Data> parentData = getToolDataForDataLink(tool.getData(), dataLink, task.isRoot());
-									
-									EList<Data> childData  = null;
+									logger.debug("resolveToolDependencies(): found "+(parentData != null ? parentData.size() : null)+" possible parent params");
+									EList<Data> childData = new BasicEList<Data>();
 									if (childTool != null)
 									{
 										try
 										{
-											childData = getToolDataForDataLink(childTool.getData(), dataLink, true);
+											ListIterator<Entry<String, EList<Data>>> it = childTool.getData().listIterator();
+											while (it.hasNext())
+											{
+												Entry<String, EList<Data>> e = it.next();
+												childData.addAll(dataLink.getMatchingDataFor(e.getValue(), GlobalConfig.getAllowedHandles(), true));
+												//ListIterator<Data> it1 = e.getValue().listIterator(e.getValue().size());
+												//while (it1.hasPrevious()){	}
+											}
+
+											//childData = getToolDataForDataLink(childTool.getData(), dataLink, true);
+											//for (EList<Data> curChildData : childTool.getData().values())
+												//childData.addAll(dataLink.getMatchingDataFor(curChildData, GlobalConfig.getAllowedHandles(), true));
 										}
 										catch (NoValidInOutDataException e)
 										{
 											e.printStackTrace();
 											//boolean noChildDataAvail = true;
 										}
+										if (childData.isEmpty())
+											logger.warn("resolveToolDependencies(): no child tool data found.");
 									}
 									else if (!dataLink.isTerminal())
 										logger.error("resolveToolDependencies(): no child tool found."+" ("+specString+")");
 									
 									
-									// get the desired data matching both parent and child 
-									Tuple<Data, Data> matchingData = findMatchingData(parentData, childData, dataLink.getFormat());
-									if (matchingData == null)
-										throw new NoValidInOutDataException();
+									// get the desired data matching both parent and child
+									logger.debug("resolveToolDependencies(): found "+(childData != null ? childData.size() : null)+" possible child params");
+									
+									//EList<Tuple<Data, Data>> matchingDataPairs = findMatchingData(parentData, childData, dataLink.getFormat());
+									      DataMatch dataMatch = matchParentAndChildData(parentData, childData);
+									      if (dataMatch == null)
+									    	  logger.error("resolveToolDependencies(): no datamatch object created.");
+									      if (dataMatch.isPipable())
+									    	  dataLink.setPipe(true);
+									      else
+									    	  dataLink.setPipe(false);
+									      
+									      Tuple<Data, Data> matchingData = new Tuple<Data, Data> (dataMatch.getParentData(), dataMatch.getChildData());
+									
+									//if (matchingData == null)
+										//throw new NoValidInOutDataException();
 									//
 									if (matchingData.parent != null)
 									{
@@ -319,10 +365,12 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										{
 											logger.debug(""+rp.renderToString());
 											data.setResolvedParam(rp);
-											//if (data.getSupportedHandles(true).contains(GlobalConstants.NAME_PIPE_HANDLE))
-												//isPipable = true;
+											if (dataLink.getPipe())
+												rp.setPipe(true);
 										}
 										dataLink.setInData(data);
+										task.getOutputs().put(new Integer(dataLink.getId()).toString(), dataLink);
+										
 									}
 									else
 										logger.error("Parent_NoValidInOutDataException");
@@ -331,23 +379,25 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 									if (matchingData.child != null)
 									{
 										Data data = EcoreUtil.copy(matchingData.child);
-										ResolvedParam rp = child.getResolvedCommand().getDataParamForDataPort(data.getPort(), false, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
+										ResolvedParam rp = childTask.getResolvedCommand().getDataParamForDataPort(data.getPort(), false, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
+										
 										if (rp == null)
 											logger.error("no valid parameter found.");
 										else
 										{
 											logger.debug(""+rp.renderToString());
 											data.setResolvedParam(rp);
-											//if (!data.getSupportedHandles(true).contains(GlobalConstants.NAME_PIPE_HANDLE))
-												//isPipable = false;
+											if (dataLink.getPipe())
+												rp.setPipe(true);
 										}
 										dataLink.setData(data);
+										childTask.getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 									}
 									else
 										logger.error("Child_NoValidInOutDataException");
 									
 									if (matchingData.parent != null)
-										dataLink.getInDataPort().setParameterName(matchingData.parent.getParameter().getEffectiveParentParameter(true).getName());
+										dataLink.getInDataPort().setParameterName(matchingData.parent.getParameter().getEffectiveParentParameter(true).resolveName());
 
 									if (dataLink.getInDataPort() == null)
 										throw new NoValidInOutDataException();
@@ -358,7 +408,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 													"parent="+(matchingData.parent != null ? matchingData.parent.getName() : null));
 									
 									if (matchingData.child != null)
-										dataLink.getDataPort().setParameterName(matchingData.child.getParameter().getEffectiveParentParameter(true).getName());
+										dataLink.getDataPort().setParameterName(matchingData.child.getParameter().getEffectiveParentParameter(true).resolveName());
 									
 									if (!dataLink.isTerminal() && matchingData.child == null) //dataLink.getInDataPort().getParameterName() == null)
 									{
@@ -373,18 +423,9 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 													+" to be hidden. use parent datalink="+parentDataLink.getUniqueString()+" to set resource."
 													+" output filename creation: "+p.getFilenameCreation());
 											URI uri = parentDataLink.getDataResourceName();
-											if (GlobalConstants.ADD_EXTENSION_TO_FILENAME.equals(p.getFilenameCreation()))
-											{
 												uri = URIUtil.addExtensionToURI(uri, 
-														dataLink.getInDataPort().getFormat().getName(), false);
-											}
-											else
-											{
-												uri = URIUtil.addExtensionToURI(
-														uri, 
-														dataLink.getInDataPort().getFormat().getName(), true);
-												
-											}
+														dataLink.getInDataPort().getFormat().getName(), 
+														!GlobalConstants.ADD_EXTENSION_TO_FILENAME.equals(p.getFilenameCreation()));
 											dataLink.setDataResourceName(uri);
 											continue;
 										}
@@ -397,24 +438,28 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 											(task.getTraversalEvents().containsKey(groupingStr) ? 
 											task.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null)
 											:
-											(child.getTraversalEvents().containsKey(groupingStr) ? 
-											child.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null);
-													
+											(childTask.getTraversalEvents().containsKey(groupingStr) ? 
+											childTask.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null);
+											
 									logger.debug("resolveToolDependencies(): "
 											+"... continue ..."
+											+"\n   found "+parentData.size()+"/"+childData.size()+" ports (for tool="+tool.getName()+")"
 											+" travcrit=("+(tc != null ? 
 													(tc.getChunkSource()+" "+tc.getId()+" "+tc.getName()+" "+tc.getMode()+" "+tc.getOperation().getName()):null)+") all:"
-													+task.getTraversalEvents().keySet()+" childs:"+(child != null ? child.getTraversalEvents().keySet() : null)
+													+task.getTraversalEvents().keySet()+" childs:"+(childTask != null ? childTask.getTraversalEvents().keySet() : null)
 											+" static="+isStatic
-											+"\n datalink="+dataLink.getId()+" "+dataLink.getDataResourceName()
-											+"\n   ---paramName out="+dataLink.getInDataPort().getParameterName()+" in="+(dataLink.getDataPort() != null ? 
-													dataLink.getDataPort().getParameterName() : null)
-											+"\n   ---parent data=("+(matchingData.parent != null ?
+											+"\n   datalink="+dataLink.getId()+" "+dataLink.getDataResourceName()+" pipe="+dataLink.getPipe()+" param="
+											+(dataLink.getInData()!=null && dataLink.getInData().getParameter()!=null ? dataLink.getInData().getParameter().resolveName():null)+"/"
+											+(dataLink.getData()!=null && dataLink.getData().getParameter()!=null ? dataLink.getData().getParameter().resolveName():null)
+											
+											//+"\n   paramName out="+dataLink.getInDataPort().getParameterName()+" in="+(dataLink.getDataPort() != null ? 
+												//	dataLink.getDataPort().getParameterName() : null)
+											+"\n   in: parent data=("+(matchingData.parent != null ?
 													("format="+matchingData.parent.getFormat().getName()+" name="+matchingData.parent.getName()
 															+" port="+matchingData.parent.getPort().getName()) 
 															+" param="+matchingData.parent.getPort().getParameterName()+" "
 															+" handle="+matchingData.parent.getHandle()+" isOutput="+matchingData.parent.isOutput() : null)+")"
-											+"\n   ---child data=("+(matchingData.child != null ?
+											+"\n   out: child data=("+(matchingData.child != null ?
 													("format="+matchingData.child.getFormat().getName()+" name="+matchingData.child.getName()
 															+" port="+matchingData.child.getPort().getName()
 															+" param="+matchingData.child.getPort().getParameterName()
@@ -424,7 +469,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										// set inputs from DataLinks first instance
 										if (!isStatic && firstInstanceDL != null && tc != null 
 												&& GlobalConstants.METADATA_INPUT.equalsIgnoreCase(tc.getChunkSource()) 
-												&& "metadata".equalsIgnoreCase(tc.getOperation().getName()))
+												&& GlobalConstants.TRAVERSAL_CHUNK_SOURCE_TYPE_METADATA.equalsIgnoreCase(tc.getOperation().getName()))
 										{
 											dataLink.setDataResourceName(getURIFromObject(URIUtil.createPath(inputDir, firstInstanceDL)));
 											logger.debug("resolveToolDependencies(): set dataresource="+firstInstanceDL+" (metadata (cached))");
@@ -511,13 +556,14 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										// set from grouping criterion
 										else if (!isStatic)
 										{
-											//if (task.is)
-											String fileName = task.getUniqueURIString()+"."+dataLink.getFormat().renderAsFileExtension();
-											
-											dataLink.setDataResourceName(getURIFromObject(
+											{
+												String fileName = task.getUniqueURIString()+"."+dataLink.getFormat().renderAsFileExtension();
+												dataLink.setDataResourceName(getURIFromObject(
 													URIUtil.createPath(workDir, fileName)));
-											logger.debug("resolveToolDependencies(): "
-													+"set dataresource="+fileName+" (task's grouping)");
+												logger.debug("resolveToolDependencies(): "
+														+"set dataresource="+fileName+" (task's grouping)");
+											}
+											
 											if (paramStr != null && !paramStr.equals(""))
 											{
 												String paramNameStr = dataLink.getParamNameStr();
@@ -533,7 +579,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										}
 										else
 										{
-											logger.error("resolveToolDependencies(): no input resource found !");
+											logger.error("resolveToolDependencies(): no input resource found/cannot process input data !");
 										}
 										
 									//}
@@ -650,7 +696,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 		}
 		return super.eIsSet(featureID);
 	}
-
+/*
 	// return the in/out data defined for the tool, for given datalink
 	// special handling needed for:
 	//   - root tool (only out-data port available)
@@ -668,7 +714,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 			data.add(dataLink.getData());
 		else if (dataMap.isEmpty())
 		{
-			
+			logger.error("getToolDataForDataLink(): to tool-data provied.");
 		}
 		else
 		{
@@ -677,7 +723,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 				for (Data curData : dataList)
 				{
 					DataPort tmp = useOutDataPort ? dataLink.getDataPort() : dataLink.getInDataPort();
-					logger.debug(curData.getPort().getFormat().getName()+" ("+curData.getPort().getName()+") vs: "
+					logger.debug("getToolDataForDataLink(): "+curData.getPort().getFormat().getName()+" ("+curData.getPort().getName()+") vs: "
 								+tmp.getFormat().getName()+"("+tmp.getName()+") iscompatible="+(curData.getPort().isCompatible(tmp))
 							+" isAllowed="+curData.isAllowed()+" isOutput="+curData.isOutput()
 							+" matching in-out port="+((useOutDataPort && !curData.isOutput()) || (!useOutDataPort && curData.isOutput()))
@@ -700,15 +746,17 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 		
 		return data;
 	}
-	
+*/
 	// compare given 2 data and do at least:
 	//  - resolve the handle -> set preferred handle
 	// if only one data is non-null check the only one return the non null data 
 	// in the correct tuples value 
-	private Tuple<Data,Data> findMatchingData(EList<Data> parentData,
+	private EList<Tuple<Data,Data>> findMatchingData(EList<Data> parentData,
 			EList<Data> childData,
-			DataFormat dataFormat) 
+			DataFormat  dataFormat) 
 	{
+		EList<Tuple<Data,Data>> matchingPairs = new BasicEList<Tuple<Data,Data>>();
+		
 		EList<Data> tmpData = null;
 		//String dummy;
 		if ((parentData == null || parentData.isEmpty()) && childData != null && !childData.isEmpty())
@@ -730,11 +778,11 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 								(childData == null || childData.isEmpty()) ? null : d);
 					}
 					*/
-					
-					return new Tuple<Data, Data>(
+					logger.warn("findMatchingData(): data defined for only one port !");
+					matchingPairs.add(new Tuple<Data, Data>(
 											(parentData == null || parentData.isEmpty()) ? null : d, 
 											(childData  == null || childData.isEmpty())  ? null : d
-												);
+												));
 				}
 			}
 		}
@@ -746,10 +794,15 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 					for (Data parent : parentData)
 					{
 						if (parent.isOutput() && child.match(parent))
-							return new Tuple<Data, Data>(parent, child);
+							//return new Tuple<Data, Data>(parent, child);
+							matchingPairs.add(new Tuple<Data, Data>(parent, child));
 					}
 			}
 		}
+		
+		return matchingPairs;
+		
+		/*
 		else if (parentData == null)
 			return null;
 		
@@ -769,13 +822,62 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 				if (child.matchFormat(dataFormat))
 				{
 					//get the first dataformat matching data
-					return new easyflow.custom.util.Tuple<Data, Data>(null, child);
+					return new Tuple<Data, Data>(null, child);
 				}
 			}
 		
 		return null;
+		*/
 	}
 
+	
+	private DataMatch matchParentAndChildData(EList<Data> parentData, EList<Data> childData)
+	{
+		
+		EMap<String, String> constraints   = new BasicEMap<String, String>();
+		EList<Long>          scores        = new BasicEList<Long>();
+		EList<DataMatch>     dataMatchList = new BasicEList<DataMatch>();
+		
+		int bestIndex = 0;
+		int i = 0;
+		
+		if (parentData == null)
+			parentData = new BasicEList<Data>();
+		
+		if (parentData.isEmpty())
+			parentData.add(null);
+			
+		if (childData == null)
+			childData = new BasicEList<Data>();
+		
+		if (childData.isEmpty())
+			childData.add(null);
+		
+		Iterator<Data> itParentData = parentData.iterator();
+		while (itParentData.hasNext())
+		//for (Data curParentData : parentData)
+		{
+			Data curParentData = itParentData.next();
+			Iterator<Data> itChildData = childData.iterator();
+			while (itChildData.hasNext())
+			//for (Data curChildData : childData)
+			{
+				Data curChildData = itChildData.next();
+				DataMatch dataMatch = DataFactory.eINSTANCE.createDataMatch();
+				dataMatch.setChildData(curChildData);
+				dataMatch.setParentData(curParentData);
+				dataMatchList.add(dataMatch);
+				scores.add(dataMatch.computeScore(constraints));
+				if (scores.get(i) > scores.get(bestIndex))
+					bestIndex = i;
+					
+				i++;
+			}
+		}
+		
+		return dataMatchList.get(bestIndex);
+	}
+	
 	
 	private DataLink getFirstParentDataLink(Task task, DataPort dataPort) throws DataLinkNotFoundException, TaskNotFoundException
 	{

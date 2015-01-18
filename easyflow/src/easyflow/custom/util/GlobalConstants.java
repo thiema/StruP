@@ -28,7 +28,11 @@ public class GlobalConstants {
 	public static final String FILE_HANDLE_PARAM_NAME     = "file_handle";
 	public static final String DEFAULT_STDOUT_HANDLE      = "";
 	public static final String DEFAULT_STDIN_HANDLE       = "-";
+	public static final String PREFERRED_HANDLE_PARAM_NAME= "preferred_handle";
 
+	public static final String BOOLEAN_TRUE_VALUE = "true";
+	public static final String BOOLEAN_FALSE_VALUE = "false";
+	
 	//
 	public static final String ABSTRACT_NODES_RESOLVED           = "abstractNodesResovled";
 	public static final String ABSTRACT_WORKFLOW_GENERATED       = "abstractWorkflowGenerated";
@@ -142,16 +146,19 @@ public class GlobalConstants {
 	public static final String CONDITION_TYPE_FILE_HANDLE             = "file_handle";
 	
 	public static final String CONDITION_TYPE_METADATA                = METADATA;
-	public static final int ANY_HANDLE  = 0;
-	public static final int FILE_HANDLE = 1;
-	public static final int PIPE_HANDLE = 2;
-	public static final int PARAM_DATA_MATCH_STRATEGY_ANY         = 0;
-	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_PORT   = 1;
-	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT = 2;
-	public static final int RETRIEVE_DATA_PORT_STRATEGY_FIRST     = 0;
-	public static final int RETRIEVE_DATA_PORT_STRATEGY_LAST      = 1;
-	public static final int RETRIEVE_DATA_PORT_STRATEGY_PRIMARY   = 2;
-
+	
+	public static final int    ANY_HANDLE  = 0;
+	public static final int    FILE_HANDLE = 1;
+	public static final int    PIPE_HANDLE = 2;
+	
+	public static final int    PARAM_DATA_MATCH_STRATEGY_ANY         = 0;
+	public static final int    PARAM_DATA_MATCH_STRATEGY_DATA_PORT   = 1;
+	public static final int    PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT = 2;
+	public static final int    PARAM_DATA_MATCH_STRATEGY_PARAM_KEY   = 3;
+	
+	public static final int    RETRIEVE_DATA_PORT_STRATEGY_FIRST     = 0;
+	public static final int    RETRIEVE_DATA_PORT_STRATEGY_LAST      = 1;
+	public static final int    RETRIEVE_DATA_PORT_STRATEGY_PRIMARY   = 2;
 
 	public static final String COMMAND_LINE_PART_INPUT      = PARAM_INPUT;
 	public static final String COMMAND_LINE_PART_OUTPUT     = PARAM_OUTPUT;

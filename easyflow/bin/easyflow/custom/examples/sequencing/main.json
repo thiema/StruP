@@ -26,9 +26,9 @@
     "use_threads"                  : "true",
     "num_threads"                  : 10,
     "queue"                        : "bioinf.q",
-    "allow_pipe"              : "false",
+    "allow_pipe"              : "true",
     "handles"                 : "pipe,file",
-    "default_handle"          : "pipe",
+    "default_handle"          : "file",
     "stdin_operator"          : "|",
     "stdout_operator"         : "|",
     "pipe_operator"           : "|",
@@ -80,10 +80,10 @@
   					     "../../../tool/schema/Easyflow_multiple.xsd", 
   					     "../../../tool/schema/external/Galaxy.xsd"],
 
-  	"var"          :  { "basepath" : "/home/heinz/tools/bio" },
+  	"var"          :  { "basepath" : "/home/mth/tools", "basepath_" : "/home/heinz/tools/bio" },
   	
   	"interpreter"  :  { "java_"        : "/path/to/java"},
-  	"pkg"          :  { "picard"      : {"jar":"$basepath/picard"},
+  	"pkg"          :  { "picard"      : {"jar": "$basepath/picard/picard"},
   				        "gatk_simple" : "$basepath/GATK/GenomeAnalysisTK.jar",
   				        "gatk"        : {"classpath" : "$basepath/GATK/GenomeAnalysisTK.jar"
   				                        } 

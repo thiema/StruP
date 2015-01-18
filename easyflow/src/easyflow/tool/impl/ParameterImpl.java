@@ -92,6 +92,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOverrideAttributes <em>Override Attributes</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isAbstract <em>Abstract</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getToolRefs <em>Tool Refs</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getPreferPkgParam <em>Prefer Pkg Param</em>}</li>
  * </ul>
  * </p>
  *
@@ -789,6 +790,26 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	protected EList<String> toolRefs;
 
 	/**
+	 * The default value of the '{@link #getPreferPkgParam() <em>Prefer Pkg Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreferPkgParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Boolean PREFER_PKG_PARAM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPreferPkgParam() <em>Prefer Pkg Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreferPkgParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected Boolean preferPkgParam = PREFER_PKG_PARAM_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1270,15 +1291,57 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean getPreferPkgParam() {
+		return preferPkgParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPreferPkgParam(Boolean newPreferPkgParam) {
+		Boolean oldPreferPkgParam = preferPkgParam;
+		preferPkgParam = newPreferPkgParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__PREFER_PKG_PARAM, oldPreferPkgParam, preferPkgParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isPreferred() 
+	{
+		if (getPreferPkgParam() != null)
+			return getPreferPkgParam();
+		else
+			return GlobalConfig.isPkgParameterPreferred();	
+	}
+
+	private String getPrefix_(String defaultPrefix)
+	{
+		if (getPrefix() == null)
+			return defaultPrefix;
+		else
+			return getPrefix();
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public String getArgKey(String defaultPrefix, Key defaultKey) {
 
 		String argKey = "";
 		if (!getKeys().isEmpty())
-			argKey = resolveArgKey(defaultPrefix, defaultKey);
+			argKey = resolveArgKey(getPrefix_(defaultPrefix), defaultKey);
 		else if (defaultKey != null)
-			return defaultKey.resolveArgKey(defaultPrefix);
+			return defaultKey.resolveArgKey(getPrefix_(defaultPrefix));
 		else
 		{
 			if (getPrefix() != null)// && isNamed(defaultIsNamed))
@@ -1402,12 +1465,12 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	public EList<String> getSupportedHandles(boolean applyConfig) {
 
 		//String d;
-		logger.debug("getSupportedHandles(): handles so far="+getHandles());
+		//logger.debug("getSupportedHandles(): handles so far="+getHandles());
 		EList<String> handles = new BasicEList<String>();
 		
 		if (getHandles() == null || getHandles().isEmpty())
 		{
-			handles.add(GlobalConfig.CONFIG_PROCESSING_DEFAULT_HANDLE_VALUE);
+			handles.add(GlobalConfig.CONFIG_PROCESSING_DEFAULT_HANDLE_DEFAULT_VALUE);
 			return handles;
 		}
 		else if (applyConfig)
@@ -1489,7 +1552,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * - the template parameter is used, when a particular attribute of the parameter is not set
 	 * 
 	 * the command line parameter has the following general layout:
-	 *  <prefix><key><delimiter><arg1><arg-delimiter><arg2>
+	 *  <prefix><key><delimiter><arg1><arg-delimiter><arg2>...<arg-delimiter><argN>
 	 *  
 	 *  examples:
 	 *  
@@ -1558,8 +1621,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return resolveValues(res, path);
 			}
 			
-			boolean argValResolved = true;
-			if (constraints != null && constraints.containsKey(GlobalConstants.FILE_HANDLE_PARAM_NAME))
+/*			boolean argValResolved = true;
+			if (constraints != null && constraints.containsKey(GlobalConstants.FILE_HANDLE_PARAM_NAME))// && constraints.get(GlobalConstants.FILE_HANDLE_PARAM_NAME) != null)
 			{
 				if (GlobalConstants.NAME_STDIN_HANDLE.equals(constraints.get(GlobalConstants.FILE_HANDLE_PARAM_NAME)))
 					argValue = resolveValues(GlobalConstants.DEFAULT_STDIN_HANDLE, "");
@@ -1567,9 +1630,11 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 					argValue = resolveValues(GlobalConstants.DEFAULT_STDOUT_HANDLE, "");
 				else
 					argValResolved = false;
+
 			}
 
-			if (!argValResolved) {
+			if (!argValResolved) 
+			{*/
 				if (constraints != null && constraints.containsKey("value"))
 				{
 					argValue = resolveValues(constraints.get("value"), path);
@@ -1590,17 +1655,20 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 					if (shouldOutputDefaultParam(defaultOutput))
 						argValue = resolveValues(getDefaultValue(), path);
 				}
-			}
+				else
+				{
+				}				
+			//}
 			
-				
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-
-		
 		if ((argValue == null || argValue.isEmpty()) && !isBoolean())
+			return cmdString;
+		
+		if (isBoolean() && argValue == null && !shouldOutputDefaultParam(defaultOutput))
 			return cmdString;
 		
 		//Parameter p = this;
@@ -1608,25 +1676,26 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		String  defaultArgDelimiter      = templateParam != null ? templateParam.getArgDelimiter(null) : null;
 		String  defaultPrefix            = templateParam != null ? templateParam.getPrefix() : null;
 		Key     defaultKey               = templateParam != null ? (templateParam.getKeys().isEmpty() ? null : templateParam.getKeys().get(0)) : null;
-		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) ?
-				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY) : GlobalConfig.omitPrefixIfNoArgKey());
-		
+		boolean omitPrefixIfNoArgKey     = (Boolean) (constraints != null && constraints.containsKey(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME) ?
+				constraints.get(GlobalConfig.CONFIG_TOOL_OMIT_PREFIX_IF_NO_ARG_KEY_PARAM_NAME) : GlobalConfig.omitPrefixIfNoArgKey());
 		boolean outputArgValue           = true;
-		if (isBoolean())
-		{
-			outputArgValue = shouldOutputArgValue(templateParam != null ? templateParam.shouldOutputArgValue(null) : null);
-		}
-		if (!outputArgValue)
-		{
-			logger.debug("generateCommandString(): omit generation of param="+resolveName());
-			return cmdString;
-		}
+			
 		// resolve prefix and key
 		if (((getName() == null || getName().equals("")) && omitPrefixIfNoArgKey))
 			logger.debug("generateCommandString(): keep cmd untouched.");
 		else if (isNamed(defaultIsNamed) || argValue == null)
 			cmdString.add(getArgKey(defaultPrefix, defaultKey));
 		
+		if (isBoolean())
+		{
+			outputArgValue = shouldOutputArgValue(templateParam != null ? templateParam.shouldOutputArgValue(null) : null);
+		}
+		if (!outputArgValue)
+		{
+			//logger.debug("generateCommandString(): omit generation of param="+resolveName());
+			return cmdString;
+		}
+
 		// resolve delimiter
 		if (outputArgValue && argValue != null && isNamed(defaultIsNamed))
 			cmdString.add(getArgDelimiter(defaultArgDelimiter));
@@ -1918,11 +1987,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			setPositional(parameter.getPositional());
 		if (parameter.getHandles() != null)
 			getHandles().addAll(parameter.getHandles());
-			
-			
-		mergeKeys(parameter.getKeys());
-			
 		
+		mergeKeys(parameter.getKeys());
 	}
 	
 	/**
@@ -1954,7 +2020,6 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			return getKeys().get(0).resolveName();
 		else
 			return null;
-
 	}
 
 	/**
@@ -2462,6 +2527,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return isAbstract();
 			case ToolPackage.PARAMETER__TOOL_REFS:
 				return getToolRefs();
+			case ToolPackage.PARAMETER__PREFER_PKG_PARAM:
+				return getPreferPkgParam();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2597,6 +2664,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				getToolRefs().clear();
 				getToolRefs().addAll((Collection<? extends String>)newValue);
 				return;
+			case ToolPackage.PARAMETER__PREFER_PKG_PARAM:
+				setPreferPkgParam((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2723,6 +2793,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case ToolPackage.PARAMETER__TOOL_REFS:
 				getToolRefs().clear();
 				return;
+			case ToolPackage.PARAMETER__PREFER_PKG_PARAM:
+				setPreferPkgParam(PREFER_PKG_PARAM_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2813,6 +2886,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 				return abstract_ != ABSTRACT_EDEFAULT;
 			case ToolPackage.PARAMETER__TOOL_REFS:
 				return toolRefs != null && !toolRefs.isEmpty();
+			case ToolPackage.PARAMETER__PREFER_PKG_PARAM:
+				return PREFER_PKG_PARAM_EDEFAULT == null ? preferPkgParam != null : !PREFER_PKG_PARAM_EDEFAULT.equals(preferPkgParam);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2931,6 +3006,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		result.append(abstract_);
 		result.append(", toolRefs: ");
 		result.append(toolRefs);
+		result.append(", preferPkgParam: ");
+		result.append(preferPkgParam);
 		result.append(')');
 		return result.toString();
 	}

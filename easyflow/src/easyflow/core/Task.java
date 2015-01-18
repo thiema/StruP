@@ -1037,7 +1037,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
 	 * @generated
 	 */
-	boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
+	boolean canProvideDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks, boolean isPartial) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1045,7 +1045,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
 	 * @generated
 	 */
-	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks) throws DataPortNotFoundException, ToolNotFoundException;
+	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks, boolean isPartial) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1062,22 +1062,6 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	EList<URI> getInputsForDataPort(DataPort dataPort);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException"
-	 * @generated
-	 */
-	void resolveInputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException"
-	 * @generated
-	 */
-	void resolveOutputs() throws DataLinkNotFoundException, ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1149,7 +1133,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.ParameterNotFoundException easyflow.NoValidInOutDataException easyflow.ResolvingParameterFailedException" dataLinksMapType="easyflow.util.maps.StringToDataLinkMap<org.eclipse.emf.ecore.EString, easyflow.data.DataLink>"
 	 * @generated
 	 */
-	void resolveDataPorts(EMap<String, DataLink> dataLinks, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
+	void resolveDataPortParams(EMap<String, DataLink> dataLinks, Tool tool, boolean isOutput) throws ParameterNotFoundException, NoValidInOutDataException, ResolvingParameterFailedException;
 
 	/**
 	 * <!-- begin-user-doc -->

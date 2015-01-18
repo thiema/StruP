@@ -245,18 +245,18 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model indexMapMapType="easyflow.util.maps.StringToIntMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EIntegerObject>" byParamIndexMapMapType="easyflow.util.maps.StringToIntMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EIntegerObject>"
 	 * @generated
 	 */
-	void createData(InOutParameter parameter);
+	void createData(InOutParameter parameter, EMap<String, Integer> indexMap, EMap<String, Integer> byParamIndexMap);
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model
+	 * @model indexMapMapType="easyflow.util.maps.StringToIntMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EIntegerObject>" byParamIndexMapMapType="easyflow.util.maps.StringToIntMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EIntegerObject>"
 	 * @generated
 	 */
-	void createData(ResolvedParam resolvedParameter);
+	void createData(ResolvedParam resolvedParameter, EMap<String, Integer> indexMap, EMap<String, Integer> byParamIndexMap);
 
 	/**
 	 * <!-- begin-user-doc -->

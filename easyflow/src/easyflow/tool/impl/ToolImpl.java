@@ -1023,10 +1023,12 @@ public class ToolImpl extends EObjectImpl implements Tool {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * if index map is provided, the parameter is inserted into the specific position 
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void createData(InOutParameter parameter) {
+	public void createData(InOutParameter parameter, EMap<String, Integer> indexMap, EMap<String, Integer> byParamIndexMap) {
+		
 		Data data = DataFactory.eINSTANCE.createData();
 		data.setOutput(parameter.isOutput());
 		data.setName(parameter.getName());
@@ -1043,10 +1045,34 @@ public class ToolImpl extends EObjectImpl implements Tool {
 		if (dataList == null)
 		{
 			dataList = new BasicEList<Data>();
-			getData().put(parameter.getName(), dataList);
+			if (indexMap != null)
+			{
+				if (!indexMap.containsKey(parameter.resolveName()))
+				{
+					indexMap.put(parameter.resolveName(), 0);
+				}
+				int i = indexMap.get(parameter.resolveName());
+				StringToDataListMapImpl entry = (StringToDataListMapImpl) EcoreUtil.create(MapsPackage.Literals.STRING_TO_DATA_LIST_MAP);
+				entry.setKey(parameter.resolveName());
+				entry.setValue(dataList);
+				getData().add(i, entry);
+				indexMap.put(parameter.resolveName(), i+1);
+			}
+			else
+				getData().put(parameter.resolveName(), dataList);
 		}
-		getData().get(parameter.getName()).add(data);
-
+		if (byParamIndexMap != null)
+		{
+			if (!byParamIndexMap.containsKey(parameter.resolveName()))
+			{
+				byParamIndexMap.put(parameter.resolveName(), 0);
+			}
+			int i = byParamIndexMap.get(parameter.resolveName());
+			getData().get(parameter.resolveName()).add(i, data);
+			byParamIndexMap.put(parameter.resolveName(), i+1);
+		}
+		else
+			getData().get(parameter.resolveName()).add(data);
 	}
 
 	/**
@@ -1054,15 +1080,24 @@ public class ToolImpl extends EObjectImpl implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void createData(ResolvedParam resolvedParameter) {
+	public void createData(ResolvedParam resolvedParameter, EMap<String, Integer> indexMap, EMap<String, Integer> byParamIndexMap) {
 		
 		if (resolvedParameter.getParameter().isDataParam())
-			createData((InOutParameter) resolvedParameter.getParameter());
+			createData((InOutParameter) resolvedParameter.getParameter(), indexMap, byParamIndexMap);
 		
 		if (resolvedParameter.getChildParams() != null)
-			for (EList<ResolvedParam> childParams : resolvedParameter.getChildParams().values())
-				for (ResolvedParam resolvedChildParam : childParams)
-					createData(resolvedChildParam);
+		{
+			Iterator<Entry<String, EList<ResolvedParam>>> it = resolvedParameter.getChildParams().iterator();
+			//for (EList<ResolvedParam> childParams : resolvedParameter.getChildParams().values())
+			while (it.hasNext())
+			{
+				Entry<String, EList<ResolvedParam>> e = it.next();
+				Iterator<ResolvedParam> it2 = e.getValue().iterator();
+				while (it2.hasNext())
+				//for (ResolvedParam resolvedChildParam : childParams)
+					createData(it2.next(), indexMap, byParamIndexMap);
+			}
+		}
 	}
 
 	/**

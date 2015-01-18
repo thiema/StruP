@@ -27,6 +27,7 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
+import easyflow.custom.util.Util;
 import easyflow.data.DataFactory;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
@@ -284,6 +285,78 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 		
 	}
 	
+	private mxICell findExistingUtilityTaskFor(String utilTaskString, Task source, String key, TraversalChunk chunk) throws TaskNotFoundException, DataLinkNotFoundException
+	{
+		EList<TraversalChunk> chunks = new  BasicEList<TraversalChunk>();
+		chunks.add(chunk);
+		EMap<String, EList<TraversalChunk>> chunksMap = new BasicEMap<String, EList<TraversalChunk>>();
+		chunksMap.put(key, chunks);
+		return findExistingUtilityTaskFor(utilTaskString, source, chunksMap);
+	}
+	
+	private mxICell findExistingUtilityTaskFor(String utilTaskString, Task source, EMap<String, EList<TraversalChunk>> chunks) throws TaskNotFoundException, DataLinkNotFoundException
+	{
+		mxICell sourceCell = (mxICell) GlobalVar.getCells().get(source.getUniqueString());
+		logger.debug("findExistingUtilityTaskFor(): check for presence of utilitytask="+utilTaskString+" as direct child of task="+source.getUniqueString()+" with chunks="+Util.list2String(chunks.get(0).getValue(), null));
+		for (Object edgeOut : getGraph().getGraph().getOutgoingEdges(sourceCell))
+		{
+			Task target = JGraphXUtil.getTargetTask((mxCell) edgeOut);
+			if (!target.isUtil() && !target.getAnalysisTypes().equals(utilTaskString))
+				continue;
+			
+			boolean missingKey = false;
+			DataLink dataLink = JGraphXUtil.loadDataLink(edgeOut);
+			boolean missingChunks = false;
+			for (String key : chunks.keySet())
+			{
+				if (!dataLink.getChunks().containsKey(key))
+				{
+					missingKey = true;
+					break;
+				}
+
+				if (dataLink.getChunks().get(key).size() != chunks.get(key).size())
+				{
+					missingChunks = true;
+					break;
+				}
+				for (TraversalChunk tcProvided : dataLink.getChunks().get(key))
+				{
+					boolean found = false;
+					for (TraversalChunk tcRequired : chunks.get(key))
+					{
+						if (tcRequired.getName().equals(tcProvided.getName()))
+						{
+							found = true;
+							break;
+						}
+					}
+					if (!found)
+					{
+						missingChunks = true;
+						break;
+					}
+				}
+				if (missingChunks)
+					break;
+					
+			}
+			if (missingChunks)
+			{
+				logger.debug("findExistingUtilityTaskFor(): skip target="+target.getUniqueString()+" (missing chunk(s))");
+				continue;
+			}
+			if (missingKey)
+			{
+				logger.debug("findExistingUtilityTaskFor(): skip target="+target.getUniqueString()+" (missing key(s))");
+				continue;
+			}
+			logger.debug("findExistingUtilityTaskFor(): found target="+target.getUniqueString()+" chunks="+dataLink.getChunks().keySet());
+			return (mxICell) edgeOut;
+		}
+		return null;
+	}
+	
 	private Task findExistingUtilityTaskFor(String utilTaskString, Object edge) throws TaskNotFoundException, DataLinkNotFoundException
 	{
 		Task   utilityTask = null;
@@ -302,7 +375,6 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 			{
 				utilityTask = JGraphXUtil.loadTask(prepVertex);
 				logger.debug("createUtilityTask(): found prep task="+utilityTask.getUniqueString());
-				
 			}
 		}
 		return utilityTask;
@@ -554,19 +626,19 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 					assert dataLink.getGroupingStr() != null;
 					if (!dataLink.getGroupingStr().equals(dataLink.getParentGroupingStr()))// && !sourceTask.isRoot())
 					{
-						if (sourceTask.canProvideDataPort(null, dataPortIn, dataLink.getGroupingStr(), null))
+						if (sourceTask.canProvideDataPort(null, dataPortIn, dataLink.getGroupingStr(), null, false))
 						{
 							found = true;
 							logger.debug("findCellsWithUntranslatedDataLinks(): source task can be configured to generate required grouping.");
 						}
 						// somehow get the relevant outdataport of source task
-						else if (task.canComsumeDataPort(null, null, dataLink.getParentGroupingStr(), null))
+						else if (task.canComsumeDataPort(null, null, dataLink.getParentGroupingStr(), null, false))
 						{
 							found = true;
 							logger.debug("findCellsWithUntranslatedDataLinks(): task can be configured to accepted grouping as provided by source task.");
 						}
 						else if (GlobalConstants.METADATA_INPUT.equals(dataLink.getGroupingStr())
-								&& sourceTask.canProvideDataPort(null, null, GlobalConstants.METADATA_INPUT, inputs))
+								&& sourceTask.canProvideDataPort(null, null, GlobalConstants.METADATA_INPUT, inputs, false))
 						{
 							found = true;
 							logger.debug("findCellsWithUntranslatedDataLinks(): direct conversion found (of grouping="+dataLink.getGroupingStr()+").");
@@ -577,7 +649,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 						// in metadata a record is defined to be "ID1 RG1 ..." and data RG1 is the same as data ID1 
 						else if (!GlobalConstants.METADATA_INPUT.equals(dataLink.getGroupingStr())
 								&& records.size() == sourceChunks.size()
-								&& sourceTask.canProvideDataPort(null, null, GlobalConstants.TRAVERSAL_CRITERION_RECORD, records))
+								&& sourceTask.canProvideDataPort(null, null, GlobalConstants.TRAVERSAL_CRITERION_RECORD, records, false))
 						{
 							found = true;
 							logger.debug("findCellsWithUntranslatedDataLinks(): direct conversion found.");
@@ -602,9 +674,9 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 							// - 1) filtering not necessary (because it just outputs the equivalent of a single record/input entity)
 							// - 2) filtering not necessary (because the parent can do it itself)
 							if (((//sourceBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && 
-									//(sourceInputs.size()  == 1 || sourceRecords.size() == 1) ||
-									chunks.size() > sourceChunks.size() ||
-									sourceTask.canProvideDataPort(null, null, sourceBasicGrouping, null))))
+									(sourceTask.getRecords().size() == 1) ||
+									//chunks.size() > sourceChunks.size() ||
+									sourceTask.canProvideDataPort(null, null, sourceBasicGrouping, null, true))))
 							{
 								logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip filtering.");
 								task.setFlags(task.getFlags() | 0x1000);
@@ -615,7 +687,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 							// - 2) merging not necessary, because the task can do merging itself
 							else if ((targetBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && inputs.size()  == 1) || 
 									  records.size() == 1 || 
-									  task.canComsumeDataPort(null, null, targetBasicGrouping, null))
+									  task.canComsumeDataPort(null, null, targetBasicGrouping, null, true))
 							{
 								logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip merging.");
 								task.setFlags(task.getFlags() | 0x2000);
@@ -914,7 +986,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 			{
 				TraversalEvent te=task.getTraversalEvents().get(dataLink.getGroupingStr());
 				logger.debug("createFilterTasks(): "+dataLink.getGroupingStr()+" "+dataLink.getParentGroupingStr()
-						+(te!=null ? "type of te="+te.getType()+" "+te.getTraversalCriterion().getMode(): "")
+						+(te!=null ? " type of te="+te.getType()+" "+te.getTraversalCriterion().getMode(): "")
 						+" source tes="+sourceTask.getTraversalEvents().keySet());
 				
 				EMap<String, EList<TraversalChunk>> currentCoveredChunks = GraphUtil.getCoveredChunks(
@@ -924,14 +996,14 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 					groupingStr,
 					true
 				);
-			
+				
 				logger.trace("createFilterTasks(): "+currentCoveredChunks.size()+" covered chunks found. "
 						+" filter chunks from "+sourceTask.getUniqueString());
+				
 				if (currentCoveredChunks.isEmpty())
 				{
 					logger.debug("createFilterTasks(): no chunks found that can be translated.");	
 				}
-	
 				else
 				{
 					if (coveredChunks==null)
@@ -942,20 +1014,29 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 							//if (coveredChunks.containsKey(e.getKey()))
 							coveredChunks.get(e.getKey()).addAll(e.getValue());
 						}
+
 					
 					logger.debug("createFilterTasks(): constallation="+(constellation & 0x04));
 					if ((constellation & 0x04) > 0)
 					{
 						String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter");
-						Task newTask          = JGraphXUtil.createNewUtilityTask(currentCoveredChunks, utilTaskString, edge);
-						mxICell newCell       = (mxICell) GlobalVar.getCells().get(newTask.getUniqueString());
+						mxICell utilEdge = findExistingUtilityTaskFor("filter", sourceTask, coveredChunks);
+						if (utilEdge != null)
+						{
+							cells.put(JGraphXUtil.getSource((mxCell) utilEdge), JGraphXUtil.loadDataLink(utilEdge));
+						}
+						else
+						{
+							Task utilTask          = JGraphXUtil.createNewUtilityTask(currentCoveredChunks, utilTaskString, edge);
+						mxICell newCell       = (mxICell) GlobalVar.getCells().get(utilTask.getUniqueString());
 						logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()
-								+"->"+newTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
+								+"->"+utilTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
 						DataLink dataLinkCopy = //copyDataLink(dataLink);
-								GraphUtil.createDataLink(dataLink, newTask, null);
+								GraphUtil.createDataLink(dataLink, utilTask, null);
 						mxICell newEdge       = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
 								JGraphXUtil.getSource((mxCell) edge), newCell, dataLinkCopy);
 						cells.put(newCell, dataLinkCopy);
+						}
 					}
 					else
 					{
@@ -982,19 +1063,27 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 									EMap<String, EList<TraversalChunk>> curCoveredChunks = new BasicEMap<String, EList<TraversalChunk>>();
 									chunks.add(traversalChunk);
 									curCoveredChunks.put(e.getKey(), chunks);
+									mxICell utilEdge = findExistingUtilityTaskFor("filter", sourceTask, e.getKey(), traversalChunk);
+									if (utilEdge != null)
+									{
+										cells.put(JGraphXUtil.getSource((mxCell) utilEdge), JGraphXUtil.loadDataLink(utilEdge));
+									}
+									else
+									{
+										String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter");
+										Task   utilTask       = JGraphXUtil.createNewUtilityTask(curCoveredChunks, utilTaskString, edge);
 									
-									String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter");
-									Task newTask          = JGraphXUtil.createNewUtilityTask(curCoveredChunks, utilTaskString, edge);
-									logger.debug("createFilterTasks(): insert edge: (parent-filter)"
-											+sourceTask.getUniqueString()+"->"+newTask.getUniqueString()
-											+" coveredChunks="+curCoveredChunks.keySet()+" single chunk="+groupingStr+" "+traversalChunk.getName());
-									DataLink dataLinkCopy = 
-											//copyDataLinkChunk(dataLink, groupingStr, traversalChunk);
-											GraphUtil.createDataLink(dataLink, newTask, groupingStr, groupingStr, chunks);
-									mxICell newCell       = (mxICell) GlobalVar.getCells().get(newTask.getUniqueString());
-									mxICell newEdge       = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
-											JGraphXUtil.getSource((mxCell) edge), newCell, dataLinkCopy);
-									cells.put(newCell, dataLinkCopy);
+										logger.debug("createFilterTasks(): insert edge: (parent-filter)"
+												+sourceTask.getUniqueString()+"->"+utilTask.getUniqueString()
+												+" coveredChunks="+curCoveredChunks.keySet()+" single chunk="+groupingStr+" "+traversalChunk.getName());
+										DataLink dataLinkCopy = 
+												//copyDataLinkChunk(dataLink, groupingStr, traversalChunk);
+												GraphUtil.createDataLink(dataLink, utilTask, groupingStr, groupingStr, chunks);
+										mxICell newCell       = (mxICell) GlobalVar.getCells().get(utilTask.getUniqueString());
+										mxICell newEdge       = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
+												JGraphXUtil.getSource((mxCell) edge), newCell, dataLinkCopy);
+										cells.put(newCell, dataLinkCopy);
+									}
 								}
 							}
 						}

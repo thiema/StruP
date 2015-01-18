@@ -239,6 +239,10 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 				return createStringToConditionMapAdapter();
 			}
 			@Override
+			public Adapter caseStringToIntMap(Map.Entry<String, Integer> object) {
+				return createStringToIntMapAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -703,6 +707,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToConditionMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Int Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToIntMapAdapter() {
 		return null;
 	}
 

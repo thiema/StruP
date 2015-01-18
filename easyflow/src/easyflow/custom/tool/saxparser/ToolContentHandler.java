@@ -206,7 +206,7 @@ public class ToolContentHandler implements ContentHandler {
 		// TODO Auto-generated method stub
 		
 	}
-///*
+/*
 	private void setDataPort(String format)
 	{
 		List<String> formats = new ArrayList<String>();
@@ -315,12 +315,15 @@ public class ToolContentHandler implements ContentHandler {
 		if (isAbstractParam)
 		{	
 			curParam.setAbstract(true);
-			if (atts.getValue("overrideAttributes") != null)
-				for (String attrib:atts.getValue("overrideAttributes").split(","))
-					curParam.getOverrideAttributes().add(attrib);	
 		}
 		else
 			curParam.setAbstract(false);
+
+		if (isAbstractParam || withinPackage)
+			if (atts.getValue("overrideAttributes") != null)
+				for (String attrib:atts.getValue("overrideAttributes").split(","))
+					curParam.getOverrideAttributes().add(attrib);
+
 		
 		if (atts.getValue("name") != null)
 			curParam.setName(atts.getValue("name"));
@@ -483,7 +486,7 @@ public class ToolContentHandler implements ContentHandler {
 				
 			if (!isAbstractParam)
 			{
-				
+				/*
 				Data data = DataFactory.eINSTANCE.createData();
 				data.setOutput(curInOutParam.isOutput());
 				data.setName(curParam.getName());
@@ -506,9 +509,9 @@ public class ToolContentHandler implements ContentHandler {
 					dataPort.getTools().put(tool.getName(), tool);
 				data.setPort(dataPort);
 				setDataPort(((InOutParameter) curParam).getFormats());
-				
-				//if (withinTool)
-					//tool.createData(curInOutParam);
+				*/
+				if (withinTool)
+					tool.createData(curInOutParam, null, null);
 
 			}
 		}
@@ -541,13 +544,13 @@ public class ToolContentHandler implements ContentHandler {
 			tool.setId(atts.getValue("id"));
 		if (tool.getName() == null)
 			tool.setName(tool.getId());
+		
 		logger.debug("processing tool="+tool.getId());
 		tool.setVersion(atts.getValue("version"));
 		if (atts.getValue("package") != null && packages.containsKey(atts.getValue("package")))
 			tool.setPackage(packages.get(atts.getValue("package")));
 		if (atts.getValue("analysis_type") != null)
 			tool.setAnalysisType(atts.getValue("analysis_type"));
-
 	}
 	
 	Parameter getParamParent(Parameter curParam)
@@ -589,7 +592,6 @@ public class ToolContentHandler implements ContentHandler {
 				tool.getCommand().getResolvedParams().put(resolvedParam.resolveName(), resolvedParam);
 			}
 		}
-
 	}
 	
 	ResolvedParam createResolvedParam(Parameter param)
@@ -792,6 +794,8 @@ public class ToolContentHandler implements ContentHandler {
 						{
 							EList<ResolvedParam> pl = new BasicEList<ResolvedParam>();
 							pl.add(subResolvedParam);
+							// assume first parameter as relevant param when resolving the condition
+							subResolvedParam.setConditionResolving(true);
 							resolvedParam.getChildParams().put(condition, pl);
 							if (conditionExp != null && !resolvedParam.getConditions().containsKey(condition))
 							{
@@ -896,8 +900,8 @@ public class ToolContentHandler implements ContentHandler {
 				if (atts.getValue("type").equals("format"))
 				{
 					String format = conditionalMap.get("when_value");
-					setDataPort(format);
-					//dataPort.setFormat(format);
+					//setDataPort(format);
+					dataPort.setFormat(format);
 				}
 				break;
 			case DATA:
@@ -1006,8 +1010,8 @@ public class ToolContentHandler implements ContentHandler {
 				if (data != null && (data.getPort().getDataFormats() == null || data.getPort().getDataFormats().isEmpty()))
 				{
 					String format = data.getFormat().getName();
-					setDataPort(format);
-					//dataPort.setFormat(format);
+					//setDataPort(format);
+					dataPort.setFormat(format);
 				}
 				data = null;
 				break;

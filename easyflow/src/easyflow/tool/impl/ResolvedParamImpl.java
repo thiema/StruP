@@ -6,6 +6,7 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.data.DataFormat;
 import easyflow.tool.Condition;
@@ -56,7 +57,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getConditionalParam <em>Conditional Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getChildParams <em>Child Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#getConditions <em>Conditions</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#isResolved <em>Resolved</em>}</li>
  *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#isPipe <em>Pipe</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ResolvedParamImpl#isConditionResolving <em>Condition Resolving</em>}</li>
  * </ul>
  * </p>
  *
@@ -197,6 +200,26 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 	protected EMap<String, Condition> conditions;
 
 	/**
+	 * The default value of the '{@link #isResolved() <em>Resolved</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isResolved()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RESOLVED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isResolved() <em>Resolved</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isResolved()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean resolved = RESOLVED_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #isPipe() <em>Pipe</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -215,6 +238,26 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 	 * @ordered
 	 */
 	protected boolean pipe = PIPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isConditionResolving() <em>Condition Resolving</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isConditionResolving()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CONDITION_RESOLVING_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isConditionResolving() <em>Condition Resolving</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isConditionResolving()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean conditionResolving = CONDITION_RESOLVING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -454,6 +497,48 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isConditionResolving() {
+		return conditionResolving;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConditionResolving(boolean newConditionResolving) {
+		boolean oldConditionResolving = conditionResolving;
+		conditionResolving = newConditionResolving;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__CONDITION_RESOLVING, oldConditionResolving, conditionResolving));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isResolved() {
+		return resolved;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setResolved(boolean newResolved) {
+		boolean oldResolved = resolved;
+		resolved = newResolved;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.RESOLVED_PARAM__RESOLVED, oldResolved, resolved));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * to generate the prefix:
 	 * 1.) use parameter definition
 	 * 2.) use template definition (template param)
@@ -467,7 +552,8 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 	{
 		Parameter param = getParameter();
 		//ResolvedParam p = this;
-		constraints.put(GlobalConstants.FILE_HANDLE_PARAM_NAME, getHandle());
+		//constraints.put(GlobalConstants.FILE_HANDLE_PARAM_NAME, getHandle());
+		//logger.debug("generateCommandString():"+constraints.keySet()+" "+getHandle()+" "+isPipe());
 		EList<String> res = param.generateCommandString(constraints, getValue(), templateParam);
 		return res;
 	}
@@ -601,6 +687,8 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 		
 		return new BasicEList<String>();
 	}
+	
+	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -628,27 +716,155 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void resolveCondititionalParam(String param, String setter, String value) {
+	public String resolvePipe(String defaultHandle) {
+
+		if (getParameter().getDefaultValue() != null)
+			return getParameter().getDefaultValue();
+		
+		return defaultHandle; 
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	/*
+	public boolean resolveHandle(String handle, Boolean isPipe) 
+	{
+		boolean rc = true;
+		
+		if (isPipe && GlobalConfig.isPipeAllowed())
+		{
+			if (handle != null && getSupportedHandles().contains(handle))
+				resolveCondititionalParam(GlobalConstants.NAME_PIPE_HANDLE, "setHandle", handle);		
+			else if (getSupportedHandles().contains(GlobalConstants.NAME_PIPE_HANDLE))
+				resolveCondititionalParam(GlobalConstants.NAME_PIPE_HANDLE, "setHandle", null);
+			else
+				rc = false;
+		}
+		else if (!isPipe && GlobalConfig.isFileAllowed())
+		{
+			if (handle != null && getSupportedHandles().contains(handle))
+				resolveCondititionalParam(GlobalConstants.NAME_FILE_HANDLE, "setHandle", handle);
+			else if (getSupportedHandles().contains(GlobalConstants.NAME_FILE_HANDLE))
+				resolveCondititionalParam(GlobalConstants.NAME_FILE_HANDLE, "setHandle", null);
+			else
+				rc = false;			
+		}
+		else		
+			rc = false;
+
+		
+		return rc;
+	}
+*/
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void resolveCondititionalParam(String param, String value) {
 		
 		if (value == null)
 			value = param;
 		
-		if ("setHandle".equals(setter))
-			setHandle(value);
+		//if ("setHandle".equals(setter))
+			//setHandle(value);
 		
 		if (getChildParams() != null && getChildParams().containsKey(param))
 		{
-			
 			setConditionalParam(param);
 			
 			for (ResolvedParam rp : getChildParams().get(param))
 			{
-				rp.resolveCondititionalParam(param, setter, value);
+				rp.resolveCondititionalParam(param, value);
 			}
 		}
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getConditionResolvingChildParam(String condition, boolean isMatch)
+	{
+		if (condition == null)
+			return null;
+		
+		if (isMatch && isConditionResolving())
+			return this;
 
-	EList<ResolvedParam> deepCopy(EList<ResolvedParam> rps)
+		if (isMatch && getChildParams() == null || getChildParams().isEmpty())
+			return null;
+		
+		if (getChildParams().containsKey(condition))
+		{
+			for (ResolvedParam child : getChildParams().get(condition))
+			{
+				ResolvedParam rp = child.getConditionResolvingChildParam(condition, true);
+				if (rp != null)
+					return rp;
+			}
+		}
+		else
+		{
+			for (EList<ResolvedParam> rps : getChildParams().values())
+			{
+				for (ResolvedParam resolvedParam : rps)
+				{
+					ResolvedParam childParam = resolvedParam.getConditionResolvingChildParam(condition, false);
+					if (childParam != null)
+						return childParam;
+				}
+			}
+		}
+					
+		
+		
+		return null;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public ResolvedParam getChildParam(String paramName, String condition) {
+		
+		if (resolveName().equals(paramName))
+			return this;
+
+		if (getChildParams() == null || getChildParams().isEmpty())
+		{
+			return null;
+		}
+		if (condition != null)
+		{
+			if (getChildParams().containsKey(condition))
+				for (ResolvedParam child : getChildParams().get(condition))
+				{
+					ResolvedParam rp = child.getChildParam(paramName, condition);
+					if (rp != null)
+						return rp;
+				}
+		}
+		else
+			for (EList<ResolvedParam> rps : getChildParams().values())
+				for (ResolvedParam resolvedParam : rps)
+				{
+					ResolvedParam rp = resolvedParam.getChildParam(paramName, condition);
+					if (rp != null)
+						return rp;
+				}
+		
+		return null;
+			
+	}
+
+	private EList<ResolvedParam> deepCopy(EList<ResolvedParam> rps)
 	{
 		EList<ResolvedParam> rpsCopy = new BasicEList<ResolvedParam>();
 		Iterator<ResolvedParam> it = rps.iterator();
@@ -658,6 +874,7 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 		}
 		return rpsCopy;
 	}
+	
 	private EList<String> getSupportedHandles_()
 	{
 		EList<String> handles = new BasicEList<String>();
@@ -749,8 +966,12 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
 				if (coreType) return getConditions();
 				else return getConditions().map();
+			case ToolPackage.RESOLVED_PARAM__RESOLVED:
+				return isResolved();
 			case ToolPackage.RESOLVED_PARAM__PIPE:
 				return isPipe();
+			case ToolPackage.RESOLVED_PARAM__CONDITION_RESOLVING:
+				return isConditionResolving();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -792,8 +1013,14 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
 				((EStructuralFeature.Setting)getConditions()).set(newValue);
 				return;
+			case ToolPackage.RESOLVED_PARAM__RESOLVED:
+				setResolved((Boolean)newValue);
+				return;
 			case ToolPackage.RESOLVED_PARAM__PIPE:
 				setPipe((Boolean)newValue);
+				return;
+			case ToolPackage.RESOLVED_PARAM__CONDITION_RESOLVING:
+				setConditionResolving((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -834,8 +1061,14 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
 				getConditions().clear();
 				return;
+			case ToolPackage.RESOLVED_PARAM__RESOLVED:
+				setResolved(RESOLVED_EDEFAULT);
+				return;
 			case ToolPackage.RESOLVED_PARAM__PIPE:
 				setPipe(PIPE_EDEFAULT);
+				return;
+			case ToolPackage.RESOLVED_PARAM__CONDITION_RESOLVING:
+				setConditionResolving(CONDITION_RESOLVING_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -867,8 +1100,12 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 				return childParams != null && !childParams.isEmpty();
 			case ToolPackage.RESOLVED_PARAM__CONDITIONS:
 				return conditions != null && !conditions.isEmpty();
+			case ToolPackage.RESOLVED_PARAM__RESOLVED:
+				return resolved != RESOLVED_EDEFAULT;
 			case ToolPackage.RESOLVED_PARAM__PIPE:
 				return pipe != PIPE_EDEFAULT;
+			case ToolPackage.RESOLVED_PARAM__CONDITION_RESOLVING:
+				return conditionResolving != CONDITION_RESOLVING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -927,8 +1164,12 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 		result.append(handle);
 		result.append(", conditionalParam: ");
 		result.append(conditionalParam);
+		result.append(", resolved: ");
+		result.append(resolved);
 		result.append(", pipe: ");
 		result.append(pipe);
+		result.append(", conditionResolving: ");
+		result.append(conditionResolving);
 		result.append(')');
 		return result.toString();
 	}

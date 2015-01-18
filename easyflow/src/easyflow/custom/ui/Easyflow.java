@@ -178,13 +178,13 @@ public class Easyflow {
 				
 				defaultProject.generateWorklowForExecutionSystem();
 			} 
-			catch (CellNotFoundException        e)        { e.printStackTrace();} 
-			catch (TaskNotFoundException        e)        { e.printStackTrace();}
-			catch (DataLinkNotFoundException    e)        { e.printStackTrace();}
-			catch (DataPortNotFoundException    e)        { e.printStackTrace();}
-			catch (ToolNotFoundException        e)        { e.printStackTrace();}
-			catch (UtilityTaskNotFoundException e)        { e.printStackTrace();}
-			catch (NoValidInOutDataException    e)        { e.printStackTrace();}
+			catch (CellNotFoundException                      e) { e.printStackTrace();} 
+			catch (TaskNotFoundException                      e) { e.printStackTrace();}
+			catch (DataLinkNotFoundException                  e) { e.printStackTrace();}
+			catch (DataPortNotFoundException                  e) { e.printStackTrace();}
+			catch (ToolNotFoundException                      e) { e.printStackTrace();}
+			catch (UtilityTaskNotFoundException               e) { e.printStackTrace();}
+			catch (NoValidInOutDataException                  e) { e.printStackTrace();}
 			catch (GroupingCriterionInstanceNotFoundException e) { e.printStackTrace();}
 		}
 	}	
