@@ -9,6 +9,7 @@ package easyflow.data.impl;
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
 import easyflow.custom.exception.NoValidInOutDataException;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Util;
 import easyflow.data.Data;
@@ -1066,6 +1067,23 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			//logger.error("getMatchingDataFor(): could not find tool for datalink="+getUniqueString(true));
 		
 		return data;	
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isHidden(boolean in) {
+		
+		boolean hidden = GlobalConfig.paramIsHidden();
+		//boolean hidden = false; 
+		Data data = in ? getInData() : getData();
+		
+		if (data != null && data.getParameter() != null && data.getParameter().isHidden())
+			hidden = true;
+			
+		return hidden;
 	}
 
 	/**

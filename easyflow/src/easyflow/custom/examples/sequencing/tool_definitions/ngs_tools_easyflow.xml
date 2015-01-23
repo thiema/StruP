@@ -69,7 +69,7 @@
 	
 	<package id="gatk" version="2.3">
 		<interpreter exe="java">
-			<param type="text" name="Xmx"       prefix="-"          separator="" default_value="256M" fixed="true" named="true"/>
+			<param type="text" name="Xmx"       prefix="-"          separator="" default_value="256M" fixed="true" named="true" output_default_param="true"/>
 			<param type="text" name="classpath" prefix="-" key="cp" separator=" "/>
 		</interpreter>
 		<param type="data" abstract="true" optional="false" format="fasta"/>

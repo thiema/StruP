@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<easyflow   
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:de.thiema.easyflow/types" 
+	xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd">
+
+	<interpreter name="java">
+		<!-- default param layout -->
+		<param type="any" abstract="true" prefix="-"/>
+	</interpreter>
+	
+	<package name="picard" version="1.56.0">
+		<interpreter exe="java"/>
+		<command pattern="pos opt"/>
+		<param type="any"  abstract="true"               name="default_param" named="true" prefix=""       separator="="     output_default_param="false" />
+		<!-- define input/output params globally for the package (type priority)
+		
+		<conditional name="input_file" type="file_handle">
+			<param name="input_file" type="select" tool_ref="All"/>
+			<when value="file">
+				<param type="data" name="inputFile" named="true" key="INPUT"     format="bam,sam"/>
+			</when>
+			<when value="pipe">
+				<param type="data" name="inputPipe" named="true" handle="stdin"  format="bam,sam"  default_value="/dev/stdin"/>
+			</when>
+		</conditional>
+		
+		<conditional name="output_file" type="file_handle">
+			<param name="output_file" type="select" tool_ref="All"/>
+			<when value="file">
+				<param type="data" output="true" name="outFile"   named="true" key="OUTPUT"    format="bam,sam"/>
+			</when>
+			<when value="pipe">
+				<param type="data" output="true" name="outPipe"   named="true" handle="stdout" format="bam,sam"  default_value="/dev/stdout"/>		
+			</when>
+		</conditional>
+		 -->
+		
+		
+		<param type="analysis_type"                      name="jar"           named="true" prefix="-"      separator=" "><!-- resolvePathRef="exe"> --> 
+			<option value="picard_ARRG" exe="AddOrReplaceReadGroups.jar">
+				<metadata_map>
+					<map_entry key="ReadGroup"    value="rgid"/>
+					<map_entry key="Sample"       value="rgsm"/>
+					<map_entry key="Lib"          value="rglb"/>
+					<map_entry key="Platform"     value="rgpl"/>
+					<map_entry key="PlatformUnit" value="rgpu"/>
+				</metadata_map>
+			</option>
+			<option value="picard_BamIndexStats"    exe="BamIndexStats.jar">                 </option>
+			<option value="picard_FastqToSam"       exe="FastqToSam.jar">                    </option>
+			<option value="picard_ReorderSam"       exe="ReorderSam.jar">                    </option>
+			<option value="picard_ReplaceSamHeader" exe="ReplaceSamHeader.jar">              </option>
+			<option value="picard_SamToFastq"       exe="SamToFastq.jar">                    </option>
+			<option value="PicardASMetrics"         exe="CollectAlignmentSummaryMetrics.jar"></option>
+			<option value="rgPicFixMate"            exe="FixMateInformation.jar">            </option>
+			<option value="PicardGCBiasMetrics"     exe="CollectGcBiasMetrics.jar">          </option>
+			<option value="PicardHsMetrics"         exe="CalculateHsMetrics.jar">            </option>
+			<option value="PicardInsertSize"        exe="CollectInsertSizeMetrics.jar">      </option>
+			<option value="rgEstLibComp"            exe="EstimateLibraryComplexity.jar">     </option>
+			<option value="rgPicardMarkDups"        exe="MarkDuplicates.jar">                </option>
+		</param>
+	</package>
+	<package id="gatk" version="2.3">
+		<interpreter exe="java">
+			<param type="text" name="Xmx"       prefix="-"          separator="" default_value="256M" fixed="true" named="true"/>
+			<param type="text" name="classpath" prefix="-" key="cp" separator=" "/>
+		</interpreter>
+		<param type="data" abstract="true"                         optional="false"                                                                      format="fasta"/>
+		<param type="data" abstract="true"                                 multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true"            named="true" key="o" output="true"   multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf,gatk_interval"/>
+		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-" output_arg_value_for_boolean_param="false"/>
+		
+		<!-- param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/> -->
+		<param name="org.broadinstitute.gatk.engine.CommandLineGATK" type="binary" cmd_part="exe"/>
+		
+		<param type="analysis_type" named="true" name="T" prefix="-">
+			<option value="Base Recalibrator"           exe="BaseRecalibrator"/>
+			<option value="Depth of Coverage"           exe="DepthOfCoverage"/>
+			<option value="Haplotype Caller"            exe="HaplotypeCaller"/>
+			<option value="Indel Realigner"             exe="IndelRealigner"/>
+			<option value="Print Reads"                 exe="PrintReads"/>
+			<option value="Realigner Target Creator"    exe="RealignerTargetCreator"/>
+			<option value="Reduce Reads"                exe="ReduceReads"/>
+			<option value="Unified Genotyper"           exe="UnifiedGenotyper"/>
+			<option value="Variant Annotator"           exe="VariantAnnotator"/>
+			<option value="Apply Variant Recalibration" exe="ApplyRecalibration"/>
+			<option value="Combine Variants"            exe="CombineVariants"/>
+			<option value="Eval Variant"                exe="VariantEval"/>
+			<option value="Variant Filtration"          exe="VariantFiltration"/>
+			<option value="Variant Recalibrator"        exe="VariantRecalibrator"/>
+			<option value="Select Variants"             exe="SelectVariants"/>
+			<option value="Validate Variants"           exe="ValidateVariants"/>
+		</param>
+	</package>
+
+	<!-- if no name for exe is defined assume the package name as the callable binary name-->
+	<package id="bwa" name="bwa" version="0.5.9">
+		<description>
+			bwa package to map short reads.
+		</description>
+		<exe name="bwa"/>
+		<command assume_data_param_positional="true"/>
+		
+		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		
+		<param type="data" abstract="true" name="output" output="true" handle="stdout" default_value="-" prefix=""/>
+		
+		<param type="data" abstract="true" name="input" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" name="input" format="fasta"/>
+		<param type="data" abstract="true" name="output" output="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf" key="f"/>
+		
+		<param type="analysis_type">
+			<option value="aln"   help="gapped/ungapped alignment"/>
+			<option value="samse" condition="size(InputFiles)==1" help="generate alignment (single ended)"/>
+			<option value="sampe" condition="size(InputFiles)>1" help="generate alignment (paired ended)"/>
+			<option value="index" help="index sequences in the FASTA format"/>
+			<option value="bwasw" help="BWA-SW for long queries"/>
+		</param>
+		<help>
+		<![CDATA[
+Program: bwa (alignment via Burrows-Wheeler transformation)
+Version: 0.6.2-r131
+Contact: Heng Li <lh3@sanger.ac.uk>
+		
+Usage:   bwa <command> [options]
+
+Command: index         index sequences in the FASTA format
+         aln           gapped/ungapped alignment
+         samse         generate alignment (single ended)
+         sampe         generate alignment (paired ended)
+         bwasw         BWA-SW for long queries
+         fastmap       identify super-maximal exact matches
+
+         fa2pac        convert FASTA to PAC format
+         pac2bwt       generate BWT from PAC
+         pac2bwtgen    alternative algorithm for generating BWT
+         bwtupdate     update .bwt to the new format
+         bwt2sa        generate SA from BWT and Occ
+         pac2cspac     convert PAC to color-space PAC
+         stdsw         standard SW/NW alignment
+		]]>
+		 </help>
+	</package>
+	
+	<package name="samtools" version="0.1.18">
+		<description>
+			samtools package to manipulate (aligned) short reads.
+		</description>
+		<exe name="samtools"/>
+		<command pattern="opt pos" assume_data_param_positional="true"/>
+		<param type="data" abstract="true" output="true" handle="stdout" key="-" prefix=""/>
+		<param type="text" abstract="true" name="default_param" separator=" " prefix="-" arg_value_separator=" "/>
+		<param type="boolean" abstract="true" name="default_param" prefix="-"/>
+		<param type="analysis_type">
+			<option value="view"     help="SAM-BAM conversion"/>
+			<option value="sort"     help="sort alignment file"/>
+			<option value="mpileup"  help="multi-way pileup"/>
+			<option value="index"    help="index alignment"/>
+			<option value="faidx"    help="index/extract FASTA"/>
+			<option value="depth"    help="compute the depth"/>
+			<option value="tview"    help="text alignment viewer"/>
+			<option value="idxstats" help="BAM index stats (r595 or later)"/>
+			<option value="fixmate"  help="fix mate information"/>
+			<option value="flagstat" help="simple stats"/>
+			<option value="rmdup"    help="remove PCR duplicates"/>
+			<option value="merge"    help="merge sorted alignments"/>
+		</param>
+		<help>
+		<![CDATA[
+Program: samtools (Tools for alignments in the SAM format)
+Version: 0.1.18-dev (r982:313)
+
+Usage:   samtools <command> [options]
+
+Command: view        SAM<->BAM conversion
+         sort        sort alignment file
+         mpileup     multi-way pileup
+         depth       compute the depth
+         faidx       index/extract FASTA
+         tview       text alignment viewer
+         index       index alignment
+         idxstats    BAM index stats (r595 or later)
+         fixmate     fix mate information
+         flagstat    simple stats
+         calmd       recalculate MD/NM tags and '=' bases
+         merge       merge sorted alignments
+         rmdup       remove PCR duplicates
+         reheader    replace BAM header
+         cat         concatenate BAMs
+         targetcut   cut fosmid regions (for fosmid pool only)
+         phase       phase heterozygotes
+         ]]>
+		 </help>
+	</package>
+
+
+	<tool id="bwa_aln"
+		name="bwa_aln" 
+		analysis_type="aln" version="0.1" package="bwa">
+		<description>
+			create bwt index
+		</description>
+		
+		<command exe="bwa">
+			bwa aln
+		</command>
+		<!--  param name="aln" type="analysis_type" positional="true"/>-->
+		<param name="reference" type="data" format="fasta" positional="true"/>
+		<param name="input" type="data" label="ReadEnd" format="fastq" positional="true"/>
+		<!-- param name="output" type="data" format="sai" output="true"/ -->
+		<conditional name="output_file" type="file_handle">
+			<param name="output_file" type="select"/>
+			<when value="file">
+				<param name="out_file" label="output" type="data" output="true" format="sai" named="true" prefix="-" key="f" separator=" "/>
+			</when>
+			<when value="pipe">
+				<param name="out_pipe" type="data" output="true" format="sai" handle="stdout"/>
+			</when>
+		</conditional>
+		<param name="seed_length"       type="integer" key="l"/>
+		<param name="max_queue_entries" type="integer" key="m"/>
+	</tool>
+	
+	<tool id="bwa_xampe" name="bwa_sam" version="0.1" package="bwa">
+		<description>
+			map single/paired reads against reference using bwt index
+		</description>
+		<command>
+			bwa samse|sampe
+		</command>
+		
+		<conditional name="analysis_type">
+			<param name="readend" type="select"/>					
+			<when value="sampe" >
+				<!-- any extra options ? -->
+			</when>
+			<when value="samse">
+				
+			</when>
+		</conditional>
+		
+		<param name="reference"   type="data" format="fasta" positional="true"/>
+		
+		<param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
+		<!-- param name="input_index" type="data" format="sai"   positional="true" multiple="true" min_occur="1" max_occur="2" handle="stdin"/-->
+		<param name="input"       type="data" format="fastq" positional="true" multiple="true" min_occur="1" max_occur="2" separator=" "/>
+		<!-- param name="output"      type="data" format="sam" output="true"/-->
+		<param name="output"      type="data" format="sam" output="true" handle="stdout"/>
+	</tool>
+	
+	<tool id="bwasw" name="bwasw" package="bwa">
+		<param name="reference" type="data" format="fasta" positional="true"/>
+		<param name="input"     type="data" format="fastq" positional="true"/>
+		<param name="output"    type="data" format="sam" output="true"/>
+		
+		<help><![CDATA[
+ Usage:   bwa bwasw [options] <target.prefix> <query.fa> [query2.fa]
+
+Options: -a INT   score for a match [1]
+         -b INT   mismatch penalty [3]
+         -q INT   gap open penalty [5]
+         -r INT   gap extension penalty [2]
+         -w INT   band width [50]
+         -m FLOAT mask level [0.50]
+
+         -t INT   number of threads [1]
+         -f FILE  file to output results to instead of stdout
+         -H       in SAM output, use hard clipping instead of soft clipping
+         -M       mark multi-part alignments as secondary
+         -S       skip Smith-Waterman read pairing
+         -I INT   ignore pairs with insert >=INT for inferring the size distr [20000]
+
+         -T INT   score threshold divided by a [30]
+         -c FLOAT coefficient of length-threshold adjustment [5.5]
+         -z INT   Z-best [1]
+         -s INT   maximum seeding interval size [3]
+         -N INT   # seeds to trigger rev aln; 2*INT is also the chaining threshold [5]
+         -G INT   maximum gap size during chaining [10000]
+
+Note: For long Illumina, 454 and Sanger reads, assembly contigs, fosmids and
+      BACs, the default setting usually works well. For the current PacBio
+      reads (end of 2010), '-b5 -q2 -r1 -z10' is recommended. One may also
+      increase '-z' for better sensitivity.
+      ]]>
+		 </help>
+	</tool>
+
+
+	<tool id="merge_sam" name="merge_sam" version="0.1" package="samtools" analysis_type="merge"> 
+		<description>merge sam files</description>
+		<param name="output" type="data" format="bam"></param>
+		<param name="input" type="data" format="bam" multiple="true"></param>
+	</tool>
+	<tool id="sort_sam" name="sort_sam" version="0.1" package="samtools" analysis_type="sort">
+		<description>remove duplicates</description>
+		<command pattern="in out"/>
+		<param name="input" type="data" format="bam"></param>
+		<param name="output" type="data" format="bam" optional="true" output="true" extension="false"/>
+	</tool>
+	<tool id="rmdup" name="rmdup" version="0.1" package="samtools">
+		<description>remove duplcates</description>
+		<conditional name="number_of_readends" type="metadata" grouping="InputFiles">
+			<when value="SE" condition="size(InputFiles)==1">
+				<!-- no more options for paried end reads -->
+			</when>
+			<when value="PE" condition="size(InputFiles)>1">
+				<param name="paired_end" key="s" type="boolean" named="true"/>
+			</when>
+		</conditional>
+		<param name="input" type="data" format="bam"></param>
+		<param name="output" type="data" format="bam" output="true"/>
+	</tool>
+
+	<tool id="flagstat" name="flagstat" version="0.1" package="samtools">
+		<description>generate statistics on flags</description>
+	</tool>
+	
+	<tool id="index_sam" analysis_type="index" name="index_sam" version="0.1" package="samtools">
+		<description>generate sam index</description>
+		<command pattern="in out">samtools index</command>
+		<param name="input" type="data" format="bam"></param>
+		<!-- 
+		explanation of special parameters:
+		hidden: the parameter is not used in the command line, though it specifies the port (e.g. the format)
+		filename: since it is hidden, the filename of the bai-index cannot be  directly specified. Though it is restricted 
+		(e.g. it is derived by the input filename by adding extension .bai to it) further possible values are: replace exten
+		 -->
+		<param name="output" type="data" format="bai" hidden="true" filename_creation="addExtensionToInput" output="true"/>
+	</tool>
+	
+	<tool id="index_fasta" name="index_fasta" version="0.1" package="samtools">
+		<description>generate fasta index</description>
+		<command>samtools faidx</command>
+		<param name="input" type="data" format="fasta"/>
+		<data name="output" format="fai"/>
+	</tool>
+	
+	<tool id="view" package="samtools" analysis_type="view">
+		<!-- define tool specific default parameter layout (abstract param) -->
+		<param type="any" name="default_param" abstract="true" separator=" " />
+		
+		<param type="boolean" name="header" key="h" named="true" fixed="true"/>
+		
+		<!-- the optional grouping attribute tells us that this parameter
+		triggers processing (e.g. displaying) of only those data records 
+		matching the specified group. When attribute data is set, the grouping
+		refers only for the specified data (ports), otherwise it is valid for all data  -->
+		<param name="r" label="filter_readgroup" type="text" named="true"
+			grouping="ReadGroup" optional="true" data="output"/>
+		<param name="l" label="filter_library" type="text" named="true"
+			grouping="Library" optional="true" data="output"/>
+			
+		<!-- the input/output can be either in the sam or bam format
+		corresponding params can be defined either separately, i.e. defining 2 param elements
+		or at once (using comma seperated values to set the format attribute). see below
+		separate definition for output file
+		and
+		combined definition for input file  
+		 -->
+		<conditional name="input_format" type="data_format">
+			<param name="input_format" type="select" dataport="BAM"/>
+			<when value="BAM">
+				<!-- the default, nothing to do -->
+			</when>
+			<when value="SAM">
+				<param name="S" type="boolean" named="true"/>
+			</when>
+		</conditional>
+		<param name="input" type="data" format="sam,bam" handle="file,stdin"/>
+		<!-- specify parameters separately, related to the pipe and to the file handle.
+				in this case there is nothing to do, just omitting the file name
+		-->
+		<conditional name="output_format">
+			<param name="output_format" type="select" dataport="BAM" output="true"/>
+			<when value="BAM">
+				<param name="b" type="boolean" named="true"/>
+			</when>
+			<when value="SAM">
+				<!-- the default, nothing to do -->
+			</when>
+		</conditional>
+		<conditional name="handle" type="file_handle">
+			<when value="file">
+				<param name="o" label="output" type="data" format="bam" output="true" named="true"/>
+			</when>
+			<when value="pipe">
+				<param name="output" type="data" format="bam" output="true" handle="stdout"/>
+			</when>
+		</conditional>
+	</tool>
+	
+</easyflow>

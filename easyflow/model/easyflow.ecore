@@ -1881,6 +1881,9 @@
         <eParameters name="allowedHandles" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="useOutDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </eOperations>
+      <eOperations name="isHidden" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="in" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="dataPort" eType="#//data/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPort" eType="#//data/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="chunks" upperBound="-1"

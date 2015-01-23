@@ -159,7 +159,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 								//copyTask(getUtilityTasks().get(prepTask.getName()), newPrepTask);
 								GraphUtil.copyTask(utilTask, newPrepTask);
 								//newPrepTask.setName(newPrepTask.getName()+"_"+task.getUniqueURIString());
-								newPrepTask.setName(newPrepTask.getName());
+								newPrepTask.setName(newPrepTask.getName()+"_for_"+task.getName());
 								newPrepTask.getChunks().addAll(EcoreUtil.copyAll(parentTask.getChunks()));
 								GlobalVar.getTasks().put(newPrepTask.getUniqueString(), newPrepTask);
 								prepTask.setTask(newPrepTask);
@@ -193,8 +193,8 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 									dataLink.getIntermediateTasks().add(prepTask);
 								}
 								logger.debug("findCellsWherePreprocessingIsRequired(): preprocessing task "
-										+prepTask.getName()+" ("+newPrepTask.getUniqueString()+") added for "
-										+task.getUniqueString()+" "+dataLink.hashCode());
+										+prepTask.getName()+" ("+newPrepTask.getUniqueString()+" id="+newPrepTask.hashCode()+") added for "
+										+task.getUniqueString()+" dl="+dataLink.hashCode());
 								
 								prepRequired.put((mxICell) vertex, prepEdges);
 							}
@@ -463,7 +463,7 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 			PreprocessingTask prepTask    = it.next();
 			Task              newPrepTask = prepTask.getTask();
 			
-			logger.debug("resolvePreprocessingTask(): insertPrepTask="+newPrepTask.getUniqueString()
+			logger.debug("resolvePreprocessingTask(): insertPrepTask="+newPrepTask.getUniqueString()+" ("+newPrepTask.hashCode()+")"
 					+" type="+newPrepTask.getAnalysisTypes()
 					+" for "+task.getUniqueString()+" "
 					+prepTask.getTask().getPreferredTool().getId()

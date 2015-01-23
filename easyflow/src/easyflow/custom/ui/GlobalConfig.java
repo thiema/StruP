@@ -156,6 +156,9 @@ public class GlobalConfig {
 	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_DEFAULT_VALUE = "|";
 
 	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME = "pipe_operator";
+
+	private static final boolean CONFIG_TOOL_PARAM_IS_HIDDEN_DEFAULT_VALUE = false;
+	private static final String CONFIG_TOOL_PARAM_IS_HIDDEN_PARAM_NAME = "param_is_hidden";
 	
 
 	private static       JSONObject           jsonConfig       = null; 
@@ -766,5 +769,13 @@ public class GlobalConfig {
 		else
 			return CONFIG_PROCESSING_PIPE_OPERATOR_DEFAULT_VALUE;
 
+	}
+
+	public static boolean paramIsHidden() 
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_PARAM_IS_HIDDEN_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_PARAM_IS_HIDDEN_PARAM_NAME).equals("true");
+		else
+			return CONFIG_TOOL_PARAM_IS_HIDDEN_DEFAULT_VALUE;
 	}
 }

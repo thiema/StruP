@@ -105,7 +105,7 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 				
 				try {
 					Task task = JGraphXUtil.loadTask(vertex);
-
+					logger.debug("resolvePipes(): "+task.getUniqueString()+" "+task.hashCode());
 					EList<DataLink> dataLinks = new BasicEList<DataLink>();
 					EList<Task>     parents   = new BasicEList<Task>();
 					Object edges[] = GlobalVar

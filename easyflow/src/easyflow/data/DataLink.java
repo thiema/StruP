@@ -558,4 +558,12 @@ public interface DataLink extends EObject {
 	 */
 	EList<Data> getMatchingDataFor(EList<Data> dataList, EList<String> allowedHandles, boolean useOutDataPort) throws NoValidInOutDataException;
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isHidden(boolean in);
+
 } // DataLink

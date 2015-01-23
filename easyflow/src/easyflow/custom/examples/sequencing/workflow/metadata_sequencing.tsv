@@ -4,4 +4,4 @@ ID1	RG1	A	A	A	A_Lane1_1.fq,A_Lane1_2.fq	100	350	ILLUMINA	Lane1	DummyDesc	hg19.fa
 #ID3	RG3	C	C	B	B_1.fq,B_2.fq	51	350	ILLUMINA	Lane3	DummyDesc
 #ID4	RG4	C	C_2	B	C_1.fq,C_2.fq	51	350	ILLUMINA	Lane4	DummyDesc
 ID5	RG5	SingleC	C	A	C_1.fq	51	0	ILLUMINA	Lane5	DummyDesc
-#ID6	RG6	FlxC	C	B	C_454_1.fq	500	0	ROCHE	X	DummyDescFlx
+ID6	RG6	FlxC	C	B	C_454_1.fq	500	0	ROCHE	X	DummyDescFlx

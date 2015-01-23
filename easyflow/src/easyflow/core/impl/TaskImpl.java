@@ -1778,8 +1778,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 				getDataPortByDataPort(dataPort, false) != null);
 	}
 
-	
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1825,6 +1823,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		Parameter      defaultParameter = GlobalConfig.getExeParameterTemplate();
 		EList<String>  cmd;
 		
+		if (Util.debugTool(tool))
+		{
+			tool.getCommand();
+		}
 				
 		if (exe != null)
 		{
@@ -1885,6 +1887,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 		Tuple<Parameter, OptionValue> anaType = tool.getAnalysisTypeOfPackage(getRecords());
 		//logger.debug("createCommandLinePart(): get analysis type with records="+Util.list2String(getRecords(), null));
 		
+		if (Util.debugTool(tool))
+		{
+			tool.getCommand();
+		}
+		
 		if (anaType != null)
 		{
 			Parameter   param = anaType.parent;
@@ -1933,7 +1940,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				tool.getPackage().getResolveUriMap() : null;
 				
 		//Command c = getCommand();
-		if (tool.getName().equals(debugTool) || tool.getId().equals(debugTool))
+		if (Util.debugTool(interpreterTool) || Util.debugTool(tool))
 		{
 			tool.getCommand();
 		}
@@ -2010,12 +2017,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		
 		return cmdParts;
 	}
-
-	static String debugTool = "view";
-	//static String debugTool = "picard_ARRG";
-	//static String debugTool = "gatk2_realigner_target_creator";
-	
-
 	
 	/**
 	 * creates commandline or parts of it with respect to the requested part (type). 
@@ -2064,10 +2065,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 			tool = getPreferredTool();
 		
 		//Command c = getCommand();
-		if (tool.getName().equals(debugTool) || tool.getId().equals(debugTool))
+		if (Util.debugTool(tool))
 		{
 			tool.getCommand();
 		}
+
 		Iterator<Entry<String, ResolvedParam>> it = getResolvedCommand().getResolvedParams().iterator();
 		logger.debug("resolveCommandLinePart(): all (unfiltered) params: "+getResolvedCommand().getResolvedParams().keySet());
 		while (it.hasNext())
@@ -2284,6 +2286,22 @@ public class TaskImpl extends EObjectImpl implements Task {
 			Entry<String, DataLink> e         = it.next();
 			DataLink                dataLink  = e.getValue();
 			Data data = isOutput ? dataLink.getInData() : dataLink.getData();
+			if (data == null)
+			{
+				if (isOutput && dataLink.getInData() == null && dataLink.isHidden(false))
+				{
+					logger.info("resolveDataPorts(): skip "+(isOutput ? "outgoing" : "ingoing")+" data port. (hidden counterpart found)");
+				}
+				else if (!isOutput && dataLink.getData() == null && dataLink.isHidden(true))
+				{
+					logger.info("resolveDataPorts(): skip "+(isOutput ? "outgoing" : "ingoing")+" data port. (hidden counterpart found)");
+				}
+				else
+				{
+					logger.error("resolveDataPorts(): skip dataport. (undefined)");
+				}
+					
+			}
 			ResolvedParam resolvedParam = data.getResolvedParam();
 			String                  paramName = null;	
 			
@@ -2681,9 +2699,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 	
 	private void resolveStaticParam(ResolvedParam resolvedParam)
 	{
+		
 		Parameter param = resolvedParam.getParameter();
 		
-		if (debugTool.equals(getPreferredTool().getName()) || debugTool.equals(getPreferredTool().getId()))
+		if (Util.debugTool(getPreferredTool()))
 		{
 			logger.debug("resolved:"+resolvedParam.renderToString()+" param: "+param.renderToString());
 			logger.debug("param="+resolvedParam.resolveName()+" grouping is empty="+param.getGrouping().isEmpty());
@@ -2773,7 +2792,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * - file_only
 	 * - any
 	 */
-	private EList<String> getFiles(EMap<String, DataLink> data, int fileHandleStrategy)
+	private EList<String> getFiles(EMap<String, DataLink> data, int fileHandleStrategy, boolean addHiddenFiles, boolean in)
 	{
 		EList<String> files = new BasicEList<String>();
 		Iterator<Entry<String, DataLink>> it = data.iterator();
@@ -2781,6 +2800,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 		{
 			boolean add = false;
 			Entry<String, DataLink> e = it.next();
+			DataLink         dataLink = e.getValue();
 			if (fileHandleStrategy == GlobalConstants.ANY_HANDLE)
 				add = true;
 			else 
@@ -2799,18 +2819,17 @@ public class TaskImpl extends EObjectImpl implements Task {
 						add = true;
 				}
 				else*/
-				if (e.getValue().getPipe() == null)
+				if (dataLink.getPipe() == null)
 					add = true;
-				else if (!e.getValue().getPipe())
+				else if (!dataLink.getPipe())
 				{
 					if (fileHandleStrategy == GlobalConstants.FILE_HANDLE)
 						add = true;
 				}
-				
 			}
 				
 			//if (e.getValue().getData() != null && e.getValue().getData().getDataResourceName() !=  null)
-			if (add)
+			if (add && (addHiddenFiles ? true : !dataLink.isHidden(!in)))
 				files.add(e.getValue().getDataResourceName().getPath());
 		}
 		return files;
@@ -2826,21 +2845,24 @@ public class TaskImpl extends EObjectImpl implements Task {
 	public Rule createRule()
 	{
 
-		logger.trace("createRule(): task="+getUniqueString()+" preferredTool="+getPreferredTool().getName()
-				+" (all: "+getTools().keySet().toString()+") "
-		);
-
 		//resolveInputs();
 		//resolveOutputs();
 		//resolveParams();
 		
 		int fileHandleStrategy = GlobalConstants.ANY_HANDLE;
 		
-		Rule rule = getRule() == null ? GlobalVar.getDefaultProject().getActiveWorkflow().getCurrentRule() : getRule();
+		Rule rule = getRule();
+		if (rule == null)
+			rule = GlobalVar.getDefaultProject().getActiveWorkflow().getCurrentRule();
 		//rule.setTask(this);
 		rule.setReadFromPipe(readFromPipe());
 		rule.setWriteToPipe(writeToPipe());
-		
+		logger.debug("createRule(): task="+getUniqueString()+" preferredTool="+getPreferredTool().getName()
+				+" (all: "+getTools().keySet().toString()+") "
+				+" task="+hashCode()
+				+" rule="+rule.hashCode()
+		);
+
 		if (rule.isReadFromPipe())
 		{
 			((RuleImpl) rule).clearCmdParts();
@@ -2849,13 +2871,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 		else
 			rule.clear();
 			
-		rule.getDependencies().addAll(getFiles(getInputs(), fileHandleStrategy));
+		rule.getDependencies().addAll(getFiles(getInputs(), fileHandleStrategy, true, true));
 		if (rule.isWriteToPipe())
 			fileHandleStrategy = GlobalConstants.FILE_HANDLE;
 		else
 			fileHandleStrategy = GlobalConstants.ANY_HANDLE;
 		
-		rule.getTargets().addAll(getFiles(getOutputs(), fileHandleStrategy));
+		rule.getTargets().addAll(getFiles(getOutputs(), fileHandleStrategy, true, false));
 				
 		logger.debug("createRule(): cmd="+rule.getCmdLine()+" targets="+rule.getTargets()+" deps="+rule.getDependencies());
 		return rule;

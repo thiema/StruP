@@ -821,8 +821,6 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 				}
 			}
 		}
-					
-		
 		
 		return null;
 	}
@@ -838,9 +836,8 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 			return this;
 
 		if (getChildParams() == null || getChildParams().isEmpty())
-		{
 			return null;
-		}
+
 		if (condition != null)
 		{
 			if (getChildParams().containsKey(condition))

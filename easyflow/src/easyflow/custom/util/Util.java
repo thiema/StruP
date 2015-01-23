@@ -26,6 +26,7 @@ import easyflow.core.Task;
 import easyflow.data.DataPort;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.GroupingInstance;
+import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 
@@ -277,6 +278,24 @@ public class Util {
 				s = o.toString();
 		return s;
 			
+	}
+	
+	//static String debugTool = "view";
+	static String debugTool = "picard_ARRG";
+	//static String debugTool = "gatk2_realigner_target_creator";
+	
+
+	public static boolean debugTool(Tool tool)
+	{
+		if (tool == null)
+			return false;
+		
+		if (debugTool.equals(tool.getName()) || debugTool.equals(tool.getId()))
+		{
+			return true;
+		}
+		return false;
+
 	}
 	
 }

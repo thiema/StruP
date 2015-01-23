@@ -183,7 +183,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 				
 				try {
 					Task task = JGraphXUtil.loadTask(vertex);
-					logger.debug("resolveToolDependencies(): ================================ resolve for task="+task.getUniqueString()+" ===================================================");
+					logger.debug("resolveToolDependencies(): ================================ resolve for task="+task.getUniqueString()+" ("+task.hashCode()+")"+" ===================================================");
 					//logger.debug("resolveToolDependencies(): process task="+task.getUniqueString());
 					if (task.getTools().isEmpty())
 					{
@@ -417,15 +417,19 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 										if (parentDataLink != null && parentDataLink.getDataResourceName() != null)
 										{
 											InOutParameter p = (InOutParameter) matchingData.parent.getParameter();
-											
+											URI uri = parentDataLink.getDataResourceName();
+											uri = URIUtil.addExtensionToURI(uri, 
+													dataLink.getInDataPort().getFormat().getName(), 
+													!GlobalConstants.ADD_EXTENSION_TO_FILENAME.equals(p.getFilenameCreation()));
+											//task.getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 											logger.info("resolveToolDependencies():"
+													+" filename="+uri.toString()
 													+" assume parameter=" +p.resolveName()
+													+" hidden="+p.isHidden()
 													+" to be hidden. use parent datalink="+parentDataLink.getUniqueString()+" to set resource."
 													+" output filename creation: "+p.getFilenameCreation());
-											URI uri = parentDataLink.getDataResourceName();
-												uri = URIUtil.addExtensionToURI(uri, 
-														dataLink.getInDataPort().getFormat().getName(), 
-														!GlobalConstants.ADD_EXTENSION_TO_FILENAME.equals(p.getFilenameCreation()));
+											dataLink.setData(matchingData.parent);
+											childTask.getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 											dataLink.setDataResourceName(uri);
 											continue;
 										}
