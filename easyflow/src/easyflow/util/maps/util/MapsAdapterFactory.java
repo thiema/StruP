@@ -8,6 +8,7 @@ package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.ErrorControl;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 
@@ -241,6 +242,10 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseStringToIntMap(Map.Entry<String, Integer> object) {
 				return createStringToIntMapAdapter();
+			}
+			@Override
+			public Adapter caseStringToErrorControlMap(Map.Entry<String, ErrorControl> object) {
+				return createStringToErrorControlMapAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -721,6 +726,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToIntMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Error Control Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToErrorControlMapAdapter() {
 		return null;
 	}
 

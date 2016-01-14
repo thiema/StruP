@@ -1,4 +1,0 @@
-#example	config (overrides default config (main.json))	folder (overrides default folder)
-sequencing	
-abstract1	main_abstract.json	sequencing
-abstract2	main_abstract_simple.json	sequencing

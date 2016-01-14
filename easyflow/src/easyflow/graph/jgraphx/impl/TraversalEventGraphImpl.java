@@ -492,6 +492,7 @@ public class TraversalEventGraphImpl extends EObjectImpl implements TraversalEve
 			final TraversalEvent traversalEvent, 
 			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
 
+		logger.debug("############ graph="+getGraph());
 		final String               groupingStr              = traversalEvent.getTraversalCriterion().getId();
 		final EMap<String, String> taskPreviousTaskMap      = new BasicEMap<String, String>();
 		final EList<mxICell>       returnCell               = new BasicEList<mxICell>();
@@ -678,7 +679,6 @@ public class TraversalEventGraphImpl extends EObjectImpl implements TraversalEve
 		getGraph().getGraph().getModel().beginUpdate();		try		{
 			getGraph().getGraph().traverseAllPaths(root, true, visitor, null);
 			JGraphXUtil.layoutGraph();
-			
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 
 		return returnCell.size() > 0 ? returnCell.get(0) : null;
@@ -717,6 +717,7 @@ public class TraversalEventGraphImpl extends EObjectImpl implements TraversalEve
 			final TraversalEvent traversalEvent, 
 			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
 		
+		logger.debug("############ graph="+getGraph());
 		final String               groupingStr         = traversalEvent.getTraversalCriterion().getId();
 		final EMap<String, String> taskPreviousTaskMap = new BasicEMap<String, String>();
 		final EList<mxICell>       returnCell          = new BasicEList<mxICell>();
@@ -807,7 +808,6 @@ public class TraversalEventGraphImpl extends EObjectImpl implements TraversalEve
 		getGraph().getGraph().getModel().beginUpdate();		try		{
 			getGraph().getGraph().traverseTopologicalOrder(root, visitor);
 			JGraphXUtil.layoutGraph();
-			
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 
 		return returnCell.size() > 0 ? returnCell.get(0) : null;
@@ -998,9 +998,10 @@ public class TraversalEventGraphImpl extends EObjectImpl implements TraversalEve
 					
 					DataLink dataLink = GraphUtil.createDataLink(edgeOut, task, null, isGrouping ? groupingStr : null, 
 							null, !isGrouping ? groupingStr : null);
+					
 					if (
 					// getProcessedEdgesCopyGraph().keySet().contains(task.getUniqueString())
-					JGraphXUtil.isEdgeInGraph(task, childTask, dataLink))
+						JGraphXUtil.isEdgeInGraph(task, childTask, dataLink))
 						logger.trace("applyMergingCriterion(): skip inserting edge (already processed)");
 
 					// insert edge from cell to its child cell

@@ -9,6 +9,7 @@ public class GlobalConstants {
 	public static final double defaultCellYPos   = 100;
 	public static final double defaultCellWidth  = 200;
 	public static final double defaultCellHeight =  40;
+	
 	public static final String TRAVERSAL_CRITERION_RECORD = "Record";
 	public static final String METADATA_INPUT             = "InputFiles";
 	public static final String GROUPING_MODE_JOINT        = "joint";
@@ -85,9 +86,42 @@ public class GlobalConstants {
 	public static final String ROOT_TASK_NAME           = "_root_";
 	
 	// error descriptions
-	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL    = "No valid data handle found for tool.";
-	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG  = "No valid data handle found due to configuration.";
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL_1    = "No valid data handle found for tool \"$VAL1\".";
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG_0  = "No valid data handle found due to configuration.";
+	public static final String ERROR_NO_TOOL_DEFINITION_FOUND_FOR_TOOL_1         = "Unable to find definition of tool \"$VAL1\".";
+	public static final String ERROR_TOOL_DEFINITION_NOT_VALID_2                 = "Unable to validate tool definition \"$VAL1\" against schema \"$VAL2\".";
+	
+	public static final String ERROR_CONFIGURATION_FILE_NOT_FOUND_1              = "Could not find the specified/default configuration file \"$VAL\".";
+	public static final String ERROR_METADATA_FILE_NOT_FOUND_1                   = "Could not find the metadata file \"$VAL1\".";
+	public static final String ERROR_WORKFLOW_TEMPLATE_NOT_FOUND_1               = "Could not find the workflow template \"$VAL1\".";
+	public static final String ERROR_CONFIGRUATION_FILE_NOT_SPECIFIED_0          = "No configuration file specified.";
+	public static final String ERROR_METADATA_FILE_NOT_SPECIFIED_0               = "No metadata file specified.";
+	public static final String ERROR_WORKFLOW_TEMPLATE_NOT_SPECIFIED_0           = "No workflow template provided.";
+	public static final String ERROR_TOOL_DEFINITION_NOT_SPECIFIED_0             = "No tool definition provided.";
+	
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL      = "Tool does not provide a valid data handle.";
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG    = "Configuration does not provide a valid data handle.";
 
+	/*
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	public static final String ERROR_
+	*/
+	
 	public static final String TRAVERSAL_CHUNK_SOURCE_TYPE_METADATA = METADATA;
 	
 	public static final String VERTEX_STYLE = "EASYFLOW_VERTEX_STYLE";
@@ -113,9 +147,13 @@ public class GlobalConstants {
 	public static final String DFLT_CONFIG_FILE = URIUtil.createPath(HOME_DIR, "config.json");
 	
 	public static final String WORKFLOW_TPL_FILE_PARAM_NAME = "workflow_template_file";
-	public static final String METADATA_FILE_PARAM_NAME     = "metadata_file";
 	public static final String WORKFLOW_DIR_PARAM_NAME      = "workflow_dir";
+	
+	public static final String PKG_CFG_FILE_PARAM_NAME      = "pkg_config_file";
+	
+	public static final String METADATA_FILE_PARAM_NAME     = "metadata_file";
 	public static final String METADATA_DIR_PARAM_NAME      = "metadata_dir";
+	
 	public static final String EXEC_SYS_PARAM_NAME          = "execution_system";
 	public static final String EXEC_SYS_OUT_FILE_PARAM_NAME = "execution_system_output_file";
 	public static final String INPUT_DIR_PARAM_NAME         = "input_dir";
@@ -124,17 +162,17 @@ public class GlobalConstants {
 	public static final String CMD_PATTERN_PARAM_NAME       = "command_pattern";
 	public static final String TOOL_DEF_DIR_PARAM_NAME      = "def_dir";
 	public static final String TOOL_CFG_FILE_PARAM_NAME     = "tool_config_file";
-	public static final String PKG_CFG_FILE_PARAM_NAME      = "pkg_config_file";
 	public static final String TOOL_CFG_DIR_PARAM_NAME      = "config_dir";
+	
 	public static final String DEFAULT_PKG_CONFIG_FILE_NAME           = "pkg_config.json";
 	public static final String DEFAULT_TOOL_CONFIG_FILE_NAME          = "tool_config.json";
 	public static final String DEFAULT_TOOL_CONFIG_DIR_NAME           = "tool_configuration";
 	public static final String DEFAULT_TOOL_DEF_DIR_NAME              = "tool_definition";
 	public static final String DEFAULT_TOOL_CONFIG_FILES_DIR_NAME     = "tool";
 	public static final String DEFAULT_PKG_CONFIG_FILES_DIR_NAME      = "pkg";
-	
 	public static final String DEFAULT_GROUPING_CRITERIA_PARAM_NAME   = "default_grouping_criteria";
 	public static final String DEFAULT_WORKFLOW_MODE_PARAM_NAME       = "default_mode";
+	
 	public static final String IS_CONTRAST_PARAM_NAME                 = "is_contrast";
 	public static final String USE_INTERVAL_PARAM_NAME                = "use_interval_list";
 	public static final String SPLIT_BY_CHUNKS_PARAM_NAME             = "split_by_chunks";

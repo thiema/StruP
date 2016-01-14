@@ -704,10 +704,10 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	{
 		if (!toolCfg.has("schemata"))
 			return null;
+		
 		JSONArray schemata = toolCfg.getJSONArray("schemata");
 		ToolSchemata    toolSchemata   = ToolFactory.eINSTANCE.createToolSchemata();
 
-		
 		// read schemata one by one
 		for (int i=0; i<schemata.size(); i++)
 		{
@@ -725,8 +725,8 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
+		
 		return toolSchemata;
 	}
 

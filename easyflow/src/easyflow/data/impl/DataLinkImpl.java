@@ -9,7 +9,7 @@ package easyflow.data.impl;
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
 import easyflow.custom.exception.NoValidInOutDataException;
-import easyflow.custom.ui.GlobalConfig;
+
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Util;
 import easyflow.data.Data;
@@ -21,7 +21,7 @@ import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
 import java.net.URI;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -1074,6 +1074,7 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	/*
 	public boolean isHidden(boolean in) {
 		
 		boolean hidden = GlobalConfig.paramIsHidden();
@@ -1085,7 +1086,7 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 			
 		return hidden;
 	}
-
+*/
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

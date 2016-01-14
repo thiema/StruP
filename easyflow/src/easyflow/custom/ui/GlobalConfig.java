@@ -16,6 +16,10 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
+import easyflow.core.ErrorControl;
+import easyflow.core.Severity;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
@@ -157,11 +161,49 @@ public class GlobalConfig {
 
 	private static final String CONFIG_PROCESSING_PIPE_OPERATOR_PARAM_NAME = "pipe_operator";
 
-	private static final boolean CONFIG_TOOL_PARAM_IS_HIDDEN_DEFAULT_VALUE = false;
-	private static final String CONFIG_TOOL_PARAM_IS_HIDDEN_PARAM_NAME = "param_is_hidden";
+	private static final boolean CONFIG_TOOL_ALLOW_HIDDEN_PARAM_DEFAULT_VALUE = false;
+	private static final String  CONFIG_TOOL_ALLOW_HIDDEN_PARAM_PARAM_NAME = "param_is_hidden";
 	
 
-	private static       JSONObject           jsonConfig       = null; 
+	private static       JSONObject           jsonConfig       = null;
+	
+	private EMap<String, ErrorControl> errorControlMap = new BasicEMap<String, ErrorControl>();
+	
+	
+	
+	private void createErrorControlObject(String name, String description, Category category, Severity severity, int valNum)
+	{
+		if (errorControlMap.containsKey(name))
+		{
+			logger.error("Errorcontrol object "+name+" already exists");
+		}
+		else
+		{
+			ErrorControl ec = CoreFactory.eINSTANCE.createErrorControl();
+			ec.setName(name);
+			ec.setDescription(description);
+			ec.setCategory(category);
+			ec.setSeverity(severity);
+			ec.setValNum(valNum);
+		}
+	}
+	
+	public String generateErrorMessage(String key, String [] args)
+	{
+		if (errorControlMap.containsKey(key))
+		{
+			for (String arg : args)
+			{
+				errorControlMap.get(key).getVals().add(arg);
+			}
+			return errorControlMap.get(key).generateDescription();
+		}
+		else
+		{
+			logger.error("no error control object found for key="+key);
+		}
+		return null;
+	}
 	
 	//public static JSONObject getJsonCfg() {
 		//return jsonConfig;
@@ -771,11 +813,11 @@ public class GlobalConfig {
 
 	}
 
-	public static boolean paramIsHidden() 
+	public static boolean allowHiddenParameter() 
 	{
-		if (getToolConfig().containsKey(CONFIG_TOOL_PARAM_IS_HIDDEN_PARAM_NAME))
-			return getToolConfig().get(CONFIG_TOOL_PARAM_IS_HIDDEN_PARAM_NAME).equals("true");
+		if (getToolConfig().containsKey(CONFIG_TOOL_ALLOW_HIDDEN_PARAM_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_ALLOW_HIDDEN_PARAM_PARAM_NAME).equals("true");
 		else
-			return CONFIG_TOOL_PARAM_IS_HIDDEN_DEFAULT_VALUE;
+			return CONFIG_TOOL_ALLOW_HIDDEN_PARAM_DEFAULT_VALUE;
 	}
 }

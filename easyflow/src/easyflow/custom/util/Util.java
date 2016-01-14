@@ -29,6 +29,7 @@ import easyflow.metadata.GroupingInstance;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
+import easyflow.traversal.TraversalEvent;
 
 public class Util {
 	
@@ -204,6 +205,38 @@ public class Util {
 		}
 		return result;
 	}
+	
+	public static String traversalEvents2String(EMap<String, TraversalEvent> traversalEvents)
+	{
+		String out = "";
+		for (String key : traversalEvents.keySet()) {
+			TraversalEvent te = traversalEvents.get(key);
+			out += "key="
+					+ key
+					+ " type=" + te.getType()
+					+ " split="
+					+ (te.getSplitTask() != null ? te.getSplitTask()
+							.getUniqueString() : null)
+					+ " merge="
+					+ (te.getMergeTask() != null ? StringUtils.join(
+							tasksToStringList(te.getMergeTask()), ",") : null)
+					+ " crit name=" + te.getTraversalCriterion().getName()
+					+ " crit mode=" + te.getTraversalCriterion().getMode()
+					+ "; ";
+		}
+		
+		return out;
+	}
+	
+	public static EList<String> tasksToStringList(EList<Task> tasks) {
+		EList<String> list = new BasicEList<String>();
+		for (Task t : tasks)
+			list.add(t.getUniqueString());
+		return list;
+
+	}
+
+
 	
 	public static String list2String(Object list, String sep)
 	{

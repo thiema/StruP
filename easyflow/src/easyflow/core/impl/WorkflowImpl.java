@@ -1,8 +1,11 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
+
 import com.mxgraph.model.mxICell;
+import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTemplate;
@@ -43,11 +46,13 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Stack;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -1364,9 +1369,31 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	 */
 	public boolean generateAbstractWorkflow() {
 
+		
+		//Testing... how the graph is displayed
+		//Adds cells to the model in a single step
+		logger.debug(GlobalVar.getGraph()+" "+graph);
+		graph=GlobalVar.getGraph();
+		/*
+		graph.getModel().beginUpdate();
+		try
+		{
+		   Object v1 = graph.insertVertex(getJgraph().getDefaultRootCell(), null, "Hello,", 20, 200, 80, 30);
+		   Object v2 = graph.insertVertex(graph.getDefaultParent(), null, "World!", 200, 250, 80, 30);
+		   Object e1 = graph.insertEdge(graph.getDefaultParent(), null, "", v1, v2);
+		}
+		finally
+		{
+		   // Updates the display
+		   graph.getModel().endUpdate();
+		}
+		//mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		//getContentPane().add(graphComponent);
+		return false;
+		*/
+		
 		//printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
     	boolean res=generateGraphFromTemplate(GlobalConfig.getTools());
-
 
     	if (res)
     	{
@@ -1388,6 +1415,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
     	
     	printWorkflowStepMsgOnEnd(res, GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
     	return res;
+    	
 	}
 
 	/**
@@ -1534,7 +1562,7 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	    		getLastTasks().add(getRootTask());
 	        logger.trace(getWorkflowTemplate().getTasks());
 	        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
-			while (it.hasNext()) 
+			while (it.hasNext())
 			{
 				Task task=it.next();
 				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
@@ -1574,7 +1602,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 								for (DataLink dataLink:parentTaskList.get(pTask))
 								{
-									
 									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
 									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode()+" "+dataLink.getInDataPort());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
@@ -1598,10 +1625,9 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 			}
 		} finally {
         	getGraph().getModel().endUpdate();
-        	JGraphXUtil.layoutGraph();
+        	//JGraphXUtil.layoutGraph();
         }
 		getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, true);
-
 	}
 
 	/**
@@ -2401,8 +2427,6 @@ public class WorkflowImpl extends EObjectImpl implements Workflow {
 	public boolean applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
 		
 		boolean rc = true;
-		
-		
 			
 			EList<GroupingInstance> groupingInstances = getJgraph().getGroupingInstances(traversalEvent);
 			if (groupingInstances.isEmpty())

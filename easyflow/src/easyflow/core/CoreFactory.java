@@ -116,6 +116,15 @@ public interface CoreFactory extends EFactory {
 	Condition createCondition();
 
 	/**
+	 * Returns a new object of class '<em>Error Control</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Control</em>'.
+	 * @generated
+	 */
+	ErrorControl createErrorControl();
+
+	/**
 	 * Returns a new object of class '<em>Tool Match</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -1,0 +1,23 @@
+#0		1		2				3			4			5					6					7			8					9						10							11
+#task	parent	implementation	formatIn	formatOut	groupingCriterion	parameterCriterion	preprocess	JEXL:process_task?	parameter definition	static params(opt)	static params(pos)
+_root_				FASTQ		InputFiles:joint
+Trinity		Trinity	FASTQ	FASTA	Group
+TrinityStats		TrinityStats.pl	FASTA		Group
+AlignTranscripts		gmap	FASTQ	FASTA
+AlignReads		tophat	FASTQ	BAM	Group
+TranscriptExpQuantification		align_and_estimate_abundance.pl	FASTQ	GENES_TSV,ISOFORMS_TSV	Sample
+MergeExpQuantRes		abundance_estimates_to_matrix.pl	ISOFORMS_TSV	ISOFORMS_TSV
+DiffExp		run_DE_analysis.pl	trans.counts
+TranscriptNorm 	run_TMM_normalization_write_FPKM_matrix.pl	FPKM
+ExtractDiffTranscripts 	analyze_diff_expr.pl	FPKM
+ExtractTranscriptClusters		define_clusters_by_cutting_tree.pl
+######
+##Helper Functions/Tasks which helps to (pre)process/prepare (e.g. indexing, sorting, splitting, ...) data 
+## which are then processed further by the actual >>main<< task
+######
+MergeAny	STATIC:cat	unix:cat	FastQ	FastQ
+AlignTranscriptsIndex	STATIC:indexGmap	gmap_build
+AlignReadsIndex	STATIC:indexBowtie	bowtie-build
+SortSam	STATIC:sort	samtools:sort_sam	BAM	BAM
+IndexSam	STATIC:index	samtools:index_sam	BAM	BAI		Read:sort:Coordinate	
+MergeSam	STATIC:merge	samtools:merge_sam	BAM,SAM	BAM,SAM	ReadGroup

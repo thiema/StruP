@@ -963,7 +963,8 @@ public class GraphImpl extends EObjectImpl implements Graph {
 				+" parentTasks=("+StringUtils.join(GraphUtil.getTaskStringList(traversalEvent.getParentTask()), ", ")+")"
 				+" splitTask="+traversalEvent.getSplitTask().getUniqueString()
 				+" mergeTasks=("+StringUtils.join(GraphUtil.getTaskStringList(traversalEvent.getMergeTask()), ", ")+")"
-				+" root="+JGraphXUtil.loadTask(root).getUniqueString());
+				+" root="+JGraphXUtil.loadTask(root).getUniqueString()
+				+" mode="+traversalEvent.getTraversalCriterion().getMode());
 		//getGraph().traverse(root, true, visitor);
 		//getGraph().traverse_topologicalOrder(getGraph().traverse_topologicalOrder(root), visitor);
 		getGraph().getModel().beginUpdate();		try		{

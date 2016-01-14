@@ -9,17 +9,20 @@ package easyflow.core.impl;
 import easyflow.EasyflowPackage;
 
 import easyflow.core.Catalog;
+import easyflow.core.Category;
 import easyflow.core.Condition;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultRecord;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
+import easyflow.core.ErrorControl;
 import easyflow.core.GalaxyTaskReader;
 import easyflow.core.ITaskReader;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.PreprocessingTask;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.core.Workflow;
@@ -76,6 +79,7 @@ import easyflow.util.maps.impl.MapsPackageImpl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -180,6 +184,27 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EClass conditionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass errorControlEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum severityEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum categoryEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -1152,6 +1177,87 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getErrorControl() {
+		return errorControlEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_Name() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_Description() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_Category() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_Severity() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_ValNum() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_Vals() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getSeverity() {
+		return severityEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getCategory() {
+		return categoryEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CoreFactory getCoreFactory() {
 		return (CoreFactory)getEFactoryInstance();
 	}
@@ -1283,6 +1389,18 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		conditionEClass = createEClass(CONDITION);
 		createEAttribute(conditionEClass, CONDITION__FORBIDDEN);
 		createEAttribute(conditionEClass, CONDITION__CIRCUMVENTING_PARENTS);
+
+		errorControlEClass = createEClass(ERROR_CONTROL);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__NAME);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__DESCRIPTION);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__CATEGORY);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__SEVERITY);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__VAL_NUM);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__VALS);
+
+		// Create enums
+		severityEEnum = createEEnum(SEVERITY);
+		categoryEEnum = createEEnum(CATEGORY);
 	}
 
 	/**
@@ -1850,6 +1968,37 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getCondition_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		addEOperation(conditionEClass, ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(errorControlEClass, ErrorControl.class, "ErrorControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getErrorControl_Name(), ecorePackage.getEString(), "name", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorControl_Description(), ecorePackage.getEString(), "description", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorControl_Category(), this.getCategory(), "category", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorControl_Severity(), this.getSeverity(), "severity", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorControl_ValNum(), ecorePackage.getEInt(), "valNum", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorControl_Vals(), ecorePackage.getEString(), "vals", null, 0, -1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		addEOperation(errorControlEClass, ecorePackage.getEString(), "generateDescription", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(severityEEnum, Severity.class, "Severity");
+		addEEnumLiteral(severityEEnum, Severity.FATAL);
+		addEEnumLiteral(severityEEnum, Severity.ERROR);
+		addEEnumLiteral(severityEEnum, Severity.WARN);
+		addEEnumLiteral(severityEEnum, Severity.INFO);
+		addEEnumLiteral(severityEEnum, Severity.DEBUG);
+		addEEnumLiteral(severityEEnum, Severity.TRACE);
+
+		initEEnum(categoryEEnum, Category.class, "Category");
+		addEEnumLiteral(categoryEEnum, Category.METADATA_DEFINITON);
+		addEEnumLiteral(categoryEEnum, Category.TASK_DEFINITON);
+		addEEnumLiteral(categoryEEnum, Category.TOOL_DEFINITION);
+		addEEnumLiteral(categoryEEnum, Category.WORKFLOW_TEMPLATE);
+		addEEnumLiteral(categoryEEnum, Category.ABSTRACT_WORKFLOW);
+		addEEnumLiteral(categoryEEnum, Category.DATA_GROUPING);
+		addEEnumLiteral(categoryEEnum, Category.PARAMETER_GROUPING);
+		addEEnumLiteral(categoryEEnum, Category.PREPROCESSING);
+		addEEnumLiteral(categoryEEnum, Category.TOOL_RESOLUTION);
+		addEEnumLiteral(categoryEEnum, Category.EXECUTION_WORKFLOW);
 	}
 
 } //CorePackageImpl

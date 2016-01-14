@@ -223,6 +223,7 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
 	public boolean isFromJar() {
 		return isFromJar;
 	}
+	
 	public void setFromJar(boolean isFromJar) {
 		this.isFromJar = isFromJar;
 	}

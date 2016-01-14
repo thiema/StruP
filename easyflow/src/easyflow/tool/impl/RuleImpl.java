@@ -540,14 +540,22 @@ public class RuleImpl extends EObjectImpl implements Rule {
 		logger.debug(getTask().getUniqueString());
 		for (DataLink dataLink : getTask().getInputs().values())
 		{
-			if (dataLink.getData().getResolvedParam() != null)
+			if (dataLink.getData() == null)
+			{
+				logger.info(" no data resolved for datalink outdata");
+			}
+			else if (dataLink.getData().getResolvedParam() != null)
 				logger.debug(" in="+dataLink.getData().getResolvedParam().resolveName()+" "+dataLink.getData().getResolvedParam().hashCode());
 			else
 				logger.info(" no parameter resolved for datalink outdata");
 		}
 		for (DataLink dataLink : getTask().getOutputs().values())
 		{
-			if (dataLink.getInData().getResolvedParam() != null)
+			if (dataLink.getInData() == null)
+			{
+				logger.info(" no data resolved for datalink indata");
+			}
+			else if (dataLink.getInData().getResolvedParam() != null)
 			{
 				logger.debug("out="+dataLink.getInData().getResolvedParam().resolveName()+" "+dataLink.getInData().getResolvedParam().hashCode());
 			}

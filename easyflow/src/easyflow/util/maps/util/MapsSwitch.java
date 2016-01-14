@@ -8,6 +8,7 @@ package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.ErrorControl;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 
@@ -306,6 +307,12 @@ public class MapsSwitch<T> extends Switch<T> {
 			case MapsPackage.STRING_TO_INT_MAP: {
 				@SuppressWarnings("unchecked") Map.Entry<String, Integer> stringToIntMap = (Map.Entry<String, Integer>)theEObject;
 				T result = caseStringToIntMap(stringToIntMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case MapsPackage.STRING_TO_ERROR_CONTROL_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, ErrorControl> stringToErrorControlMap = (Map.Entry<String, ErrorControl>)theEObject;
+				T result = caseStringToErrorControlMap(stringToErrorControlMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -805,6 +812,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToIntMap(Map.Entry<String, Integer> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Error Control Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Error Control Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToErrorControlMap(Map.Entry<String, ErrorControl> object) {
 		return null;
 	}
 

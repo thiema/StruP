@@ -1,0 +1,5 @@
+ID	ReadGroup	Lib	Sample	Group	InputFiles:List	ReadLength	InsertSize	Platform	PlatformUnit	Description	FASTA
+ID1	RG1	L1	Sp_log	A	Sp_log.left.fq,Sp_log.right.right.fq	76	350	ILLUMINA	Lane1	DummyDesc	hg19.fa
+ID2	RG2	L2	Sp_plat	A	Sp_plat.left.fq,Sp_plat.right.right.fq	76	350	ILLUMINA	Lane2	DummyDesc	hg19.fa
+ID3	RG3	L3	Sp_hs	A	Sp_hs.left.fq,Sp_hs.right.right.fq	76	350	ILLUMINA	Lane3	DummyDesc	hg19.fa
+ID4	RG4	L4	Sp_ds	A	Sp_ds.left.fq,Sp_ds.right.right.fq	76	350	ILLUMINA	Lane4	DummyDesc	hg19.fa

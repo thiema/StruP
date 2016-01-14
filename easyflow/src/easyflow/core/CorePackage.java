@@ -8,6 +8,7 @@ package easyflow.core;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -1082,6 +1083,100 @@ public interface CorePackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.core.impl.ErrorControlImpl <em>Error Control</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.ErrorControlImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getErrorControl()
+	 * @generated
+	 */
+	int ERROR_CONTROL = 13;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__DESCRIPTION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__CATEGORY = 2;
+
+	/**
+	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__SEVERITY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Val Num</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__VAL_NUM = 4;
+
+	/**
+	 * The feature id for the '<em><b>Vals</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__VALS = 5;
+
+	/**
+	 * The number of structural features of the '<em>Error Control</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL_FEATURE_COUNT = 6;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.Severity
+	 * @see easyflow.core.impl.CorePackageImpl#getSeverity()
+	 * @generated
+	 */
+	int SEVERITY = 14;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.Category <em>Category</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.Category
+	 * @see easyflow.core.impl.CorePackageImpl#getCategory()
+	 * @generated
+	 */
+	int CATEGORY = 15;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.Workflow <em>Workflow</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2125,6 +2220,102 @@ public interface CorePackage extends EPackage {
 	EAttribute getCondition_CircumventingParents();
 
 	/**
+	 * Returns the meta object for class '{@link easyflow.core.ErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Error Control</em>'.
+	 * @see easyflow.core.ErrorControl
+	 * @generated
+	 */
+	EClass getErrorControl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see easyflow.core.ErrorControl#getName()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see easyflow.core.ErrorControl#getDescription()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see easyflow.core.ErrorControl#getCategory()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_Category();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getSeverity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Severity</em>'.
+	 * @see easyflow.core.ErrorControl#getSeverity()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_Severity();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getValNum <em>Val Num</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Val Num</em>'.
+	 * @see easyflow.core.ErrorControl#getValNum()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_ValNum();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.core.ErrorControl#getVals <em>Vals</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Vals</em>'.
+	 * @see easyflow.core.ErrorControl#getVals()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_Vals();
+
+	/**
+	 * Returns the meta object for enum '{@link easyflow.core.Severity <em>Severity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Severity</em>'.
+	 * @see easyflow.core.Severity
+	 * @generated
+	 */
+	EEnum getSeverity();
+
+	/**
+	 * Returns the meta object for enum '{@link easyflow.core.Category <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Category</em>'.
+	 * @see easyflow.core.Category
+	 * @generated
+	 */
+	EEnum getCategory();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2939,6 +3130,84 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONDITION__CIRCUMVENTING_PARENTS = eINSTANCE.getCondition_CircumventingParents();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.ErrorControlImpl <em>Error Control</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.ErrorControlImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getErrorControl()
+		 * @generated
+		 */
+		EClass ERROR_CONTROL = eINSTANCE.getErrorControl();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__NAME = eINSTANCE.getErrorControl_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__DESCRIPTION = eINSTANCE.getErrorControl_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__CATEGORY = eINSTANCE.getErrorControl_Category();
+
+		/**
+		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__SEVERITY = eINSTANCE.getErrorControl_Severity();
+
+		/**
+		 * The meta object literal for the '<em><b>Val Num</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__VAL_NUM = eINSTANCE.getErrorControl_ValNum();
+
+		/**
+		 * The meta object literal for the '<em><b>Vals</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__VALS = eINSTANCE.getErrorControl_Vals();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.Severity
+		 * @see easyflow.core.impl.CorePackageImpl#getSeverity()
+		 * @generated
+		 */
+		EEnum SEVERITY = eINSTANCE.getSeverity();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.Category <em>Category</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.Category
+		 * @see easyflow.core.impl.CorePackageImpl#getCategory()
+		 * @generated
+		 */
+		EEnum CATEGORY = eINSTANCE.getCategory();
 
 	}
 

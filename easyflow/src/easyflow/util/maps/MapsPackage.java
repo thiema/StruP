@@ -1318,6 +1318,43 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_INT_MAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToErrorControlMapImpl <em>String To Error Control Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToErrorControlMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToErrorControlMap()
+	 * @generated
+	 */
+	int STRING_TO_ERROR_CONTROL_MAP = 34;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_ERROR_CONTROL_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_ERROR_CONTROL_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Error Control Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_ERROR_CONTROL_MAP_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2338,6 +2375,40 @@ public interface MapsPackage extends EPackage {
 	EAttribute getStringToIntMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Error Control Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Error Control Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="easyflow.core.ErrorControl"
+	 * @generated
+	 */
+	EClass getStringToErrorControlMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToErrorControlMap()
+	 * @generated
+	 */
+	EAttribute getStringToErrorControlMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToErrorControlMap()
+	 * @generated
+	 */
+	EReference getStringToErrorControlMap_Value();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Parameter List Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3274,6 +3345,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute STRING_TO_INT_MAP__VALUE = eINSTANCE.getStringToIntMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToErrorControlMapImpl <em>String To Error Control Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToErrorControlMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToErrorControlMap()
+		 * @generated
+		 */
+		EClass STRING_TO_ERROR_CONTROL_MAP = eINSTANCE.getStringToErrorControlMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_ERROR_CONTROL_MAP__KEY = eINSTANCE.getStringToErrorControlMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_ERROR_CONTROL_MAP__VALUE = eINSTANCE.getStringToErrorControlMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToParameterListMapImpl <em>String To Parameter List Map</em>}' class.

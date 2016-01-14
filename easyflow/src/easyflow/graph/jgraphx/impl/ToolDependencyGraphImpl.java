@@ -428,7 +428,7 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 													+" hidden="+p.isHidden()
 													+" to be hidden. use parent datalink="+parentDataLink.getUniqueString()+" to set resource."
 													+" output filename creation: "+p.getFilenameCreation());
-											dataLink.setData(matchingData.parent);
+											//dataLink.setData(matchingData.parent);
 											childTask.getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 											dataLink.setDataResourceName(uri);
 											continue;

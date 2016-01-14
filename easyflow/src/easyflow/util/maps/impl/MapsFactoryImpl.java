@@ -8,6 +8,7 @@ package easyflow.util.maps.impl;
 
 import com.mxgraph.model.mxICell;
 
+import easyflow.core.ErrorControl;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 
@@ -129,6 +130,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.TASK_TO_DATA_LINK_LIST_MAP: return (EObject)createTaskToDataLinkListMap();
 			case MapsPackage.STRING_TO_CONDITION_MAP: return (EObject)createStringToConditionMap();
 			case MapsPackage.STRING_TO_INT_MAP: return (EObject)createStringToIntMap();
+			case MapsPackage.STRING_TO_ERROR_CONTROL_MAP: return (EObject)createStringToErrorControlMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -462,6 +464,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, Integer> createStringToIntMap() {
 		StringToIntMapImpl stringToIntMap = new StringToIntMapImpl();
 		return stringToIntMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, ErrorControl> createStringToErrorControlMap() {
+		StringToErrorControlMapImpl stringToErrorControlMap = new StringToErrorControlMapImpl();
+		return stringToErrorControlMap;
 	}
 
 	/**

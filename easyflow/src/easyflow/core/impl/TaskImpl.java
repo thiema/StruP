@@ -1098,7 +1098,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 				}
 			}
 		}
-		// simple fix for root, assuming  
+		// simple fix for root, assuming 
 		else if (!"".equals(groupingStr) && hasOutdataPorts)
 		{
 			createGroupingCrit(groupingStr, getOutDataPorts().get(0), defaultMode);
@@ -1246,22 +1246,10 @@ public class TaskImpl extends EObjectImpl implements Task {
 		}
 		setPreviousTaskStr(getUniqueString());
 
-		String out = "";
-		for (String key : getTraversalEvents().keySet()) {
-			TraversalEvent te = getTraversalEvents().get(key);
-			out += "key="
-					+ key
-					+ " split="
-					+ (te.getSplitTask() != null ? te.getSplitTask()
-							.getUniqueString() : null)
-					+ " merge="
-					+ (te.getMergeTask() != null ? StringUtils.join(
-							toStringList(te.getMergeTask()), ",") : null)
-					+ "; ";
-		}
-		logger.debug("readTask(): " + getUniqueString() + " traversalEvents="
-				+ getTraversalEvents().keySet() + " (" + out + ") "
+		String out = Util.traversalEvents2String(getTraversalEvents());
+		logger.debug("readTask(): " + getUniqueString() + " (traversalEvents: "+ out + ") "
 				+ debugDataPort + " jexl exp='" + getJexlString() + "'");
+		
 	}
 	
 	private void createGroupingCrit(String groupingCritStr, DataPort dataPort, String defaultMode)
@@ -1299,15 +1287,6 @@ public class TaskImpl extends EObjectImpl implements Task {
 		dataPort.getGroupingCriteria().add(traversalCriterion);
 	}
 	
-	private EList<String> toStringList(EList<Task> tasks) {
-		EList<String> list = new BasicEList<String>();
-		for (Task t : tasks)
-			list.add(t.getUniqueString());
-		return list;
-
-	}
-
-
 	private DataPort parseDataPortField(String field, EList<Pattern> pattern, boolean isOutDataPort) {
 		
 		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
@@ -2288,18 +2267,8 @@ public class TaskImpl extends EObjectImpl implements Task {
 			Data data = isOutput ? dataLink.getInData() : dataLink.getData();
 			if (data == null)
 			{
-				if (isOutput && dataLink.getInData() == null && dataLink.isHidden(false))
-				{
-					logger.info("resolveDataPorts(): skip "+(isOutput ? "outgoing" : "ingoing")+" data port. (hidden counterpart found)");
-				}
-				else if (!isOutput && dataLink.getData() == null && dataLink.isHidden(true))
-				{
-					logger.info("resolveDataPorts(): skip "+(isOutput ? "outgoing" : "ingoing")+" data port. (hidden counterpart found)");
-				}
-				else
-				{
-					logger.error("resolveDataPorts(): skip dataport. (undefined)");
-				}
+				logger.error("resolveDataPorts(): skip dataport. (undefined)");
+				continue;
 					
 			}
 			ResolvedParam resolvedParam = data.getResolvedParam();
@@ -2792,7 +2761,7 @@ public class TaskImpl extends EObjectImpl implements Task {
 	 * - file_only
 	 * - any
 	 */
-	private EList<String> getFiles(EMap<String, DataLink> data, int fileHandleStrategy, boolean addHiddenFiles, boolean in)
+	private EList<String> getFiles(EMap<String, DataLink> data, int fileHandleStrategy)
 	{
 		EList<String> files = new BasicEList<String>();
 		Iterator<Entry<String, DataLink>> it = data.iterator();
@@ -2828,9 +2797,11 @@ public class TaskImpl extends EObjectImpl implements Task {
 				}
 			}
 				
-			//if (e.getValue().getData() != null && e.getValue().getData().getDataResourceName() !=  null)
-			if (add && (addHiddenFiles ? true : !dataLink.isHidden(!in)))
-				files.add(e.getValue().getDataResourceName().getPath());
+			//if (dataLink.getData() == null || dataLink.getInData() == null)
+			if (add)
+				files.add(dataLink.getDataResourceName().getPath());
+			else if (dataLink.getDataResourceName() != null)
+				logger.debug("getFiles(): skip dataresource="+dataLink.getDataResourceName());
 		}
 		return files;
 	}
@@ -2871,13 +2842,13 @@ public class TaskImpl extends EObjectImpl implements Task {
 		else
 			rule.clear();
 			
-		rule.getDependencies().addAll(getFiles(getInputs(), fileHandleStrategy, true, true));
+		rule.getDependencies().addAll(getFiles(getInputs(), fileHandleStrategy));
 		if (rule.isWriteToPipe())
 			fileHandleStrategy = GlobalConstants.FILE_HANDLE;
 		else
 			fileHandleStrategy = GlobalConstants.ANY_HANDLE;
 		
-		rule.getTargets().addAll(getFiles(getOutputs(), fileHandleStrategy, true, false));
+		rule.getTargets().addAll(getFiles(getOutputs(), fileHandleStrategy));
 				
 		logger.debug("createRule(): cmd="+rule.getCmdLine()+" targets="+rule.getTargets()+" deps="+rule.getDependencies());
 		return rule;

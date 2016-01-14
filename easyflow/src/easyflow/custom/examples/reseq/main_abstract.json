@@ -1,0 +1,55 @@
+{
+  "project" : {	
+	"workflow_template_file"       : "abstract.workflow",
+    "metadata_file"                : "metadata_abstract.tsv", 
+    "is_contrast"                  : "true",
+    "use_interval_list"            : "true",
+    "split_by_contig"              : "true",
+},
+  "processing" : {
+    "_target_enum"            : ["sge", "local", "aws", "pegasus"],
+    "execution_system"        : "makeflow",
+    "mem"                     : "1G",
+    "target"                  : "sge",
+    "use_threads"             : "true",
+    "num_threads"             : 10,
+    "queue"                   : "bioinf.q",
+    "handles"                 : "pipe,file",
+    "default_handle"          : "file",
+    "stdin_operator"          : "<",
+    "stdout_operator"         : "1>",
+    "stderr_operator"         : "2>",
+    "append_stdout_operator"  : "1>>",
+    "append_stderr_operator"  : "2>>"
+  },
+
+  "catalog":{
+	"reference"        : "human.fa",
+	"input_dir"        : "input_dir",
+	"work_dir"         : "analysis_dir",
+	"tmp_dir"          : "tmp",
+	},
+
+  "contrast": {
+    "_rule_enum"       : ["crossProduct", "groupWise", "sampleWise"],
+    "rule"             : "crossProduct"
+  },
+
+  "workflow": {
+    "metadata_input_field"      : ["InputFiles"],
+    "inputs"                    : ["F1"],
+    "static_inputs"             : [],
+    "default_grouping_criteria" : ["Record"],
+    "default_mode"              : "batch"
+  },
+  
+  "tool" : {
+    "command_pattern" : "pos opt in out",
+  	"def_dir"         : "tool_definitions",
+  	"tools"           : ["abstract_tools.xml"],
+  	"schemata"        : ["../../../tool/schema/Easyflow.xsd", 
+  					     "../../../tool/schema/Easyflow_multiple.xsd", 
+  					     "../../../tool/schema/external/Galaxy.xsd"]
+  }
+
+}

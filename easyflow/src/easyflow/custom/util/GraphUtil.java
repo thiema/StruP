@@ -314,7 +314,6 @@ public class GraphUtil {
 		if (!newDataLink.getChunks().containsKey(parentGroupingStr))
 			logger.error("no chunks for grouping "+parentGroupingStr+" found.");
 		
-		
 		if (!newDataLink.isTerminal() && newDataLink.getDataPort() == null)
 		{
 			logger.warn("data port not defined");

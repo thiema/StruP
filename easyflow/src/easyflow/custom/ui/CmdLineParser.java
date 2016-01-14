@@ -3,6 +3,7 @@ package easyflow.custom.ui;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -31,6 +32,14 @@ public class CmdLineParser {
 		options.addOption("l", "logLevel", true, "log level.");
 	}
 	
+	public void printHelp()
+	{
+		HelpFormatter formatter = new HelpFormatter();
+		String header = "Do something useful with an input file\n\n";
+		String footer = "\nPlease report issues at http://example.com/issues";
+		formatter.printHelp("strup", header, options, footer, true);
+	}
+	
 	public boolean parseOptions(String[] args)
 	{
 		
@@ -45,6 +54,7 @@ public class CmdLineParser {
 		    catch( ParseException exp ) {
 		        // oops, something went wrong
 		        System.err.println( "Parsing failed.  Reason: " + exp.getMessage() );
+		        printHelp();
 		        optionsParsedResult = false;
 		    }
 		}

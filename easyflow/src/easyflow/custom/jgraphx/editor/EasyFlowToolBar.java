@@ -11,6 +11,9 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
+
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -166,7 +169,8 @@ public class EasyFlowToolBar extends JToolBar
 					editor.getGraphComponent().getX(), 
 					editor.getGraphComponent().getY(), repositoryFS);
 			GlobalVar.setDefaultProject(dialog.getSelectedProject());
-
+			if (GlobalVar.getDefaultProject() != null)
+				btnInitWorkflow.setEnabled(true);
 		}
 	}
 	
@@ -187,6 +191,23 @@ public class EasyFlowToolBar extends JToolBar
 			btnInitWorkflow.setEnabled(false);
 			GlobalVar.getDefaultProject().getActiveWorkflow().
 				printWorkflowStepMsgOnEnd(rc, GlobalConstants.START);
+			/*
+			//Testing... how the graph is displayed
+			//Adds cells to the model in a single step
+			mxGraph graph = editor.getGraphComponent().getGraph();
+			graph.getModel().beginUpdate();
+			try
+			{
+			   Object v1 = graph.insertVertex(graph.getDefaultParent(), null, "Hello,", 20, 20, 80, 30);
+			   Object v2 = graph.insertVertex(graph.getDefaultParent(), null, "World!", 200, 150, 80, 30);
+			   Object e1 = graph.insertEdge(graph.getDefaultParent(), null, "", v1, v2);
+			}
+			finally
+			{
+			   // Updates the display
+			   graph.getModel().endUpdate();
+			}
+			*/
 		}
 	}
 		

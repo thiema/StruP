@@ -288,6 +288,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToErrorControlMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToParameterListMapEClass = null;
 
 	/**
@@ -1228,6 +1235,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToErrorControlMap() {
+		return stringToErrorControlMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToErrorControlMap_Key() {
+		return (EAttribute)stringToErrorControlMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getStringToErrorControlMap_Value() {
+		return (EReference)stringToErrorControlMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToParameterListMap() {
 		return stringToParameterListMapEClass;
 	}
@@ -1494,6 +1528,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		stringToIntMapEClass = createEClass(STRING_TO_INT_MAP);
 		createEAttribute(stringToIntMapEClass, STRING_TO_INT_MAP__KEY);
 		createEAttribute(stringToIntMapEClass, STRING_TO_INT_MAP__VALUE);
+
+		stringToErrorControlMapEClass = createEClass(STRING_TO_ERROR_CONTROL_MAP);
+		createEAttribute(stringToErrorControlMapEClass, STRING_TO_ERROR_CONTROL_MAP__KEY);
+		createEReference(stringToErrorControlMapEClass, STRING_TO_ERROR_CONTROL_MAP__VALUE);
 	}
 
 	/**
@@ -1670,6 +1708,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToIntMapEClass, Map.Entry.class, "StringToIntMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToIntMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getStringToIntMap_Value(), ecorePackage.getEIntegerObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToErrorControlMapEClass, Map.Entry.class, "StringToErrorControlMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToErrorControlMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getStringToErrorControlMap_Value(), theCorePackage.getErrorControl(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

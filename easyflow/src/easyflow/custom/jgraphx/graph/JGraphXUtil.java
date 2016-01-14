@@ -365,6 +365,7 @@ public class JGraphXUtil {
 	
 	public static boolean isEdgeInGraph(Task parentTask, Task childTask, DataLink dataLink) throws TaskNotFoundException, DataLinkNotFoundException
 	{
+		logger.trace("isEdgeInGraph(): "+parentTask.getUniqueString()+" "+childTask.getUniqueString()+" "+dataLink.getUniqueString());
 		boolean rc = false;
 		String parentTaskName = parentTask.getUniqueString();
 		String childTaskName  = childTask.getUniqueString();
@@ -373,7 +374,8 @@ public class JGraphXUtil {
 			mxICell parentVertex = (mxICell) GlobalVar.getCells().get(parentTaskName);
 			for (Object edgeOut : graph.getGraph().getOutgoingEdges(parentVertex))
 			{
-				if (getTargetTask((mxCell) edgeOut).getUniqueString().equals(childTaskName))
+				logger.trace("isEdgeInGraph(): "+parentTaskName);
+				if (getTargetTask((mxCell) edgeOut) != null && getTargetTask((mxCell) edgeOut).getUniqueString().equals(childTaskName))
 				{
 					if (dataLink != null)
 					{
@@ -383,7 +385,6 @@ public class JGraphXUtil {
 								dataLink.getGroupingStr().equals(curDataLink.getGroupingStr())
 								)
 							rc = true;
-						
 					}
 					else
 					{

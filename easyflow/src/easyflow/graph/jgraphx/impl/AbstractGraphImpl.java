@@ -80,13 +80,7 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 
 	public boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException, CellNotFoundException {
 		
-		boolean rc = true;
-		if (!resolveTraversalEvents_Grouping(root))
-			rc = false;
-		if (!resolveTraversalEvents_Param(root))
-			rc = false;
-			
-		return rc;
+		return resolveTraversalEvents_Grouping(root) && resolveTraversalEvents_Param(root);
 	}
 
 	/**
@@ -223,8 +217,11 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 				return true;
 			}
 		};
-		getGraph().getGraph().traverse(root, true, visitor);
+		getGraph().getGraph().getModel().beginUpdate();try{
+			getGraph().getGraph().traverse(root, true, visitor);			
 		
+		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
+		JGraphXUtil.layoutGraph();
 		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, allTraversalEvents);
 		
 		return rc;
@@ -246,6 +243,7 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 	 */	
 	public boolean resolveTraversalEvents_Grouping(mxICell root) throws TaskNotFoundException, CellNotFoundException {
 		
+		logger.debug("############ graph="+getGraph());
 		// map to track all processed traversalevents: <grouping>_<mode>_<te's root> x <Traversalevent>
 		final EMap<String, TraversalEvent> allTraversalEvents = new BasicEMap<String, TraversalEvent>();
 		// track deprecated traversalevents : <task> x <te name>
@@ -419,9 +417,12 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 			}
 		};
 		
-		getGraph().getGraph().traverseAllPaths(root, true, visitor, null);
-		//getGraph().traverse(root, true, visitor);
+		getGraph().getGraph().getModel().beginUpdate();try{
+			getGraph().getGraph().traverseAllPaths(root, true, visitor, null);
+			//getGraph().traverse(root, true, visitor);
 		
+		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
+		JGraphXUtil.layoutGraph();
 		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, allTraversalEvents);
 
 		
@@ -439,8 +440,9 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 						Task parentTask = JGraphXUtil.getSourceTask((mxCell) edge);
 						if (!dataLink.isUnconditional())
 						{
-							logger.debug("resolve traversal event for conditional edge of task="+parentTask.getUniqueString()+"=>"+task.getUniqueString()+" "+task.getTraversalEvents());
-							
+							logger.debug("resolve traversal event for conditional edge of task="
+						+parentTask.getUniqueString()+"=>"+task.getUniqueString()
+						+" "+task.getTraversalEvents());
 						}
 					}
 				} catch (TaskNotFoundException e) {
@@ -454,7 +456,11 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 				return true;
 			}
 		};
-		getGraph().getGraph().traverseAllPaths(root, true, visitor1, null);
+		
+		getGraph().getGraph().getModel().beginUpdate();try{
+			getGraph().getGraph().traverseAllPaths(root, true, visitor1, null);
+		JGraphXUtil.layoutGraph();
+		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		
 		//logger.debug("#traversalEvents="+getTraversalEvents().size()+" #"+getTraversalEvents(getDefaultRootCell(), true).size()+" root"+getDefaultRootCell());
 		return true;
@@ -494,9 +500,9 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 						+" DataPort:"+(traversalEvent.getTraversalCriterion().getDataPort()!=null?
 								traversalEvent.getTraversalCriterion().getDataPort().getName():null)
 						+" te_type="+traversalEvent.getType()+" crit="+traversalEvent.getTraversalCriterion().getId()
-						
+						+" te_mode="+traversalEvent.getTraversalCriterion().getMode()
 						//+traversalEvent.isFoundMergeTask()
-						+" "+traversalEvent.hashCode()
+						//+" "+traversalEvent.hashCode()
 						);
 		}
 		return rc;
