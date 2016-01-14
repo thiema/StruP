@@ -21,6 +21,8 @@ ant -f build/build.xml jar
 #output some info on loading/configureing the logger
 #add curdir (point) to cp because of log4j.prop 
 java -Dlog4j.debug -cp ".:build/jar/*" easyflow.custom.ui.Easyflow
+#more advanced example with basepath and config file given
+java -cp ".:build/jar/*" easyflow.custom.ui.Easyflow -l trace -c ../src/easyflow/custom/examples/reseq/main_abstract.json -p ../src/easyflow/custom/examples/reseq/
 #the gui
 java -cp ".:build/jar/*" easyflow.custom.jgraphx.editor.EasyFlowGraphEditor
 

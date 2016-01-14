@@ -1,0 +1,1 @@
+cat workflow.makeflow | sed 's|gatk_interval|interval_list|g' |sed 's|--disable_experimental_low_memory_sharding ||' |sed 's|--fix_misencoded_quality_scores ||' |sed 's|-knownsOnly ||' |sed 's|--doContextDependentGapPenalties ||' |sed 's|--multiallelic ||'

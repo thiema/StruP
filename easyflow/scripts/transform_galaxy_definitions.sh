@@ -18,7 +18,7 @@ infer_option_from_help_attribute=false
 ##for gatk set to true
 #infer_option_from_help_attribute=true
 
-SAXON_JAR=build/lib/saxon-8.7.jar
+
 BASEDIR=~/git/easyflow/easyflow/src/easyflow/custom/;
 if [ -z "$TARGETDIR" ]; then
 	TARGETDIR=$BASEDIR/examples/sequencing/tool_definitions/
@@ -29,14 +29,14 @@ fi
 if [ $CREATE_SEPARATE_DIR -eq 1 ]; then
 	TARGETDIR=$TARGETDIR/$(basename $SOURCEDIR)
 	mkdir -p $TARGETDIR
-	
 fi
+
+options="source=history infer_option_from_help_attribute=$infer_option_from_help_attribute"
+
 for filename in $(ls $SOURCEDIR/*.xml); do
 	echo "processing $filename..."
-	java -cp "$SAXON_JAR" net.sf.saxon.Transform \
-		$filename \
-		$BASEDIR/tool/schema/external/Galaxy.xsl \
-		source=history infer_option_from_help_attribute=$infer_option_from_help_attribute \
-		> $TARGETDIR/$(basename $filename)
+$SCRIPT_DIR/./transform_galaxy_definition.sh $filename
+		$TARGETDIR/$(basename $filename) \
+		"$options"
 		
 done

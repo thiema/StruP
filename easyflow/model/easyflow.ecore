@@ -608,6 +608,37 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="circumventingParents"
           upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ErrorControl">
+      <eOperations name="generateDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolveErrorTipp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//core/Category"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" eType="#//core/Severity"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="valNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vals" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="Severity">
+      <eLiterals name="FATAL"/>
+      <eLiterals name="ERROR" value="1"/>
+      <eLiterals name="WARN" value="2"/>
+      <eLiterals name="INFO" value="3" literal="INFO"/>
+      <eLiterals name="DEBUG" value="4"/>
+      <eLiterals name="TRACE" value="5"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="Category">
+      <eLiterals name="METADATA_DEFINITON" value="1"/>
+      <eLiterals name="TASK_DEFINITON"/>
+      <eLiterals name="TOOL_DEFINITION" value="2" literal="TOOL_DEFINITION"/>
+      <eLiterals name="WORKFLOW_TEMPLATE" value="4"/>
+      <eLiterals name="ABSTRACT_WORKFLOW" value="10"/>
+      <eLiterals name="DATA_GROUPING" value="20" literal="INFO"/>
+      <eLiterals name="PARAMETER_GROUPING" value="21"/>
+      <eLiterals name="PREPROCESSING" value="30"/>
+      <eLiterals name="TOOL_RESOLUTION" value="40"/>
+      <eLiterals name="EXECUTION_WORKFLOW" value="50"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
       nsPrefix="easyflow">
@@ -1796,6 +1827,10 @@
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
       </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToErrorControlMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/ErrorControl"/>
+      </eClassifiers>
     </eSubpackages>
   </eSubpackages>
   <eSubpackages name="data" nsURI="http:///de/thiema/easyflow/data/1.0.0" nsPrefix="easyflow">
@@ -1880,9 +1915,6 @@
         <eParameters name="dataList" upperBound="-1" eType="#//data/Data"/>
         <eParameters name="allowedHandles" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="useOutDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      </eOperations>
-      <eOperations name="isHidden" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-        <eParameters name="in" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="dataPort" eType="#//data/DataPort"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="inDataPort" eType="#//data/DataPort"/>
