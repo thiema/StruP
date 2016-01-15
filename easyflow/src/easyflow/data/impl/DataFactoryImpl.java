@@ -31,7 +31,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
 	 */
 	public static DataFactory init() {
 		try {
-			DataFactory theDataFactory = (DataFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/data/1.0.0"); 
+			DataFactory theDataFactory = (DataFactory)EPackage.Registry.INSTANCE.getEFactory(DataPackage.eNS_URI);
 			if (theDataFactory != null) {
 				return theDataFactory;
 			}

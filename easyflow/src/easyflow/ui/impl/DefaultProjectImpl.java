@@ -6,6 +6,8 @@
  */
 package easyflow.ui.impl;
 
+import easyflow.EasyflowFactory;
+import easyflow.EasyflowPackage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;

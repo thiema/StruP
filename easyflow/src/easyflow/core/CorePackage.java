@@ -1111,13 +1111,22 @@ public interface CorePackage extends EPackage {
 	int ERROR_CONTROL__DESCRIPTION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Resolve Error Tipp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL__RESOLVE_ERROR_TIPP = 2;
+
+	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__CATEGORY = 2;
+	int ERROR_CONTROL__CATEGORY = 3;
 
 	/**
 	 * The feature id for the '<em><b>Severity</b></em>' attribute.
@@ -1126,7 +1135,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__SEVERITY = 3;
+	int ERROR_CONTROL__SEVERITY = 4;
 
 	/**
 	 * The feature id for the '<em><b>Val Num</b></em>' attribute.
@@ -1135,7 +1144,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__VAL_NUM = 4;
+	int ERROR_CONTROL__VAL_NUM = 5;
 
 	/**
 	 * The feature id for the '<em><b>Vals</b></em>' attribute list.
@@ -1144,7 +1153,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__VALS = 5;
+	int ERROR_CONTROL__VALS = 6;
 
 	/**
 	 * The number of structural features of the '<em>Error Control</em>' class.
@@ -1153,7 +1162,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL_FEATURE_COUNT = 6;
+	int ERROR_CONTROL_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
@@ -2252,6 +2261,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getErrorControl_Description();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getResolveErrorTipp <em>Resolve Error Tipp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Resolve Error Tipp</em>'.
+	 * @see easyflow.core.ErrorControl#getResolveErrorTipp()
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	EAttribute getErrorControl_ResolveErrorTipp();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getCategory <em>Category</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3156,6 +3176,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ERROR_CONTROL__DESCRIPTION = eINSTANCE.getErrorControl_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Error Tipp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_CONTROL__RESOLVE_ERROR_TIPP = eINSTANCE.getErrorControl_ResolveErrorTipp();
 
 		/**
 		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.

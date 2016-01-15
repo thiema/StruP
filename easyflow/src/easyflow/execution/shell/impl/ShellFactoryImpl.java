@@ -31,7 +31,7 @@ public class ShellFactoryImpl extends EFactoryImpl implements ShellFactory {
 	 */
 	public static ShellFactory init() {
 		try {
-			ShellFactory theShellFactory = (ShellFactory)EPackage.Registry.INSTANCE.getEFactory("http:///de/thiema/easyflow/execution/shell/1.0.0"); 
+			ShellFactory theShellFactory = (ShellFactory)EPackage.Registry.INSTANCE.getEFactory(ShellPackage.eNS_URI);
 			if (theShellFactory != null) {
 				return theShellFactory;
 			}

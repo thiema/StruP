@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link easyflow.core.ErrorControl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.core.ErrorControl#getDescription <em>Description</em>}</li>
+ *   <li>{@link easyflow.core.ErrorControl#getResolveErrorTipp <em>Resolve Error Tipp</em>}</li>
  *   <li>{@link easyflow.core.ErrorControl#getCategory <em>Category</em>}</li>
  *   <li>{@link easyflow.core.ErrorControl#getSeverity <em>Severity</em>}</li>
  *   <li>{@link easyflow.core.ErrorControl#getValNum <em>Val Num</em>}</li>
@@ -82,6 +83,32 @@ public interface ErrorControl extends EObject {
 	 * @generated
 	 */
 	void setDescription(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Resolve Error Tipp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Resolve Error Tipp</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Resolve Error Tipp</em>' attribute.
+	 * @see #setResolveErrorTipp(String)
+	 * @see easyflow.core.CorePackage#getErrorControl_ResolveErrorTipp()
+	 * @model
+	 * @generated
+	 */
+	String getResolveErrorTipp();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.ErrorControl#getResolveErrorTipp <em>Resolve Error Tipp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Resolve Error Tipp</em>' attribute.
+	 * @see #getResolveErrorTipp()
+	 * @generated
+	 */
+	void setResolveErrorTipp(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Category</b></em>' attribute.

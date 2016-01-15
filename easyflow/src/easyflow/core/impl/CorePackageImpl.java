@@ -1204,7 +1204,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Category() {
+	public EAttribute getErrorControl_ResolveErrorTipp() {
 		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -1213,7 +1213,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Severity() {
+	public EAttribute getErrorControl_Category() {
 		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1222,7 +1222,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_ValNum() {
+	public EAttribute getErrorControl_Severity() {
 		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -1231,8 +1231,17 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Vals() {
+	public EAttribute getErrorControl_ValNum() {
 		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorControl_Vals() {
+		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1393,6 +1402,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		errorControlEClass = createEClass(ERROR_CONTROL);
 		createEAttribute(errorControlEClass, ERROR_CONTROL__NAME);
 		createEAttribute(errorControlEClass, ERROR_CONTROL__DESCRIPTION);
+		createEAttribute(errorControlEClass, ERROR_CONTROL__RESOLVE_ERROR_TIPP);
 		createEAttribute(errorControlEClass, ERROR_CONTROL__CATEGORY);
 		createEAttribute(errorControlEClass, ERROR_CONTROL__SEVERITY);
 		createEAttribute(errorControlEClass, ERROR_CONTROL__VAL_NUM);
@@ -1972,6 +1982,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEClass(errorControlEClass, ErrorControl.class, "ErrorControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getErrorControl_Name(), ecorePackage.getEString(), "name", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getErrorControl_Description(), ecorePackage.getEString(), "description", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorControl_ResolveErrorTipp(), ecorePackage.getEString(), "resolveErrorTipp", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getErrorControl_Category(), this.getCategory(), "category", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getErrorControl_Severity(), this.getSeverity(), "severity", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getErrorControl_ValNum(), ecorePackage.getEInt(), "valNum", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -456,18 +456,9 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	 * @generated
 	 */
 	public boolean isCompatibleStr(EList<String> formats, boolean requireAll) {
-		Iterator<String> it = formats.iterator();
-		while (it.hasNext())
-		{
-			String dataFormat = it.next();
-			
-			if (!requireAll && isCompatible(dataFormat))
-				return true;
-			
-			if (requireAll && !isCompatible(dataFormat))
-				return false;
-		}
-		return requireAll;		
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -485,19 +476,9 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	 * @generated
 	 */
 	public boolean isCompatible(EList<DataFormat> formats, boolean requireAll) {
-		Iterator<DataFormat> it = formats.iterator();
-		while (it.hasNext())
-		{
-			DataFormat dataFormat = it.next();
-
-			if (!requireAll && isCompatible(dataFormat))
-				return true;
-
-			if (requireAll && !isCompatible(dataFormat))
-				return false;
-		}
-		return requireAll;
-
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**

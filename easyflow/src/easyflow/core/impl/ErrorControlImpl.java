@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <ul>
  *   <li>{@link easyflow.core.impl.ErrorControlImpl#getName <em>Name</em>}</li>
  *   <li>{@link easyflow.core.impl.ErrorControlImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link easyflow.core.impl.ErrorControlImpl#getResolveErrorTipp <em>Resolve Error Tipp</em>}</li>
  *   <li>{@link easyflow.core.impl.ErrorControlImpl#getCategory <em>Category</em>}</li>
  *   <li>{@link easyflow.core.impl.ErrorControlImpl#getSeverity <em>Severity</em>}</li>
  *   <li>{@link easyflow.core.impl.ErrorControlImpl#getValNum <em>Val Num</em>}</li>
@@ -79,6 +80,26 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getResolveErrorTipp() <em>Resolve Error Tipp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResolveErrorTipp()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RESOLVE_ERROR_TIPP_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getResolveErrorTipp() <em>Resolve Error Tipp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResolveErrorTipp()
+	 * @generated
+	 * @ordered
+	 */
+	protected String resolveErrorTipp = RESOLVE_ERROR_TIPP_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getCategory() <em>Category</em>}' attribute.
@@ -216,6 +237,27 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getResolveErrorTipp() {
+		return resolveErrorTipp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setResolveErrorTipp(String newResolveErrorTipp) {
+		String oldResolveErrorTipp = resolveErrorTipp;
+		resolveErrorTipp = newResolveErrorTipp;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.ERROR_CONTROL__RESOLVE_ERROR_TIPP, oldResolveErrorTipp, resolveErrorTipp));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Category getCategory() {
 		return category;
 	}
@@ -309,6 +351,8 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 				return getName();
 			case CorePackage.ERROR_CONTROL__DESCRIPTION:
 				return getDescription();
+			case CorePackage.ERROR_CONTROL__RESOLVE_ERROR_TIPP:
+				return getResolveErrorTipp();
 			case CorePackage.ERROR_CONTROL__CATEGORY:
 				return getCategory();
 			case CorePackage.ERROR_CONTROL__SEVERITY:
@@ -335,6 +379,9 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 				return;
 			case CorePackage.ERROR_CONTROL__DESCRIPTION:
 				setDescription((String)newValue);
+				return;
+			case CorePackage.ERROR_CONTROL__RESOLVE_ERROR_TIPP:
+				setResolveErrorTipp((String)newValue);
 				return;
 			case CorePackage.ERROR_CONTROL__CATEGORY:
 				setCategory((Category)newValue);
@@ -367,6 +414,9 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 			case CorePackage.ERROR_CONTROL__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
+			case CorePackage.ERROR_CONTROL__RESOLVE_ERROR_TIPP:
+				setResolveErrorTipp(RESOLVE_ERROR_TIPP_EDEFAULT);
+				return;
 			case CorePackage.ERROR_CONTROL__CATEGORY:
 				setCategory(CATEGORY_EDEFAULT);
 				return;
@@ -395,6 +445,8 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case CorePackage.ERROR_CONTROL__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case CorePackage.ERROR_CONTROL__RESOLVE_ERROR_TIPP:
+				return RESOLVE_ERROR_TIPP_EDEFAULT == null ? resolveErrorTipp != null : !RESOLVE_ERROR_TIPP_EDEFAULT.equals(resolveErrorTipp);
 			case CorePackage.ERROR_CONTROL__CATEGORY:
 				return category != CATEGORY_EDEFAULT;
 			case CorePackage.ERROR_CONTROL__SEVERITY:
@@ -421,6 +473,8 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 		result.append(name);
 		result.append(", description: ");
 		result.append(description);
+		result.append(", resolveErrorTipp: ");
+		result.append(resolveErrorTipp);
 		result.append(", category: ");
 		result.append(category);
 		result.append(", severity: ");
