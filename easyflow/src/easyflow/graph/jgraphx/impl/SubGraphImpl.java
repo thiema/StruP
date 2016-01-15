@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -21,23 +20,19 @@ import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.SubGraph;
 import easyflow.graph.jgraphx.Subgraph;
 import easyflow.traversal.TraversalEvent;
-
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
-import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.util.GlobalVar;
-
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 /**
@@ -53,7 +48,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  *
  * @generated
  */
-public class SubGraphImpl extends EObjectImpl implements SubGraph {
+public class SubGraphImpl extends MinimalEObjectImpl.Container implements SubGraph {
 	
 	/**
 	 * The cached value of the '{@link #getGraph() <em>Graph</em>}' reference.
@@ -153,6 +148,25 @@ public class SubGraphImpl extends EObjectImpl implements SubGraph {
 				return graph != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN:
+				try {
+					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	public mxICell computeSubgraph_Grouping(final TraversalEvent traversalEvent) throws TaskNotFoundException 

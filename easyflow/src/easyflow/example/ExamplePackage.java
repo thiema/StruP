@@ -8,6 +8,7 @@ package easyflow.example;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -116,6 +117,34 @@ public interface ExamplePackage extends EPackage {
 
 
 	/**
+	 * The operation id for the '<em>Read Examples</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLES___READ_EXAMPLES = 0;
+
+	/**
+	 * The operation id for the '<em>Read Repository</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLES___READ_REPOSITORY = 1;
+
+	/**
+	 * The number of operations of the '<em>Examples</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLES_OPERATION_COUNT = 2;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.example.Examples <em>Examples</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -168,6 +197,26 @@ public interface ExamplePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getExamples_FromJar();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.example.Examples#readExamples() <em>Read Examples</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Examples</em>' operation.
+	 * @see easyflow.example.Examples#readExamples()
+	 * @generated
+	 */
+	EOperation getExamples__ReadExamples();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.example.Examples#readRepository() <em>Read Repository</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Repository</em>' operation.
+	 * @see easyflow.example.Examples#readRepository()
+	 * @generated
+	 */
+	EOperation getExamples__ReadRepository();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -232,6 +281,22 @@ public interface ExamplePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute EXAMPLES__FROM_JAR = eINSTANCE.getExamples_FromJar();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Examples</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EXAMPLES___READ_EXAMPLES = eINSTANCE.getExamples__ReadExamples();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Repository</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EXAMPLES___READ_REPOSITORY = eINSTANCE.getExamples__ReadRepository();
 
 	}
 

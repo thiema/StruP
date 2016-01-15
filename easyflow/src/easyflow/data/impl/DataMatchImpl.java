@@ -8,22 +8,18 @@ package easyflow.data.impl;
 
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
-import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
 import easyflow.data.DataMatch;
 import easyflow.data.DataPackage;
-import easyflow.graph.jgraphx.ToolDependencies;
-
+import java.lang.reflect.InvocationTargetException;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,7 +36,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class DataMatchImpl extends EObjectImpl implements DataMatch {
+public class DataMatchImpl extends MinimalEObjectImpl.Container implements DataMatch {
 	
 	private static Logger logger = Logger.getLogger(DataMatch.class);
 	
@@ -365,6 +361,23 @@ public class DataMatchImpl extends EObjectImpl implements DataMatch {
 				return score != SCORE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA_MATCH___COMPUTE_SCORE__EMAP:
+				return computeScore((EMap<String, String>)arguments.get(0));
+			case DataPackage.DATA_MATCH___IS_PIPABLE:
+				return isPipable();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

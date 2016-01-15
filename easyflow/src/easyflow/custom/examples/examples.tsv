@@ -1,4 +1,7 @@
+Name	Config	Folder	Workflow	Utility
 #example	config (overrides default config (main.json))	folder (overrides default folder)
 reseq	
-abstract1	main_abstract.json	reseq
-abstract2	main_abstract_simple.json	reseq
+abstract1	main_abstract.json	reseq	abstract_example_simple_inputs_record.workflow	abstract_example_util.workflow
+abstract2	main_abstract.json	reseq	abstract_example_simple_multi_inputs.workflow	abstract_example_util.workflow
+abstract3	main_abstract.json	reseq	abstract_example_multi_inputs_record.workflow	abstract_example_util.workflow
+abstract4	main_abstract.json	reseq	abstract_example_multi_inputs_joint.workflow	abstract_example_util.workflow

@@ -7,9 +7,7 @@
 package easyflow.execution.makeflow;
 
 import easyflow.execution.ExecutionPackage;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -96,6 +94,34 @@ public interface MakeflowPackage extends EPackage {
 	 * @ordered
 	 */
 	int MAKEFLOW_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAKEFLOW___GET_JGRAPHX_VISITOR = ExecutionPackage.IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR;
+
+	/**
+	 * The operation id for the '<em>Generate Execution String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAKEFLOW___GENERATE_EXECUTION_STRING__RULE = ExecutionPackage.IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE;
+
+	/**
+	 * The number of operations of the '<em>Makeflow</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAKEFLOW_OPERATION_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 0;
 
 
 	/**

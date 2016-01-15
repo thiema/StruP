@@ -7,12 +7,8 @@
 package easyflow.data;
 
 import easyflow.tool.Parameter;
-
 import easyflow.tool.ResolvedParam;
-import java.net.URI;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

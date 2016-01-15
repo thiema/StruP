@@ -83,6 +83,24 @@ public interface ToolPackage extends EPackage {
 	int IRULE_FEATURE_COUNT = 0;
 
 	/**
+	 * The operation id for the '<em>Clear</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IRULE___CLEAR = 0;
+
+	/**
+	 * The number of operations of the '<em>IRule</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IRULE_OPERATION_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.ToolSchemataImpl <em>Schemata</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -127,6 +145,51 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOOL_SCHEMATA_FEATURE_COUNT = 3;
+
+	/**
+	 * The operation id for the '<em>Read Schema</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_SCHEMATA___READ_SCHEMA__URI_BOOLEAN = 0;
+
+	/**
+	 * The operation id for the '<em>Read Schemata</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_SCHEMATA___READ_SCHEMATA__ELIST_BOOLEAN = 1;
+
+	/**
+	 * The operation id for the '<em>Get Default Schema</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_SCHEMATA___GET_DEFAULT_SCHEMA = 2;
+
+	/**
+	 * The operation id for the '<em>Get Schema For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_SCHEMATA___GET_SCHEMA_FOR__DOCUMENT = 3;
+
+	/**
+	 * The number of operations of the '<em>Schemata</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_SCHEMATA_OPERATION_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.ToolDefinitionsImpl <em>Definitions</em>}' class.
@@ -184,6 +247,24 @@ public interface ToolPackage extends EPackage {
 	int TOOL_DEFINITIONS_FEATURE_COUNT = 4;
 
 	/**
+	 * The operation id for the '<em>Validate Tool Definition</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN = 0;
+
+	/**
+	 * The number of operations of the '<em>Definitions</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_DEFINITIONS_OPERATION_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link easyflow.tool.IToolElement <em>ITool Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -201,6 +282,24 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int ITOOL_ELEMENT_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITOOL_ELEMENT___RENDER_TO_STRING = 0;
+
+	/**
+	 * The number of operations of the '<em>ITool Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITOOL_ELEMENT_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.DefaultToolElementImpl <em>Default Tool Element</em>}' class.
@@ -238,6 +337,15 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int DEFAULT_TOOL_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Default Tool Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_TOOL_ELEMENT_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.ToolImpl <em>Tool</em>}' class.
@@ -392,6 +500,330 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 15;
+
+	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___RENDER_TO_STRING = ITOOL_ELEMENT___RENDER_TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Write Model To XML</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___WRITE_MODEL_TO_XML = ITOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Can Filter Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Requires Grouping</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___REQUIRES_GROUPING__STRING_DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Provides Grouping</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___PROVIDES_GROUPING__STRING_DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Get Groupings For Input Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Get Groupings For Output Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Get Analysis Type Of Package</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST = ITOOL_ELEMENT_OPERATION_COUNT + 6;
+
+	/**
+	 * The operation id for the '<em>Get Template Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_TEMPLATE_PARAMETER__PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 7;
+
+	/**
+	 * The operation id for the '<em>Get Template Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_TEMPLATE_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 8;
+
+	/**
+	 * The operation id for the '<em>Get Matching Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_MATCHING_PARAMETER__ELIST_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 9;
+
+	/**
+	 * The operation id for the '<em>Get Matching Parameter By Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_MATCHING_PARAMETER_BY_NAME__ELIST_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 10;
+
+	/**
+	 * The operation id for the '<em>Assume Data Param Positional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___ASSUME_DATA_PARAM_POSITIONAL = ITOOL_ELEMENT_OPERATION_COUNT + 11;
+
+	/**
+	 * The operation id for the '<em>Omit Prefix If No Arg Key</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___OMIT_PREFIX_IF_NO_ARG_KEY = ITOOL_ELEMENT_OPERATION_COUNT + 12;
+
+	/**
+	 * The operation id for the '<em>Get Cmd Part Delimiter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_CMD_PART_DELIMITER = ITOOL_ELEMENT_OPERATION_COUNT + 13;
+
+	/**
+	 * The operation id for the '<em>Get Interpreter Params</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_INTERPRETER_PARAMS = ITOOL_ELEMENT_OPERATION_COUNT + 14;
+
+	/**
+	 * The operation id for the '<em>Get Exe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_EXE = ITOOL_ELEMENT_OPERATION_COUNT + 15;
+
+	/**
+	 * The operation id for the '<em>Get Module Params</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_MODULE_PARAMS = ITOOL_ELEMENT_OPERATION_COUNT + 16;
+
+	/**
+	 * The operation id for the '<em>Get Interpreter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___GET_INTERPRETER = ITOOL_ELEMENT_OPERATION_COUNT + 17;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 18;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 19;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 20;
+
+	/**
+	 * The operation id for the '<em>Can Process Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 21;
+
+	/**
+	 * The operation id for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 22;
+
+	/**
+	 * The operation id for the '<em>Can Process Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 23;
+
+	/**
+	 * The operation id for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 24;
+
+	/**
+	 * The operation id for the '<em>Set Process Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 25;
+
+	/**
+	 * The operation id for the '<em>Set Process Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 26;
+
+	/**
+	 * The operation id for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 27;
+
+	/**
+	 * The operation id for the '<em>Set Provide Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 28;
+
+	/**
+	 * The operation id for the '<em>Set Provide Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 29;
+
+	/**
+	 * The operation id for the '<em>Resolve Path</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___RESOLVE_PATH = ITOOL_ELEMENT_OPERATION_COUNT + 30;
+
+	/**
+	 * The operation id for the '<em>Assume Param Positional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___ASSUME_PARAM_POSITIONAL = ITOOL_ELEMENT_OPERATION_COUNT + 31;
+
+	/**
+	 * The operation id for the '<em>Create Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 32;
+
+	/**
+	 * The operation id for the '<em>Create Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 33;
+
+	/**
+	 * The number of operations of the '<em>Tool</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 34;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -791,6 +1223,321 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int PARAMETER_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 40;
+
+	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___RENDER_TO_STRING = ITOOL_ELEMENT___RENDER_TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Arg Key</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_ARG_KEY__STRING_KEY = ITOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Arg Delimiter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_ARG_DELIMITER__STRING = ITOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Arg Value Delimiter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_ARG_VALUE_DELIMITER__STRING = ITOOL_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get Prefix</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_PREFIX__STRING = ITOOL_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Get Parameter For Analysis Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST = ITOOL_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Is Analysis Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_ANALYSIS_TYPE = ITOOL_ELEMENT_OPERATION_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Get Supported Handles</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 6;
+
+	/**
+	 * The operation id for the '<em>Get Effective Parent Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 7;
+
+	/**
+	 * The operation id for the '<em>Get Merged Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_MERGED_PARAMETER__PARAMETER_BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 8;
+
+	/**
+	 * The operation id for the '<em>Matches</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___MATCHES__PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 9;
+
+	/**
+	 * The operation id for the '<em>Matches</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___MATCHES__INOUTPARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 10;
+
+	/**
+	 * The operation id for the '<em>Generate Command String URI</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 11;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 12;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 13;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 14;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 15;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_OPTIONAL__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 16;
+
+	/**
+	 * The operation id for the '<em>Is Multiple</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_MULTIPLE__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 17;
+
+	/**
+	 * The operation id for the '<em>Is Multiple Instances</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 18;
+
+	/**
+	 * The operation id for the '<em>Is Multiple Instances Per Input</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 19;
+
+	/**
+	 * The operation id for the '<em>Is Named</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_NAMED__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 20;
+
+	/**
+	 * The operation id for the '<em>Is Positional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_POSITIONAL__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 21;
+
+	/**
+	 * The operation id for the '<em>Is Fixed Arg Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 22;
+
+	/**
+	 * The operation id for the '<em>Is Multiple Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 23;
+
+	/**
+	 * The operation id for the '<em>Should Output Arg Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___SHOULD_OUTPUT_ARG_VALUE__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 24;
+
+	/**
+	 * The operation id for the '<em>Merge</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___MERGE__PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 25;
+
+	/**
+	 * The operation id for the '<em>Get Unique String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___GET_UNIQUE_STRING = ITOOL_ELEMENT_OPERATION_COUNT + 26;
+
+	/**
+	 * The operation id for the '<em>Resolve Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___RESOLVE_NAME = ITOOL_ELEMENT_OPERATION_COUNT + 27;
+
+	/**
+	 * The operation id for the '<em>Should Output Default Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___SHOULD_OUTPUT_DEFAULT_PARAM__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 28;
+
+	/**
+	 * The operation id for the '<em>Is Meta Data Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_META_DATA_PARAM = ITOOL_ELEMENT_OPERATION_COUNT + 29;
+
+	/**
+	 * The operation id for the '<em>Is Data Specifying Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_DATA_SPECIFYING_PARAM = ITOOL_ELEMENT_OPERATION_COUNT + 30;
+
+	/**
+	 * The operation id for the '<em>Is Boolean</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 31;
+
+	/**
+	 * The operation id for the '<em>Is Preferred</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___IS_PREFERRED = ITOOL_ELEMENT_OPERATION_COUNT + 32;
+
+	/**
+	 * The number of operations of the '<em>Parameter</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 33;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
@@ -1217,6 +1964,330 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 5;
 
 	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___RENDER_TO_STRING = PARAMETER___RENDER_TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Arg Key</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_ARG_KEY__STRING_KEY = PARAMETER___GET_ARG_KEY__STRING_KEY;
+
+	/**
+	 * The operation id for the '<em>Get Arg Delimiter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_ARG_DELIMITER__STRING = PARAMETER___GET_ARG_DELIMITER__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Arg Value Delimiter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_ARG_VALUE_DELIMITER__STRING = PARAMETER___GET_ARG_VALUE_DELIMITER__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Prefix</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_PREFIX__STRING = PARAMETER___GET_PREFIX__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Parameter For Analysis Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST = PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST;
+
+	/**
+	 * The operation id for the '<em>Is Analysis Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_ANALYSIS_TYPE = PARAMETER___IS_ANALYSIS_TYPE;
+
+	/**
+	 * The operation id for the '<em>Get Supported Handles</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN = PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Get Effective Parent Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN = PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Get Merged Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_MERGED_PARAMETER__PARAMETER_BOOLEAN = PARAMETER___GET_MERGED_PARAMETER__PARAMETER_BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Generate Command String URI</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER = PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER = PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER = PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER = PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER = PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER;
+
+	/**
+	 * The operation id for the '<em>Is Optional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_OPTIONAL__BOOLEAN = PARAMETER___IS_OPTIONAL__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Multiple</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_MULTIPLE__BOOLEAN = PARAMETER___IS_MULTIPLE__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Multiple Instances</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN = PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Multiple Instances Per Input</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN = PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Named</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_NAMED__BOOLEAN = PARAMETER___IS_NAMED__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Positional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_POSITIONAL__BOOLEAN = PARAMETER___IS_POSITIONAL__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Fixed Arg Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN = PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Multiple Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN = PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Should Output Arg Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___SHOULD_OUTPUT_ARG_VALUE__BOOLEAN = PARAMETER___SHOULD_OUTPUT_ARG_VALUE__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Get Unique String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_UNIQUE_STRING = PARAMETER___GET_UNIQUE_STRING;
+
+	/**
+	 * The operation id for the '<em>Resolve Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___RESOLVE_NAME = PARAMETER___RESOLVE_NAME;
+
+	/**
+	 * The operation id for the '<em>Should Output Default Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___SHOULD_OUTPUT_DEFAULT_PARAM__BOOLEAN = PARAMETER___SHOULD_OUTPUT_DEFAULT_PARAM__BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Meta Data Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_META_DATA_PARAM = PARAMETER___IS_META_DATA_PARAM;
+
+	/**
+	 * The operation id for the '<em>Is Data Specifying Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_DATA_SPECIFYING_PARAM = PARAMETER___IS_DATA_SPECIFYING_PARAM;
+
+	/**
+	 * The operation id for the '<em>Is Boolean</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_BOOLEAN = PARAMETER___IS_BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Is Preferred</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_PREFERRED = PARAMETER___IS_PREFERRED;
+
+	/**
+	 * The operation id for the '<em>Matches</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___MATCHES__INOUTPARAMETER = PARAMETER_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Matches</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___MATCHES__PARAMETER = PARAMETER_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Merge</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___MERGE__PARAMETER = PARAMETER_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Omit Extension</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___OMIT_EXTENSION = PARAMETER_OPERATION_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>In Out Parameter</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER_OPERATION_COUNT = PARAMETER_OPERATION_COUNT + 4;
+
+	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1394,6 +2465,114 @@ public interface ToolPackage extends EPackage {
 	int RESOLVED_PARAM_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___RENDER_TO_STRING = ITOOL_ELEMENT___RENDER_TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Generate Command String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP_PARAMETER = ITOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Arg Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___GET_ARG_VALUE = ITOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Resolve Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___RESOLVE_NAME = ITOOL_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get Effective Parameters</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___GET_EFFECTIVE_PARAMETERS__ELIST_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Get Supported Handles</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___GET_SUPPORTED_HANDLES = ITOOL_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Deep Copy</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___DEEP_COPY = ITOOL_ELEMENT_OPERATION_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Resolve Pipe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___RESOLVE_PIPE__STRING = ITOOL_ELEMENT_OPERATION_COUNT + 6;
+
+	/**
+	 * The operation id for the '<em>Resolve Condititional Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___RESOLVE_CONDITITIONAL_PARAM__STRING_STRING = ITOOL_ELEMENT_OPERATION_COUNT + 7;
+
+	/**
+	 * The operation id for the '<em>Get Child Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___GET_CHILD_PARAM__STRING_STRING = ITOOL_ELEMENT_OPERATION_COUNT + 8;
+
+	/**
+	 * The operation id for the '<em>Get Condition Resolving Child Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM___GET_CONDITION_RESOLVING_CHILD_PARAM__STRING_BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 9;
+
+	/**
+	 * The number of operations of the '<em>Resolved Param</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOLVED_PARAM_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 10;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1457,6 +2636,33 @@ public interface ToolPackage extends EPackage {
 	int KEY_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Resolve Arg Key</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY___RESOLVE_ARG_KEY__STRING = DEFAULT_TOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Resolve Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY___RESOLVE_NAME = DEFAULT_TOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Key</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_OPERATION_COUNT = DEFAULT_TOOL_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1511,6 +2717,15 @@ public interface ToolPackage extends EPackage {
 	int REQUIREMENT_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The number of operations of the '<em>Requirement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT_OPERATION_COUNT = DEFAULT_TOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Source URI</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1536,6 +2751,15 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int DOCUMENT_PROPERTIES_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Document Properties</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_PROPERTIES_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1592,6 +2816,24 @@ public interface ToolPackage extends EPackage {
 	int OPTION_VALUE_FEATURE_COUNT = DEFAULT_TOOL_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Resolve Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPTION_VALUE___RESOLVE_VALUE = DEFAULT_TOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Option Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPTION_VALUE_OPERATION_COUNT = DEFAULT_TOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Command Pattern</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1644,6 +2886,15 @@ public interface ToolPackage extends EPackage {
 	 * @ordered
 	 */
 	int BASE_COMMAND_FEATURE_COUNT = 5;
+
+	/**
+	 * The number of operations of the '<em>Base Command</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_COMMAND_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1754,6 +3005,51 @@ public interface ToolPackage extends EPackage {
 	int PACKAGE_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE___RENDER_TO_STRING = ITOOL_ELEMENT___RENDER_TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Interpreter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE___GET_INTERPRETER = ITOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Exe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE___GET_EXE = ITOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Interpreter Params</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE___GET_INTERPRETER_PARAMS = ITOOL_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Package</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1852,6 +3148,87 @@ public interface ToolPackage extends EPackage {
 	 */
 	int COMMAND_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 10;
 
+
+	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___RENDER_TO_STRING = ITOOL_ELEMENT___RENDER_TO_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Positional Parameter Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___GET_POSITIONAL_PARAMETER_NAMES = ITOOL_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Optional Parameter Names</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___GET_OPTIONAL_PARAMETER_NAMES = ITOOL_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Get Interperter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___GET_INTERPERTER = ITOOL_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Get Exe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___GET_EXE = ITOOL_ELEMENT_OPERATION_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Resolve Parameter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___RESOLVE_PARAMETER__STRING_ELIST = ITOOL_ELEMENT_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Get Data Param For Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___GET_DATA_PARAM_FOR_DATA_PORT__DATAPORT_BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 5;
+
+	/**
+	 * The operation id for the '<em>Get Data Param For Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND___GET_DATA_PARAM_FOR_DATA_PORT__DATAPORT_BOOLEAN_INT = ITOOL_ELEMENT_OPERATION_COUNT + 6;
+
+	/**
+	 * The number of operations of the '<em>Command</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMAND_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.RuleImpl <em>Rule</em>}' class.
@@ -2000,6 +3377,42 @@ public interface ToolPackage extends EPackage {
 
 
 	/**
+	 * The operation id for the '<em>Clear</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE___CLEAR = IRULE___CLEAR;
+
+	/**
+	 * The operation id for the '<em>Resolve Command Line Parts</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE___RESOLVE_COMMAND_LINE_PARTS = IRULE_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Create Command Line</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE___CREATE_COMMAND_LINE = IRULE_OPERATION_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Rule</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_OPERATION_COUNT = IRULE_OPERATION_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.ConditionImpl <em>Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2038,6 +3451,16 @@ public interface ToolPackage extends EPackage {
 
 
 	/**
+	 * The number of operations of the '<em>Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.IRule <em>IRule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2046,6 +3469,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIRule();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.IRule#clear() <em>Clear</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Clear</em>' operation.
+	 * @see easyflow.tool.IRule#clear()
+	 * @generated
+	 */
+	EOperation getIRule__Clear();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.ToolSchemata <em>Schemata</em>}'.
@@ -2089,6 +3522,46 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getToolSchemata_Logger();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ToolSchemata#readSchema(java.net.URI, boolean) <em>Read Schema</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Schema</em>' operation.
+	 * @see easyflow.tool.ToolSchemata#readSchema(java.net.URI, boolean)
+	 * @generated
+	 */
+	EOperation getToolSchemata__ReadSchema__URI_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ToolSchemata#readSchemata(org.eclipse.emf.common.util.EList, boolean) <em>Read Schemata</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Schemata</em>' operation.
+	 * @see easyflow.tool.ToolSchemata#readSchemata(org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getToolSchemata__ReadSchemata__EList_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ToolSchemata#getDefaultSchema() <em>Get Default Schema</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Default Schema</em>' operation.
+	 * @see easyflow.tool.ToolSchemata#getDefaultSchema()
+	 * @generated
+	 */
+	EOperation getToolSchemata__GetDefaultSchema();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ToolSchemata#getSchemaFor(org.w3c.dom.Document) <em>Get Schema For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Schema For</em>' operation.
+	 * @see easyflow.tool.ToolSchemata#getSchemaFor(org.w3c.dom.Document)
+	 * @generated
+	 */
+	EOperation getToolSchemata__GetSchemaFor__Document();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.ToolDefinitions <em>Definitions</em>}'.
@@ -2145,6 +3618,16 @@ public interface ToolPackage extends EPackage {
 	EReference getToolDefinitions_Properties();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ToolDefinitions#validateToolDefinition(java.net.URI, boolean) <em>Validate Tool Definition</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Tool Definition</em>' operation.
+	 * @see easyflow.tool.ToolDefinitions#validateToolDefinition(java.net.URI, boolean)
+	 * @generated
+	 */
+	EOperation getToolDefinitions__ValidateToolDefinition__URI_boolean();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.IToolElement <em>ITool Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2153,6 +3636,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIToolElement();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.IToolElement#renderToString() <em>Render To String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Render To String</em>' operation.
+	 * @see easyflow.tool.IToolElement#renderToString()
+	 * @generated
+	 */
+	EOperation getIToolElement__RenderToString();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.DefaultToolElement <em>Default Tool Element</em>}'.
@@ -2340,6 +3833,346 @@ public interface ToolPackage extends EPackage {
 	EReference getTool_ResolveUriMap();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#writeModelToXML() <em>Write Model To XML</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Write Model To XML</em>' operation.
+	 * @see easyflow.tool.Tool#writeModelToXML()
+	 * @generated
+	 */
+	EOperation getTool__WriteModelToXML();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canFilterInstancesFor(easyflow.data.DataPort) <em>Can Filter Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Filter Instances For</em>' operation.
+	 * @see easyflow.tool.Tool#canFilterInstancesFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanFilterInstancesFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#requiresGrouping(java.lang.String, easyflow.data.DataPort) <em>Requires Grouping</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Requires Grouping</em>' operation.
+	 * @see easyflow.tool.Tool#requiresGrouping(java.lang.String, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__RequiresGrouping__String_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#providesGrouping(java.lang.String, easyflow.data.DataPort) <em>Provides Grouping</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Provides Grouping</em>' operation.
+	 * @see easyflow.tool.Tool#providesGrouping(java.lang.String, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__ProvidesGrouping__String_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getGroupingsForInputPort(easyflow.data.DataPort, boolean) <em>Get Groupings For Input Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Groupings For Input Port</em>' operation.
+	 * @see easyflow.tool.Tool#getGroupingsForInputPort(easyflow.data.DataPort, boolean)
+	 * @generated
+	 */
+	EOperation getTool__GetGroupingsForInputPort__DataPort_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getGroupingsForOutputPort(easyflow.data.DataPort, boolean) <em>Get Groupings For Output Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Groupings For Output Port</em>' operation.
+	 * @see easyflow.tool.Tool#getGroupingsForOutputPort(easyflow.data.DataPort, boolean)
+	 * @generated
+	 */
+	EOperation getTool__GetGroupingsForOutputPort__DataPort_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getAnalysisTypeOfPackage(org.eclipse.emf.common.util.EList) <em>Get Analysis Type Of Package</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Analysis Type Of Package</em>' operation.
+	 * @see easyflow.tool.Tool#getAnalysisTypeOfPackage(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getTool__GetAnalysisTypeOfPackage__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getTemplateParameter(easyflow.tool.Parameter) <em>Get Template Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Template Parameter</em>' operation.
+	 * @see easyflow.tool.Tool#getTemplateParameter(easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getTool__GetTemplateParameter__Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getTemplateParameter() <em>Get Template Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Template Parameter</em>' operation.
+	 * @see easyflow.tool.Tool#getTemplateParameter()
+	 * @generated
+	 */
+	EOperation getTool__GetTemplateParameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getMatchingParameter(org.eclipse.emf.common.util.EList, easyflow.tool.Parameter) <em>Get Matching Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Matching Parameter</em>' operation.
+	 * @see easyflow.tool.Tool#getMatchingParameter(org.eclipse.emf.common.util.EList, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getTool__GetMatchingParameter__EList_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getMatchingParameterByName(org.eclipse.emf.common.util.EList, easyflow.tool.Parameter) <em>Get Matching Parameter By Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Matching Parameter By Name</em>' operation.
+	 * @see easyflow.tool.Tool#getMatchingParameterByName(org.eclipse.emf.common.util.EList, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getTool__GetMatchingParameterByName__EList_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#assumeDataParamPositional() <em>Assume Data Param Positional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Assume Data Param Positional</em>' operation.
+	 * @see easyflow.tool.Tool#assumeDataParamPositional()
+	 * @generated
+	 */
+	EOperation getTool__AssumeDataParamPositional();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#omitPrefixIfNoArgKey() <em>Omit Prefix If No Arg Key</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Omit Prefix If No Arg Key</em>' operation.
+	 * @see easyflow.tool.Tool#omitPrefixIfNoArgKey()
+	 * @generated
+	 */
+	EOperation getTool__OmitPrefixIfNoArgKey();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getCmdPartDelimiter() <em>Get Cmd Part Delimiter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Cmd Part Delimiter</em>' operation.
+	 * @see easyflow.tool.Tool#getCmdPartDelimiter()
+	 * @generated
+	 */
+	EOperation getTool__GetCmdPartDelimiter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getInterpreterParams() <em>Get Interpreter Params</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Interpreter Params</em>' operation.
+	 * @see easyflow.tool.Tool#getInterpreterParams()
+	 * @generated
+	 */
+	EOperation getTool__GetInterpreterParams();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getExe() <em>Get Exe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Exe</em>' operation.
+	 * @see easyflow.tool.Tool#getExe()
+	 * @generated
+	 */
+	EOperation getTool__GetExe();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getModuleParams() <em>Get Module Params</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Module Params</em>' operation.
+	 * @see easyflow.tool.Tool#getModuleParams()
+	 * @generated
+	 */
+	EOperation getTool__GetModuleParams();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#getInterpreter() <em>Get Interpreter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Interpreter</em>' operation.
+	 * @see easyflow.tool.Tool#getInterpreter()
+	 * @generated
+	 */
+	EOperation getTool__GetInterpreter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProvideMultipleInputsFor(easyflow.data.DataPort) <em>Can Provide Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Inputs For</em>' operation.
+	 * @see easyflow.tool.Tool#canProvideMultipleInputsFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanProvideMultipleInputsFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProvideMultipleInstancesFor(easyflow.data.DataPort) <em>Can Provide Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Instances For</em>' operation.
+	 * @see easyflow.tool.Tool#canProvideMultipleInstancesFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanProvideMultipleInstancesFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProvideMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Can Provide Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.tool.Tool#canProvideMultipleInstancesPerInputFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanProvideMultipleInstancesPerInputFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInputsFor(easyflow.data.DataPort) <em>Can Process Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Process Multiple Inputs For</em>' operation.
+	 * @see easyflow.tool.Tool#canProcessMultipleInputsFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanProcessMultipleInputsFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Can Process Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.tool.Tool#canProcessMultipleInstancesPerInputFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanProcessMultipleInstancesPerInputFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInstancesFor(easyflow.data.DataPort) <em>Can Process Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Process Multiple Instances For</em>' operation.
+	 * @see easyflow.tool.Tool#canProcessMultipleInstancesFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__CanProcessMultipleInstancesFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProcessMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Set Process Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.tool.Tool#setProcessMultipleInstancesPerInputFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__SetProcessMultipleInstancesPerInputFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProcessMultipleInstancesFor(easyflow.data.DataPort) <em>Set Process Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Process Multiple Instances For</em>' operation.
+	 * @see easyflow.tool.Tool#setProcessMultipleInstancesFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__SetProcessMultipleInstancesFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProcessMultipleInputsFor(easyflow.data.DataPort) <em>Set Process Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Process Multiple Inputs For</em>' operation.
+	 * @see easyflow.tool.Tool#setProcessMultipleInputsFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__SetProcessMultipleInputsFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProvideMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Set Provide Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.tool.Tool#setProvideMultipleInstancesPerInputFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__SetProvideMultipleInstancesPerInputFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProvideMultipleInstancesFor(easyflow.data.DataPort) <em>Set Provide Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Provide Multiple Instances For</em>' operation.
+	 * @see easyflow.tool.Tool#setProvideMultipleInstancesFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__SetProvideMultipleInstancesFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProvideMultipleInputsFor(easyflow.data.DataPort) <em>Set Provide Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Provide Multiple Inputs For</em>' operation.
+	 * @see easyflow.tool.Tool#setProvideMultipleInputsFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTool__SetProvideMultipleInputsFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#resolvePath() <em>Resolve Path</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Path</em>' operation.
+	 * @see easyflow.tool.Tool#resolvePath()
+	 * @generated
+	 */
+	EOperation getTool__ResolvePath();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#assumeParamPositional() <em>Assume Param Positional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Assume Param Positional</em>' operation.
+	 * @see easyflow.tool.Tool#assumeParamPositional()
+	 * @generated
+	 */
+	EOperation getTool__AssumeParamPositional();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#createData(easyflow.tool.InOutParameter, org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EMap) <em>Create Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Create Data</em>' operation.
+	 * @see easyflow.tool.Tool#createData(easyflow.tool.InOutParameter, org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getTool__CreateData__InOutParameter_EMap_EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#createData(easyflow.tool.ResolvedParam, org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EMap) <em>Create Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Create Data</em>' operation.
+	 * @see easyflow.tool.Tool#createData(easyflow.tool.ResolvedParam, org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getTool__CreateData__ResolvedParam_EMap_EMap();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Command <em>Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2381,6 +4214,76 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCommand_ResolvedParams();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#getPositionalParameterNames() <em>Get Positional Parameter Names</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Positional Parameter Names</em>' operation.
+	 * @see easyflow.tool.Command#getPositionalParameterNames()
+	 * @generated
+	 */
+	EOperation getCommand__GetPositionalParameterNames();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#getOptionalParameterNames() <em>Get Optional Parameter Names</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Optional Parameter Names</em>' operation.
+	 * @see easyflow.tool.Command#getOptionalParameterNames()
+	 * @generated
+	 */
+	EOperation getCommand__GetOptionalParameterNames();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#getInterperter() <em>Get Interperter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Interperter</em>' operation.
+	 * @see easyflow.tool.Command#getInterperter()
+	 * @generated
+	 */
+	EOperation getCommand__GetInterperter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#getExe() <em>Get Exe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Exe</em>' operation.
+	 * @see easyflow.tool.Command#getExe()
+	 * @generated
+	 */
+	EOperation getCommand__GetExe();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#resolveParameter(java.lang.String, org.eclipse.emf.common.util.EList) <em>Resolve Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Parameter</em>' operation.
+	 * @see easyflow.tool.Command#resolveParameter(java.lang.String, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getCommand__ResolveParameter__String_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#getDataParamForDataPort(easyflow.data.DataPort, boolean) <em>Get Data Param For Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Data Param For Data Port</em>' operation.
+	 * @see easyflow.tool.Command#getDataParamForDataPort(easyflow.data.DataPort, boolean)
+	 * @generated
+	 */
+	EOperation getCommand__GetDataParamForDataPort__DataPort_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Command#getDataParamForDataPort(easyflow.data.DataPort, boolean, int) <em>Get Data Param For Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Data Param For Data Port</em>' operation.
+	 * @see easyflow.tool.Command#getDataParamForDataPort(easyflow.data.DataPort, boolean, int)
+	 * @generated
+	 */
+	EOperation getCommand__GetDataParamForDataPort__DataPort_boolean_int();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Rule <em>Rule</em>}'.
@@ -2536,6 +4439,26 @@ public interface ToolPackage extends EPackage {
 	EAttribute getRule_InterpreterParams();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Rule#resolveCommandLineParts() <em>Resolve Command Line Parts</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Command Line Parts</em>' operation.
+	 * @see easyflow.tool.Rule#resolveCommandLineParts()
+	 * @generated
+	 */
+	EOperation getRule__ResolveCommandLineParts();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Rule#createCommandLine() <em>Create Command Line</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Create Command Line</em>' operation.
+	 * @see easyflow.tool.Rule#createCommandLine()
+	 * @generated
+	 */
+	EOperation getRule__CreateCommandLine();
+
+	/**
 	 * Returns the meta object for the reference '{@link easyflow.tool.Rule#getTask <em>Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2686,6 +4609,106 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getResolvedParam_ConditionResolving();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#generateCommandString(org.eclipse.emf.common.util.EMap, easyflow.tool.Parameter) <em>Generate Command String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Command String</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#generateCommandString(org.eclipse.emf.common.util.EMap, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getResolvedParam__GenerateCommandString__EMap_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#getArgValue() <em>Get Arg Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Arg Value</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#getArgValue()
+	 * @generated
+	 */
+	EOperation getResolvedParam__GetArgValue();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#resolveName() <em>Resolve Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Name</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#resolveName()
+	 * @generated
+	 */
+	EOperation getResolvedParam__ResolveName();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#getEffectiveParameters(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EMap) <em>Get Effective Parameters</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Effective Parameters</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#getEffectiveParameters(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getResolvedParam__GetEffectiveParameters__EList_EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#getSupportedHandles() <em>Get Supported Handles</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Supported Handles</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#getSupportedHandles()
+	 * @generated
+	 */
+	EOperation getResolvedParam__GetSupportedHandles();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#deepCopy() <em>Deep Copy</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Deep Copy</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#deepCopy()
+	 * @generated
+	 */
+	EOperation getResolvedParam__DeepCopy();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#resolvePipe(java.lang.String) <em>Resolve Pipe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Pipe</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#resolvePipe(java.lang.String)
+	 * @generated
+	 */
+	EOperation getResolvedParam__ResolvePipe__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#resolveCondititionalParam(java.lang.String, java.lang.String) <em>Resolve Condititional Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Condititional Param</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#resolveCondititionalParam(java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getResolvedParam__ResolveCondititionalParam__String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#getChildParam(java.lang.String, java.lang.String) <em>Get Child Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Child Param</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#getChildParam(java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getResolvedParam__GetChildParam__String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ResolvedParam#getConditionResolvingChildParam(java.lang.String, boolean) <em>Get Condition Resolving Child Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Condition Resolving Child Param</em>' operation.
+	 * @see easyflow.tool.ResolvedParam#getConditionResolvingChildParam(java.lang.String, boolean)
+	 * @generated
+	 */
+	EOperation getResolvedParam__GetConditionResolvingChildParam__String_boolean();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.ResolvedParam#isResolved <em>Resolved</em>}'.
@@ -3127,6 +5150,336 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_PreferPkgParam();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getArgKey(java.lang.String, easyflow.tool.Key) <em>Get Arg Key</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Arg Key</em>' operation.
+	 * @see easyflow.tool.Parameter#getArgKey(java.lang.String, easyflow.tool.Key)
+	 * @generated
+	 */
+	EOperation getParameter__GetArgKey__String_Key();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getArgDelimiter(java.lang.String) <em>Get Arg Delimiter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Arg Delimiter</em>' operation.
+	 * @see easyflow.tool.Parameter#getArgDelimiter(java.lang.String)
+	 * @generated
+	 */
+	EOperation getParameter__GetArgDelimiter__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getArgValueDelimiter(java.lang.String) <em>Get Arg Value Delimiter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Arg Value Delimiter</em>' operation.
+	 * @see easyflow.tool.Parameter#getArgValueDelimiter(java.lang.String)
+	 * @generated
+	 */
+	EOperation getParameter__GetArgValueDelimiter__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getPrefix(java.lang.String) <em>Get Prefix</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Prefix</em>' operation.
+	 * @see easyflow.tool.Parameter#getPrefix(java.lang.String)
+	 * @generated
+	 */
+	EOperation getParameter__GetPrefix__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getParameterForAnalysisType(org.eclipse.emf.common.util.EList) <em>Get Parameter For Analysis Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parameter For Analysis Type</em>' operation.
+	 * @see easyflow.tool.Parameter#getParameterForAnalysisType(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getParameter__GetParameterForAnalysisType__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isAnalysisType() <em>Is Analysis Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Analysis Type</em>' operation.
+	 * @see easyflow.tool.Parameter#isAnalysisType()
+	 * @generated
+	 */
+	EOperation getParameter__IsAnalysisType();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getSupportedHandles(boolean) <em>Get Supported Handles</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Supported Handles</em>' operation.
+	 * @see easyflow.tool.Parameter#getSupportedHandles(boolean)
+	 * @generated
+	 */
+	EOperation getParameter__GetSupportedHandles__boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getEffectiveParentParameter(boolean) <em>Get Effective Parent Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Effective Parent Parameter</em>' operation.
+	 * @see easyflow.tool.Parameter#getEffectiveParentParameter(boolean)
+	 * @generated
+	 */
+	EOperation getParameter__GetEffectiveParentParameter__boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getMergedParameter(easyflow.tool.Parameter, boolean) <em>Get Merged Parameter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Merged Parameter</em>' operation.
+	 * @see easyflow.tool.Parameter#getMergedParameter(easyflow.tool.Parameter, boolean)
+	 * @generated
+	 */
+	EOperation getParameter__GetMergedParameter__Parameter_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#matches(easyflow.tool.Parameter) <em>Matches</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Matches</em>' operation.
+	 * @see easyflow.tool.Parameter#matches(easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__Matches__Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#matches(easyflow.tool.InOutParameter) <em>Matches</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Matches</em>' operation.
+	 * @see easyflow.tool.Parameter#matches(easyflow.tool.InOutParameter)
+	 * @generated
+	 */
+	EOperation getParameter__Matches__InOutParameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#generateCommandStringURI(org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EList, easyflow.tool.Parameter) <em>Generate Command String URI</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Command String URI</em>' operation.
+	 * @see easyflow.tool.Parameter#generateCommandStringURI(org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EList, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__GenerateCommandStringURI__EMap_EList_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EList, easyflow.tool.Parameter) <em>Generate Command String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Command String</em>' operation.
+	 * @see easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, org.eclipse.emf.common.util.EList, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__GenerateCommandString__EMap_EList_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, java.lang.Object, easyflow.tool.Parameter) <em>Generate Command String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Command String</em>' operation.
+	 * @see easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, java.lang.Object, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__GenerateCommandString__EMap_Object_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, easyflow.tool.OptionValue, easyflow.tool.Parameter) <em>Generate Command String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Command String</em>' operation.
+	 * @see easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, easyflow.tool.OptionValue, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__GenerateCommandString__EMap_OptionValue_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, java.net.URI, easyflow.tool.Parameter) <em>Generate Command String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Command String</em>' operation.
+	 * @see easyflow.tool.Parameter#generateCommandString(org.eclipse.emf.common.util.EMap, java.net.URI, easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__GenerateCommandString__EMap_URI_Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isOptional(java.lang.Boolean) <em>Is Optional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Optional</em>' operation.
+	 * @see easyflow.tool.Parameter#isOptional(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsOptional__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMultiple(java.lang.Boolean) <em>Is Multiple</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Multiple</em>' operation.
+	 * @see easyflow.tool.Parameter#isMultiple(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsMultiple__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMultipleInstances(java.lang.Boolean) <em>Is Multiple Instances</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Multiple Instances</em>' operation.
+	 * @see easyflow.tool.Parameter#isMultipleInstances(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsMultipleInstances__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMultipleInstancesPerInput(java.lang.Boolean) <em>Is Multiple Instances Per Input</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Multiple Instances Per Input</em>' operation.
+	 * @see easyflow.tool.Parameter#isMultipleInstancesPerInput(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsMultipleInstancesPerInput__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isNamed(java.lang.Boolean) <em>Is Named</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Named</em>' operation.
+	 * @see easyflow.tool.Parameter#isNamed(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsNamed__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isPositional(java.lang.Boolean) <em>Is Positional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Positional</em>' operation.
+	 * @see easyflow.tool.Parameter#isPositional(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsPositional__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isFixedArgValue(java.lang.Boolean) <em>Is Fixed Arg Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Fixed Arg Value</em>' operation.
+	 * @see easyflow.tool.Parameter#isFixedArgValue(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsFixedArgValue__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMultipleValue(java.lang.Boolean) <em>Is Multiple Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Multiple Value</em>' operation.
+	 * @see easyflow.tool.Parameter#isMultipleValue(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__IsMultipleValue__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#shouldOutputArgValue(java.lang.Boolean) <em>Should Output Arg Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Should Output Arg Value</em>' operation.
+	 * @see easyflow.tool.Parameter#shouldOutputArgValue(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__ShouldOutputArgValue__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#merge(easyflow.tool.Parameter) <em>Merge</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Merge</em>' operation.
+	 * @see easyflow.tool.Parameter#merge(easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getParameter__Merge__Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#getUniqueString() <em>Get Unique String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique String</em>' operation.
+	 * @see easyflow.tool.Parameter#getUniqueString()
+	 * @generated
+	 */
+	EOperation getParameter__GetUniqueString();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#resolveName() <em>Resolve Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Name</em>' operation.
+	 * @see easyflow.tool.Parameter#resolveName()
+	 * @generated
+	 */
+	EOperation getParameter__ResolveName();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#shouldOutputDefaultParam(java.lang.Boolean) <em>Should Output Default Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Should Output Default Param</em>' operation.
+	 * @see easyflow.tool.Parameter#shouldOutputDefaultParam(java.lang.Boolean)
+	 * @generated
+	 */
+	EOperation getParameter__ShouldOutputDefaultParam__Boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMetaDataParam() <em>Is Meta Data Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Meta Data Param</em>' operation.
+	 * @see easyflow.tool.Parameter#isMetaDataParam()
+	 * @generated
+	 */
+	EOperation getParameter__IsMetaDataParam();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isDataSpecifyingParam() <em>Is Data Specifying Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Data Specifying Param</em>' operation.
+	 * @see easyflow.tool.Parameter#isDataSpecifyingParam()
+	 * @generated
+	 */
+	EOperation getParameter__IsDataSpecifyingParam();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isBoolean() <em>Is Boolean</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Boolean</em>' operation.
+	 * @see easyflow.tool.Parameter#isBoolean()
+	 * @generated
+	 */
+	EOperation getParameter__IsBoolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isPreferred() <em>Is Preferred</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Preferred</em>' operation.
+	 * @see easyflow.tool.Parameter#isPreferred()
+	 * @generated
+	 */
+	EOperation getParameter__IsPreferred();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.InOutParameter <em>In Out Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3192,6 +5545,46 @@ public interface ToolPackage extends EPackage {
 	EAttribute getInOutParameter_DataPort();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#matches(easyflow.tool.InOutParameter) <em>Matches</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Matches</em>' operation.
+	 * @see easyflow.tool.InOutParameter#matches(easyflow.tool.InOutParameter)
+	 * @generated
+	 */
+	EOperation getInOutParameter__Matches__InOutParameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#matches(easyflow.tool.Parameter) <em>Matches</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Matches</em>' operation.
+	 * @see easyflow.tool.InOutParameter#matches(easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getInOutParameter__Matches__Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#merge(easyflow.tool.Parameter) <em>Merge</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Merge</em>' operation.
+	 * @see easyflow.tool.InOutParameter#merge(easyflow.tool.Parameter)
+	 * @generated
+	 */
+	EOperation getInOutParameter__Merge__Parameter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#omitExtension() <em>Omit Extension</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Omit Extension</em>' operation.
+	 * @see easyflow.tool.InOutParameter#omitExtension()
+	 * @generated
+	 */
+	EOperation getInOutParameter__OmitExtension();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Package <em>Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3246,6 +5639,36 @@ public interface ToolPackage extends EPackage {
 	EReference getPackage_ResolveUriMap();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Package#getInterpreter() <em>Get Interpreter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Interpreter</em>' operation.
+	 * @see easyflow.tool.Package#getInterpreter()
+	 * @generated
+	 */
+	EOperation getPackage__GetInterpreter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Package#getExe() <em>Get Exe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Exe</em>' operation.
+	 * @see easyflow.tool.Package#getExe()
+	 * @generated
+	 */
+	EOperation getPackage__GetExe();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Package#getInterpreterParams() <em>Get Interpreter Params</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Interpreter Params</em>' operation.
+	 * @see easyflow.tool.Package#getInterpreterParams()
+	 * @generated
+	 */
+	EOperation getPackage__GetInterpreterParams();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Key <em>Key</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3298,6 +5721,26 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getKey_Type();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Key#resolveArgKey(java.lang.String) <em>Resolve Arg Key</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Arg Key</em>' operation.
+	 * @see easyflow.tool.Key#resolveArgKey(java.lang.String)
+	 * @generated
+	 */
+	EOperation getKey__ResolveArgKey__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Key#resolveName() <em>Resolve Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Name</em>' operation.
+	 * @see easyflow.tool.Key#resolveName()
+	 * @generated
+	 */
+	EOperation getKey__ResolveName();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Requirement <em>Requirement</em>}'.
@@ -3418,6 +5861,16 @@ public interface ToolPackage extends EPackage {
 	EAttribute getOptionValue_Exe();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.tool.OptionValue#resolveValue() <em>Resolve Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Value</em>' operation.
+	 * @see easyflow.tool.OptionValue#resolveValue()
+	 * @generated
+	 */
+	EOperation getOptionValue__ResolveValue();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.tool.BaseCommand <em>Base Command</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3515,6 +5968,14 @@ public interface ToolPackage extends EPackage {
 		EClass IRULE = eINSTANCE.getIRule();
 
 		/**
+		 * The meta object literal for the '<em><b>Clear</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IRULE___CLEAR = eINSTANCE.getIRule__Clear();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ToolSchemataImpl <em>Schemata</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3547,6 +6008,38 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TOOL_SCHEMATA__LOGGER = eINSTANCE.getToolSchemata_Logger();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Schema</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_SCHEMATA___READ_SCHEMA__URI_BOOLEAN = eINSTANCE.getToolSchemata__ReadSchema__URI_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Schemata</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_SCHEMATA___READ_SCHEMATA__ELIST_BOOLEAN = eINSTANCE.getToolSchemata__ReadSchemata__EList_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Default Schema</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_SCHEMATA___GET_DEFAULT_SCHEMA = eINSTANCE.getToolSchemata__GetDefaultSchema();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Schema For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_SCHEMATA___GET_SCHEMA_FOR__DOCUMENT = eINSTANCE.getToolSchemata__GetSchemaFor__Document();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.ToolDefinitionsImpl <em>Definitions</em>}' class.
@@ -3591,6 +6084,14 @@ public interface ToolPackage extends EPackage {
 		EReference TOOL_DEFINITIONS__PROPERTIES = eINSTANCE.getToolDefinitions_Properties();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Tool Definition</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN = eINSTANCE.getToolDefinitions__ValidateToolDefinition__URI_boolean();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.IToolElement <em>ITool Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3599,6 +6100,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ITOOL_ELEMENT = eINSTANCE.getIToolElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Render To String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITOOL_ELEMENT___RENDER_TO_STRING = eINSTANCE.getIToolElement__RenderToString();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.DefaultToolElementImpl <em>Default Tool Element</em>}' class.
@@ -3741,6 +6250,278 @@ public interface ToolPackage extends EPackage {
 		EReference TOOL__RESOLVE_URI_MAP = eINSTANCE.getTool_ResolveUriMap();
 
 		/**
+		 * The meta object literal for the '<em><b>Write Model To XML</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___WRITE_MODEL_TO_XML = eINSTANCE.getTool__WriteModelToXML();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Filter Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__CanFilterInstancesFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Requires Grouping</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___REQUIRES_GROUPING__STRING_DATAPORT = eINSTANCE.getTool__RequiresGrouping__String_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Provides Grouping</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___PROVIDES_GROUPING__STRING_DATAPORT = eINSTANCE.getTool__ProvidesGrouping__String_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Groupings For Input Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN = eINSTANCE.getTool__GetGroupingsForInputPort__DataPort_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Groupings For Output Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN = eINSTANCE.getTool__GetGroupingsForOutputPort__DataPort_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Analysis Type Of Package</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST = eINSTANCE.getTool__GetAnalysisTypeOfPackage__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Template Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_TEMPLATE_PARAMETER__PARAMETER = eINSTANCE.getTool__GetTemplateParameter__Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Template Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_TEMPLATE_PARAMETER = eINSTANCE.getTool__GetTemplateParameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Matching Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_MATCHING_PARAMETER__ELIST_PARAMETER = eINSTANCE.getTool__GetMatchingParameter__EList_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Matching Parameter By Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_MATCHING_PARAMETER_BY_NAME__ELIST_PARAMETER = eINSTANCE.getTool__GetMatchingParameterByName__EList_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Assume Data Param Positional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___ASSUME_DATA_PARAM_POSITIONAL = eINSTANCE.getTool__AssumeDataParamPositional();
+
+		/**
+		 * The meta object literal for the '<em><b>Omit Prefix If No Arg Key</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___OMIT_PREFIX_IF_NO_ARG_KEY = eINSTANCE.getTool__OmitPrefixIfNoArgKey();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Cmd Part Delimiter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_CMD_PART_DELIMITER = eINSTANCE.getTool__GetCmdPartDelimiter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Interpreter Params</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_INTERPRETER_PARAMS = eINSTANCE.getTool__GetInterpreterParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Exe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_EXE = eINSTANCE.getTool__GetExe();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Module Params</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_MODULE_PARAMS = eINSTANCE.getTool__GetModuleParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Interpreter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___GET_INTERPRETER = eINSTANCE.getTool__GetInterpreter();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__CanProvideMultipleInputsFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__CanProvideMultipleInstancesFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__CanProvideMultipleInstancesPerInputFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Process Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInputsFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Process Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInstancesPerInputFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Process Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInstancesFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Process Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__SetProcessMultipleInstancesPerInputFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Process Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__SetProcessMultipleInstancesFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Process Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__SetProcessMultipleInputsFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Provide Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__SetProvideMultipleInstancesPerInputFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Provide Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__SetProvideMultipleInstancesFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Provide Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__SetProvideMultipleInputsFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Path</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___RESOLVE_PATH = eINSTANCE.getTool__ResolvePath();
+
+		/**
+		 * The meta object literal for the '<em><b>Assume Param Positional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___ASSUME_PARAM_POSITIONAL = eINSTANCE.getTool__AssumeParamPositional();
+
+		/**
+		 * The meta object literal for the '<em><b>Create Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP = eINSTANCE.getTool__CreateData__InOutParameter_EMap_EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Create Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP = eINSTANCE.getTool__CreateData__ResolvedParam_EMap_EMap();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3773,6 +6554,62 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMMAND__RESOLVED_PARAMS = eINSTANCE.getCommand_ResolvedParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Positional Parameter Names</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___GET_POSITIONAL_PARAMETER_NAMES = eINSTANCE.getCommand__GetPositionalParameterNames();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Optional Parameter Names</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___GET_OPTIONAL_PARAMETER_NAMES = eINSTANCE.getCommand__GetOptionalParameterNames();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Interperter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___GET_INTERPERTER = eINSTANCE.getCommand__GetInterperter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Exe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___GET_EXE = eINSTANCE.getCommand__GetExe();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___RESOLVE_PARAMETER__STRING_ELIST = eINSTANCE.getCommand__ResolveParameter__String_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Data Param For Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___GET_DATA_PARAM_FOR_DATA_PORT__DATAPORT_BOOLEAN = eINSTANCE.getCommand__GetDataParamForDataPort__DataPort_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Data Param For Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation COMMAND___GET_DATA_PARAM_FOR_DATA_PORT__DATAPORT_BOOLEAN_INT = eINSTANCE.getCommand__GetDataParamForDataPort__DataPort_boolean_int();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.RuleImpl <em>Rule</em>}' class.
@@ -3889,6 +6726,22 @@ public interface ToolPackage extends EPackage {
 		EAttribute RULE__INTERPRETER_PARAMS = eINSTANCE.getRule_InterpreterParams();
 
 		/**
+		 * The meta object literal for the '<em><b>Resolve Command Line Parts</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RULE___RESOLVE_COMMAND_LINE_PARTS = eINSTANCE.getRule__ResolveCommandLineParts();
+
+		/**
+		 * The meta object literal for the '<em><b>Create Command Line</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RULE___CREATE_COMMAND_LINE = eINSTANCE.getRule__CreateCommandLine();
+
+		/**
 		 * The meta object literal for the '<em><b>Task</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4003,6 +6856,86 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RESOLVED_PARAM__CONDITION_RESOLVING = eINSTANCE.getResolvedParam_ConditionResolving();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Command String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP_PARAMETER = eINSTANCE.getResolvedParam__GenerateCommandString__EMap_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Arg Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___GET_ARG_VALUE = eINSTANCE.getResolvedParam__GetArgValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___RESOLVE_NAME = eINSTANCE.getResolvedParam__ResolveName();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Effective Parameters</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___GET_EFFECTIVE_PARAMETERS__ELIST_EMAP = eINSTANCE.getResolvedParam__GetEffectiveParameters__EList_EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Supported Handles</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___GET_SUPPORTED_HANDLES = eINSTANCE.getResolvedParam__GetSupportedHandles();
+
+		/**
+		 * The meta object literal for the '<em><b>Deep Copy</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___DEEP_COPY = eINSTANCE.getResolvedParam__DeepCopy();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Pipe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___RESOLVE_PIPE__STRING = eINSTANCE.getResolvedParam__ResolvePipe__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Condititional Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___RESOLVE_CONDITITIONAL_PARAM__STRING_STRING = eINSTANCE.getResolvedParam__ResolveCondititionalParam__String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Child Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___GET_CHILD_PARAM__STRING_STRING = eINSTANCE.getResolvedParam__GetChildParam__String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Condition Resolving Child Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESOLVED_PARAM___GET_CONDITION_RESOLVING_CHILD_PARAM__STRING_BOOLEAN = eINSTANCE.getResolvedParam__GetConditionResolvingChildParam__String_boolean();
 
 		/**
 		 * The meta object literal for the '<em><b>Resolved</b></em>' attribute feature.
@@ -4327,6 +7260,270 @@ public interface ToolPackage extends EPackage {
 		EAttribute PARAMETER__PREFER_PKG_PARAM = eINSTANCE.getParameter_PreferPkgParam();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Arg Key</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_ARG_KEY__STRING_KEY = eINSTANCE.getParameter__GetArgKey__String_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Arg Delimiter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_ARG_DELIMITER__STRING = eINSTANCE.getParameter__GetArgDelimiter__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Arg Value Delimiter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_ARG_VALUE_DELIMITER__STRING = eINSTANCE.getParameter__GetArgValueDelimiter__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Prefix</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_PREFIX__STRING = eINSTANCE.getParameter__GetPrefix__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parameter For Analysis Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST = eINSTANCE.getParameter__GetParameterForAnalysisType__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Analysis Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_ANALYSIS_TYPE = eINSTANCE.getParameter__IsAnalysisType();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Supported Handles</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN = eINSTANCE.getParameter__GetSupportedHandles__boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Effective Parent Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN = eINSTANCE.getParameter__GetEffectiveParentParameter__boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Merged Parameter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_MERGED_PARAMETER__PARAMETER_BOOLEAN = eINSTANCE.getParameter__GetMergedParameter__Parameter_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Matches</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___MATCHES__PARAMETER = eINSTANCE.getParameter__Matches__Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Matches</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___MATCHES__INOUTPARAMETER = eINSTANCE.getParameter__Matches__InOutParameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Command String URI</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER = eINSTANCE.getParameter__GenerateCommandStringURI__EMap_EList_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Command String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER = eINSTANCE.getParameter__GenerateCommandString__EMap_EList_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Command String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER = eINSTANCE.getParameter__GenerateCommandString__EMap_Object_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Command String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER = eINSTANCE.getParameter__GenerateCommandString__EMap_OptionValue_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Command String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER = eINSTANCE.getParameter__GenerateCommandString__EMap_URI_Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Optional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_OPTIONAL__BOOLEAN = eINSTANCE.getParameter__IsOptional__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Multiple</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_MULTIPLE__BOOLEAN = eINSTANCE.getParameter__IsMultiple__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Multiple Instances</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN = eINSTANCE.getParameter__IsMultipleInstances__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Multiple Instances Per Input</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN = eINSTANCE.getParameter__IsMultipleInstancesPerInput__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Named</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_NAMED__BOOLEAN = eINSTANCE.getParameter__IsNamed__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Positional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_POSITIONAL__BOOLEAN = eINSTANCE.getParameter__IsPositional__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Fixed Arg Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN = eINSTANCE.getParameter__IsFixedArgValue__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Multiple Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN = eINSTANCE.getParameter__IsMultipleValue__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Should Output Arg Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___SHOULD_OUTPUT_ARG_VALUE__BOOLEAN = eINSTANCE.getParameter__ShouldOutputArgValue__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Merge</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___MERGE__PARAMETER = eINSTANCE.getParameter__Merge__Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___GET_UNIQUE_STRING = eINSTANCE.getParameter__GetUniqueString();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___RESOLVE_NAME = eINSTANCE.getParameter__ResolveName();
+
+		/**
+		 * The meta object literal for the '<em><b>Should Output Default Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___SHOULD_OUTPUT_DEFAULT_PARAM__BOOLEAN = eINSTANCE.getParameter__ShouldOutputDefaultParam__Boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Meta Data Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_META_DATA_PARAM = eINSTANCE.getParameter__IsMetaDataParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Data Specifying Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_DATA_SPECIFYING_PARAM = eINSTANCE.getParameter__IsDataSpecifyingParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Boolean</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_BOOLEAN = eINSTANCE.getParameter__IsBoolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Preferred</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER___IS_PREFERRED = eINSTANCE.getParameter__IsPreferred();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.InOutParameterImpl <em>In Out Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4377,6 +7574,38 @@ public interface ToolPackage extends EPackage {
 		EAttribute IN_OUT_PARAMETER__DATA_PORT = eINSTANCE.getInOutParameter_DataPort();
 
 		/**
+		 * The meta object literal for the '<em><b>Matches</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IN_OUT_PARAMETER___MATCHES__INOUTPARAMETER = eINSTANCE.getInOutParameter__Matches__InOutParameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Matches</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IN_OUT_PARAMETER___MATCHES__PARAMETER = eINSTANCE.getInOutParameter__Matches__Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Merge</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IN_OUT_PARAMETER___MERGE__PARAMETER = eINSTANCE.getInOutParameter__Merge__Parameter();
+
+		/**
+		 * The meta object literal for the '<em><b>Omit Extension</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IN_OUT_PARAMETER___OMIT_EXTENSION = eINSTANCE.getInOutParameter__OmitExtension();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4419,6 +7648,30 @@ public interface ToolPackage extends EPackage {
 		EReference PACKAGE__RESOLVE_URI_MAP = eINSTANCE.getPackage_ResolveUriMap();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Interpreter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PACKAGE___GET_INTERPRETER = eINSTANCE.getPackage__GetInterpreter();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Exe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PACKAGE___GET_EXE = eINSTANCE.getPackage__GetExe();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Interpreter Params</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PACKAGE___GET_INTERPRETER_PARAMS = eINSTANCE.getPackage__GetInterpreterParams();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.KeyImpl <em>Key</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4459,6 +7712,22 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute KEY__TYPE = eINSTANCE.getKey_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Arg Key</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation KEY___RESOLVE_ARG_KEY__STRING = eINSTANCE.getKey__ResolveArgKey__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation KEY___RESOLVE_NAME = eINSTANCE.getKey__ResolveName();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.RequirementImpl <em>Requirement</em>}' class.
@@ -4553,6 +7822,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute OPTION_VALUE__EXE = eINSTANCE.getOptionValue_Exe();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPTION_VALUE___RESOLVE_VALUE = eINSTANCE.getOptionValue__ResolveValue();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.BaseCommandImpl <em>Base Command</em>}' class.

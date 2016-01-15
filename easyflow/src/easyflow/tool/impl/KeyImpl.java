@@ -10,8 +10,10 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.tool.Key;
 import easyflow.tool.ToolPackage;
 
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -329,6 +331,22 @@ public class KeyImpl extends DefaultToolElementImpl implements Key {
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.KEY___RESOLVE_ARG_KEY__STRING:
+				return resolveArgKey((String)arguments.get(0));
+			case ToolPackage.KEY___RESOLVE_NAME:
+				return resolveName();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

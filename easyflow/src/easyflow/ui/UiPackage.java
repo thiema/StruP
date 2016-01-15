@@ -8,6 +8,7 @@ package easyflow.ui;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -77,6 +78,285 @@ public interface UiPackage extends EPackage {
 	 * @ordered
 	 */
 	int IPROJECT_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Validate</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___VALIDATE = 0;
+
+	/**
+	 * The operation id for the '<em>Get Active Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_ACTIVE_WORKFLOW = 1;
+
+	/**
+	 * The operation id for the '<em>Clear Workflows</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___CLEAR_WORKFLOWS = 2;
+
+	/**
+	 * The operation id for the '<em>Read Configuration</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN = 3;
+
+	/**
+	 * The operation id for the '<em>Read Project Json</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___READ_PROJECT_JSON__URI = 4;
+
+	/**
+	 * The operation id for the '<em>Set Config And Base Path</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___SET_CONFIG_AND_BASE_PATH__STRING = 5;
+
+	/**
+	 * The operation id for the '<em>Apply Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___APPLY_META_DATA = 6;
+
+	/**
+	 * The operation id for the '<em>Init</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___INIT__EASYFLOWGRAPH = 7;
+
+	/**
+	 * The operation id for the '<em>Delete</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___DELETE = 8;
+
+	/**
+	 * The operation id for the '<em>Run Entire Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RUN_ENTIRE_WORKFLOW = 9;
+
+	/**
+	 * The operation id for the '<em>Resolve Traversal Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RESOLVE_TRAVERSAL_CRITERIA = 10;
+
+	/**
+	 * The operation id for the '<em>Generate Abstract Graph</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GENERATE_ABSTRACT_GRAPH = 11;
+
+	/**
+	 * The operation id for the '<em>Apply Grouping Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___APPLY_GROUPING_CRITERIA = 12;
+
+	/**
+	 * The operation id for the '<em>Apply Parameter Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___APPLY_PARAMETER_CRITERIA = 13;
+
+	/**
+	 * The operation id for the '<em>Resolve Utility Tasks</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RESOLVE_UTILITY_TASKS = 14;
+
+	/**
+	 * The operation id for the '<em>Resolve Preprocessing Tasks</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RESOLVE_PREPROCESSING_TASKS = 15;
+
+	/**
+	 * The operation id for the '<em>Resolve Tool Dependencies</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RESOLVE_TOOL_DEPENDENCIES = 16;
+
+	/**
+	 * The operation id for the '<em>Generate Worklow For Execution System</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM = 17;
+
+	/**
+	 * The operation id for the '<em>Set Worker</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___SET_WORKER__EASYFLOWOVERALLWORKER = 18;
+
+	/**
+	 * The operation id for the '<em>Run Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RUN_NEXT_WORKFLOW_STEP = 19;
+
+	/**
+	 * The operation id for the '<em>Run Prev Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RUN_PREV_WORKFLOW_STEP = 20;
+
+	/**
+	 * The operation id for the '<em>Has Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___HAS_NEXT_WORKFLOW_STEP = 21;
+
+	/**
+	 * The operation id for the '<em>Get Workflow Step Label For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING = 22;
+
+	/**
+	 * The operation id for the '<em>Get Workflow Step Desc For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING = 23;
+
+	/**
+	 * The operation id for the '<em>Get Total Number Of Workflow Steps</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS = 24;
+
+	/**
+	 * The operation id for the '<em>Get Number Of Current Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP = 25;
+
+	/**
+	 * The operation id for the '<em>Get Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_NEXT_WORKFLOW_STEP = 26;
+
+	/**
+	 * The operation id for the '<em>Get Cur Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_CUR_WORKFLOW_STEP = 27;
+
+	/**
+	 * The operation id for the '<em>Reset Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___RESET_WORKFLOW_STEP = 28;
+
+	/**
+	 * The operation id for the '<em>Get Execution System</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___GET_EXECUTION_SYSTEM = 29;
+
+	/**
+	 * The number of operations of the '<em>IProject</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT_OPERATION_COUNT = 30;
 
 	/**
 	 * The meta object id for the '{@link easyflow.ui.impl.DefaultProjectImpl <em>Default Project</em>}' class.
@@ -180,6 +460,286 @@ public interface UiPackage extends EPackage {
 
 
 	/**
+	 * The operation id for the '<em>Validate</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___VALIDATE = IPROJECT___VALIDATE;
+
+	/**
+	 * The operation id for the '<em>Get Active Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_ACTIVE_WORKFLOW = IPROJECT___GET_ACTIVE_WORKFLOW;
+
+	/**
+	 * The operation id for the '<em>Clear Workflows</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___CLEAR_WORKFLOWS = IPROJECT___CLEAR_WORKFLOWS;
+
+	/**
+	 * The operation id for the '<em>Read Configuration</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN = IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN;
+
+	/**
+	 * The operation id for the '<em>Read Project Json</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___READ_PROJECT_JSON__URI = IPROJECT___READ_PROJECT_JSON__URI;
+
+	/**
+	 * The operation id for the '<em>Set Config And Base Path</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___SET_CONFIG_AND_BASE_PATH__STRING = IPROJECT___SET_CONFIG_AND_BASE_PATH__STRING;
+
+	/**
+	 * The operation id for the '<em>Apply Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___APPLY_META_DATA = IPROJECT___APPLY_META_DATA;
+
+	/**
+	 * The operation id for the '<em>Init</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___INIT__EASYFLOWGRAPH = IPROJECT___INIT__EASYFLOWGRAPH;
+
+	/**
+	 * The operation id for the '<em>Delete</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___DELETE = IPROJECT___DELETE;
+
+	/**
+	 * The operation id for the '<em>Run Entire Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RUN_ENTIRE_WORKFLOW = IPROJECT___RUN_ENTIRE_WORKFLOW;
+
+	/**
+	 * The operation id for the '<em>Resolve Traversal Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RESOLVE_TRAVERSAL_CRITERIA = IPROJECT___RESOLVE_TRAVERSAL_CRITERIA;
+
+	/**
+	 * The operation id for the '<em>Generate Abstract Graph</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GENERATE_ABSTRACT_GRAPH = IPROJECT___GENERATE_ABSTRACT_GRAPH;
+
+	/**
+	 * The operation id for the '<em>Apply Grouping Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___APPLY_GROUPING_CRITERIA = IPROJECT___APPLY_GROUPING_CRITERIA;
+
+	/**
+	 * The operation id for the '<em>Apply Parameter Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___APPLY_PARAMETER_CRITERIA = IPROJECT___APPLY_PARAMETER_CRITERIA;
+
+	/**
+	 * The operation id for the '<em>Resolve Utility Tasks</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RESOLVE_UTILITY_TASKS = IPROJECT___RESOLVE_UTILITY_TASKS;
+
+	/**
+	 * The operation id for the '<em>Resolve Preprocessing Tasks</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RESOLVE_PREPROCESSING_TASKS = IPROJECT___RESOLVE_PREPROCESSING_TASKS;
+
+	/**
+	 * The operation id for the '<em>Resolve Tool Dependencies</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RESOLVE_TOOL_DEPENDENCIES = IPROJECT___RESOLVE_TOOL_DEPENDENCIES;
+
+	/**
+	 * The operation id for the '<em>Generate Worklow For Execution System</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM = IPROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM;
+
+	/**
+	 * The operation id for the '<em>Set Worker</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___SET_WORKER__EASYFLOWOVERALLWORKER = IPROJECT___SET_WORKER__EASYFLOWOVERALLWORKER;
+
+	/**
+	 * The operation id for the '<em>Run Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RUN_NEXT_WORKFLOW_STEP = IPROJECT___RUN_NEXT_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Run Prev Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RUN_PREV_WORKFLOW_STEP = IPROJECT___RUN_PREV_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Has Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___HAS_NEXT_WORKFLOW_STEP = IPROJECT___HAS_NEXT_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Get Workflow Step Label For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING = IPROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Workflow Step Desc For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING = IPROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Total Number Of Workflow Steps</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS = IPROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS;
+
+	/**
+	 * The operation id for the '<em>Get Number Of Current Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP = IPROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Get Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_NEXT_WORKFLOW_STEP = IPROJECT___GET_NEXT_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Get Cur Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_CUR_WORKFLOW_STEP = IPROJECT___GET_CUR_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Reset Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___RESET_WORKFLOW_STEP = IPROJECT___RESET_WORKFLOW_STEP;
+
+	/**
+	 * The operation id for the '<em>Get Execution System</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___GET_EXECUTION_SYSTEM = IPROJECT___GET_EXECUTION_SYSTEM;
+
+	/**
+	 * The number of operations of the '<em>Default Project</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT_OPERATION_COUNT = IPROJECT_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.ui.IProject <em>IProject</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -188,6 +748,306 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIProject();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#validate() <em>Validate</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate</em>' operation.
+	 * @see easyflow.ui.IProject#validate()
+	 * @generated
+	 */
+	EOperation getIProject__Validate();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getActiveWorkflow() <em>Get Active Workflow</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Active Workflow</em>' operation.
+	 * @see easyflow.ui.IProject#getActiveWorkflow()
+	 * @generated
+	 */
+	EOperation getIProject__GetActiveWorkflow();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#clearWorkflows() <em>Clear Workflows</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Clear Workflows</em>' operation.
+	 * @see easyflow.ui.IProject#clearWorkflows()
+	 * @generated
+	 */
+	EOperation getIProject__ClearWorkflows();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#readConfiguration(net.sf.json.JSONObject, boolean) <em>Read Configuration</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Configuration</em>' operation.
+	 * @see easyflow.ui.IProject#readConfiguration(net.sf.json.JSONObject, boolean)
+	 * @generated
+	 */
+	EOperation getIProject__ReadConfiguration__JSONObject_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#readProjectJson(java.net.URI) <em>Read Project Json</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Project Json</em>' operation.
+	 * @see easyflow.ui.IProject#readProjectJson(java.net.URI)
+	 * @generated
+	 */
+	EOperation getIProject__ReadProjectJson__URI();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#setConfigAndBasePath(java.lang.String) <em>Set Config And Base Path</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Config And Base Path</em>' operation.
+	 * @see easyflow.ui.IProject#setConfigAndBasePath(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIProject__SetConfigAndBasePath__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#applyMetaData() <em>Apply Meta Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Apply Meta Data</em>' operation.
+	 * @see easyflow.ui.IProject#applyMetaData()
+	 * @generated
+	 */
+	EOperation getIProject__ApplyMetaData();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#init(easyflow.custom.jgraphx.editor.EasyFlowGraph) <em>Init</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init</em>' operation.
+	 * @see easyflow.ui.IProject#init(easyflow.custom.jgraphx.editor.EasyFlowGraph)
+	 * @generated
+	 */
+	EOperation getIProject__Init__EasyFlowGraph();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#delete() <em>Delete</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Delete</em>' operation.
+	 * @see easyflow.ui.IProject#delete()
+	 * @generated
+	 */
+	EOperation getIProject__Delete();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#runEntireWorkflow() <em>Run Entire Workflow</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run Entire Workflow</em>' operation.
+	 * @see easyflow.ui.IProject#runEntireWorkflow()
+	 * @generated
+	 */
+	EOperation getIProject__RunEntireWorkflow();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#resolveTraversalCriteria() <em>Resolve Traversal Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Traversal Criteria</em>' operation.
+	 * @see easyflow.ui.IProject#resolveTraversalCriteria()
+	 * @generated
+	 */
+	EOperation getIProject__ResolveTraversalCriteria();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#generateAbstractGraph() <em>Generate Abstract Graph</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Abstract Graph</em>' operation.
+	 * @see easyflow.ui.IProject#generateAbstractGraph()
+	 * @generated
+	 */
+	EOperation getIProject__GenerateAbstractGraph();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#applyGroupingCriteria() <em>Apply Grouping Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Apply Grouping Criteria</em>' operation.
+	 * @see easyflow.ui.IProject#applyGroupingCriteria()
+	 * @generated
+	 */
+	EOperation getIProject__ApplyGroupingCriteria();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#applyParameterCriteria() <em>Apply Parameter Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Apply Parameter Criteria</em>' operation.
+	 * @see easyflow.ui.IProject#applyParameterCriteria()
+	 * @generated
+	 */
+	EOperation getIProject__ApplyParameterCriteria();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#resolveUtilityTasks() <em>Resolve Utility Tasks</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Utility Tasks</em>' operation.
+	 * @see easyflow.ui.IProject#resolveUtilityTasks()
+	 * @generated
+	 */
+	EOperation getIProject__ResolveUtilityTasks();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#resolvePreprocessingTasks() <em>Resolve Preprocessing Tasks</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Preprocessing Tasks</em>' operation.
+	 * @see easyflow.ui.IProject#resolvePreprocessingTasks()
+	 * @generated
+	 */
+	EOperation getIProject__ResolvePreprocessingTasks();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#resolveToolDependencies() <em>Resolve Tool Dependencies</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Tool Dependencies</em>' operation.
+	 * @see easyflow.ui.IProject#resolveToolDependencies()
+	 * @generated
+	 */
+	EOperation getIProject__ResolveToolDependencies();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#generateWorklowForExecutionSystem() <em>Generate Worklow For Execution System</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Worklow For Execution System</em>' operation.
+	 * @see easyflow.ui.IProject#generateWorklowForExecutionSystem()
+	 * @generated
+	 */
+	EOperation getIProject__GenerateWorklowForExecutionSystem();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#setWorker(easyflow.custom.jgraphx.EasyFlowOverallWorker) <em>Set Worker</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Worker</em>' operation.
+	 * @see easyflow.ui.IProject#setWorker(easyflow.custom.jgraphx.EasyFlowOverallWorker)
+	 * @generated
+	 */
+	EOperation getIProject__SetWorker__EasyFlowOverallWorker();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#runNextWorkflowStep() <em>Run Next Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run Next Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#runNextWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__RunNextWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#runPrevWorkflowStep() <em>Run Prev Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run Prev Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#runPrevWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__RunPrevWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#hasNextWorkflowStep() <em>Has Next Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Next Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#hasNextWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__HasNextWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getWorkflowStepLabelFor(java.lang.String) <em>Get Workflow Step Label For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Workflow Step Label For</em>' operation.
+	 * @see easyflow.ui.IProject#getWorkflowStepLabelFor(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIProject__GetWorkflowStepLabelFor__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getWorkflowStepDescFor(java.lang.String) <em>Get Workflow Step Desc For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Workflow Step Desc For</em>' operation.
+	 * @see easyflow.ui.IProject#getWorkflowStepDescFor(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIProject__GetWorkflowStepDescFor__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getTotalNumberOfWorkflowSteps() <em>Get Total Number Of Workflow Steps</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Total Number Of Workflow Steps</em>' operation.
+	 * @see easyflow.ui.IProject#getTotalNumberOfWorkflowSteps()
+	 * @generated
+	 */
+	EOperation getIProject__GetTotalNumberOfWorkflowSteps();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getNumberOfCurrentWorkflowStep() <em>Get Number Of Current Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Number Of Current Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#getNumberOfCurrentWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__GetNumberOfCurrentWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getNextWorkflowStep() <em>Get Next Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Next Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#getNextWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__GetNextWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getCurWorkflowStep() <em>Get Cur Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Cur Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#getCurWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__GetCurWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#resetWorkflowStep() <em>Reset Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Reset Workflow Step</em>' operation.
+	 * @see easyflow.ui.IProject#resetWorkflowStep()
+	 * @generated
+	 */
+	EOperation getIProject__ResetWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#getExecutionSystem() <em>Get Execution System</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Execution System</em>' operation.
+	 * @see easyflow.ui.IProject#getExecutionSystem()
+	 * @generated
+	 */
+	EOperation getIProject__GetExecutionSystem();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.ui.DefaultProject <em>Default Project</em>}'.
@@ -329,6 +1189,246 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EClass IPROJECT = eINSTANCE.getIProject();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___VALIDATE = eINSTANCE.getIProject__Validate();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Active Workflow</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_ACTIVE_WORKFLOW = eINSTANCE.getIProject__GetActiveWorkflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Clear Workflows</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___CLEAR_WORKFLOWS = eINSTANCE.getIProject__ClearWorkflows();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Configuration</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN = eINSTANCE.getIProject__ReadConfiguration__JSONObject_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Project Json</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___READ_PROJECT_JSON__URI = eINSTANCE.getIProject__ReadProjectJson__URI();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Config And Base Path</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___SET_CONFIG_AND_BASE_PATH__STRING = eINSTANCE.getIProject__SetConfigAndBasePath__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Apply Meta Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___APPLY_META_DATA = eINSTANCE.getIProject__ApplyMetaData();
+
+		/**
+		 * The meta object literal for the '<em><b>Init</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___INIT__EASYFLOWGRAPH = eINSTANCE.getIProject__Init__EasyFlowGraph();
+
+		/**
+		 * The meta object literal for the '<em><b>Delete</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___DELETE = eINSTANCE.getIProject__Delete();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Entire Workflow</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RUN_ENTIRE_WORKFLOW = eINSTANCE.getIProject__RunEntireWorkflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Traversal Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RESOLVE_TRAVERSAL_CRITERIA = eINSTANCE.getIProject__ResolveTraversalCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Abstract Graph</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GENERATE_ABSTRACT_GRAPH = eINSTANCE.getIProject__GenerateAbstractGraph();
+
+		/**
+		 * The meta object literal for the '<em><b>Apply Grouping Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___APPLY_GROUPING_CRITERIA = eINSTANCE.getIProject__ApplyGroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Apply Parameter Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___APPLY_PARAMETER_CRITERIA = eINSTANCE.getIProject__ApplyParameterCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Utility Tasks</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RESOLVE_UTILITY_TASKS = eINSTANCE.getIProject__ResolveUtilityTasks();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Preprocessing Tasks</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RESOLVE_PREPROCESSING_TASKS = eINSTANCE.getIProject__ResolvePreprocessingTasks();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Tool Dependencies</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RESOLVE_TOOL_DEPENDENCIES = eINSTANCE.getIProject__ResolveToolDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Worklow For Execution System</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM = eINSTANCE.getIProject__GenerateWorklowForExecutionSystem();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Worker</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___SET_WORKER__EASYFLOWOVERALLWORKER = eINSTANCE.getIProject__SetWorker__EasyFlowOverallWorker();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Next Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RUN_NEXT_WORKFLOW_STEP = eINSTANCE.getIProject__RunNextWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Prev Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RUN_PREV_WORKFLOW_STEP = eINSTANCE.getIProject__RunPrevWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Next Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___HAS_NEXT_WORKFLOW_STEP = eINSTANCE.getIProject__HasNextWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Workflow Step Label For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING = eINSTANCE.getIProject__GetWorkflowStepLabelFor__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Workflow Step Desc For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING = eINSTANCE.getIProject__GetWorkflowStepDescFor__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Total Number Of Workflow Steps</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS = eINSTANCE.getIProject__GetTotalNumberOfWorkflowSteps();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Number Of Current Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP = eINSTANCE.getIProject__GetNumberOfCurrentWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Next Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_NEXT_WORKFLOW_STEP = eINSTANCE.getIProject__GetNextWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Cur Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_CUR_WORKFLOW_STEP = eINSTANCE.getIProject__GetCurWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Reset Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___RESET_WORKFLOW_STEP = eINSTANCE.getIProject__ResetWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Execution System</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___GET_EXECUTION_SYSTEM = eINSTANCE.getIProject__GetExecutionSystem();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.ui.impl.DefaultProjectImpl <em>Default Project</em>}' class.

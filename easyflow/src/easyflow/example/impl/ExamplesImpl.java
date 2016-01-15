@@ -6,6 +6,8 @@
  */
 package easyflow.example.impl;
 
+import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.URIUtil;
 import easyflow.example.ExamplePackage;
 import easyflow.example.Examples;
@@ -13,6 +15,7 @@ import easyflow.ui.DefaultProject;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToProjectMapImpl;
 import easyflow.ui.UiFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,17 +25,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -53,7 +57,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ExamplesImpl extends EObjectImpl implements Examples {
+public class ExamplesImpl extends MinimalEObjectImpl.Container implements Examples {
 	/**
 	 * The default value of the '{@link #getLocator() <em>Locator</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -220,21 +224,73 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 			InputStreamReader isReader    = URIUtil.getInputStreamReader(uri, isFromJar());
 			BufferedReader bufferedReader = new BufferedReader(isReader);
 			String strLine;
+			boolean readHeader = false;
+			EMap<String, Integer> header = new BasicEMap<String, Integer>();
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
 					String[] lina=strLine.split("\t");
-					DefaultProject defaultProject = UiFactory.eINSTANCE.createDefaultProject();
-					URI baseURI = lina.length > 2 ? URIUtil.createURI(getLocator(), lina[2]) : URIUtil.createURI(getLocator(), lina[0]);
-					defaultProject.setBaseURI(baseURI);
-					
-					if (lina.length > 1)
-						defaultProject.setConfigSource(
-								URIUtil.addToURI(baseURI, lina[1]));
+					if (readHeader)
+					{
+						String name     = null;
+						String folder   = null;
+						String workflow = null;
+						String utility  = null;
+						String config   = null;
+						
+						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_NAME) && 
+								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_NAME))
+							name = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_NAME)];
+						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_CONFIG) && 
+								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_CONFIG))
+							config = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_CONFIG)];
+						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_FOLDER) && 
+								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_FOLDER))
+							folder = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_FOLDER)];
+						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_WORKFLOW) && 
+								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_WORKFLOW))
+							workflow = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_WORKFLOW)];
+						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_UTIL) && 
+								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_UTIL))
+							utility = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_UTIL)];
+						if (name != null)
+						{
+							DefaultProject defaultProject = UiFactory.eINSTANCE.createDefaultProject();
+							URI baseURI = null;
+							if (folder != null)
+								baseURI = URIUtil.createURI(getLocator(), folder);
+							else
+								baseURI = URIUtil.createURI(getLocator(), name);
+							defaultProject.setBaseURI(baseURI);
+							
+							if (config != null)
+								defaultProject.setConfigSource(
+										URIUtil.addToURI(baseURI, config));
+							else
+								defaultProject.setConfigSource(
+										URIUtil.addToURI(baseURI, "main.json"));
+							
+							if (workflow != null)
+								GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, workflow);
+							if (utility != null)
+								GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, utility);
+							
+							//getExamples().put(lina[0], defaultProject);
+							getExamples().put(name, defaultProject);
+						}
+						else
+						{
+							logger.error("readRepository() unable to process line: "+strLine);
+						}
+					}
 					else
-						defaultProject.setConfigSource(
-								URIUtil.addToURI(baseURI, "main.json"));
-					
-					getExamples().put(lina[0], defaultProject);
+					{
+						readHeader = true;
+						
+						for (int i = 0; i< lina.length; i++)
+						{
+							header.put(lina[i], i);
+						}
+					}
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -256,7 +312,6 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 	 * @generated not
 	 */
 	public EList<String> readExamples() {
-		
 		
 		EList<String> examples = new BasicEList<String>();
 		if (getLocator() == null)
@@ -414,6 +469,23 @@ public class ExamplesImpl extends EObjectImpl implements Examples {
 				return fromJar != FROM_JAR_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ExamplePackage.EXAMPLES___READ_EXAMPLES:
+				return readExamples();
+			case ExamplePackage.EXAMPLES___READ_REPOSITORY:
+				readRepository();
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

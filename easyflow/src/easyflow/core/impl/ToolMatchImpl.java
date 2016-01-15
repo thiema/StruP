@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -66,7 +65,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
+public class ToolMatchImpl extends MinimalEObjectImpl.Container implements ToolMatch {
 	
 	//i-number of matching input ports
 	//o-              output ports
@@ -1144,6 +1143,31 @@ public class ToolMatchImpl extends EObjectImpl implements ToolMatch {
 				return valid != VALID_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.TOOL_MATCH___COMPUTE_SCORE__EMAP:
+				return computeScore((EMap<String, String>)arguments.get(0));
+			case CorePackage.TOOL_MATCH___COMPUTE_EXPECTED_SCORE:
+				return computeExpectedScore();
+			case CorePackage.TOOL_MATCH___VALIDATE_DATA_PORTS__ELIST_ELIST:
+				return validateDataPorts((EList<DataPort>)arguments.get(0), (EList<Pattern>)arguments.get(1));
+			case CorePackage.TOOL_MATCH___RESOLVE_REVERSE_MISSING_IN_DATA_PORTS__ELIST:
+				return resolveReverseMissingInDataPorts((EList<Task>)arguments.get(0));
+			case CorePackage.TOOL_MATCH___RESOLVE_REVERSE_MISSING_OUT_DATA_PORTS__ELIST:
+				return resolveReverseMissingOutDataPorts((EList<Task>)arguments.get(0));
+			case CorePackage.TOOL_MATCH___GET_DATA_PORT_PROVIDING_TASKS__ELIST_ELIST:
+				return getDataPortProvidingTasks((EList<Task>)arguments.get(0), (EList<DataPort>)arguments.get(1));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -6,29 +6,15 @@
  */
 package easyflow.execution.pegasus.impl;
 
-import com.mxgraph.view.mxGraph.mxICellVisitor;
-import easyflow.core.Task;
-import easyflow.custom.exception.NoValidInOutDataException;
-import easyflow.custom.exception.ParameterNotFoundException;
-import easyflow.execution.DefaultExecutionSystem;
-import easyflow.execution.ExecutionPackage;
 import easyflow.execution.impl.IExecutionSystemImpl;
 import easyflow.execution.pegasus.Pegasus;
 import easyflow.execution.pegasus.PegasusPackage;
-import easyflow.tool.Rule;
-import easyflow.tool.Tool;
-import easyflow.ui.DefaultProject;
-import java.io.BufferedWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -308,6 +294,30 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 				return TRANSFORMATION_CATALOG_EDEFAULT == null ? transformationCatalog != null : !TRANSFORMATION_CATALOG_EDEFAULT.equals(transformationCatalog);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case PegasusPackage.PEGASUS___PLAN_WORKFLOW:
+				planWorkflow();
+				return null;
+			case PegasusPackage.PEGASUS___GENERATE_SITE_CATALOG:
+				generateSiteCatalog();
+				return null;
+			case PegasusPackage.PEGASUS___GENERATE_REPLICA_CATALOG:
+				generateReplicaCatalog();
+				return null;
+			case PegasusPackage.PEGASUS___GENERATE_TRANSFORMATION_CATALOG:
+				generateTransformationCatalog();
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

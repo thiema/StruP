@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getTasks <em>Tasks</em>}</li>
  *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getReader <em>Reader</em>}</li>
+ *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
@@ -76,6 +77,32 @@ public interface DefaultWorkflowTemplate extends IWorkflowTemplate {
 	 * @generated
 	 */
 	void setReader(BufferedReader value);
+
+	/**
+	 * Returns the value of the '<em><b>Util Task Reader</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Util Task Reader</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Util Task Reader</em>' attribute.
+	 * @see #setUtilTaskReader(BufferedReader)
+	 * @see easyflow.core.CorePackage#getDefaultWorkflowTemplate_UtilTaskReader()
+	 * @model dataType="easyflow.BufferedReader"
+	 * @generated
+	 */
+	BufferedReader getUtilTaskReader();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.DefaultWorkflowTemplate#getUtilTaskReader <em>Util Task Reader</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Util Task Reader</em>' attribute.
+	 * @see #getUtilTaskReader()
+	 * @generated
+	 */
+	void setUtilTaskReader(BufferedReader value);
 
 	/**
 	 * Returns the value of the '<em><b>Logger</b></em>' attribute.

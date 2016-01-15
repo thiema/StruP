@@ -8,33 +8,26 @@ package easyflow.tool.impl;
 
 import easyflow.tool.BaseCommand;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.DefaultToolElement;
-import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
-import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 import easyflow.util.maps.MapsPackage;
-import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
 import java.net.URI;
 import java.util.Collection;
 import java.lang.reflect.InvocationTargetException;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -63,7 +56,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
+public class PackageImpl extends MinimalEObjectImpl.Container implements easyflow.tool.Package {
 	
 	Logger logger = Logger.getLogger(Package.class);
 	/**
@@ -746,6 +739,26 @@ public class PackageImpl extends EObjectImpl implements easyflow.tool.Package {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.PACKAGE___GET_INTERPRETER:
+				return getInterpreter();
+			case ToolPackage.PACKAGE___GET_EXE:
+				return getExe();
+			case ToolPackage.PACKAGE___GET_INTERPRETER_PARAMS:
+				return getInterpreterParams();
+			case ToolPackage.PACKAGE___RENDER_TO_STRING:
+				return renderToString();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -8,6 +8,7 @@ package easyflow.data;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -158,6 +159,123 @@ public interface DataPackage extends EPackage {
 	 * @ordered
 	 */
 	int DATA_PORT_FEATURE_COUNT = 9;
+
+	/**
+	 * The operation id for the '<em>Is Compatible</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE__DATAPORT = 0;
+
+	/**
+	 * The operation id for the '<em>Remove Data Port From</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___REMOVE_DATA_PORT_FROM__ELIST = 1;
+
+	/**
+	 * The operation id for the '<em>Get Format</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___GET_FORMAT = 2;
+
+	/**
+	 * The operation id for the '<em>Matches</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___MATCHES__DATAFORMAT = 3;
+
+	/**
+	 * The operation id for the '<em>Is Compatible Str</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE_STR__ELIST_BOOLEAN = 4;
+
+	/**
+	 * The operation id for the '<em>Is Compatible Str</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE_STR__ELIST = 5;
+
+	/**
+	 * The operation id for the '<em>Is Compatible</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE__ELIST_BOOLEAN = 6;
+
+	/**
+	 * The operation id for the '<em>Is Compatible</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE__ELIST = 7;
+
+	/**
+	 * The operation id for the '<em>Is Compatible</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE__STRING = 8;
+
+	/**
+	 * The operation id for the '<em>Is Compatible</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___IS_COMPATIBLE__DATAFORMAT = 9;
+
+	/**
+	 * The operation id for the '<em>Set Format</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___SET_FORMAT__STRING = 10;
+
+	/**
+	 * The operation id for the '<em>Set Formats</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT___SET_FORMATS__ELIST = 11;
+
+	/**
+	 * The number of operations of the '<em>Port</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_PORT_OPERATION_COUNT = 12;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataLinkImpl <em>Link</em>}' class.
@@ -341,6 +459,78 @@ public interface DataPackage extends EPackage {
 	int DATA_LINK_FEATURE_COUNT = 18;
 
 	/**
+	 * The operation id for the '<em>Is Unconditional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___IS_UNCONDITIONAL = 0;
+
+	/**
+	 * The operation id for the '<em>Get Unique String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___GET_UNIQUE_STRING__STRING_STRING_STRING = 1;
+
+	/**
+	 * The operation id for the '<em>Get Unique String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___GET_UNIQUE_STRING = 2;
+
+	/**
+	 * The operation id for the '<em>Get Unique String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___GET_UNIQUE_STRING__BOOLEAN = 3;
+
+	/**
+	 * The operation id for the '<em>Get Format</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___GET_FORMAT = 4;
+
+	/**
+	 * The operation id for the '<em>Is Pipeable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___IS_PIPEABLE = 5;
+
+	/**
+	 * The operation id for the '<em>Get Matching Data For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK___GET_MATCHING_DATA_FOR__ELIST_ELIST_BOOLEAN = 6;
+
+	/**
+	 * The number of operations of the '<em>Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK_OPERATION_COUNT = 7;
+
+	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataImpl <em>Data</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -432,6 +622,105 @@ public interface DataPackage extends EPackage {
 	int DATA_FEATURE_COUNT = 8;
 
 	/**
+	 * The operation id for the '<em>Get Format</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___GET_FORMAT = 0;
+
+	/**
+	 * The operation id for the '<em>Get Format Str</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___GET_FORMAT_STR = 1;
+
+	/**
+	 * The operation id for the '<em>Is Allowed</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___IS_ALLOWED = 2;
+
+	/**
+	 * The operation id for the '<em>Get Supported Handles</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___GET_SUPPORTED_HANDLES = 3;
+
+	/**
+	 * The operation id for the '<em>Match</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___MATCH__DATA = 4;
+
+	/**
+	 * The operation id for the '<em>Match Format</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___MATCH_FORMAT__DATAFORMAT = 5;
+
+	/**
+	 * The operation id for the '<em>Resolve Handle</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___RESOLVE_HANDLE__DATA = 6;
+
+	/**
+	 * The operation id for the '<em>Resolve Handle</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___RESOLVE_HANDLE__STRING = 7;
+
+	/**
+	 * The operation id for the '<em>Resolve Supported Handles</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___RESOLVE_SUPPORTED_HANDLES = 8;
+
+	/**
+	 * The operation id for the '<em>Is Pipable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA___IS_PIPABLE = 9;
+
+	/**
+	 * The number of operations of the '<em>Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_OPERATION_COUNT = 10;
+
+	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -468,6 +757,33 @@ public interface DataPackage extends EPackage {
 	 */
 	int DATA_FORMAT_FEATURE_COUNT = 2;
 
+
+	/**
+	 * The operation id for the '<em>Match</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_FORMAT___MATCH__DATAFORMAT = 0;
+
+	/**
+	 * The operation id for the '<em>Render As File Extension</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_FORMAT___RENDER_AS_FILE_EXTENSION = 1;
+
+	/**
+	 * The number of operations of the '<em>Format</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_FORMAT_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.data.impl.DataMatchImpl <em>Match</em>}' class.
@@ -514,6 +830,34 @@ public interface DataPackage extends EPackage {
 	 * @ordered
 	 */
 	int DATA_MATCH_FEATURE_COUNT = 3;
+
+
+	/**
+	 * The operation id for the '<em>Compute Score</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH___COMPUTE_SCORE__EMAP = 0;
+
+	/**
+	 * The operation id for the '<em>Is Pipable</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH___IS_PIPABLE = 1;
+
+	/**
+	 * The number of operations of the '<em>Match</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_MATCH_OPERATION_COUNT = 2;
 
 
 	/**
@@ -624,6 +968,126 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDataPort_ParameterName();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatible(easyflow.data.DataPort) <em>Is Compatible</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatible(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatible__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#removeDataPortFrom(org.eclipse.emf.common.util.EList) <em>Remove Data Port From</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Remove Data Port From</em>' operation.
+	 * @see easyflow.data.DataPort#removeDataPortFrom(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getDataPort__RemoveDataPortFrom__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#getFormat() <em>Get Format</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Format</em>' operation.
+	 * @see easyflow.data.DataPort#getFormat()
+	 * @generated
+	 */
+	EOperation getDataPort__GetFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#matches(easyflow.data.DataFormat) <em>Matches</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Matches</em>' operation.
+	 * @see easyflow.data.DataPort#matches(easyflow.data.DataFormat)
+	 * @generated
+	 */
+	EOperation getDataPort__Matches__DataFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatibleStr(org.eclipse.emf.common.util.EList, boolean) <em>Is Compatible Str</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible Str</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatibleStr(org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatibleStr__EList_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatibleStr(org.eclipse.emf.common.util.EList) <em>Is Compatible Str</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible Str</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatibleStr(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatibleStr__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatible(org.eclipse.emf.common.util.EList, boolean) <em>Is Compatible</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatible(org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatible__EList_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatible(org.eclipse.emf.common.util.EList) <em>Is Compatible</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatible(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatible__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatible(java.lang.String) <em>Is Compatible</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatible(java.lang.String)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatible__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#isCompatible(easyflow.data.DataFormat) <em>Is Compatible</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible</em>' operation.
+	 * @see easyflow.data.DataPort#isCompatible(easyflow.data.DataFormat)
+	 * @generated
+	 */
+	EOperation getDataPort__IsCompatible__DataFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#setFormat(java.lang.String) <em>Set Format</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Format</em>' operation.
+	 * @see easyflow.data.DataPort#setFormat(java.lang.String)
+	 * @generated
+	 */
+	EOperation getDataPort__SetFormat__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataPort#setFormats(org.eclipse.emf.common.util.EList) <em>Set Formats</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Formats</em>' operation.
+	 * @see easyflow.data.DataPort#setFormats(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getDataPort__SetFormats__EList();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataLink <em>Link</em>}'.
@@ -801,6 +1265,76 @@ public interface DataPackage extends EPackage {
 	EAttribute getDataLink_Pipe();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#isUnconditional() <em>Is Unconditional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Unconditional</em>' operation.
+	 * @see easyflow.data.DataLink#isUnconditional()
+	 * @generated
+	 */
+	EOperation getDataLink__IsUnconditional();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#getUniqueString(java.lang.String, java.lang.String, java.lang.String) <em>Get Unique String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique String</em>' operation.
+	 * @see easyflow.data.DataLink#getUniqueString(java.lang.String, java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getDataLink__GetUniqueString__String_String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#getUniqueString() <em>Get Unique String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique String</em>' operation.
+	 * @see easyflow.data.DataLink#getUniqueString()
+	 * @generated
+	 */
+	EOperation getDataLink__GetUniqueString();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#getUniqueString(boolean) <em>Get Unique String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique String</em>' operation.
+	 * @see easyflow.data.DataLink#getUniqueString(boolean)
+	 * @generated
+	 */
+	EOperation getDataLink__GetUniqueString__boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#getFormat() <em>Get Format</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Format</em>' operation.
+	 * @see easyflow.data.DataLink#getFormat()
+	 * @generated
+	 */
+	EOperation getDataLink__GetFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#isPipeable() <em>Is Pipeable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Pipeable</em>' operation.
+	 * @see easyflow.data.DataLink#isPipeable()
+	 * @generated
+	 */
+	EOperation getDataLink__IsPipeable();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataLink#getMatchingDataFor(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList, boolean) <em>Get Matching Data For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Matching Data For</em>' operation.
+	 * @see easyflow.data.DataLink#getMatchingDataFor(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getDataLink__GetMatchingDataFor__EList_EList_boolean();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#getParamStr <em>Param Str</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -932,6 +1466,106 @@ public interface DataPackage extends EPackage {
 	EAttribute getData_Handle();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#getFormat() <em>Get Format</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Format</em>' operation.
+	 * @see easyflow.data.Data#getFormat()
+	 * @generated
+	 */
+	EOperation getData__GetFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#getFormatStr() <em>Get Format Str</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Format Str</em>' operation.
+	 * @see easyflow.data.Data#getFormatStr()
+	 * @generated
+	 */
+	EOperation getData__GetFormatStr();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#isAllowed() <em>Is Allowed</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Allowed</em>' operation.
+	 * @see easyflow.data.Data#isAllowed()
+	 * @generated
+	 */
+	EOperation getData__IsAllowed();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#getSupportedHandles() <em>Get Supported Handles</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Supported Handles</em>' operation.
+	 * @see easyflow.data.Data#getSupportedHandles()
+	 * @generated
+	 */
+	EOperation getData__GetSupportedHandles();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#match(easyflow.data.Data) <em>Match</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Match</em>' operation.
+	 * @see easyflow.data.Data#match(easyflow.data.Data)
+	 * @generated
+	 */
+	EOperation getData__Match__Data();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#matchFormat(easyflow.data.DataFormat) <em>Match Format</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Match Format</em>' operation.
+	 * @see easyflow.data.Data#matchFormat(easyflow.data.DataFormat)
+	 * @generated
+	 */
+	EOperation getData__MatchFormat__DataFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#resolveHandle(easyflow.data.Data) <em>Resolve Handle</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Handle</em>' operation.
+	 * @see easyflow.data.Data#resolveHandle(easyflow.data.Data)
+	 * @generated
+	 */
+	EOperation getData__ResolveHandle__Data();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#resolveHandle(java.lang.String) <em>Resolve Handle</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Handle</em>' operation.
+	 * @see easyflow.data.Data#resolveHandle(java.lang.String)
+	 * @generated
+	 */
+	EOperation getData__ResolveHandle__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#resolveSupportedHandles() <em>Resolve Supported Handles</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Supported Handles</em>' operation.
+	 * @see easyflow.data.Data#resolveSupportedHandles()
+	 * @generated
+	 */
+	EOperation getData__ResolveSupportedHandles();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.Data#isPipable() <em>Is Pipable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Pipable</em>' operation.
+	 * @see easyflow.data.Data#isPipable()
+	 * @generated
+	 */
+	EOperation getData__IsPipable();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataFormat <em>Format</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -962,6 +1596,26 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDataFormat_Description();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataFormat#match(easyflow.data.DataFormat) <em>Match</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Match</em>' operation.
+	 * @see easyflow.data.DataFormat#match(easyflow.data.DataFormat)
+	 * @generated
+	 */
+	EOperation getDataFormat__Match__DataFormat();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataFormat#renderAsFileExtension() <em>Render As File Extension</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Render As File Extension</em>' operation.
+	 * @see easyflow.data.DataFormat#renderAsFileExtension()
+	 * @generated
+	 */
+	EOperation getDataFormat__RenderAsFileExtension();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.data.DataMatch <em>Match</em>}'.
@@ -1005,6 +1659,26 @@ public interface DataPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDataMatch_Score();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataMatch#computeScore(org.eclipse.emf.common.util.EMap) <em>Compute Score</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Compute Score</em>' operation.
+	 * @see easyflow.data.DataMatch#computeScore(org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getDataMatch__ComputeScore__EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.data.DataMatch#isPipable() <em>Is Pipable</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Pipable</em>' operation.
+	 * @see easyflow.data.DataMatch#isPipable()
+	 * @generated
+	 */
+	EOperation getDataMatch__IsPipable();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1109,6 +1783,102 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_PORT__PARAMETER_NAME = eINSTANCE.getDataPort_ParameterName();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE__DATAPORT = eINSTANCE.getDataPort__IsCompatible__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Remove Data Port From</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___REMOVE_DATA_PORT_FROM__ELIST = eINSTANCE.getDataPort__RemoveDataPortFrom__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Format</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___GET_FORMAT = eINSTANCE.getDataPort__GetFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Matches</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___MATCHES__DATAFORMAT = eINSTANCE.getDataPort__Matches__DataFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible Str</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE_STR__ELIST_BOOLEAN = eINSTANCE.getDataPort__IsCompatibleStr__EList_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible Str</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE_STR__ELIST = eINSTANCE.getDataPort__IsCompatibleStr__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE__ELIST_BOOLEAN = eINSTANCE.getDataPort__IsCompatible__EList_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE__ELIST = eINSTANCE.getDataPort__IsCompatible__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE__STRING = eINSTANCE.getDataPort__IsCompatible__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___IS_COMPATIBLE__DATAFORMAT = eINSTANCE.getDataPort__IsCompatible__DataFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Format</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___SET_FORMAT__STRING = eINSTANCE.getDataPort__SetFormat__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Formats</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_PORT___SET_FORMATS__ELIST = eINSTANCE.getDataPort__SetFormats__EList();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataLinkImpl <em>Link</em>}' class.
@@ -1241,6 +2011,62 @@ public interface DataPackage extends EPackage {
 		EAttribute DATA_LINK__PIPE = eINSTANCE.getDataLink_Pipe();
 
 		/**
+		 * The meta object literal for the '<em><b>Is Unconditional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___IS_UNCONDITIONAL = eINSTANCE.getDataLink__IsUnconditional();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___GET_UNIQUE_STRING__STRING_STRING_STRING = eINSTANCE.getDataLink__GetUniqueString__String_String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___GET_UNIQUE_STRING = eINSTANCE.getDataLink__GetUniqueString();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___GET_UNIQUE_STRING__BOOLEAN = eINSTANCE.getDataLink__GetUniqueString__boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Format</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___GET_FORMAT = eINSTANCE.getDataLink__GetFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Pipeable</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___IS_PIPEABLE = eINSTANCE.getDataLink__IsPipeable();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Matching Data For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_LINK___GET_MATCHING_DATA_FOR__ELIST_ELIST_BOOLEAN = eINSTANCE.getDataLink__GetMatchingDataFor__EList_EList_boolean();
+
+		/**
 		 * The meta object literal for the '<em><b>Param Str</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1339,6 +2165,86 @@ public interface DataPackage extends EPackage {
 		EAttribute DATA__HANDLE = eINSTANCE.getData_Handle();
 
 		/**
+		 * The meta object literal for the '<em><b>Get Format</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___GET_FORMAT = eINSTANCE.getData__GetFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Format Str</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___GET_FORMAT_STR = eINSTANCE.getData__GetFormatStr();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Allowed</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___IS_ALLOWED = eINSTANCE.getData__IsAllowed();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Supported Handles</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___GET_SUPPORTED_HANDLES = eINSTANCE.getData__GetSupportedHandles();
+
+		/**
+		 * The meta object literal for the '<em><b>Match</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___MATCH__DATA = eINSTANCE.getData__Match__Data();
+
+		/**
+		 * The meta object literal for the '<em><b>Match Format</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___MATCH_FORMAT__DATAFORMAT = eINSTANCE.getData__MatchFormat__DataFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Handle</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___RESOLVE_HANDLE__DATA = eINSTANCE.getData__ResolveHandle__Data();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Handle</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___RESOLVE_HANDLE__STRING = eINSTANCE.getData__ResolveHandle__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Supported Handles</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___RESOLVE_SUPPORTED_HANDLES = eINSTANCE.getData__ResolveSupportedHandles();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Pipable</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA___IS_PIPABLE = eINSTANCE.getData__IsPipable();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataFormatImpl <em>Format</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1363,6 +2269,22 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_FORMAT__DESCRIPTION = eINSTANCE.getDataFormat_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Match</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_FORMAT___MATCH__DATAFORMAT = eINSTANCE.getDataFormat__Match__DataFormat();
+
+		/**
+		 * The meta object literal for the '<em><b>Render As File Extension</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_FORMAT___RENDER_AS_FILE_EXTENSION = eINSTANCE.getDataFormat__RenderAsFileExtension();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.data.impl.DataMatchImpl <em>Match</em>}' class.
@@ -1397,6 +2319,22 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_MATCH__SCORE = eINSTANCE.getDataMatch_Score();
+
+		/**
+		 * The meta object literal for the '<em><b>Compute Score</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_MATCH___COMPUTE_SCORE__EMAP = eINSTANCE.getDataMatch__ComputeScore__EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Pipable</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DATA_MATCH___IS_PIPABLE = eINSTANCE.getDataMatch__IsPipable();
 
 	}
 

@@ -80,6 +80,132 @@ public interface MetadataPackage extends EPackage {
 	int IMETA_DATA_FEATURE_COUNT = 0;
 
 	/**
+	 * The operation id for the '<em>Init Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___INIT_META_DATA = 0;
+
+	/**
+	 * The operation id for the '<em>Read Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___READ_META_DATA = 1;
+
+	/**
+	 * The operation id for the '<em>Get Instances</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_INSTANCES__GROUPINGINSTANCE_STRING = 2;
+
+	/**
+	 * The operation id for the '<em>Get Instances</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_INSTANCES__STRING_STRING_STRING = 3;
+
+	/**
+	 * The operation id for the '<em>Get Instances For Records</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_INSTANCES_FOR_RECORDS__STRING_ELIST = 4;
+
+	/**
+	 * The operation id for the '<em>Get Value For Grouping Instance</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_VALUE_FOR_GROUPING_INSTANCE__GROUPINGINSTANCE_STRING = 5;
+
+	/**
+	 * The operation id for the '<em>Get Records By</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_RECORDS_BY__STRING_STRING = 6;
+
+	/**
+	 * The operation id for the '<em>Get Record</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_RECORD__GROUPINGINSTANCE = 7;
+
+	/**
+	 * The operation id for the '<em>Get Record</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_RECORD__TRAVERSALCHUNK = 8;
+
+	/**
+	 * The operation id for the '<em>Get Row</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_ROW__STRING = 9;
+
+	/**
+	 * The operation id for the '<em>Get Column</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___GET_COLUMN__STRING = 10;
+
+	/**
+	 * The operation id for the '<em>Contains Column</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___CONTAINS_COLUMN__STRING = 11;
+
+	/**
+	 * The operation id for the '<em>Contains Row</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___CONTAINS_ROW__STRING = 12;
+
+	/**
+	 * The number of operations of the '<em>IMeta Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA_OPERATION_COUNT = 13;
+
+	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.DefaultMetaDataImpl <em>Default Meta Data</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -153,6 +279,132 @@ public interface MetadataPackage extends EPackage {
 	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 6;
 
 	/**
+	 * The operation id for the '<em>Init Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___INIT_META_DATA = IMETA_DATA___INIT_META_DATA;
+
+	/**
+	 * The operation id for the '<em>Read Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___READ_META_DATA = IMETA_DATA___READ_META_DATA;
+
+	/**
+	 * The operation id for the '<em>Get Instances</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_INSTANCES__GROUPINGINSTANCE_STRING = IMETA_DATA___GET_INSTANCES__GROUPINGINSTANCE_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Instances</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_INSTANCES__STRING_STRING_STRING = IMETA_DATA___GET_INSTANCES__STRING_STRING_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Instances For Records</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_INSTANCES_FOR_RECORDS__STRING_ELIST = IMETA_DATA___GET_INSTANCES_FOR_RECORDS__STRING_ELIST;
+
+	/**
+	 * The operation id for the '<em>Get Value For Grouping Instance</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_VALUE_FOR_GROUPING_INSTANCE__GROUPINGINSTANCE_STRING = IMETA_DATA___GET_VALUE_FOR_GROUPING_INSTANCE__GROUPINGINSTANCE_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Records By</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_RECORDS_BY__STRING_STRING = IMETA_DATA___GET_RECORDS_BY__STRING_STRING;
+
+	/**
+	 * The operation id for the '<em>Get Record</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_RECORD__GROUPINGINSTANCE = IMETA_DATA___GET_RECORD__GROUPINGINSTANCE;
+
+	/**
+	 * The operation id for the '<em>Get Record</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_RECORD__TRAVERSALCHUNK = IMETA_DATA___GET_RECORD__TRAVERSALCHUNK;
+
+	/**
+	 * The operation id for the '<em>Get Row</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_ROW__STRING = IMETA_DATA___GET_ROW__STRING;
+
+	/**
+	 * The operation id for the '<em>Get Column</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___GET_COLUMN__STRING = IMETA_DATA___GET_COLUMN__STRING;
+
+	/**
+	 * The operation id for the '<em>Contains Column</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___CONTAINS_COLUMN__STRING = IMETA_DATA___CONTAINS_COLUMN__STRING;
+
+	/**
+	 * The operation id for the '<em>Contains Row</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___CONTAINS_ROW__STRING = IMETA_DATA___CONTAINS_ROW__STRING;
+
+	/**
+	 * The number of operations of the '<em>Default Meta Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA_OPERATION_COUNT = IMETA_DATA_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -170,6 +422,24 @@ public interface MetadataPackage extends EPackage {
 	 * @ordered
 	 */
 	int IPROJECT_META_DATA_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Read Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT_META_DATA___READ_META_DATA = 0;
+
+	/**
+	 * The number of operations of the '<em>IProject Meta Data</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT_META_DATA_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.GroupingImpl <em>Grouping</em>}' class.
@@ -207,6 +477,15 @@ public interface MetadataPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUPING_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Grouping</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.GroupingInstanceImpl <em>Grouping Instance</em>}' class.
@@ -282,6 +561,33 @@ public interface MetadataPackage extends EPackage {
 	int GROUPING_INSTANCE_FEATURE_COUNT = 6;
 
 	/**
+	 * The operation id for the '<em>Get Overlapping Records</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE___GET_OVERLAPPING_RECORDS__ELIST = 0;
+
+	/**
+	 * The operation id for the '<em>As Traversal Chunk</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE___AS_TRAVERSAL_CHUNK = 1;
+
+	/**
+	 * The number of operations of the '<em>Grouping Instance</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE_OPERATION_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -319,6 +625,15 @@ public interface MetadataPackage extends EPackage {
 	int GROUPING_FEATURE_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Grouping Feature</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_FEATURE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.GroupingInstanceListImpl <em>Grouping Instance List</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -348,6 +663,16 @@ public interface MetadataPackage extends EPackage {
 
 
 	/**
+	 * The number of operations of the '<em>Grouping Instance List</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPING_INSTANCE_LIST_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.IMetaData <em>IMeta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -356,6 +681,136 @@ public interface MetadataPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIMetaData();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#initMetaData() <em>Init Meta Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Meta Data</em>' operation.
+	 * @see easyflow.metadata.IMetaData#initMetaData()
+	 * @generated
+	 */
+	EOperation getIMetaData__InitMetaData();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#readMetaData() <em>Read Meta Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Meta Data</em>' operation.
+	 * @see easyflow.metadata.IMetaData#readMetaData()
+	 * @generated
+	 */
+	EOperation getIMetaData__ReadMetaData();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getInstances(easyflow.metadata.GroupingInstance, java.lang.String) <em>Get Instances</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Instances</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getInstances(easyflow.metadata.GroupingInstance, java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetInstances__GroupingInstance_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getInstances(java.lang.String, java.lang.String, java.lang.String) <em>Get Instances</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Instances</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getInstances(java.lang.String, java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetInstances__String_String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getInstancesForRecords(java.lang.String, org.eclipse.emf.common.util.EList) <em>Get Instances For Records</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Instances For Records</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getInstancesForRecords(java.lang.String, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetInstancesForRecords__String_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getValueForGroupingInstance(easyflow.metadata.GroupingInstance, java.lang.String) <em>Get Value For Grouping Instance</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Value For Grouping Instance</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getValueForGroupingInstance(easyflow.metadata.GroupingInstance, java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetValueForGroupingInstance__GroupingInstance_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getRecordsBy(java.lang.String, java.lang.String) <em>Get Records By</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Records By</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getRecordsBy(java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetRecordsBy__String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getRecord(easyflow.metadata.GroupingInstance) <em>Get Record</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Record</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getRecord(easyflow.metadata.GroupingInstance)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetRecord__GroupingInstance();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getRecord(easyflow.traversal.TraversalChunk) <em>Get Record</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Record</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getRecord(easyflow.traversal.TraversalChunk)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetRecord__TraversalChunk();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getRow(java.lang.String) <em>Get Row</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Row</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getRow(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetRow__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#getColumn(java.lang.String) <em>Get Column</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Column</em>' operation.
+	 * @see easyflow.metadata.IMetaData#getColumn(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__GetColumn__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#containsColumn(java.lang.String) <em>Contains Column</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Contains Column</em>' operation.
+	 * @see easyflow.metadata.IMetaData#containsColumn(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__ContainsColumn__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#containsRow(java.lang.String) <em>Contains Row</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Contains Row</em>' operation.
+	 * @see easyflow.metadata.IMetaData#containsRow(java.lang.String)
+	 * @generated
+	 */
+	EOperation getIMetaData__ContainsRow__String();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.DefaultMetaData <em>Default Meta Data</em>}'.
@@ -442,6 +897,16 @@ public interface MetadataPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIProjectMetaData();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IProjectMetaData#readMetaData() <em>Read Meta Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Meta Data</em>' operation.
+	 * @see easyflow.metadata.IProjectMetaData#readMetaData()
+	 * @generated
+	 */
+	EOperation getIProjectMetaData__ReadMetaData();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.Grouping <em>Grouping</em>}'.
@@ -552,6 +1017,26 @@ public interface MetadataPackage extends EPackage {
 	EReference getGroupingInstance_TraversalChunk();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.GroupingInstance#getOverlappingRecords(org.eclipse.emf.common.util.EList) <em>Get Overlapping Records</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Overlapping Records</em>' operation.
+	 * @see easyflow.metadata.GroupingInstance#getOverlappingRecords(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getGroupingInstance__GetOverlappingRecords__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.GroupingInstance#asTraversalChunk() <em>As Traversal Chunk</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>As Traversal Chunk</em>' operation.
+	 * @see easyflow.metadata.GroupingInstance#asTraversalChunk()
+	 * @generated
+	 */
+	EOperation getGroupingInstance__AsTraversalChunk();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.GroupingFeature <em>Grouping Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -637,6 +1122,110 @@ public interface MetadataPackage extends EPackage {
 		EClass IMETA_DATA = eINSTANCE.getIMetaData();
 
 		/**
+		 * The meta object literal for the '<em><b>Init Meta Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___INIT_META_DATA = eINSTANCE.getIMetaData__InitMetaData();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Meta Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___READ_META_DATA = eINSTANCE.getIMetaData__ReadMetaData();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Instances</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_INSTANCES__GROUPINGINSTANCE_STRING = eINSTANCE.getIMetaData__GetInstances__GroupingInstance_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Instances</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_INSTANCES__STRING_STRING_STRING = eINSTANCE.getIMetaData__GetInstances__String_String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Instances For Records</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_INSTANCES_FOR_RECORDS__STRING_ELIST = eINSTANCE.getIMetaData__GetInstancesForRecords__String_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Value For Grouping Instance</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_VALUE_FOR_GROUPING_INSTANCE__GROUPINGINSTANCE_STRING = eINSTANCE.getIMetaData__GetValueForGroupingInstance__GroupingInstance_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Records By</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_RECORDS_BY__STRING_STRING = eINSTANCE.getIMetaData__GetRecordsBy__String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Record</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_RECORD__GROUPINGINSTANCE = eINSTANCE.getIMetaData__GetRecord__GroupingInstance();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Record</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_RECORD__TRAVERSALCHUNK = eINSTANCE.getIMetaData__GetRecord__TraversalChunk();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Row</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_ROW__STRING = eINSTANCE.getIMetaData__GetRow__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Column</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___GET_COLUMN__STRING = eINSTANCE.getIMetaData__GetColumn__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Contains Column</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___CONTAINS_COLUMN__STRING = eINSTANCE.getIMetaData__ContainsColumn__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Contains Row</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___CONTAINS_ROW__STRING = eINSTANCE.getIMetaData__ContainsRow__String();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.metadata.impl.DefaultMetaDataImpl <em>Default Meta Data</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -703,6 +1292,14 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EClass IPROJECT_META_DATA = eINSTANCE.getIProjectMetaData();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Meta Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT_META_DATA___READ_META_DATA = eINSTANCE.getIProjectMetaData__ReadMetaData();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.impl.GroupingImpl <em>Grouping</em>}' class.
@@ -787,6 +1384,22 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference GROUPING_INSTANCE__TRAVERSAL_CHUNK = eINSTANCE.getGroupingInstance_TraversalChunk();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Overlapping Records</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation GROUPING_INSTANCE___GET_OVERLAPPING_RECORDS__ELIST = eINSTANCE.getGroupingInstance__GetOverlappingRecords__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>As Traversal Chunk</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation GROUPING_INSTANCE___AS_TRAVERSAL_CHUNK = eINSTANCE.getGroupingInstance__AsTraversalChunk();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.impl.GroupingFeatureImpl <em>Grouping Feature</em>}' class.

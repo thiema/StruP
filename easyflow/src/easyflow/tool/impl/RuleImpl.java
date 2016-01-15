@@ -15,20 +15,16 @@ import easyflow.data.DataLink;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Rule;
 import easyflow.tool.ToolPackage;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
@@ -58,7 +54,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  *
  * @generated
  */
-public class RuleImpl extends EObjectImpl implements Rule {
+public class RuleImpl extends MinimalEObjectImpl.Container implements Rule {
 	
 	protected static final Logger logger = Logger.getLogger(Rule.class);
 	/**
@@ -932,6 +928,26 @@ public class RuleImpl extends EObjectImpl implements Rule {
 				return interpreterParams != null && !interpreterParams.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.RULE___RESOLVE_COMMAND_LINE_PARTS:
+				resolveCommandLineParts();
+				return null;
+			case ToolPackage.RULE___CREATE_COMMAND_LINE:
+				return createCommandLine();
+			case ToolPackage.RULE___CLEAR:
+				clear();
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

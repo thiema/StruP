@@ -762,8 +762,8 @@ public class GlobalConfig {
 
 	public static String getWorkflowTemplateFileName()
 	{
-		if (getProjectConfig().containsKey(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME))
-			return getProjectConfig().get(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME);
+		if (getProjectConfig().containsKey(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
+			return getProjectConfig().get(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME);
 		else
 			return WORKFLOW_TEMPLATE_FILE;
 	}

@@ -9,6 +9,7 @@ package easyflow.core;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -267,6 +268,330 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int WORKFLOW_FEATURE_COUNT = 21;
+
+	/**
+	 * The operation id for the '<em>Generate Graph From Template</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP = 0;
+
+	/**
+	 * The operation id for the '<em>Get Parent Task By Out Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK = 1;
+
+	/**
+	 * The operation id for the '<em>Get Parent Tasks By Out Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT = 2;
+
+	/**
+	 * The operation id for the '<em>Validate Parent Task Out Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___VALIDATE_PARENT_TASK_OUT_DATA_PORT__DATAPORT_TASK = 3;
+
+	/**
+	 * The operation id for the '<em>Validate Last Task Out Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___VALIDATE_LAST_TASK_OUT_DATA_PORT__DATAPORT = 4;
+
+	/**
+	 * The operation id for the '<em>Read Meta Data</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___READ_META_DATA = 5;
+
+	/**
+	 * The operation id for the '<em>Get Parent Tasks For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_PARENT_TASKS_FOR__TASK = 6;
+
+	/**
+	 * The operation id for the '<em>Resolve Missing Data Ports By Tool For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RESOLVE_MISSING_DATA_PORTS_BY_TOOL_FOR__TASK = 7;
+
+	/**
+	 * The operation id for the '<em>Read Workfow Template</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___READ_WORKFOW_TEMPLATE = 8;
+
+	/**
+	 * The operation id for the '<em>Generate Abstract Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GENERATE_ABSTRACT_WORKFLOW = 9;
+
+	/**
+	 * The operation id for the '<em>Apply Grouping Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___APPLY_GROUPING_CRITERIA = 10;
+
+	/**
+	 * The operation id for the '<em>Apply Parameter Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___APPLY_PARAMETER_CRITERIA = 11;
+
+	/**
+	 * The operation id for the '<em>Apply Traversal Event</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT = 12;
+
+	/**
+	 * The operation id for the '<em>Resolve Traversal Events</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RESOLVE_TRAVERSAL_EVENTS = 13;
+
+	/**
+	 * The operation id for the '<em>Resolve Incompatible Groupings</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS = 14;
+
+	/**
+	 * The operation id for the '<em>Resolve Preprocessing Tasks</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RESOLVE_PREPROCESSING_TASKS = 15;
+
+	/**
+	 * The operation id for the '<em>Resolve Tool Dependencies</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RESOLVE_TOOL_DEPENDENCIES = 16;
+
+	/**
+	 * The operation id for the '<em>Generate Worklow For Execution System</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM = 17;
+
+	/**
+	 * The operation id for the '<em>Run Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RUN_NEXT_WORKFLOW_STEP = 18;
+
+	/**
+	 * The operation id for the '<em>Run Prev Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RUN_PREV_WORKFLOW_STEP = 19;
+
+	/**
+	 * The operation id for the '<em>Run Entire Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RUN_ENTIRE_WORKFLOW = 20;
+
+	/**
+	 * The operation id for the '<em>Has Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___HAS_NEXT_WORKFLOW_STEP = 21;
+
+	/**
+	 * The operation id for the '<em>Get Total Number Of Workflow Steps</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS = 22;
+
+	/**
+	 * The operation id for the '<em>Get Workflow Step Label For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_WORKFLOW_STEP_LABEL_FOR__STRING = 23;
+
+	/**
+	 * The operation id for the '<em>Get Workflow Step Desc For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_WORKFLOW_STEP_DESC_FOR__STRING = 24;
+
+	/**
+	 * The operation id for the '<em>Get Number Of Current Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP = 25;
+
+	/**
+	 * The operation id for the '<em>Get Next Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_NEXT_WORKFLOW_STEP = 26;
+
+	/**
+	 * The operation id for the '<em>Get Cur Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_CUR_WORKFLOW_STEP = 27;
+
+	/**
+	 * The operation id for the '<em>Delete</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___DELETE = 28;
+
+	/**
+	 * The operation id for the '<em>Reset Workflow Step</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RESET_WORKFLOW_STEP = 29;
+
+	/**
+	 * The operation id for the '<em>Print Workflow Step Msg On Start</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING = 30;
+
+	/**
+	 * The operation id for the '<em>Print Workflow Step Msg On End</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING = 31;
+
+	/**
+	 * The operation id for the '<em>Get Valid In Out Data Port Combinations</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS = 32;
+
+	/**
+	 * The operation id for the '<em>Init</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___INIT = 33;
+
+	/**
+	 * The operation id for the '<em>Render To String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___RENDER_TO_STRING = 34;
+
+	/**
+	 * The number of operations of the '<em>Workflow</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW_OPERATION_COUNT = 35;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -567,6 +892,537 @@ public interface CorePackage extends EPackage {
 	int TASK_FEATURE_COUNT = 31;
 
 	/**
+	 * The operation id for the '<em>Read Task</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___READ_TASK__STRING_STRING_ELIST = 0;
+
+	/**
+	 * The operation id for the '<em>Shall Process</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SHALL_PROCESS__ELIST_STRING = 1;
+
+	/**
+	 * The operation id for the '<em>Shall Process</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN = 2;
+
+	/**
+	 * The operation id for the '<em>Parse Data Format Field</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST = 3;
+
+	/**
+	 * The operation id for the '<em>Get Unique String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_UNIQUE_STRING = 4;
+
+	/**
+	 * The operation id for the '<em>Get Unique URI String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_UNIQUE_URI_STRING = 5;
+
+	/**
+	 * The operation id for the '<em>Is Compatible With Out Data Port For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT = 6;
+
+	/**
+	 * The operation id for the '<em>Is Compatible With In Data Port For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT = 7;
+
+	/**
+	 * The operation id for the '<em>Get Parent Task By Out Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT = 8;
+
+	/**
+	 * The operation id for the '<em>Get Non Overalpping Traversal Chunks For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK = 9;
+
+	/**
+	 * The operation id for the '<em>Read Tools</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___READ_TOOLS__ELIST = 10;
+
+	/**
+	 * The operation id for the '<em>Get Preferred Tool</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_PREFERRED_TOOL = 11;
+
+	/**
+	 * The operation id for the '<em>Get Overlapping Data Ports</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST = 12;
+
+	/**
+	 * The operation id for the '<em>Resolve Command Line Part Interpreter</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_COMMAND_LINE_PART_INTERPRETER = 13;
+
+	/**
+	 * The operation id for the '<em>Resolve Command Line Part Exe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_COMMAND_LINE_PART_EXE = 14;
+
+	/**
+	 * The operation id for the '<em>Resolve Command Line Part Analysis Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_COMMAND_LINE_PART_ANALYSIS_TYPE = 15;
+
+	/**
+	 * The operation id for the '<em>Resolve Command Line Part</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_COMMAND_LINE_PART__STRING_BOOLEAN_BOOLEAN = 16;
+
+	/**
+	 * The operation id for the '<em>Get Command Line Pattern</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_COMMAND_LINE_PATTERN = 17;
+
+	/**
+	 * The operation id for the '<em>Validate Tool</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___VALIDATE_TOOL__TOOL = 18;
+
+	/**
+	 * The operation id for the '<em>Validate Tools</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___VALIDATE_TOOLS = 19;
+
+	/**
+	 * The operation id for the '<em>Get Data Port By Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN = 20;
+
+	/**
+	 * The operation id for the '<em>Get Data Port By Name Of Format</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN = 21;
+
+	/**
+	 * The operation id for the '<em>Get Data Port By Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN = 22;
+
+	/**
+	 * The operation id for the '<em>Resolve Missing Data Ports By Tool</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST = 23;
+
+	/**
+	 * The operation id for the '<em>Get Overlapping Chunks For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING = 24;
+
+	/**
+	 * The operation id for the '<em>Get Required Groupings For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN = 25;
+
+	/**
+	 * The operation id for the '<em>Get Provided Groupings For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN = 26;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Groupings For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT = 27;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = 28;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = 29;
+
+	/**
+	 * The operation id for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 30;
+
+	/**
+	 * The operation id for the '<em>Can Process Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = 31;
+
+	/**
+	 * The operation id for the '<em>Can Process Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = 32;
+
+	/**
+	 * The operation id for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 33;
+
+	/**
+	 * The operation id for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 34;
+
+	/**
+	 * The operation id for the '<em>Set Process Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = 35;
+
+	/**
+	 * The operation id for the '<em>Set Process Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = 36;
+
+	/**
+	 * The operation id for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 37;
+
+	/**
+	 * The operation id for the '<em>Set Provide Multiple Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = 38;
+
+	/**
+	 * The operation id for the '<em>Set Provide Multiple Inputs For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = 39;
+
+	/**
+	 * The operation id for the '<em>Can Filter Instances For</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT = 40;
+
+	/**
+	 * The operation id for the '<em>Get Records</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_RECORDS__BOOLEAN = 41;
+
+	/**
+	 * The operation id for the '<em>Get Inputs</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_INPUTS__BOOLEAN = 42;
+
+	/**
+	 * The operation id for the '<em>Get Overlapping Records Provided By</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK = 43;
+
+	/**
+	 * The operation id for the '<em>Can Provide Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = 44;
+
+	/**
+	 * The operation id for the '<em>Can Comsume Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = 45;
+
+	/**
+	 * The operation id for the '<em>Get Outputs For Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT = 46;
+
+	/**
+	 * The operation id for the '<em>Get Inputs For Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT = 47;
+
+	/**
+	 * The operation id for the '<em>Resolve Params</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_PARAMS = 48;
+
+	/**
+	 * The operation id for the '<em>Is Identity Transformation</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___IS_IDENTITY_TRANSFORMATION = 49;
+
+	/**
+	 * The operation id for the '<em>Is Identity Transformation</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___IS_IDENTITY_TRANSFORMATION__DATAPORT = 50;
+
+	/**
+	 * The operation id for the '<em>Resolve Conditional Static Param</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_CONDITIONAL_STATIC_PARAM__RESOLVEDPARAM = 51;
+
+	/**
+	 * The operation id for the '<em>Read From Pipe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___READ_FROM_PIPE = 52;
+
+	/**
+	 * The operation id for the '<em>Write To Pipe</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___WRITE_TO_PIPE = 53;
+
+	/**
+	 * The operation id for the '<em>Create Rule</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CREATE_RULE = 54;
+
+	/**
+	 * The operation id for the '<em>Retrieve Data Port</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RETRIEVE_DATA_PORT__BOOLEAN_INT = 55;
+
+	/**
+	 * The operation id for the '<em>Resolve Data Port Params</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_DATA_PORT_PARAMS__EMAP_TOOL_BOOLEAN = 56;
+
+	/**
+	 * The operation id for the '<em>Resolve Static Params</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___RESOLVE_STATIC_PARAMS__EMAP = 57;
+
+	/**
+	 * The number of operations of the '<em>Task</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_OPERATION_COUNT = 58;
+
+	/**
 	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -620,6 +1476,15 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int PREPROCESSING_TASK_FEATURE_COUNT = 4;
+
+	/**
+	 * The number of operations of the '<em>Preprocessing Task</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TASK_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ToolMatchImpl <em>Tool Match</em>}' class.
@@ -758,6 +1623,69 @@ public interface CorePackage extends EPackage {
 	int TOOL_MATCH_FEATURE_COUNT = 13;
 
 	/**
+	 * The operation id for the '<em>Compute Score</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH___COMPUTE_SCORE__EMAP = 0;
+
+	/**
+	 * The operation id for the '<em>Compute Expected Score</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH___COMPUTE_EXPECTED_SCORE = 1;
+
+	/**
+	 * The operation id for the '<em>Validate Data Ports</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH___VALIDATE_DATA_PORTS__ELIST_ELIST = 2;
+
+	/**
+	 * The operation id for the '<em>Resolve Reverse Missing In Data Ports</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH___RESOLVE_REVERSE_MISSING_IN_DATA_PORTS__ELIST = 3;
+
+	/**
+	 * The operation id for the '<em>Resolve Reverse Missing Out Data Ports</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH___RESOLVE_REVERSE_MISSING_OUT_DATA_PORTS__ELIST = 4;
+
+	/**
+	 * The operation id for the '<em>Get Data Port Providing Tasks</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH___GET_DATA_PORT_PROVIDING_TASKS__ELIST_ELIST = 5;
+
+	/**
+	 * The number of operations of the '<em>Tool Match</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MATCH_OPERATION_COUNT = 6;
+
+	/**
 	 * The meta object id for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -775,6 +1703,24 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int IWORKFLOW_TEMPLATE_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Read Template</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST = 0;
+
+	/**
+	 * The number of operations of the '<em>IWorkflow Template</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IWORKFLOW_TEMPLATE_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.DefaultWorkflowTemplateImpl <em>Default Workflow Template</em>}' class.
@@ -805,13 +1751,22 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_WORKFLOW_TEMPLATE__READER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Util Task Reader</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 2;
+	int DEFAULT_WORKFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Default Workflow Template</em>' class.
@@ -820,7 +1775,25 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
+	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Read Template</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST = IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST;
+
+	/**
+	 * The number of operations of the '<em>Default Workflow Template</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE_OPERATION_COUNT = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
@@ -851,13 +1824,22 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TEMPLATE__READER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Util Task Reader</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE__UTIL_TASK_READER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 2;
+	int EASYFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Easyflow Template</em>' class.
@@ -866,7 +1848,25 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
+	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Read Template</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST = IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST;
+
+	/**
+	 * The number of operations of the '<em>Easyflow Template</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE_OPERATION_COUNT = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.ITaskReader <em>ITask Reader</em>}' class.
@@ -886,6 +1886,24 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int ITASK_READER_FEATURE_COUNT = 0;
+
+	/**
+	 * The operation id for the '<em>Read Task</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITASK_READER___READ_TASK = 0;
+
+	/**
+	 * The number of operations of the '<em>ITask Reader</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITASK_READER_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.
@@ -916,6 +1934,24 @@ public interface CorePackage extends EPackage {
 	int GALAXY_TASK_READER_FEATURE_COUNT = ITASK_READER_FEATURE_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Read Task</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GALAXY_TASK_READER___READ_TASK = ITASK_READER___READ_TASK;
+
+	/**
+	 * The number of operations of the '<em>Galaxy Task Reader</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GALAXY_TASK_READER_OPERATION_COUNT = ITASK_READER_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link easyflow.core.impl.DefaultRecordImpl <em>Default Record</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -944,6 +1980,15 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_RECORD_FEATURE_COUNT = 1;
 
 	/**
+	 * The number of operations of the '<em>Default Record</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_RECORD_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link easyflow.core.impl.CatalogImpl <em>Catalog</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -970,6 +2015,15 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int CATALOG_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Catalog</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATALOG_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ParentTaskResultImpl <em>Parent Task Result</em>}' class.
@@ -1045,6 +2099,15 @@ public interface CorePackage extends EPackage {
 	int PARENT_TASK_RESULT_FEATURE_COUNT = 6;
 
 	/**
+	 * The number of operations of the '<em>Parent Task Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ConditionImpl <em>Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1081,6 +2144,24 @@ public interface CorePackage extends EPackage {
 	 */
 	int CONDITION_FEATURE_COUNT = 2;
 
+
+	/**
+	 * The operation id for the '<em>Is Unconditional</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION___IS_UNCONDITIONAL = 0;
+
+	/**
+	 * The number of operations of the '<em>Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.ErrorControlImpl <em>Error Control</em>}' class.
@@ -1163,6 +2244,24 @@ public interface CorePackage extends EPackage {
 	 * @ordered
 	 */
 	int ERROR_CONTROL_FEATURE_COUNT = 7;
+
+	/**
+	 * The operation id for the '<em>Generate Description</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL___GENERATE_DESCRIPTION = 0;
+
+	/**
+	 * The number of operations of the '<em>Error Control</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
@@ -1425,6 +2524,356 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_Jgraph();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#generateGraphFromTemplate(org.eclipse.emf.common.util.EMap) <em>Generate Graph From Template</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Graph From Template</em>' operation.
+	 * @see easyflow.core.Workflow#generateGraphFromTemplate(org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getWorkflow__GenerateGraphFromTemplate__EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getParentTaskByOutDataPort(easyflow.data.DataPort, easyflow.core.Task) <em>Get Parent Task By Out Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parent Task By Out Data Port</em>' operation.
+	 * @see easyflow.core.Workflow#getParentTaskByOutDataPort(easyflow.data.DataPort, easyflow.core.Task)
+	 * @generated
+	 */
+	EOperation getWorkflow__GetParentTaskByOutDataPort__DataPort_Task();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getParentTasksByOutDataPort(easyflow.data.DataPort) <em>Get Parent Tasks By Out Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parent Tasks By Out Data Port</em>' operation.
+	 * @see easyflow.core.Workflow#getParentTasksByOutDataPort(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getWorkflow__GetParentTasksByOutDataPort__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#validateParentTaskOutDataPort(easyflow.data.DataPort, easyflow.core.Task) <em>Validate Parent Task Out Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Parent Task Out Data Port</em>' operation.
+	 * @see easyflow.core.Workflow#validateParentTaskOutDataPort(easyflow.data.DataPort, easyflow.core.Task)
+	 * @generated
+	 */
+	EOperation getWorkflow__ValidateParentTaskOutDataPort__DataPort_Task();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#validateLastTaskOutDataPort(easyflow.data.DataPort) <em>Validate Last Task Out Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Last Task Out Data Port</em>' operation.
+	 * @see easyflow.core.Workflow#validateLastTaskOutDataPort(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getWorkflow__ValidateLastTaskOutDataPort__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#readMetaData() <em>Read Meta Data</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Meta Data</em>' operation.
+	 * @see easyflow.core.Workflow#readMetaData()
+	 * @generated
+	 */
+	EOperation getWorkflow__ReadMetaData();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getParentTasksFor(easyflow.core.Task) <em>Get Parent Tasks For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parent Tasks For</em>' operation.
+	 * @see easyflow.core.Workflow#getParentTasksFor(easyflow.core.Task)
+	 * @generated
+	 */
+	EOperation getWorkflow__GetParentTasksFor__Task();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#resolveMissingDataPortsByToolFor(easyflow.core.Task) <em>Resolve Missing Data Ports By Tool For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Missing Data Ports By Tool For</em>' operation.
+	 * @see easyflow.core.Workflow#resolveMissingDataPortsByToolFor(easyflow.core.Task)
+	 * @generated
+	 */
+	EOperation getWorkflow__ResolveMissingDataPortsByToolFor__Task();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#readWorkfowTemplate() <em>Read Workfow Template</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Workfow Template</em>' operation.
+	 * @see easyflow.core.Workflow#readWorkfowTemplate()
+	 * @generated
+	 */
+	EOperation getWorkflow__ReadWorkfowTemplate();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#generateAbstractWorkflow() <em>Generate Abstract Workflow</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Abstract Workflow</em>' operation.
+	 * @see easyflow.core.Workflow#generateAbstractWorkflow()
+	 * @generated
+	 */
+	EOperation getWorkflow__GenerateAbstractWorkflow();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#applyGroupingCriteria() <em>Apply Grouping Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Apply Grouping Criteria</em>' operation.
+	 * @see easyflow.core.Workflow#applyGroupingCriteria()
+	 * @generated
+	 */
+	EOperation getWorkflow__ApplyGroupingCriteria();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#applyParameterCriteria() <em>Apply Parameter Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Apply Parameter Criteria</em>' operation.
+	 * @see easyflow.core.Workflow#applyParameterCriteria()
+	 * @generated
+	 */
+	EOperation getWorkflow__ApplyParameterCriteria();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#applyTraversalEvent(easyflow.traversal.TraversalEvent) <em>Apply Traversal Event</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Apply Traversal Event</em>' operation.
+	 * @see easyflow.core.Workflow#applyTraversalEvent(easyflow.traversal.TraversalEvent)
+	 * @generated
+	 */
+	EOperation getWorkflow__ApplyTraversalEvent__TraversalEvent();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#resolveTraversalEvents() <em>Resolve Traversal Events</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Traversal Events</em>' operation.
+	 * @see easyflow.core.Workflow#resolveTraversalEvents()
+	 * @generated
+	 */
+	EOperation getWorkflow__ResolveTraversalEvents();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#resolveIncompatibleGroupings() <em>Resolve Incompatible Groupings</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Incompatible Groupings</em>' operation.
+	 * @see easyflow.core.Workflow#resolveIncompatibleGroupings()
+	 * @generated
+	 */
+	EOperation getWorkflow__ResolveIncompatibleGroupings();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#resolvePreprocessingTasks() <em>Resolve Preprocessing Tasks</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Preprocessing Tasks</em>' operation.
+	 * @see easyflow.core.Workflow#resolvePreprocessingTasks()
+	 * @generated
+	 */
+	EOperation getWorkflow__ResolvePreprocessingTasks();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#resolveToolDependencies() <em>Resolve Tool Dependencies</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Tool Dependencies</em>' operation.
+	 * @see easyflow.core.Workflow#resolveToolDependencies()
+	 * @generated
+	 */
+	EOperation getWorkflow__ResolveToolDependencies();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#generateWorklowForExecutionSystem() <em>Generate Worklow For Execution System</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Worklow For Execution System</em>' operation.
+	 * @see easyflow.core.Workflow#generateWorklowForExecutionSystem()
+	 * @generated
+	 */
+	EOperation getWorkflow__GenerateWorklowForExecutionSystem();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#runNextWorkflowStep() <em>Run Next Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run Next Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#runNextWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__RunNextWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#runPrevWorkflowStep() <em>Run Prev Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run Prev Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#runPrevWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__RunPrevWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#runEntireWorkflow() <em>Run Entire Workflow</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Run Entire Workflow</em>' operation.
+	 * @see easyflow.core.Workflow#runEntireWorkflow()
+	 * @generated
+	 */
+	EOperation getWorkflow__RunEntireWorkflow();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#hasNextWorkflowStep() <em>Has Next Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Next Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#hasNextWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__HasNextWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getTotalNumberOfWorkflowSteps() <em>Get Total Number Of Workflow Steps</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Total Number Of Workflow Steps</em>' operation.
+	 * @see easyflow.core.Workflow#getTotalNumberOfWorkflowSteps()
+	 * @generated
+	 */
+	EOperation getWorkflow__GetTotalNumberOfWorkflowSteps();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getWorkflowStepLabelFor(java.lang.String) <em>Get Workflow Step Label For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Workflow Step Label For</em>' operation.
+	 * @see easyflow.core.Workflow#getWorkflowStepLabelFor(java.lang.String)
+	 * @generated
+	 */
+	EOperation getWorkflow__GetWorkflowStepLabelFor__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getWorkflowStepDescFor(java.lang.String) <em>Get Workflow Step Desc For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Workflow Step Desc For</em>' operation.
+	 * @see easyflow.core.Workflow#getWorkflowStepDescFor(java.lang.String)
+	 * @generated
+	 */
+	EOperation getWorkflow__GetWorkflowStepDescFor__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getNumberOfCurrentWorkflowStep() <em>Get Number Of Current Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Number Of Current Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#getNumberOfCurrentWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__GetNumberOfCurrentWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getNextWorkflowStep() <em>Get Next Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Next Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#getNextWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__GetNextWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getCurWorkflowStep() <em>Get Cur Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Cur Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#getCurWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__GetCurWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#delete() <em>Delete</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Delete</em>' operation.
+	 * @see easyflow.core.Workflow#delete()
+	 * @generated
+	 */
+	EOperation getWorkflow__Delete();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#resetWorkflowStep() <em>Reset Workflow Step</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Reset Workflow Step</em>' operation.
+	 * @see easyflow.core.Workflow#resetWorkflowStep()
+	 * @generated
+	 */
+	EOperation getWorkflow__ResetWorkflowStep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#printWorkflowStepMsgOnStart(java.lang.String) <em>Print Workflow Step Msg On Start</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Print Workflow Step Msg On Start</em>' operation.
+	 * @see easyflow.core.Workflow#printWorkflowStepMsgOnStart(java.lang.String)
+	 * @generated
+	 */
+	EOperation getWorkflow__PrintWorkflowStepMsgOnStart__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#printWorkflowStepMsgOnEnd(boolean, java.lang.String) <em>Print Workflow Step Msg On End</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Print Workflow Step Msg On End</em>' operation.
+	 * @see easyflow.core.Workflow#printWorkflowStepMsgOnEnd(boolean, java.lang.String)
+	 * @generated
+	 */
+	EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#getValidInOutDataPortCombinations() <em>Get Valid In Out Data Port Combinations</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Valid In Out Data Port Combinations</em>' operation.
+	 * @see easyflow.core.Workflow#getValidInOutDataPortCombinations()
+	 * @generated
+	 */
+	EOperation getWorkflow__GetValidInOutDataPortCombinations();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#init() <em>Init</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init</em>' operation.
+	 * @see easyflow.core.Workflow#init()
+	 * @generated
+	 */
+	EOperation getWorkflow__Init();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#renderToString() <em>Render To String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Render To String</em>' operation.
+	 * @see easyflow.core.Workflow#renderToString()
+	 * @generated
+	 */
+	EOperation getWorkflow__RenderToString();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
@@ -1778,6 +3227,586 @@ public interface CorePackage extends EPackage {
 	EReference getTask_Rule();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#readTask(java.lang.String, java.lang.String, org.eclipse.emf.common.util.EList) <em>Read Task</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Task</em>' operation.
+	 * @see easyflow.core.Task#readTask(java.lang.String, java.lang.String, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getTask__ReadTask__String_String_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#shallProcess(org.eclipse.emf.common.util.EList, java.lang.String) <em>Shall Process</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Shall Process</em>' operation.
+	 * @see easyflow.core.Task#shallProcess(org.eclipse.emf.common.util.EList, java.lang.String)
+	 * @generated
+	 */
+	EOperation getTask__ShallProcess__EList_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#shallProcess(org.eclipse.emf.common.util.EList, java.lang.String, org.eclipse.emf.common.util.EList, boolean) <em>Shall Process</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Shall Process</em>' operation.
+	 * @see easyflow.core.Task#shallProcess(org.eclipse.emf.common.util.EList, java.lang.String, org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getTask__ShallProcess__EList_String_EList_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#parseDataFormatField(java.lang.String, org.eclipse.emf.common.util.EList) <em>Parse Data Format Field</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Parse Data Format Field</em>' operation.
+	 * @see easyflow.core.Task#parseDataFormatField(java.lang.String, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getTask__ParseDataFormatField__String_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getUniqueString() <em>Get Unique String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique String</em>' operation.
+	 * @see easyflow.core.Task#getUniqueString()
+	 * @generated
+	 */
+	EOperation getTask__GetUniqueString();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getUniqueURIString() <em>Get Unique URI String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Unique URI String</em>' operation.
+	 * @see easyflow.core.Task#getUniqueURIString()
+	 * @generated
+	 */
+	EOperation getTask__GetUniqueURIString();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#isCompatibleWithOutDataPortFor(easyflow.data.DataPort) <em>Is Compatible With Out Data Port For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible With Out Data Port For</em>' operation.
+	 * @see easyflow.core.Task#isCompatibleWithOutDataPortFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__IsCompatibleWithOutDataPortFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#isCompatibleWithInDataPortFor(easyflow.data.DataPort) <em>Is Compatible With In Data Port For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Compatible With In Data Port For</em>' operation.
+	 * @see easyflow.core.Task#isCompatibleWithInDataPortFor(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__IsCompatibleWithInDataPortFor__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getParentTaskByOutDataPort(easyflow.data.DataPort) <em>Get Parent Task By Out Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parent Task By Out Data Port</em>' operation.
+	 * @see easyflow.core.Task#getParentTaskByOutDataPort(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__GetParentTaskByOutDataPort__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getNonOveralppingTraversalChunksFor(easyflow.core.Task) <em>Get Non Overalpping Traversal Chunks For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Non Overalpping Traversal Chunks For</em>' operation.
+	 * @see easyflow.core.Task#getNonOveralppingTraversalChunksFor(easyflow.core.Task)
+	 * @generated
+	 */
+	EOperation getTask__GetNonOveralppingTraversalChunksFor__Task();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#readTools(org.eclipse.emf.common.util.EList) <em>Read Tools</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Tools</em>' operation.
+	 * @see easyflow.core.Task#readTools(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getTask__ReadTools__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getPreferredTool() <em>Get Preferred Tool</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Preferred Tool</em>' operation.
+	 * @see easyflow.core.Task#getPreferredTool()
+	 * @generated
+	 */
+	EOperation getTask__GetPreferredTool();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getOverlappingDataPorts(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList) <em>Get Overlapping Data Ports</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Overlapping Data Ports</em>' operation.
+	 * @see easyflow.core.Task#getOverlappingDataPorts(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getTask__GetOverlappingDataPorts__EList_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveCommandLinePartInterpreter() <em>Resolve Command Line Part Interpreter</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Command Line Part Interpreter</em>' operation.
+	 * @see easyflow.core.Task#resolveCommandLinePartInterpreter()
+	 * @generated
+	 */
+	EOperation getTask__ResolveCommandLinePartInterpreter();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveCommandLinePartExe() <em>Resolve Command Line Part Exe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Command Line Part Exe</em>' operation.
+	 * @see easyflow.core.Task#resolveCommandLinePartExe()
+	 * @generated
+	 */
+	EOperation getTask__ResolveCommandLinePartExe();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveCommandLinePartAnalysisType() <em>Resolve Command Line Part Analysis Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Command Line Part Analysis Type</em>' operation.
+	 * @see easyflow.core.Task#resolveCommandLinePartAnalysisType()
+	 * @generated
+	 */
+	EOperation getTask__ResolveCommandLinePartAnalysisType();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveCommandLinePart(java.lang.String, boolean, boolean) <em>Resolve Command Line Part</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Command Line Part</em>' operation.
+	 * @see easyflow.core.Task#resolveCommandLinePart(java.lang.String, boolean, boolean)
+	 * @generated
+	 */
+	EOperation getTask__ResolveCommandLinePart__String_boolean_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getCommandLinePattern() <em>Get Command Line Pattern</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Command Line Pattern</em>' operation.
+	 * @see easyflow.core.Task#getCommandLinePattern()
+	 * @generated
+	 */
+	EOperation getTask__GetCommandLinePattern();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#validateTool(easyflow.tool.Tool) <em>Validate Tool</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Tool</em>' operation.
+	 * @see easyflow.core.Task#validateTool(easyflow.tool.Tool)
+	 * @generated
+	 */
+	EOperation getTask__ValidateTool__Tool();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#validateTools() <em>Validate Tools</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Tools</em>' operation.
+	 * @see easyflow.core.Task#validateTools()
+	 * @generated
+	 */
+	EOperation getTask__ValidateTools();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getDataPortByDataPort(easyflow.data.DataPort, boolean) <em>Get Data Port By Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Data Port By Data Port</em>' operation.
+	 * @see easyflow.core.Task#getDataPortByDataPort(easyflow.data.DataPort, boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetDataPortByDataPort__DataPort_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getDataPortByNameOfFormat(java.lang.String, boolean) <em>Get Data Port By Name Of Format</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Data Port By Name Of Format</em>' operation.
+	 * @see easyflow.core.Task#getDataPortByNameOfFormat(java.lang.String, boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetDataPortByNameOfFormat__String_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getDataPortByName(java.lang.String, boolean) <em>Get Data Port By Name</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Data Port By Name</em>' operation.
+	 * @see easyflow.core.Task#getDataPortByName(java.lang.String, boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetDataPortByName__String_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveMissingDataPortsByTool(org.eclipse.emf.common.util.EList) <em>Resolve Missing Data Ports By Tool</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Missing Data Ports By Tool</em>' operation.
+	 * @see easyflow.core.Task#resolveMissingDataPortsByTool(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getTask__ResolveMissingDataPortsByTool__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getOverlappingChunksFor(easyflow.core.Task, java.lang.String) <em>Get Overlapping Chunks For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Overlapping Chunks For</em>' operation.
+	 * @see easyflow.core.Task#getOverlappingChunksFor(easyflow.core.Task, java.lang.String)
+	 * @generated
+	 */
+	EOperation getTask__GetOverlappingChunksFor__Task_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getRequiredGroupingsFor(easyflow.tool.Tool, easyflow.data.DataPort, boolean) <em>Get Required Groupings For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Required Groupings For</em>' operation.
+	 * @see easyflow.core.Task#getRequiredGroupingsFor(easyflow.tool.Tool, easyflow.data.DataPort, boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetRequiredGroupingsFor__Tool_DataPort_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getProvidedGroupingsFor(easyflow.tool.Tool, easyflow.data.DataPort, boolean) <em>Get Provided Groupings For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Provided Groupings For</em>' operation.
+	 * @see easyflow.core.Task#getProvidedGroupingsFor(easyflow.tool.Tool, easyflow.data.DataPort, boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetProvidedGroupingsFor__Tool_DataPort_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideMultipleGroupingsFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Provide Multiple Groupings For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Groupings For</em>' operation.
+	 * @see easyflow.core.Task#canProvideMultipleGroupingsFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProvideMultipleGroupingsFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Provide Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Inputs For</em>' operation.
+	 * @see easyflow.core.Task#canProvideMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProvideMultipleInputsFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Provide Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Instances For</em>' operation.
+	 * @see easyflow.core.Task#canProvideMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProvideMultipleInstancesFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Provide Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.core.Task#canProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProcessMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Process Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Process Multiple Inputs For</em>' operation.
+	 * @see easyflow.core.Task#canProcessMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProcessMultipleInputsFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProcessMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Process Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Process Multiple Instances For</em>' operation.
+	 * @see easyflow.core.Task#canProcessMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProcessMultipleInstancesFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Process Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.core.Task#canProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Process Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.core.Task#setProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProcessMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Process Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Process Multiple Instances For</em>' operation.
+	 * @see easyflow.core.Task#setProcessMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__SetProcessMultipleInstancesFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProcessMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Process Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Process Multiple Inputs For</em>' operation.
+	 * @see easyflow.core.Task#setProcessMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__SetProcessMultipleInputsFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Provide Multiple Instances Per Input For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
+	 * @see easyflow.core.Task#setProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProvideMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Provide Multiple Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Provide Multiple Instances For</em>' operation.
+	 * @see easyflow.core.Task#setProvideMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__SetProvideMultipleInstancesFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProvideMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Provide Multiple Inputs For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Set Provide Multiple Inputs For</em>' operation.
+	 * @see easyflow.core.Task#setProvideMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__SetProvideMultipleInputsFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canFilterInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Filter Instances For</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Filter Instances For</em>' operation.
+	 * @see easyflow.core.Task#canFilterInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__CanFilterInstancesFor__Tool_DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getRecords(boolean) <em>Get Records</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Records</em>' operation.
+	 * @see easyflow.core.Task#getRecords(boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetRecords__boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getInputs(boolean) <em>Get Inputs</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Inputs</em>' operation.
+	 * @see easyflow.core.Task#getInputs(boolean)
+	 * @generated
+	 */
+	EOperation getTask__GetInputs__boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getOverlappingRecordsProvidedBy(easyflow.core.Task) <em>Get Overlapping Records Provided By</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Overlapping Records Provided By</em>' operation.
+	 * @see easyflow.core.Task#getOverlappingRecordsProvidedBy(easyflow.core.Task)
+	 * @generated
+	 */
+	EOperation getTask__GetOverlappingRecordsProvidedBy__Task();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean) <em>Can Provide Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Provide Data Port</em>' operation.
+	 * @see easyflow.core.Task#canProvideDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getTask__CanProvideDataPort__Tool_DataPort_String_EList_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#canComsumeDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean) <em>Can Comsume Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Can Comsume Data Port</em>' operation.
+	 * @see easyflow.core.Task#canComsumeDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean)
+	 * @generated
+	 */
+	EOperation getTask__CanComsumeDataPort__Tool_DataPort_String_EList_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getOutputsForDataPort(easyflow.data.DataPort) <em>Get Outputs For Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Outputs For Data Port</em>' operation.
+	 * @see easyflow.core.Task#getOutputsForDataPort(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__GetOutputsForDataPort__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getInputsForDataPort(easyflow.data.DataPort) <em>Get Inputs For Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Inputs For Data Port</em>' operation.
+	 * @see easyflow.core.Task#getInputsForDataPort(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__GetInputsForDataPort__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveParams() <em>Resolve Params</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Params</em>' operation.
+	 * @see easyflow.core.Task#resolveParams()
+	 * @generated
+	 */
+	EOperation getTask__ResolveParams();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#isIdentityTransformation() <em>Is Identity Transformation</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Identity Transformation</em>' operation.
+	 * @see easyflow.core.Task#isIdentityTransformation()
+	 * @generated
+	 */
+	EOperation getTask__IsIdentityTransformation();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#isIdentityTransformation(easyflow.data.DataPort) <em>Is Identity Transformation</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Identity Transformation</em>' operation.
+	 * @see easyflow.core.Task#isIdentityTransformation(easyflow.data.DataPort)
+	 * @generated
+	 */
+	EOperation getTask__IsIdentityTransformation__DataPort();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveConditionalStaticParam(easyflow.tool.ResolvedParam) <em>Resolve Conditional Static Param</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Conditional Static Param</em>' operation.
+	 * @see easyflow.core.Task#resolveConditionalStaticParam(easyflow.tool.ResolvedParam)
+	 * @generated
+	 */
+	EOperation getTask__ResolveConditionalStaticParam__ResolvedParam();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#readFromPipe() <em>Read From Pipe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read From Pipe</em>' operation.
+	 * @see easyflow.core.Task#readFromPipe()
+	 * @generated
+	 */
+	EOperation getTask__ReadFromPipe();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#writeToPipe() <em>Write To Pipe</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Write To Pipe</em>' operation.
+	 * @see easyflow.core.Task#writeToPipe()
+	 * @generated
+	 */
+	EOperation getTask__WriteToPipe();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#createRule() <em>Create Rule</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Create Rule</em>' operation.
+	 * @see easyflow.core.Task#createRule()
+	 * @generated
+	 */
+	EOperation getTask__CreateRule();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#retrieveDataPort(boolean, int) <em>Retrieve Data Port</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Retrieve Data Port</em>' operation.
+	 * @see easyflow.core.Task#retrieveDataPort(boolean, int)
+	 * @generated
+	 */
+	EOperation getTask__RetrieveDataPort__boolean_int();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveDataPortParams(org.eclipse.emf.common.util.EMap, easyflow.tool.Tool, boolean) <em>Resolve Data Port Params</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Data Port Params</em>' operation.
+	 * @see easyflow.core.Task#resolveDataPortParams(org.eclipse.emf.common.util.EMap, easyflow.tool.Tool, boolean)
+	 * @generated
+	 */
+	EOperation getTask__ResolveDataPortParams__EMap_Tool_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#resolveStaticParams(org.eclipse.emf.common.util.EMap) <em>Resolve Static Params</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Static Params</em>' operation.
+	 * @see easyflow.core.Task#resolveStaticParams(org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getTask__ResolveStaticParams__EMap();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1985,6 +4014,66 @@ public interface CorePackage extends EPackage {
 	EAttribute getToolMatch_Valid();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.core.ToolMatch#computeScore(org.eclipse.emf.common.util.EMap) <em>Compute Score</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Compute Score</em>' operation.
+	 * @see easyflow.core.ToolMatch#computeScore(org.eclipse.emf.common.util.EMap)
+	 * @generated
+	 */
+	EOperation getToolMatch__ComputeScore__EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ToolMatch#computeExpectedScore() <em>Compute Expected Score</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Compute Expected Score</em>' operation.
+	 * @see easyflow.core.ToolMatch#computeExpectedScore()
+	 * @generated
+	 */
+	EOperation getToolMatch__ComputeExpectedScore();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ToolMatch#validateDataPorts(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList) <em>Validate Data Ports</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Data Ports</em>' operation.
+	 * @see easyflow.core.ToolMatch#validateDataPorts(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getToolMatch__ValidateDataPorts__EList_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ToolMatch#resolveReverseMissingInDataPorts(org.eclipse.emf.common.util.EList) <em>Resolve Reverse Missing In Data Ports</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Reverse Missing In Data Ports</em>' operation.
+	 * @see easyflow.core.ToolMatch#resolveReverseMissingInDataPorts(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getToolMatch__ResolveReverseMissingInDataPorts__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ToolMatch#resolveReverseMissingOutDataPorts(org.eclipse.emf.common.util.EList) <em>Resolve Reverse Missing Out Data Ports</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Reverse Missing Out Data Ports</em>' operation.
+	 * @see easyflow.core.ToolMatch#resolveReverseMissingOutDataPorts(org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getToolMatch__ResolveReverseMissingOutDataPorts__EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ToolMatch#getDataPortProvidingTasks(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList) <em>Get Data Port Providing Tasks</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Data Port Providing Tasks</em>' operation.
+	 * @see easyflow.core.ToolMatch#getDataPortProvidingTasks(org.eclipse.emf.common.util.EList, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getToolMatch__GetDataPortProvidingTasks__EList_EList();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1993,6 +4082,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getIWorkflowTemplate();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.IWorkflowTemplate#readTemplate(java.lang.String, org.eclipse.emf.common.util.EList) <em>Read Template</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Template</em>' operation.
+	 * @see easyflow.core.IWorkflowTemplate#readTemplate(java.lang.String, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getIWorkflowTemplate__ReadTemplate__String_EList();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.DefaultWorkflowTemplate <em>Default Workflow Template</em>}'.
@@ -2027,6 +4126,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getDefaultWorkflowTemplate_Reader();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getUtilTaskReader <em>Util Task Reader</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Util Task Reader</em>'.
+	 * @see easyflow.core.DefaultWorkflowTemplate#getUtilTaskReader()
+	 * @see #getDefaultWorkflowTemplate()
+	 * @generated
+	 */
+	EAttribute getDefaultWorkflowTemplate_UtilTaskReader();
+
+	/**
 	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getLogger <em>Logger</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2056,6 +4166,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getITaskReader();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ITaskReader#readTask() <em>Read Task</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Task</em>' operation.
+	 * @see easyflow.core.ITaskReader#readTask()
+	 * @generated
+	 */
+	EOperation getITaskReader__ReadTask();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.GalaxyTaskReader <em>Galaxy Task Reader</em>}'.
@@ -2229,6 +4349,16 @@ public interface CorePackage extends EPackage {
 	EAttribute getCondition_CircumventingParents();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.core.Condition#isUnconditional() <em>Is Unconditional</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Unconditional</em>' operation.
+	 * @see easyflow.core.Condition#isUnconditional()
+	 * @generated
+	 */
+	EOperation getCondition__IsUnconditional();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.ErrorControl <em>Error Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2314,6 +4444,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getErrorControl_Vals();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ErrorControl#generateDescription() <em>Generate Description</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Description</em>' operation.
+	 * @see easyflow.core.ErrorControl#generateDescription()
+	 * @generated
+	 */
+	EOperation getErrorControl__GenerateDescription();
 
 	/**
 	 * Returns the meta object for enum '{@link easyflow.core.Severity <em>Severity</em>}'.
@@ -2534,6 +4674,286 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__JGRAPH = eINSTANCE.getWorkflow_Jgraph();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Graph From Template</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP = eINSTANCE.getWorkflow__GenerateGraphFromTemplate__EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parent Task By Out Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK = eINSTANCE.getWorkflow__GetParentTaskByOutDataPort__DataPort_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parent Tasks By Out Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT = eINSTANCE.getWorkflow__GetParentTasksByOutDataPort__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Parent Task Out Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___VALIDATE_PARENT_TASK_OUT_DATA_PORT__DATAPORT_TASK = eINSTANCE.getWorkflow__ValidateParentTaskOutDataPort__DataPort_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Last Task Out Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___VALIDATE_LAST_TASK_OUT_DATA_PORT__DATAPORT = eINSTANCE.getWorkflow__ValidateLastTaskOutDataPort__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Meta Data</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___READ_META_DATA = eINSTANCE.getWorkflow__ReadMetaData();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parent Tasks For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_PARENT_TASKS_FOR__TASK = eINSTANCE.getWorkflow__GetParentTasksFor__Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Missing Data Ports By Tool For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RESOLVE_MISSING_DATA_PORTS_BY_TOOL_FOR__TASK = eINSTANCE.getWorkflow__ResolveMissingDataPortsByToolFor__Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Workfow Template</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___READ_WORKFOW_TEMPLATE = eINSTANCE.getWorkflow__ReadWorkfowTemplate();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Abstract Workflow</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GENERATE_ABSTRACT_WORKFLOW = eINSTANCE.getWorkflow__GenerateAbstractWorkflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Apply Grouping Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___APPLY_GROUPING_CRITERIA = eINSTANCE.getWorkflow__ApplyGroupingCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Apply Parameter Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___APPLY_PARAMETER_CRITERIA = eINSTANCE.getWorkflow__ApplyParameterCriteria();
+
+		/**
+		 * The meta object literal for the '<em><b>Apply Traversal Event</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT = eINSTANCE.getWorkflow__ApplyTraversalEvent__TraversalEvent();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Traversal Events</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RESOLVE_TRAVERSAL_EVENTS = eINSTANCE.getWorkflow__ResolveTraversalEvents();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Incompatible Groupings</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS = eINSTANCE.getWorkflow__ResolveIncompatibleGroupings();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Preprocessing Tasks</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RESOLVE_PREPROCESSING_TASKS = eINSTANCE.getWorkflow__ResolvePreprocessingTasks();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Tool Dependencies</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RESOLVE_TOOL_DEPENDENCIES = eINSTANCE.getWorkflow__ResolveToolDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Worklow For Execution System</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM = eINSTANCE.getWorkflow__GenerateWorklowForExecutionSystem();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Next Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RUN_NEXT_WORKFLOW_STEP = eINSTANCE.getWorkflow__RunNextWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Prev Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RUN_PREV_WORKFLOW_STEP = eINSTANCE.getWorkflow__RunPrevWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Entire Workflow</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RUN_ENTIRE_WORKFLOW = eINSTANCE.getWorkflow__RunEntireWorkflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Next Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___HAS_NEXT_WORKFLOW_STEP = eINSTANCE.getWorkflow__HasNextWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Total Number Of Workflow Steps</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS = eINSTANCE.getWorkflow__GetTotalNumberOfWorkflowSteps();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Workflow Step Label For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_WORKFLOW_STEP_LABEL_FOR__STRING = eINSTANCE.getWorkflow__GetWorkflowStepLabelFor__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Workflow Step Desc For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_WORKFLOW_STEP_DESC_FOR__STRING = eINSTANCE.getWorkflow__GetWorkflowStepDescFor__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Number Of Current Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP = eINSTANCE.getWorkflow__GetNumberOfCurrentWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Next Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_NEXT_WORKFLOW_STEP = eINSTANCE.getWorkflow__GetNextWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Cur Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_CUR_WORKFLOW_STEP = eINSTANCE.getWorkflow__GetCurWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Delete</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___DELETE = eINSTANCE.getWorkflow__Delete();
+
+		/**
+		 * The meta object literal for the '<em><b>Reset Workflow Step</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RESET_WORKFLOW_STEP = eINSTANCE.getWorkflow__ResetWorkflowStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Print Workflow Step Msg On Start</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING = eINSTANCE.getWorkflow__PrintWorkflowStepMsgOnStart__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Print Workflow Step Msg On End</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING = eINSTANCE.getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Valid In Out Data Port Combinations</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS = eINSTANCE.getWorkflow__GetValidInOutDataPortCombinations();
+
+		/**
+		 * The meta object literal for the '<em><b>Init</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___INIT = eINSTANCE.getWorkflow__Init();
+
+		/**
+		 * The meta object literal for the '<em><b>Render To String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___RENDER_TO_STRING = eINSTANCE.getWorkflow__RenderToString();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -2794,6 +5214,470 @@ public interface CorePackage extends EPackage {
 		EReference TASK__RULE = eINSTANCE.getTask_Rule();
 
 		/**
+		 * The meta object literal for the '<em><b>Read Task</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___READ_TASK__STRING_STRING_ELIST = eINSTANCE.getTask__ReadTask__String_String_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Shall Process</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SHALL_PROCESS__ELIST_STRING = eINSTANCE.getTask__ShallProcess__EList_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Shall Process</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN = eINSTANCE.getTask__ShallProcess__EList_String_EList_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Parse Data Format Field</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST = eINSTANCE.getTask__ParseDataFormatField__String_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_UNIQUE_STRING = eINSTANCE.getTask__GetUniqueString();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Unique URI String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_UNIQUE_URI_STRING = eINSTANCE.getTask__GetUniqueURIString();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible With Out Data Port For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT = eINSTANCE.getTask__IsCompatibleWithOutDataPortFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Compatible With In Data Port For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT = eINSTANCE.getTask__IsCompatibleWithInDataPortFor__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parent Task By Out Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT = eINSTANCE.getTask__GetParentTaskByOutDataPort__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Non Overalpping Traversal Chunks For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK = eINSTANCE.getTask__GetNonOveralppingTraversalChunksFor__Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Tools</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___READ_TOOLS__ELIST = eINSTANCE.getTask__ReadTools__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Preferred Tool</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_PREFERRED_TOOL = eINSTANCE.getTask__GetPreferredTool();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Overlapping Data Ports</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST = eINSTANCE.getTask__GetOverlappingDataPorts__EList_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Command Line Part Interpreter</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_COMMAND_LINE_PART_INTERPRETER = eINSTANCE.getTask__ResolveCommandLinePartInterpreter();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Command Line Part Exe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_COMMAND_LINE_PART_EXE = eINSTANCE.getTask__ResolveCommandLinePartExe();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Command Line Part Analysis Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_COMMAND_LINE_PART_ANALYSIS_TYPE = eINSTANCE.getTask__ResolveCommandLinePartAnalysisType();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Command Line Part</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_COMMAND_LINE_PART__STRING_BOOLEAN_BOOLEAN = eINSTANCE.getTask__ResolveCommandLinePart__String_boolean_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Command Line Pattern</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_COMMAND_LINE_PATTERN = eINSTANCE.getTask__GetCommandLinePattern();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Tool</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___VALIDATE_TOOL__TOOL = eINSTANCE.getTask__ValidateTool__Tool();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Tools</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___VALIDATE_TOOLS = eINSTANCE.getTask__ValidateTools();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Data Port By Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN = eINSTANCE.getTask__GetDataPortByDataPort__DataPort_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Data Port By Name Of Format</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN = eINSTANCE.getTask__GetDataPortByNameOfFormat__String_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Data Port By Name</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN = eINSTANCE.getTask__GetDataPortByName__String_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Missing Data Ports By Tool</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST = eINSTANCE.getTask__ResolveMissingDataPortsByTool__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Overlapping Chunks For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING = eINSTANCE.getTask__GetOverlappingChunksFor__Task_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Required Groupings For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN = eINSTANCE.getTask__GetRequiredGroupingsFor__Tool_DataPort_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Provided Groupings For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN = eINSTANCE.getTask__GetProvidedGroupingsFor__Tool_DataPort_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Groupings For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleGroupingsFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleInputsFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleInstancesFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Process Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProcessMultipleInputsFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Process Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProcessMultipleInstancesFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Process Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Process Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Process Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProcessMultipleInstancesFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Process Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProcessMultipleInputsFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Provide Multiple Instances Per Input For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Provide Multiple Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProvideMultipleInstancesFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Set Provide Multiple Inputs For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProvideMultipleInputsFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Filter Instances For</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanFilterInstancesFor__Tool_DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Records</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_RECORDS__BOOLEAN = eINSTANCE.getTask__GetRecords__boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Inputs</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_INPUTS__BOOLEAN = eINSTANCE.getTask__GetInputs__boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Overlapping Records Provided By</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK = eINSTANCE.getTask__GetOverlappingRecordsProvidedBy__Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Provide Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = eINSTANCE.getTask__CanProvideDataPort__Tool_DataPort_String_EList_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Can Comsume Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = eINSTANCE.getTask__CanComsumeDataPort__Tool_DataPort_String_EList_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Outputs For Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT = eINSTANCE.getTask__GetOutputsForDataPort__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Inputs For Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT = eINSTANCE.getTask__GetInputsForDataPort__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Params</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_PARAMS = eINSTANCE.getTask__ResolveParams();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Identity Transformation</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___IS_IDENTITY_TRANSFORMATION = eINSTANCE.getTask__IsIdentityTransformation();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Identity Transformation</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___IS_IDENTITY_TRANSFORMATION__DATAPORT = eINSTANCE.getTask__IsIdentityTransformation__DataPort();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Conditional Static Param</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_CONDITIONAL_STATIC_PARAM__RESOLVEDPARAM = eINSTANCE.getTask__ResolveConditionalStaticParam__ResolvedParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Read From Pipe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___READ_FROM_PIPE = eINSTANCE.getTask__ReadFromPipe();
+
+		/**
+		 * The meta object literal for the '<em><b>Write To Pipe</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___WRITE_TO_PIPE = eINSTANCE.getTask__WriteToPipe();
+
+		/**
+		 * The meta object literal for the '<em><b>Create Rule</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CREATE_RULE = eINSTANCE.getTask__CreateRule();
+
+		/**
+		 * The meta object literal for the '<em><b>Retrieve Data Port</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RETRIEVE_DATA_PORT__BOOLEAN_INT = eINSTANCE.getTask__RetrieveDataPort__boolean_int();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Data Port Params</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_DATA_PORT_PARAMS__EMAP_TOOL_BOOLEAN = eINSTANCE.getTask__ResolveDataPortParams__EMap_Tool_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Static Params</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___RESOLVE_STATIC_PARAMS__EMAP = eINSTANCE.getTask__ResolveStaticParams__EMap();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2950,6 +5834,54 @@ public interface CorePackage extends EPackage {
 		EAttribute TOOL_MATCH__VALID = eINSTANCE.getToolMatch_Valid();
 
 		/**
+		 * The meta object literal for the '<em><b>Compute Score</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_MATCH___COMPUTE_SCORE__EMAP = eINSTANCE.getToolMatch__ComputeScore__EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Compute Expected Score</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_MATCH___COMPUTE_EXPECTED_SCORE = eINSTANCE.getToolMatch__ComputeExpectedScore();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Data Ports</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_MATCH___VALIDATE_DATA_PORTS__ELIST_ELIST = eINSTANCE.getToolMatch__ValidateDataPorts__EList_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Reverse Missing In Data Ports</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_MATCH___RESOLVE_REVERSE_MISSING_IN_DATA_PORTS__ELIST = eINSTANCE.getToolMatch__ResolveReverseMissingInDataPorts__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Reverse Missing Out Data Ports</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_MATCH___RESOLVE_REVERSE_MISSING_OUT_DATA_PORTS__ELIST = eINSTANCE.getToolMatch__ResolveReverseMissingOutDataPorts__EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Data Port Providing Tasks</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_MATCH___GET_DATA_PORT_PROVIDING_TASKS__ELIST_ELIST = eINSTANCE.getToolMatch__GetDataPortProvidingTasks__EList_EList();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.IWorkflowTemplate <em>IWorkflow Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2958,6 +5890,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EClass IWORKFLOW_TEMPLATE = eINSTANCE.getIWorkflowTemplate();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Template</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST = eINSTANCE.getIWorkflowTemplate__ReadTemplate__String_EList();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.DefaultWorkflowTemplateImpl <em>Default Workflow Template</em>}' class.
@@ -2986,6 +5926,14 @@ public interface CorePackage extends EPackage {
 		EAttribute DEFAULT_WORKFLOW_TEMPLATE__READER = eINSTANCE.getDefaultWorkflowTemplate_Reader();
 
 		/**
+		 * The meta object literal for the '<em><b>Util Task Reader</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER = eINSTANCE.getDefaultWorkflowTemplate_UtilTaskReader();
+
+		/**
 		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3012,6 +5960,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EClass ITASK_READER = eINSTANCE.getITaskReader();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Task</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITASK_READER___READ_TASK = eINSTANCE.getITaskReader__ReadTask();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.GalaxyTaskReaderImpl <em>Galaxy Task Reader</em>}' class.
@@ -3152,6 +6108,14 @@ public interface CorePackage extends EPackage {
 		EAttribute CONDITION__CIRCUMVENTING_PARENTS = eINSTANCE.getCondition_CircumventingParents();
 
 		/**
+		 * The meta object literal for the '<em><b>Is Unconditional</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONDITION___IS_UNCONDITIONAL = eINSTANCE.getCondition__IsUnconditional();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ErrorControlImpl <em>Error Control</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3216,6 +6180,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ERROR_CONTROL__VALS = eINSTANCE.getErrorControl_Vals();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Description</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ERROR_CONTROL___GENERATE_DESCRIPTION = eINSTANCE.getErrorControl__GenerateDescription();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.

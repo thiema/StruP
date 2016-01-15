@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -57,7 +56,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DataPortImpl extends EObjectImpl implements DataPort {
+public class DataPortImpl extends MinimalEObjectImpl.Container implements DataPort {
 	/**
 	 * The cached value of the '{@link #getGroupingCriteria() <em>Grouping Criteria</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -453,12 +452,21 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean isCompatibleStr(EList<String> formats, boolean requireAll) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		Iterator<String> it = formats.iterator();
+		while (it.hasNext())
+		{
+			String dataFormat = it.next();
+			
+			if (!requireAll && isCompatible(dataFormat))
+				return true;
+			
+			if (requireAll && !isCompatible(dataFormat))
+				return false;
+		}
+		return requireAll;		
 	}
 
 	/**
@@ -473,12 +481,22 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public boolean isCompatible(EList<DataFormat> formats, boolean requireAll) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		Iterator<DataFormat> it = formats.iterator();
+		while (it.hasNext())
+		{
+			DataFormat dataFormat = it.next();
+
+			if (!requireAll && isCompatible(dataFormat))
+				return true;
+
+			if (requireAll && !isCompatible(dataFormat))
+				return false;
+		}
+		return requireAll;
+
 	}
 
 	/**
@@ -715,6 +733,45 @@ public class DataPortImpl extends EObjectImpl implements DataPort {
 				return PARAMETER_NAME_EDEFAULT == null ? parameterName != null : !PARAMETER_NAME_EDEFAULT.equals(parameterName);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA_PORT___IS_COMPATIBLE__DATAPORT:
+				return isCompatible((DataPort)arguments.get(0));
+			case DataPackage.DATA_PORT___REMOVE_DATA_PORT_FROM__ELIST:
+				return removeDataPortFrom((EList<DataPort>)arguments.get(0));
+			case DataPackage.DATA_PORT___GET_FORMAT:
+				return getFormat();
+			case DataPackage.DATA_PORT___MATCHES__DATAFORMAT:
+				return matches((DataFormat)arguments.get(0));
+			case DataPackage.DATA_PORT___IS_COMPATIBLE_STR__ELIST_BOOLEAN:
+				return isCompatibleStr((EList<String>)arguments.get(0), (Boolean)arguments.get(1));
+			case DataPackage.DATA_PORT___IS_COMPATIBLE_STR__ELIST:
+				return isCompatibleStr((EList<String>)arguments.get(0));
+			case DataPackage.DATA_PORT___IS_COMPATIBLE__ELIST_BOOLEAN:
+				return isCompatible((EList<DataFormat>)arguments.get(0), (Boolean)arguments.get(1));
+			case DataPackage.DATA_PORT___IS_COMPATIBLE__ELIST:
+				return isCompatible((EList<DataFormat>)arguments.get(0));
+			case DataPackage.DATA_PORT___IS_COMPATIBLE__STRING:
+				return isCompatible((String)arguments.get(0));
+			case DataPackage.DATA_PORT___IS_COMPATIBLE__DATAFORMAT:
+				return isCompatible((DataFormat)arguments.get(0));
+			case DataPackage.DATA_PORT___SET_FORMAT__STRING:
+				setFormat((String)arguments.get(0));
+				return null;
+			case DataPackage.DATA_PORT___SET_FORMATS__ELIST:
+				setFormats((EList<String>)arguments.get(0));
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

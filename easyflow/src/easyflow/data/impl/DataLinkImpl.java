@@ -9,7 +9,6 @@ package easyflow.data.impl;
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
 import easyflow.custom.exception.NoValidInOutDataException;
-
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Util;
 import easyflow.data.Data;
@@ -20,11 +19,10 @@ import easyflow.data.DataPort;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-
 import java.util.Collection;
 import java.util.Iterator;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -36,7 +34,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -72,7 +69,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DataLinkImpl extends EObjectImpl implements DataLink {
+public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLink {
 	
 	Logger logger = Logger.getLogger(DataLink.class);
 	/**
@@ -1338,6 +1335,38 @@ public class DataLinkImpl extends EObjectImpl implements DataLink {
 				return PIPE_EDEFAULT == null ? pipe != null : !PIPE_EDEFAULT.equals(pipe);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA_LINK___IS_UNCONDITIONAL:
+				return isUnconditional();
+			case DataPackage.DATA_LINK___GET_UNIQUE_STRING__STRING_STRING_STRING:
+				return getUniqueString((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
+			case DataPackage.DATA_LINK___GET_UNIQUE_STRING:
+				return getUniqueString();
+			case DataPackage.DATA_LINK___GET_UNIQUE_STRING__BOOLEAN:
+				return getUniqueString((Boolean)arguments.get(0));
+			case DataPackage.DATA_LINK___GET_FORMAT:
+				return getFormat();
+			case DataPackage.DATA_LINK___IS_PIPEABLE:
+				return isPipeable();
+			case DataPackage.DATA_LINK___GET_MATCHING_DATA_FOR__ELIST_ELIST_BOOLEAN:
+				try {
+					return getMatchingDataFor((EList<Data>)arguments.get(0), (EList<String>)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

@@ -8,11 +8,8 @@ package easyflow.graph.jgraphx.impl;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-
 import org.eclipse.emf.common.notify.Notification;
 import java.util.Map.Entry;
-
 import easyflow.core.PreprocessingTask;
 import easyflow.core.Task;
 import easyflow.core.impl.TaskImpl;
@@ -36,19 +33,17 @@ import easyflow.graph.jgraphx.PreprocessingGraph;
 import easyflow.graph.jgraphx.Preprocessing;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
-
+import java.lang.reflect.InvocationTargetException;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -66,7 +61,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  *
  * @generated
  */
-public class PreprocessingGraphImpl extends EObjectImpl implements PreprocessingGraph {
+public class PreprocessingGraphImpl extends MinimalEObjectImpl.Container implements PreprocessingGraph {
 	
 	/**
 	 * The cached value of the '{@link #getGraph() <em>Graph</em>}' reference.
@@ -932,6 +927,37 @@ public class PreprocessingGraphImpl extends EObjectImpl implements Preprocessing
 				return graph != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.PREPROCESSING_GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL:
+				try {
+					return resolvePreprocessingTask((mxICell)arguments.get(0), (mxICell)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.PREPROCESSING_GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED:
+				return findCellsWherePreprocessingIsRequired();
+			case JgraphxPackage.PREPROCESSING_GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS:
+				return findCellsWithUntranslatedDataLinks();
+			case JgraphxPackage.PREPROCESSING_GRAPH___RESOLVE_EDGE__EMAP:
+				try {
+					return resolveEdge((Map.Entry<mxICell, EList<mxICell>>)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

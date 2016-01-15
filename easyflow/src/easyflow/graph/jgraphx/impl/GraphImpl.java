@@ -9,9 +9,7 @@ package easyflow.graph.jgraphx.impl;
 import com.mxgraph.model.mxICell;
 import easyflow.core.Catalog;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
 import easyflow.core.Task;
-
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -27,57 +25,45 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
-
 import easyflow.data.DataLink;
-
 import easyflow.execution.IExecutionSystem;
 import easyflow.graph.jgraphx.AbstractGraph;
 import easyflow.graph.jgraphx.ExecutionGraph;
 import easyflow.graph.jgraphx.Graph;
 import easyflow.graph.jgraphx.JgraphxFactory;
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.PreprocessingGraph;
 import easyflow.graph.jgraphx.SubGraph;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
 import easyflow.graph.jgraphx.TraversalEventGraph;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.MetadataFactory;
-
 import easyflow.metadata.GroupingInstance;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 import easyflow.traversal.TraversalFactory;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToGraphCellMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -113,7 +99,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class GraphImpl extends EObjectImpl implements Graph {
+public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -1640,6 +1626,131 @@ public class GraphImpl extends EObjectImpl implements Graph {
 				return executionGraph != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.GRAPH___GET_NEXT_TRAVERSAL_EVENT__BOOLEAN:
+				try {
+					return getNextTraversalEvent((Boolean)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___GET_TRAVERSAL_EVENTS__MXICELL_BOOLEAN:
+				try {
+					return getTraversalEvents((mxICell)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___GET_NEW_TRAVERSAL_EVENTS__TRAVERSALEVENT_MXICELL:
+				try {
+					return getNewTraversalEvents((TraversalEvent)arguments.get(0), (mxICell)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___REMOVE_SUB_GRAPH__MXICELL_TRAVERSALEVENT:
+				return removeSubGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1));
+			case JgraphxPackage.GRAPH___CLEAR:
+				clear();
+				return null;
+			case JgraphxPackage.GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN:
+				try {
+					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___GENERATE_WORKFLOW_FOR_EXECUTION_SYSTEM__MXICELL_IEXECUTIONSYSTEM:
+				return generateWorkflowForExecutionSystem((mxICell)arguments.get(0), (IExecutionSystem)arguments.get(1));
+			case JgraphxPackage.GRAPH___RESOLVE_TOOL_DEPENDENCIES__MXICELL_CATALOG:
+				try {
+					return resolveToolDependencies((mxICell)arguments.get(0), (Catalog)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL:
+				try {
+					return resolvePreprocessingTask((mxICell)arguments.get(0), (mxICell)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED:
+				return findCellsWherePreprocessingIsRequired();
+			case JgraphxPackage.GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS:
+				return findCellsWithUntranslatedDataLinks();
+			case JgraphxPackage.GRAPH___RESOLVE_EDGE__EMAP:
+				try {
+					return resolveEdge((Map.Entry<mxICell, EList<mxICell>>)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE:
+				try {
+					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (GroupingInstance)arguments.get(3));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST:
+				try {
+					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (EList<GroupingInstance>)arguments.get(3));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE:
+				try {
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (GroupingInstance)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST:
+				try {
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (EList<GroupingInstance>)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___RESOLVE_TRAVERSAL_EVENTS__MXICELL:
+				try {
+					return resolveTraversalEvents((mxICell)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___RESET_FLAG__INT:
+				resetFlag((Integer)arguments.get(0));
+				return null;
+			case JgraphxPackage.GRAPH___RESET_FLAGS:
+				resetFlags();
+				return null;
+			case JgraphxPackage.GRAPH___GET_GROUPING_INSTANCES__TRAVERSALEVENT:
+				try {
+					return getGroupingInstances((TraversalEvent)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.GRAPH___INIT:
+				return init();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

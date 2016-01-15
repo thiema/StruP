@@ -10,10 +10,6 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.tool.Rule;
 import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
-import easyflow.core.Task;
-import easyflow.custom.exception.NoValidInOutDataException;
-import easyflow.custom.exception.ParameterNotFoundException;
-import easyflow.tool.Tool;
 import org.eclipse.emf.ecore.EObject;
 
 /**

@@ -31,20 +31,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -78,7 +75,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ToolImpl extends EObjectImpl implements Tool {
+public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -1599,6 +1596,163 @@ public class ToolImpl extends EObjectImpl implements Tool {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.TOOL___WRITE_MODEL_TO_XML:
+				writeModelToXML();
+				return null;
+			case ToolPackage.TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT:
+				try {
+					return canFilterInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___REQUIRES_GROUPING__STRING_DATAPORT:
+				return requiresGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
+			case ToolPackage.TOOL___PROVIDES_GROUPING__STRING_DATAPORT:
+				return providesGrouping((String)arguments.get(0), (DataPort)arguments.get(1));
+			case ToolPackage.TOOL___GET_GROUPINGS_FOR_INPUT_PORT__DATAPORT_BOOLEAN:
+				return getGroupingsForInputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.TOOL___GET_GROUPINGS_FOR_OUTPUT_PORT__DATAPORT_BOOLEAN:
+				return getGroupingsForOutputPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.TOOL___GET_ANALYSIS_TYPE_OF_PACKAGE__ELIST:
+				return getAnalysisTypeOfPackage((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.TOOL___GET_TEMPLATE_PARAMETER__PARAMETER:
+				return getTemplateParameter((Parameter)arguments.get(0));
+			case ToolPackage.TOOL___GET_TEMPLATE_PARAMETER:
+				return getTemplateParameter();
+			case ToolPackage.TOOL___GET_MATCHING_PARAMETER__ELIST_PARAMETER:
+				return getMatchingParameter((EList<Parameter>)arguments.get(0), (Parameter)arguments.get(1));
+			case ToolPackage.TOOL___GET_MATCHING_PARAMETER_BY_NAME__ELIST_PARAMETER:
+				return getMatchingParameterByName((EList<Parameter>)arguments.get(0), (Parameter)arguments.get(1));
+			case ToolPackage.TOOL___ASSUME_DATA_PARAM_POSITIONAL:
+				return assumeDataParamPositional();
+			case ToolPackage.TOOL___OMIT_PREFIX_IF_NO_ARG_KEY:
+				return omitPrefixIfNoArgKey();
+			case ToolPackage.TOOL___GET_CMD_PART_DELIMITER:
+				return getCmdPartDelimiter();
+			case ToolPackage.TOOL___GET_INTERPRETER_PARAMS:
+				return getInterpreterParams();
+			case ToolPackage.TOOL___GET_EXE:
+				return getExe();
+			case ToolPackage.TOOL___GET_MODULE_PARAMS:
+				return getModuleParams();
+			case ToolPackage.TOOL___GET_INTERPRETER:
+				return getInterpreter();
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					return canProvideMultipleInputsFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					return canProvideMultipleInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					return canProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					return canProcessMultipleInputsFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					return canProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					return canProcessMultipleInstancesFor((DataPort)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					setProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					setProcessMultipleInstancesFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					setProcessMultipleInputsFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+				try {
+					setProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
+				try {
+					setProvideMultipleInstancesFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
+				try {
+					setProvideMultipleInputsFor((DataPort)arguments.get(0));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case ToolPackage.TOOL___RESOLVE_PATH:
+				return resolvePath();
+			case ToolPackage.TOOL___ASSUME_PARAM_POSITIONAL:
+				return assumeParamPositional();
+			case ToolPackage.TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP:
+				createData((InOutParameter)arguments.get(0), (EMap<String, Integer>)arguments.get(1), (EMap<String, Integer>)arguments.get(2));
+				return null;
+			case ToolPackage.TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP:
+				createData((ResolvedParam)arguments.get(0), (EMap<String, Integer>)arguments.get(1), (EMap<String, Integer>)arguments.get(2));
+				return null;
+			case ToolPackage.TOOL___RENDER_TO_STRING:
+				return renderToString();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

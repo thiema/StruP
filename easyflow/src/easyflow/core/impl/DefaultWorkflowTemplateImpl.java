@@ -18,7 +18,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
@@ -31,13 +30,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getTasks <em>Tasks</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getReader <em>Reader</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultWorkflowTemplate {
+public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container implements DefaultWorkflowTemplate {
 	/**
 	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -67,6 +67,26 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	 * @ordered
 	 */
 	protected BufferedReader reader = READER_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getUtilTaskReader() <em>Util Task Reader</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskReader()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BufferedReader UTIL_TASK_READER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUtilTaskReader() <em>Util Task Reader</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskReader()
+	 * @generated
+	 * @ordered
+	 */
+	protected BufferedReader utilTaskReader = UTIL_TASK_READER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -145,6 +165,27 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BufferedReader getUtilTaskReader() {
+		return utilTaskReader;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUtilTaskReader(BufferedReader newUtilTaskReader) {
+		BufferedReader oldUtilTaskReader = utilTaskReader;
+		utilTaskReader = newUtilTaskReader;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER, oldUtilTaskReader, utilTaskReader));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Logger getLogger() {
 		return logger;
 	}
@@ -200,6 +241,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 				return getTasks();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
 				return getReader();
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER:
+				return getUtilTaskReader();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return getLogger();
 		}
@@ -222,6 +265,9 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
 				setReader((BufferedReader)newValue);
 				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER:
+				setUtilTaskReader((BufferedReader)newValue);
+				return;
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
 				return;
@@ -243,6 +289,9 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
 				setReader(READER_EDEFAULT);
 				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER:
+				setUtilTaskReader(UTIL_TASK_READER_EDEFAULT);
+				return;
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
@@ -262,10 +311,27 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 				return tasks != null && !tasks.isEmpty();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER:
 				return READER_EDEFAULT == null ? reader != null : !READER_EDEFAULT.equals(reader);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER:
+				return UTIL_TASK_READER_EDEFAULT == null ? utilTaskReader != null : !UTIL_TASK_READER_EDEFAULT.equals(utilTaskReader);
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST:
+				return readTemplate((String)arguments.get(0), (EList<String>)arguments.get(1));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -280,6 +346,8 @@ public class DefaultWorkflowTemplateImpl extends EObjectImpl implements DefaultW
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (reader: ");
 		result.append(reader);
+		result.append(", utilTaskReader: ");
+		result.append(utilTaskReader);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(')');

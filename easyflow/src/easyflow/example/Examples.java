@@ -7,12 +7,8 @@
 package easyflow.example;
 
 import easyflow.ui.DefaultProject;
-import java.net.URI;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 

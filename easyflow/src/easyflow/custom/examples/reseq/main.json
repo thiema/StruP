@@ -1,14 +1,14 @@
 {
 	
   "project" : {
-	"#workflow_template_file"       : "reseq_simple_alt_path.workflow",
-	"workflow_template_file"       : "reseq_simple.workflow",
-	"#workflow_template_file"       : "reseq_full.workflow",
+	"#workflow_definition_file"       : "reseq_simple_alt_path.workflow",
+	"workflow_definition_file"       : "reseq_simple.workflow",
+	"#workflow_definition_file"       : "reseq_full.workflow",
 	"metadata_file"               : "metadata_sequencing.tsv",
-	"#workflow_template_file"       : "abstract_multiple_traversal_event.workflow",
-	"#workflow_template_file"       : "abstract1.workflow",
-	"#workflow_template_file"       : "abstract_simple1.workflow",
-	"#workflow_template_file"       : "abstract_simple2.workflow",
+	"#workflow_definition_file"       : "abstract_multiple_traversal_event.workflow",
+	"#workflow_definition_file"       : "abstract1.workflow",
+	"#workflow_definition_file"       : "abstract_simple1.workflow",
+	"#workflow_definition_file"       : "abstract_simple2.workflow",
 	"#metadata_file"               : "metadata_abstract_simple1.tsv",
 	"#metadata_file"               : "metadata_abstract_simple2.tsv",
     "#metadata_file"               : "metadata_abstract.tsv", 

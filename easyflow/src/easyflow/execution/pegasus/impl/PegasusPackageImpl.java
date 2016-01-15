@@ -214,6 +214,42 @@ public class PegasusPackageImpl extends EPackageImpl implements PegasusPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getPegasus__PlanWorkflow() {
+		return pegasusEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPegasus__GenerateSiteCatalog() {
+		return pegasusEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPegasus__GenerateReplicaCatalog() {
+		return pegasusEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getPegasus__GenerateTransformationCatalog() {
+		return pegasusEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public PegasusFactory getPegasusFactory() {
 		return (PegasusFactory)getEFactoryInstance();
 	}
@@ -241,6 +277,10 @@ public class PegasusPackageImpl extends EPackageImpl implements PegasusPackage {
 		createEAttribute(pegasusEClass, PEGASUS__SITE_CATALOG);
 		createEAttribute(pegasusEClass, PEGASUS__REPLICA_CATALOG);
 		createEAttribute(pegasusEClass, PEGASUS__TRANSFORMATION_CATALOG);
+		createEOperation(pegasusEClass, PEGASUS___PLAN_WORKFLOW);
+		createEOperation(pegasusEClass, PEGASUS___GENERATE_SITE_CATALOG);
+		createEOperation(pegasusEClass, PEGASUS___GENERATE_REPLICA_CATALOG);
+		createEOperation(pegasusEClass, PEGASUS___GENERATE_TRANSFORMATION_CATALOG);
 	}
 
 	/**
@@ -278,19 +318,19 @@ public class PegasusPackageImpl extends EPackageImpl implements PegasusPackage {
 		pegasusEClass.getESuperTypes().add(theExecutionPackage.getIExecutionSystem());
 		pegasusEClass.getESuperTypes().add(theExecutionPackage.getDefaultExecutionSystem());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(pegasusEClass, Pegasus.class, "Pegasus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPegasus_SiteCatalog(), theEasyflowPackage.getURI(), "siteCatalog", null, 0, 1, Pegasus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPegasus_ReplicaCatalog(), theEasyflowPackage.getURI(), "replicaCatalog", null, 0, 1, Pegasus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPegasus_TransformationCatalog(), theEasyflowPackage.getURI(), "transformationCatalog", null, 0, 1, Pegasus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(pegasusEClass, null, "planWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getPegasus__PlanWorkflow(), null, "planWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(pegasusEClass, null, "generateSiteCatalog", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getPegasus__GenerateSiteCatalog(), null, "generateSiteCatalog", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(pegasusEClass, null, "generateReplicaCatalog", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getPegasus__GenerateReplicaCatalog(), null, "generateReplicaCatalog", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		addEOperation(pegasusEClass, null, "generateTransformationCatalog", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getPegasus__GenerateTransformationCatalog(), null, "generateTransformationCatalog", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 
 } //PegasusPackageImpl

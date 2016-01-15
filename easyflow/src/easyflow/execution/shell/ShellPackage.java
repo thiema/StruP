@@ -98,6 +98,34 @@ public interface ShellPackage extends EPackage {
 
 
 	/**
+	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHELL___GET_JGRAPHX_VISITOR = ExecutionPackage.IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR;
+
+	/**
+	 * The operation id for the '<em>Generate Execution String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHELL___GENERATE_EXECUTION_STRING__RULE = ExecutionPackage.IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE;
+
+	/**
+	 * The number of operations of the '<em>Shell</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHELL_OPERATION_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.execution.shell.Shell <em>Shell</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

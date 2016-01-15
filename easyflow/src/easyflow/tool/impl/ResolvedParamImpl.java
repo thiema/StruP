@@ -6,25 +6,21 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.data.DataFormat;
 import easyflow.tool.Condition;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
-import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToConditionMapImpl;
 import easyflow.util.maps.impl.StringToResolvedParamListMapImpl;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -35,7 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -65,7 +61,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
+public class ResolvedParamImpl extends MinimalEObjectImpl.Container implements ResolvedParam {
 	
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -1139,6 +1135,42 @@ public class ResolvedParamImpl extends EObjectImpl implements ResolvedParam {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.RESOLVED_PARAM___GENERATE_COMMAND_STRING__EMAP_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (Parameter)arguments.get(1));
+			case ToolPackage.RESOLVED_PARAM___GET_ARG_VALUE:
+				return getArgValue();
+			case ToolPackage.RESOLVED_PARAM___RESOLVE_NAME:
+				return resolveName();
+			case ToolPackage.RESOLVED_PARAM___GET_EFFECTIVE_PARAMETERS__ELIST_EMAP:
+				return getEffectiveParameters((EList<ResolvedParam>)arguments.get(0), (EMap<String, String>)arguments.get(1));
+			case ToolPackage.RESOLVED_PARAM___GET_SUPPORTED_HANDLES:
+				return getSupportedHandles();
+			case ToolPackage.RESOLVED_PARAM___DEEP_COPY:
+				return deepCopy();
+			case ToolPackage.RESOLVED_PARAM___RESOLVE_PIPE__STRING:
+				return resolvePipe((String)arguments.get(0));
+			case ToolPackage.RESOLVED_PARAM___RESOLVE_CONDITITIONAL_PARAM__STRING_STRING:
+				resolveCondititionalParam((String)arguments.get(0), (String)arguments.get(1));
+				return null;
+			case ToolPackage.RESOLVED_PARAM___GET_CHILD_PARAM__STRING_STRING:
+				return getChildParam((String)arguments.get(0), (String)arguments.get(1));
+			case ToolPackage.RESOLVED_PARAM___GET_CONDITION_RESOLVING_CHILD_PARAM__STRING_BOOLEAN:
+				return getConditionResolvingChildParam((String)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.RESOLVED_PARAM___RENDER_TO_STRING:
+				return renderToString();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

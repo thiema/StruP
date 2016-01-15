@@ -23,16 +23,13 @@ import easyflow.graph.jgraphx.JgraphxPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
 import easyflow.tool.ToolFactory;
-
+import java.lang.reflect.InvocationTargetException;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -50,7 +47,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  *
  * @generated
  */
-public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
+public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements ExecutionGraph {
 	
 	
 	/**
@@ -276,6 +273,24 @@ public class ExecutionGraphImpl extends EObjectImpl implements ExecutionGraph {
 				return graph != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.EXECUTION_GRAPH___GENERATE_WORKFLOW_FOR_EXECUTION_SYSTEM__MXICELL_IEXECUTIONSYSTEM:
+				return generateWorkflowForExecutionSystem((mxICell)arguments.get(0), (IExecutionSystem)arguments.get(1));
+			case JgraphxPackage.EXECUTION_GRAPH___RESOLVE_TOOL_PARAMS__MXICELL:
+				return resolveToolParams((mxICell)arguments.get(0));
+			case JgraphxPackage.EXECUTION_GRAPH___RESOLVE_PIPES__MXICELL:
+				return resolvePipes((mxICell)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

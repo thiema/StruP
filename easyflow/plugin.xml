@@ -32,6 +32,94 @@
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/graph/jgraphx/easyflow.core/1.0.0"
+            class="easyflow.graph.jgraphx.JgraphxPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/example/1.0.0"
+            class="easyflow.example.ExamplePackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/execution/1.0.0"
+            class="easyflow.execution.ExecutionPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/execution/pegasus/1.0.0"
+            class="easyflow.execution.pegasus.PegasusPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/execution/shell/1.0.0"
+            class="easyflow.execution.shell.ShellPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/execution/makeflow/1.0.0"
+            class="easyflow.execution.makeflow.MakeflowPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/tool/1.0.0"
+            class="easyflow.tool.ToolPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/metadata/1.0.0"
+            class="easyflow.metadata.MetadataPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/traversal/1.0.0"
+            class="easyflow.traversal.TraversalPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/util/maps/1.0.0"
+            class="easyflow.util.maps.MapsPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
+            uri="http:///de/thiema/easyflow/data/1.0.0"
+            class="easyflow.data.DataPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http:///de/thiema/easyflow/sequencing/easyflow.core/1.0.0"
             class="easyflow.sequencing.SequencingPackage"

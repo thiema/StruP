@@ -1,6 +1,6 @@
 {
   "project" : {	
-	"workflow_template_file"       : "abstract.workflow",
+	"workflow_definition_file"     : "abstract.workflow",
     "metadata_file"                : "metadata_abstract.tsv", 
     "is_contrast"                  : "true",
     "use_interval_list"            : "true",

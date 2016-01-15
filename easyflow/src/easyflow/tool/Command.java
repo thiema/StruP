@@ -7,7 +7,6 @@
 package easyflow.tool;
 
 import easyflow.traversal.TraversalChunk;
-import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.data.DataPort;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;

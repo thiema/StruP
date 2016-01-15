@@ -6,20 +6,17 @@
  */
 package easyflow.ui.impl;
 
-import easyflow.EasyflowFactory;
-import easyflow.EasyflowPackage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Map.Entry;
-
 import javax.xml.validation.Schema;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -36,14 +33,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
-import easyflow.core.CorePackage;
 import easyflow.core.Task;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.Workflow;
@@ -106,7 +102,7 @@ import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
  *
  * @generated
  */
-public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
+public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements DefaultProject {
 	/**
 	 * The cached value of the '{@link #getWorkflows() <em>Workflows</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -590,15 +586,20 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		return rc;
 	}
 		
-	private EasyflowTemplate readWorkflowTemplate(String workflowTplFile)
+	private EasyflowTemplate readWorkflowTemplate(String workflowTplFile, String utilDefFile)
 	{
 		
 		EasyflowTemplate workflowTemplate = CoreFactory.eINSTANCE.createEasyflowTemplate();
-		
+		int k;
 		BufferedReader bfReader = getReader(getBaseURI(), workflowTplFile, true);
 		if (bfReader != null)
 		{
 			workflowTemplate.setReader(bfReader);
+			if (utilDefFile != null)
+			{
+				BufferedReader bfReader1 = getReader(getBaseURI(), utilDefFile, true);
+				workflowTemplate.setUtilTaskReader(bfReader1);
+			}
 			return workflowTemplate;
 		}
 		
@@ -853,13 +854,17 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		// ####### READ PROJECT CONFIGURATION ########
 		JSONObject projectCfg=config.getJSONObject("project");
 		
-		logger.debug(projectCfg.get(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME)+" "+getConfigSource()+" "+getBaseURI());
+		logger.debug(projectCfg.get(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME)+" "+getConfigSource()+" "+getBaseURI());
 		
 		Workflow workflow = getActiveWorkflow();
 		
 		// ####### read workflow base-config ######
-		if (projectCfg.has(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_TPL_FILE_PARAM_NAME));
+		if (projectCfg.has(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME) && 
+				!GlobalConfig.getProjectConfig().containsKey(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
+			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
+		if (projectCfg.has(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME) &&
+				!GlobalConfig.getProjectConfig().containsKey(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
+			GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME));
 		if (projectCfg.has(GlobalConstants.WORKFLOW_DIR_PARAM_NAME))
 			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DIR_PARAM_NAME));
 		if (projectCfg.has(GlobalConstants.METADATA_FILE_PARAM_NAME))
@@ -874,7 +879,14 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		{
 			String workflowTplFile = GlobalConfig.getWorkflowTemplateFileName();
 			workflowTplFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), workflowTplFile);
-			EasyflowTemplate workflowTemplate = readWorkflowTemplate(workflowTplFile);
+			
+			String utilDefFile = null;
+			if (GlobalConfig.getProjectConfig().containsKey(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
+			{
+				utilDefFile = GlobalConfig.getProjectConfig().get(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME);
+				utilDefFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), utilDefFile);
+			}
+			EasyflowTemplate workflowTemplate = readWorkflowTemplate(workflowTplFile, utilDefFile);
 			if (workflowTemplate != null)
 			{
 				workflow.setWorkflowTemplate(workflowTemplate);
@@ -884,7 +896,6 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 			{
 				logger.error("Could not read workflow template from file: "+workflowTplFile);
 			}
-	
 			
 			// ####### set metadata ########
 			String metadataFile = GlobalConfig.getMetadataFileName();
@@ -1795,6 +1806,132 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 	 * @generated
 	 */
 	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case UiPackage.DEFAULT_PROJECT___VALIDATE:
+				return validate();
+			case UiPackage.DEFAULT_PROJECT___GET_ACTIVE_WORKFLOW:
+				return getActiveWorkflow();
+			case UiPackage.DEFAULT_PROJECT___CLEAR_WORKFLOWS:
+				clearWorkflows();
+				return null;
+			case UiPackage.DEFAULT_PROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN:
+				return readConfiguration((JSONObject)arguments.get(0), (Boolean)arguments.get(1));
+			case UiPackage.DEFAULT_PROJECT___READ_PROJECT_JSON__URI:
+				try {
+					return readProjectJson((URI)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___SET_CONFIG_AND_BASE_PATH__STRING:
+				setConfigAndBasePath((String)arguments.get(0));
+				return null;
+			case UiPackage.DEFAULT_PROJECT___APPLY_META_DATA:
+				applyMetaData();
+				return null;
+			case UiPackage.DEFAULT_PROJECT___INIT__EASYFLOWGRAPH:
+				return init((EasyFlowGraph)arguments.get(0));
+			case UiPackage.DEFAULT_PROJECT___DELETE:
+				return delete();
+			case UiPackage.DEFAULT_PROJECT___RUN_ENTIRE_WORKFLOW:
+				try {
+					return runEntireWorkflow();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_TRAVERSAL_CRITERIA:
+				try {
+					return resolveTraversalCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___GENERATE_ABSTRACT_GRAPH:
+				return generateAbstractGraph();
+			case UiPackage.DEFAULT_PROJECT___APPLY_GROUPING_CRITERIA:
+				try {
+					return applyGroupingCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___APPLY_PARAMETER_CRITERIA:
+				try {
+					return applyParameterCriteria();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_UTILITY_TASKS:
+				try {
+					return resolveUtilityTasks();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_PREPROCESSING_TASKS:
+				try {
+					return resolvePreprocessingTasks();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RESOLVE_TOOL_DEPENDENCIES:
+				try {
+					return resolveToolDependencies();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
+				return generateWorklowForExecutionSystem();
+			case UiPackage.DEFAULT_PROJECT___SET_WORKER__EASYFLOWOVERALLWORKER:
+				setWorker((EasyFlowOverallWorker)arguments.get(0));
+				return null;
+			case UiPackage.DEFAULT_PROJECT___RUN_NEXT_WORKFLOW_STEP:
+				try {
+					return runNextWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___RUN_PREV_WORKFLOW_STEP:
+				try {
+					return runPrevWorkflowStep();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case UiPackage.DEFAULT_PROJECT___HAS_NEXT_WORKFLOW_STEP:
+				return hasNextWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING:
+				return getWorkflowStepLabelFor((String)arguments.get(0));
+			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_DESC_FOR__STRING:
+				return getWorkflowStepDescFor((String)arguments.get(0));
+			case UiPackage.DEFAULT_PROJECT___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:
+				return getTotalNumberOfWorkflowSteps();
+			case UiPackage.DEFAULT_PROJECT___GET_NUMBER_OF_CURRENT_WORKFLOW_STEP:
+				return getNumberOfCurrentWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_NEXT_WORKFLOW_STEP:
+				return getNextWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_CUR_WORKFLOW_STEP:
+				return getCurWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___RESET_WORKFLOW_STEP:
+				return resetWorkflowStep();
+			case UiPackage.DEFAULT_PROJECT___GET_EXECUTION_SYSTEM:
+				return getExecutionSystem();
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -1807,7 +1944,7 @@ public class DefaultProjectImpl extends EObjectImpl implements DefaultProject {
 		result.append(logger);
 		result.append(", fromJar: ");
 		result.append(fromJar);
-		result.append(", DefaultConfigSourceString: ");
+		result.append(", defaultConfigSourceString: ");
 		result.append(defaultConfigSourceString);
 		result.append(')');
 		return result.toString();

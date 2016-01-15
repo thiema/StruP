@@ -19,14 +19,12 @@ import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
-
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
@@ -41,13 +39,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getTasks <em>Tasks</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getReader <em>Reader</em>}</li>
+ *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplate, IWorkflowTemplate {
+public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implements EasyflowTemplate, IWorkflowTemplate {
 	/**
 	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -75,6 +74,24 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 * @ordered
 	 */
 	protected BufferedReader reader = READER_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getUtilTaskReader() <em>Util Task Reader</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskReader()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BufferedReader UTIL_TASK_READER_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getUtilTaskReader() <em>Util Task Reader</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskReader()
+	 * @generated
+	 * @ordered
+	 */
+	protected BufferedReader utilTaskReader = UTIL_TASK_READER_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -151,6 +168,27 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public BufferedReader getUtilTaskReader() {
+		return utilTaskReader;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUtilTaskReader(BufferedReader newUtilTaskReader) {
+		BufferedReader oldUtilTaskReader = utilTaskReader;
+		utilTaskReader = newUtilTaskReader;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER, oldUtilTaskReader, utilTaskReader));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Logger getLogger() {
 		return logger;
 	}
@@ -217,7 +255,19 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		Map<String,Task> tmpMap=new HashMap<String,Task>();
         // Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
         BufferedReader bufferedReader = new BufferedReader(getReader());
-        String strLine;
+        readTemplate(bufferedReader, mode, defaultGroupingCriteria, tmpMap);
+        if (getUtilTaskReader() != null)
+        {
+        	bufferedReader = new BufferedReader(getUtilTaskReader());
+        	readTemplate(bufferedReader, mode, defaultGroupingCriteria, tmpMap);
+        }
+        checkParents(tmpMap);
+        return true;
+	}
+
+	private void readTemplate(BufferedReader bufferedReader, String mode, EList<String> defaultGroupingCriteria, Map<String,Task> tmpMap)
+	{
+		String strLine;
         try {
 			while ((strLine = bufferedReader.readLine()) != null)   {
 				if (!strLine.startsWith("#")) {
@@ -262,10 +312,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        checkParents(tmpMap);
-        return true;
 	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -278,6 +325,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 				return getTasks();
 			case CorePackage.EASYFLOW_TEMPLATE__READER:
 				return getReader();
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER:
+				return getUtilTaskReader();
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				return getLogger();
 		}
@@ -300,6 +349,9 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			case CorePackage.EASYFLOW_TEMPLATE__READER:
 				setReader((BufferedReader)newValue);
 				return;
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER:
+				setUtilTaskReader((BufferedReader)newValue);
+				return;
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
 				return;
@@ -321,6 +373,9 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			case CorePackage.EASYFLOW_TEMPLATE__READER:
 				setReader(READER_EDEFAULT);
 				return;
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER:
+				setUtilTaskReader(UTIL_TASK_READER_EDEFAULT);
+				return;
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
@@ -340,6 +395,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 				return tasks != null && !tasks.isEmpty();
 			case CorePackage.EASYFLOW_TEMPLATE__READER:
 				return READER_EDEFAULT == null ? reader != null : !READER_EDEFAULT.equals(reader);
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER:
+				return UTIL_TASK_READER_EDEFAULT == null ? utilTaskReader != null : !UTIL_TASK_READER_EDEFAULT.equals(utilTaskReader);
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
@@ -357,6 +414,7 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			switch (derivedFeatureID) {
 				case CorePackage.EASYFLOW_TEMPLATE__TASKS: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS;
 				case CorePackage.EASYFLOW_TEMPLATE__READER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER;
+				case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER;
 				case CorePackage.EASYFLOW_TEMPLATE__LOGGER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER;
 				default: return -1;
 			}
@@ -375,11 +433,27 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 			switch (baseFeatureID) {
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__TASKS: return CorePackage.EASYFLOW_TEMPLATE__TASKS;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER: return CorePackage.EASYFLOW_TEMPLATE__READER;
+				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER: return CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER: return CorePackage.EASYFLOW_TEMPLATE__LOGGER;
 				default: return -1;
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.EASYFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST:
+				return readTemplate((String)arguments.get(0), (EList<String>)arguments.get(1));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -394,6 +468,8 @@ public class EasyflowTemplateImpl extends EObjectImpl implements EasyflowTemplat
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (reader: ");
 		result.append(reader);
+		result.append(", utilTaskReader: ");
+		result.append(utilTaskReader);
 		result.append(", logger: ");
 		result.append(logger);
 		result.append(')');

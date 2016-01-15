@@ -7,10 +7,7 @@
 package easyflow.graph.jgraphx;
 
 import com.mxgraph.model.mxICell;
-
 import easyflow.core.Catalog;
-import easyflow.core.Task;
-
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -20,21 +17,14 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
-
-import easyflow.data.DataLink;
-
 import easyflow.execution.IExecutionSystem;
 import easyflow.metadata.DefaultMetaData;
-
 import easyflow.metadata.GroupingInstance;
 import easyflow.traversal.TraversalEvent;
-
 import java.util.Map;
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

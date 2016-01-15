@@ -11,7 +11,6 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
-
 import easyflow.core.Catalog;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -34,25 +33,21 @@ import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
 import easyflow.graph.jgraphx.ToolDependencies;
 import org.eclipse.emf.common.notify.Notification;
-
-import easyflow.tool.Command;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalCriterion;
-
+import java.lang.reflect.InvocationTargetException;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -70,7 +65,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  *
  * @generated
  */
-public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependencyGraph {
+public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implements ToolDependencyGraph {
 	
 	/**
 	 * The cached value of the '{@link #getGraph() <em>Graph</em>}' reference.
@@ -700,7 +695,26 @@ public class ToolDependencyGraphImpl extends EObjectImpl implements ToolDependen
 		}
 		return super.eIsSet(featureID);
 	}
-/*
+/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH___RESOLVE_TOOL_DEPENDENCIES__MXICELL_CATALOG:
+				try {
+					return resolveToolDependencies((mxICell)arguments.get(0), (Catalog)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/*
 	// return the in/out data defined for the tool, for given datalink
 	// special handling needed for:
 	//   - root tool (only out-data port available)

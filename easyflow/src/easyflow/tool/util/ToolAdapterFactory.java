@@ -14,7 +14,6 @@ import easyflow.tool.DocumentProperties;
 import easyflow.tool.IRule;
 import easyflow.tool.IToolElement;
 import easyflow.tool.InOutParameter;
-import easyflow.tool.Interpreter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
@@ -25,12 +24,9 @@ import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

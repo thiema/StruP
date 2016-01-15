@@ -7,38 +7,25 @@
 package easyflow.execution.impl;
 
 import easyflow.EasyflowPackage;
-
 import easyflow.core.CorePackage;
-
 import easyflow.core.impl.CorePackageImpl;
-
 import easyflow.data.DataPackage;
 import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
-
 import easyflow.example.impl.ExamplePackageImpl;
-
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.ExecutionFactory;
 import easyflow.execution.ExecutionPackage;
 import easyflow.execution.IExecutionSystem;
-
 import easyflow.execution.makeflow.MakeflowPackage;
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
 import easyflow.execution.pegasus.PegasusPackage;
-
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
-
 import easyflow.execution.shell.ShellPackage;
-
 import easyflow.execution.shell.impl.ShellPackageImpl;
-
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
-
 import easyflow.impl.EasyflowPackageImpl;
-
 import easyflow.metadata.MetadataPackage;
 import easyflow.metadata.impl.MetadataPackageImpl;
 import easyflow.tool.ToolPackage;
@@ -46,17 +33,13 @@ import easyflow.tool.impl.ToolPackageImpl;
 import easyflow.traversal.TraversalPackage;
 import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
-
 import easyflow.ui.impl.UiPackageImpl;
-
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.MapsPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -223,6 +206,24 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getIExecutionSystem__GetJgraphxVisitor() {
+		return iExecutionSystemEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getIExecutionSystem__GenerateExecutionString__Rule() {
+		return iExecutionSystemEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ExecutionFactory getExecutionFactory() {
 		return (ExecutionFactory)getEFactoryInstance();
 	}
@@ -251,6 +252,8 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		iExecutionSystemEClass = createEClass(IEXECUTION_SYSTEM);
 		createEAttribute(iExecutionSystemEClass, IEXECUTION_SYSTEM__LOGGER);
 		createEAttribute(iExecutionSystemEClass, IEXECUTION_SYSTEM__WRITER);
+		createEOperation(iExecutionSystemEClass, IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR);
+		createEOperation(iExecutionSystemEClass, IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE);
 	}
 
 	/**
@@ -295,16 +298,16 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		// Add supertypes to classes
 		defaultExecutionSystemEClass.getESuperTypes().add(this.getIExecutionSystem());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(defaultExecutionSystemEClass, DefaultExecutionSystem.class, "DefaultExecutionSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(iExecutionSystemEClass, IExecutionSystem.class, "IExecutionSystem", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getIExecutionSystem_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, IExecutionSystem.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getIExecutionSystem_Writer(), theEasyflowPackage.getBufferedWriter(), "writer", null, 0, 1, IExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		addEOperation(iExecutionSystemEClass, theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getIExecutionSystem__GetJgraphxVisitor(), theEasyflowPackage.getmxICellVisitor(), "getJgraphxVisitor", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		EOperation op = addEOperation(iExecutionSystemEClass, ecorePackage.getEString(), "generateExecutionString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getIExecutionSystem__GenerateExecutionString__Rule(), ecorePackage.getEString(), "generateExecutionString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getRule(), "rule", 0, 1, IS_UNIQUE, IS_ORDERED);
 	}
 

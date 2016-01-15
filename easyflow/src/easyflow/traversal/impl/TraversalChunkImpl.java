@@ -10,12 +10,13 @@ import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.MetadataFactory;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalPackage;
+import java.lang.reflect.InvocationTargetException;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
+public class TraversalChunkImpl extends MinimalEObjectImpl.Container implements TraversalChunk {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -325,6 +326,20 @@ public class TraversalChunkImpl extends EObjectImpl implements TraversalChunk {
 				return groupingInstance != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case TraversalPackage.TRAVERSAL_CHUNK___AS_GROUPING_INSTANCE:
+				return asGroupingInstance();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

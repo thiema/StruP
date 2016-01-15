@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -42,7 +42,6 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.ResolvingParameterFailedException;
 import easyflow.custom.exception.ToolNotFoundException;
-import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
@@ -79,6 +78,7 @@ import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -122,7 +122,7 @@ import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
  *
  * @generated
  */
-public class TaskImpl extends EObjectImpl implements Task {
+public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	/**
 	 * The cached value of the '{@link #getInDataPorts() <em>In Data Ports</em>}' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -3953,6 +3953,272 @@ public class TaskImpl extends EObjectImpl implements Task {
 				return rule != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.TASK___READ_TASK__STRING_STRING_ELIST:
+				readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
+				return null;
+			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING:
+				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN:
+				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2), (Boolean)arguments.get(3));
+			case CorePackage.TASK___PARSE_DATA_FORMAT_FIELD__STRING_ELIST:
+				return parseDataFormatField((String)arguments.get(0), (EList<Pattern>)arguments.get(1));
+			case CorePackage.TASK___GET_UNIQUE_STRING:
+				return getUniqueString();
+			case CorePackage.TASK___GET_UNIQUE_URI_STRING:
+				return getUniqueURIString();
+			case CorePackage.TASK___IS_COMPATIBLE_WITH_OUT_DATA_PORT_FOR__DATAPORT:
+				return isCompatibleWithOutDataPortFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___IS_COMPATIBLE_WITH_IN_DATA_PORT_FOR__DATAPORT:
+				return isCompatibleWithInDataPortFor((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT:
+				return getParentTaskByOutDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_NON_OVERALPPING_TRAVERSAL_CHUNKS_FOR__TASK:
+				return getNonOveralppingTraversalChunksFor((Task)arguments.get(0));
+			case CorePackage.TASK___READ_TOOLS__ELIST:
+				readTools((EList<Tool>)arguments.get(0));
+				return null;
+			case CorePackage.TASK___GET_PREFERRED_TOOL:
+				return getPreferredTool();
+			case CorePackage.TASK___GET_OVERLAPPING_DATA_PORTS__ELIST_ELIST:
+				return getOverlappingDataPorts((EList<DataPort>)arguments.get(0), (EList<DataPort>)arguments.get(1));
+			case CorePackage.TASK___RESOLVE_COMMAND_LINE_PART_INTERPRETER:
+				try {
+					return resolveCommandLinePartInterpreter();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_COMMAND_LINE_PART_EXE:
+				try {
+					return resolveCommandLinePartExe();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_COMMAND_LINE_PART_ANALYSIS_TYPE:
+				try {
+					return resolveCommandLinePartAnalysisType();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_COMMAND_LINE_PART__STRING_BOOLEAN_BOOLEAN:
+				try {
+					return resolveCommandLinePart((String)arguments.get(0), (Boolean)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_COMMAND_LINE_PATTERN:
+				return getCommandLinePattern();
+			case CorePackage.TASK___VALIDATE_TOOL__TOOL:
+				return validateTool((Tool)arguments.get(0));
+			case CorePackage.TASK___VALIDATE_TOOLS:
+				return validateTools();
+			case CorePackage.TASK___GET_DATA_PORT_BY_DATA_PORT__DATAPORT_BOOLEAN:
+				return getDataPortByDataPort((DataPort)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___GET_DATA_PORT_BY_NAME_OF_FORMAT__STRING_BOOLEAN:
+				return getDataPortByNameOfFormat((String)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___GET_DATA_PORT_BY_NAME__STRING_BOOLEAN:
+				return getDataPortByName((String)arguments.get(0), (Boolean)arguments.get(1));
+			case CorePackage.TASK___RESOLVE_MISSING_DATA_PORTS_BY_TOOL__ELIST:
+				return resolveMissingDataPortsByTool((EList<Task>)arguments.get(0));
+			case CorePackage.TASK___GET_OVERLAPPING_CHUNKS_FOR__TASK_STRING:
+				return getOverlappingChunksFor((Task)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.TASK___GET_REQUIRED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
+				try {
+					return getRequiredGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_PROVIDED_GROUPINGS_FOR__TOOL_DATAPORT_BOOLEAN:
+				try {
+					return getProvidedGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1), (Boolean)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleGroupingsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					return canProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					return canProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					setProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					setProcessMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					setProcessMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+				try {
+					setProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					setProvideMultipleInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT:
+				try {
+					setProvideMultipleInputsFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT:
+				try {
+					return canFilterInstancesFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_RECORDS__BOOLEAN:
+				return getRecords((Boolean)arguments.get(0));
+			case CorePackage.TASK___GET_INPUTS__BOOLEAN:
+				return getInputs((Boolean)arguments.get(0));
+			case CorePackage.TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK:
+				return getOverlappingRecordsProvidedBy((Task)arguments.get(0));
+			case CorePackage.TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN:
+				try {
+					return canProvideDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3), (Boolean)arguments.get(4));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN:
+				try {
+					return canComsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3), (Boolean)arguments.get(4));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT:
+				return getOutputsForDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT:
+				return getInputsForDataPort((DataPort)arguments.get(0));
+			case CorePackage.TASK___RESOLVE_PARAMS:
+				try {
+					resolveParams();
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___IS_IDENTITY_TRANSFORMATION:
+				return isIdentityTransformation();
+			case CorePackage.TASK___IS_IDENTITY_TRANSFORMATION__DATAPORT:
+				return isIdentityTransformation((DataPort)arguments.get(0));
+			case CorePackage.TASK___RESOLVE_CONDITIONAL_STATIC_PARAM__RESOLVEDPARAM:
+				resolveConditionalStaticParam((ResolvedParam)arguments.get(0));
+				return null;
+			case CorePackage.TASK___READ_FROM_PIPE:
+				return readFromPipe();
+			case CorePackage.TASK___WRITE_TO_PIPE:
+				return writeToPipe();
+			case CorePackage.TASK___CREATE_RULE:
+				try {
+					return createRule();
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RETRIEVE_DATA_PORT__BOOLEAN_INT:
+				return retrieveDataPort((Boolean)arguments.get(0), (Integer)arguments.get(1));
+			case CorePackage.TASK___RESOLVE_DATA_PORT_PARAMS__EMAP_TOOL_BOOLEAN:
+				try {
+					resolveDataPortParams((EMap<String, DataLink>)arguments.get(0), (Tool)arguments.get(1), (Boolean)arguments.get(2));
+					return null;
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case CorePackage.TASK___RESOLVE_STATIC_PARAMS__EMAP:
+				resolveStaticParams((EMap<String, ResolvedParam>)arguments.get(0));
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

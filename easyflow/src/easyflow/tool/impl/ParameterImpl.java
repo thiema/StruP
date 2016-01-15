@@ -16,35 +16,26 @@ import easyflow.tool.InOutParameter;
 import easyflow.tool.Key;
 import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
-import easyflow.tool.ResolvedParam;
-import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
-import easyflow.util.maps.MapsPackage;
-import easyflow.util.maps.impl.StringToResolvedParamListMapImpl;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map.Entry;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,7 +89,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ParameterImpl extends EObjectImpl implements Parameter {
+public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -2924,6 +2915,88 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			}
 		}
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.PARAMETER___GET_ARG_KEY__STRING_KEY:
+				return getArgKey((String)arguments.get(0), (Key)arguments.get(1));
+			case ToolPackage.PARAMETER___GET_ARG_DELIMITER__STRING:
+				return getArgDelimiter((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_ARG_VALUE_DELIMITER__STRING:
+				return getArgValueDelimiter((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_PREFIX__STRING:
+				return getPrefix((String)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_PARAMETER_FOR_ANALYSIS_TYPE__ELIST:
+				return getParameterForAnalysisType((EList<TraversalChunk>)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_ANALYSIS_TYPE:
+				return isAnalysisType();
+			case ToolPackage.PARAMETER___GET_SUPPORTED_HANDLES__BOOLEAN:
+				return getSupportedHandles((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_EFFECTIVE_PARENT_PARAMETER__BOOLEAN:
+				return getEffectiveParentParameter((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___GET_MERGED_PARAMETER__PARAMETER_BOOLEAN:
+				return getMergedParameter((Parameter)arguments.get(0), (Boolean)arguments.get(1));
+			case ToolPackage.PARAMETER___MATCHES__PARAMETER:
+				return matches((Parameter)arguments.get(0));
+			case ToolPackage.PARAMETER___MATCHES__INOUTPARAMETER:
+				return matches((InOutParameter)arguments.get(0));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING_URI__EMAP_ELIST_PARAMETER:
+				return generateCommandStringURI((EMap<String, Object>)arguments.get(0), (EList<URI>)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_ELIST_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (EList<Object>)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_OBJECT_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_OPTIONVALUE_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (OptionValue)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___GENERATE_COMMAND_STRING__EMAP_URI_PARAMETER:
+				return generateCommandString((EMap<String, Object>)arguments.get(0), (URI)arguments.get(1), (Parameter)arguments.get(2));
+			case ToolPackage.PARAMETER___IS_OPTIONAL__BOOLEAN:
+				return isOptional((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE__BOOLEAN:
+				return isMultiple((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN:
+				return isMultipleInstances((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN:
+				return isMultipleInstancesPerInput((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_NAMED__BOOLEAN:
+				return isNamed((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_POSITIONAL__BOOLEAN:
+				return isPositional((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN:
+				return isFixedArgValue((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_VALUE__BOOLEAN:
+				return isMultipleValue((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___SHOULD_OUTPUT_ARG_VALUE__BOOLEAN:
+				return shouldOutputArgValue((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___MERGE__PARAMETER:
+				merge((Parameter)arguments.get(0));
+				return null;
+			case ToolPackage.PARAMETER___GET_UNIQUE_STRING:
+				return getUniqueString();
+			case ToolPackage.PARAMETER___RESOLVE_NAME:
+				return resolveName();
+			case ToolPackage.PARAMETER___SHOULD_OUTPUT_DEFAULT_PARAM__BOOLEAN:
+				return shouldOutputDefaultParam((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_META_DATA_PARAM:
+				return isMetaDataParam();
+			case ToolPackage.PARAMETER___IS_DATA_SPECIFYING_PARAM:
+				return isDataSpecifyingParam();
+			case ToolPackage.PARAMETER___IS_BOOLEAN:
+				return isBoolean();
+			case ToolPackage.PARAMETER___IS_PREFERRED:
+				return isPreferred();
+			case ToolPackage.PARAMETER___RENDER_TO_STRING:
+				return renderToString();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

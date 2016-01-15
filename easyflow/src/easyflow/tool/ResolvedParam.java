@@ -7,7 +7,6 @@
 package easyflow.tool;
 
 import easyflow.data.DataFormat;
-import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 

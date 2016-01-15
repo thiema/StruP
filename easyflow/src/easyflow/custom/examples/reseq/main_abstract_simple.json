@@ -1,7 +1,8 @@
 {
 	
   "project" : {	
-	"workflow_template_file"       : "abstract_simple.workflow",
+	"workflow_definition_file"     : "abstract_simple.workflow",
+	"utility_definition_file"      : "utility.workflow"
     "metadata_file"                : "metadata_abstract.tsv", 
     "is_contrast"                  : "true",
     "use_interval_list"            : "true",
@@ -55,5 +56,4 @@
   					     "../../../tool/schema/Easyflow_multiple.xsd", 
   					     "../../../tool/schema/external/Galaxy.xsd"]
   }
-
 }

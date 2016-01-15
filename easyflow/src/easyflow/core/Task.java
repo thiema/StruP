@@ -12,34 +12,21 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.ParameterNotFoundException;
 import easyflow.custom.exception.ResolvingParameterFailedException;
 import easyflow.custom.exception.ToolNotFoundException;
-
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
-
 import easyflow.metadata.GroupingInstance;
-
 import easyflow.tool.Command;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Rule;
-import easyflow.tool.Parameter;
 import easyflow.tool.Tool;
-
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
-
 import java.net.URI;
-
-import java.util.Map;
 import java.util.regex.Pattern;
-
-import org.apache.commons.jexl2.JexlEngine;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

@@ -10,6 +10,7 @@ import easyflow.execution.ExecutionPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -126,6 +127,70 @@ public interface PegasusPackage extends EPackage {
 
 
 	/**
+	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS___GET_JGRAPHX_VISITOR = ExecutionPackage.IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR;
+
+	/**
+	 * The operation id for the '<em>Generate Execution String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS___GENERATE_EXECUTION_STRING__RULE = ExecutionPackage.IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE;
+
+	/**
+	 * The operation id for the '<em>Plan Workflow</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS___PLAN_WORKFLOW = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Generate Site Catalog</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS___GENERATE_SITE_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Generate Replica Catalog</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS___GENERATE_REPLICA_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Generate Transformation Catalog</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS___GENERATE_TRANSFORMATION_CATALOG = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Pegasus</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PEGASUS_OPERATION_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_OPERATION_COUNT + 4;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.execution.pegasus.Pegasus <em>Pegasus</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -167,6 +232,46 @@ public interface PegasusPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPegasus_TransformationCatalog();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.execution.pegasus.Pegasus#planWorkflow() <em>Plan Workflow</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Plan Workflow</em>' operation.
+	 * @see easyflow.execution.pegasus.Pegasus#planWorkflow()
+	 * @generated
+	 */
+	EOperation getPegasus__PlanWorkflow();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.execution.pegasus.Pegasus#generateSiteCatalog() <em>Generate Site Catalog</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Site Catalog</em>' operation.
+	 * @see easyflow.execution.pegasus.Pegasus#generateSiteCatalog()
+	 * @generated
+	 */
+	EOperation getPegasus__GenerateSiteCatalog();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.execution.pegasus.Pegasus#generateReplicaCatalog() <em>Generate Replica Catalog</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Replica Catalog</em>' operation.
+	 * @see easyflow.execution.pegasus.Pegasus#generateReplicaCatalog()
+	 * @generated
+	 */
+	EOperation getPegasus__GenerateReplicaCatalog();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.execution.pegasus.Pegasus#generateTransformationCatalog() <em>Generate Transformation Catalog</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Transformation Catalog</em>' operation.
+	 * @see easyflow.execution.pegasus.Pegasus#generateTransformationCatalog()
+	 * @generated
+	 */
+	EOperation getPegasus__GenerateTransformationCatalog();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -223,6 +328,38 @@ public interface PegasusPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PEGASUS__TRANSFORMATION_CATALOG = eINSTANCE.getPegasus_TransformationCatalog();
+
+		/**
+		 * The meta object literal for the '<em><b>Plan Workflow</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PEGASUS___PLAN_WORKFLOW = eINSTANCE.getPegasus__PlanWorkflow();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Site Catalog</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PEGASUS___GENERATE_SITE_CATALOG = eINSTANCE.getPegasus__GenerateSiteCatalog();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Replica Catalog</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PEGASUS___GENERATE_REPLICA_CATALOG = eINSTANCE.getPegasus__GenerateReplicaCatalog();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Transformation Catalog</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PEGASUS___GENERATE_TRANSFORMATION_CATALOG = eINSTANCE.getPegasus__GenerateTransformationCatalog();
 
 	}
 

@@ -6,7 +6,6 @@
  */
 package easyflow.execution.shell;
 
-import easyflow.core.Task;
 import easyflow.execution.DefaultExecutionSystem;
 import easyflow.execution.IExecutionSystem;
 

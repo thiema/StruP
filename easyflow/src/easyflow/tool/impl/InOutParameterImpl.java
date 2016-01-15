@@ -9,6 +9,7 @@ package easyflow.tool.impl;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -364,6 +365,20 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 				return DATA_PORT_EDEFAULT == null ? dataPort != null : !DATA_PORT_EDEFAULT.equals(dataPort);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ToolPackage.IN_OUT_PARAMETER___OMIT_EXTENSION:
+				return omitExtension();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

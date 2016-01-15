@@ -6,8 +6,6 @@
  */
 package easyflow.data.impl;
 
-import easyflow.custom.tool.saxparser.ToolContentHandler;
-import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.Data;
@@ -15,13 +13,10 @@ import easyflow.data.DataFormat;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
 import easyflow.tool.Parameter;
-
 import easyflow.tool.ResolvedParam;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
@@ -29,7 +24,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
@@ -52,7 +46,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class DataImpl extends EObjectImpl implements Data {
+public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 	
 	Logger logger = Logger.getLogger(Data.class);
 	/**
@@ -746,6 +740,38 @@ public class DataImpl extends EObjectImpl implements Data {
 				return HANDLE_EDEFAULT == null ? handle != null : !HANDLE_EDEFAULT.equals(handle);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case DataPackage.DATA___GET_FORMAT:
+				return getFormat();
+			case DataPackage.DATA___GET_FORMAT_STR:
+				return getFormatStr();
+			case DataPackage.DATA___IS_ALLOWED:
+				return isAllowed();
+			case DataPackage.DATA___GET_SUPPORTED_HANDLES:
+				return getSupportedHandles();
+			case DataPackage.DATA___MATCH__DATA:
+				return match((Data)arguments.get(0));
+			case DataPackage.DATA___MATCH_FORMAT__DATAFORMAT:
+				return matchFormat((DataFormat)arguments.get(0));
+			case DataPackage.DATA___RESOLVE_HANDLE__DATA:
+				return resolveHandle((Data)arguments.get(0));
+			case DataPackage.DATA___RESOLVE_HANDLE__STRING:
+				return resolveHandle((String)arguments.get(0));
+			case DataPackage.DATA___RESOLVE_SUPPORTED_HANDLES:
+				return resolveSupportedHandles();
+			case DataPackage.DATA___IS_PIPABLE:
+				return isPipable();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

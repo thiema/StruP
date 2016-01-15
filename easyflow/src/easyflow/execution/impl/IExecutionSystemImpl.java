@@ -7,9 +7,8 @@
 package easyflow.execution.impl;
 
 import java.io.IOException;
-
+import java.lang.reflect.InvocationTargetException;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
@@ -19,16 +18,14 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.execution.ExecutionPackage;
 import easyflow.execution.IExecutionSystem;
-
 import easyflow.tool.Rule;
-
 import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,7 +41,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecutionSystem {
+public abstract class IExecutionSystemImpl extends MinimalEObjectImpl.Container implements IExecutionSystem {
 	
 	/**
 	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -269,6 +266,22 @@ public abstract class IExecutionSystemImpl extends EObjectImpl implements IExecu
 				return WRITER_EDEFAULT == null ? writer != null : !WRITER_EDEFAULT.equals(writer);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case ExecutionPackage.IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR:
+				return getJgraphxVisitor();
+			case ExecutionPackage.IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE:
+				return generateExecutionString((Rule)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

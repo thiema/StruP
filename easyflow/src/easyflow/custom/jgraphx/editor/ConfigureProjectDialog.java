@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -65,9 +67,11 @@ public class ConfigureProjectDialog extends JWindow implements ActionListener {
         //userProject.setFromJar(false);    
         
 		// add the radio buttons to select predefined configs
-        
-		for (final String exampleName : examples.keySet())
+        Iterator<Entry<String, DefaultProject>> itEx = examples.iterator();
+        while (itEx.hasNext())
+		//for (final String exampleName : examples.keySet())
 		{
+        	final String exampleName = itEx.next().getKey();
 			//popup.add(newContentPane);
 			JRadioButton radioButton = new JRadioButton(exampleName);
 			radioButton.setActionCommand(exampleName);

@@ -10,7 +10,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,6 +107,33 @@ public interface ExecutionPackage extends EPackage {
 	int IEXECUTION_SYSTEM_FEATURE_COUNT = 2;
 
 	/**
+	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR = 0;
+
+	/**
+	 * The operation id for the '<em>Generate Execution String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE = 1;
+
+	/**
+	 * The number of operations of the '<em>IExecution System</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IEXECUTION_SYSTEM_OPERATION_COUNT = 2;
+
+	/**
 	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -133,6 +159,34 @@ public interface ExecutionPackage extends EPackage {
 	 * @ordered
 	 */
 	int DEFAULT_EXECUTION_SYSTEM_FEATURE_COUNT = IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The operation id for the '<em>Get Jgraphx Visitor</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_EXECUTION_SYSTEM___GET_JGRAPHX_VISITOR = IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR;
+
+	/**
+	 * The operation id for the '<em>Generate Execution String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_EXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE = IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE;
+
+	/**
+	 * The number of operations of the '<em>Default Execution System</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_EXECUTION_SYSTEM_OPERATION_COUNT = IEXECUTION_SYSTEM_OPERATION_COUNT + 0;
 
 
 	/**
@@ -176,6 +230,26 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getIExecutionSystem_Writer();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.execution.IExecutionSystem#getJgraphxVisitor() <em>Get Jgraphx Visitor</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Jgraphx Visitor</em>' operation.
+	 * @see easyflow.execution.IExecutionSystem#getJgraphxVisitor()
+	 * @generated
+	 */
+	EOperation getIExecutionSystem__GetJgraphxVisitor();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.execution.IExecutionSystem#generateExecutionString(easyflow.tool.Rule) <em>Generate Execution String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Execution String</em>' operation.
+	 * @see easyflow.execution.IExecutionSystem#generateExecutionString(easyflow.tool.Rule)
+	 * @generated
+	 */
+	EOperation getIExecutionSystem__GenerateExecutionString__Rule();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -234,6 +308,22 @@ public interface ExecutionPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute IEXECUTION_SYSTEM__WRITER = eINSTANCE.getIExecutionSystem_Writer();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Jgraphx Visitor</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IEXECUTION_SYSTEM___GET_JGRAPHX_VISITOR = eINSTANCE.getIExecutionSystem__GetJgraphxVisitor();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Execution String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IEXECUTION_SYSTEM___GENERATE_EXECUTION_STRING__RULE = eINSTANCE.getIExecutionSystem__GenerateExecutionString__Rule();
 
 	}
 

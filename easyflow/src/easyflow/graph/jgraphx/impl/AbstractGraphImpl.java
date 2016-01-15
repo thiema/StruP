@@ -7,7 +7,6 @@
 package easyflow.graph.jgraphx.impl;
 
 import java.util.Map.Entry;
-
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -23,9 +22,8 @@ import easyflow.graph.jgraphx.Abstract;
 import easyflow.graph.jgraphx.Graph;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import org.eclipse.emf.common.notify.Notification;
-import easyflow.graph.jgraphx.ToolDependencies;
 import easyflow.traversal.TraversalEvent;
-
+import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
@@ -33,11 +31,9 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -55,7 +51,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  *
  * @generated
  */
-public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
+public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements AbstractGraph {
 	
 	
 	/**
@@ -140,6 +136,25 @@ public class AbstractGraphImpl extends EObjectImpl implements AbstractGraph {
 				return graph != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.ABSTRACT_GRAPH___RESOLVE_TRAVERSAL_EVENTS__MXICELL:
+				try {
+					return resolveTraversalEvents((mxICell)arguments.get(0));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	public boolean resolveTraversalEvents_Param(mxICell root)

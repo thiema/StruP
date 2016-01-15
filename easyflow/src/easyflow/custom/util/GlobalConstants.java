@@ -146,7 +146,8 @@ public class GlobalConstants {
 	public static final String HOME_DIR         = ".strup";
 	public static final String DFLT_CONFIG_FILE = URIUtil.createPath(HOME_DIR, "config.json");
 	
-	public static final String WORKFLOW_TPL_FILE_PARAM_NAME = "workflow_template_file";
+	public static final String WORKFLOW_DEF_FILE_PARAM_NAME = "workflow_definition_file";
+	public static final String UTILITY_DEF_FILE_PARAM_NAME  = "utility_definition_file";
 	public static final String WORKFLOW_DIR_PARAM_NAME      = "workflow_dir";
 	
 	public static final String PKG_CFG_FILE_PARAM_NAME      = "pkg_config_file";
@@ -201,7 +202,14 @@ public class GlobalConstants {
 	public static final String COMMAND_LINE_PART_INPUT      = PARAM_INPUT;
 	public static final String COMMAND_LINE_PART_OUTPUT     = PARAM_OUTPUT;
 	public static final String COMMAND_LINE_PART_OPT_PARAMS = PARAM_OPTIONAL;
-	public static final String COMMAND_LINE_PART_POS_PARAMS = PARAM_POSITIONAL;	
+	public static final String COMMAND_LINE_PART_POS_PARAMS = PARAM_POSITIONAL;
+
+
+	public static final String EXAMPLE_REPO_HEADER_NAME = "Name";
+	public static final String EXAMPLE_REPO_HEADER_CONFIG = "Config";
+	public static final String EXAMPLE_REPO_HEADER_WORKFLOW = "Workflow";
+	public static final String EXAMPLE_REPO_HEADER_UTIL = "Utility";
+	public static final String EXAMPLE_REPO_HEADER_FOLDER = "Folder";
 	
 }
 

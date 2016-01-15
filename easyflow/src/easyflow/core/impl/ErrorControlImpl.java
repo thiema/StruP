@@ -10,15 +10,13 @@ import easyflow.core.Category;
 import easyflow.core.CorePackage;
 import easyflow.core.ErrorControl;
 import easyflow.core.Severity;
-
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
@@ -40,7 +38,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  *
  * @generated
  */
-public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
+public class ErrorControlImpl extends MinimalEObjectImpl.Container implements ErrorControl {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -457,6 +455,20 @@ public class ErrorControlImpl extends EObjectImpl implements ErrorControl {
 				return vals != null && !vals.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case CorePackage.ERROR_CONTROL___GENERATE_DESCRIPTION:
+				return generateDescription();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
