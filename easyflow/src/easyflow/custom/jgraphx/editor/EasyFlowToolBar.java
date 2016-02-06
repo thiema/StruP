@@ -35,7 +35,7 @@ public class EasyFlowToolBar extends JToolBar
 	private static final Logger              logger = Logger.getLogger(EasyFlowToolBar.class);
 	private        final EasyFlowGraphEditor editor;
 	private              Examples            examples;
-	private              String         defaultProjectType = "sequencing";
+	private              String         defaultProjectType = "reseq";
 	private static final boolean		isFromJar	       = false;
 	private static final String         repositoryJar      = "/easyflow/custom/examples";
 	private static String               repositoryFS       = "easyflow/custom/examples";
@@ -125,7 +125,7 @@ public class EasyFlowToolBar extends JToolBar
 		DefaultProject defaultProject = getExamples(true).getExamples().get(defaultProjectType);
 		if (defaultProject == null)
 		{
-			logger.warn("Couldnt read default project definition.");
+			logger.warn("Couldn't read default project definition.");
 			btnInitWorkflow.setEnabled(false);
 		}
 		else

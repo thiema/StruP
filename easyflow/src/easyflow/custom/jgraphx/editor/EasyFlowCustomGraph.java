@@ -66,6 +66,7 @@ public class EasyFlowCustomGraph extends mxGraph
 	/**
 	 * Prints out some useful information about the cell in the tooltip.
 	 */
+	/*
 	public String getToolTipForCell(Object cell)
 	{
 		String tip = "<html>";
@@ -151,6 +152,7 @@ public class EasyFlowCustomGraph extends mxGraph
 
 		return tip;
 	}
+	*/
 
 	/**
 	 * Overrides the method to use the currently selected edge template for
@@ -165,7 +167,7 @@ public class EasyFlowCustomGraph extends mxGraph
 	 * @param style
 	 * @return
 	 */
-	
+	/*
 	public Object createEdge(Object parent, String id, Object value,
 			Object source, Object target, String style)
 	{
@@ -179,7 +181,7 @@ public class EasyFlowCustomGraph extends mxGraph
 
 		return super.createEdge(parent, id, value, source, target, style);
 	}
-
+*/
 	/*
 	 *custom label 
 	 */
@@ -223,8 +225,6 @@ public class EasyFlowCustomGraph extends mxGraph
 							if (!dataLink.isUnconditional())
 								condition+=" not ("+StringUtils.join(dataLink.getCondition().getForbidden(), " || ")+")";
 							
-
-
 							logger.trace("getLabel(): "+labelName+"_"+uniqueString+" cond="+condition);
 							return labelName;
 						}
@@ -263,6 +263,7 @@ public class EasyFlowCustomGraph extends mxGraph
 	 * @param location Location where the mouse was released.
 	 * @return Returns the cells that were moved.
 	 */
+	/*
 	@Override
 	public Object[] moveCells(Object[] cells, double dx, double dy,
 			boolean clone, Object target, Point location)
@@ -335,7 +336,7 @@ public class EasyFlowCustomGraph extends mxGraph
 	    }
 	  };
 	}
-
+*/
 }
 
 

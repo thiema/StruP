@@ -799,7 +799,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWorkflow__GetValidInOutDataPortCombinations() {
+	public EOperation getWorkflow__Init() {
 		return workflowEClass.getEOperations().get(32);
 	}
 
@@ -808,17 +808,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWorkflow__Init() {
-		return workflowEClass.getEOperations().get(33);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getWorkflow__RenderToString() {
-		return workflowEClass.getEOperations().get(34);
+		return workflowEClass.getEOperations().get(33);
 	}
 
 	/**
@@ -1636,6 +1627,51 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getTask__GetDetailedString() {
+		return taskEClass.getEOperations().get(58);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTask__GetValidInOutDataPortCombinations() {
+		return taskEClass.getEOperations().get(59);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTask__ReadTraversalCriteria__String() {
+		return taskEClass.getEOperations().get(60);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTask__ReadGroupingCriteria__String_EList_String() {
+		return taskEClass.getEOperations().get(61);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTask__CreateGroupingCriteria__String_DataPort_String() {
+		return taskEClass.getEOperations().get(62);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPreprocessingTask() {
 		return preprocessingTaskEClass;
 	}
@@ -2280,7 +2316,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(workflowEClass, WORKFLOW___RESET_WORKFLOW_STEP);
 		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING);
 		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING);
-		createEOperation(workflowEClass, WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS);
 		createEOperation(workflowEClass, WORKFLOW___INIT);
 		createEOperation(workflowEClass, WORKFLOW___RENDER_TO_STRING);
 
@@ -2374,6 +2409,11 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(taskEClass, TASK___RETRIEVE_DATA_PORT__BOOLEAN_INT);
 		createEOperation(taskEClass, TASK___RESOLVE_DATA_PORT_PARAMS__EMAP_TOOL_BOOLEAN);
 		createEOperation(taskEClass, TASK___RESOLVE_STATIC_PARAMS__EMAP);
+		createEOperation(taskEClass, TASK___GET_DETAILED_STRING);
+		createEOperation(taskEClass, TASK___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS);
+		createEOperation(taskEClass, TASK___READ_TRAVERSAL_CRITERIA__STRING);
+		createEOperation(taskEClass, TASK___READ_GROUPING_CRITERIA__STRING_ELIST_STRING);
+		createEOperation(taskEClass, TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING);
 
 		preprocessingTaskEClass = createEClass(PREPROCESSING_TASK);
 		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__NAME);
@@ -2645,8 +2685,6 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		op = initEOperation(getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String(), null, "printWorkflowStepMsgOnEnd", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "rc", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEOperation(getWorkflow__GetValidInOutDataPortCombinations(), theMapsPackage.getStringToStringMap(), "getValidInOutDataPortCombinations", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWorkflow__Init(), null, "init", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -2938,6 +2976,23 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		op = initEOperation(getTask__ResolveStaticParams__EMap(), null, "resolveStaticParams", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToResolvedParamMap(), "resolveStaticParams", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTask__GetDetailedString(), ecorePackage.getEString(), "getDetailedString", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTask__GetValidInOutDataPortCombinations(), theMapsPackage.getStringToStringMap(), "getValidInOutDataPortCombinations", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getTask__ReadTraversalCriteria__String(), ecorePackage.getEBoolean(), "readTraversalCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "field", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getTask__ReadGroupingCriteria__String_EList_String(), ecorePackage.getEBoolean(), "readGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "field", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultCroupingCriteria", 0, -1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultMode", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getTask__CreateGroupingCriteria__String_DataPort_String(), ecorePackage.getEBoolean(), "createGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "field", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "defaultCroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "defaultMode", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(preprocessingTaskEClass, PreprocessingTask.class, "PreprocessingTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPreprocessingTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

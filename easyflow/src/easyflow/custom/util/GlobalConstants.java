@@ -205,11 +205,17 @@ public class GlobalConstants {
 	public static final String COMMAND_LINE_PART_POS_PARAMS = PARAM_POSITIONAL;
 
 
-	public static final String EXAMPLE_REPO_HEADER_NAME = "Name";
-	public static final String EXAMPLE_REPO_HEADER_CONFIG = "Config";
+	public static final String EXAMPLE_REPO_HEADER_NAME     = "Name";
+	public static final String EXAMPLE_REPO_HEADER_CONFIG   = "Config";
 	public static final String EXAMPLE_REPO_HEADER_WORKFLOW = "Workflow";
-	public static final String EXAMPLE_REPO_HEADER_UTIL = "Utility";
-	public static final String EXAMPLE_REPO_HEADER_FOLDER = "Folder";
+	public static final String EXAMPLE_REPO_HEADER_UTIL     = "Utility";
+	public static final String EXAMPLE_REPO_HEADER_FOLDER   = "Folder";
+
+
+	public static final String EXAMPLE_REPO_HEADER_METADATA = "Metadata";
+
+
+	public static final String WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME = "input_grouping_criterion";
 	
 }
 

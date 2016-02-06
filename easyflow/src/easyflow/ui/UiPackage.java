@@ -450,13 +450,40 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__PACKAGES = IPROJECT_FEATURE_COUNT + 8;
 
 	/**
+	 * The feature id for the '<em><b>Config Workflow Def File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__CONFIG_WORKFLOW_DEF_FILE = IPROJECT_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Config Utility Def File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__CONFIG_UTILITY_DEF_FILE = IPROJECT_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Config Metadata File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__CONFIG_METADATA_FILE = IPROJECT_FEATURE_COUNT + 11;
+
+	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 9;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 12;
 
 
 	/**
@@ -1159,6 +1186,39 @@ public interface UiPackage extends EPackage {
 	EReference getDefaultProject_Packages();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Config Workflow Def File</em>'.
+	 * @see easyflow.ui.DefaultProject#getConfigWorkflowDefFile()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EAttribute getDefaultProject_ConfigWorkflowDefFile();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getConfigUtilityDefFile <em>Config Utility Def File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Config Utility Def File</em>'.
+	 * @see easyflow.ui.DefaultProject#getConfigUtilityDefFile()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EAttribute getDefaultProject_ConfigUtilityDefFile();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.ui.DefaultProject#getConfigMetadataFile <em>Config Metadata File</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Config Metadata File</em>'.
+	 * @see easyflow.ui.DefaultProject#getConfigMetadataFile()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EAttribute getDefaultProject_ConfigMetadataFile();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1511,6 +1571,30 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEFAULT_PROJECT__PACKAGES = eINSTANCE.getDefaultProject_Packages();
+
+		/**
+		 * The meta object literal for the '<em><b>Config Workflow Def File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_PROJECT__CONFIG_WORKFLOW_DEF_FILE = eINSTANCE.getDefaultProject_ConfigWorkflowDefFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Config Utility Def File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_PROJECT__CONFIG_UTILITY_DEF_FILE = eINSTANCE.getDefaultProject_ConfigUtilityDefFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Config Metadata File</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_PROJECT__CONFIG_METADATA_FILE = eINSTANCE.getDefaultProject_ConfigMetadataFile();
 
 	}
 

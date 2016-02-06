@@ -7,6 +7,7 @@
 package easyflow.graph.jgraphx.impl;
 
 import java.util.Map.Entry;
+
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -21,9 +22,15 @@ import easyflow.data.DataPort;
 import easyflow.graph.jgraphx.Abstract;
 import easyflow.graph.jgraphx.Graph;
 import easyflow.graph.jgraphx.JgraphxPackage;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import easyflow.traversal.TraversalDependency;
 import easyflow.traversal.TraversalEvent;
+import easyflow.traversal.TraversalFactory;
+
 import java.lang.reflect.InvocationTargetException;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
@@ -31,9 +38,12 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -237,7 +247,7 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 		
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		JGraphXUtil.layoutGraph();
-		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, allTraversalEvents);
+		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, null, allTraversalEvents);
 		
 		return rc;
 	}
@@ -258,11 +268,13 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 	 */	
 	public boolean resolveTraversalEvents_Grouping(mxICell root) throws TaskNotFoundException, CellNotFoundException {
 		
-		logger.debug("############ graph="+getGraph());
+		logger.debug("resolveTraversalEvents_Grouping()");
 		// map to track all processed traversalevents: <grouping>_<mode>_<te's root> x <Traversalevent>
 		final EMap<String, TraversalEvent> allTraversalEvents = new BasicEMap<String, TraversalEvent>();
 		// track deprecated traversalevents : <task> x <te name>
 		final EMap<String, EList<String>> deprecatedTraversalEvents = new BasicEMap<String, EList<String>>();
+		// track traversalevents to keep
+		final EMap<String, EList<String>> keepTraversalEvents = new BasicEMap<String, EList<String>>();
 		
 		mxICellVisitor visitor=new mxICellVisitor() {
 			String debug="resolveTraversalEvents(): ";
@@ -271,16 +283,15 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 			public boolean visit(Object vertex, Object edge) {
 				// set the current task
 				//Task task=XMLUtil.loadTaskFromVertex(vertex);
-				Task task         = null;
-				Task parentTask   = null;
-				String taskString = null;
-				DataLink dataLink = null;
+				Task     task       = null;
+				Task     parentTask = null;
+				String   taskString = null;
+				DataLink dataLink   = null;
 				try {
 					task = JGraphXUtil.loadTask(vertex);
-				
 					taskString = task.getUniqueString();
-					// set vertex's parent task
 					
+					// set vertex's parent task
 					if (edge != null)
 					{
 						parentTask = JGraphXUtil.getSourceTask((mxCell) edge);
@@ -295,9 +306,8 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 					e.printStackTrace();
 				}
 				debug = (parentTask==null?"null":parentTask.getUniqueString())+"=>"+task.getUniqueString()+": ";
-							
-				String parentTaskString = parentTask != null ? parentTask.getUniqueString() : "root";
 				
+				String parentTaskString = parentTask != null ? parentTask.getUniqueString() : "root";
 				// check defined TraversalEvents for task
 				for (String te : task.getTraversalEvents().keySet()) {
 					
@@ -320,7 +330,6 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 					}
 					TraversalEvent parentTraversalEvent = null;
 
-
 					// get traversal event of parent
 					if (parentTask != null &&
 							parentTask.getTraversalEvents().keySet().contains(te) &&
@@ -333,17 +342,17 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 						
 					//if (parentTraversalEvent != null)
 					//{
-						debug+="(extend:";
+						debug += "(extend:";
 						// maintain merge tasks
 						parentTraversalEvent.getMergeTask().add(task);
 
-						// remove parent from parents merge task and deprecate current te only in case an unconditional edge is observed 
+						// remove parent from parents merge task and deprecate current te 
+						// only in case an unconditional edge is observed 
 						if (dataLink.isUnconditional())
 						{
-
 							if (parentTraversalEvent.getMergeTask().contains(parentTask))
 							{
-								debug+=" remove merge task:"+parentTaskString;
+								debug += " remove merge task:" + parentTaskString;
 								parentTraversalEvent.getMergeTask().remove(parentTask);
 							}
 
@@ -352,35 +361,27 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 								depricatedTEs = deprecatedTraversalEvents.get(taskString);
 							else
 								depricatedTEs = new BasicEList<String>();
+							
 							if (!depricatedTEs.contains(te))
 								depricatedTEs.add(te);
 							deprecatedTraversalEvents.put(taskString, depricatedTEs);
-							debug+=" change te "+te+" of task:"+taskString+" to use te of task:"+parentTaskString;
+							debug += " change te " + te + " of task:" + taskString 
+									+ " to use te of task:" + parentTaskString;
 							
 							task.getTraversalEvents().put(te, parentTraversalEvent);
 							//traversalEvent = parentTraversalEvent;
+						}
+						else
+						{
+							//task.getTraversalEvents().put(te, parentTraversalEvent);
+							//dataLink.getTraversalEvents().put(te, traversalEvent);
+							logger.debug("handling for cond. te");
 						}
 					}
 					// a new te for this particular path,
 					else
 					{
-						/*if (deprecatedTraversalEvents.containsKey(taskString))
-						{
-							if (deprecatedTraversalEvents.get(taskString).contains(te))
-							{
-								logger.debug("te found");
-								TraversalEvent te2 = traversalEvent;
-								traversalEvent = TraversalFactory.eINSTANCE.createTraversalEvent();
-								traversalEvent.setSplitTask(task);
-								traversalEvent.getMergeTask().add(task);
-								traversalEvent.getParentTask().add(parentTask);
-								traversalEvent.setTraversalCriterion(te2.getTraversalCriterion());
-								task.getTraversalEvents().put(te, traversalEvent);
-								deprecatedTraversalEvents.get(taskString).remove(te);
-							}
-						}*/
-						
-						debug+="(new:";
+						debug += "(new: " + (dataLink.isUnconditional() ? "unconditional" : "conditional");
 						// if no parent set 
 						if (parentTask == null)
 						{
@@ -388,15 +389,35 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 						}
 						else
 						{
-							debug+=" parent="+parentTaskString+" ";
+							debug += " parent=" + parentTaskString + " ";
 							// known at the overall graph
 							if (!traversalEvent.getParentTask().contains(parentTask))
 							{
 								traversalEvent.getParentTask().add(parentTask);
 							}
-							else
+							
+							if (!traversalEvent.getSplitTask().getUniqueString().equals(task.getUniqueString()))
 							{
-								debug+=" but known for whole graph ";
+								debug += " copy, because its a new splitting point ";
+								traversalEvent.incDep();
+								logger.debug(traversalEvent.getDepNum());
+								traversalEvent = EcoreUtil.copy(traversalEvent);
+								logger.debug(traversalEvent.getDepNum());
+								traversalEvent.setSplitTask(task);
+								task.getTraversalEvents().put(te, traversalEvent);
+								EList<String> keepTEs = null;
+								if (keepTraversalEvents.containsKey(taskString))
+								{
+									keepTEs = keepTraversalEvents.get(taskString);
+								}
+								else
+								{
+									keepTEs = new BasicEList<String>();
+									keepTraversalEvents.put(taskString, keepTEs);
+								}
+								if (!keepTEs.contains(te))
+									keepTEs.add(te);
+								
 							}
 						}
 						// set the traversal events merge task
@@ -405,11 +426,9 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 						
 						allTraversalEvents.put(te_unique+"_"+taskString, traversalEvent);
 					}
-					debug+=" ("+te_unique+"))";					
+					debug += " ("+te_unique+"))";					
 				}
-				
-				//debug+="\n";
-				logger.debug(debug);
+				logger.debug("resolveTraversalEvents_Grouping(): "+debug);
 				
 				//add terminal edge (dataport)
 				BasicEList<DataPort> dataPorts = null;
@@ -423,7 +442,6 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 					logger.debug("resolveTraversalEvents_Grouping(): add terminal edge for "+dataPort.getName()+" "+dataPort.getFormat().getName());
 					getGraph().getGraph().insertEdgeEasyFlow(null, null, vertex, null, termDataLink);
 					dataPorts.add(dataPort);
-					
 				}
 				if (dataPorts != null && !dataPorts.isEmpty())
 					task.getUnresolvedOutDataPorts().removeAll(dataPorts);
@@ -435,11 +453,9 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 		getGraph().getGraph().getModel().beginUpdate();try{
 			getGraph().getGraph().traverseAllPaths(root, true, visitor, null);
 			//getGraph().traverse(root, true, visitor);
-		
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		JGraphXUtil.layoutGraph();
-		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, allTraversalEvents);
-
+		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, keepTraversalEvents, allTraversalEvents);
 		
 		// traverse graph to resolve traversal events implied by conditional edges
 		mxICellVisitor visitor1=new mxICellVisitor() {
@@ -455,9 +471,9 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 						Task parentTask = JGraphXUtil.getSourceTask((mxCell) edge);
 						if (!dataLink.isUnconditional())
 						{
-							logger.debug("resolve traversal event for conditional edge of task="
-						+parentTask.getUniqueString()+"=>"+task.getUniqueString()
-						+" "+task.getTraversalEvents());
+							logger.debug("resolveTraversalEvents_Grouping(): resolve traversal event for conditional edge of task="
+											+parentTask.getUniqueString()+"=>"+task.getUniqueString()
+											+" "+task.getTraversalEvents());
 						}
 					}
 				} catch (TaskNotFoundException e) {
@@ -467,7 +483,6 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				return true;
 			}
 		};
@@ -481,20 +496,27 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 		return true;
 	}
 
-
-	private boolean removeDeprecatedTraversalEvents(EMap<String, EList<String>> deprecatedTraversalEvents, EMap<String, TraversalEvent> allTraversalEvents)
+	private boolean removeDeprecatedTraversalEvents(EMap<String, EList<String>> deprecatedTraversalEvents,
+			EMap<String, EList<String>> keepTraversalEvents,
+			EMap<String, TraversalEvent> allTraversalEvents)
 	{
 		boolean rc = true;
 		// remove deprecated traversal events
-		for (String task: deprecatedTraversalEvents.keySet())
+		for (String task : deprecatedTraversalEvents.keySet())
 		{
 			for (String te : deprecatedTraversalEvents.get(task))
 			{
+				boolean keep = false;
+				if (keepTraversalEvents != null && keepTraversalEvents.containsKey(task))
+					if (keepTraversalEvents.get(task).contains(te))
+						keep = true;
 				logger.debug("resolveTraversalEvents(): "
 						+"removed traversal event "
 						+((TraversalEvent)GlobalVar.getTasks().get(task).getTraversalEvents().get(te)).hashCode()
-						+" "+te+" from task "+task);
-				if (GlobalVar.getTasks().get(task).getTraversalEvents().removeKey(te)==null)
+						+" "+te+" from task "+task
+						+" keep="+keep
+						);
+				if (!keep && GlobalVar.getTasks().get(task).getTraversalEvents().removeKey(te) == null)
 					rc = false;
 			}
 		}
@@ -507,7 +529,10 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 				String paramMergeTasks="("+StringUtils.join(GraphUtil.getTaskStringList(allTraversalEvents.get(key).getMergeTasksParamCrit()), ", ")+")";
 				TraversalEvent traversalEvent=allTraversalEvents.get(key);
 				//if (traversalEvent.getType().equals("grouping"))
-				logger.debug("resolveTraversalEvents(): "+"processed traversal event "+key+" with"
+				logger.debug("resolveTraversalEvents():"
+						+" processed traversal event "+key
+						+" ("+traversalEvent.hashCode()+") "
+						+" with"
 						+" Parent:"+parentTasks
 						+" Split:"+(traversalEvent.getSplitTask() != null ? 
 								traversalEvent.getSplitTask().getUniqueString():null)
@@ -517,8 +542,8 @@ public class AbstractGraphImpl extends MinimalEObjectImpl.Container implements A
 						+" te_type="+traversalEvent.getType()+" crit="+traversalEvent.getTraversalCriterion().getId()
 						+" te_mode="+traversalEvent.getTraversalCriterion().getMode()
 						//+traversalEvent.isFoundMergeTask()
-						//+" "+traversalEvent.hashCode()
-						);
+						
+				);
 		}
 		return rc;
 	}

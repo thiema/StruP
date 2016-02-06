@@ -36,7 +36,7 @@
   },
 
   "workflow": {
-    "metadata_input_field"      : ["InputFiles"],
+    "input_grouping_criterion"  : "InputFiles:joint",
     "inputs"                    : ["F1"],
     "static_inputs"             : [],
     "default_grouping_criteria" : ["Record"],

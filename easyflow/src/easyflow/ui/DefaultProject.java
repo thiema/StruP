@@ -42,6 +42,9 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.ui.DefaultProject#getDefaultConfigSourceString <em>Default Config Source String</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getToolDefinitions <em>Tool Definitions</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getPackages <em>Packages</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getConfigUtilityDefFile <em>Config Utility Def File</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getConfigMetadataFile <em>Config Metadata File</em>}</li>
  * </ul>
  * </p>
  *
@@ -235,5 +238,85 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	EMap<String, easyflow.tool.Package> getPackages();
+
+	/**
+	 * Returns the value of the '<em><b>Config Workflow Def File</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Config Workflow Def File</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Config Workflow Def File</em>' attribute.
+	 * @see #setConfigWorkflowDefFile(String)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ConfigWorkflowDefFile()
+	 * @model default=""
+	 * @generated
+	 */
+	String getConfigWorkflowDefFile();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Config Workflow Def File</em>' attribute.
+	 * @see #getConfigWorkflowDefFile()
+	 * @generated
+	 */
+	void setConfigWorkflowDefFile(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Config Utility Def File</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Config Utility Def File</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Config Utility Def File</em>' attribute.
+	 * @see #setConfigUtilityDefFile(String)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ConfigUtilityDefFile()
+	 * @model default=""
+	 * @generated
+	 */
+	String getConfigUtilityDefFile();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getConfigUtilityDefFile <em>Config Utility Def File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Config Utility Def File</em>' attribute.
+	 * @see #getConfigUtilityDefFile()
+	 * @generated
+	 */
+	void setConfigUtilityDefFile(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Config Metadata File</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Config Metadata File</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Config Metadata File</em>' attribute.
+	 * @see #setConfigMetadataFile(String)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ConfigMetadataFile()
+	 * @model
+	 * @generated
+	 */
+	String getConfigMetadataFile();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getConfigMetadataFile <em>Config Metadata File</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Config Metadata File</em>' attribute.
+	 * @see #getConfigMetadataFile()
+	 * @generated
+	 */
+	void setConfigMetadataFile(String value);
 
 } // DefaultProject

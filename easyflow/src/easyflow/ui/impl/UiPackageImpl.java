@@ -564,6 +564,33 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDefaultProject_ConfigWorkflowDefFile() {
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDefaultProject_ConfigUtilityDefFile() {
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDefaultProject_ConfigMetadataFile() {
+		return (EAttribute)defaultProjectEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public UiFactory getUiFactory() {
 		return (UiFactory)getEFactoryInstance();
 	}
@@ -629,6 +656,9 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__DEFAULT_CONFIG_SOURCE_STRING);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__TOOL_DEFINITIONS);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__PACKAGES);
+		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_WORKFLOW_DEF_FILE);
+		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_UTILITY_DEF_FILE);
+		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_METADATA_FILE);
 	}
 
 	/**
@@ -788,9 +818,12 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEAttribute(getDefaultProject_BaseURI(), theEasyflowPackage.getURI(), "baseURI", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_Logger(), theEasyflowPackage.getLogger(), "logger", "", 0, 1, DefaultProject.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_FromJar(), ecorePackage.getEBoolean(), "fromJar", "true", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDefaultProject_DefaultConfigSourceString(), ecorePackage.getEString(), "defaultConfigSourceString", "main.json", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_DefaultConfigSourceString(), ecorePackage.getEString(), "DefaultConfigSourceString", "main.json", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_ToolDefinitions(), theToolPackage.getToolDefinitions(), null, "toolDefinitions", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_Packages(), theMapsPackage.getStringToPackageMap(), null, "packages", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_ConfigWorkflowDefFile(), ecorePackage.getEString(), "configWorkflowDefFile", "", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_ConfigUtilityDefFile(), ecorePackage.getEString(), "configUtilityDefFile", "", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultProject_ConfigMetadataFile(), ecorePackage.getEString(), "configMetadataFile", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //UiPackageImpl

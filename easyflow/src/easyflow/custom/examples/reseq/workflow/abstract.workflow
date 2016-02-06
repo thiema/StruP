@@ -6,12 +6,12 @@ _root_				F2	InputFiles:joint
 A		A	F2	F2		ParamID1:ParamNameA:values=[1,2]
 Ax	_root_	Ax	F2	F3
 #Cond=="C1"
-#B		B	F2	F2				Cond=="C1"
+B		B	F2	F2				Cond=="C1"
 #B		B	F2	F2	Sample,Record			Cond=="C1"
 #B		B	F2	F2	Sample			Cond=="C1"
 #B		B	F2	F2	Group,Sample
 #B		B	F2	F2	Sample:joint
-B		B	F2	F2	Sample
+#B		B	F2	F2	Sample
 #C		C	F2	F4		ParamID2:Locus:merge
 C		C	F2;F3	F4		ParamID1:ParamNameA:merge
 #C		C	F2	F2	Sample

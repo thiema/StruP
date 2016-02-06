@@ -65,6 +65,7 @@ public class TraversalFactoryImpl extends EFactoryImpl implements TraversalFacto
 			case TraversalPackage.TRAVERSAL_CRITERION: return createTraversalCriterion();
 			case TraversalPackage.TRAVERSAL_OPERATION: return createTraversalOperation();
 			case TraversalPackage.TRAVERSAL_CHUNK: return createTraversalChunk();
+			case TraversalPackage.TRAVERSAL_DEPENDENCY: return createTraversalDependency();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -118,6 +119,16 @@ public class TraversalFactoryImpl extends EFactoryImpl implements TraversalFacto
 	public TraversalChunk createTraversalChunk() {
 		TraversalChunkImpl traversalChunk = new TraversalChunkImpl();
 		return traversalChunk;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TraversalDependency createTraversalDependency() {
+		TraversalDependencyImpl traversalDependency = new TraversalDependencyImpl();
+		return traversalDependency;
 	}
 
 	/**

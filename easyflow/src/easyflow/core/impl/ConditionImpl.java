@@ -99,7 +99,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
 	 * @generated not
 	 */
 	public boolean isUnconditional() {
-		return (getForbidden()==null || getForbidden().isEmpty());
+		return (getForbidden() == null || getForbidden().isEmpty());
 	}
 
 	/**

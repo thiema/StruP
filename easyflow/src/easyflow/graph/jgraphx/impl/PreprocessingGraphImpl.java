@@ -113,7 +113,9 @@ public class PreprocessingGraphImpl extends MinimalEObjectImpl.Container impleme
 							
 							// get the incoming edge, which matches the port associated to the preptask
 							DataPort requiredDataPort = task.getInDataPorts().get(prepTask.getDataPortIndex());
-							logger.debug("findCellsWherePreprocessingIsRequired(): required dataport="+requiredDataPort.getName()+" "+requiredDataPort.getFormat().getName());
+							logger.debug("findCellsWherePreprocessingIsRequired(): "
+									+ "required dataport="+requiredDataPort.getName()
+									+" "+requiredDataPort.getFormat().getName());
 							for (Object edgeIn : getGraph().getGraph().getIncomingEdges(vertex))
 							{
 								DataLink testDataLink = JGraphXUtil.loadDataLink(edgeIn);

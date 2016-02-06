@@ -206,25 +206,32 @@ public class Util {
 		return result;
 	}
 	
+	public static String traversalEvent2String(TraversalEvent te)
+	{
+		if (te != null)
+			return " type=" + te.getType()
+				+ " split="
+				+ (te.getSplitTask() != null ? te.getSplitTask()
+						.getUniqueString() : null)
+				+ " merge="
+				+ (te.getMergeTask() != null ? StringUtils.join(
+						tasksToStringList(te.getMergeTask()), ",") : null)
+				+ " crit name=" + te.getTraversalCriterion().getName()
+				+ " crit mode=" + te.getTraversalCriterion().getMode()
+				;
+		else
+			return "";
+	}
+	
 	public static String traversalEvents2String(EMap<String, TraversalEvent> traversalEvents)
 	{
 		String out = "";
 		for (String key : traversalEvents.keySet()) {
 			TraversalEvent te = traversalEvents.get(key);
-			out += "key="
-					+ key
-					+ " type=" + te.getType()
-					+ " split="
-					+ (te.getSplitTask() != null ? te.getSplitTask()
-							.getUniqueString() : null)
-					+ " merge="
-					+ (te.getMergeTask() != null ? StringUtils.join(
-							tasksToStringList(te.getMergeTask()), ",") : null)
-					+ " crit name=" + te.getTraversalCriterion().getName()
-					+ " crit mode=" + te.getTraversalCriterion().getMode()
-					+ "; ";
+			out +="key="+ key;
+			out +=traversalEvent2String(te);
+			out += "; ";
 		}
-		
 		return out;
 	}
 	

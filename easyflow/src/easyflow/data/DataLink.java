@@ -8,14 +8,11 @@ package easyflow.data;
 
 import easyflow.core.Condition;
 import easyflow.core.PreprocessingTask;
-
 import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.traversal.TraversalChunk;
-
 import java.net.URI;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

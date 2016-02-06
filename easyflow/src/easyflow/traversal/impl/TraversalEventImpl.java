@@ -7,13 +7,20 @@
 package easyflow.traversal.impl;
 
 import com.mxgraph.model.mxICell;
+
 import easyflow.core.Task;
 import easyflow.traversal.TraversalCriterion;
+import easyflow.traversal.TraversalDependency;
 import easyflow.traversal.TraversalEvent;
+import easyflow.traversal.TraversalFactory;
 import easyflow.traversal.TraversalPackage;
+
 import java.lang.reflect.InvocationTargetException;
+
 import easyflow.core.Workflow;
+
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -41,6 +48,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getMetaData <em>Meta Data</em>}</li>
+ *   <li>{@link easyflow.traversal.impl.TraversalEventImpl#getDependancy <em>Dependancy</em>}</li>
  * </ul>
  * </p>
  *
@@ -146,6 +154,16 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 	 * @ordered
 	 */
 	protected EObject metaData = META_DATA_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getDependancy() <em>Dependancy</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDependancy()
+	 * @generated
+	 * @ordered
+	 */
+	protected TraversalDependency dependancy;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -326,6 +344,44 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TraversalDependency getDependancy() {
+		if (dependancy != null && dependancy.eIsProxy()) {
+			InternalEObject oldDependancy = (InternalEObject)dependancy;
+			dependancy = (TraversalDependency)eResolveProxy(oldDependancy);
+			if (dependancy != oldDependancy) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TraversalPackage.TRAVERSAL_EVENT__DEPENDANCY, oldDependancy, dependancy));
+			}
+		}
+		return dependancy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TraversalDependency basicGetDependancy() {
+		return dependancy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDependancy(TraversalDependency newDependancy) {
+		TraversalDependency oldDependancy = dependancy;
+		dependancy = newDependancy;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TraversalPackage.TRAVERSAL_EVENT__DEPENDANCY, oldDependancy, dependancy));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<mxICell> getParentCells() {
 		if (parentCells == null) {
 			parentCells = new EDataTypeUniqueEList<mxICell>(mxICell.class, this, TraversalPackage.TRAVERSAL_EVENT__PARENT_CELLS);
@@ -411,9 +467,55 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 		return getTraversalCriterion().getOperation().getType();
 	}
 
-	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public int getDepNum() {
+		if (getDependancy() != null)
+			return getDependancy().getNumber();
+		else
+			return 0;
+	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void incDep() {
+		TraversalDependency traversalDependancy = null;
+		if (getDependancy() != null)
+		{
+			traversalDependancy = getDependancy(); 
+		}
+		else
+		{
+			traversalDependancy = TraversalFactory.eINSTANCE.createTraversalDependency();
+			setDependancy(traversalDependancy);
+		}
+		traversalDependancy.setNumber(traversalDependancy.getNumber()+1);
+	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void decDep() {
+		if (getDependancy() != null && getDependancy().getNumber() > 0)
+			getDependancy().setNumber(getDependancy().getNumber() - 1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean hasDep() {
+		return (getDependancy() != null);
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -441,6 +543,9 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 				return getLogger();
 			case TraversalPackage.TRAVERSAL_EVENT__META_DATA:
 				return getMetaData();
+			case TraversalPackage.TRAVERSAL_EVENT__DEPENDANCY:
+				if (resolve) return getDependancy();
+				return basicGetDependancy();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -482,6 +587,9 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 			case TraversalPackage.TRAVERSAL_EVENT__META_DATA:
 				setMetaData((EObject)newValue);
 				return;
+			case TraversalPackage.TRAVERSAL_EVENT__DEPENDANCY:
+				setDependancy((TraversalDependency)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -518,6 +626,9 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 			case TraversalPackage.TRAVERSAL_EVENT__META_DATA:
 				setMetaData(META_DATA_EDEFAULT);
 				return;
+			case TraversalPackage.TRAVERSAL_EVENT__DEPENDANCY:
+				setDependancy((TraversalDependency)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -546,6 +657,8 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case TraversalPackage.TRAVERSAL_EVENT__META_DATA:
 				return META_DATA_EDEFAULT == null ? metaData != null : !META_DATA_EDEFAULT.equals(metaData);
+			case TraversalPackage.TRAVERSAL_EVENT__DEPENDANCY:
+				return dependancy != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -569,6 +682,16 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 				return isParent((Task)arguments.get(0), (String)arguments.get(1));
 			case TraversalPackage.TRAVERSAL_EVENT___GET_TYPE:
 				return getType();
+			case TraversalPackage.TRAVERSAL_EVENT___GET_DEP_NUM:
+				return getDepNum();
+			case TraversalPackage.TRAVERSAL_EVENT___INC_DEP:
+				incDep();
+				return null;
+			case TraversalPackage.TRAVERSAL_EVENT___DEC_DEP:
+				decDep();
+				return null;
+			case TraversalPackage.TRAVERSAL_EVENT___HAS_DEP:
+				return hasDep();
 		}
 		return super.eInvoke(operationID, arguments);
 	}

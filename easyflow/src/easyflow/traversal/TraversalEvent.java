@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.traversal.TraversalEvent#getTraversalCriterion <em>Traversal Criterion</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.traversal.TraversalEvent#getMetaData <em>Meta Data</em>}</li>
+ *   <li>{@link easyflow.traversal.TraversalEvent#getDependancy <em>Dependancy</em>}</li>
  * </ul>
  * </p>
  *
@@ -213,6 +214,32 @@ public interface TraversalEvent extends EObject {
 	void setMetaData(EObject value);
 
 	/**
+	 * Returns the value of the '<em><b>Dependancy</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dependancy</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dependancy</em>' reference.
+	 * @see #setDependancy(TraversalDependency)
+	 * @see easyflow.traversal.TraversalPackage#getTraversalEvent_Dependancy()
+	 * @model
+	 * @generated
+	 */
+	TraversalDependency getDependancy();
+
+	/**
+	 * Sets the value of the '{@link easyflow.traversal.TraversalEvent#getDependancy <em>Dependancy</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Dependancy</em>' reference.
+	 * @see #getDependancy()
+	 * @generated
+	 */
+	void setDependancy(TraversalDependency value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -254,5 +281,37 @@ public interface TraversalEvent extends EObject {
 	 * @generated
 	 */
 	String getType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	int getDepNum();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void incDep();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void decDep();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean hasDep();
 
 } // TraversalEvent

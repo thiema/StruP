@@ -49,6 +49,7 @@ import easyflow.tool.impl.ToolPackageImpl;
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
+import easyflow.traversal.TraversalDependency;
 import easyflow.traversal.TraversalEvent;
 import easyflow.traversal.TraversalFactory;
 import easyflow.traversal.TraversalOperation;
@@ -111,6 +112,13 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * @generated
 	 */
 	private EClass traversalChunkEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass traversalDependencyEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -300,6 +308,15 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTraversalEvent_Dependancy() {
+		return (EReference)traversalEventEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTraversalEvent__ApplyMetadata() {
 		return traversalEventEClass.getEOperations().get(0);
 	}
@@ -338,6 +355,42 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 */
 	public EOperation getTraversalEvent__GetType() {
 		return traversalEventEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__GetDepNum() {
+		return traversalEventEClass.getEOperations().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__IncDep() {
+		return traversalEventEClass.getEOperations().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__DecDep() {
+		return traversalEventEClass.getEOperations().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTraversalEvent__HasDep() {
+		return traversalEventEClass.getEOperations().get(8);
 	}
 
 	/**
@@ -552,6 +605,33 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTraversalDependency() {
+		return traversalDependencyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTraversalDependency_Number() {
+		return (EAttribute)traversalDependencyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTraversalDependency_ProcessedCells() {
+		return (EAttribute)traversalDependencyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public TraversalFactory getTraversalFactory() {
 		return (TraversalFactory)getEFactoryInstance();
 	}
@@ -584,11 +664,16 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		createEReference(traversalEventEClass, TRAVERSAL_EVENT__TRAVERSAL_CRITERION);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__LOGGER);
 		createEAttribute(traversalEventEClass, TRAVERSAL_EVENT__META_DATA);
+		createEReference(traversalEventEClass, TRAVERSAL_EVENT__DEPENDANCY);
 		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___APPLY_METADATA);
 		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___READ_CHUNKS);
 		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___IS_GROUPING);
 		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___IS_PARENT__TASK_STRING);
 		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___GET_TYPE);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___GET_DEP_NUM);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___INC_DEP);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___DEC_DEP);
+		createEOperation(traversalEventEClass, TRAVERSAL_EVENT___HAS_DEP);
 
 		groupingCriterionEClass = createEClass(GROUPING_CRITERION);
 		createEAttribute(groupingCriterionEClass, GROUPING_CRITERION__ID);
@@ -616,6 +701,10 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		createEAttribute(traversalChunkEClass, TRAVERSAL_CHUNK__DERIVED1BY1);
 		createEReference(traversalChunkEClass, TRAVERSAL_CHUNK__GROUPING_INSTANCE);
 		createEOperation(traversalChunkEClass, TRAVERSAL_CHUNK___AS_GROUPING_INSTANCE);
+
+		traversalDependencyEClass = createEClass(TRAVERSAL_DEPENDENCY);
+		createEAttribute(traversalDependencyEClass, TRAVERSAL_DEPENDENCY__NUMBER);
+		createEAttribute(traversalDependencyEClass, TRAVERSAL_DEPENDENCY__PROCESSED_CELLS);
 	}
 
 	/**
@@ -665,6 +754,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEReference(getTraversalEvent_TraversalCriterion(), this.getTraversalCriterion(), null, "traversalCriterion", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTraversalEvent_MetaData(), theEasyflowPackage.getEObject(), "metaData", null, 0, 1, TraversalEvent.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTraversalEvent_Dependancy(), this.getTraversalDependency(), null, "dependancy", null, 0, 1, TraversalEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTraversalEvent__ApplyMetadata(), ecorePackage.getEBoolean(), "applyMetadata", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -677,6 +767,14 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		addEParameter(op, ecorePackage.getEString(), "traversalChunkName", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTraversalEvent__GetType(), ecorePackage.getEString(), "getType", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTraversalEvent__GetDepNum(), ecorePackage.getEInt(), "getDepNum", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTraversalEvent__IncDep(), null, "incDep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTraversalEvent__DecDep(), null, "decDep", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTraversalEvent__HasDep(), ecorePackage.getEBoolean(), "hasDep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(groupingCriterionEClass, GroupingCriterion.class, "GroupingCriterion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroupingCriterion_Id(), ecorePackage.getEString(), "id", null, 0, 1, GroupingCriterion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -705,6 +803,10 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		initEReference(getTraversalChunk_GroupingInstance(), theMetadataPackage.getGroupingInstance(), null, "groupingInstance", null, 0, 1, TraversalChunk.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTraversalChunk__AsGroupingInstance(), theMetadataPackage.getGroupingInstance(), "asGroupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(traversalDependencyEClass, TraversalDependency.class, "TraversalDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTraversalDependency_Number(), ecorePackage.getEInt(), "number", "0", 0, 1, TraversalDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTraversalDependency_ProcessedCells(), theEasyflowPackage.getmxICell(), "processedCells", null, 0, -1, TraversalDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //TraversalPackageImpl

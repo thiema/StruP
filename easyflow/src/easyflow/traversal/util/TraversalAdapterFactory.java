@@ -92,6 +92,10 @@ public class TraversalAdapterFactory extends AdapterFactoryImpl {
 				return createTraversalChunkAdapter();
 			}
 			@Override
+			public Adapter caseTraversalDependency(TraversalDependency object) {
+				return createTraversalDependencyAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -178,6 +182,20 @@ public class TraversalAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTraversalChunkAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.traversal.TraversalDependency <em>Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.traversal.TraversalDependency
+	 * @generated
+	 */
+	public Adapter createTraversalDependencyAdapter() {
 		return null;
 	}
 

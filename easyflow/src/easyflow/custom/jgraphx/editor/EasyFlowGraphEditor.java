@@ -138,7 +138,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
 		// add the tool bar
-upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 

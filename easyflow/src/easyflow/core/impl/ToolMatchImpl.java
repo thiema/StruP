@@ -583,7 +583,7 @@ public class ToolMatchImpl extends MinimalEObjectImpl.Container implements ToolM
 			taskMissingOutDataPorts.add(dataPort);
 		}
 		Task t = getTask();
-		logger.trace("name="+getTool().getId()
+		logger.trace("computeScore(): name="+getTool().getId()
 				+" toolData="+(getTool().getData()==null ? null:getTool().getData().keySet())
 				//+" commandParams="+t.getCommand().getResolvedParams().keySet()
 				);
@@ -687,7 +687,7 @@ public class ToolMatchImpl extends MinimalEObjectImpl.Container implements ToolM
 			if (taskMissingInDataPorts.contains(dataPort.getName()))
 			{
 				getMissingInDataPorts().add(dataPort);
-				logger.debug("could not resolve: "+dataPort.getName()+" (IN)");
+				logger.debug("computeScore(): could not resolve: "+dataPort.getName()+" (IN)");
 			}
 		}
 		for (DataPort dataPort:getTask().getOutDataPorts())
@@ -702,12 +702,12 @@ public class ToolMatchImpl extends MinimalEObjectImpl.Container implements ToolM
 		// required by Tool but not provided by Task
 		for (DataPort dataPort:getReverseMissingInDataPorts())
 		{
-			logger.debug("undefined but required dataport="+dataPort.getName()+
+			logger.debug("computeScore(): undefined but required dataport="+dataPort.getName()+
 					" (IN, "+dataPort.getDataFormats().keySet().toString()+", tool) detected.");
 		}
 		for (DataPort dataPort:getReverseMissingOutDataPorts())
 		{
-			logger.debug("undefined but required dataport="+dataPort.getName()+
+			logger.debug("computeScore(): undefined but required dataport="+dataPort.getName()+
 					" (OUT, "+dataPort.getDataFormats().keySet().toString()+", tool) detected.");
 		}
 		
@@ -868,7 +868,7 @@ public class ToolMatchImpl extends MinimalEObjectImpl.Container implements ToolM
 		{
 			// try to resolve data ports which are required by tool definition
 			
-				logger.trace("unresolved data ports remain, trying to resolve... ");
+				logger.trace("resolveReverseMissingInDataPorts(): unresolved data ports remain, trying to resolve... ");
 				/*
 				logger.trace("Task="+getTask().getUniqueString()+" DataPort="+GlobalVar.getGraphUtil().getParentsFor(getTask()));
 				for (DataPort unresolvedDataPort:getReverseMissingInDataPorts())

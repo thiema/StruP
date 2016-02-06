@@ -1,0 +1,7 @@
+Record	ReadGroup	Sample	Group	Library	InputFiles:List	Platform	Cond
+ID1	RG1	S1	G1	L1	fileA	P1
+ID2_1	RG2	S2	G1	L1	fileB	P1	C1
+#ID2_2	RG2	S2	G1	L1	fileB	P1	C1
+ID3	RG3	S2	G1	L1	fileC	P2	C2
+#ID3	RG1	S1	G2	L2	fileC_1,fileC_2	P1	C1
+#ID4	RG2	S1	G3	L2	fileD_1,fileD_2,fileD_3	P2

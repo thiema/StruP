@@ -101,7 +101,7 @@ public class GraphUtil {
 				newDataLink.setParentGroupingStr(parentGroupingStr);
 				if (!newDataLink.isTerminal() && newDataLink.getGroupingStr() == null)
 				{
-					logger.warn("no grouping string set.");
+					logger.warn("createDataLinkGrouping(): no grouping string set.");
 					newDataLink.setGroupingStr(null);
 				}
 			}
@@ -116,7 +116,7 @@ public class GraphUtil {
 			newDataLink.setInDataPort(EcoreUtil.copy(dataLink.getInDataPort()));
 			}
 
-		logger.debug("groupcrit assigend to dataport: size="+dataLink.getInDataPort().getGroupingCriteria().size()
+		logger.debug("createDataLinkGrouping(): groupcrit assigend to dataport: size="+dataLink.getInDataPort().getGroupingCriteria().size()
 				+" new size="+newDataLink.getInDataPort().getGroupingCriteria().size());
 		return newDataLink;
 	}

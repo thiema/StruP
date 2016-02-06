@@ -814,7 +814,7 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 	 * @generated not
 	 */
 	public boolean isUnconditional() {
-		return (getCondition()==null || getCondition().isUnconditional());
+		return (getCondition() == null || getCondition().isUnconditional());
 	}
 
 	/**

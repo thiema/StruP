@@ -163,13 +163,22 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_EVENT__META_DATA = 7;
 
 	/**
+	 * The feature id for the '<em><b>Dependancy</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT__DEPENDANCY = 8;
+
+	/**
 	 * The number of structural features of the '<em>Event</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_FEATURE_COUNT = 8;
+	int TRAVERSAL_EVENT_FEATURE_COUNT = 9;
 
 	/**
 	 * The operation id for the '<em>Apply Metadata</em>' operation.
@@ -217,13 +226,49 @@ public interface TraversalPackage extends EPackage {
 	int TRAVERSAL_EVENT___GET_TYPE = 4;
 
 	/**
+	 * The operation id for the '<em>Get Dep Num</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT___GET_DEP_NUM = 5;
+
+	/**
+	 * The operation id for the '<em>Inc Dep</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT___INC_DEP = 6;
+
+	/**
+	 * The operation id for the '<em>Dec Dep</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT___DEC_DEP = 7;
+
+	/**
+	 * The operation id for the '<em>Has Dep</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT___HAS_DEP = 8;
+
+	/**
 	 * The number of operations of the '<em>Event</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_OPERATION_COUNT = 5;
+	int TRAVERSAL_EVENT_OPERATION_COUNT = 9;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -563,6 +608,53 @@ public interface TraversalPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link easyflow.traversal.impl.TraversalDependencyImpl <em>Dependency</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.traversal.impl.TraversalDependencyImpl
+	 * @see easyflow.traversal.impl.TraversalPackageImpl#getTraversalDependency()
+	 * @generated
+	 */
+	int TRAVERSAL_DEPENDENCY = 5;
+
+	/**
+	 * The feature id for the '<em><b>Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_DEPENDENCY__NUMBER = 0;
+
+	/**
+	 * The feature id for the '<em><b>Processed Cells</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_DEPENDENCY__PROCESSED_CELLS = 1;
+
+	/**
+	 * The number of structural features of the '<em>Dependency</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_DEPENDENCY_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Dependency</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_DEPENDENCY_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.traversal.GroupingCriterion <em>Grouping Criterion</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -802,6 +894,17 @@ public interface TraversalPackage extends EPackage {
 	EAttribute getTraversalEvent_MetaData();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.traversal.TraversalEvent#getDependancy <em>Dependancy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Dependancy</em>'.
+	 * @see easyflow.traversal.TraversalEvent#getDependancy()
+	 * @see #getTraversalEvent()
+	 * @generated
+	 */
+	EReference getTraversalEvent_Dependancy();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#applyMetadata() <em>Apply Metadata</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -850,6 +953,46 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTraversalEvent__GetType();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#getDepNum() <em>Get Dep Num</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Dep Num</em>' operation.
+	 * @see easyflow.traversal.TraversalEvent#getDepNum()
+	 * @generated
+	 */
+	EOperation getTraversalEvent__GetDepNum();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#incDep() <em>Inc Dep</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Inc Dep</em>' operation.
+	 * @see easyflow.traversal.TraversalEvent#incDep()
+	 * @generated
+	 */
+	EOperation getTraversalEvent__IncDep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#decDep() <em>Dec Dep</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Dec Dep</em>' operation.
+	 * @see easyflow.traversal.TraversalEvent#decDep()
+	 * @generated
+	 */
+	EOperation getTraversalEvent__DecDep();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.traversal.TraversalEvent#hasDep() <em>Has Dep</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Has Dep</em>' operation.
+	 * @see easyflow.traversal.TraversalEvent#hasDep()
+	 * @generated
+	 */
+	EOperation getTraversalEvent__HasDep();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.traversal.TraversalOperation <em>Operation</em>}'.
@@ -957,6 +1100,38 @@ public interface TraversalPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTraversalChunk__AsGroupingInstance();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.traversal.TraversalDependency <em>Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dependency</em>'.
+	 * @see easyflow.traversal.TraversalDependency
+	 * @generated
+	 */
+	EClass getTraversalDependency();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.traversal.TraversalDependency#getNumber <em>Number</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Number</em>'.
+	 * @see easyflow.traversal.TraversalDependency#getNumber()
+	 * @see #getTraversalDependency()
+	 * @generated
+	 */
+	EAttribute getTraversalDependency_Number();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link easyflow.traversal.TraversalDependency#getProcessedCells <em>Processed Cells</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Processed Cells</em>'.
+	 * @see easyflow.traversal.TraversalDependency#getProcessedCells()
+	 * @see #getTraversalDependency()
+	 * @generated
+	 */
+	EAttribute getTraversalDependency_ProcessedCells();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1163,6 +1338,14 @@ public interface TraversalPackage extends EPackage {
 		EAttribute TRAVERSAL_EVENT__META_DATA = eINSTANCE.getTraversalEvent_MetaData();
 
 		/**
+		 * The meta object literal for the '<em><b>Dependancy</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRAVERSAL_EVENT__DEPENDANCY = eINSTANCE.getTraversalEvent_Dependancy();
+
+		/**
 		 * The meta object literal for the '<em><b>Apply Metadata</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1201,6 +1384,38 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TRAVERSAL_EVENT___GET_TYPE = eINSTANCE.getTraversalEvent__GetType();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Dep Num</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRAVERSAL_EVENT___GET_DEP_NUM = eINSTANCE.getTraversalEvent__GetDepNum();
+
+		/**
+		 * The meta object literal for the '<em><b>Inc Dep</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRAVERSAL_EVENT___INC_DEP = eINSTANCE.getTraversalEvent__IncDep();
+
+		/**
+		 * The meta object literal for the '<em><b>Dec Dep</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRAVERSAL_EVENT___DEC_DEP = eINSTANCE.getTraversalEvent__DecDep();
+
+		/**
+		 * The meta object literal for the '<em><b>Has Dep</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TRAVERSAL_EVENT___HAS_DEP = eINSTANCE.getTraversalEvent__HasDep();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.traversal.impl.TraversalOperationImpl <em>Operation</em>}' class.
@@ -1285,6 +1500,32 @@ public interface TraversalPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TRAVERSAL_CHUNK___AS_GROUPING_INSTANCE = eINSTANCE.getTraversalChunk__AsGroupingInstance();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.traversal.impl.TraversalDependencyImpl <em>Dependency</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.traversal.impl.TraversalDependencyImpl
+		 * @see easyflow.traversal.impl.TraversalPackageImpl#getTraversalDependency()
+		 * @generated
+		 */
+		EClass TRAVERSAL_DEPENDENCY = eINSTANCE.getTraversalDependency();
+
+		/**
+		 * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRAVERSAL_DEPENDENCY__NUMBER = eINSTANCE.getTraversalDependency_Number();
+
+		/**
+		 * The meta object literal for the '<em><b>Processed Cells</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TRAVERSAL_DEPENDENCY__PROCESSED_CELLS = eINSTANCE.getTraversalDependency_ProcessedCells();
 
 	}
 

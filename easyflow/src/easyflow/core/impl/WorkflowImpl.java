@@ -1289,7 +1289,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					String combi = e.getKey()+"_"+e.getValue();
 					GlobalVar.getUtilityTasks().put(
 							combi+"_"+analysisType, utilTask);
-					logger.debug("generateAbstractWorkflow(): utility task "+analysisType+" for combination="+combi);
+					logger.debug("generateAbstractWorkflow(): utility task "+analysisType
+							+" for combination="+combi
+							+" (task "+combi+"_"+analysisType+" added)");
 				}
 			}
 		}
@@ -1316,12 +1318,13 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		
 		for (Task t:eTpl.getTasks())
 			if (GlobalConstants.ROOT_TASK_NAME.equals(t.getName()))
+			{
 				setRootTask(t);
+				logger.debug("readWorkfowTemplate(): rootTask="+t.getDetailedString());
+			}
 		
 		return rc;
 	}
-
-	
 	
 	public void printWorkflowStepMsgOnStart(String step)
 	{
@@ -1347,17 +1350,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		}
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EMap<String, String> getValidInOutDataPortCombinations() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1401,7 +1393,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	        Task tmp;
 			try {
 				tmp = JGraphXUtil.loadTask(getFirstNode());
-				logger.debug("generateGraphFromTemplate(): root="+tmp.getUniqueString()
+				logger.debug("generateAbstractWorkflow(): root="+tmp.getDetailedString()
 						+" graphsize="+GlobalVar.getTasks().size());
 			} catch (TaskNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -1564,7 +1556,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
 					continue;
 					
-				logger.debug("#######task="+task.getUniqueString()+" "+task.isUtil()+" #in="+(task.getInDataPorts().size())+" "
+				logger.debug("generateGraphFromTemplate(): #######task="+task.getUniqueString()+" "+task.isUtil()+" #in="+(task.getInDataPorts().size())+" "
 						+" first dataport="+task.getInDataPorts().get(0).getFormat().getName()
 						+" first dataports grouping="+easyflow.custom.util.Util.list2String(task.getInDataPorts().get(0).getGroupingCriteria(),null));
 				if (!task.isUtil()) 
@@ -1599,7 +1591,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 								for (DataLink dataLink:parentTaskList.get(pTask))
 								{
 									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
-									logger.trace("generateGraphFromTemplate(): add dataLink:"+dataLink.hashCode()+" "+dataLink.getInDataPort());
+									logger.trace("generateGraphFromTemplate(): add dataLink: "+dataLink.getUniqueString()+" ingoing port="+dataLink.getInDataPort().getName());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
 										getGraph().setCellUnvisible(o);
@@ -1610,11 +1602,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					}
 					if (!task.validateTools())
 					{
-						logger.debug("validation for "+task.getUniqueString()+" failed. Trying to resolve tool dependencies...");
+						logger.debug("generateGraphFromTemplate(): validation for "+task.getUniqueString()+" failed. Trying to resolve tool dependencies...");
 						if (resolveMissingDataPortsByToolFor(task))
-							logger.debug("resolved data port by Tool !");
+							logger.debug("generateGraphFromTemplate(): resolved data port by Tool !");
 					}
-					logger.debug(task.getUniqueString()+" cmd found="+(task.getResolvedCommand()!=null));
+					logger.debug("generateGraphFromTemplate(): "+task.getUniqueString()+" cmd found="+(task.getResolvedCommand()!=null));
 					getLastTasks().add(task);
 					//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 				}
@@ -1712,7 +1704,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		logger.debug("getParentTasksFor(): obtained "+results.size()+" fixed/generic parents");
 		for (ParentTaskResult result:results)
 		{
-			logger.debug(result.getParentTask().getUniqueString()
+			logger.debug("getParentTasksFor(): "
+					+result.getParentTask().getUniqueString()
 					+" condition="+result.getCondition()
 					+" potential circuments="+result.getPotentialCircumventingTasks()
 					+" ports="    +easyflow.custom.util.Util.list2String(result.getCoveredPorts(), null)
@@ -1775,29 +1768,29 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			EList<String> conditionsToCircumvent,
 			EList<String> tasksToCircumvent)
 	{
-		logger.debug("strategy="+GlobalConfig.getResolveParentTasksStrategy());
+		logger.debug("getAllParentsByStrategy(): strategy="+GlobalConfig.getResolveParentTasksStrategy());
 		// find parents which circumvent the given set of conditions
 		EMap<Task, EList<DataLink>> allTasks = getAllParents(task, results, conditionsToCircumvent, tasksToCircumvent);
-		logger.debug("all="+allTasks.size());
+		logger.debug("getAllParentsByStrategy(): all="+allTasks.size());
 		
 		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
 		
 		if (GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT.equals(GlobalConfig.getResolveParentTasksStrategy()))
 		{
 			allTasks = getNearestParentsFirst(task, allTasks);
-			logger.debug("restrict by strategy="+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT
+			logger.debug("getAllParentsByStrategy(): restrict by strategy="+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT
 					+" to="+allTasks.size());
 			tasks.addAll(allTasks);
 		}
 		else if (GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK.equals(GlobalConfig.getResolveParentTasksStrategy()))
 		{
 			allTasks = getParentsOfMaxRank(task, allTasks);
-			logger.debug("restrict by strategy="+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK
+			logger.debug("getAllParentsByStrategy(): restrict by strategy="+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_MAX_RANK
 					+" to="+allTasks.size());
 			tasks.addAll(allTasks);
 		}
 		else if (!GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS.equals(GlobalConfig.getResolveParentTasksStrategy()))
-			logger.error("Unkown Resolve-Parent-Tasks Strategy. Default to "+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS);
+			logger.error("getAllParentsByStrategy(): Unkown Resolve-Parent-Tasks Strategy. Default to "+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS);
 				
 		return tasks;
 	}
@@ -1819,7 +1812,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				dataLink.setDataPort(dataPort);
 				if (result.getParentTask().isRoot())
 					dataLink.setParentGroupingStr(GlobalConstants.METADATA_INPUT);
-				if (dataLink.getCondition()==null)
+				if (dataLink.getCondition() == null)
 					dataLink.setCondition(CoreFactory.eINSTANCE.createCondition());
 
 				if (conditionsToCircumvent != null)
@@ -1830,16 +1823,16 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					//dataLink.getCondition().getForbidden().add(result.getCondition());
 				dataLinks.add(dataLink);
 				dataLink.getCondition().getCircumventingParents().addAll(result.getPotentialCircumventingTasks());
-				logger.trace("add new datalink="+dataLink.getDataPort().getName()
+				logger.trace("getAllParents(): add new datalink="+dataLink.getDataPort().getName()
 						+" cirumvent: cond="+dataLink.getCondition().getForbidden()
 						+" task="+dataLink.getCondition().getCircumventingParents()
 						+" result object="+result.getCondition()
-						+" "+dataLink.hashCode()
+						//+" "+dataLink.hashCode()
 				);
 			}
 			
 			tasks.put(result.getParentTask(), dataLinks);
-			logger.trace("parent="+result.getParentTask().getUniqueString()
+			logger.trace("getAllParents(): parent="+result.getParentTask().getUniqueString()
 					+" (resolving "+result.getCoveredPorts().size()+" ports) added."
 					//+" "+dataLinks.hashCode()
 					);
@@ -1908,11 +1901,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				if (match != null)
 				{
 					filteredResults.add(match);
-					logger.trace("found alternate parent to cirumvent cond="+conditionsToCircumvent+" introduced by task="+match.getPotentialCircumventingTasks());
+					logger.trace("getMatchingParentTasks(): found alternate parent to cirumvent cond="+conditionsToCircumvent+" introduced by task="+match.getPotentialCircumventingTasks());
 				}
 				else
 				{
-					logger.trace("no alternate parent found to cirumvent cond="+conditionsToCircumvent);
+					logger.trace("getMatchingParentTasks():no alternate parent found to cirumvent cond="+conditionsToCircumvent);
 				}
 			}
 			else
@@ -2329,6 +2322,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		boolean rc = true;
 		
 		TraversalEvent traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
+		TraversalEvent oldTraversalEvent = null;
 		logger.debug("applyTraversalCriteria(): found "+getJgraph().getTraversalEvents().size()+" traversal events. Grouping="+isGrouping);
 		
 		while (traversalEvent != null)
@@ -2347,19 +2341,20 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 						+traversalEvent.getSplitTask().getUniqueString()
 						);
 			}
+			oldTraversalEvent = traversalEvent;
 			traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
 			
 			if (cont)
 				continue;
+			
 			for (mxICell subGraphRoot1 : getJgraph().getCurrentSubGraphs())
 			{
 				getJgraph().removeSubGraph(
 						subGraphRoot1, 
-						traversalEvent);
+						oldTraversalEvent);
 			}
 			getJgraph().resetFlags();
 			getJgraph().getCurrentSubGraphs().clear();
-			
 		}
 		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
 		printWorkflowStepMsgOnEnd(rc, step);
@@ -2367,10 +2362,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		//printGraph();
 		printAllCells(getJgraph().getDefaultRootCell());
 		return rc;
-
-		
-
 	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * iterate over graph and do for each defined/resolved traversal event:
@@ -2943,8 +2936,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING:
 				printWorkflowStepMsgOnEnd((Boolean)arguments.get(0), (String)arguments.get(1));
 				return null;
-			case CorePackage.WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS:
-				return getValidInOutDataPortCombinations();
 			case CorePackage.WORKFLOW___INIT:
 				init();
 				return null;

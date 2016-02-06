@@ -44,7 +44,6 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 			return true;
 		else
 			return false;
-
 	}
 	
 	public String setCellUnvisible(Object cell)

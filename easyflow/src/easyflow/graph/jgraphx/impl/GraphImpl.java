@@ -7,8 +7,11 @@
 package easyflow.graph.jgraphx.impl;
 
 import com.mxgraph.model.mxICell;
+
 import easyflow.core.Catalog;
+
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -25,6 +28,7 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
+import easyflow.custom.util.Util;
 import easyflow.data.DataLink;
 import easyflow.execution.IExecutionSystem;
 import easyflow.graph.jgraphx.AbstractGraph;
@@ -46,11 +50,13 @@ import easyflow.traversal.TraversalFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToGraphCellMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -808,17 +814,15 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 					if (traversalEvent.isGrouping() && isGrouping ||
 							!traversalEvent.isGrouping() && !isGrouping)
 					{
-						logger.debug("getTraversalEvents(): add te "+key+" from "+task.getUniqueString()+" "+traversalEvent.hashCode());
+						logger.debug("getTraversalEvents(): add Traversal-Event with key "+key+" for task "+task.getUniqueString());
 						traversalEvents.add(traversalEvent);
 					}
 				}
 				return true;
 			}
 		};
-		//getGraph().traverse(root, true, visitor);
 		getGraph().traverseTopologicalOrder(root, visitor);
 		return traversalEvents;
-
 	}
 
 	/**
@@ -831,9 +835,15 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @throws TaskNotFoundException 
 	 * @generated not
 	 */
-	public EList<TraversalEvent> getNewTraversalEvents(final TraversalEvent traversalEvent, mxICell root) throws TaskNotFoundException {
+	public EList<TraversalEvent> getNewTraversalEvents(
+			final TraversalEvent traversalEvent, 
+			mxICell root
+			) throws TaskNotFoundException {
 		
+		logger.debug("getNewTraversalEvents(): traversalEvent:"+Util.traversalEvent2String(traversalEvent)
+				+" hasdep="+traversalEvent.hasDep()+" depnum="+traversalEvent.getDepNum());
 		final EMap<String, TraversalEvent> newTraversalEvents = new BasicEMap<String, TraversalEvent>();
+
 		mxICellVisitor visitor=new mxICellVisitor() {
 			@Override
 			public boolean visit(Object vertex, Object edge) {				
@@ -855,12 +865,13 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 				
 				// omit generating traversal events when the parent task is known to be opted out
 				// due to conditional edge (manifested by tasks attribute circumventingParents
-				if (task.getCircumventingParents()!=null && !task.getCircumventingParents().isEmpty())
+				if (task.getCircumventingParents() != null && 
+						!task.getCircumventingParents().isEmpty())
 				{
 					logger.trace("getNewTravEvents(): "+task.getUniqueString()
 							+" circumvents "+task.getCircumventingParents());
 					//logger.debug(traversalEvent.getParentTask());
-					for (Task parentTask:traversalEvent.getParentTask())
+					for (Task parentTask : traversalEvent.getParentTask())
 						if (task.getCircumventingParents().contains(parentTask.getName()))
 							return false;
 				}
@@ -947,42 +958,55 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		};
 		logger.debug("getNewTravEvents():"
 				+" parentTasks=("+StringUtils.join(GraphUtil.getTaskStringList(traversalEvent.getParentTask()), ", ")+")"
-				+" splitTask="+traversalEvent.getSplitTask().getUniqueString()
-				+" mergeTasks=("+StringUtils.join(GraphUtil.getTaskStringList(traversalEvent.getMergeTask()), ", ")+")"
-				+" root="+JGraphXUtil.loadTask(root).getUniqueString()
-				+" mode="+traversalEvent.getTraversalCriterion().getMode());
-		//getGraph().traverse(root, true, visitor);
-		//getGraph().traverse_topologicalOrder(getGraph().traverse_topologicalOrder(root), visitor);
+				+" splitTask="   +traversalEvent.getSplitTask().getUniqueString()
+				+" mergeTasks=(" +StringUtils.join(GraphUtil.getTaskStringList(traversalEvent.getMergeTask()), ", ")+")"
+				+" root="        +JGraphXUtil.loadTask(root).getUniqueString()
+				+" mode="        +traversalEvent.getTraversalCriterion().getMode());
+
+		//special handling for dependant traversal events required.
+		//the following however, is too simple, just used to study the effect in a simple use case
+		//
+		{
 		getGraph().getModel().beginUpdate();		try		{
 			getGraph().traverseTopologicalOrder(root, visitor);
 			JGraphXUtil.layoutGraph();
 		}		finally		{			getGraph().getModel().endUpdate();		}
-
-
+		}
 		logger.debug("getNewTravEvents(): "+newTraversalEvents.size()+" "+traversalEvent.getSplitTask().getUniqueString());
 		EList<String> te2Remove = new BasicEList<String>();
-		for (String key : newTraversalEvents.keySet())
+		
+		if (traversalEvent.hasDep())
 		{
-			
-			Task tmp = GlobalVar.getTasks().get(key);
-			if (!tmp.getUniqueString().equals(tmp.getPreviousTaskStr()) && newTraversalEvents.containsKey(tmp.getPreviousTaskStr()))
-			{
-				te2Remove.add(tmp.getPreviousTaskStr());
-				logger.debug("getNewTravEvents(): marked "+tmp.getPreviousTaskStr()+" to be removed.");
-			}
-			TraversalEvent travEvent = newTraversalEvents.get(key);
-			logger.debug("getNewTravEvents(): "+key
-					+" parentTasks=("+StringUtils.join(GraphUtil.getTaskStringList(travEvent.getParentTask()), ", ")+")"
-					+" splitTask="+travEvent.getSplitTask().getUniqueString()
-					+" mergeTasks=("+StringUtils.join(GraphUtil.getTaskStringList(travEvent.getMergeTask()), ", ")+")");
+			newTraversalEvents.clear();
 		}
 		
 		if (newTraversalEvents.isEmpty())
+		{
 			newTraversalEvents.put(traversalEvent.getSplitTask().getUniqueString(), traversalEvent);
-		else if (!te2Remove.isEmpty())
-			for (String key : te2Remove)
-				newTraversalEvents.removeKey(key);
-			
+		}
+		else
+		{
+			for (String key : newTraversalEvents.keySet())
+			{
+				Task tmp = GlobalVar.getTasks().get(key);
+				if (!tmp.getUniqueString().equals(tmp.getPreviousTaskStr()) && newTraversalEvents.containsKey(tmp.getPreviousTaskStr()))
+				{
+					te2Remove.add(tmp.getPreviousTaskStr());
+					logger.debug("getNewTravEvents(): marked "+tmp.getPreviousTaskStr()+" to be removed.");
+				}
+				TraversalEvent travEvent = newTraversalEvents.get(key);
+				logger.debug("getNewTravEvents(): "+key
+						+" parentTasks=("+StringUtils.join(GraphUtil.getTaskStringList(travEvent.getParentTask()), ", ")+")"
+						+" splitTask="+travEvent.getSplitTask().getUniqueString()
+						+" mergeTasks=("+StringUtils.join(GraphUtil.getTaskStringList(travEvent.getMergeTask()), ", ")+")");
+			}
+			if (!te2Remove.isEmpty())
+			{
+				for (String key : te2Remove)
+					newTraversalEvents.removeKey(key);				
+			}
+		}
+		
 		return new BasicEList<TraversalEvent>(newTraversalEvents.values());
 	}
 
@@ -999,8 +1023,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 			}
 		}
 		return false;
-	}
-	
+	}	
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1011,6 +1034,13 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 
 		final EList<Object> tmpGraphCells = new BasicEList<Object>();
 		final EList<Object> cells = new BasicEList<Object>();
+		EList<Object> obsoleteCells = new BasicEList<Object>();
+		
+		if (traversalEvent.hasDep())
+		{
+			obsoleteCells = getObsoleteCells(traversalEvent, traversalEvent.getDependancy().getProcessedCells(), obsoleteCells);
+		}
+		
 		mxICellVisitor visitor=new mxICellVisitor()
 		{
 		
@@ -1024,27 +1054,52 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 					e.printStackTrace();
 				}
 				
-				/*logger.debug("removeSubGraph(): "+
-						task.getUniqueString()
-						+" id="+task.hashCode()
+				logger.debug("removeSubGraph(): "
+						+"task="+ task.getUniqueString()
+						+" te=" + Util.traversalEvent2String(traversalEvent)
+//						+" id="+task.hashCode()
 						+" flags="+task.getFlags()
-						+" test="+(task.getFlags() & 0x00F0)
-						+" cond="+0x10);*/
+						+" test skip task="+(task.getFlags() & 0x00F0)
+						+" test2 skip task="+(task.getFlags() & 0x0100)
+						+" #in=" + getGraph().getIncomingEdges(vertex).length
+						+"/"     + getGraph().getIncomingEdges(
+									GlobalVar.getCells().get(task.getUniqueString())).length
+				);
+				if (traversalEvent != null)
+					logger.debug("removeSubGraph(): hasdep="+traversalEvent.hasDep()
+							+" depnum="+traversalEvent.getDepNum());
+
 				if ((task.getFlags() & 0x00F0) == 0x10)
 				{
 					logger.debug("removeSubGraph(): skip task "+task.getUniqueString());
-					return true;
 				}
-				if (!doesTraversalEventExistFor(task))
+/*				else if (getGraph().getIncomingEdges(
+							GlobalVar.getCells().get(task.getUniqueString())).length > 1)
+				{
+					logger.debug("removeSubGraph(): skip task "+task.getUniqueString()+" due to more incoming ports.");
+				}*/
+				else if (!doesTraversalEventExistFor(task))
 				{
 					logger.debug("removeSubGraph(): remove graph cell for task="+task.getUniqueString());
 					getCopiedCells().remove(task.getUniqueString());
+					logger.trace("removeSubGraph(): remove cell="+getGraph().getLabel(vertex));
 					tmpGraphCells.add(vertex);
-					cells.add(GlobalVar.getCells().get(task.getUniqueString()));
+					if (traversalEvent != null && traversalEvent.hasDep())// && traversalEvent.getDepNum() > 0)
+					{
+						logger.debug("removeSubGraph(): keep original task, add to traversaldep's processed cells list");
+						traversalEvent.decDep();
+						traversalEvent.getDependancy().getProcessedCells().add((mxICell)GlobalVar.getCells().get(task.getUniqueString()));
+					}
+					else
+					{
+						logger.trace("removeSubGraph(): remove cell="+getGraph().getLabel(GlobalVar.getCells().get(task.getUniqueString())));
+						cells.add(GlobalVar.getCells().get(task.getUniqueString()));
+					}
 				}
 				else
 				{
-					logger.debug("removeSubGraph(): skip task "+task.getUniqueString()+" due to traversal event, which contains this task.");
+					logger.debug("removeSubGraph(): skip task "+task.getUniqueString()+
+							" due to traversal event, which contains this task.");
 				}
 				
 				return true;
@@ -1055,16 +1110,61 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 
 		graph.getModel().beginUpdate();try{
 			getGraph().removeCells(cells.toArray(), true);
-			
 			getGraph().removeCells(tmpGraphCells.toArray(), true);
 			getGraph().removeCells(getDeprecatedEdges().toArray());
+			getGraph().removeCells(obsoleteCells.toArray());
 			JGraphXUtil.layoutGraph();
 		
 		}finally{graph.getModel().endUpdate();}
 
 		getProcessedEdgesCopyGraph().clear();
+		if (traversalEvent != null && traversalEvent.hasDep() && traversalEvent.getDepNum() > 0)
+		{
+			traversalEvent.decDep();
+		}
+
 		// reset flag indicating not to be removed
 		return !tmpGraphCells.isEmpty() || !cells.isEmpty();
+	}
+	
+	private EList<Object> getObsoleteCells(TraversalEvent traversalEvent, 
+			EList<mxICell> processedCells,
+			EList<Object> obsoleteCells)
+	{
+		logger.debug("getObsoleteCells() ");
+		if (traversalEvent.hasDep())
+		{
+			logger.trace("getObsoleteCells(): test for cells inbetween: "+traversalEvent.getSplitTask().getUniqueString()+" ...");
+			Object splitCell = GlobalVar.getCells().get(traversalEvent.getSplitTask().getUniqueString());
+			for (Task task : traversalEvent.getMergeTask())
+			{
+				logger.trace("getObsoleteCells() ... and "+task.getUniqueString());
+				Object mergeCell = GlobalVar.getCells().get(task.getUniqueString());
+				Object[] cells = getGraph().getShortestPath(splitCell, mergeCell);
+				logger.trace("getObsoleteCells(): found "+cells.length+" depending cells.");
+				for (Object processedCell : processedCells)
+				{
+					boolean obsolete = true;
+					for (Object cell : cells)
+					{
+						if (cell == processedCell)
+						{
+							obsolete = false;
+							break;
+						}
+					}
+
+					if (obsolete)
+					{
+						logger.debug("getObsoleteCells(): add cell with label="+getGraph().getLabel(processedCell));
+						obsoleteCells.add(processedCell);
+					}
+				}
+
+			}			
+		}
+		logger.debug("getObsoleteCells() return "+obsoleteCells.size()+" obsolete cells.");
+		return obsoleteCells;
 	}
 	
 	
@@ -1253,7 +1353,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		if (traversalEvent.isGrouping())
 		{
-			logger.debug(traversalEvent.getTraversalCriterion().getId()+" "+GlobalVar.getMetaData().getGroupingInstances().keySet());
+			logger.debug("getGroupingInstances(): "+traversalEvent.getTraversalCriterion().getId()+" "+GlobalVar.getMetaData().getGroupingInstances().keySet());
 			//if (traversalEvent.getType().equals("grouping"))
 				//if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
 				if (!GlobalVar.getMetaData().getGroupingInstances().containsKey(traversalEvent.getTraversalCriterion().getId()))

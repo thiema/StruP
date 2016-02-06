@@ -1067,42 +1067,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		if ((wtplArray.length > 5)) {
 			groupingStr = wtplArray[groupingCritField];
 		}
-
+		// create grouping cirt for any task
 		if (hasIndataPorts) {
-			short dataPortNo = 0;
-
-			// String[] groupingStrA=groupingStr.split(";");
-			for (String groupingString : groupingStr.split(";")) {
-				DataPort dataPort = null;
-				if (groupingString.equals("")) {
-					tmp = (String[]) defaultGroupingCriteria.toArray();
-					dataPort = getInDataPorts().get(dataPortNo++);
-				} else {
-					tmp = groupingString.split(";");
-					if (tmp.length > 1) {
-						dataPort = getDataPortByName(tmp[0], false);
-						groupingString = tmp[1];
-					} else
-						dataPort = getInDataPorts().get(dataPortNo++);
-					tmp = groupingString.split(",");
-				}
-				logger.trace("readTask(): " + getName() + " " + groupingString
-						+ " dataPort=" + dataPort.getName() + " ("
-						+ getInDataPorts().size() + ","
-						+ getOutDataPorts().size() + ")");
-
-				if (tmp.length > 0) {
-					for (int i = 0; i < tmp.length; i++) {
-						createGroupingCrit(tmp[i], dataPort, defaultMode);
-					}
-				}
-			}
+			readGroupingCriteria(groupingStr, defaultGroupingCriteria, defaultMode);
 		}
-		// simple fix for root, assuming 
-		else if (!"".equals(groupingStr) && hasOutdataPorts)
+		// create a grouping crit for root as well
+		else if (hasOutdataPorts)
 		{
-			createGroupingCrit(groupingStr, getOutDataPorts().get(0), defaultMode);
+			createGroupingCriteria(groupingStr, getOutDataPorts().get(0), defaultMode);
 		}
+
 
 		/**
 		 * Read the traversal Expression
@@ -1111,84 +1085,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		 */
 
 		if (wtplArray.length > 6) {
-			if (!wtplArray[traversalCritField].equals("")) {
-				tmp = wtplArray[traversalCritField].split(";");
-				// logger.debug(tmp.length);
-				for (int i = 0; i < tmp.length; i++) {
-					// travParamExp, expected of the form:
-					// <TraversalName(ID)>:<Tools ParamName>:<instances enclosed
-					// in brackets or name of operation that produces/retrieves
-					// instances>
-					String[] travParamExp = tmp[i].split(":");
-					// logger.debug(tmp1.length);
-					// if (!travParamExp[0].equals("")) {
-
-					TraversalCriterion traversalCriterion = TraversalFactory.eINSTANCE
-							.createTraversalCriterion();
-					traversalCriterion.setId(travParamExp[0]);
-					if (getInDataPorts().size() > i
-							&& getInDataPorts().get(i) != null) {
-						traversalCriterion.setDataPort(getInDataPorts().get(0));
-					}
-					traversalCriterion.setName(travParamExp[1]);
-					traversalCriterion.setMode("batch");
-					TraversalOperation traversalOperation = TraversalFactory.eINSTANCE
-							.createTraversalOperation();
-					String[] operation = null;
-					if (travParamExp.length > 2) {
-						operation = travParamExp[2].split("=");
-						if (operation.length > 1) {
-							traversalOperation.setName(operation[0]);
-							traversalOperation.setType("split");
-						} else {
-							traversalOperation.setName(travParamExp[2]);
-							traversalOperation.setType("merge");
-						}
-					} else {
-						traversalOperation.setName("default");
-						traversalOperation.setType("merge");
-					}
-
-					TraversalEvent traversalEvent = TraversalFactory.eINSTANCE
-							.createTraversalEvent();
-
-					// here we parse the 3rd part of the parameter traversal
-					// expression like TraversalName:ParamName:values=[a,b,c]
-					if (operation != null && operation.length > 1) {
-						if (!operation[1].startsWith("["))
-							traversalCriterion.setChunkSource(operation[1]);
-						else {
-							String noBrackets = operation[1].substring(1,
-									operation[1].length() - 1);
-							logger.debug("readTask(): parsed values for parameter traversal expression to '"
-									+ noBrackets + "' for name=" + operation[0]);
-							String[] tmp2 = noBrackets.split(",");
-							for (String tmp3 : tmp2) {
-								TraversalChunk traversalChunk = TraversalFactory.eINSTANCE
-										.createTraversalChunk();
-								traversalChunk.setName(tmp3);
-								traversalCriterion.getChunks().put(tmp3,
-										traversalChunk);
-							}
-						}
-					}
-
-					traversalCriterion.setOperation(traversalOperation);
-					traversalEvent.setTraversalCriterion(traversalCriterion);
-					//if (traversalOperation.getType().equals("split"))
-						
-					if (traversalOperation.getType().equals("merge"))
-						traversalEvent.getMergeTask().add(this);
-					else
-						traversalEvent.setSplitTask(this);
-					logger.trace("readTask(): " + "adding travcrit: "
-							+ traversalCriterion.getId() + " ");
-					getTraversalEvents().put(traversalCriterion.getId(),
-							traversalEvent);
-					// }
-					// }
-				}
-			}
+			readTraversalCriteria(wtplArray[traversalCritField]);
 		}
 
 		/**
@@ -1252,8 +1149,143 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		
 	}
 	
-	private void createGroupingCrit(String groupingCritStr, DataPort dataPort, String defaultMode)
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public boolean readGroupingCriteria(String field, EList<String> defaultGroupingCriteria, String defaultMode)
 	{
+		boolean rc = true;
+		short dataPortNo = 0;
+		
+		// String[] groupingStrA=groupingStr.split(";");
+		for (String groupingString : field.split(";")) {
+			String[] tmp;
+			DataPort dataPort = null;
+			if (groupingString.equals("")) {
+				tmp = (String[]) defaultGroupingCriteria.toArray();
+				dataPort = getInDataPorts().get(dataPortNo++);
+			} else {
+				tmp = groupingString.split(";");
+				if (tmp.length > 1) {
+					dataPort = getDataPortByName(tmp[0], false);
+					groupingString = tmp[1];
+				} else
+					dataPort = getInDataPorts().get(dataPortNo++);
+				tmp = groupingString.split(",");
+			}
+			logger.trace("readTask(): task=" + getName() + " grouping=" + groupingString
+					+ " dataPort=" + dataPort.getName() + " ("
+					+ getInDataPorts().size() + ","
+					+ getOutDataPorts().size() + ")");
+
+			if (tmp.length > 0) {
+				for (int i = 0; i < tmp.length; i++) {
+					createGroupingCriteria(tmp[i], dataPort, defaultMode);
+				}
+			}
+		}
+		return rc;
+	}
+	
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public boolean readTraversalCriteria(String field)
+	{
+		boolean rc = true;
+		if (!field.equals("")) {
+			String[] tmp = field.split(";");
+			// logger.debug(tmp.length);
+			for (int i = 0; i < tmp.length; i++) {
+				// travParamExp, expected of the form:
+				// <TraversalName(ID)>:<Tools ParamName>:<instances enclosed
+				// in brackets or name of operation that produces/retrieves
+				// instances>
+				String[] travParamExp = tmp[i].split(":");
+				// logger.debug(tmp1.length);
+				// if (!travParamExp[0].equals("")) {
+
+				TraversalCriterion traversalCriterion = TraversalFactory.eINSTANCE
+						.createTraversalCriterion();
+				traversalCriterion.setId(travParamExp[0]);
+				if (getInDataPorts().size() > i
+						&& getInDataPorts().get(i) != null) {
+					traversalCriterion.setDataPort(getInDataPorts().get(0));
+				}
+				traversalCriterion.setName(travParamExp[1]);
+				traversalCriterion.setMode("batch");
+				TraversalOperation traversalOperation = TraversalFactory.eINSTANCE
+						.createTraversalOperation();
+				String[] operation = null;
+				if (travParamExp.length > 2) {
+					operation = travParamExp[2].split("=");
+					if (operation.length > 1) {
+						traversalOperation.setName(operation[0]);
+						traversalOperation.setType("split");
+					} else {
+						traversalOperation.setName(travParamExp[2]);
+						traversalOperation.setType("merge");
+					}
+				} else {
+					traversalOperation.setName("default");
+					traversalOperation.setType("merge");
+				}
+
+				TraversalEvent traversalEvent = TraversalFactory.eINSTANCE
+						.createTraversalEvent();
+
+				// here we parse the 3rd part of the parameter traversal
+				// expression like TraversalName:ParamName:values=[a,b,c]
+				if (operation != null && operation.length > 1) {
+					if (!operation[1].startsWith("["))
+						traversalCriterion.setChunkSource(operation[1]);
+					else {
+						String noBrackets = operation[1].substring(1,
+								operation[1].length() - 1);
+						logger.debug("readTask(): parsed values for parameter traversal expression to '"
+								+ noBrackets + "' for name=" + operation[0]);
+						String[] tmp2 = noBrackets.split(",");
+						for (String tmp3 : tmp2) {
+							TraversalChunk traversalChunk = TraversalFactory.eINSTANCE
+									.createTraversalChunk();
+							traversalChunk.setName(tmp3);
+							traversalCriterion.getChunks().put(tmp3,
+									traversalChunk);
+						}
+					}
+				}
+
+				traversalCriterion.setOperation(traversalOperation);
+				traversalEvent.setTraversalCriterion(traversalCriterion);
+				//if (traversalOperation.getType().equals("split"))
+					
+				if (traversalOperation.getType().equals("merge"))
+					traversalEvent.getMergeTask().add(this);
+				else
+					traversalEvent.setSplitTask(this);
+				logger.trace("readTask(): " + "adding travcrit: "
+						+ traversalCriterion.getId() + " ");
+				getTraversalEvents().put(traversalCriterion.getId(),
+						traversalEvent);
+				// }
+				// }
+			}
+		}
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated not
+	 */
+	public boolean createGroupingCriteria(String groupingCritStr, DataPort dataPort, String defaultMode)
+	{
+		boolean rc = true;
 		TraversalCriterion traversalCriterion = TraversalFactory.eINSTANCE
 				.createTraversalCriterion();
 		traversalCriterion.setDataPort(dataPort);
@@ -1268,7 +1300,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				.createTraversalEvent();
 		traversalCriterion.setId(group[0]);
 		logger.trace("readTask(): "
-				+ " set traversal criterion="
+				+ " set grouping criterion="
 				+ traversalCriterion.getId());
 
 		TraversalOperation traversalOperation = TraversalFactory.eINSTANCE
@@ -1278,17 +1310,20 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 
 		traversalEvent.setTraversalCriterion(traversalCriterion);
 		traversalEvent.setSplitTask(this);
-		logger.trace("readTask(): " + "adding travcrit: "
-				+ traversalCriterion.getId() + " ");
+		logger.trace("readTask(): " + "adding grouping "
+				+ "criterion="+ traversalCriterion.getId() 
+				+ " with mode="+traversalCriterion.getMode());
 		getTraversalEvents().put(traversalCriterion.getId(),
 				traversalEvent);
 		getGroupingCriteria().put(traversalCriterion.getId(),
 				traversalCriterion.getMode());
 		dataPort.getGroupingCriteria().add(traversalCriterion);
+		return rc;
 	}
 	
 	private DataPort parseDataPortField(String field, EList<Pattern> pattern, boolean isOutDataPort) {
-		
+	
+		//the dataport consists of: DataPort1=[PortName:]DataFormat,DataFormat2,...
 		DataPort dataPort = DataFactory.eINSTANCE.createDataPort();
 		String[] tmp = field.split(":");
 		String dataPortString = tmp[0];
@@ -1332,6 +1367,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	public EList<DataFormat> parseDataFormatField(String dataFormatString,
 			EList<Pattern> pattern) {
+		
 		String[] overall = dataFormatString.split(";");
 		if (overall.length > 1) {
 			// String[] tmp=overall[1].split(regex)
@@ -1357,16 +1393,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 */
 	public boolean shallProcess(EList<GroupingInstance> groupingInstances,
 			String forGrouping) {
-
 		
 		boolean requireAll = false;
 		
 		String exp = getJexlString();
 		for (EMap<String, Object> map : easyflow.custom.util.Util.createMetaDataMapForJexl(groupingInstances, forGrouping))
 		{
-		 
-			
-			logger.debug("exp="+exp+" map="+map);
+			logger.debug("shallProcess(): exp="+exp+" map="+map);
 			
 			Object evalObject = easyflow.custom.util.Util.evaluateJexl(map, getJexlString());
 			
@@ -1375,8 +1408,6 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return true;
 			else if (requireAll && !shallProcess)
 				return false;
-				
-				
 		}
 		if (requireAll)
 			return true;
@@ -1551,6 +1582,11 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		return (tasks.size() > 0) ? tasks.get(0) : null;
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public EMap<String, String> getValidInOutDataPortCombinations()
 	{
 		EMap<String, String> combis = new BasicEMap<String, String>();
@@ -2437,6 +2473,20 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		}		
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getDetailedString() {
+		return getUniqueString()
+				+" dataportIn="+Util.list2String(getInDataPorts(), ",")
+				+" dataportOut="+Util.list2String(getOutDataPorts(), ",")
+				+" traversalEvents="+Util.list2String(Util.traversalEvents2String(getTraversalEvents()), ",")
+				+" "
+				;
+	}
+
 	private void resolveConditionalStaticParam_DataPort(ResolvedParam resolvedParam)
 	{
 		throw new UnsupportedOperationException();
@@ -4217,6 +4267,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK___RESOLVE_STATIC_PARAMS__EMAP:
 				resolveStaticParams((EMap<String, ResolvedParam>)arguments.get(0));
 				return null;
+			case CorePackage.TASK___GET_DETAILED_STRING:
+				return getDetailedString();
+			case CorePackage.TASK___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS:
+				return getValidInOutDataPortCombinations();
+			case CorePackage.TASK___READ_TRAVERSAL_CRITERIA__STRING:
+				return readTraversalCriteria((String)arguments.get(0));
+			case CorePackage.TASK___READ_GROUPING_CRITERIA__STRING_ELIST_STRING:
+				return readGroupingCriteria((String)arguments.get(0), (EList<String>)arguments.get(1), (String)arguments.get(2));
+			case CorePackage.TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING:
+				return createGroupingCriteria((String)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

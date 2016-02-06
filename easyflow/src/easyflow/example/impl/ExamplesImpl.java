@@ -6,7 +6,6 @@
  */
 package easyflow.example.impl;
 
-import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.URIUtil;
 import easyflow.example.ExamplePackage;
@@ -15,7 +14,6 @@ import easyflow.ui.DefaultProject;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToProjectMapImpl;
 import easyflow.ui.UiFactory;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -236,6 +233,7 @@ public class ExamplesImpl extends MinimalEObjectImpl.Container implements Exampl
 						String workflow = null;
 						String utility  = null;
 						String config   = null;
+						String metadata = null;
 						
 						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_NAME) && 
 								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_NAME))
@@ -252,6 +250,10 @@ public class ExamplesImpl extends MinimalEObjectImpl.Container implements Exampl
 						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_UTIL) && 
 								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_UTIL))
 							utility = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_UTIL)];
+						if (header.containsKey(GlobalConstants.EXAMPLE_REPO_HEADER_METADATA) &&
+								lina.length > header.get(GlobalConstants.EXAMPLE_REPO_HEADER_METADATA))
+							metadata = lina[header.get(GlobalConstants.EXAMPLE_REPO_HEADER_METADATA)];
+							
 						if (name != null)
 						{
 							DefaultProject defaultProject = UiFactory.eINSTANCE.createDefaultProject();
@@ -270,11 +272,14 @@ public class ExamplesImpl extends MinimalEObjectImpl.Container implements Exampl
 										URIUtil.addToURI(baseURI, "main.json"));
 							
 							if (workflow != null)
-								GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, workflow);
+								defaultProject.setConfigWorkflowDefFile(workflow);
 							if (utility != null)
-								GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, utility);
-							
+								defaultProject.setConfigUtilityDefFile(utility);
+							if (metadata != null)
+								defaultProject.setConfigMetadataFile(metadata);
 							//getExamples().put(lina[0], defaultProject);
+							logger.debug("readRepository(): name="+name+" folder="+folder+" config="+config
+									+" workflow="+workflow+" utility="+utility+" ("+defaultProject.getConfigUtilityDefFile()+")");
 							getExamples().put(name, defaultProject);
 						}
 						else

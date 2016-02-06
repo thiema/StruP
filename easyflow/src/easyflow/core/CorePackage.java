@@ -558,22 +558,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING = 31;
 
 	/**
-	 * The operation id for the '<em>Get Valid In Out Data Port Combinations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS = 32;
-
-	/**
 	 * The operation id for the '<em>Init</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW___INIT = 33;
+	int WORKFLOW___INIT = 32;
 
 	/**
 	 * The operation id for the '<em>Render To String</em>' operation.
@@ -582,7 +573,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW___RENDER_TO_STRING = 34;
+	int WORKFLOW___RENDER_TO_STRING = 33;
 
 	/**
 	 * The number of operations of the '<em>Workflow</em>' class.
@@ -591,7 +582,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_OPERATION_COUNT = 35;
+	int WORKFLOW_OPERATION_COUNT = 34;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -1414,13 +1405,58 @@ public interface CorePackage extends EPackage {
 	int TASK___RESOLVE_STATIC_PARAMS__EMAP = 57;
 
 	/**
+	 * The operation id for the '<em>Get Detailed String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_DETAILED_STRING = 58;
+
+	/**
+	 * The operation id for the '<em>Get Valid In Out Data Port Combinations</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS = 59;
+
+	/**
+	 * The operation id for the '<em>Read Traversal Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___READ_TRAVERSAL_CRITERIA__STRING = 60;
+
+	/**
+	 * The operation id for the '<em>Read Grouping Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___READ_GROUPING_CRITERIA__STRING_ELIST_STRING = 61;
+
+	/**
+	 * The operation id for the '<em>Create Grouping Criteria</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING = 62;
+
+	/**
 	 * The number of operations of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_OPERATION_COUNT = 58;
+	int TASK_OPERATION_COUNT = 63;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
@@ -2846,16 +2882,6 @@ public interface CorePackage extends EPackage {
 	EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Workflow#getValidInOutDataPortCombinations() <em>Get Valid In Out Data Port Combinations</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Valid In Out Data Port Combinations</em>' operation.
-	 * @see easyflow.core.Workflow#getValidInOutDataPortCombinations()
-	 * @generated
-	 */
-	EOperation getWorkflow__GetValidInOutDataPortCombinations();
-
-	/**
 	 * Returns the meta object for the '{@link easyflow.core.Workflow#init() <em>Init</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3805,6 +3831,56 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTask__ResolveStaticParams__EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getDetailedString() <em>Get Detailed String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Detailed String</em>' operation.
+	 * @see easyflow.core.Task#getDetailedString()
+	 * @generated
+	 */
+	EOperation getTask__GetDetailedString();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#getValidInOutDataPortCombinations() <em>Get Valid In Out Data Port Combinations</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Valid In Out Data Port Combinations</em>' operation.
+	 * @see easyflow.core.Task#getValidInOutDataPortCombinations()
+	 * @generated
+	 */
+	EOperation getTask__GetValidInOutDataPortCombinations();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#readTraversalCriteria(java.lang.String) <em>Read Traversal Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Traversal Criteria</em>' operation.
+	 * @see easyflow.core.Task#readTraversalCriteria(java.lang.String)
+	 * @generated
+	 */
+	EOperation getTask__ReadTraversalCriteria__String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#readGroupingCriteria(java.lang.String, org.eclipse.emf.common.util.EList, java.lang.String) <em>Read Grouping Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Read Grouping Criteria</em>' operation.
+	 * @see easyflow.core.Task#readGroupingCriteria(java.lang.String, org.eclipse.emf.common.util.EList, java.lang.String)
+	 * @generated
+	 */
+	EOperation getTask__ReadGroupingCriteria__String_EList_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#createGroupingCriteria(java.lang.String, easyflow.data.DataPort, java.lang.String) <em>Create Grouping Criteria</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Create Grouping Criteria</em>' operation.
+	 * @see easyflow.core.Task#createGroupingCriteria(java.lang.String, easyflow.data.DataPort, java.lang.String)
+	 * @generated
+	 */
+	EOperation getTask__CreateGroupingCriteria__String_DataPort_String();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
@@ -4932,14 +5008,6 @@ public interface CorePackage extends EPackage {
 		EOperation WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING = eINSTANCE.getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Valid In Out Data Port Combinations</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation WORKFLOW___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS = eINSTANCE.getWorkflow__GetValidInOutDataPortCombinations();
-
-		/**
 		 * The meta object literal for the '<em><b>Init</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -5676,6 +5744,46 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TASK___RESOLVE_STATIC_PARAMS__EMAP = eINSTANCE.getTask__ResolveStaticParams__EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Detailed String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_DETAILED_STRING = eINSTANCE.getTask__GetDetailedString();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Valid In Out Data Port Combinations</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___GET_VALID_IN_OUT_DATA_PORT_COMBINATIONS = eINSTANCE.getTask__GetValidInOutDataPortCombinations();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Traversal Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___READ_TRAVERSAL_CRITERIA__STRING = eINSTANCE.getTask__ReadTraversalCriteria__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Read Grouping Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___READ_GROUPING_CRITERIA__STRING_ELIST_STRING = eINSTANCE.getTask__ReadGroupingCriteria__String_EList_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Create Grouping Criteria</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING = eINSTANCE.getTask__CreateGroupingCriteria__String_DataPort_String();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
