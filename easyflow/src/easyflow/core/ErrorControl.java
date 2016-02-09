@@ -218,4 +218,12 @@ public interface ErrorControl extends EObject {
 	 */
 	String generateDescription();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model errorVarMany="true"
+	 * @generated
+	 */
+	String generateErrorString(String errorTpl, Category category, Severity severity, EList<String> errorVar);
+
 } // ErrorControl

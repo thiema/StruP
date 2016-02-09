@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.core.DefaultWorkflowTemplate#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,5 +130,31 @@ public interface DefaultWorkflowTemplate extends IWorkflowTemplate {
 	 * @generated
 	 */
 	void setLogger(Logger value);
+
+	/**
+	 * Returns the value of the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Error Control</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Error Control</em>' reference.
+	 * @see #setErrorControl(ErrorControl)
+	 * @see easyflow.core.CorePackage#getDefaultWorkflowTemplate_ErrorControl()
+	 * @model
+	 * @generated
+	 */
+	ErrorControl getErrorControl();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.DefaultWorkflowTemplate#getErrorControl <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Error Control</em>' reference.
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	void setErrorControl(ErrorControl value);
 
 } // DefaultWorkflowTemplate

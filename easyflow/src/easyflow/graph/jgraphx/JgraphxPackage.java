@@ -80,13 +80,22 @@ public interface JgraphxPackage extends EPackage {
 	int ABSTRACT_GRAPH__GRAPH = 0;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_GRAPH__ERROR_CONTROL = 1;
+
+	/**
 	 * The number of structural features of the '<em>Abstract Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_GRAPH_FEATURE_COUNT = 1;
+	int ABSTRACT_GRAPH_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Resolve Traversal Events</em>' operation.
@@ -126,13 +135,22 @@ public interface JgraphxPackage extends EPackage {
 	int TRAVERSAL_EVENT_GRAPH__GRAPH = 0;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL = 1;
+
+	/**
 	 * The number of structural features of the '<em>Traversal Event Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_GRAPH_FEATURE_COUNT = 1;
+	int TRAVERSAL_EVENT_GRAPH_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Apply Traversal Event</em>' operation.
@@ -199,13 +217,22 @@ public interface JgraphxPackage extends EPackage {
 	int PREPROCESSING_GRAPH__GRAPH = 0;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_GRAPH__ERROR_CONTROL = 1;
+
+	/**
 	 * The number of structural features of the '<em>Preprocessing Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREPROCESSING_GRAPH_FEATURE_COUNT = 1;
+	int PREPROCESSING_GRAPH_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Resolve Preprocessing Task</em>' operation.
@@ -272,13 +299,22 @@ public interface JgraphxPackage extends EPackage {
 	int TOOL_DEPENDENCY_GRAPH__GRAPH = 0;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL = 1;
+
+	/**
 	 * The number of structural features of the '<em>Tool Dependency Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_DEPENDENCY_GRAPH_FEATURE_COUNT = 1;
+	int TOOL_DEPENDENCY_GRAPH_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Resolve Tool Dependencies</em>' operation.
@@ -318,13 +354,22 @@ public interface JgraphxPackage extends EPackage {
 	int EXECUTION_GRAPH__GRAPH = 0;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXECUTION_GRAPH__ERROR_CONTROL = 1;
+
+	/**
 	 * The number of structural features of the '<em>Execution Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXECUTION_GRAPH_FEATURE_COUNT = 1;
+	int EXECUTION_GRAPH_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Generate Workflow For Execution System</em>' operation.
@@ -382,13 +427,22 @@ public interface JgraphxPackage extends EPackage {
 	int SUB_GRAPH__GRAPH = 0;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUB_GRAPH__ERROR_CONTROL = 1;
+
+	/**
 	 * The number of structural features of the '<em>Sub Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH_FEATURE_COUNT = 1;
+	int SUB_GRAPH_FEATURE_COUNT = 2;
 
 	/**
 	 * The operation id for the '<em>Compute Subgraph</em>' operation.
@@ -581,13 +635,22 @@ public interface JgraphxPackage extends EPackage {
 	int GRAPH__EXECUTION_GRAPH = 17;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH__ERROR_CONTROL = 18;
+
+	/**
 	 * The number of structural features of the '<em>Graph</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_FEATURE_COUNT = 18;
+	int GRAPH_FEATURE_COUNT = 19;
 
 
 	/**
@@ -811,6 +874,17 @@ public interface JgraphxPackage extends EPackage {
 	EReference getAbstractGraph_Graph();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.AbstractGraph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.AbstractGraph#getErrorControl()
+	 * @see #getAbstractGraph()
+	 * @generated
+	 */
+	EReference getAbstractGraph_ErrorControl();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.AbstractGraph#resolveTraversalEvents(com.mxgraph.model.mxICell) <em>Resolve Traversal Events</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -840,6 +914,17 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTraversalEventGraph_Graph();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.TraversalEventGraph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.TraversalEventGraph#getErrorControl()
+	 * @see #getTraversalEventGraph()
+	 * @generated
+	 */
+	EReference getTraversalEventGraph_ErrorControl();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEvent(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, java.lang.String, easyflow.metadata.GroupingInstance) <em>Apply Traversal Event</em>}' operation.
@@ -903,6 +988,17 @@ public interface JgraphxPackage extends EPackage {
 	EReference getPreprocessingGraph_Graph();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.PreprocessingGraph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.PreprocessingGraph#getErrorControl()
+	 * @see #getPreprocessingGraph()
+	 * @generated
+	 */
+	EReference getPreprocessingGraph_ErrorControl();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.PreprocessingGraph#resolvePreprocessingTask(com.mxgraph.model.mxICell, com.mxgraph.model.mxICell) <em>Resolve Preprocessing Task</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -964,6 +1060,17 @@ public interface JgraphxPackage extends EPackage {
 	EReference getToolDependencyGraph_Graph();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.ToolDependencyGraph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.ToolDependencyGraph#getErrorControl()
+	 * @see #getToolDependencyGraph()
+	 * @generated
+	 */
+	EReference getToolDependencyGraph_ErrorControl();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.ToolDependencyGraph#resolveToolDependencies(com.mxgraph.model.mxICell, easyflow.core.Catalog) <em>Resolve Tool Dependencies</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -993,6 +1100,17 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getExecutionGraph_Graph();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.ExecutionGraph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.ExecutionGraph#getErrorControl()
+	 * @see #getExecutionGraph()
+	 * @generated
+	 */
+	EReference getExecutionGraph_ErrorControl();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.ExecutionGraph#generateWorkflowForExecutionSystem(com.mxgraph.model.mxICell, easyflow.execution.IExecutionSystem) <em>Generate Workflow For Execution System</em>}' operation.
@@ -1044,6 +1162,17 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSubGraph_Graph();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.SubGraph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.SubGraph#getErrorControl()
+	 * @see #getSubGraph()
+	 * @generated
+	 */
+	EReference getSubGraph_ErrorControl();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.SubGraph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean) <em>Compute Subgraph</em>}' operation.
@@ -1262,6 +1391,17 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getGraph_ExecutionGraph();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.Graph#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.graph.jgraphx.Graph#getErrorControl()
+	 * @see #getGraph()
+	 * @generated
+	 */
+	EReference getGraph_ErrorControl();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#getNextTraversalEvent(boolean) <em>Get Next Traversal Event</em>}' operation.
@@ -1512,6 +1652,13 @@ public interface JgraphxPackage extends EPackage {
 		 */
 		EReference ABSTRACT_GRAPH__GRAPH = eINSTANCE.getAbstractGraph_Graph();
 		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ABSTRACT_GRAPH__ERROR_CONTROL = eINSTANCE.getAbstractGraph_ErrorControl();
+		/**
 		 * The meta object literal for the '<em><b>Resolve Traversal Events</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1534,6 +1681,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TRAVERSAL_EVENT_GRAPH__GRAPH = eINSTANCE.getTraversalEventGraph_Graph();
+		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL = eINSTANCE.getTraversalEventGraph_ErrorControl();
 		/**
 		 * The meta object literal for the '<em><b>Apply Traversal Event</b></em>' operation.
 		 * <!-- begin-user-doc -->
@@ -1579,6 +1733,13 @@ public interface JgraphxPackage extends EPackage {
 		 */
 		EReference PREPROCESSING_GRAPH__GRAPH = eINSTANCE.getPreprocessingGraph_Graph();
 		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREPROCESSING_GRAPH__ERROR_CONTROL = eINSTANCE.getPreprocessingGraph_ErrorControl();
+		/**
 		 * The meta object literal for the '<em><b>Resolve Preprocessing Task</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1623,6 +1784,13 @@ public interface JgraphxPackage extends EPackage {
 		 */
 		EReference TOOL_DEPENDENCY_GRAPH__GRAPH = eINSTANCE.getToolDependencyGraph_Graph();
 		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL = eINSTANCE.getToolDependencyGraph_ErrorControl();
+		/**
 		 * The meta object literal for the '<em><b>Resolve Tool Dependencies</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1645,6 +1813,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference EXECUTION_GRAPH__GRAPH = eINSTANCE.getExecutionGraph_Graph();
+		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXECUTION_GRAPH__ERROR_CONTROL = eINSTANCE.getExecutionGraph_ErrorControl();
 		/**
 		 * The meta object literal for the '<em><b>Generate Workflow For Execution System</b></em>' operation.
 		 * <!-- begin-user-doc -->
@@ -1682,6 +1857,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SUB_GRAPH__GRAPH = eINSTANCE.getSubGraph_Graph();
+		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SUB_GRAPH__ERROR_CONTROL = eINSTANCE.getSubGraph_ErrorControl();
 		/**
 		 * The meta object literal for the '<em><b>Compute Subgraph</b></em>' operation.
 		 * <!-- begin-user-doc -->
@@ -1824,6 +2006,13 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EReference GRAPH__EXECUTION_GRAPH = eINSTANCE.getGraph_ExecutionGraph();
+		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GRAPH__ERROR_CONTROL = eINSTANCE.getGraph_ErrorControl();
 		/**
 		 * The meta object literal for the '<em><b>Get Next Traversal Event</b></em>' operation.
 		 * <!-- begin-user-doc -->

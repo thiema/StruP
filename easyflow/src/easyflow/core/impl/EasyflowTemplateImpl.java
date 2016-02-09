@@ -15,6 +15,7 @@ import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
+import easyflow.core.ErrorControl;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -41,6 +43,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,6 +113,16 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getErrorControl()
+	 * @generated
+	 * @ordered
+	 */
+	protected ErrorControl errorControl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -203,6 +216,44 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 		logger = newLogger;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__LOGGER, oldLogger, logger));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl getErrorControl() {
+		if (errorControl != null && errorControl.eIsProxy()) {
+			InternalEObject oldErrorControl = (InternalEObject)errorControl;
+			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
+			if (errorControl != oldErrorControl) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL, oldErrorControl, errorControl));
+			}
+		}
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl basicGetErrorControl() {
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setErrorControl(ErrorControl newErrorControl) {
+		ErrorControl oldErrorControl = errorControl;
+		errorControl = newErrorControl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 	/**
@@ -329,6 +380,9 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				return getUtilTaskReader();
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				return getLogger();
+			case CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL:
+				if (resolve) return getErrorControl();
+				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -355,6 +409,9 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
 				return;
+			case CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL:
+				setErrorControl((ErrorControl)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -379,6 +436,9 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
+			case CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL:
+				setErrorControl((ErrorControl)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -399,6 +459,8 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				return UTIL_TASK_READER_EDEFAULT == null ? utilTaskReader != null : !UTIL_TASK_READER_EDEFAULT.equals(utilTaskReader);
 			case CorePackage.EASYFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL:
+				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -416,6 +478,7 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				case CorePackage.EASYFLOW_TEMPLATE__READER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER;
 				case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER;
 				case CorePackage.EASYFLOW_TEMPLATE__LOGGER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER;
+				case CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL;
 				default: return -1;
 			}
 		}
@@ -435,6 +498,7 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__READER: return CorePackage.EASYFLOW_TEMPLATE__READER;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER: return CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER: return CorePackage.EASYFLOW_TEMPLATE__LOGGER;
+				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL: return CorePackage.EASYFLOW_TEMPLATE__ERROR_CONTROL;
 				default: return -1;
 			}
 		}

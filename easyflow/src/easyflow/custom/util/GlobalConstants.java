@@ -86,6 +86,7 @@ public class GlobalConstants {
 	public static final String ROOT_TASK_NAME           = "_root_";
 	
 	// error descriptions
+	public static final String ERROR_STRING_VAR_PLACEHOLDERS[] = {"$VAL1, $VAL2, $VAL3, $VAL4, $VAL5"};
 	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL_1    = "No valid data handle found for tool \"$VAL1\".";
 	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG_0  = "No valid data handle found due to configuration.";
 	public static final String ERROR_NO_TOOL_DEFINITION_FOUND_FOR_TOOL_1         = "Unable to find definition of tool \"$VAL1\".";
@@ -99,8 +100,8 @@ public class GlobalConstants {
 	public static final String ERROR_WORKFLOW_TEMPLATE_NOT_SPECIFIED_0           = "No workflow template provided.";
 	public static final String ERROR_TOOL_DEFINITION_NOT_SPECIFIED_0             = "No tool definition provided.";
 	
-	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL      = "Tool does not provide a valid data handle.";
-	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG    = "Configuration does not provide a valid data handle.";
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_0    = "No valid data handle provided.";
+	//public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG    = "Configuration does not provide a valid data handle.";
 
 	/*
 	public static final String ERROR_

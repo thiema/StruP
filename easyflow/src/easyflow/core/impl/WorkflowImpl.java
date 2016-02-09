@@ -6,6 +6,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTemplate;
+import easyflow.core.ErrorControl;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.Task;
@@ -95,6 +96,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getExecutionSystem <em>Execution System</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCurrentRule <em>Current Rule</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getJgraph <em>Jgraph</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -392,6 +394,16 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * @ordered
 	 */
 	protected Graph jgraph;
+
+	/**
+	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getErrorControl()
+	 * @generated
+	 * @ordered
+	 */
+	protected ErrorControl errorControl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -766,6 +778,44 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		jgraph = newJgraph;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__JGRAPH, oldJgraph, jgraph));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl getErrorControl() {
+		if (errorControl != null && errorControl.eIsProxy()) {
+			InternalEObject oldErrorControl = (InternalEObject)errorControl;
+			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
+			if (errorControl != oldErrorControl) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__ERROR_CONTROL, oldErrorControl, errorControl));
+			}
+		}
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl basicGetErrorControl() {
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setErrorControl(ErrorControl newErrorControl) {
+		ErrorControl oldErrorControl = errorControl;
+		errorControl = newErrorControl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 	/**
@@ -2603,6 +2653,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__JGRAPH:
 				if (resolve) return getJgraph();
 				return basicGetJgraph();
+			case CorePackage.WORKFLOW__ERROR_CONTROL:
+				if (resolve) return getErrorControl();
+				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2680,6 +2733,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__JGRAPH:
 				setJgraph((Graph)newValue);
 				return;
+			case CorePackage.WORKFLOW__ERROR_CONTROL:
+				setErrorControl((ErrorControl)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -2752,6 +2808,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__JGRAPH:
 				setJgraph((Graph)null);
 				return;
+			case CorePackage.WORKFLOW__ERROR_CONTROL:
+				setErrorControl((ErrorControl)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -2806,6 +2865,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				return currentRule != null;
 			case CorePackage.WORKFLOW__JGRAPH:
 				return jgraph != null;
+			case CorePackage.WORKFLOW__ERROR_CONTROL:
+				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}

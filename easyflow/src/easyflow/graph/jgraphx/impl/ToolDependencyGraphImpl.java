@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import easyflow.core.Catalog;
+import easyflow.core.ErrorControl;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
@@ -60,6 +61,7 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.graph.jgraphx.impl.ToolDependencyGraphImpl#getGraph <em>Graph</em>}</li>
+ *   <li>{@link easyflow.graph.jgraphx.impl.ToolDependencyGraphImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,6 +79,16 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 	 */
 	protected Graph graph;
 	
+	/**
+	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getErrorControl()
+	 * @generated
+	 * @ordered
+	 */
+	protected ErrorControl errorControl;
+
 	private static Logger logger = Logger.getLogger(ToolDependencies.class);
 	/**
 	 * <!-- begin-user-doc -->
@@ -648,6 +660,9 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				if (resolve) return getGraph();
 				return basicGetGraph();
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
+				if (resolve) return getErrorControl();
+				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -662,6 +677,9 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				setGraph((Graph)newValue);
+				return;
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
+				setErrorControl((ErrorControl)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -678,6 +696,9 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				setGraph((Graph)null);
 				return;
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
+				setErrorControl((ErrorControl)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -692,6 +713,8 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				return graph != null;
+			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
+				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -991,6 +1014,44 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 		graph = newGraph;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH, oldGraph, graph));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl getErrorControl() {
+		if (errorControl != null && errorControl.eIsProxy()) {
+			InternalEObject oldErrorControl = (InternalEObject)errorControl;
+			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
+			if (errorControl != oldErrorControl) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
+			}
+		}
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl basicGetErrorControl() {
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setErrorControl(ErrorControl newErrorControl) {
+		ErrorControl oldErrorControl = errorControl;
+		errorControl = newErrorControl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 } //ToolDependenciesImpl

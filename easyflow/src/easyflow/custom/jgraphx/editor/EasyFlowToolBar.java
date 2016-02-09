@@ -40,6 +40,7 @@ public class EasyFlowToolBar extends JToolBar
 	private static final String         repositoryJar      = "/easyflow/custom/examples";
 	private static String               repositoryFS       = "easyflow/custom/examples";
 	private static final String         repositoryFS_src   = "src/easyflow/custom/examples";
+	private static final String         repositoryFS_build = "build/classes/easyflow/custom/examples/";
 	// when running from ../easyflow/build folder the path is 
 	//private static final String         repositoryFS_bin   = "build/classes/easyflow/custom/examples";
 	// when running from the unzipped archive folder
@@ -105,6 +106,7 @@ public class EasyFlowToolBar extends JToolBar
 		
 		File repoSrcFile = new File (repositoryFS_src);
 		File repoBinFile = new File (repositoryFS_bin);
+		File repoBuildFile = new File(repositoryFS_build);
 		File repoFile = new File(repositoryFS);
 		if (!repoFile.isAbsolute())
 		{
@@ -115,6 +117,10 @@ public class EasyFlowToolBar extends JToolBar
 			else if (repoBinFile.exists())
 			{
 				repositoryFS=repositoryFS_bin;
+			}
+			else if (repoBuildFile.exists())
+			{
+				repositoryFS=repositoryFS_build;
 			}
 			else
 				repositoryFS=null;

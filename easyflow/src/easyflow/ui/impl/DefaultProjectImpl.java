@@ -42,6 +42,7 @@ import easyflow.core.Catalog;
 import easyflow.core.CoreFactory;
 import easyflow.core.Task;
 import easyflow.core.EasyflowTemplate;
+import easyflow.core.ErrorControl;
 import easyflow.core.Workflow;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
@@ -100,6 +101,7 @@ import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigUtilityDefFile <em>Config Utility Def File</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigMetadataFile <em>Config Metadata File</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -306,6 +308,16 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @ordered
 	 */
 	protected String configMetadataFile = CONFIG_METADATA_FILE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getErrorControl()
+	 * @generated
+	 * @ordered
+	 */
+	protected ErrorControl errorControl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -533,6 +545,44 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		configMetadataFile = newConfigMetadataFile;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE, oldConfigMetadataFile, configMetadataFile));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl getErrorControl() {
+		if (errorControl != null && errorControl.eIsProxy()) {
+			InternalEObject oldErrorControl = (InternalEObject)errorControl;
+			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
+			if (errorControl != oldErrorControl) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__ERROR_CONTROL, oldErrorControl, errorControl));
+			}
+		}
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl basicGetErrorControl() {
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setErrorControl(ErrorControl newErrorControl) {
+		ErrorControl oldErrorControl = errorControl;
+		errorControl = newErrorControl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 	/**
@@ -970,32 +1020,49 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		// general (project) config
 
 		logger.debug("readConfiguration(): "+config.entrySet());
-		
-		// ####### READ PROJECT CONFIGURATION ########
-		JSONObject projectCfg=config.getJSONObject("project");
-		logger.debug("readConfiguration(): project configuration keys="+projectCfg.keySet());
-		logger.debug("readConfiguration(): "+projectCfg.get(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME)+" "+getConfigSource()+" "+getBaseURI());
-		
 		Workflow workflow = getActiveWorkflow();
+		// ####### READ PROJECT CONFIGURATION ########
+		if (config.has("project"))
+		{
+			JSONObject projectCfg=config.getJSONObject("project");
 		
-		// ####### read workflow base-config ######
-		if (getConfigWorkflowDefFile() != null && !"".equals(getConfigWorkflowDefFile()))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, getConfigWorkflowDefFile());
-		else if (projectCfg.has(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
-		if (getConfigUtilityDefFile() != null && !"".equals(getConfigUtilityDefFile()))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, getConfigUtilityDefFile());
-		else if (projectCfg.has(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME));
-		
-		if (projectCfg.has(GlobalConstants.WORKFLOW_DIR_PARAM_NAME))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DIR_PARAM_NAME));
-		if (projectCfg.has(GlobalConstants.METADATA_FILE_PARAM_NAME))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.METADATA_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.METADATA_FILE_PARAM_NAME));
-		if (projectCfg.has(GlobalConstants.METADATA_DIR_PARAM_NAME))
-			GlobalConfig.getProjectConfig().put(GlobalConstants.METADATA_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.METADATA_DIR_PARAM_NAME));
-		//GlobalConfig.getProjectconfig().put(GlobalConstants.IS_CONTRAST, projectCfg.getString(GlobalConstants.IS_CONTRAST));
-		
+			logger.debug("readConfiguration(): project configuration keys="+projectCfg.keySet());
+			if (projectCfg.containsKey(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
+				logger.debug("readConfiguration(): "+projectCfg.get(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME)
+						+" "+getConfigSource()+" "+getBaseURI());
+			else
+			{
+				//getErrorControl().generateErrorString(GlobalConstants.ERROR)
+			}
+			
+			
+			
+			// ####### read workflow base-config ######
+			if (getConfigWorkflowDefFile() != null && !"".equals(getConfigWorkflowDefFile()))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, getConfigWorkflowDefFile());
+			else if (projectCfg.has(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
+			if (getConfigUtilityDefFile() != null && !"".equals(getConfigUtilityDefFile()))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, getConfigUtilityDefFile());
+			else if (projectCfg.has(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME));
+			
+			if (projectCfg.has(GlobalConstants.WORKFLOW_DIR_PARAM_NAME))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DIR_PARAM_NAME));
+			if (projectCfg.has(GlobalConstants.METADATA_FILE_PARAM_NAME))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.METADATA_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.METADATA_FILE_PARAM_NAME));
+			if (projectCfg.has(GlobalConstants.METADATA_DIR_PARAM_NAME))
+				GlobalConfig.getProjectConfig().put(GlobalConstants.METADATA_DIR_PARAM_NAME, projectCfg.getString(GlobalConstants.METADATA_DIR_PARAM_NAME));
+			//GlobalConfig.getProjectconfig().put(GlobalConstants.IS_CONTRAST, projectCfg.getString(GlobalConstants.IS_CONTRAST));
+			
+			for (Object key:projectCfg.keySet()) {
+				workflow.getGenericAttributes().put((String) key, projectCfg.get(key));
+			}
+		}
+		else
+		{
+			//getErrorControl().generateErrorString(GlobalConstants.ERROR_CONFIGRUATION_DOESNT_CONTAIN_SECTION_1, "project");
+		}
 		// ####### set workflow ########
 		
 		if (!isDefault)
@@ -1106,10 +1173,6 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
     	}
     	logger.debug("readConfiguration(): "+rootTask.getDetailedString());
 		
-		for (Object key:projectCfg.keySet()) {
-			workflow.getGenericAttributes().put((String) key, projectCfg.get(key));	
-		}
-
 		// ####### READ TOOL CONFIGURATION ########		
 		// tool config (dir, tools, schemata)
 		if (config.has("tool"))
@@ -1822,6 +1885,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return getConfigUtilityDefFile();
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				return getConfigMetadataFile();
+			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
+				if (resolve) return getErrorControl();
+				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1867,6 +1933,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				setConfigMetadataFile((String)newValue);
 				return;
+			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
+				setErrorControl((ErrorControl)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1909,6 +1978,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				setConfigMetadataFile(CONFIG_METADATA_FILE_EDEFAULT);
 				return;
+			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
+				setErrorControl((ErrorControl)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1945,6 +2017,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return CONFIG_UTILITY_DEF_FILE_EDEFAULT == null ? configUtilityDefFile != null : !CONFIG_UTILITY_DEF_FILE_EDEFAULT.equals(configUtilityDefFile);
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				return CONFIG_METADATA_FILE_EDEFAULT == null ? configMetadataFile != null : !CONFIG_METADATA_FILE_EDEFAULT.equals(configMetadataFile);
+			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
+				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}

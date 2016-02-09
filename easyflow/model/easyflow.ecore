@@ -178,6 +178,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="executionSystem" eType="#//execution/IExecutionSystem"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="currentRule" eType="#//tool/Rule"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="jgraph" eType="#//graph/jgraphx/Graph"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Task">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -573,6 +574,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilTaskReader" eType="#//BufferedReader"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           transient="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="EasyflowTemplate" eSuperTypes="#//core/IWorkflowTemplate #//core/DefaultWorkflowTemplate">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -624,6 +626,12 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ErrorControl">
       <eOperations name="generateDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="generateErrorString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//core/Category"/>
+        <eParameters name="severity" eType="#//core/Severity"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolveErrorTipp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -752,6 +760,7 @@
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           defaultValueLiteral=""/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="configMetadataFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="graph" nsURI="http:///de/thiema/easyflow/graph/easyflow.core/1.0.0"
@@ -764,6 +773,7 @@
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="TraversalEventGraph">
         <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
@@ -789,6 +799,7 @@
           <eParameters name="groupingInstances" upperBound="-1" eType="#//metadata/GroupingInstance"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="PreprocessingGraph">
         <eOperations name="resolvePreprocessingTask" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -804,6 +815,7 @@
           <eParameters name="entry" eType="#//util/maps/CellToCellListMap"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ToolDependencyGraph">
         <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -812,6 +824,7 @@
           <eParameters name="catalog" eType="#//core/Catalog"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="ExecutionGraph">
         <eOperations name="generateWorkflowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -825,6 +838,7 @@
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="SubGraph">
         <eOperations name="computeSubgraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
@@ -832,6 +846,7 @@
           <eParameters name="isComplete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="Graph">
         <eOperations name="getNextTraversalEvent" eType="#//traversal/TraversalEvent"
@@ -943,6 +958,7 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="toolDependencyGraph"
             eType="#//graph/jgraphx/ToolDependencyGraph"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="executionGraph" eType="#//graph/jgraphx/ExecutionGraph"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="errorControl" eType="#//core/ErrorControl"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

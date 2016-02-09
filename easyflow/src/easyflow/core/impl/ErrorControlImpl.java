@@ -10,8 +10,11 @@ import easyflow.core.Category;
 import easyflow.core.CorePackage;
 import easyflow.core.ErrorControl;
 import easyflow.core.Severity;
+import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.GlobalVar;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -340,6 +343,23 @@ public class ErrorControlImpl extends MinimalEObjectImpl.Container implements Er
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String generateErrorString(String errorTpl, Category category, Severity severity, EList<String> errorVar) {
+		//Util.generateStringList(s1);
+		String errorTxt = errorTpl;
+		for (int i=0; i < errorVar.size() && i < GlobalConstants.ERROR_STRING_VAR_PLACEHOLDERS.length; i++)
+		{
+			StringUtils.replace(errorTxt, GlobalConstants.ERROR_STRING_VAR_PLACEHOLDERS[i], errorVar.get(i));
+		}
+		errorTxt="Category="+category+" Severity="+severity+" Error:"+errorTxt;
+		GlobalVar.setLastErrorString(errorTxt);
+		return errorTxt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -463,10 +483,13 @@ public class ErrorControlImpl extends MinimalEObjectImpl.Container implements Er
 	 * @generated
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case CorePackage.ERROR_CONTROL___GENERATE_DESCRIPTION:
 				return generateDescription();
+			case CorePackage.ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST:
+				return generateErrorString((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (EList<String>)arguments.get(3));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

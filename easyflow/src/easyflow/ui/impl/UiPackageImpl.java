@@ -591,6 +591,15 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDefaultProject_ErrorControl() {
+		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public UiFactory getUiFactory() {
 		return (UiFactory)getEFactoryInstance();
 	}
@@ -659,6 +668,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_WORKFLOW_DEF_FILE);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_UTILITY_DEF_FILE);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_METADATA_FILE);
+		createEReference(defaultProjectEClass, DEFAULT_PROJECT__ERROR_CONTROL);
 	}
 
 	/**
@@ -824,6 +834,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEAttribute(getDefaultProject_ConfigWorkflowDefFile(), ecorePackage.getEString(), "configWorkflowDefFile", "", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_ConfigUtilityDefFile(), ecorePackage.getEString(), "configUtilityDefFile", "", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_ConfigMetadataFile(), ecorePackage.getEString(), "configMetadataFile", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultProject_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //UiPackageImpl

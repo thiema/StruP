@@ -511,6 +511,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getWorkflow_ErrorControl() {
+		return (EReference)workflowEClass.getEStructuralFeatures().get(21);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getWorkflow__GenerateGraphFromTemplate__EMap() {
 		return workflowEClass.getEOperations().get(0);
 	}
@@ -1960,6 +1969,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDefaultWorkflowTemplate_ErrorControl() {
+		return (EReference)defaultWorkflowTemplateEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getEasyflowTemplate() {
 		return easyflowTemplateEClass;
 	}
@@ -2221,6 +2239,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getErrorControl__GenerateErrorString__String_Category_Severity_EList() {
+		return errorControlEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSeverity() {
 		return severityEEnum;
 	}
@@ -2284,6 +2311,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(workflowEClass, WORKFLOW__EXECUTION_SYSTEM);
 		createEReference(workflowEClass, WORKFLOW__CURRENT_RULE);
 		createEReference(workflowEClass, WORKFLOW__JGRAPH);
+		createEReference(workflowEClass, WORKFLOW__ERROR_CONTROL);
 		createEOperation(workflowEClass, WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP);
 		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK);
 		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT);
@@ -2450,6 +2478,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__READER);
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER);
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__LOGGER);
+		createEReference(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL);
 
 		easyflowTemplateEClass = createEClass(EASYFLOW_TEMPLATE);
 
@@ -2487,6 +2516,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(errorControlEClass, ERROR_CONTROL__VAL_NUM);
 		createEAttribute(errorControlEClass, ERROR_CONTROL__VALS);
 		createEOperation(errorControlEClass, ERROR_CONTROL___GENERATE_DESCRIPTION);
+		createEOperation(errorControlEClass, ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST);
 
 		// Create enums
 		severityEEnum = createEEnum(SEVERITY);
@@ -2559,6 +2589,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getWorkflow_ExecutionSystem(), theExecutionPackage.getIExecutionSystem(), null, "executionSystem", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_CurrentRule(), theToolPackage.getRule(), null, "currentRule", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_Jgraph(), theJgraphxPackage.getGraph(), null, "jgraph", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_ErrorControl(), this.getErrorControl(), null, "errorControl", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getWorkflow__GenerateGraphFromTemplate__EMap(), ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToToolMap(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -3045,6 +3076,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getDefaultWorkflowTemplate_Reader(), theEasyflowPackage.getBufferedReader(), "reader", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultWorkflowTemplate_UtilTaskReader(), theEasyflowPackage.getBufferedReader(), "utilTaskReader", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultWorkflowTemplate_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultWorkflowTemplate.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultWorkflowTemplate_ErrorControl(), this.getErrorControl(), null, "errorControl", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(easyflowTemplateEClass, EasyflowTemplate.class, "EasyflowTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3085,6 +3117,12 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getErrorControl_Vals(), ecorePackage.getEString(), "vals", null, 0, -1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getErrorControl__GenerateDescription(), ecorePackage.getEString(), "generateDescription", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getErrorControl__GenerateErrorString__String_Category_Severity_EList(), ecorePackage.getEString(), "generateErrorString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(severityEEnum, Severity.class, "Severity");

@@ -338,4 +338,48 @@ public class Util {
 
 	}
 	
+	private static EList<String> errorStringList = new BasicEList<String>();
+	public static EList<String> generateStringList(String s1)
+	{
+		errorStringList.clear();
+		errorStringList.add(s1);
+		return errorStringList;
+	}
+
+	public static EList<String> generateStringList(String s1, String s2)
+	{
+		errorStringList.clear();
+		errorStringList.add(s1);
+		errorStringList.add(s2);
+		return errorStringList;
+	}
+
+	public static EList<String> generateStringList(String s1, String s2, String s3)
+	{
+		errorStringList.clear();
+		errorStringList.add(s1);
+		errorStringList.add(s2);
+		errorStringList.add(s3);
+		return errorStringList;
+	}
+
+	public static EList<String> generateStringList(String s1, String s2, String s3, String s4)
+	{
+		errorStringList.clear();
+		errorStringList.add(s1);
+		errorStringList.add(s2);
+		errorStringList.add(s3);
+		errorStringList.add(s4);
+		return errorStringList;
+	}
+	public static EList<String> generateStringList(String s1, String s2, String s3, String s4, String s5)
+	{
+		errorStringList.clear();
+		errorStringList.add(s1);
+		errorStringList.add(s2);
+		errorStringList.add(s3);
+		errorStringList.add(s4);
+		errorStringList.add(s5);
+		return errorStringList;
+	}
 }

@@ -73,6 +73,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCurrentRule <em>Current Rule</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getJgraph <em>Jgraph</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -548,6 +549,32 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	void setJgraph(Graph value);
+
+	/**
+	 * Returns the value of the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Error Control</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Error Control</em>' reference.
+	 * @see #setErrorControl(ErrorControl)
+	 * @see easyflow.core.CorePackage#getWorkflow_ErrorControl()
+	 * @model
+	 * @generated
+	 */
+	ErrorControl getErrorControl();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Workflow#getErrorControl <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Error Control</em>' reference.
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	void setErrorControl(ErrorControl value);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -8,6 +8,7 @@ package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
+import easyflow.core.ErrorControl;
 import easyflow.core.Task;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -107,6 +110,16 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	 * @ordered
 	 */
 	protected Logger logger = LOGGER_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getErrorControl()
+	 * @generated
+	 * @ordered
+	 */
+	protected ErrorControl errorControl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -203,6 +216,44 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	}
 	
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl getErrorControl() {
+		if (errorControl != null && errorControl.eIsProxy()) {
+			InternalEObject oldErrorControl = (InternalEObject)errorControl;
+			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
+			if (errorControl != oldErrorControl) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL, oldErrorControl, errorControl));
+			}
+		}
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ErrorControl basicGetErrorControl() {
+		return errorControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setErrorControl(ErrorControl newErrorControl) {
+		ErrorControl oldErrorControl = errorControl;
+		errorControl = newErrorControl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL, oldErrorControl, errorControl));
+	}
+
+	/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated not
@@ -245,6 +296,9 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 				return getUtilTaskReader();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return getLogger();
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
+				if (resolve) return getErrorControl();
+				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -271,6 +325,9 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
 				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
+				setErrorControl((ErrorControl)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -295,6 +352,9 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
+				setErrorControl((ErrorControl)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -315,6 +375,8 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 				return UTIL_TASK_READER_EDEFAULT == null ? utilTaskReader != null : !UTIL_TASK_READER_EDEFAULT.equals(utilTaskReader);
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
+				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}

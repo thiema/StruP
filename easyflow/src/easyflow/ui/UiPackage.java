@@ -477,13 +477,22 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__CONFIG_METADATA_FILE = IPROJECT_FEATURE_COUNT + 11;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT__ERROR_CONTROL = IPROJECT_FEATURE_COUNT + 12;
+
+	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 12;
+	int DEFAULT_PROJECT_FEATURE_COUNT = IPROJECT_FEATURE_COUNT + 13;
 
 
 	/**
@@ -1219,6 +1228,17 @@ public interface UiPackage extends EPackage {
 	EAttribute getDefaultProject_ConfigMetadataFile();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.ui.DefaultProject#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.ui.DefaultProject#getErrorControl()
+	 * @see #getDefaultProject()
+	 * @generated
+	 */
+	EReference getDefaultProject_ErrorControl();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1595,6 +1615,14 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEFAULT_PROJECT__CONFIG_METADATA_FILE = eINSTANCE.getDefaultProject_ConfigMetadataFile();
+
+		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_PROJECT__ERROR_CONTROL = eINSTANCE.getDefaultProject_ErrorControl();
 
 	}
 

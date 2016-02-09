@@ -261,13 +261,22 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__JGRAPH = 20;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW__ERROR_CONTROL = 21;
+
+	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_FEATURE_COUNT = 21;
+	int WORKFLOW_FEATURE_COUNT = 22;
 
 	/**
 	 * The operation id for the '<em>Generate Graph From Template</em>' operation.
@@ -1805,13 +1814,22 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_WORKFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Default Workflow Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Read Template</em>' operation.
@@ -1878,13 +1896,22 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE__ERROR_CONTROL = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Easyflow Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Read Template</em>' operation.
@@ -2291,13 +2318,22 @@ public interface CorePackage extends EPackage {
 	int ERROR_CONTROL___GENERATE_DESCRIPTION = 0;
 
 	/**
+	 * The operation id for the '<em>Generate Error String</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST = 1;
+
+	/**
 	 * The number of operations of the '<em>Error Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL_OPERATION_COUNT = 1;
+	int ERROR_CONTROL_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
@@ -2560,6 +2596,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkflow_Jgraph();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.core.Workflow#getErrorControl()
+	 * @see #getWorkflow()
+	 * @generated
+	 */
+	EReference getWorkflow_ErrorControl();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Workflow#generateGraphFromTemplate(org.eclipse.emf.common.util.EMap) <em>Generate Graph From Template</em>}' operation.
@@ -4224,6 +4271,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getDefaultWorkflowTemplate_Logger();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.DefaultWorkflowTemplate#getErrorControl <em>Error Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Error Control</em>'.
+	 * @see easyflow.core.DefaultWorkflowTemplate#getErrorControl()
+	 * @see #getDefaultWorkflowTemplate()
+	 * @generated
+	 */
+	EReference getDefaultWorkflowTemplate_ErrorControl();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.EasyflowTemplate <em>Easyflow Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4532,6 +4590,16 @@ public interface CorePackage extends EPackage {
 	EOperation getErrorControl__GenerateDescription();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.core.ErrorControl#generateErrorString(java.lang.String, easyflow.core.Category, easyflow.core.Severity, org.eclipse.emf.common.util.EList) <em>Generate Error String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Error String</em>' operation.
+	 * @see easyflow.core.ErrorControl#generateErrorString(java.lang.String, easyflow.core.Category, easyflow.core.Severity, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getErrorControl__GenerateErrorString__String_Category_Severity_EList();
+
+	/**
 	 * Returns the meta object for enum '{@link easyflow.core.Severity <em>Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4750,6 +4818,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKFLOW__JGRAPH = eINSTANCE.getWorkflow_Jgraph();
+
+		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKFLOW__ERROR_CONTROL = eINSTANCE.getWorkflow_ErrorControl();
 
 		/**
 		 * The meta object literal for the '<em><b>Generate Graph From Template</b></em>' operation.
@@ -6050,6 +6126,14 @@ public interface CorePackage extends EPackage {
 		EAttribute DEFAULT_WORKFLOW_TEMPLATE__LOGGER = eINSTANCE.getDefaultWorkflowTemplate_Logger();
 
 		/**
+		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL = eINSTANCE.getDefaultWorkflowTemplate_ErrorControl();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6296,6 +6380,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EOperation ERROR_CONTROL___GENERATE_DESCRIPTION = eINSTANCE.getErrorControl__GenerateDescription();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Error String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST = eINSTANCE.getErrorControl__GenerateErrorString__String_Category_Severity_EList();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.

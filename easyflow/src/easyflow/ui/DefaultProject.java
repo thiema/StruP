@@ -6,6 +6,7 @@
  */
 package easyflow.ui;
 
+import easyflow.core.ErrorControl;
 import easyflow.core.Workflow;
 
 import easyflow.metadata.IMetaData;
@@ -45,6 +46,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.ui.DefaultProject#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getConfigUtilityDefFile <em>Config Utility Def File</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getConfigMetadataFile <em>Config Metadata File</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -318,5 +320,31 @@ public interface DefaultProject extends IProject {
 	 * @generated
 	 */
 	void setConfigMetadataFile(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Error Control</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Error Control</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Error Control</em>' reference.
+	 * @see #setErrorControl(ErrorControl)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_ErrorControl()
+	 * @model
+	 * @generated
+	 */
+	ErrorControl getErrorControl();
+
+	/**
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getErrorControl <em>Error Control</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Error Control</em>' reference.
+	 * @see #getErrorControl()
+	 * @generated
+	 */
+	void setErrorControl(ErrorControl value);
 
 } // DefaultProject
