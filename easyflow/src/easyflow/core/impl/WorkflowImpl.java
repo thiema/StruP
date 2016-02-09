@@ -1458,7 +1458,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         					//logger.debug("validation result for tool="+toolName+" "+task.validateTool(tool));
         				}
         				else
-        					logger.warn("generateGraphFromTemplate(): no tool matching name="+toolName+"for task="+task.getUniqueString()+" found.");
+        					logger.warn("generateGraphFromTemplate(): no tool matching name="+toolName+" for task="+task.getUniqueString()+" found.");
         			}
         		if (!task.isUtil())
         		{

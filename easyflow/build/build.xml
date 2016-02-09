@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns:ivy="antlib:org.apache.ivy.ant" default="jar" name="Create Runnable Jar for Project easyflink">
 	
-	<property name="main-class.gui"  value="easyflow.custom.jgraphx.editor.SchemaEditor"/>
-	<property name="main-class"  value="easyflow.sequencing.examples.Easyflow"/>
+	<property name="main-class.gui"  value="easyflow.custom.jgraphx.editor.EasyFlowGraphEditor"/>
+	<property name="main-class"  value="easyflow.custom.ui.Easyflow"/>
 	<property name="src.dir" value="./../src"/>
 	<property name="jgraph.examples.src.dir" value="./../src"/>
 	<property name="editor.resources.dir" value="${src.dir}"/>
@@ -25,15 +25,15 @@
 			includes="**/org.eclipse.emf.ecore.xmi_*.jar"/-->
 	</path>
 
-	<target name="resolve" description="--> retrieve dependencies with ivy">
+	<target name="resolve" description="retrieve dependencies with ivy">
 	        <ivy:retrieve />
 	</target>
 	
-	<target name="clean">
+	<target name="clean" description="clean up class files and build directory">
 	        <delete dir="${build.dir}"/>
 	</target>
 
-	<target name="compile">
+	<target name="compile" description="generate class files">
 		<mkdir dir="${classes.dir}"/>
 	    <javac debug="yes"
 	    	destdir="${classes.dir}" 
@@ -51,7 +51,7 @@
 	    </javac>
 	</target>
 
-	<target name="pkg" depends="jar, jar-gui">
+	<target name="pkg" depends="jar, jar-gui" description="create zip package (easyflow.zip)">
 		<zip destfile="easyflow.zip">
 			<zipfileset dir="${build.dir}/jar" prefix="easyflow/jar"/>
 			<zipfileset dir="${build.dir}/classes/easyflow/custom/examples" prefix="easyflow/examples"/>
@@ -93,7 +93,7 @@ flatten pathes
 </pathconvert>
 -->
 	
-    <target name="jar" depends="compile">
+    <target name="jar" depends="compile" description="generate main java archive. (easyflow.jar)">
         <jar destfile="${jar.dir}/easyflow.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
@@ -101,7 +101,7 @@ flatten pathes
             </manifest>
         </jar>
     </target>
-    <target name="jar-gui" depends="compile">
+    <target name="jar-gui" depends="compile" description="generate main java archive with gui. (easyflow-gui.jar)">
     	<mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/easyflow-gui.jar" basedir="${classes.dir}">
  	      	<fileset dir="${editor.resources.dir}"/>
@@ -116,16 +116,28 @@ flatten pathes
         </jar>
     </target>
 	
-	<target name="run" depends="jar-gui">
-		<java fork="true" classname="${main-class}">
+	<target name="run-gui" depends="jar-gui" description="run StruP with gui.">
+		<java fork="true" classname="${main-class.gui}">
 	            <classpath>
 	                <!-- path refid="classpath"/-->
-	                <pathelement path="${jar.dir}"> </pathelement>
+	                <pathelement path="${jar.dir}/*"> </pathelement>
+	            	<pathelement path="."> </pathelement>
 	                <path location="${jar.dir}/easyflow-gui.jar"/>
 	            </classpath>
 	        </java>
 	</target>
-<echo>Java Version via Ant: ${ant.java.version}</echo>
+	
+	<target name="run" depends="jar" description="run StruP.">
+		<java fork="true" classname="${main-class}">
+	            <classpath>
+	                <!-- path refid="classpath"/-->
+	                <pathelement path="${jar.dir}"> </pathelement>
+	                <path location="${jar.dir}/easyflow.jar"/>
+	            </classpath>
+	        </java>
+	</target>
+
+	<echo>Java Version via Ant: ${ant.java.version}</echo>
     <echo>Java Version System Prop: ${java.version}</echo> 
     <echo> classpath: build/${build.dir}/jar</echo>
 </project>

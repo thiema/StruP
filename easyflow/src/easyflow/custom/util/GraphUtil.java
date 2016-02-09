@@ -101,7 +101,9 @@ public class GraphUtil {
 				newDataLink.setParentGroupingStr(parentGroupingStr);
 				if (!newDataLink.isTerminal() && newDataLink.getGroupingStr() == null)
 				{
-					logger.warn("createDataLinkGrouping(): no grouping string set.");
+					logger.debug("createDataLinkGrouping(): no grouping string set for datalink: "+
+							newDataLink.getUniqueString()
+							+".");
 					newDataLink.setGroupingStr(null);
 				}
 			}
@@ -270,7 +272,7 @@ public class GraphUtil {
 				+" static="+((dataLink != null && dataLink.getDataPort()!=null) ? dataLink.getDataPort().isStatic() : "na")
 				);
 		if (!isGrouping)
-			logger.debug("param");
+			logger.debug("createDataLink(): param");
 		DataLink newDataLink =
 				isGrouping ?
 				createDataLinkGrouping(dataLink, task, groupingStr, parentGroupingStr, dataPort) :
@@ -278,15 +280,23 @@ public class GraphUtil {
 				
 		if (dataLink.getDataPort() == null)
 		{
-			logger.warn("data port not defined");
+			logger.warn("createDataLink(): data port not defined for"
+					+" dataLink="+newDataLink.getUniqueString()
+					+" created from="+dataLink.getUniqueString()
+					);
 		}
 		else if (dataLink.getInDataPort() == null)
 		{
-			logger.warn("in data port not defined");
+			logger.warn("createDataLink(): in data port not defined for"
+					+" datalink="+newDataLink.getUniqueString()
+					+" created from="+dataLink.getUniqueString()
+					);
 		}
 		else if (!dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
 		{
-			logger.error("invalid data formats foudn for datalink="+dataLink.getUniqueString(true));
+			logger.error("invalid data formats foudn for"
+					+" dataLink="+newDataLink.getUniqueString()
+					+" created from"+dataLink.getUniqueString(true));
 		}
 		
 		if (chunks != null)
@@ -302,7 +312,10 @@ public class GraphUtil {
 			}
 			else
 			{
-				logger.debug("createDataLink(): no chunks provided by parent task.");
+				logger.debug("createDataLink(): no chunks provided by parent task."
+						+" dataLink="+newDataLink.getUniqueString()
+						+" created from="+dataLink.getUniqueString()
+						);
 			}
 		}	
 				
@@ -310,21 +323,37 @@ public class GraphUtil {
 				+" chunks for grouping="+parentGroupingStr
 				+"=("+easyflow.custom.util.Util.list2String(newDataLink.getChunks().get(parentGroupingStr), null)+")"+" "+task.getUniqueString());
 		if (!isGrouping && (!newDataLink.getChunks().containsKey(newDataLink.getParamStr()) && !isSplittingTask))
-			logger.error("no chunks for param "+newDataLink.getParamStr()+" found.");
+			logger.error("createDataLink(): no chunks for param "+newDataLink.getParamStr()+" found. "
+					+" dataLink="+newDataLink.getUniqueString()
+					+" created from="+dataLink.getUniqueString()
+					);
 		if (!newDataLink.getChunks().containsKey(parentGroupingStr))
-			logger.error("no chunks for grouping "+parentGroupingStr+" found.");
+			logger.error("createDataLink(): no chunks for grouping "+parentGroupingStr+" found."
+					+" dataLink="+newDataLink.getUniqueString()
+					+" created from="+dataLink.getUniqueString()
+					);
 		
 		if (!newDataLink.isTerminal() && newDataLink.getDataPort() == null)
 		{
-			logger.warn("data port not defined");
+			logger.warn("createDataLink(): data port not defined. "
+					+" dataLink="+newDataLink.getUniqueString()
+					+" created from="+dataLink.getUniqueString()
+					);
 		}
 		else if (newDataLink.getInDataPort() == null)
 		{
-			logger.warn("in data port not defined");
+			logger.warn("createDataLink(): in data port not defined"
+					+" dataLink="+newDataLink.getUniqueString()
+					+" created from="+dataLink.getUniqueString()
+					);
+
 		}
 		else if (!newDataLink.isTerminal() && !newDataLink.getDataPort().getFormat().match(newDataLink.getInDataPort().getFormat()))
 		{
-			logger.error("invalid data formats foudn for datalink="+newDataLink.getUniqueString(true));
+			logger.error("createDataLink(): invalid data formats found for"
+					+" datalink="+newDataLink.getUniqueString(true)
+					+" created from="+dataLink.getUniqueString()
+					);
 		}
 		
 		return newDataLink;

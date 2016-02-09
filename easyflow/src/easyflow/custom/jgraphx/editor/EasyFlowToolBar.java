@@ -119,13 +119,13 @@ public class EasyFlowToolBar extends JToolBar
 			else
 				repositoryFS=null;
 		}
-		logger.debug("Constructor: set editor. graph="+editor.getGraphComponent().getGraph()
+		logger.debug("EasyFlowToolBar(): set editor. graph="+editor.getGraphComponent().getGraph()
 				+" fs repo="+repositoryFS+" read from jar="+isFromJar+" jar repo="+repositoryJar);
 		
 		DefaultProject defaultProject = getExamples(true).getExamples().get(defaultProjectType);
 		if (defaultProject == null)
 		{
-			logger.warn("Couldn't read default project definition.");
+			logger.warn("EasyFlowToolBar(): Couldn't read default project definition.");
 			btnInitWorkflow.setEnabled(false);
 		}
 		else
