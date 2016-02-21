@@ -17,6 +17,7 @@ import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
 import easyflow.data.DataLink;
+import easyflow.graph.impl.DefaultGraphImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.TraversalEventGraph;
 import easyflow.graph.jgraphx.TraversalCriteria;
@@ -34,11 +35,9 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-import easyflow.core.ErrorControl;
 
 /**
  * <!-- begin-user-doc -->
@@ -48,13 +47,12 @@ import easyflow.core.ErrorControl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.graph.jgraphx.impl.TraversalEventGraphImpl#getGraph <em>Graph</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.impl.TraversalEventGraphImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implements TraversalEventGraph {
+public class TraversalEventGraphImpl extends DefaultGraphImpl implements TraversalEventGraph {
 	
 	private static Logger logger = Logger.getLogger(TraversalCriteria.class);
 	
@@ -67,16 +65,6 @@ public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implem
 	 * @ordered
 	 */
 	protected Graph graph;
-
-	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
-	 * @generated
-	 * @ordered
-	 */
-	protected ErrorControl errorControl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -842,9 +830,6 @@ public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implem
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__GRAPH:
 				if (resolve) return getGraph();
 				return basicGetGraph();
-			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -859,9 +844,6 @@ public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__GRAPH:
 				setGraph((Graph)newValue);
-				return;
-			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -878,9 +860,6 @@ public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implem
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__GRAPH:
 				setGraph((Graph)null);
 				return;
-			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -895,8 +874,6 @@ public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__GRAPH:
 				return graph != null;
-			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL:
-				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -990,44 +967,6 @@ public class TraversalEventGraphImpl extends MinimalEObjectImpl.Container implem
 		graph = newGraph;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.TRAVERSAL_EVENT_GRAPH__GRAPH, oldGraph, graph));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, JgraphxPackage.TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
-			}
-		}
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 } //TraversalCriteriaImpl

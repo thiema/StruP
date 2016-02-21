@@ -21,6 +21,8 @@ import easyflow.execution.pegasus.PegasusPackage;
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
 import easyflow.execution.shell.ShellPackage;
 import easyflow.execution.shell.impl.ShellPackageImpl;
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.AbstractGraph;
 import easyflow.graph.jgraphx.ExecutionGraph;
 import easyflow.graph.jgraphx.Graph;
@@ -148,6 +150,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
 		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
@@ -164,6 +167,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
 		thePegasusPackage.createPackageContents();
@@ -180,6 +184,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
 		thePegasusPackage.initializePackageContents();
@@ -223,15 +228,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getAbstractGraph_ErrorControl() {
-		return (EReference)abstractGraphEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getAbstractGraph__ResolveTraversalEvents__mxICell() {
 		return abstractGraphEClass.getEOperations().get(0);
 	}
@@ -252,15 +248,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 */
 	public EReference getTraversalEventGraph_Graph() {
 		return (EReference)traversalEventGraphEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTraversalEventGraph_ErrorControl() {
-		return (EReference)traversalEventGraphEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -322,15 +309,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPreprocessingGraph_ErrorControl() {
-		return (EReference)preprocessingGraphEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getPreprocessingGraph__ResolvePreprocessingTask__mxICell_mxICell() {
 		return preprocessingGraphEClass.getEOperations().get(0);
 	}
@@ -385,15 +363,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getToolDependencyGraph_ErrorControl() {
-		return (EReference)toolDependencyGraphEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EOperation getToolDependencyGraph__ResolveToolDependencies__mxICell_Catalog() {
 		return toolDependencyGraphEClass.getEOperations().get(0);
 	}
@@ -414,15 +383,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 */
 	public EReference getExecutionGraph_Graph() {
 		return (EReference)executionGraphEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getExecutionGraph_ErrorControl() {
-		return (EReference)executionGraphEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -468,15 +428,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 */
 	public EReference getSubGraph_Graph() {
 		return (EReference)subGraphEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSubGraph_ErrorControl() {
-		return (EReference)subGraphEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -657,15 +608,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 */
 	public EReference getGraph_ExecutionGraph() {
 		return (EReference)graphEClass.getEStructuralFeatures().get(17);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraph_ErrorControl() {
-		return (EReference)graphEClass.getEStructuralFeatures().get(18);
 	}
 
 	/**
@@ -887,12 +829,10 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		// Create classes and their features
 		abstractGraphEClass = createEClass(ABSTRACT_GRAPH);
 		createEReference(abstractGraphEClass, ABSTRACT_GRAPH__GRAPH);
-		createEReference(abstractGraphEClass, ABSTRACT_GRAPH__ERROR_CONTROL);
 		createEOperation(abstractGraphEClass, ABSTRACT_GRAPH___RESOLVE_TRAVERSAL_EVENTS__MXICELL);
 
 		traversalEventGraphEClass = createEClass(TRAVERSAL_EVENT_GRAPH);
 		createEReference(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH__GRAPH);
-		createEReference(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH__ERROR_CONTROL);
 		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE);
 		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST);
 		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE);
@@ -900,7 +840,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		preprocessingGraphEClass = createEClass(PREPROCESSING_GRAPH);
 		createEReference(preprocessingGraphEClass, PREPROCESSING_GRAPH__GRAPH);
-		createEReference(preprocessingGraphEClass, PREPROCESSING_GRAPH__ERROR_CONTROL);
 		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL);
 		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED);
 		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS);
@@ -908,19 +847,16 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		toolDependencyGraphEClass = createEClass(TOOL_DEPENDENCY_GRAPH);
 		createEReference(toolDependencyGraphEClass, TOOL_DEPENDENCY_GRAPH__GRAPH);
-		createEReference(toolDependencyGraphEClass, TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL);
 		createEOperation(toolDependencyGraphEClass, TOOL_DEPENDENCY_GRAPH___RESOLVE_TOOL_DEPENDENCIES__MXICELL_CATALOG);
 
 		executionGraphEClass = createEClass(EXECUTION_GRAPH);
 		createEReference(executionGraphEClass, EXECUTION_GRAPH__GRAPH);
-		createEReference(executionGraphEClass, EXECUTION_GRAPH__ERROR_CONTROL);
 		createEOperation(executionGraphEClass, EXECUTION_GRAPH___GENERATE_WORKFLOW_FOR_EXECUTION_SYSTEM__MXICELL_IEXECUTIONSYSTEM);
 		createEOperation(executionGraphEClass, EXECUTION_GRAPH___RESOLVE_TOOL_PARAMS__MXICELL);
 		createEOperation(executionGraphEClass, EXECUTION_GRAPH___RESOLVE_PIPES__MXICELL);
 
 		subGraphEClass = createEClass(SUB_GRAPH);
 		createEReference(subGraphEClass, SUB_GRAPH__GRAPH);
-		createEReference(subGraphEClass, SUB_GRAPH__ERROR_CONTROL);
 		createEOperation(subGraphEClass, SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN);
 
 		graphEClass = createEClass(GRAPH);
@@ -942,7 +878,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEReference(graphEClass, GRAPH__PREPROCESSING_GRAPH);
 		createEReference(graphEClass, GRAPH__TOOL_DEPENDENCY_GRAPH);
 		createEReference(graphEClass, GRAPH__EXECUTION_GRAPH);
-		createEReference(graphEClass, GRAPH__ERROR_CONTROL);
 		createEOperation(graphEClass, GRAPH___GET_NEXT_TRAVERSAL_EVENT__BOOLEAN);
 		createEOperation(graphEClass, GRAPH___GET_TRAVERSAL_EVENTS__MXICELL_BOOLEAN);
 		createEOperation(graphEClass, GRAPH___GET_NEW_TRAVERSAL_EVENTS__TRAVERSALEVENT_MXICELL);
@@ -990,11 +925,12 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
 
 		// Create type parameters
@@ -1002,11 +938,16 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		abstractGraphEClass.getESuperTypes().add(theGraphPackage.getDefaultGraph());
+		traversalEventGraphEClass.getESuperTypes().add(theGraphPackage.getDefaultGraph());
+		preprocessingGraphEClass.getESuperTypes().add(theGraphPackage.getDefaultGraph());
+		toolDependencyGraphEClass.getESuperTypes().add(theGraphPackage.getDefaultGraph());
+		executionGraphEClass.getESuperTypes().add(theGraphPackage.getDefaultGraph());
+		subGraphEClass.getESuperTypes().add(theGraphPackage.getDefaultGraph());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(abstractGraphEClass, AbstractGraph.class, "AbstractGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAbstractGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, AbstractGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAbstractGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, AbstractGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getAbstractGraph__ResolveTraversalEvents__mxICell(), ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1015,7 +956,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEClass(traversalEventGraphEClass, TraversalEventGraph.class, "TraversalEventGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraversalEventGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, TraversalEventGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTraversalEventGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, TraversalEventGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getTraversalEventGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_GroupingInstance(), null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1049,7 +989,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEClass(preprocessingGraphEClass, PreprocessingGraph.class, "PreprocessingGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPreprocessingGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, PreprocessingGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPreprocessingGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, PreprocessingGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getPreprocessingGraph__ResolvePreprocessingTask__mxICell_mxICell(), ecorePackage.getEBoolean(), "resolvePreprocessingTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "vertex", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1071,7 +1010,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEClass(toolDependencyGraphEClass, ToolDependencyGraph.class, "ToolDependencyGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getToolDependencyGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, ToolDependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getToolDependencyGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, ToolDependencyGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getToolDependencyGraph__ResolveToolDependencies__mxICell_Catalog(), ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1080,7 +1018,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEClass(executionGraphEClass, ExecutionGraph.class, "ExecutionGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getExecutionGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, ExecutionGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getExecutionGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, ExecutionGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getExecutionGraph__GenerateWorkflowForExecutionSystem__mxICell_IExecutionSystem(), ecorePackage.getEBoolean(), "generateWorkflowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1094,7 +1031,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEClass(subGraphEClass, SubGraph.class, "SubGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSubGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSubGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getSubGraph__ComputeSubgraph__TraversalEvent_boolean(), theEasyflowPackage.getmxICell(), "computeSubgraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1121,7 +1057,6 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		initEReference(getGraph_PreprocessingGraph(), this.getPreprocessingGraph(), null, "preprocessingGraph", null, 0, 1, Graph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGraph_ToolDependencyGraph(), this.getToolDependencyGraph(), null, "toolDependencyGraph", null, 0, 1, Graph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGraph_ExecutionGraph(), this.getExecutionGraph(), null, "executionGraph", null, 0, 1, Graph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGraph_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, Graph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getGraph__GetNextTraversalEvent__boolean(), theTraversalPackage.getTraversalEvent(), "getNextTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);

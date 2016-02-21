@@ -39,10 +39,12 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import easyflow.core.Catalog;
+import easyflow.core.Category;
 import easyflow.core.CoreFactory;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.core.EasyflowTemplate;
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.core.Workflow;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.IMetaData;
@@ -71,6 +73,7 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
+import easyflow.custom.util.Util;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
 import easyflow.data.DataPort;
@@ -101,7 +104,7 @@ import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigUtilityDefFile <em>Config Utility Def File</em>}</li>
  *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getConfigMetadataFile <em>Config Metadata File</em>}</li>
- *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getErrorControl <em>Error Control</em>}</li>
+ *   <li>{@link easyflow.ui.impl.DefaultProjectImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -310,14 +313,14 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	protected String configMetadataFile = CONFIG_METADATA_FILE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
+	 * @see #getLogMessage()
 	 * @generated
 	 * @ordered
 	 */
-	protected ErrorControl errorControl;
+	protected LogMessage logMessage;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -552,16 +555,16 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__ERROR_CONTROL, oldErrorControl, errorControl));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.DEFAULT_PROJECT__LOG_MESSAGE, oldLogMessage, logMessage));
 			}
 		}
-		return errorControl;
+		return logMessage;
 	}
 
 	/**
@@ -569,8 +572,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
 	}
 
 	/**
@@ -578,11 +581,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__ERROR_CONTROL, oldErrorControl, errorControl));
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.DEFAULT_PROJECT__LOG_MESSAGE, oldLogMessage, logMessage));
 	}
 
 	/**
@@ -594,6 +597,19 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void initLogMessage() {
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(Category.PROJECT_CONFIGURATION);
+		}
 	}
 
 	/**
@@ -624,7 +640,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public JSONObject readProjectJson(URI source) {
+	public JSONObject readJson(URI source, boolean isDefault) {
 		
 		//JSONObject jsonObject=null;
 		if (source == null)
@@ -645,9 +661,17 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return JSONObject.fromObject(IOUtils.toString(is));
 			else
 				logger.warn("no Input stream found.");
+		} catch (FileNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.ERROR_CONFIGURATION_FILE_NOT_FOUND_1, 
+					(isDefault ? Severity.ERROR : Severity.INFO),
+					source.toString()	);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			getLogMessage().generateLogMsg(
+					GlobalConstants.ERROR_GENERAL_IO_2, 
+					(isDefault ? Severity.ERROR : Severity.INFO),
+					Util.generateStringList(source.toString(), e.getMessage())	
+					);
 		}
 		return null;
 	}
@@ -1022,9 +1046,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		logger.debug("readConfiguration(): "+config.entrySet());
 		Workflow workflow = getActiveWorkflow();
 		// ####### READ PROJECT CONFIGURATION ########
-		if (config.has("project"))
+		if (config.has(GlobalConstants.CONFIGURATION_FILE_SECTION_PROJECT))
 		{
-			JSONObject projectCfg=config.getJSONObject("project");
+			JSONObject projectCfg=config.getJSONObject(GlobalConstants.CONFIGURATION_FILE_SECTION_PROJECT);
 		
 			logger.debug("readConfiguration(): project configuration keys="+projectCfg.keySet());
 			if (projectCfg.containsKey(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
@@ -1032,9 +1056,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 						+" "+getConfigSource()+" "+getBaseURI());
 			else
 			{
-				//getErrorControl().generateErrorString(GlobalConstants.ERROR)
+				getLogMessage().generateLogMsg(GlobalConstants.ERROR_CONFIGURATION_PARAM_MISSING_1, Severity.ERROR, 
+						Util.generateStringList(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
 			}
-			
 			
 			
 			// ####### read workflow base-config ######
@@ -1061,7 +1085,14 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
 		else
 		{
-			//getErrorControl().generateErrorString(GlobalConstants.ERROR_CONFIGRUATION_DOESNT_CONTAIN_SECTION_1, "project");
+			if (isDefault)
+				getLogMessage().generateLogMsg(GlobalConstants.ERROR_CONFIGURATION_SECTION_MISSING_1, 
+					Severity.INFO,
+					Util.generateStringList(GlobalConstants.CONFIGURATION_FILE_SECTION_PROJECT));
+			else
+				getLogMessage().generateLogMsg(GlobalConstants.ERROR_CONFIGURATION_SECTION_MISSING_1, 
+						Severity.WARN,
+						Util.generateStringList(GlobalConstants.CONFIGURATION_FILE_SECTION_PROJECT));					
 		}
 		// ####### set workflow ########
 		
@@ -1086,6 +1117,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			}
 			else
 			{
+				getLogMessage().generateLogMsg(GlobalConstants.ERROR_WORKFLOW_TEMPLATE_FAILED_TO_READ_1, 
+						Severity.FATAL, Util.generateStringList(workflow.getLogMessage().getLogMsg()));
 				logger.error("readConfiguration(): Could not read workflow template from file: "+workflowTplFile);
 			}
 			
@@ -1108,9 +1141,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
 		
 		// ####### READ PROECESSING CONFIGURATION ########
-		if (config.has("processing"))
+		if (config.has(GlobalConstants.CONFIGURATION_FILE_SECTION_PROCESSING))
 		{
-			JSONObject processingCfg=config.getJSONObject("processing");
+			JSONObject processingCfg=config.getJSONObject(GlobalConstants.CONFIGURATION_FILE_SECTION_PROCESSING);
 			Iterator<String> it = processingCfg.keys();
 			while (it.hasNext())
 			{
@@ -1122,9 +1155,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		workflow.setExecutionSystem(GlobalConfig.getExecutionSystem());
 		
 		// ####### READ CATALOG CONFIGURATION ########
-		if (config.has("catalog"))
+		if (config.has(GlobalConstants.CONFIGURATION_FILE_SECTION_CATALOG))
 		{
-			Catalog catalog = readCatalogConfiguration(config.getJSONObject("catalog"));
+			Catalog catalog = readCatalogConfiguration(config.getJSONObject(GlobalConstants.CONFIGURATION_FILE_SECTION_CATALOG));
 			if (catalog != null)
 				workflow.setCatalog(catalog);
 		}
@@ -1134,21 +1167,32 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
 		
 		// ####### READ WORKFLOW CONFIGURATION ########
-		JSONObject workflowCfg = config.getJSONObject("workflow");
-		if (workflowCfg.has(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME))
+		JSONObject workflowCfg = null;
+		if (config.has(GlobalConstants.CONFIGURATION_FILE_SECTION_WORKFLOW))
 		{
-			for (int i=0; i<workflowCfg.getJSONArray(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME).size();i++)
-				workflow.getDefaultGroupingCriteria().add(workflowCfg.getJSONArray(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME).getString(i));
+			workflowCfg = config.getJSONObject(GlobalConstants.CONFIGURATION_FILE_SECTION_WORKFLOW);
+			if (workflowCfg.has(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME))
+			{
+				for (int i=0; i<workflowCfg.getJSONArray(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME).size();i++)
+					workflow.getDefaultGroupingCriteria().add(workflowCfg.getJSONArray(GlobalConstants.DEFAULT_GROUPING_CRITERIA_PARAM_NAME).getString(i));
+			}
+			else
+			{
+				logger.info("readConfiguration(): no default grouping criteria defined. Set default automatically.");
+				workflow.getDefaultGroupingCriteria().add(GlobalConfig.getDefaultGroupingCriterion());
+			}
+
+			if (workflowCfg.has(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME))
+				workflow.setMode(workflowCfg.getString(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME));
+
 		}
-		else
+		else if (!isDefault)
 		{
+			logger.warn("readConfiguration(): no workflow section configured.");
 			logger.info("readConfiguration(): no default grouping criteria defined. Set default automatically.");
 			workflow.getDefaultGroupingCriteria().add(GlobalConfig.getDefaultGroupingCriterion());
 		}
-		
-		if (workflowCfg.has(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME))
-			workflow.setMode(workflowCfg.getString(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME));
-		
+				
     	// create the special root task/cell which is the root
     	// in all subsequent processed graphs, the root should link any
     	// task from the workflow template that has no incoming task
@@ -1163,21 +1207,28 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
     	if (!isDefault)
     	{
-    		readInputs(workflowCfg, rootTask);
-    		if (workflowCfg.has(GlobalConstants.WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME))
-    			rootTask.createGroupingCriteria(workflowCfg.getString(GlobalConstants.WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME),
+    		if (workflowCfg != null)
+    		{
+    			readInputs(workflowCfg, rootTask);
+    			if (workflowCfg.has(GlobalConstants.WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME))
+    				rootTask.createGroupingCriteria(workflowCfg.getString(GlobalConstants.WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME),
     					rootTask.getOutDataPorts().get(0), workflow.getMode());
     			//rootTask.readGroupingCriteria(
     				//	workflowCfg.getString(GlobalConstants.PROCESSING_METADATA_INPUT_FIELD_PARAM_NAME), 
     					//		workflow.getDefaultGroupingCriteria(), workflow.getMode()    							);
+    		}
+    		else
+    		{
+    			logger.debug("readConfiguration(): no default inputs and no default grouping criterion read due to missing workflow section.");
+    		}
     	}
     	logger.debug("readConfiguration(): "+rootTask.getDetailedString());
 		
 		// ####### READ TOOL CONFIGURATION ########		
 		// tool config (dir, tools, schemata)
-		if (config.has("tool"))
+		if (config.has(GlobalConstants.CONFIGURATION_FILE_SECTION_TOOL))
 		{
-			JSONObject toolCfg = config.getJSONObject("tool");
+			JSONObject toolCfg = config.getJSONObject(GlobalConstants.CONFIGURATION_FILE_SECTION_TOOL);
 			
 			EMap<String, EMap<String, String>> interpreterMap = GlobalConfig.getInterpreterMap();
 			EMap<String, EMap<String, String>> pkgMap         = GlobalConfig.getPkgMap();
@@ -1533,8 +1584,10 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		logger.debug("loglevel of logger="+logger.getName()+" "+logger.getLevel()+" "+logger.hashCode()+" "+Logger.getRootLogger().hashCode());
 		//System.exit(1);
 		boolean rc = true;
+		initLogMessage();
 		clearWorkflows();
 		GlobalVar.setDefaultProject(this);
+		
 		
 		
 		Workflow workflow;
@@ -1563,26 +1616,37 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		JSONObject dfltConfig;
 		try {
 			URI dfltSrc = URIUtil.createURI(System.getProperty("user.home"), GlobalConstants.DFLT_CONFIG_FILE);
-			dfltConfig = readProjectJson(dfltSrc);
+			dfltConfig = readJson(dfltSrc, true);
 			if (dfltConfig != null)
 			{
 				rc = readConfiguration(dfltConfig, true);
 			}
-			JSONObject mainConfig = readProjectJson(getConfigSource());	
-			GlobalConfig.setJsonCfg(mainConfig);
-	        if (readConfiguration(mainConfig, false))
-	        {
-				if (getActiveWorkflow().readWorkfowTemplate())
-				{	
-					GlobalVar.setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
-					getActiveWorkflow().getJgraph().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
-					applyMetaData();
-				}
-				else
-					rc = false;
-	        }
-	        else
-	        	rc = false;
+			JSONObject mainConfig = readJson(getConfigSource(), false);
+			if (mainConfig != null)
+			{
+				GlobalConfig.setJsonCfg(mainConfig);
+		        if (readConfiguration(mainConfig, false))
+		        {
+					if (getActiveWorkflow().readWorkfowTemplate())
+					{	
+						GlobalVar.setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+						getActiveWorkflow().getJgraph().setMetaData((DefaultMetaData) getActiveWorkflow().getMetaData());
+						applyMetaData();
+					}
+					else
+					{
+						rc = false;
+					}
+		        }
+		        else
+		        {
+		        	rc = false;
+		        }
+			}
+			else
+			{
+				rc = false;
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1885,9 +1949,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return getConfigUtilityDefFile();
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				return getConfigMetadataFile();
-			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
+			case UiPackage.DEFAULT_PROJECT__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1933,8 +1997,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				setConfigMetadataFile((String)newValue);
 				return;
-			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
+			case UiPackage.DEFAULT_PROJECT__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1978,8 +2042,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				setConfigMetadataFile(CONFIG_METADATA_FILE_EDEFAULT);
 				return;
-			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
+			case UiPackage.DEFAULT_PROJECT__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -2017,8 +2081,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return CONFIG_UTILITY_DEF_FILE_EDEFAULT == null ? configUtilityDefFile != null : !CONFIG_UTILITY_DEF_FILE_EDEFAULT.equals(configUtilityDefFile);
 			case UiPackage.DEFAULT_PROJECT__CONFIG_METADATA_FILE:
 				return CONFIG_METADATA_FILE_EDEFAULT == null ? configMetadataFile != null : !CONFIG_METADATA_FILE_EDEFAULT.equals(configMetadataFile);
-			case UiPackage.DEFAULT_PROJECT__ERROR_CONTROL:
-				return errorControl != null;
+			case UiPackage.DEFAULT_PROJECT__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2040,13 +2104,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return null;
 			case UiPackage.DEFAULT_PROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN:
 				return readConfiguration((JSONObject)arguments.get(0), (Boolean)arguments.get(1));
-			case UiPackage.DEFAULT_PROJECT___READ_PROJECT_JSON__URI:
-				try {
-					return readProjectJson((URI)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+			case UiPackage.DEFAULT_PROJECT___READ_JSON__URI_BOOLEAN:
+				return readJson((URI)arguments.get(0), (Boolean)arguments.get(1));
 			case UiPackage.DEFAULT_PROJECT___SET_CONFIG_AND_BASE_PATH__STRING:
 				setConfigAndBasePath((String)arguments.get(0));
 				return null;
@@ -2145,6 +2204,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return resetWorkflowStep();
 			case UiPackage.DEFAULT_PROJECT___GET_EXECUTION_SYSTEM:
 				return getExecutionSystem();
+			case UiPackage.DEFAULT_PROJECT___INIT_LOG_MESSAGE:
+				initLogMessage();
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

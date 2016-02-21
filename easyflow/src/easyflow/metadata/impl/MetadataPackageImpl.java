@@ -21,6 +21,8 @@ import easyflow.execution.pegasus.PegasusPackage;
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
 import easyflow.execution.shell.ShellPackage;
 import easyflow.execution.shell.impl.ShellPackageImpl;
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 import easyflow.impl.EasyflowPackageImpl;
@@ -154,6 +156,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
@@ -170,6 +173,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
@@ -186,6 +190,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
@@ -337,6 +342,15 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getIMetaData__InitLogMessage() {
+		return iMetaDataEClass.getEOperations().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDefaultMetaData() {
 		return defaultMetaDataEClass;
 	}
@@ -393,6 +407,15 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 	 */
 	public EReference getDefaultMetaData_GroupingProps() {
 		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDefaultMetaData_LogMessage() {
+		return (EReference)defaultMetaDataEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -608,6 +631,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEOperation(iMetaDataEClass, IMETA_DATA___GET_COLUMN__STRING);
 		createEOperation(iMetaDataEClass, IMETA_DATA___CONTAINS_COLUMN__STRING);
 		createEOperation(iMetaDataEClass, IMETA_DATA___CONTAINS_ROW__STRING);
+		createEOperation(iMetaDataEClass, IMETA_DATA___INIT_LOG_MESSAGE);
 
 		defaultMetaDataEClass = createEClass(DEFAULT_META_DATA);
 		createEAttribute(defaultMetaDataEClass, DEFAULT_META_DATA__READER);
@@ -616,6 +640,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_INSTANCES);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__ALIASES);
 		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__GROUPING_PROPS);
+		createEReference(defaultMetaDataEClass, DEFAULT_META_DATA__LOG_MESSAGE);
 
 		iProjectMetaDataEClass = createEClass(IPROJECT_META_DATA);
 		createEOperation(iProjectMetaDataEClass, IPROJECT_META_DATA___READ_META_DATA);
@@ -669,6 +694,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -723,6 +749,8 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		op = initEOperation(getIMetaData__ContainsRow__String(), ecorePackage.getEBoolean(), "containsRow", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "row", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getIMetaData__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(defaultMetaDataEClass, DefaultMetaData.class, "DefaultMetaData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDefaultMetaData_Reader(), theEasyflowPackage.getBufferedReader(), "reader", null, 0, 1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultMetaData_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultMetaData.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -730,6 +758,7 @@ public class MetadataPackageImpl extends EPackageImpl implements MetadataPackage
 		initEReference(getDefaultMetaData_GroupingInstances(), theMapsPackage.getStringToGroupingInstanceListMap(), null, "groupingInstances", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_Aliases(), theMapsPackage.getStringToStringMap(), null, "aliases", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultMetaData_GroupingProps(), theMapsPackage.getStringToStringMap(), null, "groupingProps", null, 0, -1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultMetaData_LogMessage(), theCorePackage.getLogMessage(), null, "logMessage", null, 0, 1, DefaultMetaData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(iProjectMetaDataEClass, IProjectMetaData.class, "IProjectMetaData", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

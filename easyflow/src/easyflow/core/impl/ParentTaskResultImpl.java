@@ -11,6 +11,7 @@ import easyflow.core.ParentTaskResult;
 import easyflow.core.Task;
 import easyflow.data.DataPort;
 import java.util.Collection;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#isGeneric <em>Generic</em>}</li>
  *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#getRank <em>Rank</em>}</li>
  *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#getPotentialCircumventingTasks <em>Potential Circumventing Tasks</em>}</li>
+ *   <li>{@link easyflow.core.impl.ParentTaskResultImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
@@ -128,6 +130,26 @@ public class ParentTaskResultImpl extends MinimalEObjectImpl.Container implement
 	 * @ordered
 	 */
 	protected EList<String> potentialCircumventingTasks;
+
+	/**
+	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Logger LOGGER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -278,6 +300,15 @@ public class ParentTaskResultImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Logger getLogger() {
+		return logger;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -294,6 +325,8 @@ public class ParentTaskResultImpl extends MinimalEObjectImpl.Container implement
 				return getRank();
 			case CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS:
 				return getPotentialCircumventingTasks();
+			case CorePackage.PARENT_TASK_RESULT__LOGGER:
+				return getLogger();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -381,6 +414,8 @@ public class ParentTaskResultImpl extends MinimalEObjectImpl.Container implement
 				return rank != RANK_EDEFAULT;
 			case CorePackage.PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS:
 				return potentialCircumventingTasks != null && !potentialCircumventingTasks.isEmpty();
+			case CorePackage.PARENT_TASK_RESULT__LOGGER:
+				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -403,6 +438,8 @@ public class ParentTaskResultImpl extends MinimalEObjectImpl.Container implement
 		result.append(rank);
 		result.append(", potentialCircumventingTasks: ");
 		result.append(potentialCircumventingTasks);
+		result.append(", logger: ");
+		result.append(logger);
 		result.append(')');
 		return result.toString();
 	}

@@ -47,6 +47,8 @@ import easyflow.execution.pegasus.PegasusPackage;
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
 import easyflow.execution.shell.ShellPackage;
 import easyflow.execution.shell.impl.ShellPackageImpl;
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
@@ -371,6 +373,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Obtain or create and register interdependencies
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
@@ -387,6 +390,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
@@ -403,6 +407,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
@@ -810,7 +815,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Obtain other dependent packages
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
-		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
+		GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
 		ExamplePackage theExamplePackage = (ExamplePackage)EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI);
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
@@ -822,7 +827,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		// Add subpackages
 		getESubpackages().add(theCorePackage);
 		getESubpackages().add(theUiPackage);
-		getESubpackages().add(theJgraphxPackage);
+		getESubpackages().add(theGraphPackage);
 		getESubpackages().add(theExamplePackage);
 		getESubpackages().add(theExecutionPackage);
 		getESubpackages().add(theToolPackage);

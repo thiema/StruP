@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import easyflow.core.Catalog;
-import easyflow.core.ErrorControl;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
@@ -30,6 +29,7 @@ import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataMatch;
 import easyflow.data.DataPort;
+import easyflow.graph.impl.DefaultGraphImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
 import easyflow.graph.jgraphx.ToolDependencies;
@@ -47,7 +47,6 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
@@ -61,13 +60,12 @@ import com.mxgraph.view.mxGraph.mxICellVisitor;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.graph.jgraphx.impl.ToolDependencyGraphImpl#getGraph <em>Graph</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.impl.ToolDependencyGraphImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implements ToolDependencyGraph {
+public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDependencyGraph {
 	
 	/**
 	 * The cached value of the '{@link #getGraph() <em>Graph</em>}' reference.
@@ -79,16 +77,6 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 	 */
 	protected Graph graph;
 	
-	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
-	 * @generated
-	 * @ordered
-	 */
-	protected ErrorControl errorControl;
-
 	private static Logger logger = Logger.getLogger(ToolDependencies.class);
 	/**
 	 * <!-- begin-user-doc -->
@@ -660,9 +648,6 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				if (resolve) return getGraph();
 				return basicGetGraph();
-			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -677,9 +662,6 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				setGraph((Graph)newValue);
-				return;
-			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -696,9 +678,6 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				setGraph((Graph)null);
 				return;
-			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -713,8 +692,6 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH:
 				return graph != null;
-			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL:
-				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1014,44 +991,6 @@ public class ToolDependencyGraphImpl extends MinimalEObjectImpl.Container implem
 		graph = newGraph;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.TOOL_DEPENDENCY_GRAPH__GRAPH, oldGraph, graph));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
-			}
-		}
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.TOOL_DEPENDENCY_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 } //ToolDependenciesImpl

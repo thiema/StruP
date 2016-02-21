@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+
 import org.apache.commons.jexl2.JexlEngine;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -62,6 +65,7 @@ public class GlobalVar {
 	
 	
 	private static boolean guiMode = false;
+	private static JTextPane txtAreaForLogMsg;
 	
 	
 	public static DefaultProject getDefaultProject() {
@@ -245,6 +249,15 @@ public class GlobalVar {
 	public static void setGraph(EasyFlowGraph graph_) {
 
 		graph = graph_;
+	}
+
+	public static void setTextAreaForLogMsg(JTextPane logMsgTextArea) {
+		GlobalVar.txtAreaForLogMsg = logMsgTextArea;	
+	}
+	
+	public static JTextPane getTextAreaForLogMsg()
+	{
+		return GlobalVar.txtAreaForLogMsg;
 	}
 
 }

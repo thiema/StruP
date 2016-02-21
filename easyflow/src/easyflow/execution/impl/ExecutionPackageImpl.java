@@ -23,6 +23,8 @@ import easyflow.execution.pegasus.PegasusPackage;
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
 import easyflow.execution.shell.ShellPackage;
 import easyflow.execution.shell.impl.ShellPackageImpl;
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
 import easyflow.impl.EasyflowPackageImpl;
@@ -113,6 +115,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		PegasusPackageImpl thePegasusPackage = (PegasusPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) instanceof PegasusPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PegasusPackage.eNS_URI) : PegasusPackage.eINSTANCE);
@@ -129,6 +132,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		thePegasusPackage.createPackageContents();
@@ -145,6 +149,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		thePegasusPackage.initializePackageContents();

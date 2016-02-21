@@ -7,7 +7,6 @@
 package easyflow.core.impl;
 
 import easyflow.EasyflowPackage;
-
 import easyflow.core.Catalog;
 import easyflow.core.Category;
 import easyflow.core.Condition;
@@ -16,67 +15,43 @@ import easyflow.core.CorePackage;
 import easyflow.core.DefaultRecord;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
-import easyflow.core.ErrorControl;
 import easyflow.core.GalaxyTaskReader;
 import easyflow.core.ITaskReader;
 import easyflow.core.IWorkflowTemplate;
+import easyflow.core.LogMessage;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.PreprocessingTask;
 import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.core.Workflow;
-
 import easyflow.data.DataPackage;
-
 import easyflow.data.impl.DataPackageImpl;
-
 import easyflow.example.ExamplePackage;
-
 import easyflow.example.impl.ExamplePackageImpl;
-
 import easyflow.execution.ExecutionPackage;
-
 import easyflow.execution.impl.ExecutionPackageImpl;
-
 import easyflow.execution.makeflow.MakeflowPackage;
-
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
-
 import easyflow.execution.pegasus.PegasusPackage;
-
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
-
 import easyflow.execution.shell.ShellPackage;
-
 import easyflow.execution.shell.impl.ShellPackageImpl;
-
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
-
 import easyflow.impl.EasyflowPackageImpl;
-
 import easyflow.metadata.MetadataPackage;
-
 import easyflow.metadata.impl.MetadataPackageImpl;
-
 import easyflow.tool.ToolPackage;
-
 import easyflow.tool.impl.ToolPackageImpl;
-
 import easyflow.traversal.TraversalPackage;
-
 import easyflow.traversal.impl.TraversalPackageImpl;
-
 import easyflow.ui.UiPackage;
-
 import easyflow.ui.impl.UiPackageImpl;
-
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.MapsPackageImpl;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -84,7 +59,6 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -190,7 +164,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass errorControlEClass = null;
+	private EClass logMessageEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -255,6 +229,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		// Obtain or create and register interdependencies
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
@@ -271,6 +246,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theCorePackage.createPackageContents();
 		theEasyflowPackage.createPackageContents();
 		theUiPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
@@ -287,6 +263,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theCorePackage.initializePackageContents();
 		theEasyflowPackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
@@ -511,7 +488,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getWorkflow_ErrorControl() {
+	public EReference getWorkflow_LogMessage() {
 		return (EReference)workflowEClass.getEStructuralFeatures().get(21);
 	}
 
@@ -799,7 +776,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String() {
+	public EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String_String_String() {
 		return workflowEClass.getEOperations().get(31);
 	}
 
@@ -819,6 +796,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EOperation getWorkflow__RenderToString() {
 		return workflowEClass.getEOperations().get(33);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getWorkflow__InitLogMessage() {
+		return workflowEClass.getEOperations().get(34);
 	}
 
 	/**
@@ -1107,6 +1093,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EReference getTask_Rule() {
 		return (EReference)taskEClass.getEStructuralFeatures().get(30);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTask_LogMessage() {
+		return (EReference)taskEClass.getEStructuralFeatures().get(31);
 	}
 
 	/**
@@ -1681,6 +1676,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getTask__InitLogMessage() {
+		return taskEClass.getEOperations().get(63);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPreprocessingTask() {
 		return preprocessingTaskEClass;
 	}
@@ -1969,8 +1973,17 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultWorkflowTemplate_ErrorControl() {
+	public EReference getDefaultWorkflowTemplate_LogMessage() {
 		return (EReference)defaultWorkflowTemplateEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getDefaultWorkflowTemplate__InitLogMessage() {
+		return defaultWorkflowTemplateEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -2122,6 +2135,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getParentTaskResult_Logger() {
+		return (EAttribute)parentTaskResultEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getCondition() {
 		return conditionEClass;
 	}
@@ -2149,6 +2171,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getCondition_Logger() {
+		return (EAttribute)conditionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getCondition__IsUnconditional() {
 		return conditionEClass.getEOperations().get(0);
 	}
@@ -2158,8 +2189,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getErrorControl() {
-		return errorControlEClass;
+	public EClass getLogMessage() {
+		return logMessageEClass;
 	}
 
 	/**
@@ -2167,8 +2198,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Name() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(0);
+	public EAttribute getLogMessage_Name() {
+		return (EAttribute)logMessageEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -2176,8 +2207,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Description() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(1);
+	public EAttribute getLogMessage_LogMsg() {
+		return (EAttribute)logMessageEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2185,8 +2216,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_ResolveErrorTipp() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(2);
+	public EAttribute getLogMessage_Category() {
+		return (EAttribute)logMessageEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2194,8 +2225,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Category() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(3);
+	public EAttribute getLogMessage_HelpMsg() {
+		return (EAttribute)logMessageEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -2203,8 +2234,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Severity() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(4);
+	public EAttribute getLogMessage_Logger() {
+		return (EAttribute)logMessageEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2212,8 +2243,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_ValNum() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(5);
+	public EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_EList() {
+		return logMessageEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -2221,8 +2252,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getErrorControl_Vals() {
-		return (EAttribute)errorControlEClass.getEStructuralFeatures().get(6);
+	public EOperation getLogMessage__GenerateLogMsg__String_Severity_EList() {
+		return logMessageEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -2230,8 +2261,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getErrorControl__GenerateDescription() {
-		return errorControlEClass.getEOperations().get(0);
+	public EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_String_EList() {
+		return logMessageEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -2239,8 +2270,44 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getErrorControl__GenerateErrorString__String_Category_Severity_EList() {
-		return errorControlEClass.getEOperations().get(1);
+	public EOperation getLogMessage__GenerateLogMsg__String_Severity_String_EList() {
+		return logMessageEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_String() {
+		return logMessageEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLogMessage__GenerateLogMsg__String_Severity_String() {
+		return logMessageEClass.getEOperations().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_String_String() {
+		return logMessageEClass.getEOperations().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLogMessage__GenerateLogMsg__String_Severity_String_String() {
+		return logMessageEClass.getEOperations().get(7);
 	}
 
 	/**
@@ -2311,7 +2378,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(workflowEClass, WORKFLOW__EXECUTION_SYSTEM);
 		createEReference(workflowEClass, WORKFLOW__CURRENT_RULE);
 		createEReference(workflowEClass, WORKFLOW__JGRAPH);
-		createEReference(workflowEClass, WORKFLOW__ERROR_CONTROL);
+		createEReference(workflowEClass, WORKFLOW__LOG_MESSAGE);
 		createEOperation(workflowEClass, WORKFLOW___GENERATE_GRAPH_FROM_TEMPLATE__EMAP);
 		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASK_BY_OUT_DATA_PORT__DATAPORT_TASK);
 		createEOperation(workflowEClass, WORKFLOW___GET_PARENT_TASKS_BY_OUT_DATA_PORT__DATAPORT);
@@ -2343,9 +2410,10 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(workflowEClass, WORKFLOW___DELETE);
 		createEOperation(workflowEClass, WORKFLOW___RESET_WORKFLOW_STEP);
 		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING);
-		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING);
+		createEOperation(workflowEClass, WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING_STRING_STRING);
 		createEOperation(workflowEClass, WORKFLOW___INIT);
 		createEOperation(workflowEClass, WORKFLOW___RENDER_TO_STRING);
+		createEOperation(workflowEClass, WORKFLOW___INIT_LOG_MESSAGE);
 
 		taskEClass = createEClass(TASK);
 		createEReference(taskEClass, TASK__IN_DATA_PORTS);
@@ -2379,6 +2447,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__PARAMS);
 		createEReference(taskEClass, TASK__STATIC_PARAMS);
 		createEReference(taskEClass, TASK__RULE);
+		createEReference(taskEClass, TASK__LOG_MESSAGE);
 		createEOperation(taskEClass, TASK___READ_TASK__STRING_STRING_ELIST);
 		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING);
 		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN);
@@ -2442,6 +2511,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(taskEClass, TASK___READ_TRAVERSAL_CRITERIA__STRING);
 		createEOperation(taskEClass, TASK___READ_GROUPING_CRITERIA__STRING_ELIST_STRING);
 		createEOperation(taskEClass, TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING);
+		createEOperation(taskEClass, TASK___INIT_LOG_MESSAGE);
 
 		preprocessingTaskEClass = createEClass(PREPROCESSING_TASK);
 		createEAttribute(preprocessingTaskEClass, PREPROCESSING_TASK__NAME);
@@ -2478,7 +2548,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__READER);
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER);
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__LOGGER);
-		createEReference(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL);
+		createEReference(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE);
+		createEOperation(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE___INIT_LOG_MESSAGE);
 
 		easyflowTemplateEClass = createEClass(EASYFLOW_TEMPLATE);
 
@@ -2501,22 +2572,28 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__GENERIC);
 		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__RANK);
 		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS);
+		createEAttribute(parentTaskResultEClass, PARENT_TASK_RESULT__LOGGER);
 
 		conditionEClass = createEClass(CONDITION);
 		createEAttribute(conditionEClass, CONDITION__FORBIDDEN);
 		createEAttribute(conditionEClass, CONDITION__CIRCUMVENTING_PARENTS);
+		createEAttribute(conditionEClass, CONDITION__LOGGER);
 		createEOperation(conditionEClass, CONDITION___IS_UNCONDITIONAL);
 
-		errorControlEClass = createEClass(ERROR_CONTROL);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__NAME);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__DESCRIPTION);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__RESOLVE_ERROR_TIPP);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__CATEGORY);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__SEVERITY);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__VAL_NUM);
-		createEAttribute(errorControlEClass, ERROR_CONTROL__VALS);
-		createEOperation(errorControlEClass, ERROR_CONTROL___GENERATE_DESCRIPTION);
-		createEOperation(errorControlEClass, ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST);
+		logMessageEClass = createEClass(LOG_MESSAGE);
+		createEAttribute(logMessageEClass, LOG_MESSAGE__NAME);
+		createEAttribute(logMessageEClass, LOG_MESSAGE__LOG_MSG);
+		createEAttribute(logMessageEClass, LOG_MESSAGE__CATEGORY);
+		createEAttribute(logMessageEClass, LOG_MESSAGE__HELP_MSG);
+		createEAttribute(logMessageEClass, LOG_MESSAGE__LOGGER);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_ELIST);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_ELIST);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_ELIST);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_ELIST);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_STRING);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING);
 
 		// Create enums
 		severityEEnum = createEEnum(SEVERITY);
@@ -2589,7 +2666,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getWorkflow_ExecutionSystem(), theExecutionPackage.getIExecutionSystem(), null, "executionSystem", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_CurrentRule(), theToolPackage.getRule(), null, "currentRule", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_Jgraph(), theJgraphxPackage.getGraph(), null, "jgraph", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWorkflow_ErrorControl(), this.getErrorControl(), null, "errorControl", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkflow_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = initEOperation(getWorkflow__GenerateGraphFromTemplate__EMap(), ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToToolMap(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -2713,13 +2790,17 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		op = initEOperation(getWorkflow__PrintWorkflowStepMsgOnStart__String(), null, "printWorkflowStepMsgOnStart", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String(), null, "printWorkflowStepMsgOnEnd", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String_String_String(), null, "printWorkflowStepMsgOnEnd", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "rc", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "step", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "helpMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWorkflow__Init(), null, "init", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWorkflow__RenderToString(), ecorePackage.getEString(), "renderToString", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getWorkflow__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTask_InDataPorts(), theDataPackage.getDataPort(), null, "inDataPorts", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2753,6 +2834,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_Params(), theMapsPackage.getStringToStringMap(), null, "params", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_StaticParams(), theMapsPackage.getStringToStringMap(), null, "staticParams", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Rule(), theToolPackage.getRule(), null, "rule", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTask_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getTask__ReadTask__String_String_EList(), null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -3025,6 +3107,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, theDataPackage.getDataPort(), "defaultCroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultMode", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getTask__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(preprocessingTaskEClass, PreprocessingTask.class, "PreprocessingTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPreprocessingTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPreprocessingTask_Task(), this.getTask(), null, "task", null, 0, 1, PreprocessingTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3076,7 +3160,9 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getDefaultWorkflowTemplate_Reader(), theEasyflowPackage.getBufferedReader(), "reader", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultWorkflowTemplate_UtilTaskReader(), theEasyflowPackage.getBufferedReader(), "utilTaskReader", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultWorkflowTemplate_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultWorkflowTemplate.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDefaultWorkflowTemplate_ErrorControl(), this.getErrorControl(), null, "errorControl", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultWorkflowTemplate_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getDefaultWorkflowTemplate__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(easyflowTemplateEClass, EasyflowTemplate.class, "EasyflowTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3100,29 +3186,69 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getParentTaskResult_Generic(), ecorePackage.getEBoolean(), "generic", "false", 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_Rank(), ecorePackage.getEInt(), "rank", null, 0, 1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParentTaskResult_PotentialCircumventingTasks(), ecorePackage.getEString(), "potentialCircumventingTasks", null, 0, -1, ParentTaskResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParentTaskResult_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, ParentTaskResult.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCondition_Forbidden(), ecorePackage.getEString(), "forbidden", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCondition_CircumventingParents(), ecorePackage.getEString(), "circumventingParents", null, 0, -1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCondition_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Condition.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getCondition__IsUnconditional(), ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(errorControlEClass, ErrorControl.class, "ErrorControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getErrorControl_Name(), ecorePackage.getEString(), "name", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorControl_Description(), ecorePackage.getEString(), "description", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorControl_ResolveErrorTipp(), ecorePackage.getEString(), "resolveErrorTipp", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorControl_Category(), this.getCategory(), "category", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorControl_Severity(), this.getSeverity(), "severity", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorControl_ValNum(), ecorePackage.getEInt(), "valNum", null, 0, 1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getErrorControl_Vals(), ecorePackage.getEString(), "vals", null, 0, -1, ErrorControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(logMessageEClass, LogMessage.class, "LogMessage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLogMessage_Name(), ecorePackage.getEString(), "name", null, 0, 1, LogMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLogMessage_LogMsg(), ecorePackage.getEString(), "logMsg", null, 0, 1, LogMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLogMessage_Category(), this.getCategory(), "category", null, 0, 1, LogMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLogMessage_HelpMsg(), ecorePackage.getEString(), "helpMsg", null, 0, 1, LogMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLogMessage_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, LogMessage.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEOperation(getErrorControl__GenerateDescription(), ecorePackage.getEString(), "generateDescription", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getErrorControl__GenerateErrorString__String_Category_Severity_EList(), ecorePackage.getEString(), "generateErrorString", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Category_Severity_EList(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Severity_EList(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Category_Severity_String_EList(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "helpMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Severity_String_EList(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "helpMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Category_Severity_String(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Severity_String(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Category_Severity_String_String(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "helpMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Severity_String_String(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "helpMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(severityEEnum, Severity.class, "Severity");
@@ -3134,9 +3260,11 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEEnumLiteral(severityEEnum, Severity.TRACE);
 
 		initEEnum(categoryEEnum, Category.class, "Category");
+		addEEnumLiteral(categoryEEnum, Category.PROJECT_CONFIGURATION);
 		addEEnumLiteral(categoryEEnum, Category.METADATA_DEFINITON);
 		addEEnumLiteral(categoryEEnum, Category.TASK_DEFINITON);
 		addEEnumLiteral(categoryEEnum, Category.TOOL_DEFINITION);
+		addEEnumLiteral(categoryEEnum, Category.WORKFLOW);
 		addEEnumLiteral(categoryEEnum, Category.WORKFLOW_TEMPLATE);
 		addEEnumLiteral(categoryEEnum, Category.ABSTRACT_WORKFLOW);
 		addEEnumLiteral(categoryEEnum, Category.DATA_GROUPING);

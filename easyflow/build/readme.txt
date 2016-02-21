@@ -5,7 +5,7 @@ import->from git with "as new java project wizard"
 # resolve deps using ivy
 # 
 # fix build path (configure src dir, add external jars)
-# 
+#
 
 git add -u
 git commit
@@ -15,6 +15,10 @@ git push -u origin --all
 
 #building
 ant -f build/build.xml jar
+
+#in special situations it might be necessary to fix up directory e.g. for ant and proxy
+ANT_HOME=/usr/share/ant/ ANT_OPTS="-Dhttp.proxyHost=192.168.211.2 -Dhttp.proxyPort=81" ant resolve
+
 
 #after doing the build, one can run the app from with folder
 #easyflow/build/ as follows:

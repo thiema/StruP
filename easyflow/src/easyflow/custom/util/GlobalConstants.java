@@ -86,19 +86,23 @@ public class GlobalConstants {
 	public static final String ROOT_TASK_NAME           = "_root_";
 	
 	// error descriptions
-	public static final String ERROR_STRING_VAR_PLACEHOLDERS[] = {"$VAL1, $VAL2, $VAL3, $VAL4, $VAL5"};
-	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL_1    = "No valid data handle found for tool \"$VAL1\".";
+	//public static final String ERROR_STRING_VAR_PLACEHOLDERS[] = {"$VAL1, $VAL2, $VAL3, $VAL4, $VAL5"};
+	public static final String ERROR_STRING_VAR_PLACEHOLDER = "$VAL";
+	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL_1    = "No valid data handle found for tool \"$VAL\".";
 	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG_0  = "No valid data handle found due to configuration.";
-	public static final String ERROR_NO_TOOL_DEFINITION_FOUND_FOR_TOOL_1         = "Unable to find definition of tool \"$VAL1\".";
-	public static final String ERROR_TOOL_DEFINITION_NOT_VALID_2                 = "Unable to validate tool definition \"$VAL1\" against schema \"$VAL2\".";
+	public static final String ERROR_NO_TOOL_DEFINITION_FOUND_FOR_TOOL_1         = "Unable to find definition of tool \"$VAL\".";
+	public static final String ERROR_TOOL_DEFINITION_NOT_VALID_2                 = "Unable to validate tool definition \"$VAL\" against schema \"$VAL\".";
 	
 	public static final String ERROR_CONFIGURATION_FILE_NOT_FOUND_1              = "Could not find the specified/default configuration file \"$VAL\".";
-	public static final String ERROR_METADATA_FILE_NOT_FOUND_1                   = "Could not find the metadata file \"$VAL1\".";
-	public static final String ERROR_WORKFLOW_TEMPLATE_NOT_FOUND_1               = "Could not find the workflow template \"$VAL1\".";
+	public static final String ERROR_METADATA_FILE_NOT_FOUND_1                   = "Could not find the metadata file \"$VAL\".";
+	public static final String ERROR_WORKFLOW_TEMPLATE_NOT_FOUND_1               = "Could not find the workflow template \"$VAL\".";
 	public static final String ERROR_CONFIGRUATION_FILE_NOT_SPECIFIED_0          = "No configuration file specified.";
 	public static final String ERROR_METADATA_FILE_NOT_SPECIFIED_0               = "No metadata file specified.";
 	public static final String ERROR_WORKFLOW_TEMPLATE_NOT_SPECIFIED_0           = "No workflow template provided.";
 	public static final String ERROR_TOOL_DEFINITION_NOT_SPECIFIED_0             = "No tool definition provided.";
+	
+	public static final String ERROR_CONFIGURATION_SECTION_MISSING_2 = "Section \"$VAL\" missing in configuration file \"$VAL\"";
+	public static final String ERROR_CONFIGURATION_PARAM_MISSING_1   = "Configuration file does not contain parameter \"$VAL\"";
 	
 	public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_0    = "No valid data handle provided.";
 	//public static final String ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG    = "Configuration does not provide a valid data handle.";
@@ -217,6 +221,33 @@ public class GlobalConstants {
 
 
 	public static final String WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME = "input_grouping_criterion";
+
+
+	public static final String CONFIGURATION_FILE_SECTION_PROJECT    = "project";
+	public static final String CONFIGURATION_FILE_SECTION_WORKFLOW   = "workflow";
+	public static final String CONFIGURATION_FILE_SECTION_TOOL       = "tool";
+	public static final String CONFIGURATION_FILE_SECTION_CONTRAST   = "contrast";
+	public static final String CONFIGURATION_FILE_SECTION_PROCESSING = "processing";
+	public static final String CONFIGURATION_FILE_SECTION_CATALOG    = "catalog";
+
+
+	public static final String ERROR_WORKFLOW_TEMPLATE_FAILED_TO_READ_1 = "Failed to read workflow template with error: \"$VAL\"";
+
+
+	public static final String ERROR_GENERAL_IO_2 = "IO Error: \"$VAL\"";
+
+
+	public static final String ERROR_CONFIGURATION_SECTION_MISSING_1 = "Section \"$VAL\" missing in configuration.";
+
+
+	public static final String GUI_LOG_MSG_STYLE_CATEGORY = "LOG_MSG_STYLE_CATEGORY";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY_LOW = "LOG_MSG_STYLE_SEVERITY_LOW";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY_HIGH = "LOG_MSG_STYLE_SEVERITY_HIGH";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM = "LOG_MSG_STYLE_SEVERITY_MEDIUM";
+	public static final String GUI_LOG_MSG_STYLE_TEXT     = "LOG_MSG_STYLE_TEXT";
+
+
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY = "LOG_MSG_STYLE_SEVERITY";
 	
 }
 

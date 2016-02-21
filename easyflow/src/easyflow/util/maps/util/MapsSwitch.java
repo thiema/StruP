@@ -7,46 +7,33 @@
 package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
-
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
-
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
-
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
-
 import easyflow.tool.Condition;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
-
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
-
 import easyflow.ui.DefaultProject;
-
 import easyflow.util.maps.*;
-
 import java.net.URI;
-
 import java.util.Map;
-
 import javax.xml.validation.Schema;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -311,7 +298,7 @@ public class MapsSwitch<T> extends Switch<T> {
 				return result;
 			}
 			case MapsPackage.STRING_TO_ERROR_CONTROL_MAP: {
-				@SuppressWarnings("unchecked") Map.Entry<String, ErrorControl> stringToErrorControlMap = (Map.Entry<String, ErrorControl>)theEObject;
+				@SuppressWarnings("unchecked") Map.Entry<String, LogMessage> stringToErrorControlMap = (Map.Entry<String, LogMessage>)theEObject;
 				T result = caseStringToErrorControlMap(stringToErrorControlMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -826,7 +813,7 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStringToErrorControlMap(Map.Entry<String, ErrorControl> object) {
+	public T caseStringToErrorControlMap(Map.Entry<String, LogMessage> object) {
 		return null;
 	}
 

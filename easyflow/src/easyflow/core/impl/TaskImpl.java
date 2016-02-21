@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
+import easyflow.core.LogMessage;
 import easyflow.core.PreprocessingTask;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
@@ -117,6 +118,7 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link easyflow.core.impl.TaskImpl#getParams <em>Params</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getStaticParams <em>Static Params</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getRule <em>Rule</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -488,6 +490,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @ordered
 	 */
 	protected Rule rule;
+
+	/**
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogMessage()
+	 * @generated
+	 * @ordered
+	 */
+	protected LogMessage logMessage;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -965,6 +977,44 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__RULE, oldRule, rule));
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.TASK__LOG_MESSAGE, oldLogMessage, logMessage));
+			}
+		}
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__LOG_MESSAGE, oldLogMessage, logMessage));
+	}
+
 	/*
 	 * private EList<String> enumerateInstances(String regexp) { regexp =
 	 * "ab(c|d){2,3}"; RegExp r = new RegExp(regexp); Automaton a =
@@ -1321,6 +1371,17 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		return rc;
 	}
 	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void initLogMessage() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
 	private DataPort parseDataPortField(String field, EList<Pattern> pattern, boolean isOutDataPort) {
 	
 		//the dataport consists of: DataPort1=[PortName:]DataFormat,DataFormat2,...
@@ -3710,6 +3771,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__RULE:
 				if (resolve) return getRule();
 				return basicGetRule();
+			case CorePackage.TASK__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -3824,6 +3888,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__RULE:
 				setRule((Rule)newValue);
 				return;
+			case CorePackage.TASK__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -3928,6 +3995,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__RULE:
 				setRule((Rule)null);
 				return;
+			case CorePackage.TASK__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -4001,6 +4071,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return staticParams != null && !staticParams.isEmpty();
 			case CorePackage.TASK__RULE:
 				return rule != null;
+			case CorePackage.TASK__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -4277,6 +4349,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return readGroupingCriteria((String)arguments.get(0), (EList<String>)arguments.get(1), (String)arguments.get(2));
 			case CorePackage.TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING:
 				return createGroupingCriteria((String)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2));
+			case CorePackage.TASK___INIT_LOG_MESSAGE:
+				initLogMessage();
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

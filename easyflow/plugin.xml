@@ -34,6 +34,14 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated easyflow -->
       <package
+            uri="http:///de/thiema/easyflow/graph/easyflow.core/1.0.0"
+            class="easyflow.graph.GraphPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
             uri="http:///de/thiema/easyflow/graph/jgraphx/easyflow.core/1.0.0"
             class="easyflow.graph.jgraphx.JgraphxPackage"
             genModel="model/easyflow.genmodel"/>

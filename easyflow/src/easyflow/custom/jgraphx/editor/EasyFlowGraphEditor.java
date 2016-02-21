@@ -2,25 +2,31 @@ package easyflow.custom.jgraphx.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.Hashtable;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import org.apache.log4j.Logger;
-
 
 import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
 import com.mxgraph.examples.swing.editor.EditorToolBar;
 import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
-
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
-
 import com.mxgraph.swing.util.mxGraphTransferable;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
@@ -63,7 +69,9 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 	 * 
 	 */
 	private JPanel upperPanel;
+	private JPanel lowerPanel;
 	private ComposeWorkflowPanel composeWorkflowPanel;
+	private JTextPane logMsgTextArea;
 	
 	
 	public EasyFlowGraphEditor()
@@ -127,7 +135,6 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 			.addTemplate("Link", new ImageIcon(GraphEditor.class
 										.getResource("/com/mxgraph/examples/swing/images/arrow.png")),
 										templateEdge);
-				
 		
 		getGraphComponent().getGraph().setCellsResizable(false);
 		getGraphComponent().setConnectable(false);
@@ -141,7 +148,33 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 //upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
-
+		lowerPanel = new JPanel();
+		lowerPanel.add(new JTextPane());
+		logMsgTextArea = new JTextPane ();
+		logMsgTextArea.setEditable(false);
+/*		
+ * dont understand which component I am ...
+ * 
+		logger.debug("the dimensions of the whole window are: "
+				+getGraphComponent().getHeight()+" "+
+				+getComponentCount()+" "
+				+getVisibleRect().getHeight()+" x "+getSize().getWidth());
+		for (int i=0; i<getComponentCount(); i++)
+		{
+			logger.debug("dimensions of component "
+					+i+":  "+getComponent(i).getName()
+					+" y="+getComponent(i).getY()
+					+" width="+getComponent(i).getSize().getWidth());
+		}
+		*/
+		logMsgTextArea.setPreferredSize(new Dimension(0, 100));
+		addStylesToDocument(logMsgTextArea.getStyledDocument());
+		//logMsgTextArea.setLineWrap(true);
+		//logMsgTextArea.setFont(new Font("Arial", Font.ITALIC, 10));
+		add(new JScrollPane (logMsgTextArea, 
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.SOUTH);
+		GlobalVar.setTextAreaForLogMsg(logMsgTextArea);
 	}
 
 	
@@ -306,5 +339,73 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 	public void setComposeWorkflowPanel(ComposeWorkflowPanel composeWorkflowPanel) {
 		this.composeWorkflowPanel = composeWorkflowPanel;
 	}
+
+	public JTextPane getTextAreaForLogMsg()
+	{
+		return logMsgTextArea;
+	}
+	protected void addStylesToDocument(StyledDocument doc) {
+		
+        //Initialize some styles.
+        Style def = StyleContext.getDefaultStyleContext().
+                        getStyle(StyleContext.DEFAULT_STYLE);
+
+        StyleConstants.setItalic(def, true);
+        StyleConstants.setFontFamily(def, "SansSerif");
+
+        Style s,ss;
+
+        //set category
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_CATEGORY, def);
+        StyleConstants.setBold(s, true);
+        StyleConstants.setForeground(s, Color.BLUE);
+        StyleConstants.setFontSize(s, 12);
+
+        //set severity
+        
+        ss = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY, def);
+        StyleConstants.setFontSize(ss, 12);
+        
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_LOW, ss);
+        StyleConstants.setForeground(s, Color.GRAY);
+        
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM, ss);
+        StyleConstants.setForeground(s, Color.BLACK);
+        
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_HIGH, ss);
+        StyleConstants.setForeground(s, Color.RED);
+        
+
+        //set log message text style
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT, def);
+        StyleConstants.setFontSize(s, 10);
+
+//        s = doc.addStyle("icon", regular);
+//        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
+        /*
+        ImageIcon pigIcon = createImageIcon("images/Pig.gif",
+                                            "a cute pig");
+        if (pigIcon != null) {
+            StyleConstants.setIcon(s, pigIcon);
+        }
+
+        s = doc.addStyle("button", regular);
+        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
+        ImageIcon soundIcon = createImageIcon("images/sound.gif",
+                                              "sound icon");
+        JButton button = new JButton();
+        if (soundIcon != null) {
+            button.setIcon(soundIcon);
+        } else {
+            button.setText("BEEP");
+        }
+        button.setCursor(Cursor.getDefaultCursor());
+        button.setMargin(new Insets(0,0,0,0));
+        button.setActionCommand(buttonString);
+        button.addActionListener(this);
+        
+        StyleConstants.setComponent(s, button);
+        */
+    }
 
 }

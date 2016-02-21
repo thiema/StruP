@@ -6,7 +6,7 @@
  */
 package easyflow.util.maps.impl;
 
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.util.maps.MapsPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String,ErrorControl> {
+public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String,LogMessage> {
 	/**
 	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -60,7 +60,7 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * @generated
 	 * @ordered
 	 */
-	protected ErrorControl value;
+	protected LogMessage value;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -107,10 +107,10 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl getTypedValue() {
+	public LogMessage getTypedValue() {
 		if (value != null && value.eIsProxy()) {
 			InternalEObject oldValue = (InternalEObject)value;
-			value = (ErrorControl)eResolveProxy(oldValue);
+			value = (LogMessage)eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MapsPackage.STRING_TO_ERROR_CONTROL_MAP__VALUE, oldValue, value));
@@ -124,7 +124,7 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl basicGetTypedValue() {
+	public LogMessage basicGetTypedValue() {
 		return value;
 	}
 
@@ -133,8 +133,8 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTypedValue(ErrorControl newValue) {
-		ErrorControl oldValue = value;
+	public void setTypedValue(LogMessage newValue) {
+		LogMessage oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MapsPackage.STRING_TO_ERROR_CONTROL_MAP__VALUE, oldValue, value));
@@ -169,7 +169,7 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 				setTypedKey((String)newValue);
 				return;
 			case MapsPackage.STRING_TO_ERROR_CONTROL_MAP__VALUE:
-				setTypedValue((ErrorControl)newValue);
+				setTypedValue((LogMessage)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -187,7 +187,7 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 				setTypedKey(KEY_EDEFAULT);
 				return;
 			case MapsPackage.STRING_TO_ERROR_CONTROL_MAP__VALUE:
-				setTypedValue((ErrorControl)null);
+				setTypedValue((LogMessage)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -277,7 +277,7 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl getValue() {
+	public LogMessage getValue() {
 		return getTypedValue();
 	}
 
@@ -286,8 +286,8 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl setValue(ErrorControl value) {
-		ErrorControl oldValue = getValue();
+	public LogMessage setValue(LogMessage value) {
+		LogMessage oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
@@ -298,9 +298,9 @@ public class StringToErrorControlMapImpl extends MinimalEObjectImpl.Container im
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public EMap<String, ErrorControl> getEMap() {
+	public EMap<String, LogMessage> getEMap() {
 		EObject container = eContainer();
-		return container == null ? null : (EMap<String, ErrorControl>)container.eGet(eContainmentFeature());
+		return container == null ? null : (EMap<String, LogMessage>)container.eGet(eContainmentFeature());
 	}
 
 } //StringToErrorControlMapImpl

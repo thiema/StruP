@@ -146,6 +146,8 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 	public ComposeWorkflowPanel insertComposeWorkflowPanel(String title)
 	{
 		final ComposeWorkflowPanel jPanel = new ComposeWorkflowPanel();
+		//jPanel.setBackground();
+		jPanel.setOpaque(false);
 		libraryPane.add(title, jPanel);
 		return jPanel;
 		

@@ -36,6 +36,8 @@ import easyflow.execution.shell.ShellPackage;
 
 import easyflow.execution.shell.impl.ShellPackageImpl;
 
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
@@ -269,6 +271,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
 		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
@@ -285,6 +288,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
 		theUiPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
@@ -301,6 +305,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
 		theUiPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
@@ -641,6 +646,15 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTool_LogMessage() {
+		return (EReference)toolEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTool__WriteModelToXML() {
 		return toolEClass.getEOperations().get(0);
 	}
@@ -940,6 +954,15 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 */
 	public EOperation getTool__CreateData__ResolvedParam_EMap_EMap() {
 		return toolEClass.getEOperations().get(33);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getTool__InitLogMessage() {
+		return toolEClass.getEOperations().get(34);
 	}
 
 	/**
@@ -2513,6 +2536,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEReference(toolEClass, TOOL__RESOLVED_PARAMS);
 		createEAttribute(toolEClass, TOOL__ROOT);
 		createEReference(toolEClass, TOOL__RESOLVE_URI_MAP);
+		createEReference(toolEClass, TOOL__LOG_MESSAGE);
 		createEOperation(toolEClass, TOOL___WRITE_MODEL_TO_XML);
 		createEOperation(toolEClass, TOOL___CAN_FILTER_INSTANCES_FOR__DATAPORT);
 		createEOperation(toolEClass, TOOL___REQUIRES_GROUPING__STRING_DATAPORT);
@@ -2547,6 +2571,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEOperation(toolEClass, TOOL___ASSUME_PARAM_POSITIONAL);
 		createEOperation(toolEClass, TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP);
 		createEOperation(toolEClass, TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP);
+		createEOperation(toolEClass, TOOL___INIT_LOG_MESSAGE);
 
 		parameterEClass = createEClass(PARAMETER);
 		createEAttribute(parameterEClass, PARAMETER__LOGGER);
@@ -2754,9 +2779,9 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		// Obtain other dependent packages
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
+		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -2839,6 +2864,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEReference(getTool_ResolvedParams(), theMapsPackage.getStringToResolvedParamMap(), null, "resolvedParams", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTool_Root(), ecorePackage.getEBoolean(), "root", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTool_ResolveUriMap(), theMapsPackage.getStringToURIMap(), null, "resolveUriMap", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTool_LogMessage(), theCorePackage.getLogMessage(), null, "logMessage", null, 0, 1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getTool__WriteModelToXML(), null, "writeModelToXML", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -2953,6 +2979,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		addEParameter(op, this.getResolvedParam(), "resolvedParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToIntMap(), "indexMap", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToIntMap(), "byParamIndexMap", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getTool__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameter_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Parameter.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

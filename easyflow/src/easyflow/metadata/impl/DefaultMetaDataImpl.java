@@ -6,6 +6,7 @@
  */
 package easyflow.metadata.impl;
 
+import easyflow.core.LogMessage;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingInstance;
@@ -57,6 +58,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getAliases <em>Aliases</em>}</li>
  *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getGroupingProps <em>Grouping Props</em>}</li>
+ *   <li>{@link easyflow.metadata.impl.DefaultMetaDataImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -142,6 +144,16 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 	 * @ordered
 	 */
 	protected EMap<String, String> groupingProps;
+
+	/**
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogMessage()
+	 * @generated
+	 * @ordered
+	 */
+	protected LogMessage logMessage;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -238,6 +250,44 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 			groupingProps = new EcoreEMap<String,String>(MapsPackage.Literals.STRING_TO_STRING_MAP, StringToStringMapImpl.class, this, MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS);
 		}
 		return groupingProps;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MetadataPackage.DEFAULT_META_DATA__LOG_MESSAGE, oldLogMessage, logMessage));
+			}
+		}
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MetadataPackage.DEFAULT_META_DATA__LOG_MESSAGE, oldLogMessage, logMessage));
 	}
 
 	/**
@@ -564,6 +614,17 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void initLogMessage() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public EMap<String, Object> getRecord(GroupingInstance recordInstance) {
@@ -668,6 +729,9 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
 				if (coreType) return getGroupingProps();
 				else return getGroupingProps().map();
+			case MetadataPackage.DEFAULT_META_DATA__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -699,6 +763,9 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
 				((EStructuralFeature.Setting)getGroupingProps()).set(newValue);
 				return;
+			case MetadataPackage.DEFAULT_META_DATA__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -729,6 +796,9 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
 				getGroupingProps().clear();
 				return;
+			case MetadataPackage.DEFAULT_META_DATA__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -753,6 +823,8 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 				return aliases != null && !aliases.isEmpty();
 			case MetadataPackage.DEFAULT_META_DATA__GROUPING_PROPS:
 				return groupingProps != null && !groupingProps.isEmpty();
+			case MetadataPackage.DEFAULT_META_DATA__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -795,6 +867,9 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 				return containsColumn((String)arguments.get(0));
 			case MetadataPackage.DEFAULT_META_DATA___CONTAINS_ROW__STRING:
 				return containsRow((String)arguments.get(0));
+			case MetadataPackage.DEFAULT_META_DATA___INIT_LOG_MESSAGE:
+				initLogMessage();
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -7,12 +7,8 @@
 package easyflow.graph.jgraphx.impl;
 
 import com.mxgraph.model.mxICell;
-
 import easyflow.core.Catalog;
-
-import easyflow.core.ErrorControl;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -51,13 +47,11 @@ import easyflow.traversal.TraversalFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToGraphCellMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -101,7 +95,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.graph.jgraphx.impl.GraphImpl#getPreprocessingGraph <em>Preprocessing Graph</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.impl.GraphImpl#getToolDependencyGraph <em>Tool Dependency Graph</em>}</li>
  *   <li>{@link easyflow.graph.jgraphx.impl.GraphImpl#getExecutionGraph <em>Execution Graph</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.impl.GraphImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -317,16 +310,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @ordered
 	 */
 	protected ExecutionGraph executionGraph;
-
-	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
-	 * @generated
-	 * @ordered
-	 */
-	protected ErrorControl errorControl;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -758,44 +741,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		executionGraph = newExecutionGraph;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.GRAPH__EXECUTION_GRAPH, oldExecutionGraph, executionGraph));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, JgraphxPackage.GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
-			}
-		}
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 	/**
@@ -1595,9 +1540,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 			case JgraphxPackage.GRAPH__EXECUTION_GRAPH:
 				if (resolve) return getExecutionGraph();
 				return basicGetExecutionGraph();
-			case JgraphxPackage.GRAPH__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1666,9 +1608,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 			case JgraphxPackage.GRAPH__EXECUTION_GRAPH:
 				setExecutionGraph((ExecutionGraph)newValue);
 				return;
-			case JgraphxPackage.GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1732,9 +1671,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 			case JgraphxPackage.GRAPH__EXECUTION_GRAPH:
 				setExecutionGraph((ExecutionGraph)null);
 				return;
-			case JgraphxPackage.GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1783,8 +1719,6 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 				return toolDependencyGraph != null;
 			case JgraphxPackage.GRAPH__EXECUTION_GRAPH:
 				return executionGraph != null;
-			case JgraphxPackage.GRAPH__ERROR_CONTROL:
-				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}

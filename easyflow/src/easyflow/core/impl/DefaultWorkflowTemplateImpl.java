@@ -8,7 +8,7 @@ package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.core.Task;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getReader <em>Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogger <em>Logger</em>}</li>
- *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getErrorControl <em>Error Control</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -112,14 +112,14 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
+	 * @see #getLogMessage()
 	 * @generated
 	 * @ordered
 	 */
-	protected ErrorControl errorControl;
+	protected LogMessage logMessage;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -220,16 +220,16 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL, oldErrorControl, errorControl));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE, oldLogMessage, logMessage));
 			}
 		}
-		return errorControl;
+		return logMessage;
 	}
 
 	/**
@@ -237,8 +237,8 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
 	}
 
 	/**
@@ -246,11 +246,22 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL, oldErrorControl, errorControl));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE, oldLogMessage, logMessage));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void initLogMessage() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -296,9 +307,9 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 				return getUtilTaskReader();
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return getLogger();
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -325,8 +336,8 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger((Logger)newValue);
 				return;
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -352,8 +363,8 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				setLogger(LOGGER_EDEFAULT);
 				return;
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -375,8 +386,8 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 				return UTIL_TASK_READER_EDEFAULT == null ? utilTaskReader != null : !UTIL_TASK_READER_EDEFAULT.equals(utilTaskReader);
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
-			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL:
-				return errorControl != null;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -390,6 +401,9 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE___INIT_LOG_MESSAGE:
+				initLogMessage();
+				return null;
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST:
 				return readTemplate((String)arguments.get(0), (EList<String>)arguments.get(1));
 		}

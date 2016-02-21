@@ -3,10 +3,11 @@ package easyflow.core.impl;
 import easyflow.core.Catalog;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+import easyflow.core.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTemplate;
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.Task;
@@ -96,7 +97,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getExecutionSystem <em>Execution System</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getCurrentRule <em>Current Rule</em>}</li>
  *   <li>{@link easyflow.core.impl.WorkflowImpl#getJgraph <em>Jgraph</em>}</li>
- *   <li>{@link easyflow.core.impl.WorkflowImpl#getErrorControl <em>Error Control</em>}</li>
+ *   <li>{@link easyflow.core.impl.WorkflowImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -396,15 +397,14 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	protected Graph jgraph;
 
 	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
+	 * @see #getLogMessage()
 	 * @generated
 	 * @ordered
 	 */
-	protected ErrorControl errorControl;
-
+	protected LogMessage logMessage;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -785,16 +785,16 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__ERROR_CONTROL, oldErrorControl, errorControl));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.WORKFLOW__LOG_MESSAGE, oldLogMessage, logMessage));
 			}
 		}
-		return errorControl;
+		return logMessage;
 	}
 
 	/**
@@ -802,8 +802,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
 	}
 
 	/**
@@ -811,11 +811,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__ERROR_CONTROL, oldErrorControl, errorControl));
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.WORKFLOW__LOG_MESSAGE, oldLogMessage, logMessage));
 	}
 
 	/**
@@ -948,6 +948,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, false);
 		
 		setCurrentRule(ToolFactory.eINSTANCE.createRule());
+		initLogMessage();
 	}
 	/**
 	 * <!-- begin-user-doc -->
@@ -958,6 +959,17 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void initLogMessage() {
+		if (getLogMessage() == null)
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+		getLogMessage().setCategory(Category.WORKFLOW);
 	}
 
 	/**
@@ -1387,15 +1399,17 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		}
 	}
 	
-	public void printWorkflowStepMsgOnEnd(boolean rc, String step)
+	public void printWorkflowStepMsgOnEnd(boolean rc, String step, String errorMsg, String helpMsg)
 	{
 		if (getWorker() != null && getWorker().getInformable() != null)
 		{
 			String curstep = getCurWorkflowStep();
 			if (step != null)
-				curstep = getWorkflowStepLabelFor(step);;
+				curstep = getWorkflowStepLabelFor(step);
 			//String msg=curstep+" (ended with result: "+(rc ? "OK" : "Error")+")";
-			String msg = curstep+" : "+(rc ? "OK" : "Error");
+			String msg = curstep+": OK";
+			if (!rc)
+				msg = curstep+": "+errorMsg;
 			getWorker().getInformable().messageChanged(msg);
 		}
 	}
@@ -1451,7 +1465,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			}
     	}
     	
-    	printWorkflowStepMsgOnEnd(res, GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
+    	printWorkflowStepMsgOnEnd(res, 
+    			GlobalConstants.GENERATE_ABSTRACT_WORKFLOW, 
+    			getLogMessage().getLogMsg(),
+    			getLogMessage().getHelpMsg());
     	return res;
     	
 	}
@@ -2127,7 +2144,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		rc = getJgraph().generateWorkflowForExecutionSystem((mxICell) getFirstNode(), getExecutionSystem());
 		if (rc)
 			getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, true);
-		printWorkflowStepMsgOnEnd(rc, GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW);
+		printWorkflowStepMsgOnEnd(rc, 
+				GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
 		return rc;
 	}
 
@@ -2141,7 +2161,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_TOOL_DEPS);
 		boolean rc = getJgraph().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
-		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_TOOL_DEPS);
+		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_TOOL_DEPS,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
 		if (rc)
 			getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, true);
 		return rc;
@@ -2407,7 +2429,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			getJgraph().getCurrentSubGraphs().clear();
 		}
 		logger.debug("applyTraversalCriteria(): finished with return code="+rc);
-		printWorkflowStepMsgOnEnd(rc, step);
+		printWorkflowStepMsgOnEnd(rc, step,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
 		setFirstNode(getJgraph().getDefaultRootCell());
 		//printGraph();
 		printAllCells(getJgraph().getDefaultRootCell());
@@ -2540,7 +2564,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		JGraphXUtil.layoutGraph();
 		if (rc)
 			getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
-		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
+		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
 		//printAllCells(getGraphUtil().getDefaultRootCell());
 		return rc;
 	}
@@ -2571,7 +2597,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		}
 		if (rc)
 			getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, true);
-		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_PREPROCESSING_TASKS);
+		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_PREPROCESSING_TASKS,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
 		
 		return rc;
 	}
@@ -2653,9 +2681,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__JGRAPH:
 				if (resolve) return getJgraph();
 				return basicGetJgraph();
-			case CorePackage.WORKFLOW__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
+			case CorePackage.WORKFLOW__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -2733,8 +2761,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__JGRAPH:
 				setJgraph((Graph)newValue);
 				return;
-			case CorePackage.WORKFLOW__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
+			case CorePackage.WORKFLOW__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -2808,8 +2836,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW__JGRAPH:
 				setJgraph((Graph)null);
 				return;
-			case CorePackage.WORKFLOW__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
+			case CorePackage.WORKFLOW__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -2865,8 +2893,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				return currentRule != null;
 			case CorePackage.WORKFLOW__JGRAPH:
 				return jgraph != null;
-			case CorePackage.WORKFLOW__ERROR_CONTROL:
-				return errorControl != null;
+			case CorePackage.WORKFLOW__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -2994,14 +3022,17 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_START__STRING:
 				printWorkflowStepMsgOnStart((String)arguments.get(0));
 				return null;
-			case CorePackage.WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING:
-				printWorkflowStepMsgOnEnd((Boolean)arguments.get(0), (String)arguments.get(1));
+			case CorePackage.WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING_STRING_STRING:
+				printWorkflowStepMsgOnEnd((Boolean)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2), (String)arguments.get(3));
 				return null;
 			case CorePackage.WORKFLOW___INIT:
 				init();
 				return null;
 			case CorePackage.WORKFLOW___RENDER_TO_STRING:
 				return renderToString();
+			case CorePackage.WORKFLOW___INIT_LOG_MESSAGE:
+				initLogMessage();
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

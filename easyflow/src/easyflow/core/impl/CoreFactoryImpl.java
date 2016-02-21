@@ -72,7 +72,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.CATALOG: return createCatalog();
 			case CorePackage.PARENT_TASK_RESULT: return createParentTaskResult();
 			case CorePackage.CONDITION: return createCondition();
-			case CorePackage.ERROR_CONTROL: return createErrorControl();
+			case CorePackage.LOG_MESSAGE: return createLogMessage();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -217,9 +217,9 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ErrorControl createErrorControl() {
-		ErrorControlImpl errorControl = new ErrorControlImpl();
-		return errorControl;
+	public LogMessage createLogMessage() {
+		LogMessageImpl logMessage = new LogMessageImpl();
+		return logMessage;
 	}
 
 	/**

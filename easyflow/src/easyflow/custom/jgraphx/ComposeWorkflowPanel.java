@@ -144,12 +144,14 @@ public class ComposeWorkflowPanel extends JPanel {
 		JPanel currentTaskPanel = new JPanel();
 		currentTaskPanel.setLayout(new BoxLayout(currentTaskPanel, BoxLayout.PAGE_AXIS));
         
-        textAreaTaskProgress.setMinimumSize(new Dimension(50, 25));
-        textAreaTaskProgress.setMaximumSize(new Dimension(350, 300));
+        //textAreaTaskProgress.setMinimumSize(new Dimension(50, 25));
+        //textAreaTaskProgress.setMaximumSize(new Dimension(350, 300));
+        textAreaTaskProgress.setPreferredSize(new Dimension(50, 25));
         textAreaTaskProgress.setEditable(false);
         textAreaTaskProgress.setBorder(BorderFactory.createLineBorder(Color.black));
         textAreaTaskProgress.setLineWrap(true);
         textAreaTaskProgress.setFont(new Font("Arial", Font.ITALIC, 10));
+        //textAreaTaskProgress.setOpaque(false);
         //currentTaskPanel.add(taskLabel);
 		
 		//currentTaskPanel.add(textAreaTaskDesc);

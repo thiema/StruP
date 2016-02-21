@@ -138,6 +138,7 @@ public class EasyFlowToolBar extends JToolBar
 		{
 			GlobalVar.setDefaultProject(defaultProject);
 			defaultProject.getActiveWorkflow();
+			defaultProject.initLogMessage();;
 			btnInitWorkflow.setEnabled(true);
 		}
 		
@@ -188,15 +189,19 @@ public class EasyFlowToolBar extends JToolBar
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 			logger.debug("Init: ");
-			GlobalVar.getDefaultProject().setFromJar(isFromJar);
+			DefaultProject defaultProject = GlobalVar.getDefaultProject(); 
+			defaultProject.setFromJar(isFromJar);
 			boolean rc = GlobalVar.getDefaultProject().init((EasyFlowGraph) editor.getGraphComponent().getGraph());
-			GlobalVar.getDefaultProject().getActiveWorkflow().setWorker(editor.getComposeWorkflowPanel().getWorker());
+			
+			defaultProject.getActiveWorkflow().setWorker(editor.getComposeWorkflowPanel().getWorker());
 			btnDeleteGraph.setEnabled(true);
 			btnGenAbstractWorkflow.setEnabled(true);
 			btnCalcAll.setEnabled(true);
 			btnInitWorkflow.setEnabled(false);
-			GlobalVar.getDefaultProject().getActiveWorkflow().
-				printWorkflowStepMsgOnEnd(rc, GlobalConstants.START);
+			defaultProject.getActiveWorkflow().
+				printWorkflowStepMsgOnEnd(rc, GlobalConstants.START,
+						defaultProject.getLogMessage().getLogMsg(),
+						defaultProject.getLogMessage().getHelpMsg());
 			/*
 			//Testing... how the graph is displayed
 			//Adds cells to the model in a single step

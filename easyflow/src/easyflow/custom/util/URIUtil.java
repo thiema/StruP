@@ -159,7 +159,7 @@ public class URIUtil {
 		logger.trace("create uri: "+basePath+" "+fileName);
 		return new URI(fileName == null ?
 								basePath :
-								new File(basePath +"/" +fileName).getPath());
+								new File(basePath + File.separator +fileName).getPath());
 	}
 	
 	public static String createPath(String basePath, String fileName)
@@ -170,7 +170,7 @@ public class URIUtil {
 		
 		return fileName == null ?
 								basePath :
-								new File(basePath +"/" +fileName).getPath();
+								new File(basePath + File.separator +fileName).getPath();
 	}
 	
 	public static URI getDirnameUri(URI uri) throws URISyntaxException

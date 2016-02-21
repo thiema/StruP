@@ -6,6 +6,7 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.core.LogMessage;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
@@ -70,6 +71,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.tool.impl.ToolImpl#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#isRoot <em>Root</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolImpl#getResolveUriMap <em>Resolve Uri Map</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -305,6 +307,16 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @ordered
 	 */
 	protected EMap<String, URI> resolveUriMap;
+
+	/**
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogMessage()
+	 * @generated
+	 * @ordered
+	 */
+	protected LogMessage logMessage;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -615,6 +627,44 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			resolveUriMap = new EcoreEMap<String,URI>(MapsPackage.Literals.STRING_TO_URI_MAP, StringToURIMapImpl.class, this, ToolPackage.TOOL__RESOLVE_URI_MAP);
 		}
 		return resolveUriMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.TOOL__LOG_MESSAGE, oldLogMessage, logMessage));
+			}
+		}
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL__LOG_MESSAGE, oldLogMessage, logMessage));
 	}
 
 	/**
@@ -1100,6 +1150,17 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void initLogMessage() {
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public String renderToString() {
@@ -1408,6 +1469,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__RESOLVE_URI_MAP:
 				if (coreType) return getResolveUriMap();
 				else return getResolveUriMap().map();
+			case ToolPackage.TOOL__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1464,6 +1528,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__RESOLVE_URI_MAP:
 				((EStructuralFeature.Setting)getResolveUriMap()).set(newValue);
 				return;
+			case ToolPackage.TOOL__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1518,6 +1585,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL__RESOLVE_URI_MAP:
 				getResolveUriMap().clear();
 				return;
+			case ToolPackage.TOOL__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1560,6 +1630,8 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return root != ROOT_EDEFAULT;
 			case ToolPackage.TOOL__RESOLVE_URI_MAP:
 				return resolveUriMap != null && !resolveUriMap.isEmpty();
+			case ToolPackage.TOOL__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1748,6 +1820,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				return null;
 			case ToolPackage.TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP:
 				createData((ResolvedParam)arguments.get(0), (EMap<String, Integer>)arguments.get(1), (EMap<String, Integer>)arguments.get(2));
+				return null;
+			case ToolPackage.TOOL___INIT_LOG_MESSAGE:
+				initLogMessage();
 				return null;
 			case ToolPackage.TOOL___RENDER_TO_STRING:
 				return renderToString();

@@ -32,6 +32,8 @@ import easyflow.execution.shell.ShellPackage;
 
 import easyflow.execution.shell.impl.ShellPackageImpl;
 
+import easyflow.graph.GraphPackage;
+import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
@@ -137,6 +139,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		// Obtain or create and register interdependencies
 		EasyflowPackageImpl theEasyflowPackage = (EasyflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) instanceof EasyflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI) : EasyflowPackage.eINSTANCE);
 		CorePackageImpl theCorePackage = (CorePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) instanceof CorePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI) : CorePackage.eINSTANCE);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI) : GraphPackage.eINSTANCE);
 		JgraphxPackageImpl theJgraphxPackage = (JgraphxPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) instanceof JgraphxPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI) : JgraphxPackage.eINSTANCE);
 		ExamplePackageImpl theExamplePackage = (ExamplePackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) instanceof ExamplePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExamplePackage.eNS_URI) : ExamplePackage.eINSTANCE);
 		ExecutionPackageImpl theExecutionPackage = (ExecutionPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) instanceof ExecutionPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI) : ExecutionPackage.eINSTANCE);
@@ -153,6 +156,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		theUiPackage.createPackageContents();
 		theEasyflowPackage.createPackageContents();
 		theCorePackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 		theJgraphxPackage.createPackageContents();
 		theExamplePackage.createPackageContents();
 		theExecutionPackage.createPackageContents();
@@ -169,6 +173,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		theUiPackage.initializePackageContents();
 		theEasyflowPackage.initializePackageContents();
 		theCorePackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 		theJgraphxPackage.initializePackageContents();
 		theExamplePackage.initializePackageContents();
 		theExecutionPackage.initializePackageContents();
@@ -240,7 +245,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getIProject__ReadProjectJson__URI() {
+	public EOperation getIProject__ReadJson__URI_boolean() {
 		return iProjectEClass.getEOperations().get(4);
 	}
 
@@ -474,6 +479,15 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getIProject__InitLogMessage() {
+		return iProjectEClass.getEOperations().get(30);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getDefaultProject() {
 		return defaultProjectEClass;
 	}
@@ -591,7 +605,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDefaultProject_ErrorControl() {
+	public EReference getDefaultProject_LogMessage() {
 		return (EReference)defaultProjectEClass.getEStructuralFeatures().get(12);
 	}
 
@@ -628,7 +642,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEOperation(iProjectEClass, IPROJECT___GET_ACTIVE_WORKFLOW);
 		createEOperation(iProjectEClass, IPROJECT___CLEAR_WORKFLOWS);
 		createEOperation(iProjectEClass, IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN);
-		createEOperation(iProjectEClass, IPROJECT___READ_PROJECT_JSON__URI);
+		createEOperation(iProjectEClass, IPROJECT___READ_JSON__URI_BOOLEAN);
 		createEOperation(iProjectEClass, IPROJECT___SET_CONFIG_AND_BASE_PATH__STRING);
 		createEOperation(iProjectEClass, IPROJECT___APPLY_META_DATA);
 		createEOperation(iProjectEClass, IPROJECT___INIT__EASYFLOWGRAPH);
@@ -654,6 +668,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEOperation(iProjectEClass, IPROJECT___GET_CUR_WORKFLOW_STEP);
 		createEOperation(iProjectEClass, IPROJECT___RESET_WORKFLOW_STEP);
 		createEOperation(iProjectEClass, IPROJECT___GET_EXECUTION_SYSTEM);
+		createEOperation(iProjectEClass, IPROJECT___INIT_LOG_MESSAGE);
 
 		defaultProjectEClass = createEClass(DEFAULT_PROJECT);
 		createEReference(defaultProjectEClass, DEFAULT_PROJECT__WORKFLOWS);
@@ -668,7 +683,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_WORKFLOW_DEF_FILE);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_UTILITY_DEF_FILE);
 		createEAttribute(defaultProjectEClass, DEFAULT_PROJECT__CONFIG_METADATA_FILE);
-		createEReference(defaultProjectEClass, DEFAULT_PROJECT__ERROR_CONTROL);
+		createEReference(defaultProjectEClass, DEFAULT_PROJECT__LOG_MESSAGE);
 	}
 
 	/**
@@ -722,9 +737,9 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		addEParameter(op, theEasyflowPackage.getJSONObject(), "config", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isDefault", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getIProject__ReadProjectJson__URI(), theEasyflowPackage.getJSONObject(), "readProjectJson", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getIProject__ReadJson__URI_boolean(), theEasyflowPackage.getJSONObject(), "readJson", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getURI(), "source", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getFileNotFoundException());
+		addEParameter(op, ecorePackage.getEBoolean(), "isDefault", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getIProject__SetConfigAndBasePath__String(), null, "setConfigAndBasePath", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "path", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -821,6 +836,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		initEOperation(getIProject__GetExecutionSystem(), theExecutionPackage.getIExecutionSystem(), "getExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		initEOperation(getIProject__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		initEClass(defaultProjectEClass, DefaultProject.class, "DefaultProject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultProject_Workflows(), theCorePackage.getWorkflow(), null, "workflows", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultProject_MetaData(), theMetadataPackage.getIMetaData(), null, "metaData", null, 0, -1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -834,7 +851,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEAttribute(getDefaultProject_ConfigWorkflowDefFile(), ecorePackage.getEString(), "configWorkflowDefFile", "", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_ConfigUtilityDefFile(), ecorePackage.getEString(), "configUtilityDefFile", "", 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultProject_ConfigMetadataFile(), ecorePackage.getEString(), "configMetadataFile", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDefaultProject_ErrorControl(), theCorePackage.getErrorControl(), null, "errorControl", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultProject_LogMessage(), theCorePackage.getLogMessage(), null, "logMessage", null, 0, 1, DefaultProject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //UiPackageImpl

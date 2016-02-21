@@ -171,7 +171,7 @@ public class GlobalConfig {
 	
 	
 	
-	private void createErrorControlObject(String name, String description, Category category, Severity severity, int valNum)
+	/*private void createErrorControlObject(String name, Category category)
 	{
 		if (errorControlMap.containsKey(name))
 		{
@@ -180,11 +180,8 @@ public class GlobalConfig {
 		else
 		{
 			ErrorControl ec = CoreFactory.eINSTANCE.createErrorControl();
-			ec.setName(name);
-			ec.setDescription(description);
+			ec.setName(name);			
 			ec.setCategory(category);
-			ec.setSeverity(severity);
-			ec.setValNum(valNum);
 		}
 	}
 	
@@ -194,9 +191,9 @@ public class GlobalConfig {
 		{
 			for (String arg : args)
 			{
-				errorControlMap.get(key).getVals().add(arg);
+				//errorControlMap.get(key).getVals().add(arg);
 			}
-			return errorControlMap.get(key).generateDescription();
+			//return errorControlMap.get(key).generateDescription();
 		}
 		else
 		{
@@ -204,7 +201,7 @@ public class GlobalConfig {
 		}
 		return null;
 	}
-	
+	*/
 	//public static JSONObject getJsonCfg() {
 		//return jsonConfig;
 	//}

@@ -16,6 +16,7 @@ import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.DataLink;
 import easyflow.execution.IExecutionSystem;
+import easyflow.graph.impl.DefaultGraphImpl;
 import easyflow.graph.jgraphx.ExecutionGraph;
 import easyflow.graph.jgraphx.Execution;
 import easyflow.graph.jgraphx.Graph;
@@ -29,11 +30,9 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-import easyflow.core.ErrorControl;
 
 /**
  * <!-- begin-user-doc -->
@@ -43,13 +42,12 @@ import easyflow.core.ErrorControl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link easyflow.graph.jgraphx.impl.ExecutionGraphImpl#getGraph <em>Graph</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.impl.ExecutionGraphImpl#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements ExecutionGraph {
+public class ExecutionGraphImpl extends DefaultGraphImpl implements ExecutionGraph {
 	
 	
 	/**
@@ -61,15 +59,6 @@ public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements 
 	 * @ordered
 	 */
 	protected Graph graph;
-	/**
-	 * The cached value of the '{@link #getErrorControl() <em>Error Control</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getErrorControl()
-	 * @generated
-	 * @ordered
-	 */
-	protected ErrorControl errorControl;
 	private static Logger logger = Logger.getLogger(Execution.class);
 	
 	
@@ -238,9 +227,6 @@ public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements 
 			case JgraphxPackage.EXECUTION_GRAPH__GRAPH:
 				if (resolve) return getGraph();
 				return basicGetGraph();
-			case JgraphxPackage.EXECUTION_GRAPH__ERROR_CONTROL:
-				if (resolve) return getErrorControl();
-				return basicGetErrorControl();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -255,9 +241,6 @@ public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements 
 		switch (featureID) {
 			case JgraphxPackage.EXECUTION_GRAPH__GRAPH:
 				setGraph((Graph)newValue);
-				return;
-			case JgraphxPackage.EXECUTION_GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -274,9 +257,6 @@ public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements 
 			case JgraphxPackage.EXECUTION_GRAPH__GRAPH:
 				setGraph((Graph)null);
 				return;
-			case JgraphxPackage.EXECUTION_GRAPH__ERROR_CONTROL:
-				setErrorControl((ErrorControl)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -291,8 +271,6 @@ public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements 
 		switch (featureID) {
 			case JgraphxPackage.EXECUTION_GRAPH__GRAPH:
 				return graph != null;
-			case JgraphxPackage.EXECUTION_GRAPH__ERROR_CONTROL:
-				return errorControl != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -361,44 +339,6 @@ public class ExecutionGraphImpl extends MinimalEObjectImpl.Container implements 
 		graph = newGraph;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.EXECUTION_GRAPH__GRAPH, oldGraph, graph));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl getErrorControl() {
-		if (errorControl != null && errorControl.eIsProxy()) {
-			InternalEObject oldErrorControl = (InternalEObject)errorControl;
-			errorControl = (ErrorControl)eResolveProxy(oldErrorControl);
-			if (errorControl != oldErrorControl) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, JgraphxPackage.EXECUTION_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
-			}
-		}
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ErrorControl basicGetErrorControl() {
-		return errorControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setErrorControl(ErrorControl newErrorControl) {
-		ErrorControl oldErrorControl = errorControl;
-		errorControl = newErrorControl;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.EXECUTION_GRAPH__ERROR_CONTROL, oldErrorControl, errorControl));
 	}
 
 } //ExecutionImpl

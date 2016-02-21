@@ -10,6 +10,7 @@ import easyflow.core.Condition;
 import easyflow.core.CorePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <ul>
  *   <li>{@link easyflow.core.impl.ConditionImpl#getForbidden <em>Forbidden</em>}</li>
  *   <li>{@link easyflow.core.impl.ConditionImpl#getCircumventingParents <em>Circumventing Parents</em>}</li>
+ *   <li>{@link easyflow.core.impl.ConditionImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,6 +51,26 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
 	 * @ordered
 	 */
 	protected EList<String> circumventingParents;
+
+	/**
+	 * The default value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Logger LOGGER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogger()
+	 * @generated
+	 * @ordered
+	 */
+	protected Logger logger = LOGGER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -96,6 +118,15 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Logger getLogger() {
+		return logger;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean isUnconditional() {
@@ -114,6 +145,8 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
 				return getForbidden();
 			case CorePackage.CONDITION__CIRCUMVENTING_PARENTS:
 				return getCircumventingParents();
+			case CorePackage.CONDITION__LOGGER:
+				return getLogger();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -169,6 +202,8 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
 				return forbidden != null && !forbidden.isEmpty();
 			case CorePackage.CONDITION__CIRCUMVENTING_PARENTS:
 				return circumventingParents != null && !circumventingParents.isEmpty();
+			case CorePackage.CONDITION__LOGGER:
+				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -201,6 +236,8 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
 		result.append(forbidden);
 		result.append(", circumventingParents: ");
 		result.append(circumventingParents);
+		result.append(", logger: ");
+		result.append(logger);
 		result.append(')');
 		return result.toString();
 	}
