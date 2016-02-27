@@ -1982,6 +1982,24 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDefaultWorkflowTemplate_FileName() {
+		return (EAttribute)defaultWorkflowTemplateEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDefaultWorkflowTemplate_UtilTaskFileName() {
+		return (EAttribute)defaultWorkflowTemplateEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getDefaultWorkflowTemplate__InitLogMessage() {
 		return defaultWorkflowTemplateEClass.getEOperations().get(0);
 	}
@@ -2549,6 +2567,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER);
 		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__LOGGER);
 		createEReference(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE);
+		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME);
+		createEAttribute(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME);
 		createEOperation(defaultWorkflowTemplateEClass, DEFAULT_WORKFLOW_TEMPLATE___INIT_LOG_MESSAGE);
 
 		easyflowTemplateEClass = createEClass(EASYFLOW_TEMPLATE);
@@ -2836,7 +2856,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_Rule(), theToolPackage.getRule(), null, "rule", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getTask__ReadTask__String_String_EList(), null, "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTask__ReadTask__String_String_EList(), ecorePackage.getEBoolean(), "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultMode", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "defaultGroupingCriteria", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -3161,6 +3181,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEAttribute(getDefaultWorkflowTemplate_UtilTaskReader(), theEasyflowPackage.getBufferedReader(), "utilTaskReader", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefaultWorkflowTemplate_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, DefaultWorkflowTemplate.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDefaultWorkflowTemplate_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultWorkflowTemplate_FileName(), ecorePackage.getEString(), "fileName", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefaultWorkflowTemplate_UtilTaskFileName(), ecorePackage.getEString(), "utilTaskFileName", null, 0, 1, DefaultWorkflowTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getDefaultWorkflowTemplate__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -3261,8 +3283,8 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		initEEnum(categoryEEnum, Category.class, "Category");
 		addEEnumLiteral(categoryEEnum, Category.PROJECT_CONFIGURATION);
-		addEEnumLiteral(categoryEEnum, Category.METADATA_DEFINITON);
-		addEEnumLiteral(categoryEEnum, Category.TASK_DEFINITON);
+		addEEnumLiteral(categoryEEnum, Category.METADATA_DEFINITION);
+		addEEnumLiteral(categoryEEnum, Category.TASK_DEFINITION);
 		addEEnumLiteral(categoryEEnum, Category.TOOL_DEFINITION);
 		addEEnumLiteral(categoryEEnum, Category.WORKFLOW);
 		addEEnumLiteral(categoryEEnum, Category.WORKFLOW_TEMPLATE);

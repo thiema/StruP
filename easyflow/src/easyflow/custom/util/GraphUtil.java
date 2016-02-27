@@ -208,7 +208,7 @@ public class GraphUtil {
 			) throws DataLinkNotFoundException
 	{
 		DataLink dataLink = JGraphXUtil.loadDataLink(edge);
-		if (dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
+		if (!dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
 		{
 			logger.error("invalid data formats foudn for datalink="+dataLink.getUniqueString(true));
 		}

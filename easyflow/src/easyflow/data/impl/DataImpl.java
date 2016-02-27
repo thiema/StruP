@@ -311,9 +311,13 @@ public class DataImpl extends MinimalEObjectImpl.Container implements Data {
 		if (getSupportedHandles(true).isEmpty())
 		{
 			if (getSupportedHandles(false).isEmpty())
-				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_0);
+			{
+				GlobalVar.setLastErrorString(GlobalConstants.LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_0);
+			}
 			else
-				GlobalVar.setLastErrorString(GlobalConstants.ERROR_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG_0);
+			{
+				GlobalVar.setLastErrorString(GlobalConstants.LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG_0);
+			}
 			return false;
 		}
 		return true;

@@ -6,20 +6,30 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
+import easyflow.core.LogMessage;
+import easyflow.core.Severity;
 import easyflow.tool.DocumentProperties;
+import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.Util;
 import easyflow.custom.util.XMLUtil;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
+
 import javax.xml.validation.Schema;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -47,6 +57,7 @@ import org.xml.sax.SAXException;
  *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getToolSchemata <em>Tool Schemata</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getProperties <em>Properties</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ToolDefinitionsImpl#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,6 +113,16 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 	 * @ordered
 	 */
 	protected EMap<String, DocumentProperties> properties;
+
+	/**
+	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLogMessage()
+	 * @generated
+	 * @ordered
+	 */
+	protected LogMessage logMessage;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,6 +217,44 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage getLogMessage() {
+		if (logMessage != null && logMessage.eIsProxy()) {
+			InternalEObject oldLogMessage = (InternalEObject)logMessage;
+			logMessage = (LogMessage)eResolveProxy(oldLogMessage);
+			if (logMessage != oldLogMessage) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ToolPackage.TOOL_DEFINITIONS__LOG_MESSAGE, oldLogMessage, logMessage));
+			}
+		}
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMessage basicGetLogMessage() {
+		return logMessage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLogMessage(LogMessage newLogMessage) {
+		LogMessage oldLogMessage = logMessage;
+		logMessage = newLogMessage;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.TOOL_DEFINITIONS__LOG_MESSAGE, oldLogMessage, logMessage));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean validateToolDefinition(URI xmlSource, boolean isFromJar) throws FileNotFoundException {
@@ -207,18 +266,36 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 			try {
 				XMLUtil.validateXML(xmlSource, schema, isFromJar);
 				logger.debug("xml source: "+xmlSource.toString()+" validated successfully !");
+				
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_PARSE_2,
+						Severity.ERROR, Util.generateStringList(xmlSource.toString(), e.getMessage()));
 				return false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2,
+						Severity.ERROR, Util.generateStringList(xmlSource.toString(), e.getMessage()));
 				e.printStackTrace();
 				return false;
 			}
 			
 		// TODO: handle schema not found/unvalidated xml source
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void initLogMessage() {
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(Category.TOOL_DEFINITION);
+		}
 	}
 
 	/**
@@ -253,6 +330,9 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
 				if (coreType) return getProperties();
 				else return getProperties().map();
+			case ToolPackage.TOOL_DEFINITIONS__LOG_MESSAGE:
+				if (resolve) return getLogMessage();
+				return basicGetLogMessage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -276,6 +356,9 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
 				((EStructuralFeature.Setting)getProperties()).set(newValue);
 				return;
+			case ToolPackage.TOOL_DEFINITIONS__LOG_MESSAGE:
+				setLogMessage((LogMessage)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -297,6 +380,9 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
 				getProperties().clear();
 				return;
+			case ToolPackage.TOOL_DEFINITIONS__LOG_MESSAGE:
+				setLogMessage((LogMessage)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -317,6 +403,8 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case ToolPackage.TOOL_DEFINITIONS__PROPERTIES:
 				return properties != null && !properties.isEmpty();
+			case ToolPackage.TOOL_DEFINITIONS__LOG_MESSAGE:
+				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -336,6 +424,9 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
+			case ToolPackage.TOOL_DEFINITIONS___INIT_LOG_MESSAGE:
+				initLogMessage();
+				return null;
 		}
 		return super.eInvoke(operationID, arguments);
 	}

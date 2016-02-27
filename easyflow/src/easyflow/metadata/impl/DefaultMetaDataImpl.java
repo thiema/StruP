@@ -6,6 +6,8 @@
  */
 package easyflow.metadata.impl;
 
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
 import easyflow.core.LogMessage;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.Grouping;
@@ -20,6 +22,7 @@ import easyflow.custom.util.GlobalVarMetaData;
 import easyflow.util.maps.impl.StringToGroupingInstanceListMapImpl;
 import easyflow.util.maps.impl.StringToGroupingMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -614,12 +618,14 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public void initLogMessage() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(Category.METADATA_DEFINITION);
+		}
 	}
 
 	/**

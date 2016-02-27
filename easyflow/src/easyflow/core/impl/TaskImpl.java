@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -31,10 +33,13 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import easyflow.core.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.LogMessage;
 import easyflow.core.PreprocessingTask;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -79,6 +84,7 @@ import easyflow.util.maps.impl.StringToTaskMapImpl;
 import easyflow.util.maps.impl.StringToToolMapImpl;
 import easyflow.util.maps.impl.StringToToolMatchMapImpl;
 import easyflow.util.maps.impl.StringToTraversalEventMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -1026,12 +1032,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * return null; }
 	 */
 
+	static String taskNamePatternStr = "[A-z0-9\\-.]+";
+	static Pattern taskNamePattern = Pattern.compile(taskNamePatternStr);
+
+	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated not
 	 */
-	public void readTask(String wtplLine, String defaultMode,
+	public boolean readTask(String wtplLine, String defaultMode,
 			EList<String> defaultGroupingCriteria) {
 
 		short taskField          =  0;
@@ -1045,22 +1055,52 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		short jexlField          =  8;
 		short paramField         =  9;
 		short staticParamField   = 10;
+		
+		boolean rc = true; 
 
 		/**
 		 * Read string into an array of strings. Process array and set task
 		 * attributes appropriately.
 		 */
 		String[] wtplArray = wtplLine.split("\t");
+		if (wtplArray.length < 4)
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_INVALID_TASK_2, 
+					Severity.ERROR, 
+					Util.generateStringList(wtplLine, 
+							"Number of tab delimited columns ("+wtplArray.length+")is smaller than 4 "));
+			return false;
+		}
 
 		String[] tmp;
-		// logger.debug(wtplArray[0]);
-		setName(wtplArray[taskField]);
+
+		/*Task name validation: alphanumeric*/
+		Matcher taskNameMatcher = taskNamePattern.matcher(wtplArray[taskField]);
+		if (taskNameMatcher.matches())
+			setName(wtplArray[taskField]);
+		else
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_INVALID_TASK_2, 
+					Severity.ERROR, 
+					Util.generateStringList(wtplLine, 
+							"Task name "+wtplArray[taskField]+" is invalid. "
+							+ "Make sure it matches the regex pattern: "+taskNamePatternStr));
+			return false;
+		}
+		
 		for (String parent : wtplArray[taskType].split(",")) {
 			tmp = parent.split(":");
 			if (tmp[0].equals("STATIC")) {
 				setUtil(true);
 				if (tmp.length > 1)
 					getAnalysisTypes().add(tmp[1]);
+			}
+			else if (tmp.length > 1)
+			{
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_INVALID_TASK_2, 
+						Severity.ERROR, 
+						Util.generateStringList(wtplLine, "Only type STATIC or none (nothing) allowed."));
+				return false;
 			}
 			// the actual parents are resolved by class EasyflowTemplate
 			// else
@@ -1075,6 +1115,12 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				getToolNames().put(tmp[i], new BasicEList<String>());
 			}
 		}
+		else
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERIC_1, 
+					Severity.WARN, 
+					"No tool defined for task "+getName());
+		}
 
 		/**
 		 * Read DataFormatIn/Out. and set DataPorts
@@ -1086,7 +1132,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			DataPort dataPort = parseDataPortField(dataPortField,
 					inputDataPortValidator, false);
 			if (dataPort == null || dataPort.getName().equals(""))
-				break;
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERIC_1, 
+						Severity.WARN, 
+						"Unable to validate InputDataPort: \""+dataPortField+"\" for Task="+getName());
 			else
 				hasIndataPorts = true;
 			getInDataPorts().add(dataPort);
@@ -1100,7 +1148,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			DataPort dataPort = parseDataPortField(dataPortField,
 					outputDataPortValidator, true);
 			if (dataPort == null || dataPort.getName().equals(""))
-				break;
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERIC_1, 
+						Severity.WARN, 
+						"Unable to validate OutpuDataPort: \""+dataPortField+"\" for Task="+getName());
 			else
 				hasOutdataPorts = true;
 			getOutDataPorts().add(dataPort);
@@ -1119,14 +1169,20 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		}
 		// create grouping cirt for any task
 		if (hasIndataPorts) {
-			readGroupingCriteria(groupingStr, defaultGroupingCriteria, defaultMode);
+			rc = readGroupingCriteria(groupingStr, defaultGroupingCriteria, defaultMode);
 		}
 		// create a grouping crit for root as well
 		else if (hasOutdataPorts)
 		{
-			createGroupingCriteria(groupingStr, getOutDataPorts().get(0), defaultMode);
+			rc = createGroupingCriteria(groupingStr, getOutDataPorts().get(0), defaultMode);
 		}
-
+		if (!rc)
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERIC_1, 
+					Severity.WARN, 
+					"Unable to process GroupingCriterion: \""+groupingStr+"\" for Task="+getName());	
+			return false;
+		}
 
 		/**
 		 * Read the traversal Expression
@@ -1135,7 +1191,14 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		 */
 
 		if (wtplArray.length > 6) {
-			readTraversalCriteria(wtplArray[traversalCritField]);
+			rc = readTraversalCriteria(wtplArray[traversalCritField]);
+			if (!rc)
+			{
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERIC_1, 
+						Severity.WARN, 
+						"Unable to process TraversalCriterion: \""+wtplArray[traversalCritField]+"\" for Task="+getName());
+				return false;
+			}
 		}
 
 		/**
@@ -1196,6 +1259,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		String out = Util.traversalEvents2String(getTraversalEvents());
 		logger.debug("readTask(): " + getUniqueString() + " (traversalEvents: "+ out + ") "
 				+ debugDataPort + " jexl exp='" + getJexlString() + "'");
+		
+		return rc;
 		
 	}
 	
@@ -1374,12 +1439,15 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public void initLogMessage() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(Category.TASK_DEFINITION);
+		}
 	}
 
 	private DataPort parseDataPortField(String field, EList<Pattern> pattern, boolean isOutDataPort) {
@@ -1504,9 +1572,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	public boolean shallProcess(EList<GroupingInstance> groupingInstances,
 			String forGrouping, EList<String> jexlStrings, boolean isInverse, EMap<String, Object> map) {
 
-		
 		if (jexlString != null)
-			for (String jexlString : jexlStrings) {
+		{
+			for (String jexlString : jexlStrings) 
+			{
 				boolean shallProcess = shallProcess(
 						easyflow.custom.util.Util.
 							evaluateJexl(map, jexlString));
@@ -1515,16 +1584,17 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				if (!shallProcess)
 					return false;
 			}
+		}
 		return true;
 	}
 
 	private boolean shallProcess(Object evalObject) {
+		
 		if (evalObject instanceof Boolean) {
 			return (Boolean) evalObject;
 			// return true;
 		}
 		return true;
-
 	}
 
 	private String getUniqueString_(String sep1, String sep2, String sep3)
@@ -4087,8 +4157,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case CorePackage.TASK___READ_TASK__STRING_STRING_ELIST:
-				readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
-				return null;
+				return readTask((String)arguments.get(0), (String)arguments.get(1), (EList<String>)arguments.get(2));
 			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING:
 				return shallProcess((EList<GroupingInstance>)arguments.get(0), (String)arguments.get(1));
 			case CorePackage.TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN:

@@ -14,16 +14,11 @@ import easyflow.core.Severity;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.Util;
-
-import java.awt.Color;
 import java.awt.Font;
 import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -291,7 +286,8 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 					style = GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM;
 				}
 				doc.insertString(doc.getLength(), severity.getLiteral()+" ", doc.getStyle(style));
-				doc.insertString(doc.getLength(), msg, doc.getStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT));
+				doc.insertString(doc.getLength(), msg+System.getProperty("line.separator"), doc.getStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT));
+				
 				//doc.set
 			} catch (BadLocationException e) {
 				logger.error("writeMsgToGUI(): Couldn't insert text into text pane.");
@@ -322,17 +318,18 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	public String generateLogMsg(String errorTpl, Category category, Severity severity, EList<String> errorVar) {
 		//Util.generateStringList(s1);
 		String logMsg = errorTpl;
-		logger.debug("generateLogMsg(errorTpl="+errorTpl
-				+"category="+category
-				+"severity="+severity
-				+"errorVar="+Util.list2String(errorVar, ",")+")");
+		logger.debug("generateLogMsg("
+				+ "errorTpl="+errorTpl
+				+" category="+category.getLiteral()
+				+" severity="+severity.getLiteral()
+				+" errorVar="+Util.list2String(errorVar, ",")+")");
 		for (int i=0; i < errorVar.size() //&& i < GlobalConstants.ERROR_STRING_VAR_PLACEHOLDERS.length
 				; i++)
 		{
 			logMsg = StringUtils.replace(logMsg, GlobalConstants.ERROR_STRING_VAR_PLACEHOLDER, errorVar.get(i), 1);
 		}
 		writeMsgToGUI(category, severity, logMsg);
-		logMsg="Category="+category+" Severity="+severity+" Error:"+logMsg;
+		logMsg="Category="+category.getLiteral()+" Severity="+severity.getLiteral()+" Error:"+logMsg;
 		GlobalVar.setLastErrorString(logMsg);
 		//GlobalVar.setLastErrorReason();
 		setLogMsg(logMsg);
@@ -378,14 +375,15 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	 */
 	public String generateLogMsg(String errorTpl, Category category, Severity severity, String errorVar) {
 		String logMsg = errorTpl;
-		logger.debug("generateLogMsg(errorTpl="+errorTpl
-				+"category="+category
-				+"severity="+severity
-				+"errorVar="+Util.list2String(errorVar, ",")+")");
+		logger.debug("generateLogMsg("
+				+ "errorTpl="+errorTpl
+				+" category="+category.getLiteral()
+				+" severity="+severity.getLiteral()
+				+" errorVar="+Util.list2String(errorVar, ",")+")");
 		logMsg = StringUtils.replace(logMsg, GlobalConstants.ERROR_STRING_VAR_PLACEHOLDER, errorVar, 1);
 
 		writeMsgToGUI(category, severity, logMsg);
-		logMsg="Category="+category+" Severity="+severity+" Error:"+logMsg;
+		logMsg="Category="+category.getLiteral()+" Severity="+severity.getLiteral()+" Error:"+logMsg;
 		GlobalVar.setLastErrorString(logMsg);
 		//GlobalVar.setLastErrorReason();
 		setLogMsg(logMsg);

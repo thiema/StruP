@@ -162,8 +162,9 @@ public class BasicGraphEditor extends JPanel
 
 		// Stores a reference to the graph and creates the command history
 		graphComponent = component;
+		/*
 		final mxGraph graph = graphComponent.getGraph();
-		undoManager = createUndoManager();
+				undoManager = createUndoManager();
 
 		// Do not change the scale and translation after files have been loaded
 		graph.setResetViewOnRootChange(false);
@@ -189,7 +190,7 @@ public class BasicGraphEditor extends JPanel
 
 		undoManager.addListener(mxEvent.UNDO, undoHandler);
 		undoManager.addListener(mxEvent.REDO, undoHandler);
-
+		
 		// Creates the graph outline component
 		graphOutline = new mxGraphOutline(graphComponent);
 
@@ -231,6 +232,7 @@ public class BasicGraphEditor extends JPanel
 		installHandlers();
 		installListeners();
 		updateTitle();
+		*/
 	}
 
 	/**

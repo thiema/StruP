@@ -1,8 +1,10 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
+
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+
 import easyflow.core.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
@@ -10,6 +12,7 @@ import easyflow.core.EasyflowTemplate;
 import easyflow.core.LogMessage;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.DefaultWorkflowTemplate;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.core.Workflow;
 import easyflow.custom.exception.CellNotFoundException;
@@ -33,6 +36,7 @@ import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
+import easyflow.custom.util.Util;
 import easyflow.tool.Rule;
 import easyflow.metadata.GroupingInstance;
 import easyflow.metadata.IMetaData;
@@ -45,12 +49,14 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Stack;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -968,8 +974,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 */
 	public void initLogMessage() {
 		if (getLogMessage() == null)
+		{
 			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
-		getLogMessage().setCategory(Category.WORKFLOW);
+			getLogMessage().setCategory(Category.WORKFLOW);
+		}
 	}
 
 	/**
@@ -1351,7 +1359,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					String combi = e.getKey()+"_"+e.getValue();
 					GlobalVar.getUtilityTasks().put(
 							combi+"_"+analysisType, utilTask);
-					logger.debug("generateAbstractWorkflow(): utility task "+analysisType
+					logger.debug("registerUtilityTasks(): utility task "+analysisType
 							+" for combination="+combi
 							+" (task "+combi+"_"+analysisType+" added)");
 				}
@@ -1360,6 +1368,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		
 		// add the "input"-splitting task, which actually doesnt do anything
 		Task dummyTask = CoreFactory.eINSTANCE.createTask();
+		dummyTask.initLogMessage();
 		dummyTask.setUtil(true);
 		GlobalVar.getUtilityTasks().put(GlobalConstants.METADATA_INPUT, dummyTask);
 		return rc;
@@ -1378,12 +1387,13 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		boolean rc = eTpl.readTemplate(getMode(), 
 				getDefaultGroupingCriteria());
 		
-		for (Task t:eTpl.getTasks())
-			if (GlobalConstants.ROOT_TASK_NAME.equals(t.getName()))
-			{
-				setRootTask(t);
-				logger.debug("readWorkfowTemplate(): rootTask="+t.getDetailedString());
-			}
+		if (rc)
+			for (Task t:eTpl.getTasks())
+				if (GlobalConstants.ROOT_TASK_NAME.equals(t.getName()))
+				{
+					setRootTask(t);
+					logger.debug("readWorkfowTemplate(): rootTask="+t.getDetailedString());
+				}
 		
 		return rc;
 	}
@@ -1409,7 +1419,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			//String msg=curstep+" (ended with result: "+(rc ? "OK" : "Error")+")";
 			String msg = curstep+": OK";
 			if (!rc)
-				msg = curstep+": "+errorMsg;
+				msg = curstep+": Failed.";
 			getWorker().getInformable().messageChanged(msg);
 		}
 	}
@@ -1445,7 +1455,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		*/
 		
 		//printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
-    	boolean res=generateGraphFromTemplate(GlobalConfig.getTools());
+    	boolean res = generateGraphFromTemplate(GlobalConfig.getTools());
 
     	if (res)
     	{
@@ -1488,9 +1498,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         	// iterate through tasks and do for each task:
         	//  -associate tools and validate them (if available)
         	//	-create a corresponding vertex in the graph
-        	for (Task task:getWorkflowTemplate().getTasks()) {
+        	for (Task task : getWorkflowTemplate().getTasks()) {
         		// try to find tool definition/implementation
-        		logger.debug("check tool definitions for task="+task.getUniqueString());
+        		logger.debug("generateGraphFromTemplate(): check tool definitions for task="+task.getUniqueString());
         		if (tools!=null)
         			for (String toolName:task.getToolNames().keySet())
         			{
@@ -1508,9 +1518,14 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         					Tool tool=tools.get(toolName);
         					if (packageName!=null)
         						if (tool.getPackage() != null && !tool.getPackage().getName().equals(packageName))
+        						{
         							logger.warn("generateGraphFromTemplate(): package name ("+packageName
         									+") from workflow template for task "+task.getName()
         									+" differs from tool defintion ( "+tool.getPackage().getName()+") !");
+                					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_PKG_NAME_DOES_NOT_MATCH_NAME_IN_WORKFLOW_4, Severity.WARN,
+                							Util.generateStringList(tool.getPackage().getName(), tool.getName(), packageName, task.getUniqueString()));
+        							
+        						}
         						else if(tool.getPackage()==null)
         						{
         							easyflow.tool.Package pkg = ToolFactory.eINSTANCE.createPackage();
@@ -1520,12 +1535,18 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         					logger.debug("generateGraphFromTemplate(): add tool definition "+tool.getName()+"/"+tool.getId()+" to tasks tool map");
         					task.getTools().put(toolName, tool);
         					if (task.getPreferredTool().getCommand() == null)
+        					{
         						logger.error("generateGraphFromTemplate(): no command provided by tool.");
+        					}
         					//task.setCommand(task.getPreferredTool().getCommand());
         					//logger.debug("validation result for tool="+toolName+" "+task.validateTool(tool));
         				}
         				else
+        				{
         					logger.warn("generateGraphFromTemplate(): no tool matching name="+toolName+" for task="+task.getUniqueString()+" found.");
+        					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_NOT_FOUND_FOR_TASK_2, Severity.WARN,
+        							Util.generateStringList(toolName, task.getUniqueString()));
+        				}
         			}
         		if (!task.isUtil())
         		{
@@ -1565,6 +1586,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         	}
         	
         	Tool    rootTool    = ToolFactory.eINSTANCE.createTool();
+        	rootTool.initLogMessage();
 			Command rootCommand = ToolFactory.eINSTANCE.createCommand();
 			getRootTask().setResolvedCommand(rootCommand);
 			for (DataPort dataPort : getRootTask().getOutDataPorts())
@@ -1615,7 +1637,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	    	getJgraph().setDefaultRootCell((mxICell) rootCell);
 	    	if (!getLastTasks().contains(getRootTask()))
 	    		getLastTasks().add(getRootTask());
-	        logger.trace(getWorkflowTemplate().getTasks());
+	        logger.trace("generateAbstractGraphEdges(): "+getWorkflowTemplate().getTasks());
 	        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
 			while (it.hasNext())
 			{
@@ -1623,7 +1645,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				if (task.getUniqueString().equalsIgnoreCase(getRootTask().getUniqueString()))
 					continue;
 					
-				logger.debug("generateGraphFromTemplate(): #######task="+task.getUniqueString()+" "+task.isUtil()+" #in="+(task.getInDataPorts().size())+" "
+				logger.debug("generateAbstractGraphEdges(): #######task="+task.getUniqueString()+" "+task.isUtil()+" #in="+(task.getInDataPorts().size())+" "
 						+" first dataport="+task.getInDataPorts().get(0).getFormat().getName()
 						+" first dataports grouping="+easyflow.custom.util.Util.list2String(task.getInDataPorts().get(0).getGroupingCriteria(),null));
 				if (!task.isUtil()) 
@@ -1634,7 +1656,9 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					{
 						for (DataPort dataPort:task.getInDataPorts())
 						{
-							logger.debug("generateGraphFromTemplate(): no parent found. link task with root using data port="+dataPort.getName());
+        					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_LINK_TASK_TO_ROOT_2, Severity.INFO,
+        							Util.generateStringList(task.getUniqueString(), dataPort.getName()));
+							logger.debug("generateAbstractGraphEdges():  no parent found. link task with root using data port="+dataPort.getName());
 							getGraph().insertEdgeEasyFlow(null, null, rootCell, target, createDataLinkForRoot(getRootTask(), task, dataPort));
 						}
 					}
@@ -1654,11 +1678,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 							}
 							else*/
 							{
-								logger.trace("generateGraphFromTemplate(): adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
+								logger.trace("generateAbstractGraphEdges():  adding mxgraph edge: ("+pTask.getName()+"=>"+task.getName()+")");
 								for (DataLink dataLink:parentTaskList.get(pTask))
 								{
 									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
-									logger.trace("generateGraphFromTemplate(): add dataLink: "+dataLink.getUniqueString()+" ingoing port="+dataLink.getInDataPort().getName());
+									logger.trace("generateAbstractGraphEdges():  add dataLink: "+dataLink.getUniqueString()+" ingoing port="+dataLink.getInDataPort().getName());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
 									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
 										getGraph().setCellUnvisible(o);
@@ -1669,11 +1693,14 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					}
 					if (!task.validateTools())
 					{
-						logger.debug("generateGraphFromTemplate(): validation for "+task.getUniqueString()+" failed. Trying to resolve tool dependencies...");
+						logger.debug("generateAbstractGraphEdges():  validation for "+task.getUniqueString()+" failed. Trying to resolve tool dependencies...");
 						if (resolveMissingDataPortsByToolFor(task))
-							logger.debug("generateGraphFromTemplate(): resolved data port by Tool !");
+							logger.debug("generateAbstractGraphEdges():  resolved data port by Tool !");
+						else
+							getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_NO_IMPLEMENTING_TOOL_FOR_TASK_1, Severity.WARN,
+        							Util.generateStringList(task.getUniqueString()));
 					}
-					logger.debug("generateGraphFromTemplate(): "+task.getUniqueString()+" cmd found="+(task.getResolvedCommand()!=null));
+					logger.debug("generateAbstractGraphEdges():  "+task.getUniqueString()+" cmd found="+(task.getResolvedCommand()!=null));
 					getLastTasks().add(task);
 					//logger.debug(getWorkflowTemplate().getTasks().size()+" "+getLastTasks().size());
 				}

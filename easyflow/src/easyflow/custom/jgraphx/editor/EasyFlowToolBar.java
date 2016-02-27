@@ -236,6 +236,7 @@ public class EasyFlowToolBar extends JToolBar
 			if (defaultProject .getActiveWorkflow()!=null)
 				defaultProject.resetWorkflowStep();
 			defaultProject.delete();
+			GlobalVar.getTextAreaForLogMsg().setText("");
 			//btnDeleteGraph.setEnabled(false);
 			//btnInitWorkflow.setEnabled(true);
 			initButtons();

@@ -1,5 +1,6 @@
 package easyflow.custom.util;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -381,5 +382,12 @@ public class Util {
 		errorStringList.add(s4);
 		errorStringList.add(s5);
 		return errorStringList;
+	}
+
+	public static String createString(URI uri) {
+		if (uri != null)
+			return uri.toString();
+		else
+			return "<null>";
 	}
 }

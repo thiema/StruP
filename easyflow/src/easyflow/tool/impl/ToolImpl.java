@@ -6,6 +6,8 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
 import easyflow.core.LogMessage;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
@@ -28,11 +30,13 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDataListMapImpl;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
 import easyflow.util.maps.impl.StringToURIMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -1150,12 +1154,14 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	public void initLogMessage() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(Category.TOOL_DEFINITION);
+		}
 	}
 
 	/**

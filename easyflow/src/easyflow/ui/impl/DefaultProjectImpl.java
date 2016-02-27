@@ -661,16 +661,18 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				return JSONObject.fromObject(IOUtils.toString(is));
 			else
 				logger.warn("no Input stream found.");
+			
 		} catch (FileNotFoundException e) {
 			getLogMessage().generateLogMsg(
-					GlobalConstants.ERROR_CONFIGURATION_FILE_NOT_FOUND_1, 
-					(isDefault ? Severity.ERROR : Severity.INFO),
-					source.toString()	);
+					GlobalConstants.LOG_MSG_CONFIGURATION_FILE_NOT_FOUND_1, 
+					(isDefault ? Severity.INFO : Severity.ERROR),
+					Util.createString(source)	
+					);
 		} catch (IOException e) {
 			getLogMessage().generateLogMsg(
-					GlobalConstants.ERROR_GENERAL_IO_2, 
-					(isDefault ? Severity.ERROR : Severity.INFO),
-					Util.generateStringList(source.toString(), e.getMessage())	
+					GlobalConstants.LOG_MSG_GENERAL_IO_2, 
+					(isDefault ? Severity.INFO : Severity.ERROR),
+					Util.generateStringList(e.getMessage(), Util.createString(source))	
 					);
 		}
 		return null;
@@ -790,6 +792,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	{
 		
 		EasyflowTemplate workflowTemplate = CoreFactory.eINSTANCE.createEasyflowTemplate();
+		workflowTemplate.setFileName(workflowTplFile);
+		workflowTemplate.setUtilTaskFileName(utilDefFile);
+		workflowTemplate.initLogMessage();
 		BufferedReader bfReader = getReader(getBaseURI(), workflowTplFile, true);
 		if (bfReader != null)
 		{
@@ -808,7 +813,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	private DefaultMetaData readMetadata(String metadataFile)
 	{
 		DefaultMetaData metaData = MetadataFactory.eINSTANCE.createDefaultMetaData();		
-
+		metaData.initLogMessage();
 		BufferedReader bfReader;
 		bfReader = getReader(getBaseURI(), metadataFile, true);
 		if (bfReader != null)
@@ -853,7 +858,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			for (Object key : jo.keySet())
 			{
 				varMap.put((String)key, (String)jo.get(key));
-				logger.debug("added var "+key+"="+varMap.get((String)key));
+				logger.debug("readToolConfiguration(): added var "+key+"="+varMap.get((String)key));
 			}
 		}
 
@@ -881,7 +886,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		while (it.hasNext())
 		{
 			String key = it.next();
-			logger.trace("read catalog key="+key);
+			logger.trace("readCatalogConfiguration(): read catalog key="+key);
 			catalog.getEntries().put(key, jsonObject.getString(key));
 		}
 
@@ -915,16 +920,21 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		{
 			try {
 				URI source = URIUtil.addToURI(toolDefPath, schemata.getString(i));
-				logger.debug(source.toString());
-				Schema schema = toolSchemata.readSchema(source, isFromJar());
-				
+				logger.debug("readToolSchemata(): "+source.toString());
+				try {
+					Schema schema = toolSchemata.readSchema(source, isFromJar());					
+				} catch (FileNotFoundException e) {
+					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERAL_IO_2, 
+							Severity.ERROR, 
+							Util.generateStringList(e.getMessage(), Util.createString(source)));
+				}
 				//if (schema != null)
 					//toolSchemata.getSchemata().put(source.toString(), schema);
 			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+						Severity.ERROR, 
+						Util.generateStringList(Util.createString(toolDefPath), 
+								schemata.getString(i), e.getReason()));
 				e.printStackTrace();
 			}
 		}
@@ -947,54 +957,75 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		{
 		JSONArray toolsArray = toolCfg.getJSONArray("tools");
 		//EList<Tool> tools = new BasicEList<Tool>();
-		for (int i=0; i<toolsArray.size(); i++)
+		for (int i=0; i < toolsArray.size(); i++)
 			try {
-				for (URI source:URIUtil.getSources(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)), isFromJar())) {
-					logger.debug(toolsArray.getString(i)+" "+source.toString());
-					if (toolDefintions.validateToolDefinition(source, isFromJar()))
-					{
-						DocumentProperties documentProperties = ToolFactory.eINSTANCE.createDocumentProperties();
-						documentProperties.setSourceURI(source);
-						documentProperties.setFromJar(isFromJar());
-						//ToolContentHandler toolContentHandler = new ToolContentHandler();
-						for (Tool tool : ToolContentHandler.parse(source, documentProperties, null, null))
+				for (URI source : URIUtil.getSources(URIUtil.addToURI(toolDefPath, toolsArray.getString(i)), isFromJar())) {
+					logger.debug("readToolDefinition(): "+toolsArray.getString(i)+" "+source.toString());
+					try {
+						if (toolDefintions.validateToolDefinition(source, isFromJar()))
 						{
-							// check for configured package path
-							if (tool.getPackage() != null 
-									&& pkgMap.containsKey(tool.getPackage().getId()))
+							DocumentProperties documentProperties = ToolFactory.eINSTANCE.createDocumentProperties();
+							documentProperties.setSourceURI(source);
+							documentProperties.setFromJar(isFromJar());
+							//ToolContentHandler toolContentHandler = new ToolContentHandler();
+							for (Tool tool : ToolContentHandler.parse(source, documentProperties, null, null))
 							{
-								for (Entry<String, String> e : pkgMap.get(tool.getPackage().getId()))
+								// check for configured package path
+								if (tool.getPackage() != null 
+										&& pkgMap.containsKey(tool.getPackage().getId()))
 								{
-									tool.getPackage().getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+									for (Entry<String, String> e : pkgMap.get(tool.getPackage().getId()))
+									{
+										tool.getPackage().getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+									}
 								}
-							}
-							// check for configured tool path
-							if (toolMap.containsKey(tool.getId()))
-							{
-								for (Entry<String, String> e : toolMap.get(tool.getId()))
+								// check for configured tool path
+								if (toolMap.containsKey(tool.getId()))
 								{
-									tool.getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+									for (Entry<String, String> e : toolMap.get(tool.getId()))
+									{
+										tool.getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+									}
 								}
-							}
-							if (interpreterMap.containsKey(tool.getId()))
-							{
-								for (Entry<String, String> e : interpreterMap.get(tool.getId()))
+								if (interpreterMap.containsKey(tool.getId()))
 								{
-									tool.getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
-								}								
+									for (Entry<String, String> e : interpreterMap.get(tool.getId()))
+									{
+										tool.getResolveUriMap().put(e.getKey(), URIUtil.createURI(e.getValue(), null));
+									}								
+								}
+								logger.debug("readToolDefinition(): SAX parser returned tool: "+tool.getId()
+										+" pkg="+(tool.getPackage() == null ? null : tool.getPackage().getId())
+										+" params="+tool.getCommand().getResolvedParams().keySet());
+								GlobalConfig.getTools().put(tool.getId(), tool);
+								
 							}
-							logger.debug("SAX parser returned tool: "+tool.getId()
-									+" pkg="+(tool.getPackage() == null ? null : tool.getPackage().getId())
-									+" params="+tool.getCommand().getResolvedParams().keySet());
-							GlobalConfig.getTools().put(tool.getId(), tool);
-							
 						}
+						else
+						{
+							getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_VALIDATE_1, 
+									Severity.WARN, 
+									Util.generateStringList(source.toString()));
+							logger.error("readToolDefinition(): Could not parse tool definition.");
+							rc = false;
+						}
+
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+						rc = false;
+						getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
+								Severity.WARN, 
+								Util.generateStringList(source.toString(), e.getMessage()));
 					}
-					else
-					{
-						logger.error("Could not parse tool definition.");
-					}
+
 				}
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+				rc = false;
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+						Severity.WARN, 
+						Util.generateStringList(toolDefPath.toString(), toolsArray.getString(i), e.getReason()));
+			}
 				
 				/*
 				for (int j=0; j<doc.getDocumentElement().getChildNodes().getLength(); j++) {
@@ -1007,14 +1038,6 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 					}
 				}
 				*/
-
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-				rc = false;
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				rc = false;
-			}
 		}
 		
 		return rc;		
@@ -1038,9 +1061,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated not
 	 */
 	public boolean readConfiguration(JSONObject config, boolean isDefault) {
-		
-		boolean rc = true;
-		
+			
 		// general (project) config
 
 		logger.debug("readConfiguration(): "+config.entrySet());
@@ -1056,7 +1077,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 						+" "+getConfigSource()+" "+getBaseURI());
 			else
 			{
-				getLogMessage().generateLogMsg(GlobalConstants.ERROR_CONFIGURATION_PARAM_MISSING_1, Severity.ERROR, 
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_PARAM_MISSING_1, Severity.ERROR, 
 						Util.generateStringList(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
 			}
 			
@@ -1086,11 +1107,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		else
 		{
 			if (isDefault)
-				getLogMessage().generateLogMsg(GlobalConstants.ERROR_CONFIGURATION_SECTION_MISSING_1, 
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_SECTION_MISSING_1, 
 					Severity.INFO,
 					Util.generateStringList(GlobalConstants.CONFIGURATION_FILE_SECTION_PROJECT));
 			else
-				getLogMessage().generateLogMsg(GlobalConstants.ERROR_CONFIGURATION_SECTION_MISSING_1, 
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_SECTION_MISSING_1, 
 						Severity.WARN,
 						Util.generateStringList(GlobalConstants.CONFIGURATION_FILE_SECTION_PROJECT));					
 		}
@@ -1117,9 +1138,10 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			}
 			else
 			{
-				getLogMessage().generateLogMsg(GlobalConstants.ERROR_WORKFLOW_TEMPLATE_FAILED_TO_READ_1, 
-						Severity.FATAL, Util.generateStringList(workflow.getLogMessage().getLogMsg()));
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2, 
+						Severity.FATAL, Util.generateStringList(workflowTplFile, workflow.getLogMessage().getLogMsg()));
 				logger.error("readConfiguration(): Could not read workflow template from file: "+workflowTplFile);
+				return false;
 			}
 			
 			// ####### set metadata ########
@@ -1136,7 +1158,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			else
 			{
 				logger.error("readConfiguration(): Could not read metadata from file: "+metadataFile+"");
-				rc = false;
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_METADATA_FAILED_TO_READ_2, 
+						Severity.FATAL, Util.generateStringList(metadataFile, workflow.getLogMessage().getLogMsg()));
+				return false;
 			}
 		}
 		
@@ -1200,6 +1224,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		if (rootTask == null)
 		{
 	    	rootTask = CoreFactory.eINSTANCE.createTask();
+	    	rootTask.initLogMessage();
 	    	rootTask.setName(GlobalConstants.ROOT_TASK_NAME);
 	    	rootTask.setRoot(true);
 	    	workflow.setRootTask(rootTask);
@@ -1256,8 +1281,13 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				toolDefPath = URIUtil.addToURI(toolDefPath, GlobalConfig.getToolDefDirName());
 				
 			} catch (URISyntaxException e) {
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+						Severity.WARN, 
+						Util.generateStringList(toolDefPath.toString(), 
+								GlobalConfig.getToolDefDirName(), 
+								e.getReason()));
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			ToolSchemata toolSchemata = readToolSchemata(toolCfg, toolDefPath);
@@ -1326,11 +1356,18 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			{
 				GlobalConfig.setToolConfigDirName(toolCfg.getString(GlobalConstants.TOOL_CFG_DIR_PARAM_NAME));
 			}
+			else
+			{
+				logger.warn("readConfiguration(): No tool section configured");
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_PARAM_MISSING_1, 
+						Severity.WARN, GlobalConstants.TOOL_CFG_DIR_PARAM_NAME);
+			}
 		}
 		else
 		{
-			logger.error("readConfiguration(): No tool section configured");
-			rc = false;
+			logger.warn("readConfiguration(): No tool section configured");
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_SECTION_MISSING_1, 
+					Severity.WARN,GlobalConstants.CONFIGURATION_FILE_SECTION_TOOL);
 		}
 		
 		//############# read constant param values for tool/pkg ################
@@ -1347,8 +1384,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				toolConfigPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getToolConfigDirName());
 				
 			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+						Severity.WARN, 
+						Util.generateStringList(toolConfigPath.toString(), 
+								GlobalConfig.getToolConfigDirName(), 
+								e.getReason()));
 			}
 			
 			try 
@@ -1357,41 +1397,76 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			} 
 			catch (URISyntaxException e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+						Severity.WARN, 
+						Util.generateStringList(toolConfigPath.toString(), GlobalConfig.getToolConfigFilesDirName(), 
+								e.getReason()));
 			}
-
 			try 
 			{
 				pkgFilesPath = URIUtil.addToURI(toolConfigPath, GlobalConfig.getPkgConfigFilesDirName());
 			} 
 			catch (URISyntaxException e) 
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+						Severity.WARN, 
+						Util.generateStringList(toolConfigPath.toString(), GlobalConfig.getPkgConfigFilesDirName(), 
+								e.getReason()));
 			}
 
 			
 			BufferedReader bfReader;
-			JSONObject     toolCfg;
+			JSONObject     toolCfg = null;
 			// try to find tool_config.json
 			bfReader = getReader(toolConfigPath, GlobalConfig.getToolConfigFileName(), true);
-			try {
-				toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+			if (bfReader != null)
+			{
+				try {
+					toolCfg = JSONObject.fromObject(IOUtils.toString(bfReader));
+				} catch (IOException e) {
+					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_FAILED_TO_CREATE_JSON_OBJECT_2, 
+							Severity.ERROR, 
+							Util.generateStringList(
+									Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+									"tool configuration"
+							));					
+				}
 				readToolConfig(toolCfg);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} else {
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
+						Severity.ERROR, 
+						Util.generateStringList(
+								Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+								"Could not create buffered reader for tool configuration."
+						));
+				return false;
 			}
 	
 			// try to find pkg_config.json
 			bfReader = getReader(toolConfigPath, GlobalConfig.getPkgConfigFileName(), true);
-			try {
-				toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+			if (bfReader != null)
+			{
+				try {
+					toolCfg= JSONObject.fromObject(IOUtils.toString(bfReader));
+				} catch (IOException e) {
+					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_FAILED_TO_CREATE_JSON_OBJECT_2, 
+							Severity.ERROR, 
+							Util.generateStringList(
+									Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+									"pkg configuration"
+							));					
+				}
 				readPkgConfig(toolCfg);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			else
+			{
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
+						Severity.ERROR, 
+						Util.generateStringList(
+								Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+								"Could not create buffered reader for pkg configuration."
+						));
+				return false;
 			}
 			
 			// try to find <toolname>_config.json
@@ -1407,13 +1482,13 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
 		getWorkflows().add(workflow);
 
-		return rc;
+		return true;
 	}
 	
 	private boolean readToolConfig(JSONObject toolCfg)
 	{
 		boolean rc = true;
-		logger.debug(GlobalConfig.getTools().keySet());
+		logger.debug("readToolConfig(): "+GlobalConfig.getTools().keySet());
 		Iterator<String> it = toolCfg.keys();
 		for (String key = null; it.hasNext(); key=it.next())
 		{
@@ -1422,7 +1497,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			if (GlobalConfig.getTools().keySet().contains(key))
 			{
 				Tool t = GlobalConfig.getTools().get(key);
-				logger.debug("found configuration for tool="+key);
+				logger.debug("readToolConfig(): found configuration for tool="+key);
 				JSONObject to = toolCfg.getJSONObject(key);
 				Iterator<String> pit = to.keys();
 				while (pit.hasNext())
@@ -1439,7 +1514,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	private boolean readPkgConfig(JSONObject pkgCfg)
 	{
 		boolean rc = true;
-		logger.debug(GlobalConfig.getTools().keySet());
+		logger.debug("readPkgConfig(): "+GlobalConfig.getTools().keySet());
 		Iterator<Entry<String, Tool>> it = GlobalConfig.getTools().iterator();
 		
 		for (Entry<String, Tool> key = null; it.hasNext(); key=it.next())
@@ -1494,11 +1569,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			ResolvedParam rp = findParamByName(param, rpList);
 			if (rp != null)
 			{
-				logger.debug("found config for known parameter="+rp.resolveName());
+				logger.debug("enumerateToolConfigParameter(): found config for known parameter="+rp.resolveName());
 				resolveToolConfigParameter(params, param, rp);
 			}
 			else
-				logger.debug("config for unknown parameter="+param+" detected");
+				logger.debug("enumerateToolConfigParameter(): config for unknown parameter="+param+" detected");
 		
 		}
 
@@ -1515,7 +1590,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	private boolean resolveToolConfigParameter(JSONObject o, String paramName, ResolvedParam rp)
 	{
 		boolean rc = true;
-		logger.debug("resolve parameter="+rp.resolveName()+" with config="+o);
+		logger.debug("resolveToolConfigParameter(): resolve parameter="+rp.resolveName()+" with config="+o);
 		//check what kind of object we have:
 		//1. string:
 		Object value = o.getString(paramName);
@@ -1523,7 +1598,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			rp.getValue().add(value);
 		else
 		{
-			logger.warn("no handling for value="+value+" implemented.");
+			logger.warn("resolveToolConfigParameter(): no handling for value="+value+" implemented.");
 			rc = false;
 		}
 		return rc;
@@ -1539,14 +1614,24 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				isReader = URIUtil.getInputStreamReader(uri, isFromJar());
 				return new BufferedReader(isReader);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
 				if (createWarning)
-					logger.info("Could not read resource with uri="+uri.toString());
+				{
+					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERAL_IO_2,
+						Severity.WARN, 
+						Util.generateStringList(e.getMessage(), Util.createString(uri)));
+				
+					logger.info("getReader(): Could not read resource with uri="+uri.toString());
+				}
+				else
+				{
+					logger.debug("getReader(): Could not read resource with uri="+uri.toString());
+				}
 			}
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+					Severity.ERROR, 
+					Util.generateStringList(Util.createString(baseUri), path, 
+							e1.getReason()));
 		} 
 		return null;
 	}
@@ -1557,20 +1642,37 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated not
 	 */
 	public void setConfigAndBasePath(String path) {
+		String curBasePath = null;
+		String curFileName = null;
 		try {
-			logger.debug("Set base path to "+path);
+			logger.trace("setConfigAndBasePath(): Set base path to "+path);
 			String baseName = URIUtil.getDirname(path);
+			
 			if (baseName != null)
+			{
+				curBasePath = baseName;
+				curFileName = "<unused>";
 				setBaseURI(URIUtil.createURI(baseName, null));
+			}
 			String fileName = URIUtil.getFilename(path);
-			logger.debug("Filename="+fileName+" dir="+baseName);
+			logger.trace("setConfigAndBasePath(): Filename="+fileName+" dir="+baseName);
 			if (fileName == null)
+			{
+				curBasePath = Util.createString(getBaseURI());
+				curFileName = DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT;
 				setConfigSource(URIUtil.addToURI(getBaseURI(), DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT));
+			}
 			else
+			{
+				curBasePath = path;
+				curFileName = "<unused>";
 				setConfigSource(URIUtil.createURI(path, null));
+			}
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+					Severity.WARN, 
+					Util.generateStringList(curBasePath, curFileName, 
+							e.getReason()));
 		}
 	}
 
@@ -1581,14 +1683,10 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 */
 	public boolean init(EasyFlowGraph graph) {
 		
-		logger.debug("loglevel of logger="+logger.getName()+" "+logger.getLevel()+" "+logger.hashCode()+" "+Logger.getRootLogger().hashCode());
-		//System.exit(1);
 		boolean rc = true;
 		initLogMessage();
 		clearWorkflows();
 		GlobalVar.setDefaultProject(this);
-		
-		
 		
 		Workflow workflow;
 		if (getActiveWorkflow() != null)
@@ -1608,6 +1706,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			jGraph.setGraph(graph);
 			JGraphXUtil.setGraph(jGraph);
 		}
+		
 		if (getActiveWorkflow().getGraph() == null)
 			getActiveWorkflow().setGraph(graph);
 		if (GlobalVar.getGraph() == null)
@@ -1621,6 +1720,15 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			{
 				rc = readConfiguration(dfltConfig, true);
 			}
+		} catch (URISyntaxException e) {
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
+					Severity.WARN, 
+					Util.generateStringList(System.getProperty("user.home"), 
+							GlobalConstants.DFLT_CONFIG_FILE, 
+							e.getReason()));
+		}
+
+			
 			JSONObject mainConfig = readJson(getConfigSource(), false);
 			if (mainConfig != null)
 			{
@@ -1647,10 +1755,6 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			{
 				rc = false;
 			}
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return rc;
 		

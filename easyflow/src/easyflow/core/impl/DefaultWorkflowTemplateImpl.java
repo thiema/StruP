@@ -35,6 +35,8 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getLogMessage <em>Log Message</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.DefaultWorkflowTemplateImpl#getUtilTaskFileName <em>Util Task File Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -120,6 +122,46 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	 * @ordered
 	 */
 	protected LogMessage logMessage;
+
+	/**
+	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FILE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String fileName = FILE_NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getUtilTaskFileName() <em>Util Task File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String UTIL_TASK_FILE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUtilTaskFileName() <em>Util Task File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String utilTaskFileName = UTIL_TASK_FILE_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -258,6 +300,48 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFileName(String newFileName) {
+		String oldFileName = fileName;
+		fileName = newFileName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME, oldFileName, fileName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getUtilTaskFileName() {
+		return utilTaskFileName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUtilTaskFileName(String newUtilTaskFileName) {
+		String oldUtilTaskFileName = utilTaskFileName;
+		utilTaskFileName = newUtilTaskFileName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME, oldUtilTaskFileName, utilTaskFileName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public void initLogMessage() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -310,6 +394,10 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
 				if (resolve) return getLogMessage();
 				return basicGetLogMessage();
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
+				return getFileName();
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				return getUtilTaskFileName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -339,6 +427,12 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
 				setLogMessage((LogMessage)newValue);
 				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
+				setFileName((String)newValue);
+				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				setUtilTaskFileName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -366,6 +460,12 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
 				setLogMessage((LogMessage)null);
 				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
+				setFileName(FILE_NAME_EDEFAULT);
+				return;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				setUtilTaskFileName(UTIL_TASK_FILE_NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -388,6 +488,10 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE:
 				return logMessage != null;
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME:
+				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
+			case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				return UTIL_TASK_FILE_NAME_EDEFAULT == null ? utilTaskFileName != null : !UTIL_TASK_FILE_NAME_EDEFAULT.equals(utilTaskFileName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -426,6 +530,10 @@ public class DefaultWorkflowTemplateImpl extends MinimalEObjectImpl.Container im
 		result.append(utilTaskReader);
 		result.append(", logger: ");
 		result.append(logger);
+		result.append(", fileName: ");
+		result.append(fileName);
+		result.append(", utilTaskFileName: ");
+		result.append(utilTaskFileName);
 		result.append(')');
 		return result.toString();
 	}

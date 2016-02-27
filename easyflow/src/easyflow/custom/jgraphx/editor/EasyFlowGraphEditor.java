@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 
 import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
-import com.mxgraph.examples.swing.editor.EditorToolBar;
+
 import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -35,7 +35,6 @@ import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxStylesheet;
 
 import easyflow.core.CoreFactory;
@@ -77,7 +76,7 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 	public EasyFlowGraphEditor()
 	{
 		// super("mxGraph for JFC/Swing", new SchemaGraphComponent(new mxGraph()
-		super("EasyFlow", new EasyFlowGraphComponent(new EasyFlowGraph()));
+		super("StruP", new EasyFlowGraphComponent(new EasyFlowGraph()));
 
 		final EasyFlowGraph graph = (EasyFlowGraph) graphComponent.getGraph();
 		// logger.debug(((EasyFlowGraph)getGraphComponent().getGraph()).hashCode());
@@ -148,33 +147,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 //upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
-		lowerPanel = new JPanel();
-		lowerPanel.add(new JTextPane());
-		logMsgTextArea = new JTextPane ();
-		logMsgTextArea.setEditable(false);
-/*		
- * dont understand which component I am ...
- * 
-		logger.debug("the dimensions of the whole window are: "
-				+getGraphComponent().getHeight()+" "+
-				+getComponentCount()+" "
-				+getVisibleRect().getHeight()+" x "+getSize().getWidth());
-		for (int i=0; i<getComponentCount(); i++)
-		{
-			logger.debug("dimensions of component "
-					+i+":  "+getComponent(i).getName()
-					+" y="+getComponent(i).getY()
-					+" width="+getComponent(i).getSize().getWidth());
-		}
-		*/
-		logMsgTextArea.setPreferredSize(new Dimension(0, 100));
-		addStylesToDocument(logMsgTextArea.getStyledDocument());
-		//logMsgTextArea.setLineWrap(true);
-		//logMsgTextArea.setFont(new Font("Arial", Font.ITALIC, 10));
-		add(new JScrollPane (logMsgTextArea, 
-				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.SOUTH);
-		GlobalVar.setTextAreaForLogMsg(logMsgTextArea);
+		
 	}
 
 	

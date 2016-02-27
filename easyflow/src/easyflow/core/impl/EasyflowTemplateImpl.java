@@ -11,16 +11,22 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import easyflow.core.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.LogMessage;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.Util;
+
 import java.util.Collection;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -44,6 +50,8 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getUtilTaskReader <em>Util Task Reader</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getLogMessage <em>Log Message</em>}</li>
+ *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getFileName <em>File Name</em>}</li>
+ *   <li>{@link easyflow.core.impl.EasyflowTemplateImpl#getUtilTaskFileName <em>Util Task File Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -123,6 +131,42 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 	 * @ordered
 	 */
 	protected LogMessage logMessage;
+	/**
+	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FILE_NAME_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getFileName() <em>File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String fileName = FILE_NAME_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getUtilTaskFileName() <em>Util Task File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String UTIL_TASK_FILE_NAME_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getUtilTaskFileName() <em>Util Task File Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUtilTaskFileName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String utilTaskFileName = UTIL_TASK_FILE_NAME_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -260,10 +304,54 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFileName(String newFileName) {
+		String oldFileName = fileName;
+		fileName = newFileName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__FILE_NAME, oldFileName, fileName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getUtilTaskFileName() {
+		return utilTaskFileName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUtilTaskFileName(String newUtilTaskFileName) {
+		String oldUtilTaskFileName = utilTaskFileName;
+		utilTaskFileName = newUtilTaskFileName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME, oldUtilTaskFileName, utilTaskFileName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public void initLogMessage() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(Category.WORKFLOW_TEMPLATE);
+		}
 	}
 
 	/**
@@ -272,14 +360,16 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 	 * the parent is added
 	 * @param tmpMap
 	 */
-	private void checkParents(Map<String,Task> tmpMap) {
+	private boolean checkParents(Map<String,Task> tmpMap) {
 		
         BufferedReader bufferedReader = new BufferedReader(getReader());
 
         String strLine;
+        int lineNo = 0;
         try {
-        	
-			while ((strLine = bufferedReader.readLine()) != null)   {
+        	lineNo++;
+			while ((strLine = bufferedReader.readLine()) != null)
+			{
 				if (!strLine.startsWith("#")) {
 					String[] parentTaskNames=strLine.split("\t")[1].split(",");
 					if (!parentTaskNames[0].equals("")) {
@@ -294,17 +384,25 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 								found=true;
 							logger.debug(found+" "+parentTaskName);
 							if (!found)
-								if (tmpMap.containsKey(parentTaskName)) {
+								if (tmpMap.containsKey(parentTaskName)) 
+								{
 									task.getParents().put(parentTaskName, tmpMap.get(parentTaskName));
-								} else logger.warn("parent task not found: "+parentTaskName);
+								} 
+								else 
+									logger.warn("parent task not found: "+parentTaskName);
 						}
 					}
 				}
 			}
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+        } 
+        catch (IOException e) 
+        {
+        	getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_AT_LINE_3, 
+        			Severity.ERROR, 
+        			Util.generateStringList(getFileName(), Integer.toString(lineNo), e.getMessage()));
+        	return false;
 		}
+        return true;
 	}
 	/**
 	 * <!-- begin-user-doc -->
@@ -312,34 +410,65 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 	 * @generated not
 	 */
 	public boolean readTemplate(String mode, EList<String> defaultGroupingCriteria) {
+		
+		boolean rc;
 
 		Map<String,Task> tmpMap=new HashMap<String,Task>();
         // Reader reader = new InputStreamReader(getClass().getResourceAsStream(getFileName()));
         BufferedReader bufferedReader = new BufferedReader(getReader());
-        readTemplate(bufferedReader, mode, defaultGroupingCriteria, tmpMap);
-        if (getUtilTaskReader() != null)
+        rc = readTemplate(bufferedReader, mode, defaultGroupingCriteria, tmpMap);
+        if (rc && getUtilTaskReader() != null)
         {
         	bufferedReader = new BufferedReader(getUtilTaskReader());
-        	readTemplate(bufferedReader, mode, defaultGroupingCriteria, tmpMap);
+        	rc = readTemplate(bufferedReader, mode, defaultGroupingCriteria, tmpMap);
+            if (rc)
+            	checkParents(tmpMap);
+            else
+            	getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2, 
+    					Severity.FATAL, 
+    					Util.generateStringList(getUtilTaskFileName(),
+    							getLogMessage().getLogMsg()));            	
+
         }
-        checkParents(tmpMap);
-        return true;
+        else if (!rc)
+        {
+        	getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2, 
+					Severity.FATAL, 
+					Util.generateStringList(getFileName(),
+							getLogMessage().getLogMsg()));
+        }
+        
+        return rc;
 	}
 
-	private void readTemplate(BufferedReader bufferedReader, String mode, EList<String> defaultGroupingCriteria, Map<String,Task> tmpMap)
+	private boolean readTemplate(BufferedReader bufferedReader, String mode, EList<String> defaultGroupingCriteria, Map<String,Task> tmpMap)
 	{
+		boolean rc = true;
 		String strLine;
+		int lineNo = 0;
         try {
 			while ((strLine = bufferedReader.readLine()) != null)   {
+				lineNo++;
 				if (!strLine.startsWith("#")) {
 					
 					Task task = null;
 					if (strLine.startsWith(GlobalConstants.ROOT_TASK_NAME) && GlobalVar.getRootTask() != null)
+					{
 						task = GlobalVar.getRootTask();
+					}
 					else
+					{
 						task = CoreFactory.eINSTANCE.createTask();
+						task.initLogMessage();
+					}
 					
-					task.readTask(strLine, mode, defaultGroupingCriteria);
+					if (!task.readTask(strLine, mode, defaultGroupingCriteria))
+					{
+						getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_INVALID_LINE_AT_2, 
+								Severity.ERROR, 
+								Integer.toString(lineNo));
+						rc = false;
+					}
 					tmpMap.put(task.getName(), task);
 					String[] rawParentTaskNames=strLine.split("\t")[1].split(",");
 					
@@ -371,8 +500,14 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			rc = false;
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_TEMPLATE_INVALID_LINE_AT_2, 
+					Severity.ERROR, 
+					Util.generateStringList(Integer.toString(lineNo), e.getMessage()));
+
 			e.printStackTrace();
 		}
+        return rc;
 	}
 	/**
 	 * <!-- begin-user-doc -->
@@ -393,6 +528,10 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			case CorePackage.EASYFLOW_TEMPLATE__LOG_MESSAGE:
 				if (resolve) return getLogMessage();
 				return basicGetLogMessage();
+			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
+				return getFileName();
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				return getUtilTaskFileName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -422,6 +561,12 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			case CorePackage.EASYFLOW_TEMPLATE__LOG_MESSAGE:
 				setLogMessage((LogMessage)newValue);
 				return;
+			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
+				setFileName((String)newValue);
+				return;
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				setUtilTaskFileName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -449,6 +594,12 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 			case CorePackage.EASYFLOW_TEMPLATE__LOG_MESSAGE:
 				setLogMessage((LogMessage)null);
 				return;
+			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
+				setFileName(FILE_NAME_EDEFAULT);
+				return;
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				setUtilTaskFileName(UTIL_TASK_FILE_NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -471,6 +622,10 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 			case CorePackage.EASYFLOW_TEMPLATE__LOG_MESSAGE:
 				return logMessage != null;
+			case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME:
+				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
+			case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME:
+				return UTIL_TASK_FILE_NAME_EDEFAULT == null ? utilTaskFileName != null : !UTIL_TASK_FILE_NAME_EDEFAULT.equals(utilTaskFileName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -489,6 +644,8 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER;
 				case CorePackage.EASYFLOW_TEMPLATE__LOGGER: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER;
 				case CorePackage.EASYFLOW_TEMPLATE__LOG_MESSAGE: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE;
+				case CorePackage.EASYFLOW_TEMPLATE__FILE_NAME: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME;
+				case CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME: return CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME;
 				default: return -1;
 			}
 		}
@@ -509,6 +666,8 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_READER: return CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_READER;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOGGER: return CorePackage.EASYFLOW_TEMPLATE__LOGGER;
 				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE: return CorePackage.EASYFLOW_TEMPLATE__LOG_MESSAGE;
+				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME: return CorePackage.EASYFLOW_TEMPLATE__FILE_NAME;
+				case CorePackage.DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME: return CorePackage.EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME;
 				default: return -1;
 			}
 		}
@@ -565,6 +724,10 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 		result.append(utilTaskReader);
 		result.append(", logger: ");
 		result.append(logger);
+		result.append(", fileName: ");
+		result.append(fileName);
+		result.append(", utilTaskFileName: ");
+		result.append(utilTaskFileName);
 		result.append(')');
 		return result.toString();
 	}

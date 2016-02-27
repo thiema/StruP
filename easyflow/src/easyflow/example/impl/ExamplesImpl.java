@@ -331,20 +331,20 @@ public class ExamplesImpl extends MinimalEObjectImpl.Container implements Exampl
 			if (file.isFile())
 			{
 				File file1 = new File(file.getParentFile().getParentFile().getPath()+"/classes"+getLocator());
-				logger.debug(file1);
+				logger.debug("readExamples(): "+file1);
 				peers = file1.listFiles();
 			}
 			// assume directory
 			else
 			{
-				logger.debug(uri);
+				logger.debug("readExamples(): "+uri);
 				uri = new URI(uri.getScheme(),
 						uri.getHost(),
 						uri.getPath()+getLocator(),
 						uri.getFragment());
 				peers = new File(uri).listFiles();
 			}
-			logger.debug(peers);
+			logger.debug("readExamples(): "+peers);
 			if (peers != null)
 			for (File file1 : peers)
 			{

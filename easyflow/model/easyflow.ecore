@@ -187,7 +187,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The Task respresents a basic data processing unit. It transforms a number of Inputs into Outputs. The Task itself is independent of a concrete Tool that implements the Task and the processing."/>
       </eAnnotations>
-      <eOperations name="readTask">
+      <eOperations name="readTask" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value=""/>
         </eAnnotations>
@@ -581,6 +581,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilTaskFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="EasyflowTemplate" eSuperTypes="#//core/IWorkflowTemplate #//core/DefaultWorkflowTemplate">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -700,13 +702,13 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="Category">
       <eLiterals name="PROJECT_CONFIGURATION" value="10"/>
-      <eLiterals name="METADATA_DEFINITON" value="15"/>
-      <eLiterals name="TASK_DEFINITON" value="16"/>
+      <eLiterals name="METADATA_DEFINITION" value="15"/>
+      <eLiterals name="TASK_DEFINITION" value="16"/>
       <eLiterals name="TOOL_DEFINITION" value="17" literal="TOOL_DEFINITION"/>
-      <eLiterals name="WORKFLOW" value="20" literal=""/>
+      <eLiterals name="WORKFLOW" value="20" literal="WORKFLOW"/>
       <eLiterals name="WORKFLOW_TEMPLATE" value="25"/>
       <eLiterals name="ABSTRACT_WORKFLOW" value="30"/>
-      <eLiterals name="DATA_GROUPING" value="40" literal="INFO"/>
+      <eLiterals name="DATA_GROUPING" value="40" literal="DATA_GROUPING"/>
       <eLiterals name="PARAMETER_GROUPING" value="41"/>
       <eLiterals name="PREPROCESSING" value="50"/>
       <eLiterals name="TOOL_RESOLUTION" value="60"/>
@@ -1095,6 +1097,7 @@
         <eParameters name="xmlSource" eType="#//URI"/>
         <eParameters name="isFromJar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </eOperations>
+      <eOperations name="initLogMessage"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolDefinitions" upperBound="-1"
           eType="#//Document"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="toolSchemata" eType="#//tool/ToolSchemata"/>
@@ -1102,6 +1105,7 @@
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
           eType="#//util/maps/StringToDocumentPropertiesMap" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IToolElement" abstract="true" interface="true">
       <eOperations name="renderToString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

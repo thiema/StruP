@@ -1,21 +1,23 @@
 package easyflow.custom.jgraphx.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
+import javax.swing.JTextPane;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import org.apache.log4j.Logger;
 
-
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
-import com.mxgraph.examples.swing.editor.EditorMenuBar;
-import com.mxgraph.examples.swing.editor.EditorToolBar;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.util.mxEvent;
@@ -26,6 +28,8 @@ import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
 import com.mxgraph.view.mxGraph;
 
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
+import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.GlobalVar;
 
 public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 {
@@ -35,7 +39,6 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 	 */
 	private static final long serialVersionUID = -6561623072112577140L;
 
-	private JPanel upperPanel;
 	protected static final Logger logger = Logger.getLogger(EasyFlowBasicGraphEditor.class);
 	/**
 	 * 
@@ -45,10 +48,10 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		super(appTitle, component);
 		
 		// Stores and updates the frame title
-		this.appTitle = appTitle;
+//		this.appTitle = appTitle;
 
 		// Stores a reference to the graph and creates the command history
-		graphComponent = component;
+//		graphComponent = component;
 		final mxGraph graph = graphComponent.getGraph();
 		undoManager = createUndoManager();
 
@@ -61,6 +64,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		// Adds the command history to the model and view
 		graph.getModel().addListener(mxEvent.UNDO, undoHandler);
 		graph.getView().addListener(mxEvent.UNDO, undoHandler);
+
 
 		// Keeps the selection in sync with the command history
 		mxIEventListener undoHandler = new mxIEventListener()
@@ -101,6 +105,51 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		outer.setDividerSize(6);
 		outer.setBorder(null);
 
+		
+		//JPanel lowerPanel = new JPanel();
+		//lowerPanel.add(new JTextPane());
+		JTextPane logMsgTextArea = new JTextPane ();
+		logMsgTextArea.setEditable(false);
+		
+/*		
+ * dont understand which component I am ...
+ * 
+		logger.debug("the dimensions of the whole window are: "
+				+getGraphComponent().getHeight()+" "+
+				+getComponentCount()+" "
+				+getVisibleRect().getHeight()+" x "+getSize().getWidth());
+		for (int i=0; i<getComponentCount(); i++)
+		{
+			logger.debug("dimensions of component "
+					+i+":  "+getComponent(i).getName()
+					+" y="+getComponent(i).getY()
+					+" width="+getComponent(i).getSize().getWidth());
+		}
+		*/
+		
+		logMsgTextArea.setPreferredSize(new Dimension(0, 100));
+		addStylesToDocument(logMsgTextArea.getStyledDocument());
+		//logMsgTextArea.setLineWrap(true);
+		//logMsgTextArea.setFont(new Font("Arial", Font.ITALIC, 10));
+		JScrollPane logMsgTextAreaScrollPane = new JScrollPane (logMsgTextArea, 
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		logMsgTextAreaScrollPane.setAutoscrolls(true);
+		//logMsgTextAreaScrollPane.setPreferredSize(new Dimension(0, 400));
+		//logMsgTextAreaScrollPane.setMinimumSize(new Dimension(0, 400));
+		//logMsgTextAreaScrollPane.add(logMsgTextArea);
+		//lowerPanel.add(logMsgTextAreaScrollPane);
+		//add(lowerPanel, BorderLayout.SOUTH);
+		GlobalVar.setTextAreaForLogMsg(logMsgTextArea);
+		
+		JSplitPane overall = new JSplitPane(JSplitPane.VERTICAL_SPLIT, outer, logMsgTextAreaScrollPane);
+		overall.setOneTouchExpandable(true);
+		overall.setDividerLocation(-5);
+		overall.setResizeWeight(1);
+		overall.setDividerSize(3);
+
+		
+		
 		// Creates the status bar
 		statusBar = createStatusBar();
 
@@ -109,7 +158,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 
 		// Puts everything together
 		setLayout(new BorderLayout());
-		add(outer, BorderLayout.CENTER);
+		add(overall, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 		installToolBar();
 		
@@ -152,4 +201,69 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		return jPanel;
 		
 	}
+	
+	protected void addStylesToDocument(StyledDocument doc) {
+		
+        //Initialize some styles.
+        Style def = StyleContext.getDefaultStyleContext().
+                        getStyle(StyleContext.DEFAULT_STYLE);
+
+        StyleConstants.setItalic(def, true);
+        StyleConstants.setFontFamily(def, "SansSerif");
+
+        Style s,ss;
+
+        //set category
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_CATEGORY, def);
+        StyleConstants.setBold(s, true);
+        StyleConstants.setForeground(s, Color.BLUE);
+        StyleConstants.setFontSize(s, 12);
+
+        //set severity
+        
+        ss = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY, def);
+        StyleConstants.setFontSize(ss, 12);
+        
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_LOW, ss);
+        StyleConstants.setForeground(s, Color.GRAY);
+        
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM, ss);
+        StyleConstants.setForeground(s, Color.BLACK);
+        
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_HIGH, ss);
+        StyleConstants.setForeground(s, Color.RED);
+        
+
+        //set log message text style
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT, def);
+        StyleConstants.setFontSize(s, 10);
+
+//        s = doc.addStyle("icon", regular);
+//        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
+        /*
+        ImageIcon pigIcon = createImageIcon("images/Pig.gif",
+                                            "a cute pig");
+        if (pigIcon != null) {
+            StyleConstants.setIcon(s, pigIcon);
+        }
+
+        s = doc.addStyle("button", regular);
+        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
+        ImageIcon soundIcon = createImageIcon("images/sound.gif",
+                                              "sound icon");
+        JButton button = new JButton();
+        if (soundIcon != null) {
+            button.setIcon(soundIcon);
+        } else {
+            button.setText("BEEP");
+        }
+        button.setCursor(Cursor.getDefaultCursor());
+        button.setMargin(new Insets(0,0,0,0));
+        button.setActionCommand(buttonString);
+        button.addActionListener(this);
+        
+        StyleConstants.setComponent(s, button);
+        */
+    }
+
 }
