@@ -201,18 +201,18 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 				mxICell clonedVertex = JGraphXUtil.cloneCell((mxICell) vertex);
 				// set the current task
 				Task     curTask  = null;
-				DataLink dataLink = null;
+				//DataLink dataLink = null;
 				boolean processTerminalEdges = false;
 				try {
 					curTask = JGraphXUtil.loadTask(vertex);
-					if (edge1 != null)
-						dataLink = JGraphXUtil.loadDataLink(edge1);
+					//if (edge1 != null)
+						//dataLink = JGraphXUtil.loadDataLink(edge1);
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (DataLinkNotFoundException e) {
+				//} catch (DataLinkNotFoundException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				//curTask = getTasks().get(curTask.getUniqueString());
 				logger.debug("computeSubgraph(): "+curTask.getUniqueString() 
@@ -271,7 +271,8 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 				Object target = null;
 				
 				// everything fine, insert vertex into the subgraph, unless already inserted
-				if (!addedTasks.containsKey(curTask.getUniqueString())) {
+				if (!addedTasks.containsKey(curTask.getUniqueString())) 
+				{
 					if (getGraph().getCopiedCells().containsKey(curTask.getUniqueString()))
 					{
 						target = getGraph().getCopiedCells().get(curTask.getUniqueString());
@@ -290,8 +291,10 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
                     processTerminalEdges = true;
                     addedTasks.put(curTask.getUniqueString(), target);
 				}
-				else 
+				else
+				{
 					target=addedTasks.get(curTask.getUniqueString());
+				}
 				
 				// the root node doesn't have an incoming edge
                 if (edge1 == null)
@@ -382,9 +385,9 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 	public mxICell computeSubgraph_Param(final TraversalEvent traversalEvent)
 	{
 		final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
-		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
 		final EList<String>        mergeTasks = new BasicEList<String>();
 		final EList<String>        addedEdges = new BasicEList<String>();
+		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
 		final Map<String, Boolean>     memMap = new HashMap<String, Boolean>();
 		
 		final String SPLITTING_TASK_FOUND = "splittingTaskFound";

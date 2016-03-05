@@ -58,6 +58,7 @@ import java.util.Map.Entry;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
@@ -1651,14 +1652,15 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				if (!task.isUtil()) 
 				{
 					Object target = GlobalVar.getCells().get(task.getUniqueString());
-					EMap<Task, EList<DataLink>> parentTaskList=getParentTasksFor(task);
+					EMap<Task, EList<DataLink>> parentTaskList = getParentTasksFor(task);
+					logger.debug("generateAbstractGraphEdges(): got "+parentTaskList.size()+" parents.");
 					if (parentTaskList.isEmpty())
 					{
 						for (DataPort dataPort:task.getInDataPorts())
 						{
         					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_LINK_TASK_TO_ROOT_2, Severity.INFO,
         							Util.generateStringList(task.getUniqueString(), dataPort.getName()));
-							logger.debug("generateAbstractGraphEdges():  no parent found. link task with root using data port="+dataPort.getName());
+							logger.debug("generateAbstractGraphEdges(): no parent found. link task with root using data port="+dataPort.getName());
 							getGraph().insertEdgeEasyFlow(null, null, rootCell, target, createDataLinkForRoot(getRootTask(), task, dataPort));
 						}
 					}
@@ -1799,7 +1801,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		for (ParentTaskResult result:results)
 		{
 			logger.debug("getParentTasksFor(): "
-					+result.getParentTask().getUniqueString()
+					+"task="+task.getUniqueString()
+					+" parent="+result.getParentTask().getUniqueString()
 					+" condition="+result.getCondition()
 					+" potential circuments="+result.getPotentialCircumventingTasks()
 					+" ports="    +easyflow.custom.util.Util.list2String(result.getCoveredPorts(), null)
@@ -1845,7 +1848,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				EList<String> taskSet = new BasicEList<String>();
 				for (int j:conditions)
 				{
-					conditionSet.add(uconds[j]);
+					if (!conditionSet.contains(uconds[j]))
+						conditionSet.add(uconds[j]);
 					taskSet.add(ctasks[j]);
 				}
 				// find parents which circumvent the given set of conditions
@@ -1862,7 +1866,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			EList<String> conditionsToCircumvent,
 			EList<String> tasksToCircumvent)
 	{
-		logger.debug("getAllParentsByStrategy(): strategy="+GlobalConfig.getResolveParentTasksStrategy());
+		logger.debug("getAllParentsByStrategy(): find parents for "
+				+ "task="+task.getUniqueString()
+				+" coditions2circumvent="+conditionsToCircumvent
+				+" tasts2circumvent="+tasksToCircumvent
+				+" strategy="+GlobalConfig.getResolveParentTasksStrategy());
 		// find parents which circumvent the given set of conditions
 		EMap<Task, EList<DataLink>> allTasks = getAllParents(task, results, conditionsToCircumvent, tasksToCircumvent);
 		logger.debug("getAllParentsByStrategy(): all="+allTasks.size());
@@ -1886,6 +1894,12 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		else if (!GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS.equals(GlobalConfig.getResolveParentTasksStrategy()))
 			logger.error("getAllParentsByStrategy(): Unkown Resolve-Parent-Tasks Strategy. Default to "+GlobalConfig.CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_ALL_PARENTS);
 				
+		if (logger.getParent().getLevel().toInt()<=Priority.DEBUG_INT)
+		{
+			for (Task t:tasks.keySet())
+				logger.debug("getAllParentsByStrategy(): return parent task="+t.getUniqueString());
+		}
+		
 		return tasks;
 	}
 			
@@ -1930,7 +1944,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					+" (resolving "+result.getCoveredPorts().size()+" ports) added."
 					//+" "+dataLinks.hashCode()
 					);
-			
 		}
 		return tasks;
 	}
@@ -1995,11 +2008,14 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				if (match != null)
 				{
 					filteredResults.add(match);
-					logger.trace("getMatchingParentTasks(): found alternate parent to cirumvent cond="+conditionsToCircumvent+" introduced by task="+match.getPotentialCircumventingTasks());
+					logger.trace("getMatchingParentTasks(): found alternate parent to cirumvent "
+							+ "cond="+conditionsToCircumvent+" introduced by "
+							+ "task="+match.getPotentialCircumventingTasks());
 				}
 				else
 				{
-					logger.trace("getMatchingParentTasks():no alternate parent found to cirumvent cond="+conditionsToCircumvent);
+					logger.trace("getMatchingParentTasks():no alternate parent found to cirumvent "
+							+ "cond="+conditionsToCircumvent);
 				}
 			}
 			else

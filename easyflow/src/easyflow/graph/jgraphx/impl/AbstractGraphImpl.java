@@ -391,9 +391,9 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 							{
 								debug += " copy, because its a new splitting point ";
 								traversalEvent.incDep();
-								logger.debug(traversalEvent.getDepNum());
+								
 								traversalEvent = EcoreUtil.copy(traversalEvent);
-								logger.debug(traversalEvent.getDepNum());
+								
 								traversalEvent.setSplitTask(task);
 								task.getTraversalEvents().put(te, traversalEvent);
 								EList<String> keepTEs = null;

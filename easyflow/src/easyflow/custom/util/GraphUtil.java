@@ -294,7 +294,7 @@ public class GraphUtil {
 		}
 		else if (!dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
 		{
-			logger.error("invalid data formats foudn for"
+			logger.error("createDataLink(): invalid data formats found for"
 					+" dataLink="+newDataLink.getUniqueString()
 					+" created from"+dataLink.getUniqueString(true));
 		}

@@ -13,9 +13,11 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.graph.jgraphx.Graph;
 import easyflow.custom.exception.TraversalChunkNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
+import easyflow.custom.util.Util;
 import easyflow.data.DataLink;
 import easyflow.graph.impl.DefaultGraphImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
@@ -24,7 +26,9 @@ import easyflow.graph.jgraphx.TraversalCriteria;
 import easyflow.metadata.GroupingInstance;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
+
 import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -35,6 +39,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -207,6 +212,7 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 				logger.trace("applyTraversalEvent():"
 						+" mergeTasks="     +GraphUtil.getTaskStringList(traversalEvent.getMergeTask())
 						+" size="           +traversalEvent.getMergeTask().size()
+						+" depTE="			+traversalEvent.getDepNum()
 						+" previousTaskStr="+task.getPreviousTaskStr()
 						+" ("               +task.getUniqueString()+", "
 						                    +GlobalVar.getTasks().get(task.getPreviousTaskStr()).getUniqueString()+")");
@@ -288,6 +294,7 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 		final String               groupingStr              = traversalEvent.getTraversalCriterion().getId();
 		final EMap<String, String> taskPreviousTaskMap      = new BasicEMap<String, String>();
 		final EList<mxICell>       returnCell               = new BasicEList<mxICell>();
+		final EList<Task>          lastTask                 = new BasicEList<Task>();
 
 		EList<String> instances = new BasicEList<String>(); 
 		for (GroupingInstance groupingInstance : groupingInstances)
@@ -306,6 +313,8 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 					task = JGraphXUtil.loadTask(vertex);
 					if (edge != null)
 						inDataLink = JGraphXUtil.loadDataLink(edge);
+					else
+						lastTask.clear();
 				} catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -313,9 +322,9 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				String debugTask = "RmDup";
-				if (task.getName().equals(debugTask))
-					logger.debug("debugging task="+debugTask);
+				
+				if (GlobalConfig.getDebugTasks().contains(task.getName()))
+					logger.debug("debugging task="+task.getName());
 						
 				String taskString = task.getUniqueString();
 				logger.debug("applyTraversalEventCopyGraph(): check task="+task.getUniqueString()
@@ -331,7 +340,22 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 				if (!GraphUtil.isValidConversion(task.getChunks(), groupingStr, groupingInstances))
 					return false;
 				if (!task.shallProcess(groupingInstances, groupingStr))
+				{
+					logger.debug("applyTraversalEventCopyGraph(): "
+							+" mergetasks="+Util.tasksToStringList(traversalEvent.getMergeTask())
+							+" lasttask="+(lastTask.isEmpty() ? null : lastTask.get(0).getUniqueString())
+							+" curtask"+task.getUniqueString());
+					if (!lastTask.isEmpty())
+					{
+						logger.debug("applyTraversalEventCopyGraph(): is contained?="+traversalEvent.getMergeTask().contains(lastTask.get(0)));
+						if (!traversalEvent.getMergeTask().contains(lastTask.get(0)))
+						{
+							logger.debug("applyTraversalEventCopyGraph(): update traversalEvents merge task list. Adding task="+lastTask.get(0).getUniqueString());
+							traversalEvent.getMergeTask().add(lastTask.get(0));
+						}
+					}
 					return false;
+				}
 				
 				if (inDataLink != null && !inDataLink.isUnconditional())
 				{
@@ -456,16 +480,19 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 				if (!skipTerminalEdgeProcessing)
 					applyTraversalEventCopyGraph_terminalEdge(vertex, copyTask, groupingStr, cell);
 				
+				if (lastTask.isEmpty())
+					lastTask.add(task);
+				else
+					lastTask.set(0, task);
 				return true;
 			}
 		};
-		//getGraph().traverse(root, true, visitor);
-		//getGraph().traverseTopologicalOrder(root, visitor);
+
 		getGraph().getGraph().getModel().beginUpdate();		try		{
 			getGraph().getGraph().traverseAllPaths(root, true, visitor, null);
 			JGraphXUtil.layoutGraph();
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
-
+		
 		return returnCell.size() > 0 ? returnCell.get(0) : null;
 	}
 

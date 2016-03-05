@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 
 import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
-
+import com.mxgraph.examples.swing.editor.EditorToolBar;
 import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -53,7 +53,7 @@ import easyflow.custom.util.GlobalVar;
 //upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 // 
 // and the comment (in class EasyFlowBasicGraphEditor.java) 
-//frame.setJMenuBar(new EditorMenuBar(this));
+//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 // 
 public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 {
@@ -68,7 +68,6 @@ public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 	 * 
 	 */
 	private JPanel upperPanel;
-	private JPanel lowerPanel;
 	private ComposeWorkflowPanel composeWorkflowPanel;
 	private JTextPane logMsgTextArea;
 	
@@ -144,7 +143,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
 		// add the tool bar
-//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
 		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 		
@@ -317,68 +316,5 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 	{
 		return logMsgTextArea;
 	}
-	protected void addStylesToDocument(StyledDocument doc) {
-		
-        //Initialize some styles.
-        Style def = StyleContext.getDefaultStyleContext().
-                        getStyle(StyleContext.DEFAULT_STYLE);
-
-        StyleConstants.setItalic(def, true);
-        StyleConstants.setFontFamily(def, "SansSerif");
-
-        Style s,ss;
-
-        //set category
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_CATEGORY, def);
-        StyleConstants.setBold(s, true);
-        StyleConstants.setForeground(s, Color.BLUE);
-        StyleConstants.setFontSize(s, 12);
-
-        //set severity
-        
-        ss = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY, def);
-        StyleConstants.setFontSize(ss, 12);
-        
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_LOW, ss);
-        StyleConstants.setForeground(s, Color.GRAY);
-        
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM, ss);
-        StyleConstants.setForeground(s, Color.BLACK);
-        
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_HIGH, ss);
-        StyleConstants.setForeground(s, Color.RED);
-        
-
-        //set log message text style
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT, def);
-        StyleConstants.setFontSize(s, 10);
-
-//        s = doc.addStyle("icon", regular);
-//        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
-        /*
-        ImageIcon pigIcon = createImageIcon("images/Pig.gif",
-                                            "a cute pig");
-        if (pigIcon != null) {
-            StyleConstants.setIcon(s, pigIcon);
-        }
-
-        s = doc.addStyle("button", regular);
-        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
-        ImageIcon soundIcon = createImageIcon("images/sound.gif",
-                                              "sound icon");
-        JButton button = new JButton();
-        if (soundIcon != null) {
-            button.setIcon(soundIcon);
-        } else {
-            button.setText("BEEP");
-        }
-        button.setCursor(Cursor.getDefaultCursor());
-        button.setMargin(new Insets(0,0,0,0));
-        button.setActionCommand(buttonString);
-        button.addActionListener(this);
-        
-        StyleConstants.setComponent(s, button);
-        */
-    }
 
 }

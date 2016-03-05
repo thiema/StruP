@@ -1761,9 +1761,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	public void readTools(EList<Tool> tools) {
 		for (Tool tool : tools) {
 			if (getToolNames().containsKey(tool.getName())) {
-				logger.debug("found tool with name:" + tool.getName());
+				logger.debug("readTools(): found tool with name:" + tool.getName());
 				if (getTools().containsKey(tool.getId()))
-					logger.warn("override tool:" + tool.getId());
+					logger.warn("readTools(): override tool:" + tool.getId());
 				getTools().put(tool.getId(), tool);
 			}
 		}
@@ -1801,8 +1801,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		for (DataPort dataPort1 : dataPorts1)
 			for (DataPort dataPort2 : dataPorts2) {
 				logger.trace("getOverlappingDataPorts(): check "
-						+ dataPort1.getName() + " "+dataPort1.getDataFormats().keySet() + " vs " 
-						+ dataPort2.getName()+ " "+dataPort2.getDataFormats().keySet()+" "+dataPort2.isCompatible(dataPort1));
+						+ dataPort1.getName() + " formats="+dataPort1.getDataFormats().keySet() + " vs " 
+						+ dataPort2.getName() + " formats="+dataPort2.getDataFormats().keySet()+" "+dataPort2.isCompatible(dataPort1));
 				if (dataPort2.isCompatible(dataPort1))
 					dataPorts.add(dataPort1);
 			}
@@ -2695,7 +2695,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			resolvedParam.getConditions()  != null && !resolvedParam.getConditions().isEmpty()
 			)
 		{
-			logger.debug(resolvedParam.getConditions().keySet()+" "+getChunks().keySet());
+			logger.debug("resolveConditionalStaticParam_Grouping(): "+
+					resolvedParam.getConditions().keySet()+" "+getChunks().keySet());
 			for (String key : resolvedParam.getConditions().keySet())
 			{
 				Condition c = resolvedParam.getConditions().get(key); 
@@ -2722,7 +2723,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 						//	isConsistent = false;
 							tmp = false;
 						}	
-						logger.debug("resolveConditionalStaticParam_Grouping(): eval result="+evalRes+" (exp="+c.getExpression()+" against context="+metaDataMap+")");
+						logger.debug("resolveConditionalStaticParam_Grouping(): eval result="
+								+evalRes+" (exp="+c.getExpression()+" against context="+metaDataMap+")");
 					}
 					if (tmp)
 					{

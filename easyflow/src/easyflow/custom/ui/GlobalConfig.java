@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -15,6 +16,8 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+
+import com.mxgraph.model.mxICell;
 
 import easyflow.core.Category;
 import easyflow.core.CoreFactory;
@@ -142,6 +145,7 @@ public class GlobalConfig {
 	private static final EList<String> toolCfgParams              = new BasicEList<String>();
 	private static final EList<String> workflowCfgParams              = new BasicEList<String>();
 	private static final EList<String> processingCfgParams              = new BasicEList<String>();
+	private static final EList<String> debugTasks             = new BasicEList<String>();
 
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE              = false;
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_DEFAULT_VALUE           = false;
@@ -163,6 +167,8 @@ public class GlobalConfig {
 
 	private static final boolean CONFIG_TOOL_ALLOW_HIDDEN_PARAM_DEFAULT_VALUE = false;
 	private static final String  CONFIG_TOOL_ALLOW_HIDDEN_PARAM_PARAM_NAME = "param_is_hidden";
+
+	private static final String CONFIG_TOOL_DEBUG_TASKS_PARAM_NAME = "debug_tasks";
 	
 
 	private static       JSONObject           jsonConfig       = null;
@@ -816,5 +822,20 @@ public class GlobalConfig {
 			return getToolConfig().get(CONFIG_TOOL_ALLOW_HIDDEN_PARAM_PARAM_NAME).equals("true");
 		else
 			return CONFIG_TOOL_ALLOW_HIDDEN_PARAM_DEFAULT_VALUE;
+	}
+
+	private static boolean debugTasksRead = false;
+	public static EList<String> getDebugTasks() {
+		if (!debugTasksRead)
+		{
+			if (getToolConfig().containsKey(CONFIG_TOOL_DEBUG_TASKS_PARAM_NAME))
+			{
+				String s[] = StringUtils.split(getToolConfig().get(CONFIG_TOOL_DEBUG_TASKS_PARAM_NAME), ',');
+				for (int i = 0; i< s.length;i++)
+					debugTasks.add(s[i]);
+			}
+			debugTasksRead = true;
+		}
+		return debugTasks; 
 	}
 }
