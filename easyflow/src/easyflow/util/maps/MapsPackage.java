@@ -2696,7 +2696,7 @@ public interface MapsPackage extends EPackage {
 	 * @return the meta object for class '<em>String To Error Control Map</em>'.
 	 * @see java.util.Map.Entry
 	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueType="easyflow.core.ErrorControl"
+	 *        valueType="easyflow.core.LogMessage"
 	 * @generated
 	 */
 	EClass getStringToErrorControlMap();

@@ -6,6 +6,7 @@
  */
 package easyflow.tool;
 
+import easyflow.core.LogMessage;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import org.w3c.dom.Document;
  *   <li>{@link easyflow.tool.ToolDefinitions#getToolSchemata <em>Tool Schemata</em>}</li>
  *   <li>{@link easyflow.tool.ToolDefinitions#getLogger <em>Logger</em>}</li>
  *   <li>{@link easyflow.tool.ToolDefinitions#getProperties <em>Properties</em>}</li>
+ *   <li>{@link easyflow.tool.ToolDefinitions#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -109,11 +111,45 @@ public interface ToolDefinitions extends EObject {
 	EMap<String, DocumentProperties> getProperties();
 
 	/**
+	 * Returns the value of the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Log Message</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Log Message</em>' reference.
+	 * @see #setLogMessage(LogMessage)
+	 * @see easyflow.tool.ToolPackage#getToolDefinitions_LogMessage()
+	 * @model
+	 * @generated
+	 */
+	LogMessage getLogMessage();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.ToolDefinitions#getLogMessage <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Log Message</em>' reference.
+	 * @see #getLogMessage()
+	 * @generated
+	 */
+	void setLogMessage(LogMessage value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model exceptions="easyflow.FileNotFoundException" xmlSourceDataType="easyflow.URI"
 	 * @generated
 	 */
 	boolean validateToolDefinition(URI xmlSource, boolean isFromJar) throws FileNotFoundException;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void initLogMessage();
 
 } // ToolDefinitions

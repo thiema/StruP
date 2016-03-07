@@ -116,13 +116,13 @@ public interface UiPackage extends EPackage {
 	int IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN = 3;
 
 	/**
-	 * The operation id for the '<em>Read Project Json</em>' operation.
+	 * The operation id for the '<em>Read Json</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IPROJECT___READ_PROJECT_JSON__URI = 4;
+	int IPROJECT___READ_JSON__URI_BOOLEAN = 4;
 
 	/**
 	 * The operation id for the '<em>Set Config And Base Path</em>' operation.
@@ -350,13 +350,22 @@ public interface UiPackage extends EPackage {
 	int IPROJECT___GET_EXECUTION_SYSTEM = 29;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IPROJECT___INIT_LOG_MESSAGE = 30;
+
+	/**
 	 * The number of operations of the '<em>IProject</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IPROJECT_OPERATION_COUNT = 30;
+	int IPROJECT_OPERATION_COUNT = 31;
 
 	/**
 	 * The meta object id for the '{@link easyflow.ui.impl.DefaultProjectImpl <em>Default Project</em>}' class.
@@ -477,13 +486,13 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT__CONFIG_METADATA_FILE = IPROJECT_FEATURE_COUNT + 11;
 
 	/**
-	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT__ERROR_CONTROL = IPROJECT_FEATURE_COUNT + 12;
+	int DEFAULT_PROJECT__LOG_MESSAGE = IPROJECT_FEATURE_COUNT + 12;
 
 	/**
 	 * The number of structural features of the '<em>Default Project</em>' class.
@@ -532,13 +541,13 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN = IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN;
 
 	/**
-	 * The operation id for the '<em>Read Project Json</em>' operation.
+	 * The operation id for the '<em>Read Json</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_PROJECT___READ_PROJECT_JSON__URI = IPROJECT___READ_PROJECT_JSON__URI;
+	int DEFAULT_PROJECT___READ_JSON__URI_BOOLEAN = IPROJECT___READ_JSON__URI_BOOLEAN;
 
 	/**
 	 * The operation id for the '<em>Set Config And Base Path</em>' operation.
@@ -766,6 +775,15 @@ public interface UiPackage extends EPackage {
 	int DEFAULT_PROJECT___GET_EXECUTION_SYSTEM = IPROJECT___GET_EXECUTION_SYSTEM;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_PROJECT___INIT_LOG_MESSAGE = IPROJECT___INIT_LOG_MESSAGE;
+
+	/**
 	 * The number of operations of the '<em>Default Project</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -826,14 +844,14 @@ public interface UiPackage extends EPackage {
 	EOperation getIProject__ReadConfiguration__JSONObject_boolean();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.ui.IProject#readProjectJson(java.net.URI) <em>Read Project Json</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#readJson(java.net.URI, boolean) <em>Read Json</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Read Project Json</em>' operation.
-	 * @see easyflow.ui.IProject#readProjectJson(java.net.URI)
+	 * @return the meta object for the '<em>Read Json</em>' operation.
+	 * @see easyflow.ui.IProject#readJson(java.net.URI, boolean)
 	 * @generated
 	 */
-	EOperation getIProject__ReadProjectJson__URI();
+	EOperation getIProject__ReadJson__URI_boolean();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.ui.IProject#setConfigAndBasePath(java.lang.String) <em>Set Config And Base Path</em>}' operation.
@@ -1086,6 +1104,16 @@ public interface UiPackage extends EPackage {
 	EOperation getIProject__GetExecutionSystem();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.ui.IProject#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.ui.IProject#initLogMessage()
+	 * @generated
+	 */
+	EOperation getIProject__InitLogMessage();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.ui.DefaultProject <em>Default Project</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1228,15 +1256,15 @@ public interface UiPackage extends EPackage {
 	EAttribute getDefaultProject_ConfigMetadataFile();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.ui.DefaultProject#getErrorControl <em>Error Control</em>}'.
+	 * Returns the meta object for the reference '{@link easyflow.ui.DefaultProject#getLogMessage <em>Log Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Error Control</em>'.
-	 * @see easyflow.ui.DefaultProject#getErrorControl()
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.ui.DefaultProject#getLogMessage()
 	 * @see #getDefaultProject()
 	 * @generated
 	 */
-	EReference getDefaultProject_ErrorControl();
+	EReference getDefaultProject_LogMessage();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1303,12 +1331,12 @@ public interface UiPackage extends EPackage {
 		EOperation IPROJECT___READ_CONFIGURATION__JSONOBJECT_BOOLEAN = eINSTANCE.getIProject__ReadConfiguration__JSONObject_boolean();
 
 		/**
-		 * The meta object literal for the '<em><b>Read Project Json</b></em>' operation.
+		 * The meta object literal for the '<em><b>Read Json</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation IPROJECT___READ_PROJECT_JSON__URI = eINSTANCE.getIProject__ReadProjectJson__URI();
+		EOperation IPROJECT___READ_JSON__URI_BOOLEAN = eINSTANCE.getIProject__ReadJson__URI_boolean();
 
 		/**
 		 * The meta object literal for the '<em><b>Set Config And Base Path</b></em>' operation.
@@ -1511,6 +1539,14 @@ public interface UiPackage extends EPackage {
 		EOperation IPROJECT___GET_EXECUTION_SYSTEM = eINSTANCE.getIProject__GetExecutionSystem();
 
 		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IPROJECT___INIT_LOG_MESSAGE = eINSTANCE.getIProject__InitLogMessage();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.ui.impl.DefaultProjectImpl <em>Default Project</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1617,12 +1653,12 @@ public interface UiPackage extends EPackage {
 		EAttribute DEFAULT_PROJECT__CONFIG_METADATA_FILE = eINSTANCE.getDefaultProject_ConfigMetadataFile();
 
 		/**
-		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEFAULT_PROJECT__ERROR_CONTROL = eINSTANCE.getDefaultProject_ErrorControl();
+		EReference DEFAULT_PROJECT__LOG_MESSAGE = eINSTANCE.getDefaultProject_LogMessage();
 
 	}
 

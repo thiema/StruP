@@ -6,6 +6,7 @@
  */
 package easyflow.tool;
 
+import easyflow.core.LogMessage;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.util.Tuple;
 import easyflow.data.Data;
@@ -42,6 +43,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Tool#getResolvedParams <em>Resolved Params</em>}</li>
  *   <li>{@link easyflow.tool.Tool#isRoot <em>Root</em>}</li>
  *   <li>{@link easyflow.tool.Tool#getResolveUriMap <em>Resolve Uri Map</em>}</li>
+ *   <li>{@link easyflow.tool.Tool#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -256,6 +258,14 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void createData(ResolvedParam resolvedParameter, EMap<String, Integer> indexMap, EMap<String, Integer> byParamIndexMap);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void initLogMessage();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -486,6 +496,32 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	EMap<String, URI> getResolveUriMap();
+
+	/**
+	 * Returns the value of the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Log Message</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Log Message</em>' reference.
+	 * @see #setLogMessage(LogMessage)
+	 * @see easyflow.tool.ToolPackage#getTool_LogMessage()
+	 * @model
+	 * @generated
+	 */
+	LogMessage getLogMessage();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.Tool#getLogMessage <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Log Message</em>' reference.
+	 * @see #getLogMessage()
+	 * @generated
+	 */
+	void setLogMessage(LogMessage value);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -261,13 +261,13 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW__JGRAPH = 20;
 
 	/**
-	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW__ERROR_CONTROL = 21;
+	int WORKFLOW__LOG_MESSAGE = 21;
 
 	/**
 	 * The number of structural features of the '<em>Workflow</em>' class.
@@ -564,7 +564,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING = 31;
+	int WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING_STRING_STRING = 31;
 
 	/**
 	 * The operation id for the '<em>Init</em>' operation.
@@ -585,13 +585,22 @@ public interface CorePackage extends EPackage {
 	int WORKFLOW___RENDER_TO_STRING = 33;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKFLOW___INIT_LOG_MESSAGE = 34;
+
+	/**
 	 * The number of operations of the '<em>Workflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKFLOW_OPERATION_COUNT = 34;
+	int WORKFLOW_OPERATION_COUNT = 35;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -883,13 +892,22 @@ public interface CorePackage extends EPackage {
 	int TASK__RULE = 30;
 
 	/**
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__LOG_MESSAGE = 31;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 31;
+	int TASK_FEATURE_COUNT = 32;
 
 	/**
 	 * The operation id for the '<em>Read Task</em>' operation.
@@ -1459,13 +1477,22 @@ public interface CorePackage extends EPackage {
 	int TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING = 62;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK___INIT_LOG_MESSAGE = 63;
+
+	/**
 	 * The number of operations of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_OPERATION_COUNT = 63;
+	int TASK_OPERATION_COUNT = 64;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
@@ -1814,13 +1841,31 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_WORKFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+	int DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Util Task File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Default Workflow Template</em>' class.
@@ -1829,7 +1874,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 5;
+	int DEFAULT_WORKFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Read Template</em>' operation.
@@ -1841,13 +1886,22 @@ public interface CorePackage extends EPackage {
 	int DEFAULT_WORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST = IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_WORKFLOW_TEMPLATE___INIT_LOG_MESSAGE = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Default Workflow Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_WORKFLOW_TEMPLATE_OPERATION_COUNT = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 0;
+	int DEFAULT_WORKFLOW_TEMPLATE_OPERATION_COUNT = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
@@ -1896,13 +1950,31 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TEMPLATE__LOGGER = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Error Control</b></em>' reference.
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE__ERROR_CONTROL = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+	int EASYFLOW_TEMPLATE__LOG_MESSAGE = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE__FILE_NAME = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Util Task File Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE__UTIL_TASK_FILE_NAME = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Easyflow Template</em>' class.
@@ -1911,7 +1983,7 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 5;
+	int EASYFLOW_TEMPLATE_FEATURE_COUNT = IWORKFLOW_TEMPLATE_FEATURE_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Read Template</em>' operation.
@@ -1923,13 +1995,22 @@ public interface CorePackage extends EPackage {
 	int EASYFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST = IWORKFLOW_TEMPLATE___READ_TEMPLATE__STRING_ELIST;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EASYFLOW_TEMPLATE___INIT_LOG_MESSAGE = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Easyflow Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EASYFLOW_TEMPLATE_OPERATION_COUNT = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 0;
+	int EASYFLOW_TEMPLATE_OPERATION_COUNT = IWORKFLOW_TEMPLATE_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.ITaskReader <em>ITask Reader</em>}' class.
@@ -2153,13 +2234,22 @@ public interface CorePackage extends EPackage {
 	int PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS = 5;
 
 	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARENT_TASK_RESULT__LOGGER = 6;
+
+	/**
 	 * The number of structural features of the '<em>Parent Task Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARENT_TASK_RESULT_FEATURE_COUNT = 6;
+	int PARENT_TASK_RESULT_FEATURE_COUNT = 7;
 
 	/**
 	 * The number of operations of the '<em>Parent Task Result</em>' class.
@@ -2199,13 +2289,22 @@ public interface CorePackage extends EPackage {
 	int CONDITION__CIRCUMVENTING_PARENTS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION__LOGGER = 2;
+
+	/**
 	 * The number of structural features of the '<em>Condition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITION_FEATURE_COUNT = 2;
+	int CONDITION_FEATURE_COUNT = 3;
 
 
 	/**
@@ -2227,14 +2326,14 @@ public interface CorePackage extends EPackage {
 	int CONDITION_OPERATION_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link easyflow.core.impl.ErrorControlImpl <em>Error Control</em>}' class.
+	 * The meta object id for the '{@link easyflow.core.impl.LogMessageImpl <em>Log Message</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see easyflow.core.impl.ErrorControlImpl
-	 * @see easyflow.core.impl.CorePackageImpl#getErrorControl()
+	 * @see easyflow.core.impl.LogMessageImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getLogMessage()
 	 * @generated
 	 */
-	int ERROR_CONTROL = 13;
+	int LOG_MESSAGE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2243,25 +2342,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__NAME = 0;
+	int LOG_MESSAGE__NAME = 0;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * The feature id for the '<em><b>Log Msg</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__DESCRIPTION = 1;
-
-	/**
-	 * The feature id for the '<em><b>Resolve Error Tipp</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ERROR_CONTROL__RESOLVE_ERROR_TIPP = 2;
+	int LOG_MESSAGE__LOG_MSG = 1;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -2270,70 +2360,115 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__CATEGORY = 3;
+	int LOG_MESSAGE__CATEGORY = 2;
 
 	/**
-	 * The feature id for the '<em><b>Severity</b></em>' attribute.
+	 * The feature id for the '<em><b>Help Msg</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__SEVERITY = 4;
+	int LOG_MESSAGE__HELP_MSG = 3;
 
 	/**
-	 * The feature id for the '<em><b>Val Num</b></em>' attribute.
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__VAL_NUM = 5;
+	int LOG_MESSAGE__LOGGER = 4;
 
 	/**
-	 * The feature id for the '<em><b>Vals</b></em>' attribute list.
+	 * The number of structural features of the '<em>Log Message</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL__VALS = 6;
+	int LOG_MESSAGE_FEATURE_COUNT = 5;
 
 	/**
-	 * The number of structural features of the '<em>Error Control</em>' class.
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL_FEATURE_COUNT = 7;
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_ELIST = 0;
 
 	/**
-	 * The operation id for the '<em>Generate Description</em>' operation.
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL___GENERATE_DESCRIPTION = 0;
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_ELIST = 1;
 
 	/**
-	 * The operation id for the '<em>Generate Error String</em>' operation.
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST = 1;
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_ELIST = 2;
 
 	/**
-	 * The number of operations of the '<em>Error Control</em>' class.
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ERROR_CONTROL_OPERATION_COUNT = 2;
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_ELIST = 3;
+
+	/**
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING = 4;
+
+	/**
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING = 5;
+
+	/**
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_STRING = 6;
+
+	/**
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING = 7;
+
+	/**
+	 * The number of operations of the '<em>Log Message</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE_OPERATION_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
@@ -2598,15 +2733,15 @@ public interface CorePackage extends EPackage {
 	EReference getWorkflow_Jgraph();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getErrorControl <em>Error Control</em>}'.
+	 * Returns the meta object for the reference '{@link easyflow.core.Workflow#getLogMessage <em>Log Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Error Control</em>'.
-	 * @see easyflow.core.Workflow#getErrorControl()
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.core.Workflow#getLogMessage()
 	 * @see #getWorkflow()
 	 * @generated
 	 */
-	EReference getWorkflow_ErrorControl();
+	EReference getWorkflow_LogMessage();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Workflow#generateGraphFromTemplate(org.eclipse.emf.common.util.EMap) <em>Generate Graph From Template</em>}' operation.
@@ -2919,14 +3054,14 @@ public interface CorePackage extends EPackage {
 	EOperation getWorkflow__PrintWorkflowStepMsgOnStart__String();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Workflow#printWorkflowStepMsgOnEnd(boolean, java.lang.String) <em>Print Workflow Step Msg On End</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#printWorkflowStepMsgOnEnd(boolean, java.lang.String, java.lang.String, java.lang.String) <em>Print Workflow Step Msg On End</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Print Workflow Step Msg On End</em>' operation.
-	 * @see easyflow.core.Workflow#printWorkflowStepMsgOnEnd(boolean, java.lang.String)
+	 * @see easyflow.core.Workflow#printWorkflowStepMsgOnEnd(boolean, java.lang.String, java.lang.String, java.lang.String)
 	 * @generated
 	 */
-	EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String();
+	EOperation getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String_String_String();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Workflow#init() <em>Init</em>}' operation.
@@ -2947,6 +3082,16 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getWorkflow__RenderToString();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.Workflow#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.core.Workflow#initLogMessage()
+	 * @generated
+	 */
+	EOperation getWorkflow__InitLogMessage();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.Task <em>Task</em>}'.
@@ -3298,6 +3443,17 @@ public interface CorePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTask_Rule();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.Task#getLogMessage <em>Log Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.core.Task#getLogMessage()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EReference getTask_LogMessage();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Task#readTask(java.lang.String, java.lang.String, org.eclipse.emf.common.util.EList) <em>Read Task</em>}' operation.
@@ -3930,6 +4086,16 @@ public interface CorePackage extends EPackage {
 	EOperation getTask__CreateGroupingCriteria__String_DataPort_String();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.core.Task#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.core.Task#initLogMessage()
+	 * @generated
+	 */
+	EOperation getTask__InitLogMessage();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.PreprocessingTask <em>Preprocessing Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4271,15 +4437,47 @@ public interface CorePackage extends EPackage {
 	EAttribute getDefaultWorkflowTemplate_Logger();
 
 	/**
-	 * Returns the meta object for the reference '{@link easyflow.core.DefaultWorkflowTemplate#getErrorControl <em>Error Control</em>}'.
+	 * Returns the meta object for the reference '{@link easyflow.core.DefaultWorkflowTemplate#getLogMessage <em>Log Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Error Control</em>'.
-	 * @see easyflow.core.DefaultWorkflowTemplate#getErrorControl()
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.core.DefaultWorkflowTemplate#getLogMessage()
 	 * @see #getDefaultWorkflowTemplate()
 	 * @generated
 	 */
-	EReference getDefaultWorkflowTemplate_ErrorControl();
+	EReference getDefaultWorkflowTemplate_LogMessage();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getFileName <em>File Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>File Name</em>'.
+	 * @see easyflow.core.DefaultWorkflowTemplate#getFileName()
+	 * @see #getDefaultWorkflowTemplate()
+	 * @generated
+	 */
+	EAttribute getDefaultWorkflowTemplate_FileName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.DefaultWorkflowTemplate#getUtilTaskFileName <em>Util Task File Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Util Task File Name</em>'.
+	 * @see easyflow.core.DefaultWorkflowTemplate#getUtilTaskFileName()
+	 * @see #getDefaultWorkflowTemplate()
+	 * @generated
+	 */
+	EAttribute getDefaultWorkflowTemplate_UtilTaskFileName();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.DefaultWorkflowTemplate#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.core.DefaultWorkflowTemplate#initLogMessage()
+	 * @generated
+	 */
+	EOperation getDefaultWorkflowTemplate__InitLogMessage();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.core.EasyflowTemplate <em>Easyflow Template</em>}'.
@@ -4451,6 +4649,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getParentTaskResult_PotentialCircumventingTasks();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ParentTaskResult#getLogger <em>Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.core.ParentTaskResult#getLogger()
+	 * @see #getParentTaskResult()
+	 * @generated
+	 */
+	EAttribute getParentTaskResult_Logger();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.core.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4483,6 +4692,17 @@ public interface CorePackage extends EPackage {
 	EAttribute getCondition_CircumventingParents();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.Condition#getLogger <em>Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.core.Condition#getLogger()
+	 * @see #getCondition()
+	 * @generated
+	 */
+	EAttribute getCondition_Logger();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.core.Condition#isUnconditional() <em>Is Unconditional</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4493,111 +4713,149 @@ public interface CorePackage extends EPackage {
 	EOperation getCondition__IsUnconditional();
 
 	/**
-	 * Returns the meta object for class '{@link easyflow.core.ErrorControl <em>Error Control</em>}'.
+	 * Returns the meta object for class '{@link easyflow.core.LogMessage <em>Log Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Error Control</em>'.
-	 * @see easyflow.core.ErrorControl
+	 * @return the meta object for class '<em>Log Message</em>'.
+	 * @see easyflow.core.LogMessage
 	 * @generated
 	 */
-	EClass getErrorControl();
+	EClass getLogMessage();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.LogMessage#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see easyflow.core.ErrorControl#getName()
-	 * @see #getErrorControl()
+	 * @see easyflow.core.LogMessage#getName()
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	EAttribute getErrorControl_Name();
+	EAttribute getLogMessage_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getDescription <em>Description</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.LogMessage#getLogMsg <em>Log Msg</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see easyflow.core.ErrorControl#getDescription()
-	 * @see #getErrorControl()
+	 * @return the meta object for the attribute '<em>Log Msg</em>'.
+	 * @see easyflow.core.LogMessage#getLogMsg()
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	EAttribute getErrorControl_Description();
+	EAttribute getLogMessage_LogMsg();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getResolveErrorTipp <em>Resolve Error Tipp</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Resolve Error Tipp</em>'.
-	 * @see easyflow.core.ErrorControl#getResolveErrorTipp()
-	 * @see #getErrorControl()
-	 * @generated
-	 */
-	EAttribute getErrorControl_ResolveErrorTipp();
-
-	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getCategory <em>Category</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.LogMessage#getCategory <em>Category</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Category</em>'.
-	 * @see easyflow.core.ErrorControl#getCategory()
-	 * @see #getErrorControl()
+	 * @see easyflow.core.LogMessage#getCategory()
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	EAttribute getErrorControl_Category();
+	EAttribute getLogMessage_Category();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getSeverity <em>Severity</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.LogMessage#getHelpMsg <em>Help Msg</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Severity</em>'.
-	 * @see easyflow.core.ErrorControl#getSeverity()
-	 * @see #getErrorControl()
+	 * @return the meta object for the attribute '<em>Help Msg</em>'.
+	 * @see easyflow.core.LogMessage#getHelpMsg()
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	EAttribute getErrorControl_Severity();
+	EAttribute getLogMessage_HelpMsg();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorControl#getValNum <em>Val Num</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.core.LogMessage#getLogger <em>Logger</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Val Num</em>'.
-	 * @see easyflow.core.ErrorControl#getValNum()
-	 * @see #getErrorControl()
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.core.LogMessage#getLogger()
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	EAttribute getErrorControl_ValNum();
+	EAttribute getLogMessage_Logger();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link easyflow.core.ErrorControl#getVals <em>Vals</em>}'.
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, org.eclipse.emf.common.util.EList) <em>Generate Log Msg</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Vals</em>'.
-	 * @see easyflow.core.ErrorControl#getVals()
-	 * @see #getErrorControl()
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	EAttribute getErrorControl_Vals();
+	EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_EList();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.ErrorControl#generateDescription() <em>Generate Description</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, org.eclipse.emf.common.util.EList) <em>Generate Log Msg</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Generate Description</em>' operation.
-	 * @see easyflow.core.ErrorControl#generateDescription()
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	EOperation getErrorControl__GenerateDescription();
+	EOperation getLogMessage__GenerateLogMsg__String_Severity_EList();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.ErrorControl#generateErrorString(java.lang.String, easyflow.core.Category, easyflow.core.Severity, org.eclipse.emf.common.util.EList) <em>Generate Error String</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.String, org.eclipse.emf.common.util.EList) <em>Generate Log Msg</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Generate Error String</em>' operation.
-	 * @see easyflow.core.ErrorControl#generateErrorString(java.lang.String, easyflow.core.Category, easyflow.core.Severity, org.eclipse.emf.common.util.EList)
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.String, org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	EOperation getErrorControl__GenerateErrorString__String_Category_Severity_EList();
+	EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_String_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, java.lang.String, org.eclipse.emf.common.util.EList) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, java.lang.String, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Severity_String_EList();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.String) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.String)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, java.lang.String) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, java.lang.String)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Severity_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.String, java.lang.String) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, java.lang.String, java.lang.String) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity, java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Severity_String_String();
 
 	/**
 	 * Returns the meta object for enum '{@link easyflow.core.Severity <em>Severity</em>}'.
@@ -4820,12 +5078,12 @@ public interface CorePackage extends EPackage {
 		EReference WORKFLOW__JGRAPH = eINSTANCE.getWorkflow_Jgraph();
 
 		/**
-		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference WORKFLOW__ERROR_CONTROL = eINSTANCE.getWorkflow_ErrorControl();
+		EReference WORKFLOW__LOG_MESSAGE = eINSTANCE.getWorkflow_LogMessage();
 
 		/**
 		 * The meta object literal for the '<em><b>Generate Graph From Template</b></em>' operation.
@@ -5081,7 +5339,7 @@ public interface CorePackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING = eINSTANCE.getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String();
+		EOperation WORKFLOW___PRINT_WORKFLOW_STEP_MSG_ON_END__BOOLEAN_STRING_STRING_STRING = eINSTANCE.getWorkflow__PrintWorkflowStepMsgOnEnd__boolean_String_String_String();
 
 		/**
 		 * The meta object literal for the '<em><b>Init</b></em>' operation.
@@ -5098,6 +5356,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EOperation WORKFLOW___RENDER_TO_STRING = eINSTANCE.getWorkflow__RenderToString();
+
+		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation WORKFLOW___INIT_LOG_MESSAGE = eINSTANCE.getWorkflow__InitLogMessage();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.TaskImpl <em>Task</em>}' class.
@@ -5356,6 +5622,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK__RULE = eINSTANCE.getTask_Rule();
+
+		/**
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK__LOG_MESSAGE = eINSTANCE.getTask_LogMessage();
 
 		/**
 		 * The meta object literal for the '<em><b>Read Task</b></em>' operation.
@@ -5862,6 +6136,14 @@ public interface CorePackage extends EPackage {
 		EOperation TASK___CREATE_GROUPING_CRITERIA__STRING_DATAPORT_STRING = eINSTANCE.getTask__CreateGroupingCriteria__String_DataPort_String();
 
 		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TASK___INIT_LOG_MESSAGE = eINSTANCE.getTask__InitLogMessage();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.PreprocessingTaskImpl <em>Preprocessing Task</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6126,12 +6408,36 @@ public interface CorePackage extends EPackage {
 		EAttribute DEFAULT_WORKFLOW_TEMPLATE__LOGGER = eINSTANCE.getDefaultWorkflowTemplate_Logger();
 
 		/**
-		 * The meta object literal for the '<em><b>Error Control</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEFAULT_WORKFLOW_TEMPLATE__ERROR_CONTROL = eINSTANCE.getDefaultWorkflowTemplate_ErrorControl();
+		EReference DEFAULT_WORKFLOW_TEMPLATE__LOG_MESSAGE = eINSTANCE.getDefaultWorkflowTemplate_LogMessage();
+
+		/**
+		 * The meta object literal for the '<em><b>File Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_WORKFLOW_TEMPLATE__FILE_NAME = eINSTANCE.getDefaultWorkflowTemplate_FileName();
+
+		/**
+		 * The meta object literal for the '<em><b>Util Task File Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_WORKFLOW_TEMPLATE__UTIL_TASK_FILE_NAME = eINSTANCE.getDefaultWorkflowTemplate_UtilTaskFileName();
+
+		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation DEFAULT_WORKFLOW_TEMPLATE___INIT_LOG_MESSAGE = eINSTANCE.getDefaultWorkflowTemplate__InitLogMessage();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.EasyflowTemplateImpl <em>Easyflow Template</em>}' class.
@@ -6274,6 +6580,14 @@ public interface CorePackage extends EPackage {
 		EAttribute PARENT_TASK_RESULT__POTENTIAL_CIRCUMVENTING_TASKS = eINSTANCE.getParentTaskResult_PotentialCircumventingTasks();
 
 		/**
+		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARENT_TASK_RESULT__LOGGER = eINSTANCE.getParentTaskResult_Logger();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.impl.ConditionImpl <em>Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6300,6 +6614,14 @@ public interface CorePackage extends EPackage {
 		EAttribute CONDITION__CIRCUMVENTING_PARENTS = eINSTANCE.getCondition_CircumventingParents();
 
 		/**
+		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONDITION__LOGGER = eINSTANCE.getCondition_Logger();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Unconditional</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6308,14 +6630,14 @@ public interface CorePackage extends EPackage {
 		EOperation CONDITION___IS_UNCONDITIONAL = eINSTANCE.getCondition__IsUnconditional();
 
 		/**
-		 * The meta object literal for the '{@link easyflow.core.impl.ErrorControlImpl <em>Error Control</em>}' class.
+		 * The meta object literal for the '{@link easyflow.core.impl.LogMessageImpl <em>Log Message</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see easyflow.core.impl.ErrorControlImpl
-		 * @see easyflow.core.impl.CorePackageImpl#getErrorControl()
+		 * @see easyflow.core.impl.LogMessageImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getLogMessage()
 		 * @generated
 		 */
-		EClass ERROR_CONTROL = eINSTANCE.getErrorControl();
+		EClass LOG_MESSAGE = eINSTANCE.getLogMessage();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -6323,23 +6645,15 @@ public interface CorePackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ERROR_CONTROL__NAME = eINSTANCE.getErrorControl_Name();
+		EAttribute LOG_MESSAGE__NAME = eINSTANCE.getLogMessage_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Log Msg</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ERROR_CONTROL__DESCRIPTION = eINSTANCE.getErrorControl_Description();
-
-		/**
-		 * The meta object literal for the '<em><b>Resolve Error Tipp</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ERROR_CONTROL__RESOLVE_ERROR_TIPP = eINSTANCE.getErrorControl_ResolveErrorTipp();
+		EAttribute LOG_MESSAGE__LOG_MSG = eINSTANCE.getLogMessage_LogMsg();
 
 		/**
 		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.
@@ -6347,47 +6661,87 @@ public interface CorePackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ERROR_CONTROL__CATEGORY = eINSTANCE.getErrorControl_Category();
+		EAttribute LOG_MESSAGE__CATEGORY = eINSTANCE.getLogMessage_Category();
 
 		/**
-		 * The meta object literal for the '<em><b>Severity</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Help Msg</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ERROR_CONTROL__SEVERITY = eINSTANCE.getErrorControl_Severity();
+		EAttribute LOG_MESSAGE__HELP_MSG = eINSTANCE.getLogMessage_HelpMsg();
 
 		/**
-		 * The meta object literal for the '<em><b>Val Num</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ERROR_CONTROL__VAL_NUM = eINSTANCE.getErrorControl_ValNum();
+		EAttribute LOG_MESSAGE__LOGGER = eINSTANCE.getLogMessage_Logger();
 
 		/**
-		 * The meta object literal for the '<em><b>Vals</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ERROR_CONTROL__VALS = eINSTANCE.getErrorControl_Vals();
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_ELIST = eINSTANCE.getLogMessage__GenerateLogMsg__String_Category_Severity_EList();
 
 		/**
-		 * The meta object literal for the '<em><b>Generate Description</b></em>' operation.
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation ERROR_CONTROL___GENERATE_DESCRIPTION = eINSTANCE.getErrorControl__GenerateDescription();
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_ELIST = eINSTANCE.getLogMessage__GenerateLogMsg__String_Severity_EList();
 
 		/**
-		 * The meta object literal for the '<em><b>Generate Error String</b></em>' operation.
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation ERROR_CONTROL___GENERATE_ERROR_STRING__STRING_CATEGORY_SEVERITY_ELIST = eINSTANCE.getErrorControl__GenerateErrorString__String_Category_Severity_EList();
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_ELIST = eINSTANCE.getLogMessage__GenerateLogMsg__String_Category_Severity_String_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_ELIST = eINSTANCE.getLogMessage__GenerateLogMsg__String_Severity_String_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING = eINSTANCE.getLogMessage__GenerateLogMsg__String_Category_Severity_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING = eINSTANCE.getLogMessage__GenerateLogMsg__String_Severity_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_STRING = eINSTANCE.getLogMessage__GenerateLogMsg__String_Category_Severity_String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING = eINSTANCE.getLogMessage__GenerateLogMsg__String_Severity_String_String();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.

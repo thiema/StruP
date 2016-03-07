@@ -197,13 +197,22 @@ public interface MetadataPackage extends EPackage {
 	int IMETA_DATA___CONTAINS_ROW__STRING = 12;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMETA_DATA___INIT_LOG_MESSAGE = 13;
+
+	/**
 	 * The number of operations of the '<em>IMeta Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMETA_DATA_OPERATION_COUNT = 13;
+	int IMETA_DATA_OPERATION_COUNT = 14;
 
 	/**
 	 * The meta object id for the '{@link easyflow.metadata.impl.DefaultMetaDataImpl <em>Default Meta Data</em>}' class.
@@ -270,13 +279,22 @@ public interface MetadataPackage extends EPackage {
 	int DEFAULT_META_DATA__GROUPING_PROPS = IMETA_DATA_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA__LOG_MESSAGE = IMETA_DATA_FEATURE_COUNT + 6;
+
+	/**
 	 * The number of structural features of the '<em>Default Meta Data</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 6;
+	int DEFAULT_META_DATA_FEATURE_COUNT = IMETA_DATA_FEATURE_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Init Meta Data</em>' operation.
@@ -394,6 +412,15 @@ public interface MetadataPackage extends EPackage {
 	 * @ordered
 	 */
 	int DEFAULT_META_DATA___CONTAINS_ROW__STRING = IMETA_DATA___CONTAINS_ROW__STRING;
+
+	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_META_DATA___INIT_LOG_MESSAGE = IMETA_DATA___INIT_LOG_MESSAGE;
 
 	/**
 	 * The number of operations of the '<em>Default Meta Data</em>' class.
@@ -813,6 +840,16 @@ public interface MetadataPackage extends EPackage {
 	EOperation getIMetaData__ContainsRow__String();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.metadata.IMetaData#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.metadata.IMetaData#initLogMessage()
+	 * @generated
+	 */
+	EOperation getIMetaData__InitLogMessage();
+
+	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.DefaultMetaData <em>Default Meta Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -887,6 +924,17 @@ public interface MetadataPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDefaultMetaData_GroupingProps();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.metadata.DefaultMetaData#getLogMessage <em>Log Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.metadata.DefaultMetaData#getLogMessage()
+	 * @see #getDefaultMetaData()
+	 * @generated
+	 */
+	EReference getDefaultMetaData_LogMessage();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}'.
@@ -1226,6 +1274,14 @@ public interface MetadataPackage extends EPackage {
 		EOperation IMETA_DATA___CONTAINS_ROW__STRING = eINSTANCE.getIMetaData__ContainsRow__String();
 
 		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IMETA_DATA___INIT_LOG_MESSAGE = eINSTANCE.getIMetaData__InitLogMessage();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.metadata.impl.DefaultMetaDataImpl <em>Default Meta Data</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1282,6 +1338,14 @@ public interface MetadataPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DEFAULT_META_DATA__GROUPING_PROPS = eINSTANCE.getDefaultMetaData_GroupingProps();
+
+		/**
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEFAULT_META_DATA__LOG_MESSAGE = eINSTANCE.getDefaultMetaData_LogMessage();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.metadata.IProjectMetaData <em>IProject Meta Data</em>}' class.

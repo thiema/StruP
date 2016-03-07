@@ -124,8 +124,8 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createConditionAdapter();
 			}
 			@Override
-			public Adapter caseErrorControl(ErrorControl object) {
-				return createErrorControlAdapter();
+			public Adapter caseLogMessage(LogMessage object) {
+				return createLogMessageAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -316,16 +316,16 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link easyflow.core.ErrorControl <em>Error Control</em>}'.
+	 * Creates a new adapter for an object of class '{@link easyflow.core.LogMessage <em>Log Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see easyflow.core.ErrorControl
+	 * @see easyflow.core.LogMessage
 	 * @generated
 	 */
-	public Adapter createErrorControlAdapter() {
+	public Adapter createLogMessageAdapter() {
 		return null;
 	}
 

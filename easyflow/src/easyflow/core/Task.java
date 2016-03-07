@@ -72,6 +72,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getParams <em>Params</em>}</li>
  *   <li>{@link easyflow.core.Task#getStaticParams <em>Static Params</em>}</li>
  *   <li>{@link easyflow.core.Task#getRule <em>Rule</em>}</li>
+ *   <li>{@link easyflow.core.Task#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -682,6 +683,32 @@ public interface Task extends EObject {
 	void setRule(Rule value);
 
 	/**
+	 * Returns the value of the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Log Message</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Log Message</em>' reference.
+	 * @see #setLogMessage(LogMessage)
+	 * @see easyflow.core.CorePackage#getTask_LogMessage()
+	 * @model
+	 * @generated
+	 */
+	LogMessage getLogMessage();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getLogMessage <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Log Message</em>' reference.
+	 * @see #getLogMessage()
+	 * @generated
+	 */
+	void setLogMessage(LogMessage value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -690,7 +717,7 @@ public interface Task extends EObject {
 	 * @model defaultGroupingCriteriaMany="true"
 	 * @generated
 	 */
-	void readTask(String taskString, String defaultMode, EList<String> defaultGroupingCriteria);
+	boolean readTask(String taskString, String defaultMode, EList<String> defaultGroupingCriteria);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1169,6 +1196,14 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	boolean createGroupingCriteria(String field, DataPort defaultCroupingCriteria, String defaultMode);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void initLogMessage();
 
 	/**
 	 * <!-- begin-user-doc -->

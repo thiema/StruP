@@ -73,7 +73,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Workflow#getExecutionSystem <em>Execution System</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getCurrentRule <em>Current Rule</em>}</li>
  *   <li>{@link easyflow.core.Workflow#getJgraph <em>Jgraph</em>}</li>
- *   <li>{@link easyflow.core.Workflow#getErrorControl <em>Error Control</em>}</li>
+ *   <li>{@link easyflow.core.Workflow#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -551,30 +551,30 @@ public interface Workflow extends EObject {
 	void setJgraph(Graph value);
 
 	/**
-	 * Returns the value of the '<em><b>Error Control</b></em>' reference.
+	 * Returns the value of the '<em><b>Log Message</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Error Control</em>' reference isn't clear,
+	 * If the meaning of the '<em>Log Message</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Error Control</em>' reference.
-	 * @see #setErrorControl(ErrorControl)
-	 * @see easyflow.core.CorePackage#getWorkflow_ErrorControl()
+	 * @return the value of the '<em>Log Message</em>' reference.
+	 * @see #setLogMessage(LogMessage)
+	 * @see easyflow.core.CorePackage#getWorkflow_LogMessage()
 	 * @model
 	 * @generated
 	 */
-	ErrorControl getErrorControl();
+	LogMessage getLogMessage();
 
 	/**
-	 * Sets the value of the '{@link easyflow.core.Workflow#getErrorControl <em>Error Control</em>}' reference.
+	 * Sets the value of the '{@link easyflow.core.Workflow#getLogMessage <em>Log Message</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Error Control</em>' reference.
-	 * @see #getErrorControl()
+	 * @param value the new value of the '<em>Log Message</em>' reference.
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	void setErrorControl(ErrorControl value);
+	void setLogMessage(LogMessage value);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -859,7 +859,7 @@ public interface Workflow extends EObject {
 	 * @model
 	 * @generated
 	 */
-	void printWorkflowStepMsgOnEnd(boolean rc, String step);
+	void printWorkflowStepMsgOnEnd(boolean rc, String step, String errorMsg, String helpMsg);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -876,5 +876,13 @@ public interface Workflow extends EObject {
 	 * @generated
 	 */
 	String renderToString();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void initLogMessage();
 
 } // Workflow

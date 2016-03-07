@@ -7,6 +7,7 @@
 package easyflow.core;
 
 import easyflow.data.DataPort;
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.ParentTaskResult#isGeneric <em>Generic</em>}</li>
  *   <li>{@link easyflow.core.ParentTaskResult#getRank <em>Rank</em>}</li>
  *   <li>{@link easyflow.core.ParentTaskResult#getPotentialCircumventingTasks <em>Potential Circumventing Tasks</em>}</li>
+ *   <li>{@link easyflow.core.ParentTaskResult#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
@@ -169,5 +171,20 @@ public interface ParentTaskResult extends EObject {
 	 * @generated
 	 */
 	EList<String> getPotentialCircumventingTasks();
+
+	/**
+	 * Returns the value of the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Logger</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Logger</em>' attribute.
+	 * @see easyflow.core.CorePackage#getParentTaskResult_Logger()
+	 * @model dataType="easyflow.Logger" transient="true" changeable="false"
+	 * @generated
+	 */
+	Logger getLogger();
 
 } // ParentTaskResult

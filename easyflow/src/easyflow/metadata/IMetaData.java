@@ -123,6 +123,14 @@ public interface IMetaData extends EObject {
 	 * @model
 	 * @generated
 	 */
+	void initLogMessage();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
 	EList<GroupingInstance> getInstances(String groupingStr1, String groupingStr2, String instanceStr);
 
 	/**

@@ -382,7 +382,8 @@ public class JGraphXUtil {
 						DataLink curDataLink = loadDataLink(edgeOut);
 						if (
 								dataLink.getDataPort().getName().equals(curDataLink.getDataPort().getName()) &&
-								dataLink.getGroupingStr().equals(curDataLink.getGroupingStr())
+								(//dataLink.getGroupingStr() == curDataLink.getGroupingStr() ||
+								dataLink.getGroupingStr().equals(curDataLink.getGroupingStr()))
 								)
 							rc = true;
 					}

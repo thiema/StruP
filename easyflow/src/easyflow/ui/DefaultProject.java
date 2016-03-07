@@ -6,17 +6,12 @@
  */
 package easyflow.ui;
 
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.core.Workflow;
-
 import easyflow.metadata.IMetaData;
-
 import easyflow.tool.ToolDefinitions;
-
 import java.net.URI;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
@@ -46,7 +41,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.ui.DefaultProject#getConfigWorkflowDefFile <em>Config Workflow Def File</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getConfigUtilityDefFile <em>Config Utility Def File</em>}</li>
  *   <li>{@link easyflow.ui.DefaultProject#getConfigMetadataFile <em>Config Metadata File</em>}</li>
- *   <li>{@link easyflow.ui.DefaultProject#getErrorControl <em>Error Control</em>}</li>
+ *   <li>{@link easyflow.ui.DefaultProject#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -322,29 +317,29 @@ public interface DefaultProject extends IProject {
 	void setConfigMetadataFile(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Error Control</b></em>' reference.
+	 * Returns the value of the '<em><b>Log Message</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Error Control</em>' reference isn't clear,
+	 * If the meaning of the '<em>Log Message</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Error Control</em>' reference.
-	 * @see #setErrorControl(ErrorControl)
-	 * @see easyflow.ui.UiPackage#getDefaultProject_ErrorControl()
+	 * @return the value of the '<em>Log Message</em>' reference.
+	 * @see #setLogMessage(LogMessage)
+	 * @see easyflow.ui.UiPackage#getDefaultProject_LogMessage()
 	 * @model
 	 * @generated
 	 */
-	ErrorControl getErrorControl();
+	LogMessage getLogMessage();
 
 	/**
-	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getErrorControl <em>Error Control</em>}' reference.
+	 * Sets the value of the '{@link easyflow.ui.DefaultProject#getLogMessage <em>Log Message</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Error Control</em>' reference.
-	 * @see #getErrorControl()
+	 * @param value the new value of the '<em>Log Message</em>' reference.
+	 * @see #getLogMessage()
 	 * @generated
 	 */
-	void setErrorControl(ErrorControl value);
+	void setLogMessage(LogMessage value);
 
 } // DefaultProject

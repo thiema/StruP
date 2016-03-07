@@ -7,7 +7,6 @@
 package easyflow.ui;
 
 import easyflow.core.Workflow;
-
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -19,7 +18,6 @@ import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.execution.IExecutionSystem;
-import java.io.FileNotFoundException;
 import java.net.URI;
 import net.sf.json.JSONObject;
 import org.eclipse.emf.ecore.EObject;
@@ -62,17 +60,6 @@ public interface IProject extends EObject {
 	 * <!-- begin-model-doc -->
 	 * 
 	 * <!-- end-model-doc -->
-	 * @model dataType="easyflow.JSONObject" exceptions="easyflow.FileNotFoundException" sourceDataType="easyflow.URI"
-	 * @generated
-	 */
-	JSONObject readProjectJson(URI source) throws FileNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * 
-	 * <!-- end-model-doc -->
 	 * @model
 	 * @generated
 	 */
@@ -104,6 +91,17 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	boolean readConfiguration(JSONObject config, boolean isDefault);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * 
+	 * <!-- end-model-doc -->
+	 * @model dataType="easyflow.JSONObject" sourceDataType="easyflow.URI"
+	 * @generated
+	 */
+	JSONObject readJson(URI source, boolean isDefault);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -224,6 +222,14 @@ public interface IProject extends EObject {
 	 * @generated
 	 */
 	IExecutionSystem getExecutionSystem();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	void initLogMessage();
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -238,13 +238,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL_DEFINITIONS__PROPERTIES = 3;
 
 	/**
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_DEFINITIONS__LOG_MESSAGE = 4;
+
+	/**
 	 * The number of structural features of the '<em>Definitions</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_DEFINITIONS_FEATURE_COUNT = 4;
+	int TOOL_DEFINITIONS_FEATURE_COUNT = 5;
 
 	/**
 	 * The operation id for the '<em>Validate Tool Definition</em>' operation.
@@ -256,13 +265,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN = 0;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_DEFINITIONS___INIT_LOG_MESSAGE = 1;
+
+	/**
 	 * The number of operations of the '<em>Definitions</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_DEFINITIONS_OPERATION_COUNT = 1;
+	int TOOL_DEFINITIONS_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.IToolElement <em>ITool Element</em>}' class.
@@ -493,13 +511,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL__RESOLVE_URI_MAP = ITOOL_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
+	 * The feature id for the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__LOG_MESSAGE = ITOOL_ELEMENT_FEATURE_COUNT + 15;
+
+	/**
 	 * The number of structural features of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 15;
+	int TOOL_FEATURE_COUNT = ITOOL_ELEMENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Render To String</em>' operation.
@@ -817,13 +844,22 @@ public interface ToolPackage extends EPackage {
 	int TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 33;
 
 	/**
+	 * The operation id for the '<em>Init Log Message</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___INIT_LOG_MESSAGE = ITOOL_ELEMENT_OPERATION_COUNT + 34;
+
+	/**
 	 * The number of operations of the '<em>Tool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 34;
+	int TOOL_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 35;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -3618,6 +3654,17 @@ public interface ToolPackage extends EPackage {
 	EReference getToolDefinitions_Properties();
 
 	/**
+	 * Returns the meta object for the reference '{@link easyflow.tool.ToolDefinitions#getLogMessage <em>Log Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.tool.ToolDefinitions#getLogMessage()
+	 * @see #getToolDefinitions()
+	 * @generated
+	 */
+	EReference getToolDefinitions_LogMessage();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.tool.ToolDefinitions#validateToolDefinition(java.net.URI, boolean) <em>Validate Tool Definition</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3626,6 +3673,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getToolDefinitions__ValidateToolDefinition__URI_boolean();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.ToolDefinitions#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.tool.ToolDefinitions#initLogMessage()
+	 * @generated
+	 */
+	EOperation getToolDefinitions__InitLogMessage();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.IToolElement <em>ITool Element</em>}'.
@@ -3831,6 +3888,17 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTool_ResolveUriMap();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.tool.Tool#getLogMessage <em>Log Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Log Message</em>'.
+	 * @see easyflow.tool.Tool#getLogMessage()
+	 * @see #getTool()
+	 * @generated
+	 */
+	EReference getTool_LogMessage();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.tool.Tool#writeModelToXML() <em>Write Model To XML</em>}' operation.
@@ -4171,6 +4239,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTool__CreateData__ResolvedParam_EMap_EMap();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#initLogMessage() <em>Init Log Message</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Init Log Message</em>' operation.
+	 * @see easyflow.tool.Tool#initLogMessage()
+	 * @generated
+	 */
+	EOperation getTool__InitLogMessage();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Command <em>Command</em>}'.
@@ -6084,12 +6162,28 @@ public interface ToolPackage extends EPackage {
 		EReference TOOL_DEFINITIONS__PROPERTIES = eINSTANCE.getToolDefinitions_Properties();
 
 		/**
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL_DEFINITIONS__LOG_MESSAGE = eINSTANCE.getToolDefinitions_LogMessage();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Tool Definition</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation TOOL_DEFINITIONS___VALIDATE_TOOL_DEFINITION__URI_BOOLEAN = eINSTANCE.getToolDefinitions__ValidateToolDefinition__URI_boolean();
+
+		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL_DEFINITIONS___INIT_LOG_MESSAGE = eINSTANCE.getToolDefinitions__InitLogMessage();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.IToolElement <em>ITool Element</em>}' class.
@@ -6248,6 +6342,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TOOL__RESOLVE_URI_MAP = eINSTANCE.getTool_ResolveUriMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Log Message</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOOL__LOG_MESSAGE = eINSTANCE.getTool_LogMessage();
 
 		/**
 		 * The meta object literal for the '<em><b>Write Model To XML</b></em>' operation.
@@ -6520,6 +6622,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP = eINSTANCE.getTool__CreateData__ResolvedParam_EMap_EMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Init Log Message</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___INIT_LOG_MESSAGE = eINSTANCE.getTool__InitLogMessage();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.

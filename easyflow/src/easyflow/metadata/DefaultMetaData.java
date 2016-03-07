@@ -6,6 +6,7 @@
  */
 package easyflow.metadata;
 
+import easyflow.core.LogMessage;
 import java.io.BufferedReader;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EMap;
@@ -28,6 +29,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupingInstances <em>Grouping Instances</em>}</li>
  *   <li>{@link easyflow.metadata.DefaultMetaData#getAliases <em>Aliases</em>}</li>
  *   <li>{@link easyflow.metadata.DefaultMetaData#getGroupingProps <em>Grouping Props</em>}</li>
+ *   <li>{@link easyflow.metadata.DefaultMetaData#getLogMessage <em>Log Message</em>}</li>
  * </ul>
  * </p>
  *
@@ -155,5 +157,31 @@ public interface DefaultMetaData extends IMetaData {
 	 * @generated
 	 */
 	EMap<String, String> getGroupingProps();
+
+	/**
+	 * Returns the value of the '<em><b>Log Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Log Message</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Log Message</em>' reference.
+	 * @see #setLogMessage(LogMessage)
+	 * @see easyflow.metadata.MetadataPackage#getDefaultMetaData_LogMessage()
+	 * @model
+	 * @generated
+	 */
+	LogMessage getLogMessage();
+
+	/**
+	 * Sets the value of the '{@link easyflow.metadata.DefaultMetaData#getLogMessage <em>Log Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Log Message</em>' reference.
+	 * @see #getLogMessage()
+	 * @generated
+	 */
+	void setLogMessage(LogMessage value);
 
 } // DefaultMetaData

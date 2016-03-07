@@ -7,48 +7,34 @@
 package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
-
-import easyflow.core.ErrorControl;
+import easyflow.core.LogMessage;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
-
 import easyflow.data.Data;
 import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
-
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingFeature;
 import easyflow.metadata.GroupingInstanceList;
-
 import easyflow.tool.Condition;
 import easyflow.tool.DocumentProperties;
 import easyflow.tool.Parameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
-
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
-
 import easyflow.ui.DefaultProject;
-
 import easyflow.util.maps.*;
-
 import java.net.URI;
-
 import java.util.Map;
-
 import javax.xml.validation.Schema;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -244,7 +230,7 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 				return createStringToIntMapAdapter();
 			}
 			@Override
-			public Adapter caseStringToErrorControlMap(Map.Entry<String, ErrorControl> object) {
+			public Adapter caseStringToErrorControlMap(Map.Entry<String, LogMessage> object) {
 				return createStringToErrorControlMapAdapter();
 			}
 			@Override

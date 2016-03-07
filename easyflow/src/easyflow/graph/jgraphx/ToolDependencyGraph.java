@@ -7,13 +7,9 @@
 package easyflow.graph.jgraphx;
 
 import com.mxgraph.model.mxICell;
-
 import easyflow.core.Catalog;
-
-import easyflow.core.ErrorControl;
 import easyflow.custom.exception.NoValidInOutDataException;
-
-import org.eclipse.emf.ecore.EObject;
+import easyflow.graph.DefaultGraph;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link easyflow.graph.jgraphx.ToolDependencyGraph#getGraph <em>Graph</em>}</li>
- *   <li>{@link easyflow.graph.jgraphx.ToolDependencyGraph#getErrorControl <em>Error Control</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ToolDependencyGraph extends EObject {
+public interface ToolDependencyGraph extends DefaultGraph {
 	/**
 	 * Returns the value of the '<em><b>Graph</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -58,32 +53,6 @@ public interface ToolDependencyGraph extends EObject {
 	 * @generated
 	 */
 	void setGraph(Graph value);
-
-	/**
-	 * Returns the value of the '<em><b>Error Control</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Error Control</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Error Control</em>' reference.
-	 * @see #setErrorControl(ErrorControl)
-	 * @see easyflow.graph.jgraphx.JgraphxPackage#getToolDependencyGraph_ErrorControl()
-	 * @model
-	 * @generated
-	 */
-	ErrorControl getErrorControl();
-
-	/**
-	 * Sets the value of the '{@link easyflow.graph.jgraphx.ToolDependencyGraph#getErrorControl <em>Error Control</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Error Control</em>' reference.
-	 * @see #getErrorControl()
-	 * @generated
-	 */
-	void setErrorControl(ErrorControl value);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -1638,7 +1638,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	    	getJgraph().setDefaultRootCell((mxICell) rootCell);
 	    	if (!getLastTasks().contains(getRootTask()))
 	    		getLastTasks().add(getRootTask());
-	        logger.trace("generateAbstractGraphEdges(): "+getWorkflowTemplate().getTasks());
+	        //logger.trace("generateAbstractGraphEdges(): "+getWorkflowTemplate().getTasks());
 	        Iterator<Task> it=getWorkflowTemplate().getTasks().iterator();
 			while (it.hasNext())
 			{
@@ -1797,8 +1797,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			//logger.debug("getParentTasksFor(): found "+tmp.size()+" tasks from parents task list");
 			results.addAll(getParentTasksFor(task, tmp));
 		}
-		logger.debug("getParentTasksFor(): obtained "+results.size()+" fixed/generic parents");
-		for (ParentTaskResult result:results)
+		logger.debug("getParentTasksFor(): obtained " + results.size() + " fixed/generic parents");
+		for (ParentTaskResult result : results)
 		{
 			logger.debug("getParentTasksFor(): "
 					+"task="+task.getUniqueString()
@@ -1812,24 +1812,21 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		// produce the resulting map
 		EMap<Task, EList<DataLink>> tasks = getParents(task, results);
 		return tasks;
-		
 	}
 	
 	private EMap<Task, EList<DataLink>> getParents(Task task, EList<ParentTaskResult> results)
 	{
+		logger.debug("getParents(): evaluate "+results.size()+" parents for task "+task.getUniqueString());
 		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
 		
-		// add parents unconditionally
-		//tasks.addAll(getAllParents(task, results, null, null));
 		tasks.addAll(getAllParentsByStrategy(task, results, null, null));
 		
 		// evaluate conditions
 		String uconds[] = new String[results.size()];
 		String ctasks[] = new String[results.size()];
 		int i=0;
-		for (ParentTaskResult result:results)
+		for (ParentTaskResult result : results)
 		{
-			
 			if (result.getCondition() != null && !result.getCondition().equals(""))
 			{
 				uconds[i]=result.getCondition();
@@ -1841,9 +1838,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		if (i>0)
 		{
 			EList<Integer[]> powerSet = enumerateIntPowerSet(i);
-			
-			for (Integer[] conditions: powerSet)
+			logger.debug("getParents(): evaluate set of "+powerSet.size()+" combinations.");
+			for (Integer[] conditions : powerSet)
 			{
+				
 				EList<String> conditionSet = new BasicEList<String>();
 				EList<String> taskSet = new BasicEList<String>();
 				for (int j:conditions)
@@ -1852,12 +1850,58 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 						conditionSet.add(uconds[j]);
 					taskSet.add(ctasks[j]);
 				}
+				logger.debug("getParents(): test condition set="+conditionSet+" "+Util.list2String(taskSet, ","));
 				// find parents which circumvent the given set of conditions
-				//EMap<Task, EList<DataLink>> allTasks = getAllParents(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet);
-				EMap<Task, EList<DataLink>> allTasks = getAllParentsByStrategy(task, getMatchingParentTasks(results, conditionSet), conditionSet, taskSet);
-				tasks.addAll(allTasks);
+				EMap<Task, EList<DataLink>> allTasks = getAllParentsByStrategy(task, 
+						getMatchingParentTasks(results, conditionSet), 
+						conditionSet, taskSet);
+				Iterator<Entry<Task, EList<DataLink>>> it = allTasks.iterator();
+				while (it.hasNext())
+				{
+					Entry<Task, EList<DataLink>> e = it.next();
+					if (tasks.containsKey(e.getKey()))
+					{
+						EList<DataLink> knownDLs = tasks.get(e.getKey());
+						if (e.getValue().size() == knownDLs.size())
+						{
+							boolean matchAll = true;
+							for (DataLink d : e.getValue())
+							{
+								boolean match = false;
+								for (DataLink knownDL : knownDLs)
+								{
+									if (
+											((d.getInDataPort() == null && knownDL.getInDataPort() == null) ||
+											(d.getInDataPort() != null && d.getInDataPort().isCompatible(knownDL.getInDataPort()))
+											) &&
+											((d.getDataPort() == null && knownDL.getDataPort() == null) ||
+											(d.getDataPort() != null &&
+											d.getDataPort().isCompatible(knownDL.getDataPort())))
+										)
+									{
+										match = true;
+										break;
+									}
+								}
+								if (!match)
+								{
+									matchAll = false;
+									break;
+								}
+							}
+							if (!matchAll)
+								tasks.add(e);		
+						}
+					}
+					else
+					{
+						tasks.add(e);
+					}
+				}
+				//tasks.addAll(allTasks);
 			}
 		}
+		logger.debug("getParents(): produced "+tasks.size()+" parents with datalinks.");
 		return tasks;
 	}
 	
@@ -1913,6 +1957,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		
 		for (ParentTaskResult result:results)
 		{
+			logger.debug("getAllParents(): parent="+result.getParentTask().getUniqueString()
+					+" cond="+result.getCondition()
+					+" potential circumvents="+result.getPotentialCircumventingTasks()
+					+" ports="+Util.list2String(result.getCoveredPorts(), ","));
 			EList<DataLink> dataLinks = new BasicEList<DataLink>();
 			for (DataPort dataPort:result.getCoveredPorts())
 			{
@@ -1941,7 +1989,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			
 			tasks.put(result.getParentTask(), dataLinks);
 			logger.trace("getAllParents(): parent="+result.getParentTask().getUniqueString()
-					+" (resolving "+result.getCoveredPorts().size()+" ports) added."
+					+" (resolving "+result.getCoveredPorts().size()+" ports) added."+" (tot="+tasks.size()+")"
 					//+" "+dataLinks.hashCode()
 					);
 		}
@@ -2004,7 +2052,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			ParentTaskResult result = it.next();
 			if (conditionsToCircumvent.contains(result.getCondition()))
 			{
-				ParentTaskResult match=findParentBehindOf(results, result, conditionsToCircumvent);
+				ParentTaskResult match = findParentBehindOf(results, result, conditionsToCircumvent);
 				if (match != null)
 				{
 					filteredResults.add(match);

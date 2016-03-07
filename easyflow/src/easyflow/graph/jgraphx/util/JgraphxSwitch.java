@@ -6,6 +6,8 @@
  */
 package easyflow.graph.jgraphx.util;
 
+import easyflow.graph.DefaultGraph;
+import easyflow.graph.IGraph;
 import easyflow.graph.jgraphx.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -73,36 +75,48 @@ public class JgraphxSwitch<T> extends Switch<T> {
 			case JgraphxPackage.ABSTRACT_GRAPH: {
 				AbstractGraph abstractGraph = (AbstractGraph)theEObject;
 				T result = caseAbstractGraph(abstractGraph);
+				if (result == null) result = caseDefaultGraph(abstractGraph);
+				if (result == null) result = caseIGraph(abstractGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH: {
 				TraversalEventGraph traversalEventGraph = (TraversalEventGraph)theEObject;
 				T result = caseTraversalEventGraph(traversalEventGraph);
+				if (result == null) result = caseDefaultGraph(traversalEventGraph);
+				if (result == null) result = caseIGraph(traversalEventGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JgraphxPackage.PREPROCESSING_GRAPH: {
 				PreprocessingGraph preprocessingGraph = (PreprocessingGraph)theEObject;
 				T result = casePreprocessingGraph(preprocessingGraph);
+				if (result == null) result = caseDefaultGraph(preprocessingGraph);
+				if (result == null) result = caseIGraph(preprocessingGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JgraphxPackage.TOOL_DEPENDENCY_GRAPH: {
 				ToolDependencyGraph toolDependencyGraph = (ToolDependencyGraph)theEObject;
 				T result = caseToolDependencyGraph(toolDependencyGraph);
+				if (result == null) result = caseDefaultGraph(toolDependencyGraph);
+				if (result == null) result = caseIGraph(toolDependencyGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JgraphxPackage.EXECUTION_GRAPH: {
 				ExecutionGraph executionGraph = (ExecutionGraph)theEObject;
 				T result = caseExecutionGraph(executionGraph);
+				if (result == null) result = caseDefaultGraph(executionGraph);
+				if (result == null) result = caseIGraph(executionGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JgraphxPackage.SUB_GRAPH: {
 				SubGraph subGraph = (SubGraph)theEObject;
 				T result = caseSubGraph(subGraph);
+				if (result == null) result = caseDefaultGraph(subGraph);
+				if (result == null) result = caseIGraph(subGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -218,6 +232,36 @@ public class JgraphxSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGraph(Graph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IGraph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IGraph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIGraph(IGraph object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Default Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Default Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDefaultGraph(DefaultGraph object) {
 		return null;
 	}
 

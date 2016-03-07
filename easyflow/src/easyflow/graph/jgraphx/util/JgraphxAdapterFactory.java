@@ -6,6 +6,8 @@
  */
 package easyflow.graph.jgraphx.util;
 
+import easyflow.graph.DefaultGraph;
+import easyflow.graph.IGraph;
 import easyflow.graph.jgraphx.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -98,6 +100,14 @@ public class JgraphxAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseGraph(Graph object) {
 				return createGraphAdapter();
+			}
+			@Override
+			public Adapter caseIGraph(IGraph object) {
+				return createIGraphAdapter();
+			}
+			@Override
+			public Adapter caseDefaultGraph(DefaultGraph object) {
+				return createDefaultGraphAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -214,6 +224,34 @@ public class JgraphxAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.IGraph <em>IGraph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.IGraph
+	 * @generated
+	 */
+	public Adapter createIGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.DefaultGraph <em>Default Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.DefaultGraph
+	 * @generated
+	 */
+	public Adapter createDefaultGraphAdapter() {
 		return null;
 	}
 

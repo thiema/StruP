@@ -152,9 +152,9 @@ public class CoreSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CorePackage.ERROR_CONTROL: {
-				ErrorControl errorControl = (ErrorControl)theEObject;
-				T result = caseErrorControl(errorControl);
+			case CorePackage.LOG_MESSAGE: {
+				LogMessage logMessage = (LogMessage)theEObject;
+				T result = caseLogMessage(logMessage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -343,17 +343,17 @@ public class CoreSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Error Control</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Log Message</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Error Control</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Log Message</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseErrorControl(ErrorControl object) {
+	public T caseLogMessage(LogMessage object) {
 		return null;
 	}
 
