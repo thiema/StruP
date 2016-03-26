@@ -114,6 +114,14 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated easyflow -->
       <package
+            uri="http:///de/thiema/easyflow/util/1.0.0"
+            class="easyflow.util.UtilPackage"
+            genModel="model/easyflow.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated easyflow -->
+      <package
             uri="http:///de/thiema/easyflow/util/maps/1.0.0"
             class="easyflow.util.maps.MapsPackage"
             genModel="model/easyflow.genmodel"/>

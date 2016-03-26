@@ -6,11 +6,11 @@
  */
 package easyflow.graph.jgraphx;
 
-import com.mxgraph.model.mxICell;
-import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.graph.DefaultGraph;
 import easyflow.traversal.TraversalEvent;
+import easyflow.util.ReturnValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,9 +58,9 @@ public interface SubGraph extends DefaultGraph {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model dataType="easyflow.mxICell" exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException"
 	 * @generated
 	 */
-	mxICell computeSubgraph(TraversalEvent traversalEvent, boolean isComplete) throws CellNotFoundException, TaskNotFoundException;
+	boolean computeSubgraph(TraversalEvent traversalEvent, boolean isComplete, ReturnValue returnCell) throws TaskNotFoundException, DataLinkNotFoundException;
 
 } // SubGraph

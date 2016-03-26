@@ -105,7 +105,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_GRAPH___INIT_LOG_MESSAGE = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE;
+	int ABSTRACT_GRAPH___INIT_LOG_MESSAGE__CATEGORY = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY;
 
 	/**
 	 * The operation id for the '<em>Resolve Traversal Events</em>' operation.
@@ -169,7 +169,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_GRAPH___INIT_LOG_MESSAGE = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE;
+	int TRAVERSAL_EVENT_GRAPH___INIT_LOG_MESSAGE__CATEGORY = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY;
 
 	/**
 	 * The operation id for the '<em>Apply Traversal Event</em>' operation.
@@ -196,7 +196,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 2;
+	int TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Apply Traversal Event Copy Graph</em>' operation.
@@ -205,7 +205,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 3;
+	int TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Traversal Event Graph</em>' class.
@@ -260,7 +260,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREPROCESSING_GRAPH___INIT_LOG_MESSAGE = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE;
+	int PREPROCESSING_GRAPH___INIT_LOG_MESSAGE__CATEGORY = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY;
 
 	/**
 	 * The operation id for the '<em>Resolve Preprocessing Task</em>' operation.
@@ -351,7 +351,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_DEPENDENCY_GRAPH___INIT_LOG_MESSAGE = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE;
+	int TOOL_DEPENDENCY_GRAPH___INIT_LOG_MESSAGE__CATEGORY = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY;
 
 	/**
 	 * The operation id for the '<em>Resolve Tool Dependencies</em>' operation.
@@ -415,7 +415,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXECUTION_GRAPH___INIT_LOG_MESSAGE = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE;
+	int EXECUTION_GRAPH___INIT_LOG_MESSAGE__CATEGORY = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY;
 
 	/**
 	 * The operation id for the '<em>Generate Workflow For Execution System</em>' operation.
@@ -497,7 +497,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH___INIT_LOG_MESSAGE = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE;
+	int SUB_GRAPH___INIT_LOG_MESSAGE__CATEGORY = GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY;
 
 	/**
 	 * The operation id for the '<em>Compute Subgraph</em>' operation.
@@ -506,7 +506,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 0;
+	int SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Sub Graph</em>' class.
@@ -751,7 +751,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN = 5;
+	int GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE = 5;
 
 	/**
 	 * The operation id for the '<em>Generate Workflow For Execution System</em>' operation.
@@ -832,7 +832,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE = 14;
+	int GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE = 14;
 
 	/**
 	 * The operation id for the '<em>Apply Traversal Event Copy Graph</em>' operation.
@@ -841,7 +841,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST = 15;
+	int GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE = 15;
 
 	/**
 	 * The operation id for the '<em>Resolve Traversal Events</em>' operation.
@@ -971,24 +971,24 @@ public interface JgraphxPackage extends EPackage {
 	EOperation getTraversalEventGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_EList();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance) <em>Apply Traversal Event Copy Graph</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance, easyflow.util.ReturnValue) <em>Apply Traversal Event Copy Graph</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Apply Traversal Event Copy Graph</em>' operation.
-	 * @see easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance)
+	 * @see easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance, easyflow.util.ReturnValue)
 	 * @generated
 	 */
-	EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance();
+	EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList) <em>Apply Traversal Event Copy Graph</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList, easyflow.util.ReturnValue) <em>Apply Traversal Event Copy Graph</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Apply Traversal Event Copy Graph</em>' operation.
-	 * @see easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList)
+	 * @see easyflow.graph.jgraphx.TraversalEventGraph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList, easyflow.util.ReturnValue)
 	 * @generated
 	 */
-	EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList();
+	EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.graph.jgraphx.PreprocessingGraph <em>Preprocessing Graph</em>}'.
@@ -1155,14 +1155,14 @@ public interface JgraphxPackage extends EPackage {
 	EReference getSubGraph_Graph();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.SubGraph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean) <em>Compute Subgraph</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.SubGraph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean, easyflow.util.ReturnValue) <em>Compute Subgraph</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Compute Subgraph</em>' operation.
-	 * @see easyflow.graph.jgraphx.SubGraph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean)
+	 * @see easyflow.graph.jgraphx.SubGraph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean, easyflow.util.ReturnValue)
 	 * @generated
 	 */
-	EOperation getSubGraph__ComputeSubgraph__TraversalEvent_boolean();
+	EOperation getSubGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.graph.jgraphx.Graph <em>Graph</em>}'.
@@ -1423,14 +1423,14 @@ public interface JgraphxPackage extends EPackage {
 	EOperation getGraph__Clear();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean) <em>Compute Subgraph</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean, easyflow.util.ReturnValue) <em>Compute Subgraph</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Compute Subgraph</em>' operation.
-	 * @see easyflow.graph.jgraphx.Graph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean)
+	 * @see easyflow.graph.jgraphx.Graph#computeSubgraph(easyflow.traversal.TraversalEvent, boolean, easyflow.util.ReturnValue)
 	 * @generated
 	 */
-	EOperation getGraph__ComputeSubgraph__TraversalEvent_boolean();
+	EOperation getGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#generateWorkflowForExecutionSystem(com.mxgraph.model.mxICell, easyflow.execution.IExecutionSystem) <em>Generate Workflow For Execution System</em>}' operation.
@@ -1513,24 +1513,24 @@ public interface JgraphxPackage extends EPackage {
 	EOperation getGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_EList();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance) <em>Apply Traversal Event Copy Graph</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance, easyflow.util.ReturnValue) <em>Apply Traversal Event Copy Graph</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Apply Traversal Event Copy Graph</em>' operation.
-	 * @see easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance)
+	 * @see easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, easyflow.metadata.GroupingInstance, easyflow.util.ReturnValue)
 	 * @generated
 	 */
-	EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance();
+	EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList) <em>Apply Traversal Event Copy Graph</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList, easyflow.util.ReturnValue) <em>Apply Traversal Event Copy Graph</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Apply Traversal Event Copy Graph</em>' operation.
-	 * @see easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList)
+	 * @see easyflow.graph.jgraphx.Graph#applyTraversalEventCopyGraph(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, org.eclipse.emf.common.util.EList, easyflow.util.ReturnValue)
 	 * @generated
 	 */
-	EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList();
+	EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#resolveTraversalEvents(com.mxgraph.model.mxICell) <em>Resolve Traversal Events</em>}' operation.
@@ -1663,14 +1663,14 @@ public interface JgraphxPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE = eINSTANCE.getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance();
+		EOperation TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE = eINSTANCE.getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue();
 		/**
 		 * The meta object literal for the '<em><b>Apply Traversal Event Copy Graph</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST = eINSTANCE.getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList();
+		EOperation TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE = eINSTANCE.getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue();
 		/**
 		 * The meta object literal for the '{@link easyflow.graph.jgraphx.impl.PreprocessingGraphImpl <em>Preprocessing Graph</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1797,7 +1797,7 @@ public interface JgraphxPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN = eINSTANCE.getSubGraph__ComputeSubgraph__TraversalEvent_boolean();
+		EOperation SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE = eINSTANCE.getSubGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue();
 		/**
 		 * The meta object literal for the '{@link easyflow.graph.jgraphx.impl.GraphImpl <em>Graph</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1974,7 +1974,7 @@ public interface JgraphxPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN = eINSTANCE.getGraph__ComputeSubgraph__TraversalEvent_boolean();
+		EOperation GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE = eINSTANCE.getGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue();
 		/**
 		 * The meta object literal for the '<em><b>Generate Workflow For Execution System</b></em>' operation.
 		 * <!-- begin-user-doc -->
@@ -2037,14 +2037,14 @@ public interface JgraphxPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE = eINSTANCE.getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance();
+		EOperation GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE = eINSTANCE.getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue();
 		/**
 		 * The meta object literal for the '<em><b>Apply Traversal Event Copy Graph</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST = eINSTANCE.getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList();
+		EOperation GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE = eINSTANCE.getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue();
 		/**
 		 * The meta object literal for the '<em><b>Resolve Traversal Events</b></em>' operation.
 		 * <!-- begin-user-doc -->

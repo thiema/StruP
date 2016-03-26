@@ -2462,13 +2462,131 @@ public interface CorePackage extends EPackage {
 	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING = 7;
 
 	/**
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY = 8;
+
+	/**
+	 * The operation id for the '<em>Generate Log Msg</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_EXCEPTION_ELIST = 9;
+
+	/**
 	 * The number of operations of the '<em>Log Message</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOG_MESSAGE_OPERATION_COUNT = 8;
+	int LOG_MESSAGE_OPERATION_COUNT = 10;
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.impl.ErrorInfoImpl <em>Error Info</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.impl.ErrorInfoImpl
+	 * @see easyflow.core.impl.CorePackageImpl#getErrorInfo()
+	 * @generated
+	 */
+	int ERROR_INFO = 14;
+
+	/**
+	 * The feature id for the '<em><b>Task</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO__TASK = 0;
+
+	/**
+	 * The feature id for the '<em><b>Data Link</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO__DATA_LINK = 1;
+
+	/**
+	 * The feature id for the '<em><b>Info</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO__INFO = 2;
+
+	/**
+	 * The feature id for the '<em><b>Final</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO__FINAL = 3;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO__CATEGORY = 4;
+
+	/**
+	 * The feature id for the '<em><b>Logger</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO__LOGGER = 5;
+
+	/**
+	 * The number of structural features of the '<em>Error Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO_FEATURE_COUNT = 6;
+
+	/**
+	 * The operation id for the '<em>Clear</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO___CLEAR = 0;
+
+	/**
+	 * The operation id for the '<em>Print</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO___PRINT = 1;
+
+	/**
+	 * The number of operations of the '<em>Error Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ERROR_INFO_OPERATION_COUNT = 2;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
@@ -2478,7 +2596,7 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getSeverity()
 	 * @generated
 	 */
-	int SEVERITY = 14;
+	int SEVERITY = 15;
 
 	/**
 	 * The meta object id for the '{@link easyflow.core.Category <em>Category</em>}' enum.
@@ -2488,7 +2606,18 @@ public interface CorePackage extends EPackage {
 	 * @see easyflow.core.impl.CorePackageImpl#getCategory()
 	 * @generated
 	 */
-	int CATEGORY = 15;
+	int CATEGORY = 16;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.core.LogMsgOutputMode <em>Log Msg Output Mode</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.core.LogMsgOutputMode
+	 * @see easyflow.core.impl.CorePackageImpl#getLogMsgOutputMode()
+	 * @generated
+	 */
+	int LOG_MSG_OUTPUT_MODE = 17;
 
 
 	/**
@@ -4858,6 +4987,122 @@ public interface CorePackage extends EPackage {
 	EOperation getLogMessage__GenerateLogMsg__String_Severity_String_String();
 
 	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Severity)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Severity();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.Exception, org.eclipse.emf.common.util.EList) <em>Generate Log Msg</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Generate Log Msg</em>' operation.
+	 * @see easyflow.core.LogMessage#generateLogMsg(java.lang.String, easyflow.core.Category, easyflow.core.Severity, java.lang.Exception, org.eclipse.emf.common.util.EList)
+	 * @generated
+	 */
+	EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_Exception_EList();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.core.ErrorInfo <em>Error Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Error Info</em>'.
+	 * @see easyflow.core.ErrorInfo
+	 * @generated
+	 */
+	EClass getErrorInfo();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.ErrorInfo#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Task</em>'.
+	 * @see easyflow.core.ErrorInfo#getTask()
+	 * @see #getErrorInfo()
+	 * @generated
+	 */
+	EReference getErrorInfo_Task();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.core.ErrorInfo#getDataLink <em>Data Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Data Link</em>'.
+	 * @see easyflow.core.ErrorInfo#getDataLink()
+	 * @see #getErrorInfo()
+	 * @generated
+	 */
+	EReference getErrorInfo_DataLink();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorInfo#getInfo <em>Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Info</em>'.
+	 * @see easyflow.core.ErrorInfo#getInfo()
+	 * @see #getErrorInfo()
+	 * @generated
+	 */
+	EAttribute getErrorInfo_Info();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorInfo#isFinal <em>Final</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Final</em>'.
+	 * @see easyflow.core.ErrorInfo#isFinal()
+	 * @see #getErrorInfo()
+	 * @generated
+	 */
+	EAttribute getErrorInfo_Final();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorInfo#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see easyflow.core.ErrorInfo#getCategory()
+	 * @see #getErrorInfo()
+	 * @generated
+	 */
+	EAttribute getErrorInfo_Category();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.ErrorInfo#getLogger <em>Logger</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Logger</em>'.
+	 * @see easyflow.core.ErrorInfo#getLogger()
+	 * @see #getErrorInfo()
+	 * @generated
+	 */
+	EAttribute getErrorInfo_Logger();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ErrorInfo#clear() <em>Clear</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Clear</em>' operation.
+	 * @see easyflow.core.ErrorInfo#clear()
+	 * @generated
+	 */
+	EOperation getErrorInfo__Clear();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.core.ErrorInfo#print() <em>Print</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Print</em>' operation.
+	 * @see easyflow.core.ErrorInfo#print()
+	 * @generated
+	 */
+	EOperation getErrorInfo__Print();
+
+	/**
 	 * Returns the meta object for enum '{@link easyflow.core.Severity <em>Severity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4878,6 +5123,16 @@ public interface CorePackage extends EPackage {
 	EEnum getCategory();
 
 	/**
+	 * Returns the meta object for enum '{@link easyflow.core.LogMsgOutputMode <em>Log Msg Output Mode</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Log Msg Output Mode</em>'.
+	 * @see easyflow.core.LogMsgOutputMode
+	 * @generated
+	 */
+	EEnum getLogMsgOutputMode();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4892,6 +5147,7 @@ public interface CorePackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
+	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
@@ -6744,6 +7000,96 @@ public interface CorePackage extends EPackage {
 		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING = eINSTANCE.getLogMessage__GenerateLogMsg__String_Severity_String_String();
 
 		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY = eINSTANCE.getLogMessage__GenerateLogMsg__String_Severity();
+
+		/**
+		 * The meta object literal for the '<em><b>Generate Log Msg</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_EXCEPTION_ELIST = eINSTANCE.getLogMessage__GenerateLogMsg__String_Category_Severity_Exception_EList();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.impl.ErrorInfoImpl <em>Error Info</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.impl.ErrorInfoImpl
+		 * @see easyflow.core.impl.CorePackageImpl#getErrorInfo()
+		 * @generated
+		 */
+		EClass ERROR_INFO = eINSTANCE.getErrorInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_INFO__TASK = eINSTANCE.getErrorInfo_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Data Link</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ERROR_INFO__DATA_LINK = eINSTANCE.getErrorInfo_DataLink();
+
+		/**
+		 * The meta object literal for the '<em><b>Info</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_INFO__INFO = eINSTANCE.getErrorInfo_Info();
+
+		/**
+		 * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_INFO__FINAL = eINSTANCE.getErrorInfo_Final();
+
+		/**
+		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_INFO__CATEGORY = eINSTANCE.getErrorInfo_Category();
+
+		/**
+		 * The meta object literal for the '<em><b>Logger</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ERROR_INFO__LOGGER = eINSTANCE.getErrorInfo_Logger();
+
+		/**
+		 * The meta object literal for the '<em><b>Clear</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ERROR_INFO___CLEAR = eINSTANCE.getErrorInfo__Clear();
+
+		/**
+		 * The meta object literal for the '<em><b>Print</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ERROR_INFO___PRINT = eINSTANCE.getErrorInfo__Print();
+
+		/**
 		 * The meta object literal for the '{@link easyflow.core.Severity <em>Severity</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6762,6 +7108,16 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EEnum CATEGORY = eINSTANCE.getCategory();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.core.LogMsgOutputMode <em>Log Msg Output Mode</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.core.LogMsgOutputMode
+		 * @see easyflow.core.impl.CorePackageImpl#getLogMsgOutputMode()
+		 * @generated
+		 */
+		EEnum LOG_MSG_OUTPUT_MODE = eINSTANCE.getLogMsgOutputMode();
 
 	}
 

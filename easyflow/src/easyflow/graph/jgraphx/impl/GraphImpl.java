@@ -7,8 +7,12 @@
 package easyflow.graph.jgraphx.impl;
 
 import com.mxgraph.model.mxICell;
+
 import easyflow.core.Catalog;
+import easyflow.core.Category;
+
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -44,14 +48,17 @@ import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 import easyflow.traversal.TraversalFactory;
+import easyflow.util.ReturnValue;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToGraphCellMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -750,7 +757,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @throws CellNotFoundException 
 	 * @generated not
 	 */
-	public TraversalEvent getNextTraversalEvent(boolean isGrouping) throws TaskNotFoundException, CellNotFoundException {
+	public TraversalEvent getNextTraversalEvent(boolean isGrouping) throws TaskNotFoundException {
 
 		//logger.debug(""+getTraversalEvents().size()+" "+getNewTraversalEvents().size()+" "+getDefaultRootCell());
 		if (getTraversalEvents().isEmpty())
@@ -783,7 +790,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EList<TraversalEvent> getTraversalEvents(mxICell root, final boolean isGrouping) throws CellNotFoundException, TaskNotFoundException {
+	public EList<TraversalEvent> getTraversalEvents(mxICell root, final boolean isGrouping) throws TaskNotFoundException {
 		
 		final EList<TraversalEvent> traversalEvents = new BasicEList<TraversalEvent>();
 		
@@ -1179,9 +1186,8 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public mxICell computeSubgraph(TraversalEvent traversalEvent, boolean isComplete) throws CellNotFoundException, TaskNotFoundException {
-		
-		return getSubGraph().computeSubgraph(traversalEvent, isComplete);
+	public boolean computeSubgraph(TraversalEvent traversalEvent, boolean isComplete, ReturnValue returnCell) throws TaskNotFoundException, DataLinkNotFoundException {
+		return getSubGraph().computeSubgraph(traversalEvent, isComplete, returnCell);
 	}
 
 	/**
@@ -1251,21 +1257,25 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws DataLinkNotFoundException 
+	 * @throws TaskNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, GroupingInstance groupingInstance) throws CellNotFoundException, TaskNotFoundException {
+	public boolean applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, GroupingInstance groupingInstance) throws TaskNotFoundException, TaskNotFoundException, DataLinkNotFoundException {
 
-		getTraversalEventGraph().applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstance);
+		return getTraversalEventGraph().applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstance);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws DataLinkNotFoundException 
+	 * @throws TaskNotFoundException 
 	 * @generated not
 	 */
-	public void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, EList<GroupingInstance> groupingInstances) throws CellNotFoundException, TaskNotFoundException {
+	public boolean applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, String groupingStr, EList<GroupingInstance> groupingInstances) throws TaskNotFoundException, TaskNotFoundException, DataLinkNotFoundException {
 		
-		getTraversalEventGraph().applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstances);
+		return getTraversalEventGraph().applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstances);
 	}
 
 	/**
@@ -1273,9 +1283,8 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public mxICell applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, GroupingInstance groupingInstance) throws CellNotFoundException, TaskNotFoundException {
-
-		return getTraversalEventGraph().applyTraversalEventCopyGraph(root, traversalEvent, groupingInstance);
+	public boolean applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, GroupingInstance groupingInstance, ReturnValue returnCell) throws TaskNotFoundException, DataLinkNotFoundException {
+		return getTraversalEventGraph().applyTraversalEventCopyGraph(root, traversalEvent, groupingInstance, returnCell);
 	}
 
 	/**
@@ -1283,17 +1292,19 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public mxICell applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, EList<GroupingInstance> groupingInstances) throws CellNotFoundException, TaskNotFoundException {
+	public boolean applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, EList<GroupingInstance> groupingInstances, ReturnValue returnCell) throws TaskNotFoundException, DataLinkNotFoundException {
+		return getTraversalEventGraph().applyTraversalEventCopyGraph(root, traversalEvent, groupingInstances, returnCell);
 		
-		return getTraversalEventGraph().applyTraversalEventCopyGraph(root, traversalEvent, groupingInstances);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws DataLinkNotFoundException 
+	 * @throws  
 	 * @generated not
 	 */
-	public boolean resolveTraversalEvents(mxICell root) throws CellNotFoundException, TaskNotFoundException {
+	public boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException, DataLinkNotFoundException {
 
 		return getAbstractGraph().resolveTraversalEvents(root);
 	}
@@ -1456,11 +1467,17 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		setExecutionGraph     (JgraphxFactory.eINSTANCE.createExecutionGraph());
 		
 		getAbstractGraph()      .setGraph(this);
+		getAbstractGraph()      .initLogMessage(Category.ABSTRACT_WORKFLOW_GENERATION);
 		getSubGraph()           .setGraph(this);
+		getSubGraph()           .initLogMessage(Category.SUBGRAPH_CREATION);
 		getTraversalEventGraph().setGraph(this);
+		getTraversalEventGraph().initLogMessage(Category.TRAVERSAL_EVENT_RESOLUTION);
 		getPreprocessingGraph() .setGraph(this);
+		getPreprocessingGraph() .initLogMessage(Category.UTILITY_TASK_RESOLUTION);
 		getToolDependencyGraph().setGraph(this);
+		getToolDependencyGraph().initLogMessage(Category.TOOL_RESOLUTION);
 		getExecutionGraph()     .setGraph(this);
+		getExecutionGraph()     .initLogMessage(Category.EXECUTION_WORKFLOW_GENERATION);
 		
 		return rc;
 	}
@@ -1758,9 +1775,9 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 			case JgraphxPackage.GRAPH___CLEAR:
 				clear();
 				return null;
-			case JgraphxPackage.GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN:
+			case JgraphxPackage.GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE:
 				try {
-					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1));
+					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1), (ReturnValue)arguments.get(2));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
@@ -1794,30 +1811,28 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 				}
 			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE:
 				try {
-					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (GroupingInstance)arguments.get(3));
-					return null;
+					return applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (GroupingInstance)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
 			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST:
 				try {
-					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (EList<GroupingInstance>)arguments.get(3));
-					return null;
+					return applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (EList<GroupingInstance>)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE:
+			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE:
 				try {
-					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (GroupingInstance)arguments.get(2));
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (GroupingInstance)arguments.get(2), (ReturnValue)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST:
+			case JgraphxPackage.GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE:
 				try {
-					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (EList<GroupingInstance>)arguments.get(2));
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (EList<GroupingInstance>)arguments.get(2), (ReturnValue)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);

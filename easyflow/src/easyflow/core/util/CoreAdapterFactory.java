@@ -128,6 +128,10 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 				return createLogMessageAdapter();
 			}
 			@Override
+			public Adapter caseErrorInfo(ErrorInfo object) {
+				return createErrorInfoAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -326,6 +330,20 @@ public class CoreAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLogMessageAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.core.ErrorInfo <em>Error Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.core.ErrorInfo
+	 * @generated
+	 */
+	public Adapter createErrorInfoAdapter() {
 		return null;
 	}
 

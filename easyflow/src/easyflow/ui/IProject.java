@@ -7,14 +7,6 @@
 package easyflow.ui;
 
 import easyflow.core.Workflow;
-import easyflow.custom.exception.CellNotFoundException;
-import easyflow.custom.exception.DataLinkNotFoundException;
-import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
-import easyflow.custom.exception.NoValidInOutDataException;
-import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.ToolNotFoundException;
-import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.execution.IExecutionSystem;
@@ -138,18 +130,18 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException easyflow.TaskNotFoundException easyflow.CellNotFoundException easyflow.GroupingCriterionInstanceNotFoundException easyflow.NoValidInOutDataException"
+	 * @model
 	 * @generated
 	 */
-	int runNextWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException;
+	int runNextWorkflowStep();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException easyflow.TaskNotFoundException easyflow.CellNotFoundException easyflow.GroupingCriterionInstanceNotFoundException easyflow.NoValidInOutDataException"
+	 * @model
 	 * @generated
 	 */
-	int runPrevWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException;
+	int runPrevWorkflowStep();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -234,42 +226,42 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean resolveTraversalCriteria() throws CellNotFoundException, TaskNotFoundException;
+	boolean resolveTraversalCriteria();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.NoValidInOutDataException"
+	 * @model
 	 * @generated
 	 */
-	boolean resolveToolDependencies() throws NoValidInOutDataException;
+	boolean resolveToolDependencies();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException easyflow.TaskNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException;
+	boolean resolveUtilityTasks();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.TaskNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean resolvePreprocessingTasks() throws ToolNotFoundException, UtilityTaskNotFoundException, DataLinkNotFoundException, TaskNotFoundException;
+	boolean resolvePreprocessingTasks();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataLinkNotFoundException easyflow.DataPortNotFoundException easyflow.ToolNotFoundException easyflow.UtilityTaskNotFoundException easyflow.TaskNotFoundException easyflow.CellNotFoundException easyflow.GroupingCriterionInstanceNotFoundException easyflow.NoValidInOutDataException"
+	 * @model
 	 * @generated
 	 */
-	boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException;
+	boolean runEntireWorkflow();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -282,17 +274,17 @@ public interface IProject extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
+	boolean applyGroupingCriteria();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException easyflow.GroupingCriterionInstanceNotFoundException"
+	 * @model
 	 * @generated
 	 */
-	boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException;
+	boolean applyParameterCriteria();
 
 } // IProject

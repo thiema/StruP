@@ -41,13 +41,14 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Tuple" instanceClassName="easyflow.custom.util.Tuple"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ResolvingParameterFailedException"
       instanceClassName="easyflow.custom.exception.ResolvingParameterFailedException"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Exception" instanceClassName="java.lang.Exception"/>
   <eSubpackages name="core" nsURI="http:///de/thiema/easyflow/core/easyflow.core/1.0.0"
       nsPrefix="easyflow">
     <eClassifiers xsi:type="ecore:EClass" name="Workflow">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A Workflow is modelled using a graph representing data processing Tasks and its connections. E.g. the inputs and outputs and its parent and child tasks. The Workflow provides basic methods to generate and manipulate data processing workflows."/>
       </eAnnotations>
-      <eOperations name="generateGraphFromTemplate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eOperations name="generateGraphFromTemplate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value=""/>
         </eAnnotations>
@@ -95,37 +96,27 @@
       </eOperations>
       <eOperations name="readWorkfowTemplate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="generateAbstractWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="applyGroupingCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
+      <eOperations name="applyGroupingCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="breadth first iteration of graph. compute new graph with &#xA;given traversal event applied."/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="applyParameterCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
-      <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException">
+      <eOperations name="applyParameterCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
       </eOperations>
-      <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+      <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="breadth first iteration of graph and completing/checking the traversal events of each task&#xA;in order to combine splitting and merging events into a single events. Usually each&#xA;merging event complements a splitting event.&#xA;Moreover the parent for each splitting event is set."/>
         </eAnnotations>
       </eOperations>
-      <eOperations name="resolveIncompatibleGroupings" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="resolvePreprocessingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//NoValidInOutDataException"/>
+      <eOperations name="resolveIncompatibleGroupings" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolvePreprocessingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
-      <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
-      <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
+      <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="hasNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="getTotalNumberOfWorkflowSteps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="getWorkflowStepLabelFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -685,10 +676,33 @@
         <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="severity" eType="#//core/Severity"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//core/Category"/>
+        <eParameters name="severity" eType="#//core/Severity"/>
+        <eParameters name="exception" eType="#//Exception"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//core/Category"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ErrorInfo">
+      <eOperations name="clear"/>
+      <eOperations name="print"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dataLink" eType="#//data/DataLink"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="info" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//core/Category"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
     </eClassifiers>
@@ -701,18 +715,31 @@
       <eLiterals name="TRACE" value="5"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="Category">
+      <eLiterals name="NO_CATEGORY"/>
       <eLiterals name="PROJECT_CONFIGURATION" value="10"/>
       <eLiterals name="METADATA_DEFINITION" value="15"/>
       <eLiterals name="TASK_DEFINITION" value="16"/>
       <eLiterals name="TOOL_DEFINITION" value="17" literal="TOOL_DEFINITION"/>
       <eLiterals name="WORKFLOW" value="20" literal="WORKFLOW"/>
-      <eLiterals name="WORKFLOW_TEMPLATE" value="25"/>
-      <eLiterals name="ABSTRACT_WORKFLOW" value="30"/>
-      <eLiterals name="DATA_GROUPING" value="40" literal="DATA_GROUPING"/>
-      <eLiterals name="PARAMETER_GROUPING" value="41"/>
-      <eLiterals name="PREPROCESSING" value="50"/>
+      <eLiterals name="WORKFLOW_TEMPLATE_PARSING" value="25"/>
+      <eLiterals name="ABSTRACT_WORKFLOW_GENERATION" value="30"/>
+      <eLiterals name="TRAVERSAL_EVENT_CREATION" value="33"/>
+      <eLiterals name="SUBGRAPH_CREATION" value="35" literal="SUBGRAPH_CREATION"/>
+      <eLiterals name="TRAVERSAL_EVENT_RESOLUTION" value="40" literal="TRAVERSAL_EVENT_RESOLUTION"/>
+      <eLiterals name="DATA_GROUPING" value="41" literal="DATA_GROUPING"/>
+      <eLiterals name="PARAMETER_GROUPING" value="42"/>
+      <eLiterals name="UTILITY_TASK_RESOLUTION" value="50"/>
+      <eLiterals name="INCOMPATIBLE_GROUPING_RESOLUTION" value="51"/>
       <eLiterals name="TOOL_RESOLUTION" value="60"/>
-      <eLiterals name="EXECUTION_WORKFLOW" value="70"/>
+      <eLiterals name="EXECUTION_WORKFLOW_GENERATION" value="70"/>
+      <eLiterals name="GRAPH_UTIL" value="200" literal="GRAPH_UTIL"/>
+      <eLiterals name="UTIL" value="300"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="LogMsgOutputMode">
+      <eLiterals name="SILENT"/>
+      <eLiterals name="CONSOLE" value="1"/>
+      <eLiterals name="GUI" value="2"/>
+      <eLiterals name="ALL" value="5"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
@@ -750,29 +777,20 @@
         <eParameters name="graph" eType="#//EasyFlowGraph"/>
       </eOperations>
       <eOperations name="delete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
-      <eOperations name="resolveTraversalCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException"/>
+      <eOperations name="runEntireWorkflow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolveTraversalCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="generateAbstractGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="applyGroupingCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
-      <eOperations name="applyParameterCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//CellNotFoundException #//TaskNotFoundException #//GroupingCriterionInstanceNotFoundException"/>
-      <eOperations name="resolveUtilityTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="resolvePreprocessingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//DataLinkNotFoundException #//TaskNotFoundException"/>
-      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          eExceptions="#//NoValidInOutDataException"/>
+      <eOperations name="applyGroupingCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="applyParameterCriteria" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolveUtilityTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolvePreprocessingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="resolveToolDependencies" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="generateWorklowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="setWorker">
         <eParameters name="worker" eType="#//EasyFlowOverallWorker"/>
       </eOperations>
-      <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
-      <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-          eExceptions="#//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException #//TaskNotFoundException #//CellNotFoundException #//GroupingCriterionInstanceNotFoundException #//NoValidInOutDataException"/>
+      <eOperations name="runNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="runPrevWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="hasNextWorkflowStep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eOperations name="getWorkflowStepLabelFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="step" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -820,8 +838,10 @@
   </eSubpackages>
   <eSubpackages name="graph" nsURI="http:///de/thiema/easyflow/graph/easyflow.core/1.0.0"
       nsPrefix="easyflow">
-    <eClassifiers xsi:type="ecore:EClass" name="IGraph">
-      <eOperations name="initLogMessage"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IGraph" abstract="true" interface="true">
+      <eOperations name="initLogMessage">
+        <eParameters name="category" eType="#//core/Category"/>
+      </eOperations>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DefaultGraph" eSuperTypes="#//graph/IGraph">
       <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
@@ -830,33 +850,39 @@
         nsPrefix="easyflow">
       <eClassifiers xsi:type="ecore:EClass" name="AbstractGraph" eSuperTypes="#//graph/DefaultGraph">
         <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-            eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="TraversalEventGraph" eSuperTypes="#//graph/DefaultGraph">
-        <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
           <eParameters name="groupingInstance" eType="#//metadata/GroupingInstance"/>
         </eOperations>
-        <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
           <eParameters name="groupingInstances" upperBound="-1" eType="#//metadata/GroupingInstance"/>
         </eOperations>
-        <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEventCopyGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingInstance" eType="#//metadata/GroupingInstance"/>
+          <eParameters name="returnCell" eType="#//util/ReturnValue"/>
         </eOperations>
-        <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEventCopyGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingInstances" upperBound="-1" eType="#//metadata/GroupingInstance"/>
+          <eParameters name="returnCell" eType="#//util/ReturnValue"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
       </eClassifiers>
@@ -897,24 +923,26 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="SubGraph" eSuperTypes="#//graph/DefaultGraph">
-        <eOperations name="computeSubgraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="computeSubgraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="isComplete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters name="returnCell" eType="#//util/ReturnValue"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="Graph">
         <eOperations name="getNextTraversalEvent" eType="#//traversal/TraversalEvent"
-            eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="isGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
         </eOperations>
         <eOperations name="getTraversalEvents" upperBound="-1" eType="#//traversal/TraversalEvent"
-            eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="isGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
         </eOperations>
         <eOperations name="getNewTraversalEvents" upperBound="-1" eType="#//traversal/TraversalEvent"
-            eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
@@ -923,9 +951,11 @@
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
         </eOperations>
         <eOperations name="clear"/>
-        <eOperations name="computeSubgraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="computeSubgraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="isComplete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters name="returnCell" eType="#//util/ReturnValue"/>
         </eOperations>
         <eOperations name="generateWorkflowForExecutionSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
           <eParameters name="root" eType="#//mxICell"/>
@@ -948,30 +978,36 @@
             eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException">
           <eParameters name="entry" eType="#//util/maps/CellToCellListMap"/>
         </eOperations>
-        <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
           <eParameters name="groupingInstance" eType="#//metadata/GroupingInstance"/>
         </eOperations>
-        <eOperations name="applyTraversalEvent" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
           <eParameters name="groupingInstances" upperBound="-1" eType="#//metadata/GroupingInstance"/>
         </eOperations>
-        <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEventCopyGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingInstance" eType="#//metadata/GroupingInstance"/>
+          <eParameters name="returnCell" eType="#//util/ReturnValue"/>
         </eOperations>
-        <eOperations name="applyTraversalEventCopyGraph" eType="#//mxICell" eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+        <eOperations name="applyTraversalEventCopyGraph" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
           <eParameters name="traversalEvent" eType="#//traversal/TraversalEvent"/>
           <eParameters name="groupingInstances" upperBound="-1" eType="#//metadata/GroupingInstance"/>
+          <eParameters name="returnCell" eType="#//util/ReturnValue"/>
         </eOperations>
         <eOperations name="resolveTraversalEvents" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-            eExceptions="#//CellNotFoundException #//TaskNotFoundException">
+            eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
           <eParameters name="root" eType="#//mxICell"/>
         </eOperations>
         <eOperations name="resetFlag">
@@ -1787,6 +1823,10 @@
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="util" nsURI="http:///de/thiema/easyflow/util/1.0.0" nsPrefix="easyflow">
+    <eClassifiers xsi:type="ecore:EClass" name="ReturnValue">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="eobject" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="#//Object"/>
+    </eClassifiers>
     <eSubpackages name="maps" nsURI="http:///de/thiema/easyflow/util/maps/1.0.0" nsPrefix="easyflow">
       <eClassifiers xsi:type="ecore:EClass" name="CellToCellListMap" instanceClassName="java.util.Map$Entry">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//mxICell"/>

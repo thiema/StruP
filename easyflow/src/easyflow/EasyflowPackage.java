@@ -378,6 +378,16 @@ public interface EasyflowPackage extends EPackage {
 	int RESOLVING_PARAMETER_FAILED_EXCEPTION = 32;
 
 	/**
+	 * The meta object id for the '<em>Exception</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.lang.Exception
+	 * @see easyflow.impl.EasyflowPackageImpl#getException()
+	 * @generated
+	 */
+	int EXCEPTION = 33;
+
+	/**
 	 * The meta object id for the '<em>Easy Flow Overall Worker</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -741,6 +751,17 @@ public interface EasyflowPackage extends EPackage {
 	EDataType getResolvingParameterFailedException();
 
 	/**
+	 * Returns the meta object for data type '{@link java.lang.Exception <em>Exception</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Exception</em>'.
+	 * @see java.lang.Exception
+	 * @model instanceClass="java.lang.Exception"
+	 * @generated
+	 */
+	EDataType getException();
+
+	/**
 	 * Returns the meta object for data type '{@link easyflow.custom.jgraphx.EasyFlowOverallWorker <em>Easy Flow Overall Worker</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1092,6 +1113,16 @@ public interface EasyflowPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType RESOLVING_PARAMETER_FAILED_EXCEPTION = eINSTANCE.getResolvingParameterFailedException();
+
+		/**
+		 * The meta object literal for the '<em>Exception</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Exception
+		 * @see easyflow.impl.EasyflowPackageImpl#getException()
+		 * @generated
+		 */
+		EDataType EXCEPTION = eINSTANCE.getException();
 
 		/**
 		 * The meta object literal for the '<em>Easy Flow Overall Worker</em>' data type.

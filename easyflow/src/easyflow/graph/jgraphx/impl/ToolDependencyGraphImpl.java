@@ -178,7 +178,9 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 				
 				try {
 					Task task = JGraphXUtil.loadTask(vertex);
-					logger.debug("resolveToolDependencies(): ================================ resolve for task="+task.getUniqueString()+" ("+task.hashCode()+")"+" ===================================================");
+					logger.debug("resolveToolDependencies(): ================================ "
+							+ "resolve for task="+task.getUniqueString()+" ("+task.hashCode()+")"
+							+" ===================================================");
 					//logger.debug("resolveToolDependencies(): process task="+task.getUniqueString());
 					if (task.getTools().isEmpty())
 					{
@@ -223,8 +225,6 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 												(dataLink.getInDataPort().getName()+" "+dataLink.getInDataPort().getParameterName()
 											+" "+dataLink.getInDataPort().hashCode()):null)
 								);
-
-									
 									
 
 									if (debugTool.equals(tool.getName()) || debugTool.equalsIgnoreCase(tool.getId()))
@@ -435,10 +435,10 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 
 									TraversalCriterion tc = dataLink.isTerminal() ?
 											(task.getTraversalEvents().containsKey(groupingStr) ? 
-											task.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null)
+													task.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null)
 											:
 											(childTask.getTraversalEvents().containsKey(groupingStr) ? 
-											childTask.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null);
+													childTask.getTraversalEvents().get(groupingStr).getTraversalCriterion() : null);
 											
 									logger.debug("resolveToolDependencies(): "
 											+"... continue ..."
@@ -907,6 +907,7 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 		return null;
 	}
 	
+	/*
 	private String getFirstInstance(Task task, DataLink dataLink)
 	{
 		String firstInstanceStr = null;
@@ -943,7 +944,7 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 		return firstInstanceStr;
 		
 	}
-
+*/
 	
 	/**
 	 * <!-- begin-user-doc -->

@@ -8,9 +8,7 @@ package easyflow.data.impl;
 
 import easyflow.EasyflowPackage;
 import easyflow.core.CorePackage;
-
 import easyflow.core.impl.CorePackageImpl;
-
 import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
@@ -18,61 +16,38 @@ import easyflow.data.DataLink;
 import easyflow.data.DataMatch;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
-
 import easyflow.example.ExamplePackage;
-
 import easyflow.example.impl.ExamplePackageImpl;
-
 import easyflow.execution.ExecutionPackage;
-
 import easyflow.execution.impl.ExecutionPackageImpl;
-
 import easyflow.execution.makeflow.MakeflowPackage;
-
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
-
 import easyflow.execution.pegasus.PegasusPackage;
-
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
-
 import easyflow.execution.shell.ShellPackage;
-
 import easyflow.execution.shell.impl.ShellPackageImpl;
-
 import easyflow.graph.GraphPackage;
 import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
-
 import easyflow.impl.EasyflowPackageImpl;
-
 import easyflow.metadata.MetadataPackage;
-
 import easyflow.metadata.impl.MetadataPackageImpl;
-
 import easyflow.tool.ToolPackage;
-
 import easyflow.tool.impl.ToolPackageImpl;
-
 import easyflow.traversal.TraversalPackage;
-
 import easyflow.traversal.impl.TraversalPackageImpl;
-
 import easyflow.ui.UiPackage;
-
 import easyflow.ui.impl.UiPackageImpl;
-
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.MapsPackageImpl;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -177,6 +152,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 
 		// Create package meta-data objects
@@ -194,6 +170,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 
 		// Initialize created meta-data
@@ -211,6 +188,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed

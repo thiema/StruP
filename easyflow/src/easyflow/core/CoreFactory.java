@@ -125,6 +125,15 @@ public interface CoreFactory extends EFactory {
 	LogMessage createLogMessage();
 
 	/**
+	 * Returns a new object of class '<em>Error Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Error Info</em>'.
+	 * @generated
+	 */
+	ErrorInfo createErrorInfo();
+
+	/**
 	 * Returns a new object of class '<em>Tool Match</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

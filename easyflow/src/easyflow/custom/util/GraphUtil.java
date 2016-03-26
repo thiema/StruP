@@ -10,6 +10,12 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import sun.security.action.GetLongAction;
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
+import easyflow.core.LogMessage;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
@@ -32,7 +38,24 @@ import easyflow.traversal.TraversalFactory;
 
 public class GraphUtil {
 	
-	private static Logger logger = Logger.getLogger(GraphUtil.class);
+	private static Logger     logger     = Logger.getLogger(GraphUtil.class);
+	private static LogMessage logMessage = null;
+	
+	public static void initLogMessage()
+	{
+		if (logMessage == null)
+		{
+			logMessage = CoreFactory.eINSTANCE.createLogMessage();
+		//if (logMessage.getCategory() == null)
+			logMessage.setCategory(Category.GRAPH_UTIL);
+		}
+	}
+	
+	public static LogMessage getLogMessage()
+	{
+		initLogMessage();
+		return logMessage;
+	}
 	
 	public static boolean shallProcess(EList<String> tasks,
 								EList<GroupingInstance> groupingInstances,
@@ -92,8 +115,8 @@ public class GraphUtil {
 			else*/
 		if (groupingStr != null)
 			newDataLink.setGroupingStr(groupingStr);
-		
 			newDataLink.setParamStr(dataLink.getParamStr());
+			
 			if (dataLink.getCondition()!=null && !dataLink.getCondition().isUnconditional())
 				newDataLink.setCondition(dataLink.getCondition());
 			if (parentGroupingStr != null)
@@ -114,12 +137,14 @@ public class GraphUtil {
 			}
 			else
 			{
-			newDataLink.setDataPort(EcoreUtil.copy(dataLink.getDataPort()));
-			newDataLink.setInDataPort(EcoreUtil.copy(dataLink.getInDataPort()));
+				newDataLink.setDataPort(EcoreUtil.copy(dataLink.getDataPort()));
+				newDataLink.setInDataPort(EcoreUtil.copy(dataLink.getInDataPort()));
 			}
 
-		logger.debug("createDataLinkGrouping(): groupcrit assigend to dataport: size="+dataLink.getInDataPort().getGroupingCriteria().size()
-				+" new size="+newDataLink.getInDataPort().getGroupingCriteria().size());
+		logger.debug("createDataLinkGrouping(): groupcrits assigend to ingoing dataport: "
+				+ "template: "+(dataLink.getInDataPort() != null ? dataLink.getInDataPort().getGroupingCriteria().size() : "undef")
+				+" new:"+(newDataLink.getInDataPort() != null ? newDataLink.getInDataPort().getGroupingCriteria().size() : "undef")
+				);
 		return newDataLink;
 	}
 	
@@ -173,7 +198,8 @@ public class GraphUtil {
 	{
 		EList<TraversalChunk> chunks = dataLink.getChunks().get(dataLink.getParentGroupingStr());
 		//if (checkDataPort)
-			logger.debug("createDataLink(): datalink port="+dataLink.getInDataPort().getFormat().getName()+" tasks outport="+task.getOutDataPorts());
+			logger.debug("createDataLink(): datalink port="+dataLink.getInDataPort().getFormat().getName()
+					+" tasks outport="+Util.list2String(task.getOutDataPorts(), ","));
 		
 		/*if (task.isUtil() && !task.getOutDataPorts().isEmpty())
 		{
@@ -263,19 +289,22 @@ public class GraphUtil {
 			groupingStr = dataLink.getGroupingStr();
 
 		logger.debug("createDataLink(): "
+				+" dataPort="+(dataPort != null ? dataPort.getName()
+						+" (format=" + (dataPort.getFormat() != null ? dataPort.getFormat().getName(): null)+")": null)
 				+" isGrouping="+isGrouping
 				+" paramStr="+paramStr
 				+" groupingStr="+groupingStr
-				+" dataLinks groupingStr="+dataLink.getGroupingStr()
+				+" dataLink's groupingStr="+dataLink.getGroupingStr()
 				//+" effective parents groupingStr="+effectiveParentGroupingStr
 				//+" root="+source != null ? source.isRoot() : "?"
 				+" static="+((dataLink != null && dataLink.getDataPort()!=null) ? dataLink.getDataPort().isStatic() : "na")
 				);
 		if (!isGrouping)
-			logger.debug("createDataLink(): param");
-		DataLink newDataLink =
-				isGrouping ?
-				createDataLinkGrouping(dataLink, task, groupingStr, parentGroupingStr, dataPort) :
+			logger.debug("createDataLink(): create for parameter");
+		
+		DataLink newDataLink = isGrouping ?
+				createDataLinkGrouping(dataLink, task, 
+						groupingStr, parentGroupingStr, dataPort) :
 				createDataLinkParam(dataLink, task, paramStr);
 				
 		if (dataLink.getDataPort() == null)
@@ -287,20 +316,21 @@ public class GraphUtil {
 		}
 		else if (dataLink.getInDataPort() == null)
 		{
-			logger.warn("createDataLink(): in data port not defined for"
-					+" datalink="+newDataLink.getUniqueString()
-					+" created from="+dataLink.getUniqueString()
-					);
+			logger.warn("createDataLink(): invalid data formats found for"
+					+" dataLink \""+newDataLink.getUniqueString()+"\""
+					+" created from \""+dataLink.getUniqueString(true)+"\"");
 		}
 		else if (!dataLink.getDataPort().getFormat().match(dataLink.getInDataPort().getFormat()))
 		{
-			logger.error("createDataLink(): invalid data formats found for"
-					+" dataLink="+newDataLink.getUniqueString()
-					+" created from"+dataLink.getUniqueString(true));
+			logger.debug("createDataLink(): data formats differ for"
+					+" dataLink \""+newDataLink.getUniqueString()+"\""
+					+" created from \""+dataLink.getUniqueString(true)+"\"");
 		}
 		
 		if (chunks != null)
+		{
 			addTraversalChunksToDataLink(newDataLink, parentGroupingStr, chunks);
+		}
 		//else if (!isGrouping)
 			//addTraversalChunksToDataLink(newDataLink, effectiveParentGroupingStr, dataLink.getChunks().get(effectiveParentGroupingStr));
 		else 
@@ -543,14 +573,19 @@ public class GraphUtil {
 					}
 				}
 				else //if (getMetaData().getGroupingInstancesByGroup().containsKey(key))
-					for (GroupingInstance groupingInstance : GlobalVar.getMetaData().getInstances(parentGroupStr, groupingStr, traversalChunk.getName())
-						)
+				{
+					for (GroupingInstance groupingInstance : 
+						GlobalVar.getMetaData().
+							getInstances(parentGroupStr, 
+									groupingStr, traversalChunk.getName()))
+					{
 						if (groupingInstance.getName().equals(instanceStr))
 						{
 							isValid = true;
 							break;
 						}
-				
+					}
+				}
 			}
 			if (!isValid)
 				return false;
@@ -743,8 +778,7 @@ public class GraphUtil {
 
 	
 	public static EList<TraversalChunk> getChunksFor(Task task, String groupingStr, boolean intersect)
-	{
-		
+	{	
 		EList<TraversalChunk> records = task.getRecords(intersect);
 		EList<String> recordStr = new BasicEList<String>();
 		EList<TraversalChunk> traversalChunks = new BasicEList<TraversalChunk>();
@@ -809,9 +843,8 @@ public class GraphUtil {
 	{
 		return task.getGroupingCriteria().get(0).getKey();
 	}
-
 	
-	public static Task getUtilityTask(DataPort inDataPort, String analysisType) throws UtilityTaskNotFoundException
+	public static Task getUtilityTask(DataPort inDataPort, String analysisType, Task task) throws UtilityTaskNotFoundException
 	{
 		//if (analysisType.equalsIgnoreCase(GlobalConstants.ANALYSIS_TYPE_INDEX))
 		//{
@@ -823,27 +856,80 @@ public class GraphUtil {
 				}	
 			}
 		//}
+			String err = getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_ANALYSIS_TYPE_3, 
+					Severity.ERROR,
+					Util.generateStringList(inDataPort.getName(), task.getUniqueString(), analysisType));
+			GlobalVar.setLastErrorInfo(Category.GRAPH_UTIL, task, null,
+					err, true);
 		throw new UtilityTaskNotFoundException();
 	}
 	
-	public static Task getUtilityTask(DataLink dataLink, String analysisType) throws UtilityTaskNotFoundException
+	public static Task getUtilityTask(DataLink dataLink, String analysisType, Task task) 
+			throws UtilityTaskNotFoundException
 	{
-		return getUtilityTask(dataLink.getDataPort(), dataLink.getInDataPort(), analysisType);
+		return getUtilityTask(dataLink.getDataPort(), dataLink.getInDataPort(), analysisType, task);
 	}
 		
-	public static Task getUtilityTask(DataPort inDataPort, DataPort dataPort, String analysisType)  throws UtilityTaskNotFoundException
+	public static Task getUtilityTask(DataPort inDataPort, DataPort dataPort, 
+			String analysisType, Task task)  
+					throws UtilityTaskNotFoundException
 	{
-		String utilityTaskUniqueString = getUtilityTaskKey(inDataPort, dataPort, analysisType); 
+		String utilityTaskUniqueString = getUtilityTaskKey(inDataPort, dataPort, analysisType, task);
 		logger.debug("utilityTaskUniqueString(): trying to get utility task="+utilityTaskUniqueString);
-		if (GlobalVar.getUtilityTasks().containsKey(utilityTaskUniqueString) && GlobalVar.getUtilityTasks().get(utilityTaskUniqueString) != null)
+		if (GlobalVar.getUtilityTasks().containsKey(utilityTaskUniqueString) && 
+				GlobalVar.getUtilityTasks().get(utilityTaskUniqueString) != null)
+		{
 			return GlobalVar.getUtilityTasks().get(utilityTaskUniqueString);
+		}
 		else
+		{
+			String err = getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_ANALYSIS_TYPE_3, 
+					Severity.ERROR,
+					Util.generateStringList(inDataPort.getName(), task.getUniqueString(), analysisType));
+			GlobalVar.setLastErrorInfo(Category.GRAPH_UTIL, task, null,
+					err, true);
 			throw new UtilityTaskNotFoundException();
+		}
 	}
 	
-	
-	public static String getUtilityTaskKey(DataPort in, DataPort out, String analysisType)
+	private static boolean validateDataPortForUtilityTaskSearch(DataPort dataPort, String direction,
+			String analysisType, Task task)
 	{
+		if (dataPort == null || dataPort.getFormat() == null)
+		{
+			String err = getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_GRAPH_UTIL_INVALID_DATAPORRT_FOR_TASK_3, Severity.ERROR, 
+							Util.generateStringList(direction, analysisType, task.getUniqueString()));
+			GlobalVar.setLastErrorInfo(Category.GRAPH_UTIL, task, null,
+					err, true);
+			return false;
+		}
+		return true;
+	}
+	
+	private static boolean validateDataLinkForUtilityTaskSearch(DataLink dataLink, String analysisType, Task task)
+	{
+		if (!validateDataPortForUtilityTaskSearch(dataLink.getInDataPort(), "ingoing", analysisType, task))
+		{
+			GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+			return false;
+		}
+		else if (!validateDataPortForUtilityTaskSearch(dataLink.getDataPort(), "outgoing", analysisType, task))
+		{
+			GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+			return false;
+		}
+		
+		return true;
+	}
+
+	public static String getUtilityTaskKey(DataPort in, DataPort out, String analysisType, Task task)
+	{	
+		if ( !(validateDataPortForUtilityTaskSearch(in, "ingoing", analysisType, task) && 
+				validateDataPortForUtilityTaskSearch(out, "outgoing", analysisType, task)))
+		{
+			return null;
+		}
 		String utilityTaskUniqueString = 
 				in.getFormat().getName()
 				+"_"+out.getFormat().getName()
@@ -851,15 +937,17 @@ public class GraphUtil {
 		return utilityTaskUniqueString;
 	}	
 	
-	public static String getUtilityTaskKey(DataLink dataLink, String analysisType)
+	public static String getUtilityTaskKey(DataLink dataLink, String analysisType, Task task)
 	{
+		if (!validateDataLinkForUtilityTaskSearch(dataLink, analysisType, task))
+		{
+			return null;
+		}
 		String utilityTaskUniqueString = 
 				dataLink.getInDataPort().getFormat().getName()
 				+"_"+dataLink.getDataPort().getFormat().getName()
 				+"_"+analysisType;
 		return utilityTaskUniqueString;
-	}
-	
-
+	}	
 }
 

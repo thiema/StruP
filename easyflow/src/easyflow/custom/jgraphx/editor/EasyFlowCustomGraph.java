@@ -22,7 +22,10 @@ import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.Util;
 import easyflow.data.DataLink;
+import easyflow.tool.Parameter;
+import easyflow.traversal.TraversalCriterion;
 
 
 /**
@@ -66,6 +69,107 @@ public class EasyFlowCustomGraph extends mxGraph
 	/**
 	 * Prints out some useful information about the cell in the tooltip.
 	 */
+	
+	public String getToolTipForCell(Object cell)
+	{
+		String tip = "<html>";
+		String label = getLabel(cell);
+		if (!getModel().isEdge(cell))
+		{
+			Task task;
+			try {
+				task = JGraphXUtil.loadTask(cell);
+				tip += "Name: "+task.getName()+"<br>";
+				if (task.getChunks().size() > 0)
+				{
+				tip += "Data:<br>";
+				for (String chunkType : task.getChunks().keySet())
+				{
+					tip += "  -" + chunkType+": "+Util.list2String(task.getChunks().get(chunkType), ",");
+					tip += "<br>";
+				}
+				}
+				tip += "Tool: "+task.getPreferredTool().getName()+"<br>";
+			} catch (TaskNotFoundException e) {
+				tip += "Task not found. ("+label+")<br>";
+			}
+		}
+		else
+		{
+			try {
+				DataLink dataLink = JGraphXUtil.loadDataLink(cell);
+				tip += "Name: "+dataLink.getDataPort().getName()+"<br>";
+				tip += "Format: "+dataLink.getFormat().getName()+"<br>";
+				
+				if (dataLink.getInDataPort() != null)
+				{
+					tip += "DataPort (In): "+dataLink.getInDataPort().getName()
+							+" ("+dataLink.getInDataPort().getFormat().renderAsFileExtension()+")<br>";
+				}
+				if (dataLink.getInData() != null)
+				{
+					tip += "Data (In): "+dataLink.getInData().getFormatStr()+"<br>";
+					
+					if (dataLink.getInData().getParameter() != null)
+					{
+						Parameter param = dataLink.getInData().getParameter();
+						tip += "Parameter (In): "+(param.getLabel() == null ? param.getName() : param.getLabel())+"<br>";
+					}
+				}
+				tip += "DataPort (Out): "+dataLink.getDataPort().getName()
+						+" ("+dataLink.getDataPort().getFormat().renderAsFileExtension()+")<br>";
+				if (dataLink.getData() != null)
+				{
+					tip += "Data (Out): "+dataLink.getData().getFormatStr()+"<br>";
+					
+					if (dataLink.getData().getParameter() != null)
+					{
+						Parameter param = dataLink.getData().getParameter();
+						tip += "Parameter (Out): "+(param.getLabel() == null ? param.getName() : param.getLabel())+"<br>";
+					}
+				}
+				/*
+				if (dataLink.getChunks() != null)
+				{
+					tip += "Data:<br>";
+					for (String chunkType : dataLink.getChunks().keySet())
+					{
+						tip += "  -"+chunkType+": "+Util.list2String(dataLink.getChunks().get(chunkType), ",");
+						tip += "<br>";
+					}
+				}
+				
+				if (dataLink.getDataPort() != null && !dataLink.getDataPort().isStatic())
+				{
+					tip += "Data:<br>";
+					for (TraversalCriterion traversalCriterion : dataLink.getDataPort().getGroupingCriteria())
+					{
+						for (String chunkType : traversalCriterion.getChunks().keySet())
+						{
+							tip += "  -"+chunkType+": "+Util.list2String(dataLink.getChunks().get(chunkType), ",");
+							tip += "<br>";
+						}
+					}
+				}
+				else
+				{
+					tip += "No DataPort defined.<br>";
+				}
+				tip += "Group: "+dataLink.getGroupingStr()+"<br>";
+				tip += "Param: "+dataLink.getParamNameStr()+"<br>";
+				*/
+				
+				
+				
+			} catch (DataLinkNotFoundException e) {
+				tip += "Link not found. ("+label+")<br>";
+			}
+		}
+		
+		tip += "</html>";
+		return tip;
+	}
+	
 	/*
 	public String getToolTipForCell(Object cell)
 	{

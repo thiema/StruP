@@ -1,3 +1,3 @@
-A		A	F2	F2
-B		B	F3	F3
-C		C	F4	F4
+A		A	F1	F1
+B		B	F2	F2
+C		C	F3	F3

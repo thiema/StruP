@@ -37,7 +37,7 @@
 
   "workflow": {
     "input_grouping_criterion"  : "InputFiles:joint",
-    "inputs"                    : ["F1"],
+    "inputs"                    : ["F1", "F2"],
     "static_inputs"             : [],
     "default_grouping_criteria" : ["Record"],
     "default_mode"              : "batch"

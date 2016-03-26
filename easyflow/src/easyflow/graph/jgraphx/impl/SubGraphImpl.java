@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import easyflow.core.CoreFactory;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
@@ -21,6 +22,7 @@ import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.SubGraph;
 import easyflow.graph.jgraphx.Subgraph;
 import easyflow.traversal.TraversalEvent;
+import easyflow.util.ReturnValue;
 import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.notify.Notification;
 import org.apache.log4j.Logger;
@@ -32,7 +34,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.Util;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 /**
@@ -70,27 +74,6 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 		super();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-		 * get subgraph that is spanned by the given traversal event.
-		 * This sub graph is rooted by the splitting task and it contains all tasks
-		 * that belong to paths to at least one of the merging tasks.
-		 * tracked information:
-		 * global:
-		 *    copiedCells -> any cell (mxCell) copied using original tasks unique name as key  
-		 *    flags       -> check skip "subgraph-copy" flag
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @generated not
-	 */	
-	public mxICell computeSubgraph(final TraversalEvent traversalEvent, final boolean isComplete) throws TaskNotFoundException 
-	{
-		if (traversalEvent.isGrouping())
-			return computeSubgraph_Grouping(traversalEvent);
-		else
-			return computeSubgraph_Param(traversalEvent);
-	}
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -158,9 +141,9 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case JgraphxPackage.SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN:
+			case JgraphxPackage.SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE:
 				try {
-					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1));
+					return computeSubgraph((TraversalEvent)arguments.get(0), (Boolean)arguments.get(1), (ReturnValue)arguments.get(2));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
@@ -169,17 +152,53 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 		return super.eInvoke(operationID, arguments);
 	}
 
-	public mxICell computeSubgraph_Grouping(final TraversalEvent traversalEvent) throws TaskNotFoundException 
+	/**
+	 * <!-- begin-user-doc -->
+		 * get subgraph that is spanned by the given traversal event.
+		 * This sub graph is rooted by the splitting task and it contains all tasks
+		 * that belong to paths to at least one of the merging tasks.
+		 * tracked information:
+		 * global:
+		 *    copiedCells -> any cell (mxCell) copied using original tasks unique name as key  
+		 *    flags       -> check skip "subgraph-copy" flag
+	 * <!-- end-user-doc -->
+	 * @throws TaskNotFoundException 
+	 * @generated not
+	 */	
+	public boolean computeSubgraph(final TraversalEvent traversalEvent, final boolean isComplete, ReturnValue returnCell) throws TaskNotFoundException 
 	{
+		if (traversalEvent.isGrouping())
+			return computeSubgraph_Grouping(traversalEvent, returnCell);
+		else
+			return computeSubgraph_Param(traversalEvent, returnCell);
+	}	
+	
+	public boolean computeSubgraph_Grouping(final TraversalEvent traversalEvent, final ReturnValue returnCell) throws TaskNotFoundException 
+	{
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_START_1, 
+				Severity.DEBUG, 
+				Util.generateStringList(Util.traversalEvent2String(traversalEvent)));
+
 		// track all new Tasks
 		final Map<String, Object> addedTasks = new HashMap<String, Object>();
 		final Map<String, String> addedEdges = new HashMap<String, String>();
-		final EList<mxCell>     firstNodeTmp = new BasicEList<mxCell>();
+		final EList<Boolean>      rc = new BasicEList<Boolean>();
+		rc.add(new Boolean(true));
+		final Boolean rcFalse = new Boolean(false);
+		final Boolean rcTrue  = new Boolean(true);
+		returnCell.setObject(null);
 
 		mxICell startCell = (mxICell) GlobalVar.getCells().get(traversalEvent.getSplitTask().getUniqueString());
-		
+		if (startCell == null)
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_NO_MERGE_TASK_IN_TRAVERSAL_EVENT_1, 
+				Severity.WARN, 
+				Util.generateStringList(traversalEvent.getSplitTask().getUniqueString()));
+		}
+
 		EList<mxICell> stopCells = JGraphXUtil.getCells(traversalEvent.getMergeTask());
-		logger.trace("computeSubgraph(): "+GlobalVar.getCells().size()+" "+traversalEvent.getMergeTask().size()+" "+stopCells.size()+" "+startCell);
+		logger.trace("computeSubgraph(): "+GlobalVar.getCells().size()+" "
+				+traversalEvent.getMergeTask().size()+" "+stopCells.size()+" "+startCell);
 		// get the task names and put in to List
 		final List<String> targetTaskNames = new ArrayList<String>();
 		for (mxICell tmpCell : stopCells) {
@@ -197,7 +216,6 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 			@Override
 			public boolean visit(Object vertex, Object edge1) {
 				
-				
 				mxICell clonedVertex = JGraphXUtil.cloneCell((mxICell) vertex);
 				// set the current task
 				Task     curTask  = null;
@@ -205,14 +223,11 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 				boolean processTerminalEdges = false;
 				try {
 					curTask = JGraphXUtil.loadTask(vertex);
-					//if (edge1 != null)
-						//dataLink = JGraphXUtil.loadDataLink(edge1);
 				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				//} catch (DataLinkNotFoundException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TASK_NOT_FOUND_EXCEPTION_0, 
+							Severity.ERROR);
+					rc.set(0, rcFalse);
+					return false;
 				}
 				//curTask = getTasks().get(curTask.getUniqueString());
 				logger.debug("computeSubgraph(): "+curTask.getUniqueString() 
@@ -224,7 +239,9 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 						+ " #out="+getGraph().getGraph().getOutgoingEdges(clonedVertex).length
 						);
 				if ((curTask.getFlags() & 0x000F) == 1)
+				{
 					return false;
+				}
 				
 				logger.trace("computeSubgraph(): "+"merge task for task "+curTask.getUniqueString()+" not reached yet");
 				// test if there is a path to any of the merging tasks. if yes insert this task in to the subgraph
@@ -232,7 +249,7 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 				boolean mergeTaskFound = false;
 				boolean mergeTaskReached = false;
 				//mxICell source = (mxICell) vertex1;
-				for (Task mergeTask:traversalEvent.getMergeTask())
+				for (Task mergeTask : traversalEvent.getMergeTask())
 				{
 					if (curTask.getUniqueString().equals(mergeTask.getUniqueString()))
 					{
@@ -245,16 +262,15 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 								+"("+curTask.getPreviousTaskStr()+") corresponding cell:"+vertex
 								+"merge task:"+mergeTask.getUniqueString()+" corresponding cell:"+target);
 					
-					int ps=getGraph().getGraph().getShortestPath(
-							vertex, 
-							target).length;
+					int ps = getGraph().getGraph().getShortestPath(
+								vertex, target).length;
 					logger.trace("computeSubgraph(): compute shortest path from "+
 							curTask.getUniqueString()+" ("+GlobalVar.getCells().get(curTask.getUniqueString())+") to "
 									+mergeTask.getUniqueString()+" ("+GlobalVar.getCells().get(mergeTask.getUniqueString())+")="+ps
 									+ " #out="+getGraph().getGraph().getOutgoingEdges(vertex).length
 									+ " #in="+getGraph().getGraph().getIncomingEdges(target).length);
 					
-					if (ps>0)
+					if (ps > 0)
 					{
 						mergeTaskFound = true;
 						break;
@@ -286,8 +302,8 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 						logger.debug("computeSubgraph(): "+"vertex "
                     		+ curTask.getUniqueString()+" inserted");
 					}
-                    if (firstNodeTmp.isEmpty())
-                    	firstNodeTmp.add((mxCell) target);
+                    if (returnCell.getObject() == null)
+                    	returnCell.setObject(target);
                     processTerminalEdges = true;
                     addedTasks.put(curTask.getUniqueString(), target);
 				}
@@ -344,12 +360,39 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 			JGraphXUtil.layoutGraph();
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		
-		if (firstNodeTmp.isEmpty())
-			logger.debug("computeSubgraph(): "+(firstNodeTmp.isEmpty()?"empty":"non empty")+" subgraph found.");
+		int numVertices = returnCell.getObject() == null ? 0 :
+			getGraph().getGraph().getChildCells(returnCell.getObject()).length + 1;
+		if (numVertices == 0)
+		{
+			logger.error("computeSubgraph(): empty subgraph produced.");
+			rc.set(0, rcFalse);
+		}
+		else if (numVertices == 1)
+		{
+			logger.debug("computeSubgraph(): subgraph containing single vertext created.");
+		}
 		else
-			logger.debug("computeSubgraph(): "+(firstNodeTmp.isEmpty()?"empty":"non empty")+" subgraph found.");
-		return firstNodeTmp.isEmpty() ? null : firstNodeTmp.get(0);
-
+		{
+			logger.debug("computeSubgraph(): subgraph containing "+numVertices+" vertices created.");
+		}
+		
+		if (returnCell.getObject() == null)
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_END_2, 
+					Severity.WARN,
+					Util.generateStringList(
+							Integer.toString(0),
+							Util.traversalEvent2String(traversalEvent))
+					);
+		}
+		else
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_END_1, 
+				Severity.DEBUG, 
+				Integer.toString(numVertices));
+		}
+		
+		return rc.get(0);
 	}
 
 	private void computeSubgraph_TerminalEdge(Object vertex, Object source, Task curTask)
@@ -369,8 +412,6 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 	                			+"terminal edge inserted for task="+curTask.getUniqueString()
 	                			//+" "+getGraph().getOutgoingEdges(source).length
 	                			);
-						
-
 					}
 				}
 			} catch (DataLinkNotFoundException e) {
@@ -378,13 +419,13 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 				e.printStackTrace();
 			}
         }
-
 	}
 	
 
-	public mxICell computeSubgraph_Param(final TraversalEvent traversalEvent)
+	public boolean computeSubgraph_Param(final TraversalEvent traversalEvent, final ReturnValue returnCell)
 	{
-		final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
+		boolean rc = true;
+		//final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
 		final EList<String>        mergeTasks = new BasicEList<String>();
 		final EList<String>        addedEdges = new BasicEList<String>();
 		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
@@ -398,6 +439,10 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 		//memMap.put(, false);
 		memMap.put(MERGE_TASK_REACHED, false);
 		//memMap.put(TERMINAL_EDGE_REACHED, false);
+		returnCell.setEobject(null);
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_START_1, 
+				Severity.DEBUG, 
+				Util.generateStringList(Util.traversalEvent2String(traversalEvent)));
 
 		
 		for (Task task:traversalEvent.getMergeTask())
@@ -437,7 +482,7 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 						memMap.put(MERGE_TASK_REACHED, false);
 						//memMap.put(CUR_TASK_IS_SPLITTING_TASK, true);
 						//use artifical root node
-						if (firstNodeTmp.isEmpty())
+						if (returnCell.getObject() == null)
 						{
 							Task rootTask = CoreFactory.eINSTANCE.createTask();
 							String rootTaskString = parentTask.getUniqueString();
@@ -449,11 +494,10 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 							mxICell tmp = (mxICell) getGraph().getGraph().insertVertexEasyFlow(null, null, rootTask);
 							logger.debug("added artifical root: "+tmp);
 							addedTasks.put(rootTaskString, tmp);
-							firstNodeTmp.clear();
-							firstNodeTmp.add(tmp);
+							returnCell.setObject(tmp);
 							//addedTasks.put(task.getUniqueString(), firstNodeTmp.get(0));
 						}
-						source = firstNodeTmp.get(0);
+						source = (mxICell) returnCell.getObject();
 					}
 					else if (mergeTasks.contains(task.getName()))
 					{
@@ -497,9 +541,9 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 					dataLink.setParamNameStr(traversalEvent.getTraversalCriterion().getName());
 					dataLink.setProcessed(false);
 					
-					String debugTask = "RmDup";
-					if (task.getName().equals(debugTask))
-						logger.debug("debugging task="+debugTask);
+					
+					//if (GlobalVar.getDebugTasks().contains(task.getName()))
+						//logger.debug("debugging task="+task.getName());
 
 					
 					String uniqueDataLink = dataLink.getUniqueString()
@@ -540,192 +584,26 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 			JGraphXUtil.layoutGraph();
 			}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		
-		return firstNodeTmp.isEmpty() ? null : firstNodeTmp.get(0);
-	}
-	
-	/*
-	public mxICell computeSubgraph_Param1(final TraversalEvent traversalEvent)
-	{
-		// store the artifical root node (index 0) and the the first node after the splitting task 
-		// of the current subgraph path
-		final EList<mxICell>     firstNodeTmp = new BasicEList<mxICell>();
-		final Map<String, mxICell> addedTasks = new HashMap<String, mxICell>();
-		final EList<String>        mergeTasks = new BasicEList<String>();
-		final EList<String>        addedEdges = new BasicEList<String>();
-		final Map<String, Boolean>     memMap = new HashMap<String, Boolean>();
-		memMap.put("splittingTaskFound", false);
-		memMap.put("curTaskIsSplittingTask", false);
-		memMap.put("mergeTaskReached", false);
-		memMap.put("terminalEdgeReached", false);
-		
-		for (Task task:traversalEvent.getMergeTask())
+		if (returnCell.getObject() == null)
 		{
-			mergeTasks.add(task.getName());
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_END_2, 
+					Severity.WARN,
+					Util.generateStringList(
+							Integer.toString(0),
+							Util.traversalEvent2String(traversalEvent))
+					);
+		}
+		else
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_END_1, 
+				Severity.DEBUG, 
+				Integer.toString(getGraph().getGraph().getChildCells(
+						returnCell.getObject()).length));
 		}
 
-		mxICellVisitor visitor = new mxICellVisitor() {
-
-			@Override
-			public boolean visit(Object vertex, Object edgeIn) {
-				
-				// set the current task
-				Task     parentTask = null;
-				Task     task       = null;
-				DataLink dataLink   = null;
-				mxICell  source     = null;
-				mxICell  target     = null;
-				try {
-					task = loadTask(vertex);
-					if (edgeIn != null)
-						parentTask = getSourceTask((mxCell) edgeIn);
-					
-					logger.debug("process "+(parentTask != null ? parentTask.getUniqueString():null)+"=>"+task.getUniqueString());
-					if (task.getName().equals(traversalEvent.getSplitTask().getName()))
-					{
-						logger.debug("splitting task found");
-						//mxICell clonedVertex = cloneCell((mxICell) vertex);
-						
-						memMap.put("splittingTaskFound", true);
-						memMap.put("curTaskIsSplittingTask", true);
-						memMap.put("mergeTaskReached", false);
-						memMap.put("terminalEdgeReached", false);
-						//use artifical root node
-						if (firstNodeTmp.isEmpty())
-						{
-							Task rootTask = CoreFactory.eINSTANCE.createTask();
-							parentTask = rootTask;
-							rootTask.setRoot(true);
-							
-							rootTask.setName("root_"+traversalEvent.getTraversalCriterion().getId());
-							getTasks().put(rootTask.getName(), rootTask);
-							mxICell tmp = (mxICell) getGraph().insertVertexEasyFlow(null, null, rootTask);
-							logger.debug("added artifical root: "+tmp);
-							firstNodeTmp.clear();
-							firstNodeTmp.add(tmp);
-							//addedTasks.put(task.getUniqueString(), firstNodeTmp.get(0));
-						}
-						source = firstNodeTmp.get(0);
-					}
-					else if (addedTasks.containsKey(task.getUniqueString()))
-					{
-						memMap.put("splittingTaskFound", true);
-						memMap.put("mergeTaskReached", false);
-						memMap.put("terminalEdgeReached", false);
-
-					}
-					else if (!memMap.get("splittingTaskFound"))
-						return true;
-					
-					if (!addedTasks.containsKey(task.getUniqueString()))
-					{
-						//mxICell clonedVertex = cloneCell((mxICell) vertex);
-						target = (mxICell) getGraph().insertVertexEasyFlow(null, null, task);
-						logger.debug("added task="+task.getUniqueString()+" "+target);
-						addedTasks.put(task.getUniqueString(), target);
-					}
-					else
-						target = addedTasks.get(task.getUniqueString());
-					
-					if (edgeIn == null)
-					{
-						computeSubgraph_TerminalEdge(vertex, target, task, null);
-						return true;
-					}
-					//for (Object edge : getGraph().getIncomingEdges(vertex))
-					Object edge = edgeIn;
-					{
-					if (source == null)
-					{
-						source = (mxICell) addedTasks.get(parentTask.getUniqueString());
-					}
-					if (memMap.get("curTaskIsSplittingTask"))
-					{
-						memMap.put("curTaskIsSplittingTask", false);
-						firstNodeTmp.add(1, (mxICell) vertex);
-					}
-					Object os[] = getGraph().getOutgoingEdges(vertex);
-					if (os.length == 0)
-					{
-						memMap.put("terminalEdgeReached", true);
-						
-					}
-					else
-					for (Object o:os)
-					{
-						DataLink odl = loadDataLink(o);
-						if (odl.isTerminal())
-							memMap.put("terminalEdgeReached", true);
-					}
-					if (memMap.get("terminalEdgeReached"))
-						logger.debug("terminal edge reached.");
-					
-					dataLink = loadDataLink(edge);
-					dataLink.setProcessed(false);
-					String uniqueDataLink = dataLink.getUniqueString()
-							+"_"+(parentTask==null ? "root":parentTask.getUniqueString())
-							+"_"+task.getUniqueString();
-					logger.debug("computeSubgraph_Param(): "+dataLink.getUniqueString()+" "+dataLink.getUniqueString(true));
-					if (addedEdges.contains(uniqueDataLink))
-						return true;
-					
-					//insert edge
-					logger.debug("computeSubgraph_Param(): "
-                			+"edge "+(parentTask == null ? "root":parentTask.getUniqueString())
-                			+"->"+task.getUniqueString()+" inserted"
-                			+" ("+source+" "+target+")");
-					getGraph().insertEdgeEasyFlow(null, null, source, target, 
-	            			((mxCell)edge).getValue());
-					computeSubgraph_TerminalEdge(vertex, target, task, null);
-					
-					addedEdges.add(uniqueDataLink);
-					}
-					if (mergeTasks.contains(task.getName()))
-					{
-						logger.debug("computeSubgraph_Param(): merge task "+task.getName()+" reached.");
-						memMap.put("mergeTaskReached", true);
-						return false;
-					}
-					logger.debug("mergeTaskReached="+memMap.get("mergeTaskReached")
-							+" splittingTaskFound="+memMap.get("splittingTaskFound")
-							+" terminalEdgeReached="+memMap.get("terminalEdgeReached")
-							+" curTaskIsSplittingTask="+memMap.get("curTaskIsSplittingTask"));
-					if (!memMap.get("mergeTaskReached") 
-							&& memMap.get("splittingTaskFound") 
-							&& memMap.get("terminalEdgeReached"))
-					{
-						getGraph().removeGraph(firstNodeTmp.get(1));
-						firstNodeTmp.clear();
-					}
-					
-					return true;
-					
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				catch (DataLinkNotFoundException e) {			e.printStackTrace();}
-				
-				if (!memMap.get("mergeTaskReached") 
-						&& memMap.get("splittingTaskFound") 
-						&& memMap.get("terminalEdgeReached"))
-				{
-					getGraph().removeGraph(firstNodeTmp.get(1));
-					firstNodeTmp.clear();
-				}
-				
-				return true;
-			}
-		};
-		graph.getModel().beginUpdate();		try		{
-			getGraph().traverseAllPaths(getDefaultRootCell(), true, visitor, null);
-			//getGraph().traverseTopologicalOrder(getDefaultRootCell(), visitor);
-			layoutGraph();
-			}		finally		{			graph.getModel().endUpdate();		}
 		
-		return firstNodeTmp.isEmpty() ? null : firstNodeTmp.get(0);
+		return rc;
 	}
-	*/
-
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -774,5 +652,4 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, JgraphxPackage.SUB_GRAPH__GRAPH, oldGraph, graph));
 	}
-
 } //SubgraphImpl

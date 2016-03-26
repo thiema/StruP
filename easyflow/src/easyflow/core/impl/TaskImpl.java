@@ -213,8 +213,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @generated not
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = Logger
-			.getLogger(Task.class);
+	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(Task.class);
 
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -3076,8 +3075,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		getToolMatches().put(tool.getName(), toolMatch);
 		long score = toolMatch.computeScore(null);
 		long expectedScore = toolMatch.computeExpectedScore();
-		logger.trace(Long.toBinaryString(score) + " ");
-		logger.trace(Long.toBinaryString(expectedScore) + " (exp)");
+		logger.trace("validateTool(): "+Long.toBinaryString(score) + " ");
+		logger.trace("validateTool(): "+Long.toBinaryString(expectedScore) + " (exp)");
 		// logger.debug(Long.toHexString(score)+" vs "+Long.toHexString(expectedScore));
 		if (score == expectedScore) {
 			rc = true;
@@ -3094,7 +3093,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	public boolean validateTools() {
 		boolean rc = false;
 		for (Entry<String, Tool> toolEntry : getTools()) {
-			logger.trace("validate tool=" + toolEntry.getKey());
+			logger.trace("validateTools(): validate tool=" + toolEntry.getKey());
 			if (validateTool(toolEntry.getValue())) {
 				rc = true;
 			}

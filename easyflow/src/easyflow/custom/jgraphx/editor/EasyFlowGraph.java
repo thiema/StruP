@@ -63,7 +63,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 			if (dataLink.getCondition().isUnconditional())
 				return GlobalConstants.EDGE_STYLE;
 			else
-				return GlobalConstants.TASK_CIRCUMVENTING_EDGE_STYLE;
+				return GlobalConstants.CIRCUMVENTING_TASK_EDGE_STYLE;
 		}
 		return GlobalConstants.EDGE_STYLE;
 	}

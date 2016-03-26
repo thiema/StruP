@@ -8,7 +8,6 @@ package easyflow.graph.jgraphx.impl;
 
 import java.util.Map.Entry;
 import easyflow.core.Task;
-import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.graph.jgraphx.AbstractGraph;
@@ -75,7 +74,7 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 		super();
 	}
 
-	public boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException, CellNotFoundException {
+	public boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException {
 		
 		return resolveTraversalEvents_Grouping(root) && resolveTraversalEvents_Param(root);
 	}
@@ -257,7 +256,7 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */	
-	public boolean resolveTraversalEvents_Grouping(mxICell root) throws TaskNotFoundException, CellNotFoundException {
+	public boolean resolveTraversalEvents_Grouping(mxICell root) throws TaskNotFoundException {
 		
 		logger.debug("resolveTraversalEvents_Grouping()");
 		// map to track all processed traversalevents: <grouping>_<mode>_<te's root> x <Traversalevent>

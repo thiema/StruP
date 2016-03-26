@@ -7,7 +7,7 @@
 package easyflow.graph.jgraphx;
 
 import com.mxgraph.model.mxICell;
-import easyflow.custom.exception.CellNotFoundException;
+import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.graph.DefaultGraph;
 
@@ -57,9 +57,9 @@ public interface AbstractGraph extends DefaultGraph {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.CellNotFoundException easyflow.TaskNotFoundException" rootDataType="easyflow.mxICell"
+	 * @model exceptions="easyflow.TaskNotFoundException easyflow.DataLinkNotFoundException" rootDataType="easyflow.mxICell"
 	 * @generated
 	 */
-	boolean resolveTraversalEvents(mxICell root) throws CellNotFoundException, TaskNotFoundException;
+	boolean resolveTraversalEvents(mxICell root) throws TaskNotFoundException, DataLinkNotFoundException;
 
 } // AbstractGraph

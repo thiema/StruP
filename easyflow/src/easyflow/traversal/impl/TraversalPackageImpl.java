@@ -7,47 +7,29 @@
 package easyflow.traversal.impl;
 
 import easyflow.EasyflowPackage;
-
 import easyflow.core.CorePackage;
-
 import easyflow.core.impl.CorePackageImpl;
-
 import easyflow.data.DataPackage;
 import easyflow.data.impl.DataPackageImpl;
 import easyflow.example.ExamplePackage;
-
 import easyflow.example.impl.ExamplePackageImpl;
-
 import easyflow.execution.ExecutionPackage;
-
 import easyflow.execution.impl.ExecutionPackageImpl;
-
 import easyflow.execution.makeflow.MakeflowPackage;
-
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
-
 import easyflow.execution.pegasus.PegasusPackage;
-
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
-
 import easyflow.execution.shell.ShellPackage;
-
 import easyflow.execution.shell.impl.ShellPackageImpl;
-
 import easyflow.graph.GraphPackage;
 import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
-
 import easyflow.impl.EasyflowPackageImpl;
-
 import easyflow.metadata.MetadataPackage;
 import easyflow.metadata.impl.MetadataPackageImpl;
-
 import easyflow.tool.ToolPackage;
 import easyflow.tool.impl.ToolPackageImpl;
-
 import easyflow.traversal.GroupingCriterion;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
@@ -56,21 +38,17 @@ import easyflow.traversal.TraversalEvent;
 import easyflow.traversal.TraversalFactory;
 import easyflow.traversal.TraversalOperation;
 import easyflow.traversal.TraversalPackage;
-
 import easyflow.ui.UiPackage;
-
 import easyflow.ui.impl.UiPackageImpl;
-
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.MapsPackageImpl;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -181,6 +159,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		MakeflowPackageImpl theMakeflowPackage = (MakeflowPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) instanceof MakeflowPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MakeflowPackage.eNS_URI) : MakeflowPackage.eINSTANCE);
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
@@ -198,6 +177,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		theMakeflowPackage.createPackageContents();
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 		theDataPackage.createPackageContents();
 
@@ -215,6 +195,7 @@ public class TraversalPackageImpl extends EPackageImpl implements TraversalPacka
 		theMakeflowPackage.initializePackageContents();
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 		theDataPackage.initializePackageContents();
 

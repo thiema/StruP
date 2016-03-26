@@ -41,6 +41,8 @@ import easyflow.traversal.TraversalPackage;
 import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
 import easyflow.ui.impl.UiPackageImpl;
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.MapsPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
@@ -159,6 +161,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
@@ -176,6 +179,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 		theDataPackage.createPackageContents();
 
@@ -193,6 +197,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 		theDataPackage.initializePackageContents();
 
@@ -273,7 +278,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance() {
+	public EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue() {
 		return traversalEventGraphEClass.getEOperations().get(2);
 	}
 
@@ -282,7 +287,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList() {
+	public EOperation getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue() {
 		return traversalEventGraphEClass.getEOperations().get(3);
 	}
 
@@ -435,7 +440,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getSubGraph__ComputeSubgraph__TraversalEvent_boolean() {
+	public EOperation getSubGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue() {
 		return subGraphEClass.getEOperations().get(0);
 	}
 
@@ -660,7 +665,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getGraph__ComputeSubgraph__TraversalEvent_boolean() {
+	public EOperation getGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue() {
 		return graphEClass.getEOperations().get(5);
 	}
 
@@ -741,7 +746,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance() {
+	public EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue() {
 		return graphEClass.getEOperations().get(14);
 	}
 
@@ -750,7 +755,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList() {
+	public EOperation getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue() {
 		return graphEClass.getEOperations().get(15);
 	}
 
@@ -835,8 +840,8 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEReference(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH__GRAPH);
 		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE);
 		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST);
-		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE);
-		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST);
+		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE);
+		createEOperation(traversalEventGraphEClass, TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE);
 
 		preprocessingGraphEClass = createEClass(PREPROCESSING_GRAPH);
 		createEReference(preprocessingGraphEClass, PREPROCESSING_GRAPH__GRAPH);
@@ -857,7 +862,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		subGraphEClass = createEClass(SUB_GRAPH);
 		createEReference(subGraphEClass, SUB_GRAPH__GRAPH);
-		createEOperation(subGraphEClass, SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN);
+		createEOperation(subGraphEClass, SUB_GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE);
 
 		graphEClass = createEClass(GRAPH);
 		createEAttribute(graphEClass, GRAPH__LOGGER);
@@ -883,7 +888,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEOperation(graphEClass, GRAPH___GET_NEW_TRAVERSAL_EVENTS__TRAVERSALEVENT_MXICELL);
 		createEOperation(graphEClass, GRAPH___REMOVE_SUB_GRAPH__MXICELL_TRAVERSALEVENT);
 		createEOperation(graphEClass, GRAPH___CLEAR);
-		createEOperation(graphEClass, GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN);
+		createEOperation(graphEClass, GRAPH___COMPUTE_SUBGRAPH__TRAVERSALEVENT_BOOLEAN_RETURNVALUE);
 		createEOperation(graphEClass, GRAPH___GENERATE_WORKFLOW_FOR_EXECUTION_SYSTEM__MXICELL_IEXECUTIONSYSTEM);
 		createEOperation(graphEClass, GRAPH___RESOLVE_TOOL_DEPENDENCIES__MXICELL_CATALOG);
 		createEOperation(graphEClass, GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL);
@@ -892,8 +897,8 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEOperation(graphEClass, GRAPH___RESOLVE_EDGE__EMAP);
 		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE);
 		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST);
-		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE);
-		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST);
+		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE);
+		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE);
 		createEOperation(graphEClass, GRAPH___RESOLVE_TRAVERSAL_EVENTS__MXICELL);
 		createEOperation(graphEClass, GRAPH___RESET_FLAG__INT);
 		createEOperation(graphEClass, GRAPH___RESET_FLAGS);
@@ -929,6 +934,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		EasyflowPackage theEasyflowPackage = (EasyflowPackage)EPackage.Registry.INSTANCE.getEPackage(EasyflowPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
+		UtilPackage theUtilPackage = (UtilPackage)EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI);
 		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
 		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
 		ExecutionPackage theExecutionPackage = (ExecutionPackage)EPackage.Registry.INSTANCE.getEPackage(ExecutionPackage.eNS_URI);
@@ -951,41 +957,43 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		EOperation op = initEOperation(getAbstractGraph__ResolveTraversalEvents__mxICell(), ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		initEClass(traversalEventGraphEClass, TraversalEventGraph.class, "TraversalEventGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTraversalEventGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, TraversalEventGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getTraversalEventGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_GroupingInstance(), null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTraversalEventGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_GroupingInstance(), ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
-		op = initEOperation(getTraversalEventGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_EList(), null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTraversalEventGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_EList(), ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
-		op = initEOperation(getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance(), theEasyflowPackage.getmxICell(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue(), ecorePackage.getEBoolean(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEParameter(op, theUtilPackage.getReturnValue(), "returnCell", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
-		op = initEOperation(getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList(), theEasyflowPackage.getmxICell(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTraversalEventGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue(), ecorePackage.getEBoolean(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEParameter(op, theUtilPackage.getReturnValue(), "returnCell", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		initEClass(preprocessingGraphEClass, PreprocessingGraph.class, "PreprocessingGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPreprocessingGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, PreprocessingGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1032,11 +1040,12 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		initEClass(subGraphEClass, SubGraph.class, "SubGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSubGraph_Graph(), this.getGraph(), null, "graph", null, 0, 1, SubGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		op = initEOperation(getSubGraph__ComputeSubgraph__TraversalEvent_boolean(), theEasyflowPackage.getmxICell(), "computeSubgraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getSubGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue(), ecorePackage.getEBoolean(), "computeSubgraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isComplete", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEParameter(op, theUtilPackage.getReturnValue(), "returnCell", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		initEClass(graphEClass, Graph.class, "Graph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGraph_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Graph.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1060,20 +1069,20 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		op = initEOperation(getGraph__GetNextTraversalEvent__boolean(), theTraversalPackage.getTraversalEvent(), "getNextTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		op = initEOperation(getGraph__GetTraversalEvents__mxICell_boolean(), theTraversalPackage.getTraversalEvent(), "getTraversalEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		op = initEOperation(getGraph__GetNewTraversalEvents__TraversalEvent_mxICell(), theTraversalPackage.getTraversalEvent(), "getNewTraversalEvents", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		op = initEOperation(getGraph__RemoveSubGraph__mxICell_TraversalEvent(), ecorePackage.getEBoolean(), "removeSubGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1081,11 +1090,12 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEOperation(getGraph__Clear(), null, "clear", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getGraph__ComputeSubgraph__TraversalEvent_boolean(), theEasyflowPackage.getmxICell(), "computeSubgraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGraph__ComputeSubgraph__TraversalEvent_boolean_ReturnValue(), ecorePackage.getEBoolean(), "computeSubgraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBoolean(), "isComplete", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEParameter(op, theUtilPackage.getReturnValue(), "returnCell", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		op = initEOperation(getGraph__GenerateWorkflowForExecutionSystem__mxICell_IExecutionSystem(), ecorePackage.getEBoolean(), "generateWorkflowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1114,40 +1124,42 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
 
-		op = initEOperation(getGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_GroupingInstance(), null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_GroupingInstance(), ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
-		op = initEOperation(getGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_EList(), null, "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGraph__ApplyTraversalEvent__mxICell_TraversalEvent_String_EList(), ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "groupingStr", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
-		op = initEOperation(getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance(), theEasyflowPackage.getmxICell(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_GroupingInstance_ReturnValue(), ecorePackage.getEBoolean(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEParameter(op, theUtilPackage.getReturnValue(), "returnCell", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
-		op = initEOperation(getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList(), theEasyflowPackage.getmxICell(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGraph__ApplyTraversalEventCopyGraph__mxICell_TraversalEvent_EList_ReturnValue(), ecorePackage.getEBoolean(), "applyTraversalEventCopyGraph", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMetadataPackage.getGroupingInstance(), "groupingInstances", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
+		addEParameter(op, theUtilPackage.getReturnValue(), "returnCell", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		op = initEOperation(getGraph__ResolveTraversalEvents__mxICell(), ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theEasyflowPackage.getmxICell(), "root", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 
 		op = initEOperation(getGraph__ResetFlag__int(), null, "resetFlag", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEInt(), "mask", 0, 1, IS_UNIQUE, IS_ORDERED);

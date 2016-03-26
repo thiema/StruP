@@ -142,9 +142,11 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		//getGraphComponent().getGraphHandler().setKeepOnTop(false);
 		upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
-		// add the tool bar
-upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
-		upperPanel.add(new EasyFlowToolBar(this, JToolBar.HORIZONTAL), BorderLayout.SOUTH);
+		EasyFlowToolBar easyFlowToolBar = new EasyFlowToolBar(this, JToolBar.HORIZONTAL);
+		// add the tool bar (only in developer mode, which was determined in EasyFlowToolBar Constructor)
+		if (GlobalVar.isDevloperMode())
+			upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
+		upperPanel.add(easyFlowToolBar, BorderLayout.SOUTH);
 		add(upperPanel, BorderLayout.NORTH);
 		
 	}
@@ -205,11 +207,11 @@ upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH)
         return edgeStyle;
 	}
 	
-	private static Map<String, Object> getTaskCircumventingEdgeStyle(Color color) {
+	private static Map<String, Object> getCircumventingTaskEdgeStyle(Color color) {
 		Map<String, Object> edgeStyle = new Hashtable<String, Object>();
 		edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
 		edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
-        edgeStyle.put(mxConstants.STYLE_STROKECOLOR, mxUtils.getHexColorString(Color.RED));		
+        edgeStyle.put(mxConstants.STYLE_STROKECOLOR, mxUtils.getHexColorString(Color.CYAN));		
         //edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL);
         edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
         //if (color != null)
@@ -222,7 +224,7 @@ upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH)
 		Map<String, Object> edgeStyle = new Hashtable<String, Object>();
 		edgeStyle.put(mxConstants.STYLE_STROKEWIDTH, 3);
 		edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
-        edgeStyle.put(mxConstants.STYLE_STROKECOLOR, mxUtils.getHexColorString(Color.PINK));		
+        edgeStyle.put(mxConstants.STYLE_STROKECOLOR, mxUtils.getHexColorString(Color.RED));		
         //edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_OVAL);
         edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
         //if (color != null)
@@ -247,7 +249,7 @@ upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH)
         stylesheet.putCellStyle(GlobalConstants.EDGE_STYLE, edgeStyle);
         
         // task circumventing edges
-        stylesheet.putCellStyle(GlobalConstants.TASK_CIRCUMVENTING_EDGE_STYLE, getTaskCircumventingEdgeStyle(color));
+        stylesheet.putCellStyle(GlobalConstants.CIRCUMVENTING_TASK_EDGE_STYLE, getCircumventingTaskEdgeStyle(color));
         
         stylesheet.putCellStyle(GlobalConstants.MISSING_IN_OUT_DATAPORT_EDGE_STYLE, getMissingInOutDataPortEdgeStyle(color));
         

@@ -48,12 +48,15 @@ Export-Package: easyflow,
  easyflow.ui,
  easyflow.ui.impl,
  easyflow.ui.util,
+ easyflow.util,
+ easyflow.util.impl,
  easyflow.util.maps,
  easyflow.util.maps.impl,
- easyflow.util.maps.util
+ easyflow.util.maps.util,
+ easyflow.util.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.ecore.xmi
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.ecore.xmi.impl,

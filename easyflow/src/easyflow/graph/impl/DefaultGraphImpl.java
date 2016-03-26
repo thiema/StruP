@@ -2,17 +2,20 @@
  */
 package easyflow.graph.impl;
 
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
 import easyflow.core.LogMessage;
-
 import easyflow.graph.DefaultGraph;
 import easyflow.graph.GraphPackage;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class DefaultGraphImpl extends IGraphImpl implements DefaultGraph {
+public class DefaultGraphImpl extends MinimalEObjectImpl.Container implements DefaultGraph {
 	/**
 	 * The cached value of the '{@link #getLogMessage() <em>Log Message</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -98,6 +101,23 @@ public class DefaultGraphImpl extends IGraphImpl implements DefaultGraph {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public void initLogMessage(Category category) {
+		if (getLogMessage() == null)
+		{
+			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			getLogMessage().setCategory(category);
+		}
+		else if (!getLogMessage().getCategory().equals(category))
+		{
+			getLogMessage().setCategory(category);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -152,6 +172,21 @@ public class DefaultGraphImpl extends IGraphImpl implements DefaultGraph {
 				return logMessage != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY:
+				initLogMessage((Category)arguments.get(0));
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //DefaultGraphImpl

@@ -65,26 +65,46 @@ public enum Category implements Enumerator {
 	 * @ordered
 	 */
 	WORKFLOW(20, "WORKFLOW", "WORKFLOW"), /**
-	 * The '<em><b>WORKFLOW TEMPLATE</b></em>' literal object.
+	 * The '<em><b>WORKFLOW TEMPLATE PARSING</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #WORKFLOW_TEMPLATE_VALUE
+	 * @see #WORKFLOW_TEMPLATE_PARSING_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	WORKFLOW_TEMPLATE(25, "WORKFLOW_TEMPLATE", "WORKFLOW_TEMPLATE"),
-
-	/**
-	 * The '<em><b>ABSTRACT WORKFLOW</b></em>' literal object.
+	WORKFLOW_TEMPLATE_PARSING(25, "WORKFLOW_TEMPLATE_PARSING", "WORKFLOW_TEMPLATE_PARSING"), /**
+	 * The '<em><b>ABSTRACT WORKFLOW GENERATION</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #ABSTRACT_WORKFLOW_VALUE
+	 * @see #ABSTRACT_WORKFLOW_GENERATION_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	ABSTRACT_WORKFLOW(30, "ABSTRACT_WORKFLOW", "ABSTRACT_WORKFLOW"),
-
-	/**
+	ABSTRACT_WORKFLOW_GENERATION(30, "ABSTRACT_WORKFLOW_GENERATION", "ABSTRACT_WORKFLOW_GENERATION"), /**
+	 * The '<em><b>TRAVERSAL EVENT CREATION</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #TRAVERSAL_EVENT_CREATION_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	TRAVERSAL_EVENT_CREATION(33, "TRAVERSAL_EVENT_CREATION", "TRAVERSAL_EVENT_CREATION"), /**
+	 * The '<em><b>SUBGRAPH CREATION</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #SUBGRAPH_CREATION_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	SUBGRAPH_CREATION(35, "SUBGRAPH_CREATION", "SUBGRAPH_CREATION"), /**
+	 * The '<em><b>TRAVERSAL EVENT RESOLUTION</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #TRAVERSAL_EVENT_RESOLUTION_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	TRAVERSAL_EVENT_RESOLUTION(40, "TRAVERSAL_EVENT_RESOLUTION", "TRAVERSAL_EVENT_RESOLUTION"), /**
 	 * The '<em><b>DATA GROUPING</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,9 +112,7 @@ public enum Category implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DATA_GROUPING(40, "DATA_GROUPING", "DATA_GROUPING"),
-
-	/**
+	DATA_GROUPING(41, "DATA_GROUPING", "DATA_GROUPING"), /**
 	 * The '<em><b>PARAMETER GROUPING</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -102,19 +120,23 @@ public enum Category implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	PARAMETER_GROUPING(41, "PARAMETER_GROUPING", "PARAMETER_GROUPING"),
-
-	/**
-	 * The '<em><b>PREPROCESSING</b></em>' literal object.
+	PARAMETER_GROUPING(42, "PARAMETER_GROUPING", "PARAMETER_GROUPING"), /**
+	 * The '<em><b>UTILITY TASK RESOLUTION</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #PREPROCESSING_VALUE
+	 * @see #UTILITY_TASK_RESOLUTION_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	PREPROCESSING(50, "PREPROCESSING", "PREPROCESSING"),
-
-	/**
+	UTILITY_TASK_RESOLUTION(50, "UTILITY_TASK_RESOLUTION", "UTILITY_TASK_RESOLUTION"), /**
+	 * The '<em><b>INCOMPATIBLE GROUPING RESOLUTION</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #INCOMPATIBLE_GROUPING_RESOLUTION_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	INCOMPATIBLE_GROUPING_RESOLUTION(51, "INCOMPATIBLE_GROUPING_RESOLUTION", "INCOMPATIBLE_GROUPING_RESOLUTION"), /**
 	 * The '<em><b>TOOL RESOLUTION</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,17 +144,31 @@ public enum Category implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	TOOL_RESOLUTION(60, "TOOL_RESOLUTION", "TOOL_RESOLUTION"),
-
-	/**
-	 * The '<em><b>EXECUTION WORKFLOW</b></em>' literal object.
+	TOOL_RESOLUTION(60, "TOOL_RESOLUTION", "TOOL_RESOLUTION"), /**
+	 * The '<em><b>EXECUTION WORKFLOW GENERATION</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #EXECUTION_WORKFLOW_VALUE
+	 * @see #EXECUTION_WORKFLOW_GENERATION_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	EXECUTION_WORKFLOW(70, "EXECUTION_WORKFLOW", "EXECUTION_WORKFLOW");
+	EXECUTION_WORKFLOW_GENERATION(70, "EXECUTION_WORKFLOW_GENERATION", "EXECUTION_WORKFLOW_GENERATION"), /**
+	 * The '<em><b>GRAPH UTIL</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #GRAPH_UTIL_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	GRAPH_UTIL(200, "GRAPH_UTIL", "GRAPH_UTIL"), /**
+	 * The '<em><b>UTIL</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #UTIL_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	UTIL(300, "UTIL", "UTIL");
 
 	/**
 	 * The '<em><b>PROJECT CONFIGURATION</b></em>' literal value.
@@ -210,34 +246,79 @@ public enum Category implements Enumerator {
 	public static final int WORKFLOW_VALUE = 20;
 
 	/**
-	 * The '<em><b>WORKFLOW TEMPLATE</b></em>' literal value.
+	 * The '<em><b>WORKFLOW TEMPLATE PARSING</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>WORKFLOW TEMPLATE</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>WORKFLOW TEMPLATE PARSING</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #WORKFLOW_TEMPLATE
+	 * @see #WORKFLOW_TEMPLATE_PARSING
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int WORKFLOW_TEMPLATE_VALUE = 25;
+	public static final int WORKFLOW_TEMPLATE_PARSING_VALUE = 25;
 
 	/**
-	 * The '<em><b>ABSTRACT WORKFLOW</b></em>' literal value.
+	 * The '<em><b>ABSTRACT WORKFLOW GENERATION</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>ABSTRACT WORKFLOW</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>ABSTRACT WORKFLOW GENERATION</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #ABSTRACT_WORKFLOW
+	 * @see #ABSTRACT_WORKFLOW_GENERATION
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ABSTRACT_WORKFLOW_VALUE = 30;
+	public static final int ABSTRACT_WORKFLOW_GENERATION_VALUE = 30;
+
+	/**
+	 * The '<em><b>TRAVERSAL EVENT CREATION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>TRAVERSAL EVENT CREATION</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #TRAVERSAL_EVENT_CREATION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TRAVERSAL_EVENT_CREATION_VALUE = 33;
+
+	/**
+	 * The '<em><b>SUBGRAPH CREATION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>SUBGRAPH CREATION</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #SUBGRAPH_CREATION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int SUBGRAPH_CREATION_VALUE = 35;
+
+	/**
+	 * The '<em><b>TRAVERSAL EVENT RESOLUTION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>TRAVERSAL EVENT RESOLUTION</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #TRAVERSAL_EVENT_RESOLUTION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TRAVERSAL_EVENT_RESOLUTION_VALUE = 40;
 
 	/**
 	 * The '<em><b>DATA GROUPING</b></em>' literal value.
@@ -252,7 +333,7 @@ public enum Category implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DATA_GROUPING_VALUE = 40;
+	public static final int DATA_GROUPING_VALUE = 41;
 
 	/**
 	 * The '<em><b>PARAMETER GROUPING</b></em>' literal value.
@@ -267,22 +348,37 @@ public enum Category implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PARAMETER_GROUPING_VALUE = 41;
+	public static final int PARAMETER_GROUPING_VALUE = 42;
 
 	/**
-	 * The '<em><b>PREPROCESSING</b></em>' literal value.
+	 * The '<em><b>UTILITY TASK RESOLUTION</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>PREPROCESSING</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>UTILITY TASK RESOLUTION</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #PREPROCESSING
+	 * @see #UTILITY_TASK_RESOLUTION
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int PREPROCESSING_VALUE = 50;
+	public static final int UTILITY_TASK_RESOLUTION_VALUE = 50;
+
+	/**
+	 * The '<em><b>INCOMPATIBLE GROUPING RESOLUTION</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>INCOMPATIBLE GROUPING RESOLUTION</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #INCOMPATIBLE_GROUPING_RESOLUTION
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INCOMPATIBLE_GROUPING_RESOLUTION_VALUE = 51;
 
 	/**
 	 * The '<em><b>TOOL RESOLUTION</b></em>' literal value.
@@ -300,19 +396,49 @@ public enum Category implements Enumerator {
 	public static final int TOOL_RESOLUTION_VALUE = 60;
 
 	/**
-	 * The '<em><b>EXECUTION WORKFLOW</b></em>' literal value.
+	 * The '<em><b>EXECUTION WORKFLOW GENERATION</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>EXECUTION WORKFLOW</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>EXECUTION WORKFLOW GENERATION</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #EXECUTION_WORKFLOW
+	 * @see #EXECUTION_WORKFLOW_GENERATION
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int EXECUTION_WORKFLOW_VALUE = 70;
+	public static final int EXECUTION_WORKFLOW_GENERATION_VALUE = 70;
+
+	/**
+	 * The '<em><b>GRAPH UTIL</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>GRAPH UTIL</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #GRAPH_UTIL
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int GRAPH_UTIL_VALUE = 200;
+
+	/**
+	 * The '<em><b>UTIL</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>UTIL</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #UTIL
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int UTIL_VALUE = 300;
 
 	/**
 	 * An array of all the '<em><b>Category</b></em>' enumerators.
@@ -327,13 +453,19 @@ public enum Category implements Enumerator {
 			TASK_DEFINITION,
 			TOOL_DEFINITION,
 			WORKFLOW,
-			WORKFLOW_TEMPLATE,
-			ABSTRACT_WORKFLOW,
+			WORKFLOW_TEMPLATE_PARSING,
+			ABSTRACT_WORKFLOW_GENERATION,
+			TRAVERSAL_EVENT_CREATION,
+			SUBGRAPH_CREATION,
+			TRAVERSAL_EVENT_RESOLUTION,
 			DATA_GROUPING,
 			PARAMETER_GROUPING,
-			PREPROCESSING,
+			UTILITY_TASK_RESOLUTION,
+			INCOMPATIBLE_GROUPING_RESOLUTION,
 			TOOL_RESOLUTION,
-			EXECUTION_WORKFLOW,
+			EXECUTION_WORKFLOW_GENERATION,
+			GRAPH_UTIL,
+			UTIL,
 		};
 
 	/**
@@ -389,13 +521,19 @@ public enum Category implements Enumerator {
 			case TASK_DEFINITION_VALUE: return TASK_DEFINITION;
 			case TOOL_DEFINITION_VALUE: return TOOL_DEFINITION;
 			case WORKFLOW_VALUE: return WORKFLOW;
-			case WORKFLOW_TEMPLATE_VALUE: return WORKFLOW_TEMPLATE;
-			case ABSTRACT_WORKFLOW_VALUE: return ABSTRACT_WORKFLOW;
+			case WORKFLOW_TEMPLATE_PARSING_VALUE: return WORKFLOW_TEMPLATE_PARSING;
+			case ABSTRACT_WORKFLOW_GENERATION_VALUE: return ABSTRACT_WORKFLOW_GENERATION;
+			case TRAVERSAL_EVENT_CREATION_VALUE: return TRAVERSAL_EVENT_CREATION;
+			case SUBGRAPH_CREATION_VALUE: return SUBGRAPH_CREATION;
+			case TRAVERSAL_EVENT_RESOLUTION_VALUE: return TRAVERSAL_EVENT_RESOLUTION;
 			case DATA_GROUPING_VALUE: return DATA_GROUPING;
 			case PARAMETER_GROUPING_VALUE: return PARAMETER_GROUPING;
-			case PREPROCESSING_VALUE: return PREPROCESSING;
+			case UTILITY_TASK_RESOLUTION_VALUE: return UTILITY_TASK_RESOLUTION;
+			case INCOMPATIBLE_GROUPING_RESOLUTION_VALUE: return INCOMPATIBLE_GROUPING_RESOLUTION;
 			case TOOL_RESOLUTION_VALUE: return TOOL_RESOLUTION;
-			case EXECUTION_WORKFLOW_VALUE: return EXECUTION_WORKFLOW;
+			case EXECUTION_WORKFLOW_GENERATION_VALUE: return EXECUTION_WORKFLOW_GENERATION;
+			case GRAPH_UTIL_VALUE: return GRAPH_UTIL;
+			case UTIL_VALUE: return UTIL;
 		}
 		return null;
 	}

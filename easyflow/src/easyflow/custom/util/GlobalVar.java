@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.Style;
 
 import org.apache.commons.jexl2.JexlEngine;
 import org.eclipse.emf.common.util.BasicEList;
@@ -20,6 +22,11 @@ import org.eclipse.emf.common.util.EMap;
 import com.mxgraph.model.mxICell;
 
 import easyflow.data.DataLink;
+import easyflow.core.Category;
+import easyflow.core.CoreFactory;
+import easyflow.core.ErrorInfo;
+import easyflow.core.LogMsgOutputMode;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
@@ -34,11 +41,13 @@ public class GlobalVar {
 	private static Map<String, Object> defaultEdgeStyle   = new HashMap<String, Object>();
 	private static Map<String, Object> defaultVertexStyle = new HashMap<String, Object>();
 	
-	private static String lastErrorString = null;
+	//private static String      lastErrorString = null;
+	private static ErrorInfo   lastErrorInfo   = CoreFactory.eINSTANCE.createErrorInfo();
 	
-	public static String executionSystemFileName = null;
-	public static File   executionSystemFile     = null;
-	public static BufferedWriter executionSystemWriter   = null;
+	
+	public static        String            executionSystemFileName = null;
+	public static        File              executionSystemFile     = null;
+	public static        BufferedWriter    executionSystemWriter   = null;
 
 	
 	private static final JexlEngine jexlEngine = new JexlEngine();
@@ -47,7 +56,13 @@ public class GlobalVar {
 	private static Util util      = null;
 	
 	private static Map<String, easyflow.tool.Package> packages = new HashMap<String, easyflow.tool.Package>();
-	private static Map<String, Map<String, Map<String, Map<String, String>>>> masterMap = new HashMap<String, Map<String, Map<String, Map<String, String>>>>();
+	private static Map<String, 
+						Map<String, 
+							Map<String, 
+								Map<String, String>
+								>
+							>
+						> 				masterMap = new HashMap<String, Map<String, Map<String, Map<String, String>>>>();
 	private static EasyFlowGraphEditor  editor               = null;
 	private static ComposeWorkflowPanel composeWorkflowPanel = null;
 	private static DefaultProject       defaultProject       = null;
@@ -62,10 +77,11 @@ public class GlobalVar {
 	static EMap<String, DataLink>  dataLinks    = new BasicEMap<String, DataLink>();
 	static EList<Object>           utilityCells = new BasicEList<Object>();
 	
-	
-	
-	private static boolean guiMode = false;
+	private static LogMsgOutputMode outputMode = LogMsgOutputMode.GUI;
 	private static JTextPane txtAreaForLogMsg;
+	private static boolean isDeveloperMode = false;
+	private static Style defaultStyle;
+	private static int debugLevel = GlobalConstants.DEFAULT_DEBUG_LEVEL;
 	
 	
 	public static DefaultProject getDefaultProject() {
@@ -92,12 +108,12 @@ public class GlobalVar {
 		GlobalVar.util = util;
 	}
 
-	public static boolean isGuiMode() {
-		return guiMode;
+	public static boolean outputToGUI() {
+		return outputMode.getValue() > LogMsgOutputMode.CONSOLE_VALUE;
 	}
 
-	public static void setGuiMode(boolean guiMode) {
-		GlobalVar.guiMode = guiMode;
+	public static void setOutputMode(LogMsgOutputMode outputMode) {
+		GlobalVar.outputMode = outputMode;
 	}
 
 	public static ComposeWorkflowPanel getComposeWorkflowPanel() {
@@ -190,12 +206,12 @@ public class GlobalVar {
 		return jexlEngine;
 	}
 
-	public static String getLastErrorString() {
-		return lastErrorString;
+	public static ErrorInfo getLastErrorInfo() {
+		return lastErrorInfo;
 	}
 
-	public static void setLastErrorString(String lastErrorString) {
-		GlobalVar.lastErrorString = lastErrorString;
+	public static void setLastErrorInfo(ErrorInfo lastErrorInfo) {
+		GlobalVar.lastErrorInfo = lastErrorInfo;
 	}
 
 	public static Map<String, Map<String, Map<String, Map<String, String>>>> getMasterMap() {
@@ -209,12 +225,12 @@ public class GlobalVar {
 	public static DefaultMetaData getMetaData() {
 		return metaData;
 	}
-
+/*
 	public static EMap<String, EList<TraversalChunk>> getTraversalChunks() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+*/
 	public static EMap<String, Object> getCells() {
 		return cells;
 	}
@@ -258,6 +274,63 @@ public class GlobalVar {
 	public static JTextPane getTextAreaForLogMsg()
 	{
 		return GlobalVar.txtAreaForLogMsg;
+	}
+
+	public static void setDeveloperMode(boolean isDeveloperMode)
+	{
+		GlobalVar.isDeveloperMode = isDeveloperMode;
+	}
+	
+	public static boolean isDevloperMode() {
+		
+		return isDeveloperMode;
+	}
+
+	public static boolean outputToConsole() {
+		return outputMode.getValue() != LogMsgOutputMode.GUI_VALUE;
+	}
+
+	public static void setLastErrorInfo(Category category, Task task, DataLink dataLink, String info, boolean isFinal) {
+		if (!lastErrorInfo.isFinal() || isFinal)
+		{
+			lastErrorInfo.clear();
+			lastErrorInfo.setCategory(category);
+			lastErrorInfo.setTask(task);
+			lastErrorInfo.setInfo(info);
+			lastErrorInfo.setFinal(isFinal);
+			lastErrorInfo.setDataLink(dataLink);
+		}
+	}
+
+	public static void setDefaultDocStyle(Style defaultStyle) {
+		GlobalVar.defaultStyle = defaultStyle;
+		
+	}
+
+	public static Style getDefaultDocStyle() {
+		return defaultStyle;
+	}
+
+	public static void setDebugLevel(String severity)
+	{
+		if (severity.equalsIgnoreCase("trace"))
+			debugLevel = GlobalConstants.DEBUG_LEVEL_TRACE;
+		else if (severity.equalsIgnoreCase("debug"))
+			debugLevel = GlobalConstants.DEBUG_LEVEL_DEBUG;
+		else if (severity.equalsIgnoreCase("info"))
+			debugLevel = GlobalConstants.DEBUG_LEVEL_INFO;
+		else if (severity.equalsIgnoreCase("warn"))
+			debugLevel = GlobalConstants.DEBUG_LEVEL_WARN;
+		else if (severity.equalsIgnoreCase("error"))
+			debugLevel = GlobalConstants.DEBUG_LEVEL_ERROR;
+		else if (severity.equalsIgnoreCase("fatal"))
+			debugLevel = GlobalConstants.DEBUG_LEVEL_FATAL;
+		else
+			debugLevel = GlobalConstants.DEFAULT_DEBUG_LEVEL;
+	}
+	
+	public static boolean isRequiredDebugLevelReached(Severity severity) {
+		return severity.getValue() <= debugLevel ;
 	}
 
 }

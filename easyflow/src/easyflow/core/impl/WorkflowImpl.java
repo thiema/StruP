@@ -45,6 +45,8 @@ import easyflow.tool.InOutParameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
+import easyflow.util.ReturnValue;
+import easyflow.util.UtilFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
@@ -1014,14 +1016,12 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			{
 				getWorker().getComposeWorkflowPanel().getTextAreaTaskProgress().setText("");
 			}
-			
 		}
+		
 		getGraph().getModel().endUpdate();
 		GlobalConfig.getTools().clear();
 		getLastTasks().clear();
 		setFirstNode(null);
-		
-		
 		
 		return rc;
 	}
@@ -1120,7 +1120,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public int runNextWorkflowStep() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, NoValidInOutDataException {
+	public int runNextWorkflowStep() {
 		
 		if (getNextWorkflowStep().equals(GlobalConstants.START) || 
 				getNextWorkflowStep().equals(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW))
@@ -1172,7 +1172,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public int runEntireWorkflow() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, NoValidInOutDataException {
+	public int runEntireWorkflow() {
 		int rc = 0;
 		if (getNextWorkflowStep().equals(GlobalConstants.START) || 
 				getNextWorkflowStep().equals(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW))
@@ -1456,15 +1456,18 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		*/
 		
 		//printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_ABSTRACT_WORKFLOW);
-    	boolean res = generateGraphFromTemplate(GlobalConfig.getTools());
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_NUM_TOOLS_AVAILABLE_1, 
+				Severity.DEBUG, Integer.toString(GlobalConfig.getTools().size()));
 
-    	if (res)
+    	int res = generateGraphFromTemplate(GlobalConfig.getTools());
+
+    	if (res > 0)
     	{
     		registerUtilityTasks();
     		//printGraph();
-    		generateAbstractGraphEdges();
+    		res = generateAbstractGraphEdges();
     		//printGraph();
-
+/*
 	        Task tmp;
 			try {
 				tmp = JGraphXUtil.loadTask(getFirstNode());
@@ -1474,14 +1477,15 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
     	}
     	
-    	printWorkflowStepMsgOnEnd(res, 
+    	printWorkflowStepMsgOnEnd(res > 0, 
     			GlobalConstants.GENERATE_ABSTRACT_WORKFLOW, 
     			getLogMessage().getLogMsg(),
     			getLogMessage().getHelpMsg());
-    	return res;
     	
+    	return res > 0;
 	}
 
 	/**
@@ -1489,11 +1493,13 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean generateGraphFromTemplate(EMap<String, Tool> tools) {
-				
+	public int generateGraphFromTemplate(EMap<String, Tool> tools) {
+		
+		int res = 0;
 		getGraph().getModel().beginUpdate();
 		
 		logger.debug("generateGraphFromTemplate(): got definition for tools: "+(tools!=null?tools.keySet():null));
+		
         try {
 
         	// iterate through tasks and do for each task:
@@ -1561,6 +1567,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	        				+"add to cell map: key="+task.getUniqueString()
 	        				+" cmd="+task.getResolvedCommand()
 	        				+" cell="+getGraph().getLabel(target));
+	        		res++;
 	        		//map.put(task.getName(), target);
         		}
         		else
@@ -1613,7 +1620,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         	getGraph().getModel().endUpdate();
         }
         
-        return true;
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_NUM_VERTEX_CREATED_1, 
+				(res > 0 ? Severity.INFO : Severity.WARN),
+				Integer.toString(res));
+
+        return res;
 	}
 
 	private DataLink createDataLinkForRoot(Task parent, Task child, DataPort dataPort)
@@ -1621,11 +1632,16 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 		dataLink.setDataPort(dataPort);
 		dataLink.setParentGroupingStr(GlobalConstants.METADATA_INPUT);
+		dataLink.setInDataPort(parent.getDataPortByDataPort(dataPort, true));
+		
+		//dataLink.setGroupingStr(GlobalConstants.METADATA_INPUT);
 		return dataLink;
 	}
 	
-	private void generateAbstractGraphEdges()
+	private int generateAbstractGraphEdges()
 	{
+		int edgesIns = 0;
+		int edgesToRootIns = 0;
 		try {
 			Object rootCell = GlobalVar.getCells().get(getRootTask().getUniqueString());
 			if (rootCell==null)
@@ -1658,10 +1674,12 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					{
 						for (DataPort dataPort:task.getInDataPorts())
 						{
-        					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_LINK_TASK_TO_ROOT_2, Severity.INFO,
+        					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_LINK_TASK_TO_ROOT_2, Severity.WARN,
         							Util.generateStringList(task.getUniqueString(), dataPort.getName()));
-							logger.debug("generateAbstractGraphEdges(): no parent found. link task with root using data port="+dataPort.getName());
+							logger.warn("generateAbstractGraphEdges(): no parent found. link task with root using data port="+dataPort.getName());
+							
 							getGraph().insertEdgeEasyFlow(null, null, rootCell, target, createDataLinkForRoot(getRootTask(), task, dataPort));
+							edgesToRootIns++;
 						}
 					}
 					else
@@ -1686,6 +1704,10 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 									dataLink.setInDataPort(pTask.getDataPortByDataPort(dataLink.getDataPort(), true));
 									logger.trace("generateAbstractGraphEdges():  add dataLink: "+dataLink.getUniqueString()+" ingoing port="+dataLink.getInDataPort().getName());
 									Object o=getGraph().insertEdgeEasyFlow(null, null, source, target, dataLink);
+									if (pTask.isRoot())
+										edgesToRootIns++;
+									else
+										edgesIns++;
 									if (dataLink.getDataPort().isStatic() || pTask.isUtil())
 										getGraph().setCellUnvisible(o);
 									pTask.getUnresolvedOutDataPorts().remove(dataLink.getInDataPort());
@@ -1711,7 +1733,22 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
         	getGraph().getModel().endUpdate();
         	//JGraphXUtil.layoutGraph();
         }
-		getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, true);
+		if (edgesToRootIns > 0)
+		{
+			getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, true);
+			
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_NUM_EDGES_CREATED_2, 
+					(edgesIns > 0 ? Severity.INFO : Severity.WARN),
+					Util.generateStringList(Integer.toString(edgesIns+edgesToRootIns), Integer.toString(edgesToRootIns)));
+		}
+		else
+		{
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_ABSTRACT_GRAPH_NUM_EDGES_CREATED_2, Severity.ERROR,
+					Util.generateStringList(Integer.toString(edgesIns), Integer.toString(edgesToRootIns)));
+			getProcessedStates().put(GlobalConstants.ABSTRACT_WORKFLOW_GENERATED, false);
+		}
+		
+		return edgesIns + edgesToRootIns;
 	}
 
 	/**
@@ -1955,14 +1992,14 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	{
 		EMap<Task, EList<DataLink>> tasks = new BasicEMap<Task, EList<DataLink>>();
 		
-		for (ParentTaskResult result:results)
+		for (ParentTaskResult result : results)
 		{
 			logger.debug("getAllParents(): parent="+result.getParentTask().getUniqueString()
 					+" cond="+result.getCondition()
 					+" potential circumvents="+result.getPotentialCircumventingTasks()
 					+" ports="+Util.list2String(result.getCoveredPorts(), ","));
 			EList<DataLink> dataLinks = new BasicEList<DataLink>();
-			for (DataPort dataPort:result.getCoveredPorts())
+			for (DataPort dataPort : result.getCoveredPorts())
 			{
 				DataLink dataLink = DataFactory.eINSTANCE.createDataLink();
 				dataLink.setDataPort(dataPort);
@@ -2228,43 +2265,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean generateWorklowForExecutionSystem() {
-		
-		printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW);
-		boolean rc = false;
-		rc = getJgraph().generateWorkflowForExecutionSystem((mxICell) getFirstNode(), getExecutionSystem());
-		if (rc)
-			getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, true);
-		printWorkflowStepMsgOnEnd(rc, 
-				GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW,
-				getLogMessage().getLogMsg(),
-				getLogMessage().getHelpMsg());
-		return rc;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws NoValidInOutDataException 
-	 * @generated not
-	 */
-	public boolean resolveToolDependencies() throws NoValidInOutDataException {
-		
-		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_TOOL_DEPS);
-		boolean rc = getJgraph().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
-		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_TOOL_DEPS,
-				getLogMessage().getLogMsg(),
-				getLogMessage().getHelpMsg());
-		if (rc)
-			getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, true);
-		return rc;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
 	public boolean resolveMissingDataPortsByToolFor(Task task) {
 		
 		Object target = GlobalVar.getCells().get(task.getUniqueString());
@@ -2459,35 +2459,63 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
 	 * @generated not
 	 */
-	public boolean resolveTraversalEvents() throws CellNotFoundException, TaskNotFoundException {
+	public boolean resolveTraversalEvents() {
 		
 		
-		if (getJgraph().resolveTraversalEvents((mxICell)getFirstNode()))
-		{
-			getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
-			return true;
+		try {
+			if (getJgraph().resolveTraversalEvents((mxICell)getFirstNode()))
+			{
+				getProcessedStates().put(GlobalConstants.TRAVERSAL_EVENTS_RESOLVED, true);
+				return true;
+			}
+		} catch (TaskNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0,
+					Category.TRAVERSAL_EVENT_CREATION,
+					Severity.ERROR, e, null
+					);
+		} catch (DataLinkNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+					Category.TRAVERSAL_EVENT_CREATION,
+					Severity.ERROR, e, null
+					);
 		}
 		return false;
-			
 	}
 
-
 	
-	public boolean applyTraversalCriteria(boolean isGrouping) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyTraversalCriteria(boolean isGrouping) {
 		
 		String step = isGrouping ? GlobalConstants.APPLY_GROUPINGS : GlobalConstants.APPLY_PARAMETERS;
 		//getWorker().
 		printWorkflowStepMsgOnStart(step);
 		boolean rc = true;
 		
-		TraversalEvent traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
+		TraversalEvent traversalEvent;
+		try {
+			traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
+		} catch (TaskNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+					Category.TRAVERSAL_EVENT_RESOLUTION,
+					Severity.ERROR, e,
+					null);
+			return false;
+		} catch (DataLinkNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+					Category.TRAVERSAL_EVENT_RESOLUTION,
+					Severity.ERROR, e,
+					null);
+			return false;
+		}
 		TraversalEvent oldTraversalEvent = null;
 		logger.debug("applyTraversalCriteria(): found "+getJgraph().getTraversalEvents().size()+" traversal events. Grouping="+isGrouping);
-		
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_PROCESS_NUM_TRAVERSAL_EVENTS_2, Severity.INFO, 
+				Util.generateStringList(Integer.toString(getJgraph().getTraversalEvents().size()), isGrouping ? "grouping" : "parameter"));
 		while (traversalEvent != null)
 		{
 			logger.debug("applyTraversalCriteria(): te="+GraphUtil.traversalEventToString(traversalEvent)
@@ -2497,7 +2525,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			if (!applyTraversalEvent(traversalEvent))
 			{
 				cont = true;
-				rc = false;
+				//rc = false;
 				logger.error("applyTraversalCriteria(): error occured for te="
 						+traversalEvent.getTraversalCriterion().getId()+" "
 						+traversalEvent.getTraversalCriterion().getName()+" split task="
@@ -2505,7 +2533,23 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 						);
 			}
 			oldTraversalEvent = traversalEvent;
-			traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
+			try {
+				traversalEvent = getJgraph().getNextTraversalEvent(isGrouping);
+			} catch (TaskNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+						Category.TRAVERSAL_EVENT_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
+			} catch (DataLinkNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+						Category.TRAVERSAL_EVENT_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
+			}
 			
 			if (cont)
 				continue;
@@ -2542,11 +2586,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 *  
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
 	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyGroupingCriteria() {
 		
 		boolean rc = applyTraversalCriteria(true); 
 		if (rc)
@@ -2558,11 +2602,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
 	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyParameterCriteria() {
 		
 		boolean rc = applyTraversalCriteria(false);
 		if (rc)
@@ -2574,56 +2618,151 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
 	 * @throws GroupingCriterionInstanceNotFoundException 
+	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean applyTraversalEvent(TraversalEvent traversalEvent) throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyTraversalEvent(TraversalEvent traversalEvent) {
 		
-		boolean rc = true;
-			
-			EList<GroupingInstance> groupingInstances = getJgraph().getGroupingInstances(traversalEvent);
-			if (groupingInstances.isEmpty())
-				return false;
-			
-			mxICell subGraphRoot = getJgraph().computeSubgraph(traversalEvent, true);
+		boolean rc;
+		final ReturnValue returnCell = UtilFactory.eINSTANCE.createReturnValue();
 		
-			getJgraph().getCurrentSubGraphs().add(subGraphRoot);
-			
-			if (subGraphRoot != null)
-			{				
-					if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
-					{
-						for (GroupingInstance groupingInstance : groupingInstances)
-						{
-							logger.debug("applyTraversalEvents(): applying grouping instance="+groupingInstance.getName()+" with features="+
-									groupingInstance.getFeatures().keySet()+" for criterion="+traversalEvent.getTraversalCriterion().getId());
-							
-							mxICell copyRoot = getJgraph().applyTraversalEventCopyGraph(subGraphRoot, 
-									traversalEvent, 
-									groupingInstance);
-							//if (!traversalEvent.isGrouping())
-							//throw new UnsupportedOperationException();
-							getJgraph().applyTraversalEvent(copyRoot, traversalEvent, 
+		EList<GroupingInstance> groupingInstances;
+		try {
+			groupingInstances = getJgraph()
+					.getGroupingInstances(traversalEvent);
+		} catch (GroupingCriterionInstanceNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_GROUPING_CRITERION_INSTANCE_NOT_FOUND_0, 
+					Category.TRAVERSAL_EVENT_RESOLUTION,
+					Severity.ERROR, e,
+					null);
+			return false;
+		}
+		if (groupingInstances.isEmpty())
+			return false;
+
+		if (traversalEvent.isGrouping())
+			getLogMessage().generateLogMsg(
+				GlobalConstants.LOG_MSG_APPLY_TRAVERSAL_EVENT_GROUPING_5,
+				Severity.INFO,
+				Util.generateStringList(
+						traversalEvent.getSplitTask().getUniqueString(),
+						Util.list2String(Util.tasksToStringList(traversalEvent.getMergeTask()), ","),
+						traversalEvent.getTraversalCriterion().getMode(),
+						traversalEvent.getTraversalCriterion().getId(),
+						Util.list2String(groupingInstances, ",")));
+		else
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_APPLY_TRAVERSAL_EVENT_PARAMETER_5,
+					Severity.INFO,
+					Util.generateStringList(
+							traversalEvent.getSplitTask().getUniqueString(),
+							Util.list2String(Util.tasksToStringList(traversalEvent.getMergeTask()), ","),
+							traversalEvent.getTraversalCriterion().getMode(),
+							traversalEvent.getTraversalCriterion().getName(),
+							Util.list2String(groupingInstances, ",")));
+
+		try {
+			rc = getJgraph()
+					.computeSubgraph(traversalEvent, true, returnCell);
+		} catch (TaskNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+					Category.TRAVERSAL_EVENT_RESOLUTION,
+					Severity.ERROR, e,
+					null);
+			return false;
+		} catch (DataLinkNotFoundException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+					Category.TRAVERSAL_EVENT_RESOLUTION,
+					Severity.ERROR, e,
+					null);
+			return false;
+		}
+
+		if (rc && returnCell.getObject() != null)
+			rc = getJgraph().getCurrentSubGraphs().add((mxICell) returnCell.getObject());
+
+		if (rc && returnCell.getObject() != null)
+		{
+			mxICell subGraphRoot = (mxICell) returnCell.getObject();
+			if (traversalEvent.getTraversalCriterion().getMode()
+					.equals(GlobalConstants.GROUPING_MODE_BATCH)) {
+				int numEventsResolved = 0;
+				for (GroupingInstance groupingInstance : groupingInstances) {
+					logger.debug("applyTraversalEvents(): applying grouping instance="
+							+ groupingInstance.getName()
+							+ " with features="
+							+ groupingInstance.getFeatures().keySet()
+							+ " for criterion="
+							+ traversalEvent.getTraversalCriterion().getId());
+
+					try {
+						rc = getJgraph()
+								.applyTraversalEventCopyGraph(subGraphRoot,
+										traversalEvent, groupingInstance, returnCell);
+						if (rc && returnCell.getObject() != null) {
+							rc = getJgraph().applyTraversalEvent((mxICell) returnCell.getObject(),
+									traversalEvent,
 									traversalEvent.getTraversalCriterion().getId(),
 									groupingInstance);
+							if (!rc)
+								break;
+							numEventsResolved++;
 						}
+					} catch (TaskNotFoundException e) {
+						getLogMessage().generateLogMsg(
+								GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+								Category.TRAVERSAL_EVENT_RESOLUTION,
+								Severity.ERROR, e,
+								null);
+						return false;
+					} catch (DataLinkNotFoundException e) {
+						getLogMessage().generateLogMsg(
+								GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+								Category.TRAVERSAL_EVENT_RESOLUTION,
+								Severity.ERROR, e,
+								null);
+						return false;
 					}
-					else
-					{
-						logger.debug("applyTraversalEvents(): joint mode, "+" for criterion="+traversalEvent.getTraversalCriterion().getId());
-						mxICell copyRoot = getJgraph().applyTraversalEventCopyGraph(subGraphRoot, 
-								traversalEvent, 
-								groupingInstances);
-						logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
-						getJgraph().applyTraversalEvent(copyRoot, traversalEvent, 
+				}
+				if (numEventsResolved == 0)
+					rc = false;
+					
+			} else {
+				logger.debug("applyTraversalEvents(): joint mode, "
+						+ " for criterion="
+						+ traversalEvent.getTraversalCriterion().getId());
+				try {
+					rc = getJgraph().applyTraversalEventCopyGraph(
+							subGraphRoot, traversalEvent, groupingInstances, returnCell);
+					logger.debug("applyTraversalEvents(): copy graph applied in joint mode.");
+					if (rc && returnCell != null) {
+						rc = getJgraph().applyTraversalEvent((mxICell) returnCell.getObject(), traversalEvent,
 								traversalEvent.getTraversalCriterion().getId(),
 								groupingInstances);
 						logger.debug("applyTraversalEvents(): traversals applied in joint mode.");
 					}
+				} catch (TaskNotFoundException e) {
+					getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+							Category.TRAVERSAL_EVENT_RESOLUTION,
+							Severity.ERROR, e,
+							null);
+					return false;
+				} catch (DataLinkNotFoundException e) {
+					getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+							Category.TRAVERSAL_EVENT_RESOLUTION,
+							Severity.ERROR, e,
+							null);
+					return false;
+				}
 			}
-		
-		
+		}
+
 		return rc;
 	}	
 
@@ -2632,29 +2771,95 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean resolveIncompatibleGroupings() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
+	public boolean resolveIncompatibleGroupings() {
 		
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
 		boolean rc = true;
 		//Iterator<Entry<mxICell, EList<mxICell>>> it = getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet().iterator();
 		EMap<mxICell, EList<mxICell>> untranslatedDLs = getJgraph().findCellsWithUntranslatedDataLinks();
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_FOUND_NUM_INCOMPATIBLE_GROUPINGS_1, Severity.INFO,
+				Integer.toString(untranslatedDLs.size()));
 		ListIterator<Entry<mxICell, EList<mxICell>>> it = untranslatedDLs.listIterator(untranslatedDLs.size()); 
 		while (it.hasPrevious())
 		//while (it.hasNext())
 		{
 			Entry<mxICell, EList<mxICell>> entry = //it.next(); 
 					it.previous();
-			logger.debug("resolveIncompatibleGroupings(): resolve for task="+JGraphXUtil.loadTask(entry.getKey()).getUniqueString());
+			try {
+				logger.debug("resolveIncompatibleGroupings(): resolve for task="+JGraphXUtil.loadTask(entry.getKey()).getUniqueString());
+			} catch (TaskNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+						Category.INCOMPATIBLE_GROUPING_RESOLUTION, 
+						Severity.ERROR, e,
+						Util.generateStringList("resolveIncompatibleGroupings"));
+				return false;
+			}
+			/*
 			for (mxICell cell:entry.getValue())
 			{
-				DataLink dataLink = JGraphXUtil.loadDataLink(cell);
+				DataLink dataLink;
+				try {
+					dataLink = JGraphXUtil.loadDataLink(cell);
+				} catch (DataLinkNotFoundException e) {
+					getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0, 
+							Category.INCOMPATIBLE_GROUPING_RESOLUTION,
+							Severity.ERROR, e,
+							null);
+					return false;
+				}
 				logger.debug("resolveIncompatibleGroupings(): "+dataLink.getParentGroupingStr()+"->"+dataLink.getGroupingStr());
+			}*/
+			try {
+				Task task = JGraphXUtil.loadTask(entry.getKey());
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_WORKFLOW_RESOLVE_INCOMPATIBLE_GROUPING_FOR_TASK_1,
+						Severity.INFO,
+						task.getUniqueString());
+				rc = getJgraph().resolveEdge(entry);
+			} catch (TaskNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
+			} catch (DataLinkNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0, 
+						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
+			} catch (DataPortNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_DATAPORT_NOT_FOUND_0, 
+						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
+			} catch (ToolNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_TOOL_NOT_FOUND_0, 
+						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
+			} catch (UtilityTaskNotFoundException e) {
+				getLogMessage().generateLogMsg(
+						GlobalConstants.LOG_MSG_UTILITY_TASK_NOT_FOUND_0, 
+						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
+						Severity.ERROR, e,
+						null);
+				return false;
 			}
-			rc=getJgraph().resolveEdge(entry);
 		}
 		JGraphXUtil.layoutGraph();
 		if (rc)
+		{
 			getProcessedStates().put(GlobalConstants.INCOMPATIBLE_GROUPINGS_RESOLVED, true);
+		}
 		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS,
 				getLogMessage().getLogMsg(),
 				getLogMessage().getHelpMsg());
@@ -2669,7 +2874,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean resolvePreprocessingTasks() throws TaskNotFoundException, DataLinkNotFoundException {
+	public boolean resolvePreprocessingTasks() {
 		
 		boolean rc = true;
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_PREPROCESSING_TASKS);
@@ -2681,7 +2886,23 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			Entry<mxICell, EList<mxICell>> entry = it.next();
 			for (mxICell edge:entry.getValue())
 			{
-				rc = getJgraph().resolvePreprocessingTask(entry.getKey(), edge);
+				try {
+					rc = getJgraph().resolvePreprocessingTask(entry.getKey(), edge);
+				} catch (TaskNotFoundException e) {
+					getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
+							Category.UTILITY_TASK_RESOLUTION,
+							Severity.ERROR, e,
+							null);
+					return false;
+				} catch (DataLinkNotFoundException e) {
+					getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0,
+							Category.UTILITY_TASK_RESOLUTION,
+							Severity.ERROR, e,
+							null);
+					return false;
+				}
 				logger.debug("resolvePreprocessingTasks(): rc="+rc);
 			}
 			//rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), null);
@@ -2692,6 +2913,53 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				getLogMessage().getLogMsg(),
 				getLogMessage().getHelpMsg());
 		
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @throws NoValidInOutDataException 
+	 * @generated not
+	 */
+	public boolean resolveToolDependencies() {
+		
+		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_TOOL_DEPS);
+		boolean rc;
+		try {
+			rc = getJgraph().resolveToolDependencies((mxICell) getFirstNode(), getCatalog());
+		} catch (NoValidInOutDataException e) {
+			getLogMessage().generateLogMsg(
+					GlobalConstants.LOG_MSG_INVALID_DATA_PORT_FOUND_0,
+					Category.TOOL_RESOLUTION,
+					Severity.ERROR, e,
+					null);
+			return false;
+		}
+		printWorkflowStepMsgOnEnd(rc, GlobalConstants.RESOLVE_TOOL_DEPS,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
+		if (rc)
+			getProcessedStates().put(GlobalConstants.TOOL_DEPS_RESOLVED, true);
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean generateWorklowForExecutionSystem() {
+		
+		printWorkflowStepMsgOnStart(GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW);
+		boolean rc = false;
+		rc = getJgraph().generateWorkflowForExecutionSystem((mxICell) getFirstNode(), getExecutionSystem());
+		if (rc)
+			getProcessedStates().put(GlobalConstants.EXEC_WORKFLOW_GENERATED, true);
+		printWorkflowStepMsgOnEnd(rc, 
+				GlobalConstants.GENERATE_EXECUTABLE_WORKFLOW,
+				getLogMessage().getLogMsg(),
+				getLogMessage().getHelpMsg());
 		return rc;
 	}
 
@@ -3021,77 +3289,27 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 			case CorePackage.WORKFLOW___GENERATE_ABSTRACT_WORKFLOW:
 				return generateAbstractWorkflow();
 			case CorePackage.WORKFLOW___APPLY_GROUPING_CRITERIA:
-				try {
-					return applyGroupingCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return applyGroupingCriteria();
 			case CorePackage.WORKFLOW___APPLY_PARAMETER_CRITERIA:
-				try {
-					return applyParameterCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return applyParameterCriteria();
 			case CorePackage.WORKFLOW___APPLY_TRAVERSAL_EVENT__TRAVERSALEVENT:
-				try {
-					return applyTraversalEvent((TraversalEvent)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return applyTraversalEvent((TraversalEvent)arguments.get(0));
 			case CorePackage.WORKFLOW___RESOLVE_TRAVERSAL_EVENTS:
-				try {
-					return resolveTraversalEvents();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolveTraversalEvents();
 			case CorePackage.WORKFLOW___RESOLVE_INCOMPATIBLE_GROUPINGS:
-				try {
-					return resolveIncompatibleGroupings();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolveIncompatibleGroupings();
 			case CorePackage.WORKFLOW___RESOLVE_PREPROCESSING_TASKS:
-				try {
-					return resolvePreprocessingTasks();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolvePreprocessingTasks();
 			case CorePackage.WORKFLOW___RESOLVE_TOOL_DEPENDENCIES:
-				try {
-					return resolveToolDependencies();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolveToolDependencies();
 			case CorePackage.WORKFLOW___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
 				return generateWorklowForExecutionSystem();
 			case CorePackage.WORKFLOW___RUN_NEXT_WORKFLOW_STEP:
-				try {
-					return runNextWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return runNextWorkflowStep();
 			case CorePackage.WORKFLOW___RUN_PREV_WORKFLOW_STEP:
-				try {
-					return runPrevWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return runPrevWorkflowStep();
 			case CorePackage.WORKFLOW___RUN_ENTIRE_WORKFLOW:
-				try {
-					return runEntireWorkflow();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return runEntireWorkflow();
 			case CorePackage.WORKFLOW___HAS_NEXT_WORKFLOW_STEP:
 				return hasNextWorkflowStep();
 			case CorePackage.WORKFLOW___GET_TOTAL_NUMBER_OF_WORKFLOW_STEPS:

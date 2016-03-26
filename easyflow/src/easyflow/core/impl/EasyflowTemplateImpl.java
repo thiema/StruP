@@ -350,7 +350,7 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 		if (getLogMessage() == null)
 		{
 			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
-			getLogMessage().setCategory(Category.WORKFLOW_TEMPLATE);
+			getLogMessage().setCategory(Category.WORKFLOW_TEMPLATE_PARSING);
 		}
 	}
 

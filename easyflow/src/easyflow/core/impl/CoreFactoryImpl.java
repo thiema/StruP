@@ -73,6 +73,7 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 			case CorePackage.PARENT_TASK_RESULT: return createParentTaskResult();
 			case CorePackage.CONDITION: return createCondition();
 			case CorePackage.LOG_MESSAGE: return createLogMessage();
+			case CorePackage.ERROR_INFO: return createErrorInfo();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -90,6 +91,8 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 				return createSeverityFromString(eDataType, initialValue);
 			case CorePackage.CATEGORY:
 				return createCategoryFromString(eDataType, initialValue);
+			case CorePackage.LOG_MSG_OUTPUT_MODE:
+				return createLogMsgOutputModeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -107,6 +110,8 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 				return convertSeverityToString(eDataType, instanceValue);
 			case CorePackage.CATEGORY:
 				return convertCategoryToString(eDataType, instanceValue);
+			case CorePackage.LOG_MSG_OUTPUT_MODE:
+				return convertLogMsgOutputModeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -227,6 +232,16 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ErrorInfo createErrorInfo() {
+		ErrorInfoImpl errorInfo = new ErrorInfoImpl();
+		return errorInfo;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Severity createSeverityFromString(EDataType eDataType, String initialValue) {
 		Severity result = Severity.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -259,6 +274,26 @@ public class CoreFactoryImpl extends EFactoryImpl implements CoreFactory {
 	 * @generated
 	 */
 	public String convertCategoryToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LogMsgOutputMode createLogMsgOutputModeFromString(EDataType eDataType, String initialValue) {
+		LogMsgOutputMode result = LogMsgOutputMode.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertLogMsgOutputModeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

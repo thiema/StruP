@@ -8,9 +8,13 @@ package easyflow.graph.jgraphx.impl;
 
 import java.util.Iterator;
 import java.util.Map;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import java.util.Map.Entry;
+
 import easyflow.core.PreprocessingTask;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.core.impl.TaskImpl;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -34,7 +38,9 @@ import easyflow.graph.jgraphx.PreprocessingGraph;
 import easyflow.graph.jgraphx.Preprocessing;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
+
 import java.lang.reflect.InvocationTargetException;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -44,6 +50,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -119,7 +126,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 							for (Object edgeIn : getGraph().getGraph().getIncomingEdges(vertex))
 							{
 								DataLink testDataLink = JGraphXUtil.loadDataLink(edgeIn);
-								logger.debug(" test against "+testDataLink.getInDataPort().getName());
+								logger.trace("findCellsWherePreprocessingIsRequired():  test against "+testDataLink.getInDataPort().getName());
 								if (requiredDataPort.isCompatible(testDataLink.getInDataPort()))
 								{
 									dataLink = testDataLink;
@@ -144,8 +151,8 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 										+requiredDataPort.getFormat().getName()
 										);
 								Task utilTask = dataLink == null ?
-										GraphUtil.getUtilityTask(requiredDataPort, prepTask.getName()) :
-										GraphUtil.getUtilityTask(dataLink, prepTask.getName());
+										GraphUtil.getUtilityTask(requiredDataPort, prepTask.getName(), task) :
+										GraphUtil.getUtilityTask(dataLink, prepTask.getName(), task);
 
 								logger.debug("findCellsWherePreprocessingIsRequired(): util task="+utilTask.getUniqueString()+" found.");
 								
@@ -192,10 +199,11 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 								logger.debug("findCellsWherePreprocessingIsRequired(): preprocessing task "
 										+prepTask.getName()+" ("+newPrepTask.getUniqueString()+" id="+newPrepTask.hashCode()+") added for "
 										+task.getUniqueString()+" dl="+dataLink.hashCode());
-								
+								getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_UTILITY_ADD_UTILITY_TASK_3, Severity.INFO,
+										Util.generateStringList(prepTask.getName(), task.getUniqueString(), dataLink.getUniqueString()));
 								prepRequired.put((mxICell) vertex, prepEdges);
 							}
-							catch (UtilityTaskNotFoundException e) 
+							catch (UtilityTaskNotFoundException e)
 							{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -487,10 +495,12 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 			}
 			else
 			{
-				logger.debug("resolvePreprocessingTask(): check2 "+JGraphXUtil.loadTask(source).getUniqueString()+" "+newPrepTask.getUniqueString());
+				logger.debug("resolvePreprocessingTask(): search parent for "
+						+" preptask="+newPrepTask.getUniqueString()
+						+" of task="+JGraphXUtil.loadTask(source).getUniqueString()
+						);
 				newSource = findParentForPrepVertexForPrepTask(source, newPrepTask);
 				logger.debug("resolvePreprocessingTask(): got new parent="+JGraphXUtil.loadTask(newSource).getUniqueString());
-				//newVertex = findPrepVertexForPrepTask(source, newPrepTask);
 				newVertex = findPrepVertexForPrepTask(newSource, newPrepTask);
 				if (newVertex != null)
 				{
@@ -549,7 +559,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 			logger.debug("resolvePreprocessingTask(): insert edge:"+lastCompatibleTask.getUniqueString()+"=>"+JGraphXUtil.loadTask(vertex).getUniqueString());
 		}
 		Task lastTask = JGraphXUtil.loadTask(last);
-		logger.debug("resolvePreprocessingTask(): trying to link with last task="+lastTask.getUniqueString()+"("+last+")");
+		logger.debug("resolvePreprocessingTask(): trying to link with last task="+lastTask.getUniqueString());
 		DataLink newDataLink = GraphUtil.createDataLink(dataLink, lastTask, dataLink.getInDataPort()); 
 		Object o = getGraph().getGraph().insertEdgeEasyFlow(null, null, last, vertex, 
 				newDataLink
@@ -784,19 +794,23 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 				String groupingStr = GlobalConfig.getGroupingCriterionForFilterTask();
 				try
 				{
-					utilityTask = GraphUtil.getUtilityTask(firstDataLink.getDataPort(), firstDataLink.getInDataPort(), "filter");
+					utilityTask = GraphUtil.getUtilityTask(firstDataLink.getDataPort(), 
+							firstDataLink.getInDataPort(), "filter",
+							task);
 					groupingStr = GraphUtil.getGroupingCriterionOfUtilityTask(utilityTask);
 				}
 				catch (UtilityTaskNotFoundException e)
 				{
+					//getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_UTILITY_TASK_ASSUME__0, severity, errorVar)
 					logger.debug("createFilterTasks(): no filter task found. Assume parent provide chunks.");
 				}
 
-
-											
 				// filter tasks can be the actual parent
-				EMap<mxICell, DataLink> cellMap = createFilterTasks(entry.getKey(), entry.getValue(), 
+				try
+				{
+					EMap<mxICell, DataLink> cellMap = createFilterTasks(entry.getKey(), entry.getValue(), 
 						firstDataLink.getInDataPort(), groupingStr, constellation);
+				
 				EMap<String, EList<TraversalChunk>> traversalChunks = new BasicEMap<String, EList<TraversalChunk>>();
 				
 				if (!cellMap.isEmpty())
@@ -813,7 +827,6 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 							for (Entry<String, EList<TraversalChunk>> e1:task.getChunks())
 								traversalChunks.put(e1.getKey(), new BasicEList(EcoreUtil.copyAll(e1.getValue())));
 						}
-						
 					}
 					Task mergeTask = null;
 					boolean existingMergeTaskFound = false;
@@ -823,7 +836,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 					}
 					else 
 					{
-						String utilTaskString = GraphUtil.getUtilityTaskKey(firstDataLink, "merge");
+						String utilTaskString = GraphUtil.getUtilityTaskKey(firstDataLink, "merge", task);
 						mergeTask = findExistingUtilityTaskFor(utilTaskString, firstEdge);
 						if (mergeTask == null)
 							mergeTask = JGraphXUtil.createNewUtilityTask(traversalChunks, utilTaskString, firstEdge);
@@ -833,6 +846,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 
 					mxICell mergeCell = (mxICell) GlobalVar.getCells().get(mergeTask.getUniqueString());
 					if (!existingMergeTaskFound)
+					{
 						for (Entry<mxICell, DataLink> e : cellMap.entrySet())
 						{
 							Task source = JGraphXUtil.loadTask(e.getKey());
@@ -847,7 +861,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 									GraphUtil.createDataLink(e.getValue(), task, null)
 									);
 						}
-						
+					}	
 					if (((task.getFlags() >> 13) & 0x1) != 1)
 					{
 						logger.debug("resolveEdge(): insert edge: (merge-task) "
@@ -863,7 +877,12 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 											GraphUtil.createDataLink(firstEdge, task, firstDataLink.getGroupingStr(), firstDataLink.getGroupingStr(), null)
 											);
 					}
-				}				
+				}
+				}
+				catch (UtilityTaskNotFoundException e) {
+					GlobalVar.getLastErrorInfo().setDataLink(firstDataLink);
+					throw e;
+				}
 			} finally {
 				JGraphXUtil.layoutGraph();
 				getGraph().getGraph().getModel().endUpdate(); 
@@ -1047,7 +1066,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 					logger.debug("createFilterTasks(): constallation="+(constellation & 0x04));
 					if ((constellation & 0x04) > 0)
 					{
-						String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter");
+						String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter", task);
 						mxICell utilEdge = findExistingUtilityTaskFor("filter", sourceTask, coveredChunks);
 						if (utilEdge != null)
 						{
@@ -1055,15 +1074,15 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						}
 						else
 						{
-							Task utilTask          = JGraphXUtil.createNewUtilityTask(currentCoveredChunks, utilTaskString, edge);
-						mxICell newCell       = (mxICell) GlobalVar.getCells().get(utilTask.getUniqueString());
-						logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()
+							Task utilTask         = JGraphXUtil.createNewUtilityTask(currentCoveredChunks, utilTaskString, edge);
+							mxICell newCell       = (mxICell) GlobalVar.getCells().get(utilTask.getUniqueString());
+							logger.debug("createFilterTasks(): insert edge: (parent-filter)"+sourceTask.getUniqueString()
 								+"->"+utilTask.getUniqueString()+" coveredChunks="+coveredChunks.keySet());
-						DataLink dataLinkCopy = //copyDataLink(dataLink);
+							DataLink dataLinkCopy = //copyDataLink(dataLink);
 								GraphUtil.createDataLink(dataLink, utilTask, null);
-						mxICell newEdge       = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
+							mxICell newEdge       = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
 								JGraphXUtil.getSource((mxCell) edge), newCell, dataLinkCopy);
-						cells.put(newCell, dataLinkCopy);
+							cells.put(newCell, dataLinkCopy);
 						}
 					}
 					else
@@ -1083,7 +1102,6 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 									mxICell newEdge = (mxICell) getGraph().getGraph().insertEdgeEasyFlow(null, null, 
 											JGraphXUtil.getSource((mxCell) edge), newCell, dataLinkCopy);
 									//cells.put(newCell, dataLinkCopy);
-									
 								}
 								else 
 								{
@@ -1098,7 +1116,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 									}
 									else
 									{
-										String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter");
+										String utilTaskString = GraphUtil.getUtilityTaskKey(dataLink, "filter", task);
 										Task   utilTask       = JGraphXUtil.createNewUtilityTask(curCoveredChunks, utilTaskString, edge);
 									
 										logger.debug("createFilterTasks(): insert edge: (parent-filter)"

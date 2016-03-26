@@ -3,6 +3,7 @@ package easyflow.custom.jgraphx.editor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -205,23 +206,31 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 	protected void addStylesToDocument(StyledDocument doc) {
 		
         //Initialize some styles.
-        Style def = StyleContext.getDefaultStyleContext().
-                        getStyle(StyleContext.DEFAULT_STYLE);
-
-        StyleConstants.setItalic(def, true);
-        StyleConstants.setFontFamily(def, "SansSerif");
+        //Style def_monospace = StyleContext.getDefaultStyleContext().
+          //              getStyle(StyleContext.DEFAULT_STYLE);
+        Style defaultStyle = StyleContext.getDefaultStyleContext().
+                getStyle(StyleContext.DEFAULT_STYLE);
+        //GlobalVar.setDefaultDocStyle(defaultStyle);
+        StyleConstants.setFontFamily(defaultStyle, "Courier");
+        //font and some styles can't be set this way. has to be set everytime before writing 
+        //StyleConstants.setItalic(def_monospace, true);
+        
+        //for (String s : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
+        	//logger.info(s);
+        //choose a monospaced font:
+        //"Bitstream Charter" "Courier 10 Pitch" "Courier"
+        //StyleConstants.setFontFamily(def_monospace, "Courier");
 
         Style s,ss;
 
         //set category
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_CATEGORY, def);
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_CATEGORY, defaultStyle);
         StyleConstants.setBold(s, true);
         StyleConstants.setForeground(s, Color.BLUE);
         StyleConstants.setFontSize(s, 12);
 
         //set severity
-        
-        ss = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY, def);
+        ss = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY, defaultStyle);
         StyleConstants.setFontSize(ss, 12);
         
         s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_SEVERITY_LOW, ss);
@@ -235,9 +244,9 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
         
 
         //set log message text style
-        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT, def);
-        StyleConstants.setFontSize(s, 10);
-
+        s = doc.addStyle(GlobalConstants.GUI_LOG_MSG_STYLE_TEXT, defaultStyle);
+        StyleConstants.setFontSize(s, 11);
+        
 //        s = doc.addStyle("icon", regular);
 //        StyleConstants.setAlignment(s, StyleConstants.ALIGN_CENTER);
         /*

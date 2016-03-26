@@ -15,10 +15,12 @@ import easyflow.core.CorePackage;
 import easyflow.core.DefaultRecord;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
+import easyflow.core.ErrorInfo;
 import easyflow.core.GalaxyTaskReader;
 import easyflow.core.ITaskReader;
 import easyflow.core.IWorkflowTemplate;
 import easyflow.core.LogMessage;
+import easyflow.core.LogMsgOutputMode;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.PreprocessingTask;
 import easyflow.core.Severity;
@@ -50,6 +52,8 @@ import easyflow.traversal.TraversalPackage;
 import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
 import easyflow.ui.impl.UiPackageImpl;
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.MapsPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
@@ -171,6 +175,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass errorInfoEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum severityEEnum = null;
 
 	/**
@@ -179,6 +190,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * @generated
 	 */
 	private EEnum categoryEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum logMsgOutputModeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -239,6 +257,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
@@ -256,6 +275,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 		theDataPackage.createPackageContents();
 
@@ -273,6 +293,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 		theDataPackage.initializePackageContents();
 
@@ -2333,6 +2354,105 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getLogMessage__GenerateLogMsg__String_Severity() {
+		return logMessageEClass.getEOperations().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getLogMessage__GenerateLogMsg__String_Category_Severity_Exception_EList() {
+		return logMessageEClass.getEOperations().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getErrorInfo() {
+		return errorInfoEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getErrorInfo_Task() {
+		return (EReference)errorInfoEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getErrorInfo_DataLink() {
+		return (EReference)errorInfoEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorInfo_Info() {
+		return (EAttribute)errorInfoEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorInfo_Final() {
+		return (EAttribute)errorInfoEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorInfo_Category() {
+		return (EAttribute)errorInfoEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getErrorInfo_Logger() {
+		return (EAttribute)errorInfoEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getErrorInfo__Clear() {
+		return errorInfoEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getErrorInfo__Print() {
+		return errorInfoEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getSeverity() {
 		return severityEEnum;
 	}
@@ -2344,6 +2464,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 */
 	public EEnum getCategory() {
 		return categoryEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getLogMsgOutputMode() {
+		return logMsgOutputModeEEnum;
 	}
 
 	/**
@@ -2614,10 +2743,23 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING);
 		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_STRING);
 		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY);
+		createEOperation(logMessageEClass, LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_EXCEPTION_ELIST);
+
+		errorInfoEClass = createEClass(ERROR_INFO);
+		createEReference(errorInfoEClass, ERROR_INFO__TASK);
+		createEReference(errorInfoEClass, ERROR_INFO__DATA_LINK);
+		createEAttribute(errorInfoEClass, ERROR_INFO__INFO);
+		createEAttribute(errorInfoEClass, ERROR_INFO__FINAL);
+		createEAttribute(errorInfoEClass, ERROR_INFO__CATEGORY);
+		createEAttribute(errorInfoEClass, ERROR_INFO__LOGGER);
+		createEOperation(errorInfoEClass, ERROR_INFO___CLEAR);
+		createEOperation(errorInfoEClass, ERROR_INFO___PRINT);
 
 		// Create enums
 		severityEEnum = createEEnum(SEVERITY);
 		categoryEEnum = createEEnum(CATEGORY);
+		logMsgOutputModeEEnum = createEEnum(LOG_MSG_OUTPUT_MODE);
 	}
 
 	/**
@@ -2688,7 +2830,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getWorkflow_Jgraph(), theJgraphxPackage.getGraph(), null, "jgraph", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkflow_LogMessage(), this.getLogMessage(), null, "logMessage", null, 0, 1, Workflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = initEOperation(getWorkflow__GenerateGraphFromTemplate__EMap(), ecorePackage.getEBoolean(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getWorkflow__GenerateGraphFromTemplate__EMap(), ecorePackage.getEInt(), "generateGraphFromTemplate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theMapsPackage.getStringToToolMap(), "tools", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getWorkflow__GetParentTaskByOutDataPort__DataPort_Task(), this.getTask(), "getParentTaskByOutDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -2721,71 +2863,28 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 
 		initEOperation(getWorkflow__GenerateAbstractWorkflow(), ecorePackage.getEBoolean(), "generateAbstractWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ApplyGroupingCriteria(), ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		initEOperation(getWorkflow__ApplyGroupingCriteria(), ecorePackage.getEBoolean(), "applyGroupingCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ApplyParameterCriteria(), ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
+		initEOperation(getWorkflow__ApplyParameterCriteria(), ecorePackage.getEBoolean(), "applyParameterCriteria", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getWorkflow__ApplyTraversalEvent__TraversalEvent(), ecorePackage.getEBoolean(), "applyTraversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theTraversalPackage.getTraversalEvent(), "traversalEvent", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
-		op = initEOperation(getWorkflow__ResolveTraversalEvents(), ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		initEOperation(getWorkflow__ResolveTraversalEvents(), ecorePackage.getEBoolean(), "resolveTraversalEvents", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ResolveIncompatibleGroupings(), ecorePackage.getEBoolean(), "resolveIncompatibleGroupings", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-		addEException(op, theEasyflowPackage.getToolNotFoundException());
-		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		initEOperation(getWorkflow__ResolveIncompatibleGroupings(), ecorePackage.getEBoolean(), "resolveIncompatibleGroupings", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ResolvePreprocessingTasks(), ecorePackage.getEBoolean(), "resolvePreprocessingTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
+		initEOperation(getWorkflow__ResolvePreprocessingTasks(), ecorePackage.getEBoolean(), "resolvePreprocessingTasks", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__ResolveToolDependencies(), ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
+		initEOperation(getWorkflow__ResolveToolDependencies(), ecorePackage.getEBoolean(), "resolveToolDependencies", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWorkflow__GenerateWorklowForExecutionSystem(), ecorePackage.getEBoolean(), "generateWorklowForExecutionSystem", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__RunNextWorkflowStep(), ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-		addEException(op, theEasyflowPackage.getToolNotFoundException());
-		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
+		initEOperation(getWorkflow__RunNextWorkflowStep(), ecorePackage.getEInt(), "runNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__RunPrevWorkflowStep(), ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-		addEException(op, theEasyflowPackage.getToolNotFoundException());
-		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
+		initEOperation(getWorkflow__RunPrevWorkflowStep(), ecorePackage.getEInt(), "runPrevWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getWorkflow__RunEntireWorkflow(), ecorePackage.getEInt(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-		addEException(op, theEasyflowPackage.getToolNotFoundException());
-		addEException(op, theEasyflowPackage.getUtilityTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getTaskNotFoundException());
-		addEException(op, theEasyflowPackage.getCellNotFoundException());
-		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
-		addEException(op, theEasyflowPackage.getNoValidInOutDataException());
+		initEOperation(getWorkflow__RunEntireWorkflow(), ecorePackage.getEInt(), "runEntireWorkflow", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getWorkflow__HasNextWorkflowStep(), ecorePackage.getEBoolean(), "hasNextWorkflowStep", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -3272,6 +3371,29 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, ecorePackage.getEString(), "helpMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Severity(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getLogMessage__GenerateLogMsg__String_Category_Severity_Exception_EList(), ecorePackage.getEString(), "generateLogMsg", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorTpl", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, this.getSeverity(), "severity", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getException(), "exception", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "errorVar", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(errorInfoEClass, ErrorInfo.class, "ErrorInfo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getErrorInfo_Task(), this.getTask(), null, "task", null, 0, 1, ErrorInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getErrorInfo_DataLink(), theDataPackage.getDataLink(), null, "dataLink", null, 0, 1, ErrorInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorInfo_Info(), ecorePackage.getEString(), "info", null, 0, 1, ErrorInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorInfo_Final(), ecorePackage.getEBoolean(), "final", "false", 0, 1, ErrorInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorInfo_Category(), this.getCategory(), "category", null, 0, 1, ErrorInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getErrorInfo_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, ErrorInfo.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getErrorInfo__Clear(), null, "clear", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEOperation(getErrorInfo__Print(), null, "print", 0, 1, IS_UNIQUE, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(severityEEnum, Severity.class, "Severity");
 		addEEnumLiteral(severityEEnum, Severity.FATAL);
@@ -3287,13 +3409,25 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEEnumLiteral(categoryEEnum, Category.TASK_DEFINITION);
 		addEEnumLiteral(categoryEEnum, Category.TOOL_DEFINITION);
 		addEEnumLiteral(categoryEEnum, Category.WORKFLOW);
-		addEEnumLiteral(categoryEEnum, Category.WORKFLOW_TEMPLATE);
-		addEEnumLiteral(categoryEEnum, Category.ABSTRACT_WORKFLOW);
+		addEEnumLiteral(categoryEEnum, Category.WORKFLOW_TEMPLATE_PARSING);
+		addEEnumLiteral(categoryEEnum, Category.ABSTRACT_WORKFLOW_GENERATION);
+		addEEnumLiteral(categoryEEnum, Category.TRAVERSAL_EVENT_CREATION);
+		addEEnumLiteral(categoryEEnum, Category.SUBGRAPH_CREATION);
+		addEEnumLiteral(categoryEEnum, Category.TRAVERSAL_EVENT_RESOLUTION);
 		addEEnumLiteral(categoryEEnum, Category.DATA_GROUPING);
 		addEEnumLiteral(categoryEEnum, Category.PARAMETER_GROUPING);
-		addEEnumLiteral(categoryEEnum, Category.PREPROCESSING);
+		addEEnumLiteral(categoryEEnum, Category.UTILITY_TASK_RESOLUTION);
+		addEEnumLiteral(categoryEEnum, Category.INCOMPATIBLE_GROUPING_RESOLUTION);
 		addEEnumLiteral(categoryEEnum, Category.TOOL_RESOLUTION);
-		addEEnumLiteral(categoryEEnum, Category.EXECUTION_WORKFLOW);
+		addEEnumLiteral(categoryEEnum, Category.EXECUTION_WORKFLOW_GENERATION);
+		addEEnumLiteral(categoryEEnum, Category.GRAPH_UTIL);
+		addEEnumLiteral(categoryEEnum, Category.UTIL);
+
+		initEEnum(logMsgOutputModeEEnum, LogMsgOutputMode.class, "LogMsgOutputMode");
+		addEEnumLiteral(logMsgOutputModeEEnum, LogMsgOutputMode.SILENT);
+		addEEnumLiteral(logMsgOutputModeEEnum, LogMsgOutputMode.CONSOLE);
+		addEEnumLiteral(logMsgOutputModeEEnum, LogMsgOutputMode.GUI);
+		addEEnumLiteral(logMsgOutputModeEEnum, LogMsgOutputMode.ALL);
 	}
 
 } //CorePackageImpl

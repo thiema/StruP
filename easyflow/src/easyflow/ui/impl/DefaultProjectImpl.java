@@ -56,14 +56,6 @@ import easyflow.tool.Tool;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolFactory;
 import easyflow.tool.ToolSchemata;
-import easyflow.custom.exception.CellNotFoundException;
-import easyflow.custom.exception.DataLinkNotFoundException;
-import easyflow.custom.exception.DataPortNotFoundException;
-import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
-import easyflow.custom.exception.NoValidInOutDataException;
-import easyflow.custom.exception.TaskNotFoundException;
-import easyflow.custom.exception.ToolNotFoundException;
-import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.execution.IExecutionSystem;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
@@ -718,21 +710,24 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	private boolean readInputs(JSONObject workflowCfg, Task rootTask)
 	{
     	short bitPos=0;
-    	
+    	boolean rc = true; 
     	EMap<String, String> processedFormats = new BasicEMap<String, String>();
-    	readInputsMap(workflowCfg, rootTask, "inputs_map", false, processedFormats);
-    	readInputsMap(workflowCfg, rootTask, "static_inputs_map", true, processedFormats);
+    	readInputsMap(workflowCfg, rootTask, GlobalConstants.WORKFLOW_CFG_INPUT_MAP_PARAM_NAME, false, processedFormats);
+    	readInputsMap(workflowCfg, rootTask, GlobalConstants.WORKFLOW_CFG_STATIC_INPUT_MAP_PARAM_NAME, true, processedFormats);
+    	int i;
     	
-    	for (int i=0; i<workflowCfg.getJSONArray("inputs").size();i++)
+    	for (i = 0; i<workflowCfg.getJSONArray(GlobalConstants.WORKFLOW_CFG_INPUT_PARAM_NAME).size(); i++)
     	{
-    		String name=workflowCfg.getJSONArray("inputs").getString(i);
+    		String name = workflowCfg.getJSONArray(GlobalConstants.WORKFLOW_CFG_INPUT_PARAM_NAME).getString(i);
     		if (!processedFormats.containsValue(name))
     			rootTask.getOutDataPorts().add(readInput(name, name, bitPos++));
     	}
+    	if (i == 0)
+    		rc = false;
     	
-    	for (int i=0; i<workflowCfg.getJSONArray("static_inputs").size();i++)
+    	for (i=0; i<workflowCfg.getJSONArray(GlobalConstants.WORKFLOW_CFG_STATIC_INPUT_PARAM_NAME).size(); i++)
     	{
-    		String name = workflowCfg.getJSONArray("inputs").getString(i);
+    		String name = workflowCfg.getJSONArray(GlobalConstants.WORKFLOW_CFG_STATIC_INPUT_PARAM_NAME).getString(i);
     		if (!processedFormats.containsValue(name))
     		{
     			DataPort dataPort = readInput(name, name, bitPos++);
@@ -740,7 +735,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
     			rootTask.getOutDataPorts().add(dataPort);
     		}
     	}
-    	return true;
+    	return rc;
 	}
 	
 	
@@ -900,7 +895,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		for (String paramName : GlobalConfig.getWorkflowConfigParams())
 		{
 			if (workflowCfg.has(paramName))
-				GlobalConfig.getToolConfig().put(paramName, (String) workflowCfg.get(paramName));
+				GlobalConfig.getWorkflowConfig().put(paramName, (String) workflowCfg.get(paramName));
 		}
 
 		return rc;		
@@ -1073,12 +1068,14 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		
 			logger.debug("readConfiguration(): project configuration keys="+projectCfg.keySet());
 			if (projectCfg.containsKey(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
+			{
 				logger.debug("readConfiguration(): "+projectCfg.get(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME)
 						+" "+getConfigSource()+" "+getBaseURI());
+			}
 			else
 			{
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_PARAM_MISSING_1, Severity.ERROR, 
-						Util.generateStringList(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
+						GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME);
 			}
 			
 			
@@ -1087,6 +1084,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, getConfigWorkflowDefFile());
 			else if (projectCfg.has(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME))
 				GlobalConfig.getProjectConfig().put(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME, projectCfg.getString(GlobalConstants.WORKFLOW_DEF_FILE_PARAM_NAME));
+			
 			if (getConfigUtilityDefFile() != null && !"".equals(getConfigUtilityDefFile()))
 				GlobalConfig.getProjectConfig().put(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME, getConfigUtilityDefFile());
 			else if (projectCfg.has(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
@@ -1121,12 +1119,15 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		{
 			String workflowTplFile = GlobalConfig.getWorkflowTemplateFileName();
 			workflowTplFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), workflowTplFile);
-			
+
 			String utilDefFile = null;
 			if (GlobalConfig.getProjectConfig().containsKey(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
 			{
 				utilDefFile = GlobalConfig.getProjectConfig().get(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME);
 				utilDefFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), utilDefFile);
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_READ_WORKFLOW_FILE_1, Severity.INFO, 
+						utilDefFile);
+
 			}
 			EasyflowTemplate workflowTemplate = readWorkflowTemplate(workflowTplFile, utilDefFile);
 			if (workflowTemplate != null)
@@ -1135,6 +1136,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				logger.debug("readConfiguration(): workflow template read. Read "
 						+workflow.getWorkflowTemplate().getTasks().size()
 						+" ("+workflow.getLastTasks().size()+") tasks. ");
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_READ_WORKFLOW_FILE_1, Severity.INFO, 
+						workflowTplFile);
 			}
 			else
 			{
@@ -1154,6 +1157,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			if (metaData != null)
 			{
 				workflow.setMetaData(metaData);
+				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_READ_METADATA_FILE_1, Severity.INFO, 
+						metadataFile);	
 			}
 			else
 			{
@@ -1208,6 +1213,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 
 			if (workflowCfg.has(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME))
 				workflow.setMode(workflowCfg.getString(GlobalConstants.DEFAULT_WORKFLOW_MODE_PARAM_NAME));
+			
+			//read any parameter regardless of type as string into config map
+			readWorkflowConfiguration(workflowCfg);
+			if (workflowCfg.containsKey(GlobalConstants.WORKFLOW_CFG_DEBUG_LEVEL_PARAM_NAME))
+				GlobalVar.setDebugLevel((String)workflowCfg.get(GlobalConstants.WORKFLOW_CFG_DEBUG_LEVEL_PARAM_NAME));
 
 		}
 		else if (!isDefault)
@@ -1371,7 +1381,6 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
 		
 		//############# read constant param values for tool/pkg ################
-		
 		
 		if (!isDefault)
 		{
@@ -1687,6 +1696,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		initLogMessage();
 		clearWorkflows();
 		GlobalVar.setDefaultProject(this);
+		GlobalVar.getLastErrorInfo().clear();
 		
 		Workflow workflow;
 		if (getActiveWorkflow() != null)
@@ -1728,7 +1738,13 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 							e.getReason()));
 		}
 
-			
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_READ_CONFIG_FILE_1, Severity.INFO, 
+				getConfigSource().toString());
+		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_BASE_URI_1, Severity.INFO, 
+				getBaseURI().toString());
+	
+		
+		
 			JSONObject mainConfig = readJson(getConfigSource(), false);
 			if (mainConfig != null)
 			{
@@ -1807,9 +1823,10 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean applyGroupingCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyGroupingCriteria() {
 		return getActiveWorkflow().applyGroupingCriteria();
 	}
 
@@ -1818,41 +1835,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * <!-- end-user-doc -->
 	 * @throws GroupingCriterionInstanceNotFoundException 
 	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
+	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean applyParameterCriteria() throws CellNotFoundException, TaskNotFoundException, GroupingCriterionInstanceNotFoundException {
+	public boolean applyParameterCriteria() {
 		return getActiveWorkflow().applyParameterCriteria();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws TaskNotFoundException 
-	 * @throws CellNotFoundException 
-	 * @generated not
-	 */
-	public boolean resolveTraversalCriteria() throws CellNotFoundException, TaskNotFoundException {
-		return getActiveWorkflow().resolveTraversalEvents();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @throws NoValidInOutDataException 
-	 * @generated not
-	 */
-	public boolean resolveToolDependencies() throws NoValidInOutDataException {
-		return getActiveWorkflow().resolveToolDependencies();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated not
-	 */
-	public boolean resolveUtilityTasks() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException {
-		return getActiveWorkflow().resolveIncompatibleGroupings();
 	}
 
 	/**
@@ -1862,8 +1849,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
-	public boolean resolvePreprocessingTasks() throws DataLinkNotFoundException, TaskNotFoundException {
-		return getActiveWorkflow().resolvePreprocessingTasks();
+	public boolean resolveTraversalCriteria() {
+		return getActiveWorkflow().resolveTraversalEvents();
 	}
 
 	/**
@@ -1872,7 +1859,34 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public boolean runEntireWorkflow() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException {
+	public boolean resolveToolDependencies() {
+		return getActiveWorkflow().resolveToolDependencies();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolveUtilityTasks() {
+		return getActiveWorkflow().resolveIncompatibleGroupings();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean resolvePreprocessingTasks() {
+		return getActiveWorkflow().resolvePreprocessingTasks();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc --> 
+	 * @generated not
+	 */
+	public boolean runEntireWorkflow() {
 		return getActiveWorkflow().runEntireWorkflow()==0;
 	}
 	/**
@@ -1918,7 +1932,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public int runNextWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException {
+	public int runNextWorkflowStep() {
 		return getActiveWorkflow().runNextWorkflowStep();
 	}
 
@@ -1928,7 +1942,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 	 * @throws NoValidInOutDataException 
 	 * @generated not
 	 */
-	public int runPrevWorkflowStep() throws DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException, TaskNotFoundException, CellNotFoundException, GroupingCriterionInstanceNotFoundException, NoValidInOutDataException {
+	public int runPrevWorkflowStep() {
 		return getActiveWorkflow().runPrevWorkflowStep();
 	}
 
@@ -2221,75 +2235,30 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			case UiPackage.DEFAULT_PROJECT___DELETE:
 				return delete();
 			case UiPackage.DEFAULT_PROJECT___RUN_ENTIRE_WORKFLOW:
-				try {
-					return runEntireWorkflow();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return runEntireWorkflow();
 			case UiPackage.DEFAULT_PROJECT___RESOLVE_TRAVERSAL_CRITERIA:
-				try {
-					return resolveTraversalCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolveTraversalCriteria();
 			case UiPackage.DEFAULT_PROJECT___GENERATE_ABSTRACT_GRAPH:
 				return generateAbstractGraph();
 			case UiPackage.DEFAULT_PROJECT___APPLY_GROUPING_CRITERIA:
-				try {
-					return applyGroupingCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return applyGroupingCriteria();
 			case UiPackage.DEFAULT_PROJECT___APPLY_PARAMETER_CRITERIA:
-				try {
-					return applyParameterCriteria();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return applyParameterCriteria();
 			case UiPackage.DEFAULT_PROJECT___RESOLVE_UTILITY_TASKS:
-				try {
-					return resolveUtilityTasks();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolveUtilityTasks();
 			case UiPackage.DEFAULT_PROJECT___RESOLVE_PREPROCESSING_TASKS:
-				try {
-					return resolvePreprocessingTasks();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolvePreprocessingTasks();
 			case UiPackage.DEFAULT_PROJECT___RESOLVE_TOOL_DEPENDENCIES:
-				try {
-					return resolveToolDependencies();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return resolveToolDependencies();
 			case UiPackage.DEFAULT_PROJECT___GENERATE_WORKLOW_FOR_EXECUTION_SYSTEM:
 				return generateWorklowForExecutionSystem();
 			case UiPackage.DEFAULT_PROJECT___SET_WORKER__EASYFLOWOVERALLWORKER:
 				setWorker((EasyFlowOverallWorker)arguments.get(0));
 				return null;
 			case UiPackage.DEFAULT_PROJECT___RUN_NEXT_WORKFLOW_STEP:
-				try {
-					return runNextWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return runNextWorkflowStep();
 			case UiPackage.DEFAULT_PROJECT___RUN_PREV_WORKFLOW_STEP:
-				try {
-					return runPrevWorkflowStep();
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
+				return runPrevWorkflowStep();
 			case UiPackage.DEFAULT_PROJECT___HAS_NEXT_WORKFLOW_STEP:
 				return hasNextWorkflowStep();
 			case UiPackage.DEFAULT_PROJECT___GET_WORKFLOW_STEP_LABEL_FOR__STRING:

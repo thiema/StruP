@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.swing.JButton;
+
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
 import org.apache.commons.jexl2.JexlEngine;
@@ -23,6 +25,7 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
+import easyflow.core.ErrorInfo;
 import easyflow.core.Task;
 import easyflow.data.DataPort;
 import easyflow.metadata.DefaultMetaData;
@@ -389,5 +392,26 @@ public class Util {
 			return uri.toString();
 		else
 			return "<null>";
+	}
+	
+	public static void printLastErrorInfo(Exception e, JButton jButton)
+	{
+		ErrorInfo errorInfo = GlobalVar.getLastErrorInfo(); 
+		if (errorInfo != null)
+		{
+			errorInfo.print();
+			if (GlobalVar.isDevloperMode())
+			{
+				e.printStackTrace();
+			}
+			if (GlobalVar.outputToGUI() && jButton != null)
+			{
+				jButton.setEnabled(false);
+			}
+		}
+		else
+		{
+			
+		}
 	}
 }

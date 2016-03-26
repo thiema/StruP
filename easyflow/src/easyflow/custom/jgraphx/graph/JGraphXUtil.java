@@ -9,20 +9,26 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.w3c.dom.Element;
 
+import sun.security.action.GetLongAction;
+
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
+import easyflow.core.Category;
 import easyflow.core.CoreFactory;
+import easyflow.core.Severity;
 import easyflow.core.Task;
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GraphUtil;
+import easyflow.custom.util.Util;
 import easyflow.custom.util.XMLUtil;
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
@@ -172,21 +178,30 @@ public class JGraphXUtil {
 	{
 		
 		Task source = getSourceTask((mxCell) edge);
-		Task target = getTargetTask((mxCell) edge);
-		//mxICell targetVertex = getTarget((mxCell) edge);
-		//mxICell sourceVertex = getSource((mxCell) edge);
-		
-		
-		//DataLink dataLink = loadDataLink(edge);
-		
+		Task target = getTargetTask((mxCell) edge);		
 		Task utilityTask = CoreFactory.eINSTANCE.createTask();
 		
-		logger.debug("createUtilityTask(): resolve prep task="+utilityTaskUniqueString+" inbetween of "+source.getUniqueString()+" "+target.getUniqueString());
+		logger.debug("createUtilityTask(): resolve prep task="+utilityTaskUniqueString
+				+" inbetween of "+source.getUniqueString()+" "+target.getUniqueString());
 		
-		if (GlobalVar.getUtilityTasks().containsKey(utilityTaskUniqueString) && GlobalVar.getUtilityTasks().get(utilityTaskUniqueString) != null)
+		if (GlobalVar.getUtilityTasks().containsKey(utilityTaskUniqueString) && 
+				GlobalVar.getUtilityTasks().get(utilityTaskUniqueString) != null)
 			utilityTask = EcoreUtil.copy(GlobalVar.getUtilityTasks().get(utilityTaskUniqueString));
 		else
+		{
+			DataLink dataLink = loadDataLink(edge);
+			logger.error("createUtilityTask(): Utility task \""+utilityTaskUniqueString+"\" not found. "
+					+ "(Known utilites: "+GlobalVar.getUtilityTasks().keySet()+")");
+			String err = GraphUtil.getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_UTILLITY_TASK_4, 
+					Severity.ERROR,
+					Util.generateStringList(utilityTaskUniqueString,
+							dataLink.getUniqueString(), 
+							source.getUniqueString(), 
+							target.getUniqueString()) 
+					);
+			GlobalVar.setLastErrorInfo(Category.GRAPH_UTIL, target, dataLink, err, true);
 			throw new UtilityTaskNotFoundException();
+		}
 		
 		utilityTask.setName(utilityTask.getName()+"_"+target.getUniqueURIString());
 		utilityTask.getChunks().clear();
@@ -382,9 +397,12 @@ public class JGraphXUtil {
 						DataLink curDataLink = loadDataLink(edgeOut);
 						if (
 								dataLink.getDataPort().getName().equals(curDataLink.getDataPort().getName()) &&
-								(//dataLink.getGroupingStr() == curDataLink.getGroupingStr() ||
-								dataLink.getGroupingStr().equals(curDataLink.getGroupingStr()))
+								(
+										(dataLink.getGroupingStr() == null && curDataLink.getGroupingStr() == null)||
+										(dataLink.getGroupingStr() != null &&
+										dataLink.getGroupingStr().equals(curDataLink.getGroupingStr()))
 								)
+							)
 							rc = true;
 					}
 					else

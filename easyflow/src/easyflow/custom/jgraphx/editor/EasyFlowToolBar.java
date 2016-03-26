@@ -24,6 +24,7 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
+import easyflow.custom.util.Util;
 import easyflow.example.ExampleFactory;
 import easyflow.example.Examples;
 import easyflow.ui.DefaultProject;
@@ -112,7 +113,10 @@ public class EasyFlowToolBar extends JToolBar
 		{
 			// this should be the case when started from within eclipse
 			if (repoSrcFile.exists())
+			{
 				repositoryFS=repositoryFS_src;
+				GlobalVar.setDeveloperMode(true);
+			}
 			// from command line
 			else if (repoBinFile.exists())
 			{
@@ -253,7 +257,7 @@ public class EasyFlowToolBar extends JToolBar
 			try {
 				DefaultProject defaultProject = GlobalVar.getDefaultProject();
 				logger.debug(defaultProject.getActiveWorkflow());
-				
+				btnGenAbstractWorkflow.setEnabled(false);
 					if (defaultProject.generateAbstractGraph()
 							&& defaultProject.resolveTraversalCriteria()
 							&& defaultProject.applyGroupingCriteria()
@@ -267,33 +271,10 @@ public class EasyFlowToolBar extends JToolBar
 						//btnResolveUtilityTasks.setEnabled(true);
 					}
 					btnCalcAll.setEnabled(false);
-					btnGenAbstractWorkflow.setEnabled(false);
 					
-				} catch (DataLinkNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DataPortNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ToolNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UtilityTaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-
-				} catch (CellNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (GroupingCriterionInstanceNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NoValidInOutDataException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+				} catch (Exception e) {
+					Util.printLastErrorInfo(e, btnCalcAll);
 				}
 		}
 	}
@@ -315,12 +296,8 @@ public class EasyFlowToolBar extends JToolBar
 				}
 				btnGenAbstractWorkflow.setEnabled(false);
 				btnCalcAll.setEnabled(false);
-			} catch (CellNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				Util.printLastErrorInfo(e, btnGenAbstractWorkflow);
 			}
 
 		}
@@ -340,15 +317,8 @@ public class EasyFlowToolBar extends JToolBar
 				}
 				btnApplyGroupingCrit.setEnabled(false);
 				btnGenAbstractWorkflow.setEnabled(false);
-			} catch (CellNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (GroupingCriterionInstanceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				Util.printLastErrorInfo(e, btnApplyGroupingCrit);
 			}
 		}
 	}
@@ -370,17 +340,9 @@ public class EasyFlowToolBar extends JToolBar
 				}
 				btnApplyParameterCrit.setEnabled(false);
 				btnGenAbstractWorkflow.setEnabled(false);
-			} catch (CellNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (GroupingCriterionInstanceNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				Util.printLastErrorInfo(e, btnApplyParameterCrit);
 			}
-			
 		}
 		
 	}
@@ -398,27 +360,12 @@ public class EasyFlowToolBar extends JToolBar
 					)
 				{
 					btnResolveToolDeps.setEnabled(true);
-					
 				}
 				btnResolveUtilityTasks.setEnabled(false);
-			} catch (DataLinkNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DataPortNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ToolNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UtilityTaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TaskNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				Util.printLastErrorInfo(e, btnResolveUtilityTasks);
 			}
 		}
-		
 	}
 	
 	private class ResolveToolDepsAction extends AbstractAction {
@@ -427,7 +374,7 @@ public class EasyFlowToolBar extends JToolBar
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent ae) {
 			try {
 				if (GlobalVar.getDefaultProject().resolveToolDependencies())
 				{
@@ -435,10 +382,8 @@ public class EasyFlowToolBar extends JToolBar
 					btnGenerateExecWorkflow.setEnabled(true);
 				}
 				btnResolveToolDeps.setEnabled(false);
-			} catch (NoValidInOutDataException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			} catch (Exception e) {
+				Util.printLastErrorInfo(e, btnResolveToolDeps);			}
 		}
 	}
 	

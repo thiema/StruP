@@ -1,0 +1,35 @@
+ID	ReadGroup	Lib	Sample	Group	InputFiles:List	ReadLength	InsertSize	Platform	PlatformUnit	Description	FASTA
+#ID1	RG1	A	A	A	A_Lane1_1.fq,A_Lane1_2.fq	100	350	ILLUMINA	Lane1	DummyDesc	hg19.fa
+#ID2	RG1_Rep	A_	A_Rep	GroupA	A_Lane2_1.fq,A_Lane2_2.fq	100	350	ILLUMINA	Lane2	DummyDesc
+#ID3	RG3	C	C	B	B_1.fq,B_2.fq	51	350	ILLUMINA	Lane3	DummyDesc
+#ID4	RG4	C	C_2	B	C_1.fq,C_2.fq	51	350	ILLUMINA	Lane4	DummyDesc
+#ID5	RG5	SingleC	C	A	C_11.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID6	RG6	FlxC	C	B	C_454_1.fq	500	0	ROCHE	X	DummyDescFlx
+ID7	RG7_1	SingleC	C	A	C_07.fq	51	0	ILLUMINA	Lane5	DummyDesc
+ID8	RG7_2	SingleC	C	A	C_08.fq	51	0	ILLUMINA	Lane5	DummyDesc
+ID9	RG7	SingleC	C	A	C_09.fq	51	0	ILLUMINA	Lane5	DummyDesc
+ID10	RG7	SingleC	C	A	C_10.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID11	RG7	SingleC	C	A	C_11.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID12	RG7	SingleC	C	A	C_12.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID13	RG7	SingleC	C	A	C_13.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID14	RG7	SingleC	C	A	C_14.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID15	RG7	SingleC	C	A	C_15.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID16	RG7	SingleC	C	A	C_16.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID17	RG7	SingleC	C	A	C_17.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID18	RG7	SingleC	C	A	C_18.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID19	RG7	SingleC	C	A	C_19.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID20	RG7	SingleC	C	A	C_20.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID21	RG7	SingleC	C	A	C_21.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID22	RG7	SingleC	C	A	C_22.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID23	RG7	SingleC	C	A	C_23.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID24	RG7	SingleC	C	A	C_24.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID25	RG7	SingleC	C	A	C_25.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID26	RG7	SingleC	C	A	C_26.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID27	RG7	SingleC	C	A	C_27.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID28	RG7	SingleC	C	A	C_28.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID29	RG7	SingleC	C	A	C_29.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID30	RG7	SingleC	C	A	C_30.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID31	RG7	SingleC	C	A	C_31.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID32	RG7	SingleC	C	A	C_32.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID33	RG7	SingleC	C	A	C_33.fq	51	0	ILLUMINA	Lane5	DummyDesc
+#ID34	RG7	SingleC	C	A	C_34.fq	51	0	ILLUMINA	Lane5	DummyDesc

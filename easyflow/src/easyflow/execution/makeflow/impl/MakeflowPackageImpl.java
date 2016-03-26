@@ -35,6 +35,8 @@ import easyflow.traversal.TraversalPackage;
 import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
 import easyflow.ui.impl.UiPackageImpl;
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.MapsPackageImpl;
 import org.eclipse.emf.ecore.EClass;
@@ -114,6 +116,7 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
@@ -131,6 +134,7 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 		theDataPackage.createPackageContents();
 
@@ -148,6 +152,7 @@ public class MakeflowPackageImpl extends EPackageImpl implements MakeflowPackage
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 		theDataPackage.initializePackageContents();
 

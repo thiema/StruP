@@ -16,13 +16,16 @@ import easyflow.data.DataFormat;
 import easyflow.data.DataLink;
 import easyflow.data.DataPackage;
 import easyflow.data.DataPort;
+import easyflow.tool.Parameter;
 import easyflow.traversal.TraversalChunk;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -883,6 +886,9 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 		String sep1="_";
 		String sep2="=";
 		String sep3="-";
+		String dataPortStr1 = "";
+		String dataPortStr2 = "";
+		String dataPortStr  = "";
 		
 		if (getParamStr()!=null && !getParamStr().equals(""))
 		{
@@ -900,7 +906,77 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 			uniqueStrs.add(uniqueStr2);
 		}
 		
-		return StringUtils.join(uniqueStrs, sep1);
+		if (isVerbose)
+		{
+			if (getInDataPort() != null)
+			{
+				dataPortStr1 += "DataPort (In): "+getInDataPort().getName()
+						+" (FileExension="+getInDataPort().getFormat().renderAsFileExtension()+")";
+			}
+			if (getInData() != null)
+			{
+				dataPortStr1 += "Data (In): "+getInData().getFormatStr();
+				
+				if (getInData().getParameter() != null)
+				{
+					Parameter param = getInData().getParameter();
+					dataPortStr1 += "Parameter (In): "+(param.getLabel() == null ? param.getName() : param.getLabel());
+				}
+			}
+			if (!"".equals(dataPortStr1))
+				dataPortStr+=dataPortStr1;
+
+			if (getDataPort() != null)
+			{
+				dataPortStr2 += "DataPort (Out): "+getDataPort().getName()
+					+" (FileExension="+getDataPort().getFormat().renderAsFileExtension()+")";
+			}
+			if (getData() != null)
+			{
+				dataPortStr2 += "Data (Out): "+getData().getFormatStr();
+				
+				if (getData().getParameter() != null)
+				{
+					Parameter param = getData().getParameter();
+					dataPortStr2 += "Parameter (Out): "+(param.getLabel() == null ? param.getName() : param.getLabel());
+				}
+			}
+			if (!"".equals(dataPortStr2))
+				dataPortStr+=dataPortStr2;
+			/*
+			if (getChunks() != null)
+			{
+				tip += "Data:<br>";
+				for (String chunkType : getChunks().keySet())
+				{
+					tip += "  -"+chunkType+": "+Util.list2String(getChunks().get(chunkType), ",");
+					tip += "<br>";
+				}
+			}
+			
+			if (getDataPort() != null && !getDataPort().isStatic())
+			{
+				tip += "Data:<br>";
+				for (TraversalCriterion traversalCriterion : getDataPort().getGroupingCriteria())
+				{
+					for (String chunkType : traversalCriterion.getChunks().keySet())
+					{
+						tip += "  -"+chunkType+": "+Util.list2String(getChunks().get(chunkType), ",");
+						tip += "<br>";
+					}
+				}
+			}
+			else
+			{
+				tip += "No DataPort defined.<br>";
+			}
+			*/
+		}
+		
+		if (!"".equals(dataPortStr))
+			return StringUtils.join(uniqueStrs, sep1)+" "+dataPortStr;
+		else
+			return StringUtils.join(uniqueStrs, sep1);
 	}
 
 	/**

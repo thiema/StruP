@@ -3,71 +3,43 @@
 package easyflow.graph.impl;
 
 import easyflow.EasyflowPackage;
-
 import easyflow.core.CorePackage;
-
 import easyflow.core.impl.CorePackageImpl;
-
 import easyflow.data.DataPackage;
-
 import easyflow.data.impl.DataPackageImpl;
-
 import easyflow.example.ExamplePackage;
-
 import easyflow.example.impl.ExamplePackageImpl;
-
 import easyflow.execution.ExecutionPackage;
-
 import easyflow.execution.impl.ExecutionPackageImpl;
-
 import easyflow.execution.makeflow.MakeflowPackage;
-
 import easyflow.execution.makeflow.impl.MakeflowPackageImpl;
-
 import easyflow.execution.pegasus.PegasusPackage;
-
 import easyflow.execution.pegasus.impl.PegasusPackageImpl;
-
 import easyflow.execution.shell.ShellPackage;
-
 import easyflow.execution.shell.impl.ShellPackageImpl;
-
 import easyflow.graph.DefaultGraph;
 import easyflow.graph.GraphFactory;
 import easyflow.graph.GraphPackage;
 import easyflow.graph.IGraph;
-
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
-
 import easyflow.impl.EasyflowPackageImpl;
-
 import easyflow.metadata.MetadataPackage;
-
 import easyflow.metadata.impl.MetadataPackageImpl;
-
 import easyflow.tool.ToolPackage;
-
 import easyflow.tool.impl.ToolPackageImpl;
-
 import easyflow.traversal.TraversalPackage;
-
 import easyflow.traversal.impl.TraversalPackageImpl;
-
 import easyflow.ui.UiPackage;
-
 import easyflow.ui.impl.UiPackageImpl;
-
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
-
 import easyflow.util.maps.impl.MapsPackageImpl;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -150,6 +122,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
@@ -167,6 +140,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 		theDataPackage.createPackageContents();
 
@@ -184,6 +158,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 		theDataPackage.initializePackageContents();
 
@@ -210,7 +185,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getIGraph__InitLogMessage() {
+	public EOperation getIGraph__InitLogMessage__Category() {
 		return iGraphEClass.getEOperations().get(0);
 	}
 
@@ -261,7 +236,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 
 		// Create classes and their features
 		iGraphEClass = createEClass(IGRAPH);
-		createEOperation(iGraphEClass, IGRAPH___INIT_LOG_MESSAGE);
+		createEOperation(iGraphEClass, IGRAPH___INIT_LOG_MESSAGE__CATEGORY);
 
 		defaultGraphEClass = createEClass(DEFAULT_GRAPH);
 		createEReference(defaultGraphEClass, DEFAULT_GRAPH__LOG_MESSAGE);
@@ -305,9 +280,10 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		defaultGraphEClass.getESuperTypes().add(this.getIGraph());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(iGraphEClass, IGraph.class, "IGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(iGraphEClass, IGraph.class, "IGraph", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEOperation(getIGraph__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = initEOperation(getIGraph__InitLogMessage__Category(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultGraphEClass, DefaultGraph.class, "DefaultGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefaultGraph_LogMessage(), theCorePackage.getLogMessage(), null, "logMessage", null, 0, 1, DefaultGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

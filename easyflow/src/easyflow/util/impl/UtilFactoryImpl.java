@@ -1,8 +1,8 @@
 /**
  */
-package easyflow.graph.impl;
+package easyflow.util.impl;
 
-import easyflow.graph.*;
+import easyflow.util.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -18,24 +18,24 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
+public class UtilFactoryImpl extends EFactoryImpl implements UtilFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static GraphFactory init() {
+	public static UtilFactory init() {
 		try {
-			GraphFactory theGraphFactory = (GraphFactory)EPackage.Registry.INSTANCE.getEFactory(GraphPackage.eNS_URI);
-			if (theGraphFactory != null) {
-				return theGraphFactory;
+			UtilFactory theUtilFactory = (UtilFactory)EPackage.Registry.INSTANCE.getEFactory(UtilPackage.eNS_URI);
+			if (theUtilFactory != null) {
+				return theUtilFactory;
 			}
 		}
 		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new GraphFactoryImpl();
+		return new UtilFactoryImpl();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphFactoryImpl() {
+	public UtilFactoryImpl() {
 		super();
 	}
 
@@ -56,7 +56,7 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case GraphPackage.DEFAULT_GRAPH: return createDefaultGraph();
+			case UtilPackage.RETURN_VALUE: return createReturnValue();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -67,9 +67,9 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DefaultGraph createDefaultGraph() {
-		DefaultGraphImpl defaultGraph = new DefaultGraphImpl();
-		return defaultGraph;
+	public ReturnValue createReturnValue() {
+		ReturnValueImpl returnValue = new ReturnValueImpl();
+		return returnValue;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPackage getGraphPackage() {
-		return (GraphPackage)getEPackage();
+	public UtilPackage getUtilPackage() {
+		return (UtilPackage)getEPackage();
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * @generated
 	 */
 	@Deprecated
-	public static GraphPackage getPackage() {
-		return GraphPackage.eINSTANCE;
+	public static UtilPackage getPackage() {
+		return UtilPackage.eINSTANCE;
 	}
 
-} //GraphFactoryImpl
+} //UtilFactoryImpl

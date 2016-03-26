@@ -1,21 +1,14 @@
 {
 	
   "project" : {
-	"#workflow_definition_file"       : "reseq_simple_alt_path.workflow",
-	"workflow_definition_file"       : "reseq_simple.workflow",
-	"#workflow_definition_file"       : "reseq_full.workflow",
-	"metadata_file"               : "metadata_sequencing.tsv",
-	"#workflow_definition_file"       : "abstract_multiple_traversal_event.workflow",
-	"#workflow_definition_file"       : "abstract1.workflow",
-	"#workflow_definition_file"       : "abstract_simple1.workflow",
-	"#workflow_definition_file"       : "abstract_simple2.workflow",
-	"#metadata_file"               : "metadata_abstract_simple1.tsv",
-	"#metadata_file"               : "metadata_abstract_simple2.tsv",
-    "#metadata_file"               : "metadata_abstract.tsv", 
-    
+	"#workflow_definition_file"     : "reseq_simple_alt_path.workflow",
+	"workflow_definition_file"     : "reseq_simple.workflow",
+	"#workflow_definition_file"     : "reseq_full.workflow",
+	"metadata_file"                : "metadata_reseq.tsv",
+	"#metadata_file"                : "metadata_reseq_many.tsv",
     "is_contrast"                  : "true",
     "use_interval_list"            : "true",
-    "split_by_chunks"              : "true",
+    "split_by_chunks"              : "true"
 },
   "processing" : {
     "_target_enum"                 : ["sge", "local", "aws", "pegasus"],
@@ -63,7 +56,8 @@
     "w1"                        : ["MapReads", "AddReadGroup"],
     "w2"                        : ["SampleReads", "MapReads", "AddReadgroup", "Bamprocessing", "VariantDetection"],
     "default_grouping_criteria" : ["Record"],
-    "default_mode"              : "batch"
+    "default_mode"              : "batch",
+    "debug_level"				: "info"
   },
   
   "tool" : {

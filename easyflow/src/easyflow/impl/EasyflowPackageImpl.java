@@ -7,17 +7,12 @@
 package easyflow.impl;
 
 import com.mxgraph.model.mxICell;
-
 import com.mxgraph.view.mxGraph;
-
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 import easyflow.EasyflowFactory;
 import easyflow.EasyflowPackage;
-
 import easyflow.core.CorePackage;
-
 import easyflow.core.impl.CorePackageImpl;
-
 import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.DataPortNotFoundException;
@@ -33,7 +28,6 @@ import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.EasyFlowOverallWorker;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
-
 import easyflow.custom.util.Tuple;
 import easyflow.data.DataPackage;
 import easyflow.data.impl.DataPackageImpl;
@@ -50,9 +44,7 @@ import easyflow.execution.shell.impl.ShellPackageImpl;
 import easyflow.graph.GraphPackage;
 import easyflow.graph.impl.GraphPackageImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
-
 import easyflow.graph.jgraphx.impl.JgraphxPackageImpl;
-
 import easyflow.metadata.MetadataPackage;
 import easyflow.metadata.impl.MetadataPackageImpl;
 import easyflow.tool.ToolPackage;
@@ -60,29 +52,24 @@ import easyflow.tool.impl.ToolPackageImpl;
 import easyflow.traversal.TraversalPackage;
 import easyflow.traversal.impl.TraversalPackageImpl;
 import easyflow.ui.UiPackage;
-
 import easyflow.ui.impl.UiPackageImpl;
-
+import easyflow.util.UtilPackage;
+import easyflow.util.impl.UtilPackageImpl;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.MapsPackageImpl;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.util.Stack;
-
 import java.util.regex.Pattern;
 import javax.xml.validation.Schema;
 import net.sf.json.JSONObject;
 import org.apache.commons.jexl2.JexlEngine;
-
 import org.apache.log4j.Logger;
-
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -322,6 +309,13 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EDataType exceptionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType easyFlowOverallWorkerEDataType = null;
 
 	/**
@@ -383,6 +377,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		ToolPackageImpl theToolPackage = (ToolPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) instanceof ToolPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI) : ToolPackage.eINSTANCE);
 		MetadataPackageImpl theMetadataPackage = (MetadataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) instanceof MetadataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI) : MetadataPackage.eINSTANCE);
 		TraversalPackageImpl theTraversalPackage = (TraversalPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) instanceof TraversalPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI) : TraversalPackage.eINSTANCE);
+		UtilPackageImpl theUtilPackage = (UtilPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) instanceof UtilPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI) : UtilPackage.eINSTANCE);
 		MapsPackageImpl theMapsPackage = (MapsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) instanceof MapsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI) : MapsPackage.eINSTANCE);
 		DataPackageImpl theDataPackage = (DataPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) instanceof DataPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI) : DataPackage.eINSTANCE);
 
@@ -400,6 +395,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theToolPackage.createPackageContents();
 		theMetadataPackage.createPackageContents();
 		theTraversalPackage.createPackageContents();
+		theUtilPackage.createPackageContents();
 		theMapsPackage.createPackageContents();
 		theDataPackage.createPackageContents();
 
@@ -417,6 +413,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		theToolPackage.initializePackageContents();
 		theMetadataPackage.initializePackageContents();
 		theTraversalPackage.initializePackageContents();
+		theUtilPackage.initializePackageContents();
 		theMapsPackage.initializePackageContents();
 		theDataPackage.initializePackageContents();
 
@@ -722,6 +719,15 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EDataType getException() {
+		return exceptionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getEasyFlowOverallWorker() {
 		return easyFlowOverallWorkerEDataType;
 	}
@@ -787,6 +793,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		noValidInOutDataExceptionEDataType = createEDataType(NO_VALID_IN_OUT_DATA_EXCEPTION);
 		tupleEDataType = createEDataType(TUPLE);
 		resolvingParameterFailedExceptionEDataType = createEDataType(RESOLVING_PARAMETER_FAILED_EXCEPTION);
+		exceptionEDataType = createEDataType(EXCEPTION);
 	}
 
 	/**
@@ -821,7 +828,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		ToolPackage theToolPackage = (ToolPackage)EPackage.Registry.INSTANCE.getEPackage(ToolPackage.eNS_URI);
 		MetadataPackage theMetadataPackage = (MetadataPackage)EPackage.Registry.INSTANCE.getEPackage(MetadataPackage.eNS_URI);
 		TraversalPackage theTraversalPackage = (TraversalPackage)EPackage.Registry.INSTANCE.getEPackage(TraversalPackage.eNS_URI);
-		MapsPackage theMapsPackage = (MapsPackage)EPackage.Registry.INSTANCE.getEPackage(MapsPackage.eNS_URI);
+		UtilPackage theUtilPackage = (UtilPackage)EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI);
 		DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 
 		// Add subpackages
@@ -833,7 +840,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		getESubpackages().add(theToolPackage);
 		getESubpackages().add(theMetadataPackage);
 		getESubpackages().add(theTraversalPackage);
-		getESubpackages().add(theMapsPackage);
+		getESubpackages().add(theUtilPackage);
 		getESubpackages().add(theDataPackage);
 
 		// Initialize data types
@@ -870,6 +877,7 @@ public class EasyflowPackageImpl extends EPackageImpl implements EasyflowPackage
 		initEDataType(noValidInOutDataExceptionEDataType, NoValidInOutDataException.class, "NoValidInOutDataException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(tupleEDataType, Tuple.class, "Tuple", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(resolvingParameterFailedExceptionEDataType, ResolvingParameterFailedException.class, "ResolvingParameterFailedException", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(exceptionEDataType, Exception.class, "Exception", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

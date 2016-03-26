@@ -6,8 +6,8 @@
  */
 package easyflow.graph.jgraphx.impl;
 
+import easyflow.core.Severity;
 import easyflow.core.Task;
-import easyflow.custom.exception.CellNotFoundException;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.graph.jgraphx.Graph;
@@ -27,6 +27,7 @@ import easyflow.metadata.GroupingInstance;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
 
+import easyflow.util.ReturnValue;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -85,14 +86,16 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public void applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, 
-			String groupingStr, GroupingInstance groupingInstance) throws CellNotFoundException, TaskNotFoundException {
+	public boolean applyTraversalEvent(mxICell root, TraversalEvent traversalEvent, 
+			String groupingStr, GroupingInstance groupingInstance) throws TaskNotFoundException {
 		
+		boolean rc;
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		groupingInstances.add(groupingInstance);
-		applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstances);
+		rc = applyTraversalEvent(root, traversalEvent, groupingStr, groupingInstances);
 		if (!traversalEvent.isGrouping())
 			getGraph().getGraph().removeCells(new Object[]{root}, true);
+		return rc;
 	}
 	
 	/**
@@ -107,7 +110,7 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 	 * @generated not
 	 */
 	
-	public void applyTraversalEvent(mxICell root, 
+	public boolean applyTraversalEvent(mxICell root, 
 			final TraversalEvent traversalEvent,
 			final String groupingStr,
 			final EList<GroupingInstance> groupingInstances
@@ -115,10 +118,13 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 			) throws TaskNotFoundException 
 	{
 		
+		
 		//final EMap<String, EList<String>> possibleMergeParents = new BasicEMap<String, EList<String>>();
 		final EMap<String, mxICell> mergeCells   = new BasicEMap<String, mxICell>();
 		// only used in case of param criterion
 		final EList<String>         mergeTasks   = new BasicEList<String>();
+		final EList<Boolean>        rc           = new BasicEList<Boolean>();
+		rc.add(new Boolean(true));
 		if (!traversalEvent.isGrouping())
 			for (Task mergeTask:traversalEvent.getMergeTask())
 				mergeTasks.add(mergeTask.getName());
@@ -254,7 +260,8 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}		
+		}
+		return rc.get(0).booleanValue();
 	}
 
 	/**
@@ -263,16 +270,16 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 	 * @throws TaskNotFoundException 
 	 * @generated not
 	 */
-	public mxICell applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, 
-			GroupingInstance groupingInstance) throws TaskNotFoundException {
+	public boolean applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, 
+			GroupingInstance groupingInstance, ReturnValue returnCell) throws TaskNotFoundException {
 		
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		groupingInstances.add(groupingInstance);
 		
 		if (traversalEvent.isGrouping())
-			return applyTraversalEventCopyGraph(root, traversalEvent, groupingInstances);
+			return applyTraversalEventCopyGraph(root, traversalEvent, groupingInstances, returnCell);
 		else
-			return applyTraversalEventCopyGraph_Param(root, traversalEvent, groupingInstances);
+			return applyTraversalEventCopyGraph_Param(root, traversalEvent, groupingInstances, returnCell);
 	}
 
 	
@@ -286,15 +293,21 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 	 * @throws TaskNotFoundException
 	 * @generated not
 	 */
-	public mxICell applyTraversalEventCopyGraph(mxICell root, 
+	public boolean applyTraversalEventCopyGraph(mxICell root, 
 			final TraversalEvent traversalEvent, 
-			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
+			final EList<GroupingInstance> groupingInstances,
+			final ReturnValue returnCell) throws TaskNotFoundException {
 
 		logger.debug("applyTraversalEventCopyGraph()");
 		final String               groupingStr              = traversalEvent.getTraversalCriterion().getId();
 		final EMap<String, String> taskPreviousTaskMap      = new BasicEMap<String, String>();
-		final EList<mxICell>       returnCell               = new BasicEList<mxICell>();
 		final EList<Task>          lastTask                 = new BasicEList<Task>();
+		final EList<Boolean>       rc                       = new BasicEList<Boolean>();
+		final Boolean rcTrue = new Boolean(true);
+		final Boolean rcFalse = new Boolean(false);
+		rc.add(rcTrue);
+		
+		returnCell.setObject(null);
 
 		EList<String> instances = new BasicEList<String>(); 
 		for (GroupingInstance groupingInstance : groupingInstances)
@@ -316,11 +329,11 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 					else
 						lastTask.clear();
 				} catch (TaskNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					rc.set(0, rcFalse);
+					return false;
 				} catch (DataLinkNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					rc.set(0, rcFalse);
+					return false;
 				}
 				
 				if (GlobalConfig.getDebugTasks().contains(task.getName()))
@@ -334,17 +347,28 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 						);
 				
 				boolean shouldAddCircumventingParents = false;
-				
-
 				// check special conditions to possibly break this path and stop copying tasks
 				if (!GraphUtil.isValidConversion(task.getChunks(), groupingStr, groupingInstances))
+				{
+					logger.info("applyTraversalEventCopyGraph(): skip traversal. Cannot convert between "
+							+ "chunks " +task.getChunks().keySet()
+							+" and "+Util.list2String(groupingInstances, ",")
+							+" for grouping="+groupingStr);
+					
 					return false;
+				}
 				if (!task.shallProcess(groupingInstances, groupingStr))
 				{
-					logger.debug("applyTraversalEventCopyGraph(): "
-							+" mergetasks="+Util.tasksToStringList(traversalEvent.getMergeTask())
+					logger.info("applyTraversalEventCopyGraph(): skip traversal due to unmet "
+							+ "condition = "+task.getJexlString()
+							+" of task ="+task.getUniqueString()
+							+" (mergetasks="+Util.tasksToStringList(traversalEvent.getMergeTask())
 							+" lasttask="+(lastTask.isEmpty() ? null : lastTask.get(0).getUniqueString())
-							+" curtask"+task.getUniqueString());
+							+")");
+					getLogMessage().generateLogMsg(
+							GlobalConstants.LOG_MSG_APPLY_TRAVERSAL_EVENT_SKIP_CONDITIONAL_TASK_2,
+							Severity.INFO,
+							Util.generateStringList(taskString, task.getJexlString()));
 					if (!lastTask.isEmpty())
 					{
 						logger.debug("applyTraversalEventCopyGraph(): is contained?="+traversalEvent.getMergeTask().contains(lastTask.get(0)));
@@ -365,13 +389,13 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 							shallProcess(groupingInstances, groupingStr, 
 									inDataLink.getCondition().getForbidden(),
 									true)
-									);
+					);
 					// skip, because this processing is not permitted
 					if (!task.shallProcess(groupingInstances, groupingStr, 
 						inDataLink.getCondition().getForbidden(),
 						true))
 					{
-						logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
+						logger.info("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
 						return false;
 					}
 					// skip, because the circumventing parent
@@ -381,7 +405,7 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 										true)
 							)
 					{
-						logger.debug("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
+						logger.info("skip due to unpermitted conditions: "+inDataLink.getCondition().getForbidden());
 						return false;
 					}
 					else if (!inDataLink.getCondition().isUnconditional())
@@ -410,7 +434,7 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 				else 
 				{
 					GlobalVar.getTasks().put(copyTask.getUniqueString(), copyTask);
-					logger.trace("applyTraversalEventCopyGraph(): added key:"+copyTask.getUniqueString());
+					logger.trace("applyTraversalEventCopyGraph(): added task with key:"+copyTask.getUniqueString()+" in global tasks map.");
 					// create the new cell
 					cell = (mxICell) getGraph().getGraph().insertVertexEasyFlow(null, null, copyTask);
 					logger.debug("applyTraversalEventCopyGraph(): added vertex:"+copyTask.getUniqueString());
@@ -422,8 +446,8 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 					}
 				}				
 				
-				if (returnCell.isEmpty()) 
-					returnCell.add(cell);
+				if (returnCell.getObject() == null) 
+					returnCell.setObject(cell);
 				
 				boolean skipTerminalEdgeProcessing = false;
 				if (edge != null)
@@ -439,10 +463,11 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 								+"->"+copyTask.getUniqueString()
 								);
 						if (
-								getGraph().getProcessedEdgesCopyGraph().containsKey(taskPreviousTaskMap.get(source.getUniqueString()))
-							&& getGraph().getProcessedEdgesCopyGraph().get(taskPreviousTaskMap.
-									get(source.getUniqueString())).equals(copyTask.getUniqueString())
-								)
+							getGraph().getProcessedEdgesCopyGraph().
+								containsKey(taskPreviousTaskMap.get(source.getUniqueString())) &&
+							getGraph().getProcessedEdgesCopyGraph().get(taskPreviousTaskMap.
+								get(source.getUniqueString())).equals(copyTask.getUniqueString())
+							)
 						{
 							skipTerminalEdgeProcessing = true;
 							logger.debug("applyTraversalEventCopyGraph(): skip already inserted edge");
@@ -464,17 +489,18 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 										taskPreviousTaskMap.get(source.getUniqueString()),
 										copyTask.getUniqueString());
 								
-							} catch (DataLinkNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							}
+							catch (DataLinkNotFoundException e) 
+							{
+								rc.set(0, rcFalse);
+								return false;
 							}
 						}
-						
 					} 
 					catch (TaskNotFoundException e) 
 					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						rc.set(0, rcFalse);
+						return false;
 					}	
 				}
 				if (!skipTerminalEdgeProcessing)
@@ -493,7 +519,15 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 			JGraphXUtil.layoutGraph();
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		
-		return returnCell.size() > 0 ? returnCell.get(0) : null;
+		int numVertices = returnCell.getObject() != null ? 
+				getGraph().getGraph().getChildVertices(returnCell.getObject()).length + 1 : 0;
+		if (numVertices > 0)
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_APPLY_TRAVERSAL_EVENT_COPY_GRAPH_END_1, Severity.DEBUG, 
+				Integer.toString(numVertices));
+		else
+			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_APPLY_TRAVERSAL_EVENT_COPY_GRAPH_NO_VERTICES_COPIED_0, Severity.DEBUG, (String)null);			
+
+		return rc.get(0).booleanValue();
 	}
 
 	private void applyTraversalEventCopyGraph_terminalEdge(Object vertex, Task task, String groupingStr, Object sourceVertex)
@@ -525,14 +559,14 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 
 	}
 	
-	private mxICell applyTraversalEventCopyGraph_Param(mxICell root, 
+	private boolean applyTraversalEventCopyGraph_Param(mxICell root, 
 			final TraversalEvent traversalEvent, 
-			final EList<GroupingInstance> groupingInstances) throws TaskNotFoundException {
+			final EList<GroupingInstance> groupingInstances,
+			final ReturnValue returnCell) throws TaskNotFoundException {
 		
-		logger.debug("############ graph="+getGraph());
 		final String               groupingStr         = traversalEvent.getTraversalCriterion().getId();
 		final EMap<String, String> taskPreviousTaskMap = new BasicEMap<String, String>();
-		final EList<mxICell>       returnCell          = new BasicEList<mxICell>();
+		returnCell.setObject(null);
 		
 		mxICellVisitor visitor=new mxICellVisitor() {
 			String debug="";
@@ -574,8 +608,8 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 					
 						GlobalVar.getCells().put(copyTask.getUniqueString(), (mxICell) cell);
 					}
-					if (returnCell.isEmpty())
-						returnCell.add(cell);
+					if (returnCell.getObject() == null)
+						returnCell.setObject(cell);
 					
 					if (edge != null)
 					{
@@ -622,7 +656,7 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 			JGraphXUtil.layoutGraph();
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 
-		return returnCell.size() > 0 ? returnCell.get(0) : null;
+		return returnCell.getObject() != null;
 	}
 
 	private String getMoreGranularGroupingCriterion(String crit1, String crit2)
@@ -643,7 +677,6 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 		
 		boolean modeRequireAll = true;
 		// boolean modeUseFirstMatchingGroupingStr = true;
-
 		boolean requireAllChunks = false;
 		boolean requireAllInstances = true;
 
@@ -715,8 +748,8 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 									throws TaskNotFoundException, DataLinkNotFoundException, TraversalChunkNotFoundException 
 		{
 		logger.trace("applyMergingCriterion(): "
-				+ getGraph().getGraph().getOutgoingEdges(cell).length + " "
-				+ getGraph().getGraph().getVertices(cell).size());
+				+" num outgoing edges = "+ getGraph().getGraph().getOutgoingEdges(previousCell).length + " "
+				+" num vertices = "+ getGraph().getGraph().getVertices(cell).size());
 
 		Task task = JGraphXUtil.loadTask(cell);
 		// TraversalEvent traversalEvent =
@@ -736,110 +769,77 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 			// +"(cell"+childCell+")"
 			);
 			// logger.debug(childTask.getCircumventingParents());
-
-			
 			
 			if (outDataLink != null) {
-
-				/*EList<String> forbiddenInstances = outDataLink.getCondition() != null ? 
-							outDataLink.getCondition().getForbidden() : null;
-				boolean shallProcessFirstCircumventingParent = !outDataLink.isUnconditional() ? 
-						getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))
-											.shallProcess(groupingInstances, groupingStr, outDataLink.getCondition().getForbidden(), true)
-											:true;
-				boolean shallProcessChild = childTask.shallProcess(
-								groupingInstances, groupingStr, forbiddenInstances, true);
-				boolean shallProcessCircumventingParents = shallProcess(outDataLink.getCondition().getCircumventingParents(), 
-						groupingInstances, groupingStr, outDataLink.getCondition().getForbidden(), true);
-
-				logger.debug("applyMergingCriterion(): " 
-						+ groupingStr + " instances=(" + easyFlowUtil.list2String(groupingInstances, ", ")+")"
-						+ " shallProcessFirstCircumventingParent="+shallProcessFirstCircumventingParent
-						+ " shallProcessChild="+shallProcessChild
-						+ " shallProcessCircumventingParents="+shallProcessCircumventingParents
-						//+ " shallProcess="+task.shallProcess(groupingInstances, groupingStr)
-						//+ " shallProcess (child)="+childTask.shallProcess(groupingInstances, groupingStr)
-						+ " metadata="+!getMetaData().containsColumn(groupingStr)
-						//+ " cond="+outDataLink.getCondition()
-						);
-						*/
-				if (!isGrouping)
-				{
-					//logger.debug(" isProcessed="+outDataLink.isProcessed()+" ");
+				if (!isGrouping) {
+					// logger.debug(" isProcessed="+outDataLink.isProcessed()+" ");
 					if (outDataLink.isProcessed())
 						continue;
 				}
 
 				if (
 				// test for conditional edges
-						(outDataLink.isUnconditional() || !isGrouping ||
-						(outDataLink.getCondition() != null &&
-						
-							(!outDataLink.getCondition().getCircumventingParents().isEmpty() && 
-									GraphUtil.shallProcess(outDataLink.getCondition().getCircumventingParents(), 
-											groupingInstances, groupingStr, 
-											outDataLink.getCondition().getForbidden(), 
-											true)
-									&&
-
-						//	getTasks().get(outDataLink.getCondition().getCircumventingParents().get(0))
-							//	.shallProcess(groupingInstances, groupingStr, 
-								//		outDataLink.getCondition().getForbidden(),
-									//	true)
-								//&&
-							childTask
-								.shallProcess(
-										groupingInstances, groupingStr,
-										(outDataLink.getCondition() != null ? outDataLink
-												.getCondition().getForbidden()
-												: null), true)
-												)
-							)
-						)
-						//
-						&& (!getGraph().getMetaData().containsColumn(groupingStr) ||
-						
-							(task.shallProcess(groupingInstances, groupingStr)
-						
-							&& childTask.shallProcess(groupingInstances, groupingStr)
-							)
-							
-						)
-				)
+				(outDataLink.isUnconditional() || !isGrouping || 
+					(
+					outDataLink.getCondition() != null 				&&
+					(!outDataLink.getCondition().
+						getCircumventingParents().isEmpty()			&& 
+					GraphUtil.shallProcess(outDataLink.getCondition()
+						.getCircumventingParents(), groupingInstances,
+							groupingStr, outDataLink.getCondition()
+								.getForbidden(), true) 				&&
+					childTask.shallProcess(groupingInstances, groupingStr,
+							(outDataLink.getCondition() != null ? 
+									outDataLink.getCondition().
+									getForbidden() : null),
+							true)))
+				) && 
+				(!getGraph().getMetaData().containsColumn(groupingStr) ||
+					(task.shallProcess(groupingInstances, groupingStr) && 
+					childTask.shallProcess(groupingInstances, groupingStr)))
+				) 
 				{
-					
-					DataLink dataLink = GraphUtil.createDataLink(edgeOut, task, null, isGrouping ? groupingStr : null, 
-							null, !isGrouping ? groupingStr : null);
-					
+					DataLink dataLink = GraphUtil.createDataLink(edgeOut, task,
+							null, isGrouping ? groupingStr : null, null,
+							!isGrouping ? groupingStr : null);
+
 					if (
 					// getProcessedEdgesCopyGraph().keySet().contains(task.getUniqueString())
-						JGraphXUtil.isEdgeInGraph(task, childTask, dataLink))
+					JGraphXUtil.isEdgeInGraph(task, childTask, dataLink))
 						logger.trace("applyMergingCriterion(): skip inserting edge (already processed)");
 
 					// insert edge from cell to its child cell
 					else {
 						logger.debug("applyMergingCriterion(): "
 								+ "insert edge: " + task.getUniqueString()
-								+ "->" + childTask.getUniqueString() + ")"+" port="+dataLink.getUniqueString());
+								+ "->" + childTask.getUniqueString() + ")"
+								+ " port=" + dataLink.getUniqueString());
 
-						getGraph().getGraph().insertEdgeEasyFlow(null, null, cell,
-								childCell, dataLink);
+						getGraph().getGraph().insertEdgeEasyFlow(null, null,
+								cell, childCell, dataLink);
 						// getProcessedEdges().put(task.getUniqueString(),
 						// childTask.getUniqueString());
 					}
-				}
-				else
-				{
+				} else {
 					logger.debug("applyMergingCriterion(): skip inserting edge to task "
-							+childTask.getUniqueString()+" due unmatched condition.");
-					
-					if (getGraph().getGraph().getIncomingEdges(childCell).length == 1)
-					{
-						logger.info("applyMergingCriterion(): mark task "+childTask.getUniqueString()+" to be removed. "
+							+ childTask.getUniqueString()
+							+ " due unmatched condition.");
+
+					if (getGraph().getGraph().getIncomingEdges(childCell).length == 1) {
+						getLogMessage()
+								.generateLogMsg(
+										GlobalConstants.LOG_MSG_APPLY_TRAVERSAL_EVENT_REMOVE_MERGE_TASK_DUE_TO_CONDITION_2,
+										Severity.INFO,
+										Util.generateStringList(
+												childTask.getUniqueString(),
+												childTask.getJexlString()));
+						logger.info("applyMergingCriterion(): mark task "
+								+ childTask.getUniqueString()
+								+ " to be removed. "
 								+ "(No ingoing dataports other than the one omitted by condition.)");
-						//childTask.setFlags(childTask.getFlags() | 0x0100);
+						// childTask.setFlags(childTask.getFlags() | 0x0100);
 					}
-					
+
 				}
 			} else
 				logger.debug("applyMergingCriterion(): skip inserting edge due datalink null pointer.");
@@ -916,30 +916,28 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 		switch (operationID) {
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE:
 				try {
-					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (GroupingInstance)arguments.get(3));
-					return null;
+					return applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (GroupingInstance)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
 			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST:
 				try {
-					applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (EList<GroupingInstance>)arguments.get(3));
-					return null;
+					return applyTraversalEvent((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (String)arguments.get(2), (EList<GroupingInstance>)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE:
+			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE:
 				try {
-					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (GroupingInstance)arguments.get(2));
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (GroupingInstance)arguments.get(2), (ReturnValue)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST:
+			case JgraphxPackage.TRAVERSAL_EVENT_GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_ELIST_RETURNVALUE:
 				try {
-					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (EList<GroupingInstance>)arguments.get(2));
+					return applyTraversalEventCopyGraph((mxICell)arguments.get(0), (TraversalEvent)arguments.get(1), (EList<GroupingInstance>)arguments.get(2), (ReturnValue)arguments.get(3));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);

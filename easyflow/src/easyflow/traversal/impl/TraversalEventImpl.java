@@ -412,7 +412,7 @@ public class TraversalEventImpl extends MinimalEObjectImpl.Container implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
 	public void readChunks() {
 		// TODO: implement this method

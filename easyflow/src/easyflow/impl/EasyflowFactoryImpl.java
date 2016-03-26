@@ -172,6 +172,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return createTupleFromString(eDataType, initialValue);
 			case EasyflowPackage.RESOLVING_PARAMETER_FAILED_EXCEPTION:
 				return createResolvingParameterFailedExceptionFromString(eDataType, initialValue);
+			case EasyflowPackage.EXCEPTION:
+				return createExceptionFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -249,6 +251,8 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 				return convertTupleToString(eDataType, instanceValue);
 			case EasyflowPackage.RESOLVING_PARAMETER_FAILED_EXCEPTION:
 				return convertResolvingParameterFailedExceptionToString(eDataType, instanceValue);
+			case EasyflowPackage.EXCEPTION:
+				return convertExceptionToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -809,6 +813,24 @@ public class EasyflowFactoryImpl extends EFactoryImpl implements EasyflowFactory
 	 * @generated
 	 */
 	public String convertResolvingParameterFailedExceptionToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Exception createExceptionFromString(EDataType eDataType, String initialValue) {
+		return (Exception)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertExceptionToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 
