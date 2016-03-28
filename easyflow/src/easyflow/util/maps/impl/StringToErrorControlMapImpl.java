@@ -6,7 +6,7 @@
  */
 package easyflow.util.maps.impl;
 
-import easyflow.core.LogMessage;
+import easyflow.util.LogMessage;
 import easyflow.util.maps.MapsPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;

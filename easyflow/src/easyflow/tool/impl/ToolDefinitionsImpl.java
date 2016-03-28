@@ -6,10 +6,10 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.core.Category;
+import easyflow.util.Category;
+import easyflow.util.UtilFactory;
 import easyflow.core.CoreFactory;
-import easyflow.core.LogMessage;
-import easyflow.core.Severity;
+import easyflow.util.Severity;
 import easyflow.tool.DocumentProperties;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.Util;
@@ -17,6 +17,7 @@ import easyflow.custom.util.XMLUtil;
 import easyflow.tool.ToolDefinitions;
 import easyflow.tool.ToolPackage;
 import easyflow.tool.ToolSchemata;
+import easyflow.util.LogMessage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl;
 
@@ -293,7 +294,7 @@ public class ToolDefinitionsImpl extends MinimalEObjectImpl.Container implements
 	public void initLogMessage() {
 		if (getLogMessage() == null)
 		{
-			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			setLogMessage(UtilFactory.eINSTANCE.createLogMessage());
 			getLogMessage().setCategory(Category.TOOL_DEFINITION);
 		}
 	}

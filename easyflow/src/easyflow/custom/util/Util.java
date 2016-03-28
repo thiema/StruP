@@ -16,7 +16,6 @@ import javax.swing.JButton;
 
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
-import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -25,7 +24,7 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
-import easyflow.core.ErrorInfo;
+import easyflow.util.ErrorInfo;
 import easyflow.core.Task;
 import easyflow.data.DataPort;
 import easyflow.metadata.DefaultMetaData;

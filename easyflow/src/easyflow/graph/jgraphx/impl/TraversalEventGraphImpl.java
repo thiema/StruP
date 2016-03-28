@@ -6,7 +6,7 @@
  */
 package easyflow.graph.jgraphx.impl;
 
-import easyflow.core.Severity;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
@@ -714,24 +714,30 @@ public class TraversalEventGraphImpl extends DefaultGraphImpl implements Travers
 				+ " parent is root="+parentTask.isRoot()
 				+ " isgrouping="+isGrouping 
 				+ " overlapping recs="+(overlap != null ? overlap.size() : null)
-				);
+		);
 		if (overlap == null)
 			logger.error("applySplittingCriterion(): no overlapping chunks found");
+		else
+			logger.debug("applySplittingCriterion(): task="+task.getUniqueString()+" chunks="+Util.list2String(overlap, ","));
 		
 		if (parentTask.isRoot() && !parentTask.getGroupingCriteria().containsKey(groupingStr)) {
 			
-			// get criterion
-			//getMetaData().getInstances(groupingStr1, groupingStr2, instanceStr)
-
-			getGraph().getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
-					GraphUtil.createDataLink(edgeIn, parentTask, isGrouping ? groupingStr : null, null, overlap, !isGrouping ? groupingStr : null));
+				//DataLink newDataLink = GraphUtil.createDataLink(dataLink, task, groupingStr, null, traversalChunk);
+			DataLink newDataLink = GraphUtil.createDataLink(edgeIn, parentTask, 
+						isGrouping ? groupingStr : null, 
+						null, 
+						overlap, !isGrouping ? groupingStr : null);
+				
 			logger.debug("applySplittingCriterion(): insert edge: "
-					+ parentTask.getUniqueString() + " ->"
-					+ task.getUniqueString()+" case=root");
+						+ parentTask.getUniqueString() + " ->"
+						+ task.getUniqueString()+" case=root"+" static="+newDataLink.getDataPort().isStatic()+" added="+getGraph().getAddEdges().keySet());				
+
+			getGraph().getGraph().insertEdgeEasyFlow(null, null, parentCell, cell, newDataLink);
+				
 		} else {
-			if (!isGrouping
-					|| !task.getOverlappingRecordsProvidedBy(parentTask)
-							.isEmpty())
+			if (!isGrouping ||
+				!task.getOverlappingRecordsProvidedBy(parentTask).isEmpty()
+				)
 			{
 				getGraph().getGraph().insertEdgeEasyFlow(null, null, parentCell, cell,
 						GraphUtil.createDataLink(edgeIn, parentTask, isGrouping ? groupingStr : null, null, overlap, !isGrouping ? groupingStr : null));

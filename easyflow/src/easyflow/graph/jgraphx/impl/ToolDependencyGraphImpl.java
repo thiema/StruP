@@ -11,7 +11,11 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
+
 import easyflow.core.Catalog;
+import easyflow.util.ReturnValueBoolean;
+import easyflow.util.Severity;
+import easyflow.util.UtilFactory;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.NoValidInOutDataException;
@@ -23,6 +27,7 @@ import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.Tuple;
 import easyflow.custom.util.URIUtil;
+import easyflow.custom.util.Util;
 import easyflow.data.Data;
 import easyflow.data.DataFactory;
 import easyflow.data.DataFormat;
@@ -33,12 +38,16 @@ import easyflow.graph.impl.DefaultGraphImpl;
 import easyflow.graph.jgraphx.JgraphxPackage;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
 import easyflow.graph.jgraphx.ToolDependencies;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import easyflow.tool.InOutParameter;
 import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalCriterion;
+
 import java.lang.reflect.InvocationTargetException;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -48,6 +57,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
@@ -139,10 +149,12 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 	
 	public boolean resolveToolDependencies(mxICell root, final Catalog catalog) throws NoValidInOutDataException
 	{
-		boolean rc = true;
+		//boolean rc = true;
 		final EMap<String, DataPort> staticInputs = new BasicEMap<String, DataPort>();
 		final EMap<String, DataPort> inputs       = new BasicEMap<String, DataPort>();
-		final EList<String>          rcTraversal  = new BasicEList<String>();
+		//final EList<String>          rcTraversal  = new BasicEList<String>();
+		final ReturnValueBoolean     rc = UtilFactory.eINSTANCE.createReturnValueBoolean();
+		rc.setValue(true);
 		
 		final String inputDir = (String) (catalog.getEntries().containsKey(GlobalConstants.DATA_INPUT_DIR) ? 
 				catalog.getEntries().get(GlobalConstants.DATA_INPUT_DIR) : "");
@@ -238,17 +250,12 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 										// retrieve the parent tool data
 										// ParentTool -----------> ChildTool
 										// tool       dataLink---> childTool 
-										//parentData = getToolDataForDataLink(tool.getData(), dataLink, false);
 										ListIterator<Entry<String, EList<Data>>> it = tool.getData().listIterator();
 										while (it.hasNext())
 										{
 											Entry<String, EList<Data>> e = it.next();
 											parentData.addAll(dataLink.getMatchingDataFor(e.getValue(), GlobalConfig.getAllowedHandles(), false));
-											//ListIterator<Data> it1 = e.getValue().listIterator(e.getValue().size());
-											//while (it1.hasPrevious()){	}
 										}
-										//for (EList<Data> curParentData : tool.getData().values())
-											//parentData.addAll(dataLink.getMatchingDataFor(curParentData, GlobalConfig.getAllowedHandles(), false));
 										
 										if (parentData.isEmpty())
 											logger.warn("resolveToolDependencies(): no ingoing tool data found.");
@@ -257,8 +264,19 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 									catch (NoValidInOutDataException e)
 									{
 										logger.error("resolveToolDependencies(): no ingoing tool data found.");
-										//e.printStackTrace();
-										//boolean noChildDataAvail = true;
+										GlobalVar.getLastErrorInfo().setTask(task);
+										GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+										getLogMessage().generateLogMsg(
+												GlobalConstants.LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_4,
+												Severity.ERROR,
+												Util.generateStringList(
+														"ingoing",
+														task.getUniqueString(), 
+														tool.getName(), 
+														dataLink.getUniqueString(true))
+										);
+										rc.setValue(false);
+										return false;
 									}
 									
 									if (parentData.size() == 0)
@@ -272,14 +290,10 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 									
 									if (!dataLink.getChunks().isEmpty())
 									{
-										/*if (paramStr != null && !paramStr.equals("") 
-												&& dataLink.getChunks().containsKey(paramStr) 
-												&& !dataLink.getChunks().get(paramStr).isEmpty())
-											firstInstanceDL=dataLink.getChunks().get(paramStr).get(0).getName();
-										else */
 										if (dataLink.getChunks().get(groupingStr) == null)
-											//logger.debug("resolveToolDependencies(): no chunks found for grouping="+groupingStr);
+										{
 											chunksResult="no chunk found for grouping="+groupingStr;
+										}
 										else if (!dataLink.getChunks().get(groupingStr).isEmpty())
 										{
 											if (dataLink.getChunks().get(groupingStr).size() > 1)
@@ -290,18 +304,13 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 											else
 												chunksResult="chunk found";	
 											firstInstanceDL=dataLink.getChunks().get(groupingStr).get(0).getName();
-											//logger.debug("resolveToolDependencies(): chunks found in datalink to resolve tool output.");
 										}
 									}
 									else
+									{
 										chunksResult ="no chunk found in datalink";
-									
-									//boolean  isMetadata    = false;
-									//boolean  isStaticInput = false;
-									//boolean  isGenericInput= false;
-									//boolean  assumeHiddenInput = false;
-									
-									//EList<Data> parentData = getToolDataForDataLink(tool.getData(), dataLink, task.isRoot());
+									}
+
 									logger.debug("resolveToolDependencies(): found "+(parentData != null ? parentData.size() : null)+" possible parent params");
 									EList<Data> childData = new BasicEList<Data>();
 									if (childTool != null)
@@ -313,52 +322,64 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 											{
 												Entry<String, EList<Data>> e = it.next();
 												childData.addAll(dataLink.getMatchingDataFor(e.getValue(), GlobalConfig.getAllowedHandles(), true));
-												//ListIterator<Data> it1 = e.getValue().listIterator(e.getValue().size());
-												//while (it1.hasPrevious()){	}
 											}
-
-											//childData = getToolDataForDataLink(childTool.getData(), dataLink, true);
-											//for (EList<Data> curChildData : childTool.getData().values())
-												//childData.addAll(dataLink.getMatchingDataFor(curChildData, GlobalConfig.getAllowedHandles(), true));
 										}
 										catch (NoValidInOutDataException e)
 										{
-											e.printStackTrace();
-											//boolean noChildDataAvail = true;
+											GlobalVar.getLastErrorInfo().setTask(task);
+											GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+											getLogMessage().generateLogMsg(
+													GlobalConstants.LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_4,
+													Severity.ERROR,
+													Util.generateStringList(
+															"outgoing",
+															task.getUniqueString(), 
+															tool.getName(), 
+															dataLink.getUniqueString(true))
+											);
+											rc.setValue(false);
+											return false;
 										}
 										if (childData.isEmpty())
+										{
 											logger.warn("resolveToolDependencies(): no child tool data found.");
+										}
 									}
 									else if (!dataLink.isTerminal())
+									{
 										logger.error("resolveToolDependencies(): no child tool found."+" ("+specString+")");
+									}
 									
 									
 									// get the desired data matching both parent and child
 									logger.debug("resolveToolDependencies(): found "+(childData != null ? childData.size() : null)+" possible child params");
 									
-									//EList<Tuple<Data, Data>> matchingDataPairs = findMatchingData(parentData, childData, dataLink.getFormat());
-									      DataMatch dataMatch = matchParentAndChildData(parentData, childData);
-									      if (dataMatch == null)
-									    	  logger.error("resolveToolDependencies(): no datamatch object created.");
-									      if (dataMatch.isPipable())
-									    	  dataLink.setPipe(true);
-									      else
-									    	  dataLink.setPipe(false);
+									DataMatch dataMatch = matchParentAndChildData(parentData, childData);
+									if (dataMatch == null)
+									{
+										logger.error("resolveToolDependencies(): no datamatch object created.");
+									}
+									if (dataMatch.isPipable())
+										dataLink.setPipe(true);
+									else
+										dataLink.setPipe(false);
 									      
-									      Tuple<Data, Data> matchingData = new Tuple<Data, Data> (dataMatch.getParentData(), dataMatch.getChildData());
+									Tuple<Data, Data> matchingData = new Tuple<Data, Data> (dataMatch.getParentData(), dataMatch.getChildData());
 									
-									//if (matchingData == null)
-										//throw new NoValidInOutDataException();
-									//
 									if (matchingData.parent != null)
 									{
 										Data data = EcoreUtil.copy(matchingData.parent);
-										ResolvedParam rp = task.getResolvedCommand().getDataParamForDataPort(data.getPort(), true, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
+										ResolvedParam rp = task.getResolvedCommand().getDataParamForDataPort(
+												data.getPort(), 
+												true, 
+												GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
 										if (rp == null)
-											logger.error("no valid parameter found.");
+										{
+											logger.warn("resolveToolDependencies(): no valid parameter found.");
+										}
 										else
 										{
-											logger.debug(""+rp.renderToString());
+											logger.debug("resolveToolDependencies(): parameter resolved="+rp.renderToString());
 											data.setResolvedParam(rp);
 											if (dataLink.getPipe())
 												rp.setPipe(true);
@@ -368,16 +389,49 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 										
 									}
 									else
-										logger.error("Parent_NoValidInOutDataException");
-										//throw new NoValidInOutDataException();
+									{
+										logger.error("resolveToolDependencies(): Parent_NoValidInOutDataException");
+										GlobalVar.getLastErrorInfo().setTask(task);
+										GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+										getLogMessage().generateLogMsg(
+												GlobalConstants.LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_4,
+												Severity.ERROR,
+												Util.generateStringList(
+														"ingoing",
+														task.getUniqueString(), 
+														tool.getName(), 
+														dataLink.getUniqueString(true))
+										);
+										rc.setValue(false);
+										return false;
+									}
 									
 									if (matchingData.child != null)
 									{
 										Data data = EcoreUtil.copy(matchingData.child);
-										ResolvedParam rp = childTask.getResolvedCommand().getDataParamForDataPort(data.getPort(), false, GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
+										ResolvedParam rp = childTask.getResolvedCommand().getDataParamForDataPort(
+												data.getPort(), false, 
+												GlobalConstants.PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT);
 										
 										if (rp == null)
-											logger.error("no valid parameter found.");
+										{
+											logger.error("resolveToolDependencies(): no valid parameter found.");
+											GlobalVar.getLastErrorInfo().setTask(task);
+											GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+											GlobalVar.getLastErrorInfo().setDataPort(data.getPort());
+											getLogMessage().generateLogMsg(
+													GlobalConstants.LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_PARAMETER_5,
+													Severity.ERROR,
+													Util.generateStringList(
+															"outgoing",
+															task.getUniqueString(), 
+															tool.getName(), 
+															data.getPort().getName(),
+															data.getPort().getParameterName())
+											);
+											rc.setValue(false);
+											return false;
+										}
 										else
 										{
 											logger.debug(""+rp.renderToString());
@@ -389,7 +443,21 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 										childTask.getInputs().put(new Integer(dataLink.getId()).toString(), dataLink);
 									}
 									else
-										logger.error("Child_NoValidInOutDataException");
+									{
+										logger.info("resolveToolDependencies(): No valid outgoing data found for task "+task.getUniqueString());
+										GlobalVar.getLastErrorInfo().setTask(task);
+										GlobalVar.getLastErrorInfo().setDataLink(dataLink);
+										getLogMessage().generateLogMsg(
+												GlobalConstants.LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_4,
+												Severity.WARN,
+												Util.generateStringList(
+														"outgoing",
+														task.getUniqueString(),
+														tool.getName(),
+														dataLink.getUniqueString(true)) 
+										);
+										//rc.setValue(true);
+									}
 									
 									if (matchingData.parent != null)
 										dataLink.getInDataPort().setParameterName(matchingData.parent.getParameter().getEffectiveParentParameter(true).resolveName());
@@ -407,7 +475,7 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 									
 									if (!dataLink.isTerminal() && matchingData.child == null) //dataLink.getInDataPort().getParameterName() == null)
 									{
-										logger.error("resolveToolDependencies(): child parametername could not be resolved.");
+										logger.warn("resolveToolDependencies(): child parametername could not be resolved.");
 										DataLink parentDataLink = getFirstParentDataLink(task, task.getInDataPorts().get(0));
 										if (parentDataLink != null && parentDataLink.getDataResourceName() != null)
 										{
@@ -580,44 +648,35 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 										{
 											logger.error("resolveToolDependencies(): no input resource found/cannot process input data !");
 										}
-										
-									//}
-									//else
 									{
 										
 									}
-									//
-/*									
-									// read from catalog
-									
-									// generate uri from group and its data port
-									
-									*/
 									logger.debug("=================================================================================================================================");
 							
-								} catch (TaskNotFoundException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
+								} catch (TaskNotFoundException e) {
+									rc.setValue(false);
+									return false;
 								} catch (DataLinkNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									rc.setValue(false);
+									return false;
 								} catch (NoValidInOutDataException e) {
 									// TODO Auto-generated catch block
 									logger.error("failed to resolve tool "+tool.getName()+" task="+task.getUniqueString());
-									e.printStackTrace();
-									rcTraversal.add("NoValidInOutDataFoundException");
+									//e.printStackTrace();
+									//rcTraversal.add("NoValidInOutDataFoundException");
+									rc.setValue(false);
 									return false;
 								} catch (URISyntaxException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									rc.setValue(false);
+									return false;
 								}
 							}
 						}
 					}
 				}
-				catch (TaskNotFoundException e1) {
+				catch (TaskNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
 
 				return true;
@@ -630,11 +689,11 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 			
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 
-		if (rcTraversal.contains("NoValidInOutDataFoundException"))
+		//if (rcTraversal.contains("NoValidInOutDataFoundException"))
 			//throw new NoValidInOutDataException();
-			rc = false;
+			//rc = false;
 
-		return rc;
+		return rc.getValue();
 	}
 	
 	/**

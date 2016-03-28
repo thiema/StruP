@@ -6,12 +6,12 @@
  */
 package easyflow.tool;
 
-import easyflow.core.LogMessage;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.util.Tuple;
 import easyflow.data.Data;
 import easyflow.data.DataPort;
 import easyflow.traversal.TraversalChunk;
+import easyflow.util.LogMessage;
 import java.net.URI;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;

@@ -6,9 +6,9 @@
  */
 package easyflow.metadata.impl;
 
-import easyflow.core.Category;
+import easyflow.util.Category;
+import easyflow.util.UtilFactory;
 import easyflow.core.CoreFactory;
-import easyflow.core.LogMessage;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingInstance;
@@ -16,6 +16,7 @@ import easyflow.metadata.GroupingInstanceList;
 import easyflow.metadata.MetadataFactory;
 import easyflow.metadata.MetadataPackage;
 import easyflow.traversal.TraversalChunk;
+import easyflow.util.LogMessage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVarMetaData;
@@ -623,7 +624,7 @@ public class DefaultMetaDataImpl extends MinimalEObjectImpl.Container implements
 	public void initLogMessage() {
 		if (getLogMessage() == null)
 		{
-			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			setLogMessage(UtilFactory.eINSTANCE.createLogMessage());
 			getLogMessage().setCategory(Category.METADATA_DEFINITION);
 		}
 	}

@@ -6,10 +6,10 @@
  */
 package easyflow.ui;
 
-import easyflow.core.LogMessage;
 import easyflow.core.Workflow;
 import easyflow.metadata.IMetaData;
 import easyflow.tool.ToolDefinitions;
+import easyflow.util.LogMessage;
 import java.net.URI;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;

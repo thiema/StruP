@@ -1,18 +1,15 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
-
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
-import easyflow.core.Category;
+import easyflow.util.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.EasyflowTemplate;
-import easyflow.core.LogMessage;
 import easyflow.core.ParentTaskResult;
 import easyflow.core.DefaultWorkflowTemplate;
-import easyflow.core.Severity;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.core.Workflow;
 import easyflow.custom.exception.CellNotFoundException;
@@ -45,20 +42,19 @@ import easyflow.tool.InOutParameter;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolFactory;
 import easyflow.traversal.TraversalEvent;
+import easyflow.util.LogMessage;
 import easyflow.util.ReturnValue;
 import easyflow.util.UtilFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 import java.util.Stack;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.eclipse.emf.common.notify.Notification;
@@ -978,7 +974,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	public void initLogMessage() {
 		if (getLogMessage() == null)
 		{
-			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			setLogMessage(UtilFactory.eINSTANCE.createLogMessage());
 			getLogMessage().setCategory(Category.WORKFLOW);
 		}
 	}
@@ -2768,6 +2764,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * insert filter/merge tasks as necessary to resolve incompatible groupings
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
@@ -2822,36 +2819,31 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
 						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
-						Severity.ERROR, e,
-						null);
+						Severity.ERROR, e);
 				return false;
 			} catch (DataLinkNotFoundException e) {
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_DATALINK_NOT_FOUND_0, 
 						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
-						Severity.ERROR, e,
-						null);
+						Severity.ERROR, e);
 				return false;
 			} catch (DataPortNotFoundException e) {
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_DATAPORT_NOT_FOUND_0, 
 						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
-						Severity.ERROR, e,
-						null);
+						Severity.ERROR, e);
 				return false;
 			} catch (ToolNotFoundException e) {
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_TOOL_NOT_FOUND_0, 
 						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
-						Severity.ERROR, e,
-						null);
+						Severity.ERROR, e);
 				return false;
 			} catch (UtilityTaskNotFoundException e) {
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_UTILITY_TASK_NOT_FOUND_0, 
 						Category.INCOMPATIBLE_GROUPING_RESOLUTION,
-						Severity.ERROR, e,
-						null);
+						Severity.ERROR, e);
 				return false;
 			}
 		}
@@ -2870,8 +2862,8 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	
 	/**
 	 * <!-- begin-user-doc -->
+	 * insert preprocessing tasks (e.g. index, sort, ...) as defined in workflow template
 	 * <!-- end-user-doc -->
-	 * @throws DataLinkNotFoundException 
 	 * @generated not
 	 */
 	public boolean resolvePreprocessingTasks() {

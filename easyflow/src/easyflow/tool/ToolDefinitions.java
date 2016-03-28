@@ -6,7 +6,7 @@
  */
 package easyflow.tool;
 
-import easyflow.core.LogMessage;
+import easyflow.util.LogMessage;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import org.apache.log4j.Logger;

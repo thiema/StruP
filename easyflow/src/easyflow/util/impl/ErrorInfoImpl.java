@@ -1,21 +1,19 @@
 /**
  */
-package easyflow.core.impl;
+package easyflow.util.impl;
 
-import easyflow.core.Category;
-import easyflow.core.CorePackage;
-import easyflow.core.ErrorInfo;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.data.DataLink;
-
+import easyflow.data.DataPort;
+import easyflow.util.Category;
+import easyflow.util.ErrorInfo;
+import easyflow.util.UtilPackage;
 import java.lang.reflect.InvocationTargetException;
-
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -31,12 +29,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link easyflow.core.impl.ErrorInfoImpl#getTask <em>Task</em>}</li>
- *   <li>{@link easyflow.core.impl.ErrorInfoImpl#getDataLink <em>Data Link</em>}</li>
- *   <li>{@link easyflow.core.impl.ErrorInfoImpl#getInfo <em>Info</em>}</li>
- *   <li>{@link easyflow.core.impl.ErrorInfoImpl#isFinal <em>Final</em>}</li>
- *   <li>{@link easyflow.core.impl.ErrorInfoImpl#getCategory <em>Category</em>}</li>
- *   <li>{@link easyflow.core.impl.ErrorInfoImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#getTask <em>Task</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#getDataLink <em>Data Link</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#getDataPort <em>Data Port</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#getInfo <em>Info</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#isFinal <em>Final</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#getCategory <em>Category</em>}</li>
+ *   <li>{@link easyflow.util.impl.ErrorInfoImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,6 +61,16 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	 * @ordered
 	 */
 	protected DataLink dataLink;
+
+	/**
+	 * The cached value of the '{@link #getDataPort() <em>Data Port</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDataPort()
+	 * @generated
+	 * @ordered
+	 */
+	protected DataPort dataPort;
 
 	/**
 	 * The default value of the '{@link #getInfo() <em>Info</em>}' attribute.
@@ -111,7 +120,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Category CATEGORY_EDEFAULT = Category.PROJECT_CONFIGURATION;
+	protected static final Category CATEGORY_EDEFAULT = Category.NO_CATEGORY;
 
 	/**
 	 * The cached value of the '{@link #getCategory() <em>Category</em>}' attribute.
@@ -159,7 +168,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CorePackage.Literals.ERROR_INFO;
+		return UtilPackage.Literals.ERROR_INFO;
 	}
 
 	/**
@@ -173,7 +182,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 			task = (Task)eResolveProxy(oldTask);
 			if (task != oldTask) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.ERROR_INFO__TASK, oldTask, task));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UtilPackage.ERROR_INFO__TASK, oldTask, task));
 			}
 		}
 		return task;
@@ -197,7 +206,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 		Task oldTask = task;
 		task = newTask;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.ERROR_INFO__TASK, oldTask, task));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.ERROR_INFO__TASK, oldTask, task));
 	}
 
 	/**
@@ -211,7 +220,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 			dataLink = (DataLink)eResolveProxy(oldDataLink);
 			if (dataLink != oldDataLink) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CorePackage.ERROR_INFO__DATA_LINK, oldDataLink, dataLink));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UtilPackage.ERROR_INFO__DATA_LINK, oldDataLink, dataLink));
 			}
 		}
 		return dataLink;
@@ -235,7 +244,45 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 		DataLink oldDataLink = dataLink;
 		dataLink = newDataLink;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.ERROR_INFO__DATA_LINK, oldDataLink, dataLink));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.ERROR_INFO__DATA_LINK, oldDataLink, dataLink));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataPort getDataPort() {
+		if (dataPort != null && dataPort.eIsProxy()) {
+			InternalEObject oldDataPort = (InternalEObject)dataPort;
+			dataPort = (DataPort)eResolveProxy(oldDataPort);
+			if (dataPort != oldDataPort) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UtilPackage.ERROR_INFO__DATA_PORT, oldDataPort, dataPort));
+			}
+		}
+		return dataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataPort basicGetDataPort() {
+		return dataPort;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDataPort(DataPort newDataPort) {
+		DataPort oldDataPort = dataPort;
+		dataPort = newDataPort;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.ERROR_INFO__DATA_PORT, oldDataPort, dataPort));
 	}
 
 	/**
@@ -256,7 +303,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 		String oldInfo = info;
 		info = newInfo;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.ERROR_INFO__INFO, oldInfo, info));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.ERROR_INFO__INFO, oldInfo, info));
 	}
 
 	/**
@@ -277,7 +324,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 		boolean oldFinal = final_;
 		final_ = newFinal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.ERROR_INFO__FINAL, oldFinal, final_));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.ERROR_INFO__FINAL, oldFinal, final_));
 	}
 
 	/**
@@ -298,7 +345,7 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 		Category oldCategory = category;
 		category = newCategory == null ? CATEGORY_EDEFAULT : newCategory;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.ERROR_INFO__CATEGORY, oldCategory, category));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.ERROR_INFO__CATEGORY, oldCategory, category));
 	}
 
 	/**
@@ -379,19 +426,22 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CorePackage.ERROR_INFO__TASK:
+			case UtilPackage.ERROR_INFO__TASK:
 				if (resolve) return getTask();
 				return basicGetTask();
-			case CorePackage.ERROR_INFO__DATA_LINK:
+			case UtilPackage.ERROR_INFO__DATA_LINK:
 				if (resolve) return getDataLink();
 				return basicGetDataLink();
-			case CorePackage.ERROR_INFO__INFO:
+			case UtilPackage.ERROR_INFO__DATA_PORT:
+				if (resolve) return getDataPort();
+				return basicGetDataPort();
+			case UtilPackage.ERROR_INFO__INFO:
 				return getInfo();
-			case CorePackage.ERROR_INFO__FINAL:
+			case UtilPackage.ERROR_INFO__FINAL:
 				return isFinal();
-			case CorePackage.ERROR_INFO__CATEGORY:
+			case UtilPackage.ERROR_INFO__CATEGORY:
 				return getCategory();
-			case CorePackage.ERROR_INFO__LOGGER:
+			case UtilPackage.ERROR_INFO__LOGGER:
 				return getLogger();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -405,19 +455,22 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CorePackage.ERROR_INFO__TASK:
+			case UtilPackage.ERROR_INFO__TASK:
 				setTask((Task)newValue);
 				return;
-			case CorePackage.ERROR_INFO__DATA_LINK:
+			case UtilPackage.ERROR_INFO__DATA_LINK:
 				setDataLink((DataLink)newValue);
 				return;
-			case CorePackage.ERROR_INFO__INFO:
+			case UtilPackage.ERROR_INFO__DATA_PORT:
+				setDataPort((DataPort)newValue);
+				return;
+			case UtilPackage.ERROR_INFO__INFO:
 				setInfo((String)newValue);
 				return;
-			case CorePackage.ERROR_INFO__FINAL:
+			case UtilPackage.ERROR_INFO__FINAL:
 				setFinal((Boolean)newValue);
 				return;
-			case CorePackage.ERROR_INFO__CATEGORY:
+			case UtilPackage.ERROR_INFO__CATEGORY:
 				setCategory((Category)newValue);
 				return;
 		}
@@ -432,19 +485,22 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CorePackage.ERROR_INFO__TASK:
+			case UtilPackage.ERROR_INFO__TASK:
 				setTask((Task)null);
 				return;
-			case CorePackage.ERROR_INFO__DATA_LINK:
+			case UtilPackage.ERROR_INFO__DATA_LINK:
 				setDataLink((DataLink)null);
 				return;
-			case CorePackage.ERROR_INFO__INFO:
+			case UtilPackage.ERROR_INFO__DATA_PORT:
+				setDataPort((DataPort)null);
+				return;
+			case UtilPackage.ERROR_INFO__INFO:
 				setInfo(INFO_EDEFAULT);
 				return;
-			case CorePackage.ERROR_INFO__FINAL:
+			case UtilPackage.ERROR_INFO__FINAL:
 				setFinal(FINAL_EDEFAULT);
 				return;
-			case CorePackage.ERROR_INFO__CATEGORY:
+			case UtilPackage.ERROR_INFO__CATEGORY:
 				setCategory(CATEGORY_EDEFAULT);
 				return;
 		}
@@ -459,17 +515,19 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CorePackage.ERROR_INFO__TASK:
+			case UtilPackage.ERROR_INFO__TASK:
 				return task != null;
-			case CorePackage.ERROR_INFO__DATA_LINK:
+			case UtilPackage.ERROR_INFO__DATA_LINK:
 				return dataLink != null;
-			case CorePackage.ERROR_INFO__INFO:
+			case UtilPackage.ERROR_INFO__DATA_PORT:
+				return dataPort != null;
+			case UtilPackage.ERROR_INFO__INFO:
 				return INFO_EDEFAULT == null ? info != null : !INFO_EDEFAULT.equals(info);
-			case CorePackage.ERROR_INFO__FINAL:
+			case UtilPackage.ERROR_INFO__FINAL:
 				return final_ != FINAL_EDEFAULT;
-			case CorePackage.ERROR_INFO__CATEGORY:
+			case UtilPackage.ERROR_INFO__CATEGORY:
 				return category != CATEGORY_EDEFAULT;
-			case CorePackage.ERROR_INFO__LOGGER:
+			case UtilPackage.ERROR_INFO__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
@@ -483,10 +541,10 @@ public class ErrorInfoImpl extends MinimalEObjectImpl.Container implements Error
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case CorePackage.ERROR_INFO___CLEAR:
+			case UtilPackage.ERROR_INFO___CLEAR:
 				clear();
 				return null;
-			case CorePackage.ERROR_INFO___PRINT:
+			case UtilPackage.ERROR_INFO___PRINT:
 				print();
 				return null;
 		}

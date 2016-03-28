@@ -17,12 +17,6 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
-import com.mxgraph.model.mxICell;
-
-import easyflow.core.Category;
-import easyflow.core.CoreFactory;
-import easyflow.core.ErrorControl;
-import easyflow.core.Severity;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.URIUtil;
@@ -170,10 +164,7 @@ public class GlobalConfig {
 
 	private static final String CONFIG_TOOL_DEBUG_TASKS_PARAM_NAME = "debug_tasks";
 	
-
 	private static       JSONObject           jsonConfig       = null;
-	
-	private EMap<String, ErrorControl> errorControlMap = new BasicEMap<String, ErrorControl>();
 	
 	
 	

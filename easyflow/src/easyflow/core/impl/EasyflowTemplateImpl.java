@@ -12,18 +12,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import easyflow.core.Category;
+import easyflow.util.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
 import easyflow.core.EasyflowTemplate;
 import easyflow.core.IWorkflowTemplate;
-import easyflow.core.LogMessage;
-import easyflow.core.Severity;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.Util;
+import easyflow.util.LogMessage;
+import easyflow.util.UtilFactory;
 
 import java.util.Collection;
 
@@ -349,7 +350,7 @@ public class EasyflowTemplateImpl extends MinimalEObjectImpl.Container implement
 	public void initLogMessage() {
 		if (getLogMessage() == null)
 		{
-			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			setLogMessage(UtilFactory.eINSTANCE.createLogMessage());
 			getLogMessage().setCategory(Category.WORKFLOW_TEMPLATE_PARSING);
 		}
 	}

@@ -116,24 +116,6 @@ public interface CoreFactory extends EFactory {
 	Condition createCondition();
 
 	/**
-	 * Returns a new object of class '<em>Log Message</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Log Message</em>'.
-	 * @generated
-	 */
-	LogMessage createLogMessage();
-
-	/**
-	 * Returns a new object of class '<em>Error Info</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Error Info</em>'.
-	 * @generated
-	 */
-	ErrorInfo createErrorInfo();
-
-	/**
 	 * Returns a new object of class '<em>Tool Match</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

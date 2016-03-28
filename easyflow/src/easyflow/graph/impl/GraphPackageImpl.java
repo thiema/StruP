@@ -267,7 +267,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 
 		// Obtain other dependent packages
 		JgraphxPackage theJgraphxPackage = (JgraphxPackage)EPackage.Registry.INSTANCE.getEPackage(JgraphxPackage.eNS_URI);
-		CorePackage theCorePackage = (CorePackage)EPackage.Registry.INSTANCE.getEPackage(CorePackage.eNS_URI);
+		UtilPackage theUtilPackage = (UtilPackage)EPackage.Registry.INSTANCE.getEPackage(UtilPackage.eNS_URI);
 
 		// Add subpackages
 		getESubpackages().add(theJgraphxPackage);
@@ -283,10 +283,10 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEClass(iGraphEClass, IGraph.class, "IGraph", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		EOperation op = initEOperation(getIGraph__InitLogMessage__Category(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theCorePackage.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theUtilPackage.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(defaultGraphEClass, DefaultGraph.class, "DefaultGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDefaultGraph_LogMessage(), theCorePackage.getLogMessage(), null, "logMessage", null, 0, 1, DefaultGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDefaultGraph_LogMessage(), theUtilPackage.getLogMessage(), null, "logMessage", null, 0, 1, DefaultGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //GraphPackageImpl

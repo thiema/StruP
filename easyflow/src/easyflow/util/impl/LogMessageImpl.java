@@ -4,16 +4,15 @@
  *
  * $Id$
  */
-package easyflow.core.impl;
+package easyflow.util.impl;
 
-import easyflow.core.Category;
-import easyflow.core.CorePackage;
-import easyflow.core.ErrorControl;
-import easyflow.core.LogMessage;
-import easyflow.core.Severity;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.Util;
+import easyflow.util.Category;
+import easyflow.util.LogMessage;
+import easyflow.util.Severity;
+import easyflow.util.UtilPackage;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -33,11 +32,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link easyflow.core.impl.LogMessageImpl#getName <em>Name</em>}</li>
- *   <li>{@link easyflow.core.impl.LogMessageImpl#getLogMsg <em>Log Msg</em>}</li>
- *   <li>{@link easyflow.core.impl.LogMessageImpl#getCategory <em>Category</em>}</li>
- *   <li>{@link easyflow.core.impl.LogMessageImpl#getHelpMsg <em>Help Msg</em>}</li>
- *   <li>{@link easyflow.core.impl.LogMessageImpl#getLogger <em>Logger</em>}</li>
+ *   <li>{@link easyflow.util.impl.LogMessageImpl#getName <em>Name</em>}</li>
+ *   <li>{@link easyflow.util.impl.LogMessageImpl#getLogMsg <em>Log Msg</em>}</li>
+ *   <li>{@link easyflow.util.impl.LogMessageImpl#getCategory <em>Category</em>}</li>
+ *   <li>{@link easyflow.util.impl.LogMessageImpl#getHelpMsg <em>Help Msg</em>}</li>
+ *   <li>{@link easyflow.util.impl.LogMessageImpl#getLogger <em>Logger</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,7 +91,7 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Category CATEGORY_EDEFAULT = Category.PROJECT_CONFIGURATION;
+	protected static final Category CATEGORY_EDEFAULT = Category.NO_CATEGORY;
 
 	/**
 	 * The cached value of the '{@link #getCategory() <em>Category</em>}' attribute.
@@ -132,7 +131,7 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	 * @generated not
 	 * @ordered
 	 */
-	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(ErrorControl.class);
+	protected static final Logger LOGGER_EDEFAULT = Logger.getLogger(LogMessage.class);
 
 	/**
 	 * The cached value of the '{@link #getLogger() <em>Logger</em>}' attribute.
@@ -160,7 +159,7 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return CorePackage.Literals.LOG_MESSAGE;
+		return UtilPackage.Literals.LOG_MESSAGE;
 	}
 
 	/**
@@ -181,7 +180,7 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.LOG_MESSAGE__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.LOG_MESSAGE__NAME, oldName, name));
 	}
 
 	/**
@@ -202,7 +201,7 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 		String oldLogMsg = logMsg;
 		logMsg = newLogMsg;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.LOG_MESSAGE__LOG_MSG, oldLogMsg, logMsg));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.LOG_MESSAGE__LOG_MSG, oldLogMsg, logMsg));
 	}
 
 	/**
@@ -223,9 +222,9 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 		Category oldCategory = category;
 		category = newCategory == null ? CATEGORY_EDEFAULT : newCategory;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.LOG_MESSAGE__CATEGORY, oldCategory, category));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.LOG_MESSAGE__CATEGORY, oldCategory, category));
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -244,7 +243,7 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 		String oldHelpMsg = helpMsg;
 		helpMsg = newHelpMsg;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.LOG_MESSAGE__HELP_MSG, oldHelpMsg, helpMsg));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.LOG_MESSAGE__HELP_MSG, oldHelpMsg, helpMsg));
 	}
 
 	/**
@@ -462,20 +461,31 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String generateLogMsg(String errorTpl, Category category, Severity severity, Exception exception) {
+		if (GlobalVar.isDevloperMode())
+			exception.printStackTrace();
+		return generateLogMsg(errorTpl, category, severity, (String)null);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CorePackage.LOG_MESSAGE__NAME:
+			case UtilPackage.LOG_MESSAGE__NAME:
 				return getName();
-			case CorePackage.LOG_MESSAGE__LOG_MSG:
+			case UtilPackage.LOG_MESSAGE__LOG_MSG:
 				return getLogMsg();
-			case CorePackage.LOG_MESSAGE__CATEGORY:
+			case UtilPackage.LOG_MESSAGE__CATEGORY:
 				return getCategory();
-			case CorePackage.LOG_MESSAGE__HELP_MSG:
+			case UtilPackage.LOG_MESSAGE__HELP_MSG:
 				return getHelpMsg();
-			case CorePackage.LOG_MESSAGE__LOGGER:
+			case UtilPackage.LOG_MESSAGE__LOGGER:
 				return getLogger();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -490,16 +500,16 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CorePackage.LOG_MESSAGE__NAME:
+			case UtilPackage.LOG_MESSAGE__NAME:
 				setName((String)newValue);
 				return;
-			case CorePackage.LOG_MESSAGE__LOG_MSG:
+			case UtilPackage.LOG_MESSAGE__LOG_MSG:
 				setLogMsg((String)newValue);
 				return;
-			case CorePackage.LOG_MESSAGE__CATEGORY:
+			case UtilPackage.LOG_MESSAGE__CATEGORY:
 				setCategory((Category)newValue);
 				return;
-			case CorePackage.LOG_MESSAGE__HELP_MSG:
+			case UtilPackage.LOG_MESSAGE__HELP_MSG:
 				setHelpMsg((String)newValue);
 				return;
 		}
@@ -514,16 +524,16 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CorePackage.LOG_MESSAGE__NAME:
+			case UtilPackage.LOG_MESSAGE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case CorePackage.LOG_MESSAGE__LOG_MSG:
+			case UtilPackage.LOG_MESSAGE__LOG_MSG:
 				setLogMsg(LOG_MSG_EDEFAULT);
 				return;
-			case CorePackage.LOG_MESSAGE__CATEGORY:
+			case UtilPackage.LOG_MESSAGE__CATEGORY:
 				setCategory(CATEGORY_EDEFAULT);
 				return;
-			case CorePackage.LOG_MESSAGE__HELP_MSG:
+			case UtilPackage.LOG_MESSAGE__HELP_MSG:
 				setHelpMsg(HELP_MSG_EDEFAULT);
 				return;
 		}
@@ -538,15 +548,15 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CorePackage.LOG_MESSAGE__NAME:
+			case UtilPackage.LOG_MESSAGE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case CorePackage.LOG_MESSAGE__LOG_MSG:
+			case UtilPackage.LOG_MESSAGE__LOG_MSG:
 				return LOG_MSG_EDEFAULT == null ? logMsg != null : !LOG_MSG_EDEFAULT.equals(logMsg);
-			case CorePackage.LOG_MESSAGE__CATEGORY:
+			case UtilPackage.LOG_MESSAGE__CATEGORY:
 				return category != CATEGORY_EDEFAULT;
-			case CorePackage.LOG_MESSAGE__HELP_MSG:
+			case UtilPackage.LOG_MESSAGE__HELP_MSG:
 				return HELP_MSG_EDEFAULT == null ? helpMsg != null : !HELP_MSG_EDEFAULT.equals(helpMsg);
-			case CorePackage.LOG_MESSAGE__LOGGER:
+			case UtilPackage.LOG_MESSAGE__LOGGER:
 				return LOGGER_EDEFAULT == null ? logger != null : !LOGGER_EDEFAULT.equals(logger);
 		}
 		return super.eIsSet(featureID);
@@ -561,26 +571,28 @@ public class LogMessageImpl extends MinimalEObjectImpl.Container implements LogM
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_ELIST:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_ELIST:
 				return generateLogMsg((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (EList<String>)arguments.get(3));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_ELIST:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_ELIST:
 				return generateLogMsg((String)arguments.get(0), (Severity)arguments.get(1), (EList<String>)arguments.get(2));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_ELIST:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_ELIST:
 				return generateLogMsg((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (String)arguments.get(3), (EList<String>)arguments.get(4));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_ELIST:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_ELIST:
 				return generateLogMsg((String)arguments.get(0), (Severity)arguments.get(1), (String)arguments.get(2), (EList<String>)arguments.get(3));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING:
 				return generateLogMsg((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (String)arguments.get(3));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING:
 				return generateLogMsg((String)arguments.get(0), (Severity)arguments.get(1), (String)arguments.get(2));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_STRING:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_STRING_STRING:
 				return generateLogMsg((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (String)arguments.get(3), (String)arguments.get(4));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY_STRING_STRING:
 				return generateLogMsg((String)arguments.get(0), (Severity)arguments.get(1), (String)arguments.get(2), (String)arguments.get(3));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_SEVERITY:
 				return generateLogMsg((String)arguments.get(0), (Severity)arguments.get(1));
-			case CorePackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_EXCEPTION_ELIST:
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_EXCEPTION_ELIST:
 				return generateLogMsg((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (Exception)arguments.get(3), (EList<String>)arguments.get(4));
+			case UtilPackage.LOG_MESSAGE___GENERATE_LOG_MSG__STRING_CATEGORY_SEVERITY_EXCEPTION:
+				return generateLogMsg((String)arguments.get(0), (Category)arguments.get(1), (Severity)arguments.get(2), (Exception)arguments.get(3));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

@@ -6,9 +6,7 @@
  */
 package easyflow.tool.impl;
 
-import easyflow.core.Category;
-import easyflow.core.CoreFactory;
-import easyflow.core.LogMessage;
+import easyflow.util.Category;
 import easyflow.custom.exception.DataPortNotFoundException;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
@@ -26,6 +24,8 @@ import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
+import easyflow.util.LogMessage;
+import easyflow.util.UtilFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDataListMapImpl;
 import easyflow.util.maps.impl.StringToResolvedParamMapImpl;
@@ -1159,7 +1159,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	public void initLogMessage() {
 		if (getLogMessage() == null)
 		{
-			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			setLogMessage(UtilFactory.eINSTANCE.createLogMessage());
 			getLogMessage().setCategory(Category.TOOL_DEFINITION);
 		}
 	}
@@ -1238,6 +1238,8 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 */
 	public boolean canProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
 		
+		if (dataPort == null)
+			throw new DataPortNotFoundException();
 		Data matchingData = getDataForDataPort(dataPort);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();

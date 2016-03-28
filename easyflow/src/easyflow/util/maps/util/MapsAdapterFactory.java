@@ -7,7 +7,6 @@
 package easyflow.util.maps.util;
 
 import com.mxgraph.model.mxICell;
-import easyflow.core.LogMessage;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.data.Data;
@@ -26,6 +25,7 @@ import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 import easyflow.ui.DefaultProject;
+import easyflow.util.LogMessage;
 import easyflow.util.maps.*;
 import java.net.URI;
 import java.util.Map;

@@ -34,12 +34,11 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import easyflow.core.Category;
+import easyflow.util.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
-import easyflow.core.LogMessage;
 import easyflow.core.PreprocessingTask;
-import easyflow.core.Severity;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.core.ToolMatch;
 import easyflow.custom.exception.DataLinkNotFoundException;
@@ -75,6 +74,8 @@ import easyflow.traversal.TraversalCriterion;
 import easyflow.traversal.TraversalEvent;
 import easyflow.traversal.TraversalFactory;
 import easyflow.traversal.TraversalOperation;
+import easyflow.util.LogMessage;
+import easyflow.util.UtilFactory;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToChunksMapImpl;
 import easyflow.util.maps.impl.StringToDataLinkMapImpl;
@@ -1444,7 +1445,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 
 		if (getLogMessage() == null)
 		{
-			setLogMessage(CoreFactory.eINSTANCE.createLogMessage());
+			setLogMessage(UtilFactory.eINSTANCE.createLogMessage());
 			getLogMessage().setCategory(Category.TASK_DEFINITION);
 		}
 	}

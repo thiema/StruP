@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import easyflow.core.CoreFactory;
-import easyflow.core.Severity;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.TaskNotFoundException;
@@ -439,7 +439,7 @@ public class SubGraphImpl extends DefaultGraphImpl implements SubGraph {
 		//memMap.put(, false);
 		memMap.put(MERGE_TASK_REACHED, false);
 		//memMap.put(TERMINAL_EDGE_REACHED, false);
-		returnCell.setEobject(null);
+		returnCell.setObject(null);
 		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_SUBGRAPH_COMPUTE_START_1, 
 				Severity.DEBUG, 
 				Util.generateStringList(Util.traversalEvent2String(traversalEvent)));

@@ -22,6 +22,7 @@ import easyflow.tool.Rule;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
+import easyflow.util.LogMessage;
 import java.net.URI;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;

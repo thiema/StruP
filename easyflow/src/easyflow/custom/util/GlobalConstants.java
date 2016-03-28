@@ -32,6 +32,9 @@ public class GlobalConstants {
 
 	public static final String BOOLEAN_TRUE_VALUE = "true";
 	public static final String BOOLEAN_FALSE_VALUE = "false";
+	
+	public static final String UTILITY_TASK_FILTER_NAME = "filter";
+	public static final String UTILITY_TASK_MERGE_NAME = "merge";
 
 	//
 	public static final String ABSTRACT_NODES_RESOLVED = "abstractNodesResovled";
@@ -212,42 +215,42 @@ public class GlobalConstants {
 	public static final String LOG_MSG_WORKFLOW_TEMPLATE_NOT_SPECIFIED_0 = "No workflow template provided.";
 	public static final String LOG_MSG_TOOL_DEFINITION_NOT_SPECIFIED_0 = "No tool definition provided.";
 
-	public static final String LOG_MSG_CONFIGURATION_SECTION_MISSING_2 = "Section \"$VAL\" missing in configuration file \"$VAL\"";
-	public static final String LOG_MSG_CONFIGURATION_PARAM_MISSING_1 = "Configuration file does not contain parameter \"$VAL\"";
+	public static final String LOG_MSG_CONFIGURATION_SECTION_MISSING_2 = "Section \"$VAL\" missing in configuration file \"$VAL\".";
+	public static final String LOG_MSG_CONFIGURATION_PARAM_MISSING_1 = "Configuration file does not contain parameter \"$VAL\".";
 
 	public static final String LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_0 = "No valid data handle provided.";
 	// public static final String
 	// LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG =
 	// "Configuration does not provide a valid data handle.";
 
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2 = "Failed to read workflow template \"$VAL\" with error: \"$VAL\"";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2 = "Failed to read workflow template \"$VAL\" with error: \"$VAL\".";
 
-	public static final String LOG_MSG_GENERAL_IO_1 = "IO Error: \"$VAL\"";
+	public static final String LOG_MSG_GENERAL_IO_1 = "IO Error: \"$VAL\".";
 	public static final String LOG_MSG_GENERAL_IO_2 = "IO Error: \"$VAL\". Filename: \"$VAL\"";
 
 	public static final String LOG_MSG_CONFIGURATION_SECTION_MISSING_1 = "Section \"$VAL\" missing in configuration.";
 
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_INVALID_TASK_2 = "Invalid task definition in workflow template detected: \"$VAL\". Detailed Error description: \"$VAL\"";
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_INVALID_LINE_AT_2 = "Unable to process line \"$VAL\". Error: \"$VAL\"";
-	public static final String LOG_MSG_METADATA_INVALID_METADATA_2 = "Invalid metadata definition detected: \"$VAL\". Detailed Error description: \"$VAL\"";
-	public static final String LOG_MSG_METADATA_INVALID_LINE_AT_2 = "Unable to process line \"$VAL\". Error: \"$VAL\"";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_INVALID_TASK_2 = "Invalid task definition in workflow template detected: \"$VAL\". Detailed Error description: \"$VAL\".";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_INVALID_LINE_AT_2 = "Unable to process line \"$VAL\". Error: \"$VAL\".";
+	public static final String LOG_MSG_METADATA_INVALID_METADATA_2 = "Invalid metadata definition detected: \"$VAL\". Detailed Error description: \"$VAL\".";
+	public static final String LOG_MSG_METADATA_INVALID_LINE_AT_2 = "Unable to process line \"$VAL\". Error: \"$VAL\".";
 	public static final String LOG_MSG_GENERIC_1 = "$VAL";
-	public static final String LOG_MSG_METADATA_FAILED_TO_READ_2 = "Failed to read metadata \"$VAL\" with error: \"$VAL\"";
-	public static final String LOG_MSG_TOOL_DEFINITION_FAILED_TO_VALIDATE_1 = "Failed to validate Tool definition from file \"$VAL\"";
-	public static final String LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2 = "Failed to read tool definition from file \"$VAL\". Error: \"$VAL\"";
-	public static final String LOG_MSG_TOOL_DEFINITION_FAILED_TO_PARSE_2 = "Unable to parse tool definition from file \"$VAL\". Error \"$VAL\"";
-	public static final String LOG_MSG_CREATE_URI_3 = "Unable to create URI from parts: \"$VAL\" and \"$VAL\". Error: \"$VAL\"";
-	public static final String LOG_MSG_FAILED_TO_CREATE_JSON_OBJECT_2 = "Failed to create JSON Object from JSON File \"$VAL\" for section \"$VAL\"";
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_AT_LINE_3 = "Failed to read workflow template \"$VAL\" at line \"$VAL\" with error: \"$VAL\"";
+	public static final String LOG_MSG_METADATA_FAILED_TO_READ_2 = "Failed to read metadata \"$VAL\" with error: \"$VAL\".";
+	public static final String LOG_MSG_TOOL_DEFINITION_FAILED_TO_VALIDATE_1 = "Failed to validate Tool definition from file \"$VAL\".";
+	public static final String LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2 = "Failed to read tool definition from file \"$VAL\". Error: \"$VAL\".";
+	public static final String LOG_MSG_TOOL_DEFINITION_FAILED_TO_PARSE_2 = "Unable to parse tool definition from file \"$VAL\". Error \"$VAL\".";
+	public static final String LOG_MSG_CREATE_URI_3 = "Unable to create URI from parts: \"$VAL\" and \"$VAL\". Error: \"$VAL\".";
+	public static final String LOG_MSG_FAILED_TO_CREATE_JSON_OBJECT_2 = "Failed to create JSON Object from JSON File \"$VAL\" for section \"$VAL\".";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_AT_LINE_3 = "Failed to read workflow template \"$VAL\" at line \"$VAL\" with error: \"$VAL\".";
 
-	public static final String LOG_MSG_TOOL_DEFINITION_NOT_FOUND_FOR_TASK_2 = "Could not find definition for tool \"$VAL\" of task \"$VAL\"";
+	public static final String LOG_MSG_TOOL_DEFINITION_NOT_FOUND_FOR_TASK_2 = "Could not find definition for tool \"$VAL\" of task \"$VAL\".";
 
 	public static final String LOG_MSG_TOOL_DEFINITION_PKG_NAME_DOES_NOT_MATCH_NAME_IN_WORKFLOW_4 = "The package name \"$VAL\" of tool \"$VAL\" does not match "
 			+ "the package name \"$VAL\" as defined in workflow for task \"$VAL\".";
 
 	public static final String LOG_MSG_ABSTRACT_GRAPH_LINK_TASK_TO_ROOT_2 = "Could not find matching Dataport for task \"$VAL\" (Dataport=\"$VAL\"). Link to root node.";
 
-	public static final String LOG_MSG_ABSTRACT_GRAPH_NO_IMPLEMENTING_TOOL_FOR_TASK_1 = "Could not find tool that implements all Dataports for Task \"$VAL\"";
+	public static final String LOG_MSG_ABSTRACT_GRAPH_NO_IMPLEMENTING_TOOL_FOR_TASK_1 = "Could not find tool that implements all Dataports for Task \"$VAL\".";
 
 	public static final String LOG_MSG_ABSTRACT_GRAPH_NUM_VERTEX_CREATED_1 = "$VAL vertices created.";
 
@@ -279,7 +282,7 @@ public class GlobalConstants {
 
 	public static final String LOG_MSG_APPLY_TRAVERSAL_EVENT_COPY_GRAPH_NO_VERTICES_COPIED_0 = "No vertices selected.";
 
-	public static final String LOG_MSG_WORKFLOW_PROCESS_NUM_TRAVERSAL_EVENTS_2 = "Process $VAL traversal events of type \"$VAL\"";
+	public static final String LOG_MSG_WORKFLOW_PROCESS_NUM_TRAVERSAL_EVENTS_2 = "Process $VAL traversal events of type \"$VAL\".";
 
 	public static final String LOG_MSG_TASK_NOT_FOUND_EXCEPTION_0 = "Task not found for vertex.";
 
@@ -304,7 +307,7 @@ public class GlobalConstants {
 
 	public static final String LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_ANALYSIS_TYPE_3 = "No Utility Task found for Dataport $VAL and Task $VAL and Analysis type $VAL.";
 
-	public static final String LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_UTILLITY_TASK_4 = "Could not find Utility Task $VAL to resolve Datalink \"$VAL\" "
+	public static final String LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_UTILLITY_TASK_4 = "Could not find Utility Task $VAL to resolve Datalink \"$VAL\"."
 			+ "between \"$VAL\" and \"$VAL\".";
 
 	public static final String LOG_MSG_TASK_NOT_FOUND_0 = "Could not find Task.";
@@ -321,10 +324,20 @@ public class GlobalConstants {
 
 	public static final String LOG_MSG_INVALID_DATA_PORT_FOUND_0 = "Invalid Dataport found.";
 
-	public static String LOG_MSG_UTILITY_ADD_UTILITY_TASK_3 = "Add utility task \"$VAL\" for task \"$VAL\" and datalink \"$VAL\".";
+	public static final String LOG_MSG_UTILITY_ADD_UTILITY_TASK_3 = "Add utility task \"$VAL\" for task \"$VAL\" and datalink \"$VAL\".";
 
-	public static String LOG_MSG_WORKFLOW_RESOLVE_INCOMPATIBLE_GROUPING_FOR_TASK_1 = "Resolve incompatible grouping for task \"$VAL\".";
+	public static final String LOG_MSG_WORKFLOW_RESOLVE_INCOMPATIBLE_GROUPING_FOR_TASK_1 = "Resolve incompatible grouping for task \"$VAL\".";
 
-	public static String LOG_MSG_WORKFLOW_FOUND_NUM_INCOMPATIBLE_GROUPINGS_1 = "Found $VAL incompatible groupings.";
+	public static final String LOG_MSG_WORKFLOW_FOUND_NUM_INCOMPATIBLE_GROUPINGS_1 = "Found $VAL incompatible groupings.";
+
+	public static final String LOG_MSG_UTILITY_MERGE_TASKS_3 = "Add merge \"$VAL\" for [$VAL] and task \"$VAL\".";
+
+	public static final int UTILITY_TASK_DO_NOT_FILTER = 0x1000;
+
+	public static final int UTILITY_TASK_DO_NOT_MERGE = 0x2000;
+
+	public static final String LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_4 = "Failed to retrieve $VAL data for task \"$VAL\", tool \"$VAL\" and datalink \"$VAL\".";
+
+	public static final String LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_PARAMETER_5 = "Failed to retrieve data parameter name for task \"$VAL\", tool \"$VAL\", data port \"$VAL\", parameter \"$VAL\".";	
 
 }

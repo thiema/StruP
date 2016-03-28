@@ -5,12 +5,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-import javax.swing.text.MutableAttributeSet;
+
 import javax.swing.text.Style;
 
 import org.apache.commons.jexl2.JexlEngine;
@@ -19,20 +18,21 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
-import com.mxgraph.model.mxICell;
+
 
 import easyflow.data.DataLink;
-import easyflow.core.Category;
-import easyflow.core.CoreFactory;
-import easyflow.core.ErrorInfo;
-import easyflow.core.LogMsgOutputMode;
-import easyflow.core.Severity;
+import easyflow.util.Category;
+
+import easyflow.util.ErrorInfo;
+import easyflow.util.LogMsgOutputMode;
+import easyflow.util.UtilFactory;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowGraphEditor;
 import easyflow.metadata.DefaultMetaData;
-import easyflow.traversal.TraversalChunk;
+
 import easyflow.ui.DefaultProject;
 
 public class GlobalVar {
@@ -42,7 +42,7 @@ public class GlobalVar {
 	private static Map<String, Object> defaultVertexStyle = new HashMap<String, Object>();
 	
 	//private static String      lastErrorString = null;
-	private static ErrorInfo   lastErrorInfo   = CoreFactory.eINSTANCE.createErrorInfo();
+	private static ErrorInfo   lastErrorInfo   = UtilFactory.eINSTANCE.createErrorInfo();
 	
 	
 	public static        String            executionSystemFileName = null;

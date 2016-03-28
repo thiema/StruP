@@ -172,7 +172,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="executionSystem" eType="#//execution/IExecutionSystem"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="currentRule" eType="#//tool/Rule"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="jgraph" eType="#//graph/jgraphx/Graph"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Task">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -495,7 +495,7 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="staticParams" upperBound="-1"
           eType="#//util/maps/StringToStringMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//tool/Rule"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PreprocessingTask">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -571,7 +571,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilTaskReader" eType="#//BufferedReader"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           transient="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="utilTaskFileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
@@ -626,120 +626,6 @@
           upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="LogMessage">
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="category" eType="#//core/Category"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="category" eType="#//core/Category"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="category" eType="#//core/Category"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="category" eType="#//core/Category"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-      </eOperations>
-      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="category" eType="#//core/Category"/>
-        <eParameters name="severity" eType="#//core/Severity"/>
-        <eParameters name="exception" eType="#//Exception"/>
-        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eOperations>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//core/Category"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
-          changeable="false" transient="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EClass" name="ErrorInfo">
-      <eOperations name="clear"/>
-      <eOperations name="print"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//core/Task"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="dataLink" eType="#//data/DataLink"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="info" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-          defaultValueLiteral="false"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//core/Category"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
-          changeable="false" transient="true"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EEnum" name="Severity">
-      <eLiterals name="FATAL"/>
-      <eLiterals name="ERROR" value="1"/>
-      <eLiterals name="WARN" value="2"/>
-      <eLiterals name="INFO" value="3" literal="INFO"/>
-      <eLiterals name="DEBUG" value="4"/>
-      <eLiterals name="TRACE" value="5"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EEnum" name="Category">
-      <eLiterals name="NO_CATEGORY"/>
-      <eLiterals name="PROJECT_CONFIGURATION" value="10"/>
-      <eLiterals name="METADATA_DEFINITION" value="15"/>
-      <eLiterals name="TASK_DEFINITION" value="16"/>
-      <eLiterals name="TOOL_DEFINITION" value="17" literal="TOOL_DEFINITION"/>
-      <eLiterals name="WORKFLOW" value="20" literal="WORKFLOW"/>
-      <eLiterals name="WORKFLOW_TEMPLATE_PARSING" value="25"/>
-      <eLiterals name="ABSTRACT_WORKFLOW_GENERATION" value="30"/>
-      <eLiterals name="TRAVERSAL_EVENT_CREATION" value="33"/>
-      <eLiterals name="SUBGRAPH_CREATION" value="35" literal="SUBGRAPH_CREATION"/>
-      <eLiterals name="TRAVERSAL_EVENT_RESOLUTION" value="40" literal="TRAVERSAL_EVENT_RESOLUTION"/>
-      <eLiterals name="DATA_GROUPING" value="41" literal="DATA_GROUPING"/>
-      <eLiterals name="PARAMETER_GROUPING" value="42"/>
-      <eLiterals name="UTILITY_TASK_RESOLUTION" value="50"/>
-      <eLiterals name="INCOMPATIBLE_GROUPING_RESOLUTION" value="51"/>
-      <eLiterals name="TOOL_RESOLUTION" value="60"/>
-      <eLiterals name="EXECUTION_WORKFLOW_GENERATION" value="70"/>
-      <eLiterals name="GRAPH_UTIL" value="200" literal="GRAPH_UTIL"/>
-      <eLiterals name="UTIL" value="300"/>
-    </eClassifiers>
-    <eClassifiers xsi:type="ecore:EEnum" name="LogMsgOutputMode">
-      <eLiterals name="SILENT"/>
-      <eLiterals name="CONSOLE" value="1"/>
-      <eLiterals name="GUI" value="2"/>
-      <eLiterals name="ALL" value="5"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="ui" nsURI="http:///de/thiema/easyflow/ui/easyflow.core/1.0.0"
@@ -833,18 +719,18 @@
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
           defaultValueLiteral=""/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="configMetadataFile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="graph" nsURI="http:///de/thiema/easyflow/graph/easyflow.core/1.0.0"
       nsPrefix="easyflow">
     <eClassifiers xsi:type="ecore:EClass" name="IGraph" abstract="true" interface="true">
       <eOperations name="initLogMessage">
-        <eParameters name="category" eType="#//core/Category"/>
+        <eParameters name="category" eType="#//util/Category"/>
       </eOperations>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="DefaultGraph" eSuperTypes="#//graph/IGraph">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
     <eSubpackages name="jgraphx" nsURI="http:///de/thiema/easyflow/graph/jgraphx/easyflow.core/1.0.0"
         nsPrefix="easyflow">
@@ -1141,7 +1027,7 @@
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
           eType="#//util/maps/StringToDocumentPropertiesMap" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IToolElement" abstract="true" interface="true">
       <eOperations name="renderToString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -1271,7 +1157,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="root" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="resolveUriMap" upperBound="-1"
           eType="#//util/maps/StringToURIMap" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eOperations name="getArgKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -1673,7 +1559,7 @@
           eType="#//util/maps/StringToStringMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="groupingProps" upperBound="-1"
           eType="#//util/maps/StringToStringMap" containment="true"/>
-      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//core/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IProjectMetaData" abstract="true"
         interface="true">
@@ -1823,9 +1709,138 @@
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="util" nsURI="http:///de/thiema/easyflow/util/1.0.0" nsPrefix="easyflow">
-    <eClassifiers xsi:type="ecore:EClass" name="ReturnValue">
-      <eStructuralFeatures xsi:type="ecore:EReference" name="eobject" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IReturnValue" abstract="true" interface="true">
+      <eOperations name="isEmpty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ReturnValue" eSuperTypes="#//util/IReturnValue">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="object" eType="#//Object"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ReturnValueInteger" eSuperTypes="#//util/IReturnValue">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ReturnValueBoolean" eSuperTypes="#//util/IReturnValue">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LogMessage">
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//util/Category"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//util/Category"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//util/Category"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//util/Category"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="errorVar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//util/Category"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="exception" eType="#//Exception"/>
+        <eParameters name="errorVar" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="generateLogMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="errorTpl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="category" eType="#//util/Category"/>
+        <eParameters name="severity" eType="#//util/Severity"/>
+        <eParameters name="exception" eType="#//Exception"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//util/Category"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="helpMsg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ErrorInfo">
+      <eOperations name="clear"/>
+      <eOperations name="print"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//core/Task"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dataLink" eType="#//data/DataLink"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dataPort" eType="#//data/DataPort"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="info" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//util/Category"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
+          changeable="false" transient="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="Severity">
+      <eLiterals name="FATAL"/>
+      <eLiterals name="ERROR" value="1"/>
+      <eLiterals name="WARN" value="2"/>
+      <eLiterals name="INFO" value="3" literal="INFO"/>
+      <eLiterals name="DEBUG" value="4"/>
+      <eLiterals name="TRACE" value="5"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="Category">
+      <eLiterals name="NO_CATEGORY"/>
+      <eLiterals name="PROJECT_CONFIGURATION" value="10"/>
+      <eLiterals name="METADATA_DEFINITION" value="15"/>
+      <eLiterals name="TASK_DEFINITION" value="16"/>
+      <eLiterals name="TOOL_DEFINITION" value="17" literal="TOOL_DEFINITION"/>
+      <eLiterals name="WORKFLOW" value="20" literal="WORKFLOW"/>
+      <eLiterals name="WORKFLOW_TEMPLATE_PARSING" value="25"/>
+      <eLiterals name="ABSTRACT_WORKFLOW_GENERATION" value="30"/>
+      <eLiterals name="TRAVERSAL_EVENT_CREATION" value="33"/>
+      <eLiterals name="SUBGRAPH_CREATION" value="35" literal="SUBGRAPH_CREATION"/>
+      <eLiterals name="TRAVERSAL_EVENT_RESOLUTION" value="40" literal="TRAVERSAL_EVENT_RESOLUTION"/>
+      <eLiterals name="DATA_GROUPING" value="41" literal="DATA_GROUPING"/>
+      <eLiterals name="PARAMETER_GROUPING" value="42"/>
+      <eLiterals name="UTILITY_TASK_RESOLUTION" value="50"/>
+      <eLiterals name="INCOMPATIBLE_GROUPING_RESOLUTION" value="51"/>
+      <eLiterals name="TOOL_RESOLUTION" value="60"/>
+      <eLiterals name="EXECUTION_WORKFLOW_GENERATION" value="70"/>
+      <eLiterals name="GRAPH_UTIL" value="200" literal="GRAPH_UTIL"/>
+      <eLiterals name="UTIL" value="300"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="LogMsgOutputMode">
+      <eLiterals name="SILENT"/>
+      <eLiterals name="CONSOLE" value="1"/>
+      <eLiterals name="GUI" value="2"/>
+      <eLiterals name="ALL" value="5"/>
     </eClassifiers>
     <eSubpackages name="maps" nsURI="http:///de/thiema/easyflow/util/maps/1.0.0" nsPrefix="easyflow">
       <eClassifiers xsi:type="ecore:EClass" name="CellToCellListMap" instanceClassName="java.util.Map$Entry">
@@ -1977,7 +1992,7 @@
       </eClassifiers>
       <eClassifiers xsi:type="ecore:EClass" name="StringToErrorControlMap" instanceClassName="java.util.Map$Entry">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//core/LogMessage"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//util/LogMessage"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

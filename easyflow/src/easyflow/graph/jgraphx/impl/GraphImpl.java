@@ -9,7 +9,7 @@ package easyflow.graph.jgraphx.impl;
 import com.mxgraph.model.mxICell;
 
 import easyflow.core.Catalog;
-import easyflow.core.Category;
+import easyflow.util.Category;
 
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 

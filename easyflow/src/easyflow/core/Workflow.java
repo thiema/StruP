@@ -15,6 +15,7 @@ import easyflow.graph.jgraphx.Graph;
 import easyflow.tool.Rule;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalEvent;
+import easyflow.util.LogMessage;
 import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;

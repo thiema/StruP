@@ -6,7 +6,7 @@
  */
 package easyflow.metadata;
 
-import easyflow.core.LogMessage;
+import easyflow.util.LogMessage;
 import java.io.BufferedReader;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EMap;

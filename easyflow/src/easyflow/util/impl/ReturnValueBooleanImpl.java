@@ -2,55 +2,60 @@
  */
 package easyflow.util.impl;
 
-import easyflow.util.ReturnValue;
+import easyflow.util.ReturnValueBoolean;
 import easyflow.util.UtilPackage;
+
 import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Return Value</b></em>'.
+ * An implementation of the model object '<em><b>Return Value Boolean</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link easyflow.util.impl.ReturnValueImpl#getObject <em>Object</em>}</li>
+ *   <li>{@link easyflow.util.impl.ReturnValueBooleanImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ReturnValueImpl extends MinimalEObjectImpl.Container implements ReturnValue {
+public class ReturnValueBooleanImpl extends MinimalEObjectImpl.Container implements ReturnValueBoolean {
 	/**
-	 * The default value of the '{@link #getObject() <em>Object</em>}' attribute.
+	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getObject()
+	 * @see #getValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object OBJECT_EDEFAULT = null;
+	protected static final Boolean VALUE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getObject() <em>Object</em>}' attribute.
+	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getObject()
+	 * @see #getValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected Object object = OBJECT_EDEFAULT;
+	protected Boolean value = VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ReturnValueImpl() {
+	protected ReturnValueBooleanImpl() {
 		super();
 	}
 
@@ -61,7 +66,7 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return UtilPackage.Literals.RETURN_VALUE;
+		return UtilPackage.Literals.RETURN_VALUE_BOOLEAN;
 	}
 
 	/**
@@ -69,8 +74,8 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object getObject() {
-		return object;
+	public Boolean getValue() {
+		return value;
 	}
 
 	/**
@@ -78,20 +83,22 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setObject(Object newObject) {
-		Object oldObject = object;
-		object = newObject;
+	public void setValue(Boolean newValue) {
+		Boolean oldValue = value;
+		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.RETURN_VALUE__OBJECT, oldObject, object));
+			eNotify(new ENotificationImpl(this, Notification.SET, UtilPackage.RETURN_VALUE_BOOLEAN__VALUE, oldValue, value));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated not
+	 * @generated
 	 */
 	public boolean isEmpty() {
-		return (getObject() == null);
+		// TODO: implement this method
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -102,8 +109,8 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case UtilPackage.RETURN_VALUE__OBJECT:
-				return getObject();
+			case UtilPackage.RETURN_VALUE_BOOLEAN__VALUE:
+				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -116,8 +123,8 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case UtilPackage.RETURN_VALUE__OBJECT:
-				setObject(newValue);
+			case UtilPackage.RETURN_VALUE_BOOLEAN__VALUE:
+				setValue((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -131,8 +138,8 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case UtilPackage.RETURN_VALUE__OBJECT:
-				setObject(OBJECT_EDEFAULT);
+			case UtilPackage.RETURN_VALUE_BOOLEAN__VALUE:
+				setValue(VALUE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -146,8 +153,8 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case UtilPackage.RETURN_VALUE__OBJECT:
-				return OBJECT_EDEFAULT == null ? object != null : !OBJECT_EDEFAULT.equals(object);
+			case UtilPackage.RETURN_VALUE_BOOLEAN__VALUE:
+				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -160,7 +167,7 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
-			case UtilPackage.RETURN_VALUE___IS_EMPTY:
+			case UtilPackage.RETURN_VALUE_BOOLEAN___IS_EMPTY:
 				return isEmpty();
 		}
 		return super.eInvoke(operationID, arguments);
@@ -176,10 +183,10 @@ public class ReturnValueImpl extends MinimalEObjectImpl.Container implements Ret
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (object: ");
-		result.append(object);
+		result.append(" (value: ");
+		result.append(value);
 		result.append(')');
 		return result.toString();
 	}
 
-} //ReturnValueImpl
+} //ReturnValueBooleanImpl

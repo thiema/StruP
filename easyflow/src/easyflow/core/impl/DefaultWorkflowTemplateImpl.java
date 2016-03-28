@@ -8,8 +8,8 @@ package easyflow.core.impl;
 
 import easyflow.core.CorePackage;
 import easyflow.core.DefaultWorkflowTemplate;
-import easyflow.core.LogMessage;
 import easyflow.core.Task;
+import easyflow.util.LogMessage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

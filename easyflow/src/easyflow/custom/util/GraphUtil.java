@@ -12,10 +12,10 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import sun.security.action.GetLongAction;
-import easyflow.core.Category;
-import easyflow.core.CoreFactory;
-import easyflow.core.LogMessage;
-import easyflow.core.Severity;
+import easyflow.util.Category;
+import easyflow.util.LogMessage;
+import easyflow.util.UtilFactory;
+import easyflow.util.Severity;
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
 import easyflow.custom.exception.GroupingCriterionInstanceNotFoundException;
@@ -45,7 +45,7 @@ public class GraphUtil {
 	{
 		if (logMessage == null)
 		{
-			logMessage = CoreFactory.eINSTANCE.createLogMessage();
+			logMessage = UtilFactory.eINSTANCE.createLogMessage();
 		//if (logMessage.getCategory() == null)
 			logMessage.setCategory(Category.GRAPH_UTIL);
 		}
@@ -327,7 +327,7 @@ public class GraphUtil {
 					+" created from \""+dataLink.getUniqueString(true)+"\"");
 		}
 		
-		if (chunks != null)
+		if (chunks != null && !chunks.isEmpty())
 		{
 			addTraversalChunksToDataLink(newDataLink, parentGroupingStr, chunks);
 		}
@@ -351,14 +351,15 @@ public class GraphUtil {
 				
 		logger.debug("createDataLink(): chunks defined for="+newDataLink.getChunks().keySet()
 				+" chunks for grouping="+parentGroupingStr
-				+"=("+easyflow.custom.util.Util.list2String(newDataLink.getChunks().get(parentGroupingStr), null)+")"+" "+task.getUniqueString());
+				+"=("+Util.list2String(newDataLink.getChunks().get(parentGroupingStr), null)+")"+" "+task.getUniqueString());
+		
 		if (!isGrouping && (!newDataLink.getChunks().containsKey(newDataLink.getParamStr()) && !isSplittingTask))
 			logger.error("createDataLink(): no chunks for param "+newDataLink.getParamStr()+" found. "
 					+" dataLink="+newDataLink.getUniqueString()
 					+" created from="+dataLink.getUniqueString()
 					);
 		if (!newDataLink.getChunks().containsKey(parentGroupingStr))
-			logger.error("createDataLink(): no chunks for grouping "+parentGroupingStr+" found."
+			logger.warn("createDataLink(): no chunks for grouping "+parentGroupingStr+" found."
 					+" dataLink="+newDataLink.getUniqueString()
 					+" created from="+dataLink.getUniqueString()
 					);
@@ -884,7 +885,7 @@ public class GraphUtil {
 		else
 		{
 			String err = getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GRAPH_UTIL_NO_TASK_FOR_ANALYSIS_TYPE_3, 
-					Severity.ERROR,
+					Severity.WARN,
 					Util.generateStringList(inDataPort.getName(), task.getUniqueString(), analysisType));
 			GlobalVar.setLastErrorInfo(Category.GRAPH_UTIL, task, null,
 					err, true);
