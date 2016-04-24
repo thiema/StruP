@@ -940,7 +940,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException"
 	 * @generated
 	 */
-	boolean canProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
+	boolean canProvideMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -964,7 +964,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.ToolNotFoundException easyflow.DataPortNotFoundException"
 	 * @generated
 	 */
-	boolean canProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException;
+	boolean canProcessMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -972,7 +972,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.DataPortNotFoundException"
 	 * @generated
 	 */
-	void setProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+	void setProcessMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -996,7 +996,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.DataPortNotFoundException"
 	 * @generated
 	 */
-	void setProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
+	void setProvideMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1060,7 +1060,7 @@ public interface Task extends EObject {
 	 * @model exceptions="easyflow.DataPortNotFoundException easyflow.ToolNotFoundException" traverslChunksMany="true"
 	 * @generated
 	 */
-	boolean canComsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks, boolean isPartial) throws DataPortNotFoundException, ToolNotFoundException;
+	boolean canConsumeDataPort(Tool tool, DataPort dataPort, String grouping, EList<TraversalChunk> traverslChunks, boolean isPartial) throws DataPortNotFoundException, ToolNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -5,11 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-
 import java.util.Map;
 
 import javax.swing.JTextPane;
-
 import javax.swing.text.Style;
 
 import org.apache.commons.jexl2.JexlEngine;
@@ -20,9 +18,13 @@ import org.eclipse.emf.common.util.EMap;
 
 
 
+
+
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxRectangle;
+
 import easyflow.data.DataLink;
 import easyflow.util.Category;
-
 import easyflow.util.ErrorInfo;
 import easyflow.util.LogMsgOutputMode;
 import easyflow.util.UtilFactory;
@@ -32,7 +34,6 @@ import easyflow.custom.jgraphx.ComposeWorkflowPanel;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
 import easyflow.custom.jgraphx.editor.EasyFlowGraphEditor;
 import easyflow.metadata.DefaultMetaData;
-
 import easyflow.ui.DefaultProject;
 
 public class GlobalVar {
@@ -82,6 +83,7 @@ public class GlobalVar {
 	private static boolean isDeveloperMode = false;
 	private static Style defaultStyle;
 	private static int debugLevel = GlobalConstants.DEFAULT_DEBUG_LEVEL;
+	private static mxGraphComponent graphComponent;
 	
 	
 	public static DefaultProject getDefaultProject() {
@@ -332,5 +334,15 @@ public class GlobalVar {
 	public static boolean isRequiredDebugLevelReached(Severity severity) {
 		return severity.getValue() <= debugLevel ;
 	}
+
+	public static void setGraphComponent(mxGraphComponent graphComponent) {
+		GlobalVar.graphComponent = graphComponent;
+	}
+
+	public static mxGraphComponent getGraphComponent() {
+		return graphComponent;
+	}
+	
+	
 
 }

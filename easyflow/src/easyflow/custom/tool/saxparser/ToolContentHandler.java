@@ -302,7 +302,7 @@ public class ToolContentHandler implements ContentHandler {
 		curParam.setOptional(null);
 		curParam.setPositional(null);
 		curParam.setMultiple(null);
-		curParam.setMultipleInstancesPerInput(null);
+		curParam.setMultipleInstancesPerDataport(null);
 		curParam.setMultipleInstances(null);
 		curParam.setMultipleValue(null);
 	}
@@ -352,7 +352,7 @@ public class ToolContentHandler implements ContentHandler {
 			curParam.setPositional(atts.getValue("positional").equals("true") ? true : false);
 		else
 			curParam.setPositional(null);
-
+		
 		if (atts.getValue("multiple") != null)
 			curParam.setMultiple(atts.getValue("multiple").equals("true") ? true : false);
 		else
@@ -363,10 +363,10 @@ public class ToolContentHandler implements ContentHandler {
 		else
 			curParam.setMultipleInstances(null);
 
-		if (atts.getValue("multiple_instances_per_input") != null)
-			curParam.setMultipleInstancesPerInput(atts.getValue("multiple_instances_per_input").equals("true") ? true : false);
+		if (atts.getValue("multiple_instances_per_dataport") != null)
+			curParam.setMultipleInstancesPerDataport(atts.getValue("multiple_instances_per_dataport").equals("true") ? true : false);
 		else
-			curParam.setMultipleInstancesPerInput(null);
+			curParam.setMultipleInstancesPerDataport(null);
 
 		if (atts.getValue("multiple_value") != null)
 			curParam.setMultipleValue(atts.getValue("multiple_value").equals("true") ? true : false);
@@ -483,6 +483,12 @@ public class ToolContentHandler implements ContentHandler {
 			{
 				curInOutParam.setFilenameCreation(atts.getValue("filename_creation"));
 			}
+			
+			if (atts.getValue("convert_grouping") != null)
+				curInOutParam.setConvertGrouping("any");
+			else
+				curInOutParam.setConvertGrouping(null);
+
 				
 			if (!isAbstractParam)
 			{
@@ -621,10 +627,12 @@ public class ToolContentHandler implements ContentHandler {
 				pkg.setDescription(atts.getValue("description"));
 				if (atts.getValue("name")!=null)
 					pkg.setName(atts.getValue("name"));
-				if (atts.getValue("id")==null)
+				if (atts.getValue("id") == null)
 					pkg.setId(pkg.getName());
 				else
 					pkg.setId(atts.getValue("id"));
+				if (pkg.getName() == null && pkg.getId() != null)
+					pkg.setName(pkg.getId());
 				pkg.setVersion(atts.getValue("version"));
 				packages.put(pkg.getId(), pkg);
 				logger.debug(pkg.getId());

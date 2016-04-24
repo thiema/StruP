@@ -1359,7 +1359,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort() {
+	public EOperation getTask__CanProvideMultipleInstancesPerDataportFor__Tool_DataPort() {
 		return taskEClass.getEOperations().get(30);
 	}
 
@@ -1386,7 +1386,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort() {
+	public EOperation getTask__CanProcessMultipleInstancesPerDataportFor__Tool_DataPort() {
 		return taskEClass.getEOperations().get(33);
 	}
 
@@ -1395,7 +1395,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort() {
+	public EOperation getTask__SetProcessMultipleInstancesPerDataportFor__Tool_DataPort() {
 		return taskEClass.getEOperations().get(34);
 	}
 
@@ -1422,7 +1422,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort() {
+	public EOperation getTask__SetProvideMultipleInstancesPerDataportFor__Tool_DataPort() {
 		return taskEClass.getEOperations().get(37);
 	}
 
@@ -1494,7 +1494,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTask__CanComsumeDataPort__Tool_DataPort_String_EList_boolean() {
+	public EOperation getTask__CanConsumeDataPort__Tool_DataPort_String_EList_boolean() {
 		return taskEClass.getEOperations().get(45);
 	}
 
@@ -2332,14 +2332,14 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_GROUPINGS_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
+		createEOperation(taskEClass, TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
+		createEOperation(taskEClass, TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT);
+		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
-		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT);
+		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___SET_PROVIDE_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT);
 		createEOperation(taskEClass, TASK___CAN_FILTER_INSTANCES_FOR__TOOL_DATAPORT);
@@ -2347,7 +2347,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEOperation(taskEClass, TASK___GET_INPUTS__BOOLEAN);
 		createEOperation(taskEClass, TASK___GET_OVERLAPPING_RECORDS_PROVIDED_BY__TASK);
 		createEOperation(taskEClass, TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN);
-		createEOperation(taskEClass, TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN);
+		createEOperation(taskEClass, TASK___CAN_CONSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN);
 		createEOperation(taskEClass, TASK___GET_OUTPUTS_FOR_DATA_PORT__DATAPORT);
 		createEOperation(taskEClass, TASK___GET_INPUTS_FOR_DATA_PORT__DATAPORT);
 		createEOperation(taskEClass, TASK___RESOLVE_PARAMS);
@@ -2754,7 +2754,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTask__CanProvideMultipleInstancesPerDataportFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInstancesPerDataportFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
@@ -2772,13 +2772,13 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTask__CanProcessMultipleInstancesPerDataportFor__Tool_DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesPerDataportFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort(), null, "setProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTask__SetProcessMultipleInstancesPerDataportFor__Tool_DataPort(), null, "setProcessMultipleInstancesPerDataportFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
@@ -2793,7 +2793,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort(), null, "setProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTask__SetProvideMultipleInstancesPerDataportFor__Tool_DataPort(), null, "setProvideMultipleInstancesPerDataportFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
@@ -2832,7 +2832,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 		addEException(op, theEasyflowPackage.getToolNotFoundException());
 
-		op = initEOperation(getTask__CanComsumeDataPort__Tool_DataPort_String_EList_boolean(), ecorePackage.getEBoolean(), "canComsumeDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTask__CanConsumeDataPort__Tool_DataPort_String_EList_boolean(), ecorePackage.getEBoolean(), "canConsumeDataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theToolPackage.getTool(), "tool", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "grouping", 0, 1, IS_UNIQUE, IS_ORDERED);

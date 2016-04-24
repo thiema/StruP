@@ -67,8 +67,8 @@
 			<param type="text" name="classpath" prefix="-" key="cp" separator=" "/>
 		</interpreter>
 		<param type="data" abstract="true"                         optional="false"                                                                      format="fasta"/>
-		<param type="data" abstract="true"                                 multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
-		<param type="data" abstract="true"            named="true" key="o" output="true"   multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf,gatk_interval"/>
+		<param type="data" abstract="true"                                 multiple="true" multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true"            named="true" key="o" output="true"   multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf,gatk_interval"/>
 		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-" output_arg_value_for_boolean_param="false"/>
 		
 		<!-- param name="jar" default_value="GenomeAnalysisTK.jar" type="binary" cmd_part="exe" prefix="-" fixed="true" named="true"/> -->
@@ -106,9 +106,9 @@
 		
 		<param type="data" abstract="true" name="output" output="true" handle="stdout" default_value="-" prefix=""/>
 		
-		<param type="data" abstract="true" name="input" multiple="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf"/>
+		<param type="data" abstract="true" name="input" multiple="true" multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf"/>
 		<param type="data" abstract="true" name="input" format="fasta"/>
-		<param type="data" abstract="true" name="output" output="true" multiple_instances="true" multiple_instances_per_input="true" format="bam,sam,vcf" key="f"/>
+		<param type="data" abstract="true" name="output" output="true" multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf" key="f"/>
 		
 		<param type="analysis_type">
 			<option value="aln"   help="gapped/ungapped alignment"/>

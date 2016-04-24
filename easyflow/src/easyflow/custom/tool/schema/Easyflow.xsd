@@ -147,7 +147,8 @@
 		<xs:attribute name="is_value_required"                  type="xs:boolean"  />
 		<xs:attribute name="multiple"                           type="xs:boolean"  />
 		<xs:attribute name="multiple_instances"                 type="xs:boolean"  />
-		<xs:attribute name="multiple_instances_per_input"       type="xs:boolean"  />
+		<xs:attribute name="multiple_instances_per_dataport"    type="xs:boolean"  />
+		<xs:attribute name="convert_grouping"                   type="ConvertGroupingType"/>
 		<xs:attribute name="multiple_value"                     type="xs:boolean"  />
 		<xs:attribute name="grouping"                           type="xs:string"   />
 		<xs:attribute name="handle"                             type="xs:string"   />
@@ -168,6 +169,13 @@
 
 	</xs:complexType>
 
+	<xs:simpleType name="ConvertGroupingType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="any"/>
+			<xs:enumeration value="none"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:simpleType name="FilenameCreationType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="replaceExtensionOfInput"/>

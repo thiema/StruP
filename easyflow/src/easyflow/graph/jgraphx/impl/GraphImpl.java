@@ -41,6 +41,7 @@ import easyflow.graph.jgraphx.PreprocessingGraph;
 import easyflow.graph.jgraphx.SubGraph;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
 import easyflow.graph.jgraphx.TraversalEventGraph;
+import easyflow.graph.jgraphx.UntranslatedLink;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.MetadataFactory;
 import easyflow.metadata.GroupingInstance;
@@ -1239,7 +1240,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public EMap<mxICell, EList<mxICell>> findCellsWithUntranslatedDataLinks() {
+	public EList<UntranslatedLink> findCellsWithUntranslatedDataLinks() {
 
 		return getPreprocessingGraph().findCellsWithUntranslatedDataLinks();
 	}
@@ -1249,9 +1250,9 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean resolveEdge(Map.Entry<mxICell, EList<mxICell>> entry) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
+	public boolean resolveEdge(Task target, EList<mxICell> edges) throws TaskNotFoundException, DataLinkNotFoundException, DataPortNotFoundException, ToolNotFoundException, UtilityTaskNotFoundException {
 
-		return getPreprocessingGraph().resolveEdge(entry);
+		return getPreprocessingGraph().resolveEdge(target, edges);
 	}
 
 	/**
@@ -1284,6 +1285,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @generated not
 	 */
 	public boolean applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, GroupingInstance groupingInstance, ReturnValue returnCell) throws TaskNotFoundException, DataLinkNotFoundException {
+		
 		return getTraversalEventGraph().applyTraversalEventCopyGraph(root, traversalEvent, groupingInstance, returnCell);
 	}
 
@@ -1293,6 +1295,7 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 	 * @generated not
 	 */
 	public boolean applyTraversalEventCopyGraph(mxICell root, TraversalEvent traversalEvent, EList<GroupingInstance> groupingInstances, ReturnValue returnCell) throws TaskNotFoundException, DataLinkNotFoundException {
+		
 		return getTraversalEventGraph().applyTraversalEventCopyGraph(root, traversalEvent, groupingInstances, returnCell);
 		
 	}
@@ -1802,9 +1805,9 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 				return findCellsWherePreprocessingIsRequired();
 			case JgraphxPackage.GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS:
 				return findCellsWithUntranslatedDataLinks();
-			case JgraphxPackage.GRAPH___RESOLVE_EDGE__EMAP:
+			case JgraphxPackage.GRAPH___RESOLVE_EDGE__TASK_ELIST:
 				try {
-					return resolveEdge((Map.Entry<mxICell, EList<mxICell>>)arguments.get(0));
+					return resolveEdge((Task)arguments.get(0), (EList<mxICell>)arguments.get(1));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);

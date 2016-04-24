@@ -155,75 +155,82 @@ public class GlobalConstants {
 
 	public static final String CONDITION_TYPE_METADATA = METADATA;
 
-	public static final int ANY_HANDLE = 0;
+	public static final int ANY_HANDLE  = 0;
 	public static final int FILE_HANDLE = 1;
 	public static final int PIPE_HANDLE = 2;
+	
+	public static final int UTILITY_TASK_DO_NOT_FILTER            = 0x1000;
+	public static final int UTILITY_TASK_DO_NOT_MERGE             = 0x2000;
+	
+	public static final int MULTIPLE_DATAPORTS                    = 0x01;
+	public static final int MULTIPLE_INSTANCES                    = 0x02;
+	public static final int MULTIPLE_INSTANCES_PER_DATAPORT       = 0x04;
 
-	public static final int PARAM_DATA_MATCH_STRATEGY_ANY = 0;
-	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_PORT = 1;
+	public static final int PARAM_DATA_MATCH_STRATEGY_ANY         = 0;
+	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_PORT   = 1;
 	public static final int PARAM_DATA_MATCH_STRATEGY_DATA_FORMAT = 2;
-	public static final int PARAM_DATA_MATCH_STRATEGY_PARAM_KEY = 3;
+	public static final int PARAM_DATA_MATCH_STRATEGY_PARAM_KEY   = 3;
 
-	public static final int RETRIEVE_DATA_PORT_STRATEGY_FIRST = 0;
-	public static final int RETRIEVE_DATA_PORT_STRATEGY_LAST = 1;
+	public static final int RETRIEVE_DATA_PORT_STRATEGY_FIRST   = 0;
+	public static final int RETRIEVE_DATA_PORT_STRATEGY_LAST    = 1;
 	public static final int RETRIEVE_DATA_PORT_STRATEGY_PRIMARY = 2;
 
-	public static final String COMMAND_LINE_PART_INPUT = PARAM_INPUT;
-	public static final String COMMAND_LINE_PART_OUTPUT = PARAM_OUTPUT;
-	public static final String COMMAND_LINE_PART_OPT_PARAMS = PARAM_OPTIONAL;
-	public static final String COMMAND_LINE_PART_POS_PARAMS = PARAM_POSITIONAL;
+	public static final String COMMAND_LINE_PART_INPUT          = PARAM_INPUT;
+	public static final String COMMAND_LINE_PART_OUTPUT         = PARAM_OUTPUT;
+	public static final String COMMAND_LINE_PART_OPT_PARAMS     = PARAM_OPTIONAL;
+	public static final String COMMAND_LINE_PART_POS_PARAMS     = PARAM_POSITIONAL;
 
-	public static final String EXAMPLE_REPO_HEADER_NAME = "Name";
-	public static final String EXAMPLE_REPO_HEADER_CONFIG = "Config";
-	public static final String EXAMPLE_REPO_HEADER_WORKFLOW = "Workflow";
-	public static final String EXAMPLE_REPO_HEADER_UTIL = "Utility";
-	public static final String EXAMPLE_REPO_HEADER_FOLDER = "Folder";
+	public static final String EXAMPLE_REPO_HEADER_NAME         = "Name";
+	public static final String EXAMPLE_REPO_HEADER_CONFIG       = "Config";
+	public static final String EXAMPLE_REPO_HEADER_WORKFLOW     = "Workflow";
+	public static final String EXAMPLE_REPO_HEADER_UTIL         = "Utility";
+	public static final String EXAMPLE_REPO_HEADER_FOLDER       = "Folder";
 
-	public static final String EXAMPLE_REPO_HEADER_METADATA = "Metadata";
+	public static final String EXAMPLE_REPO_HEADER_METADATA     = "Metadata";
 
 	public static final String WORKFLOW_INPUT_GROUPING_CRITERION_PARAM_NAME = "input_grouping_criterion";
 
-	public static final String CONFIGURATION_FILE_SECTION_PROJECT = "project";
-	public static final String CONFIGURATION_FILE_SECTION_WORKFLOW = "workflow";
-	public static final String CONFIGURATION_FILE_SECTION_TOOL = "tool";
-	public static final String CONFIGURATION_FILE_SECTION_CONTRAST = "contrast";
+	public static final String CONFIGURATION_FILE_SECTION_PROJECT    = "project";
+	public static final String CONFIGURATION_FILE_SECTION_WORKFLOW   = "workflow";
+	public static final String CONFIGURATION_FILE_SECTION_TOOL       = "tool";
+	public static final String CONFIGURATION_FILE_SECTION_CONTRAST   = "contrast";
 	public static final String CONFIGURATION_FILE_SECTION_PROCESSING = "processing";
-	public static final String CONFIGURATION_FILE_SECTION_CATALOG = "catalog";
+	public static final String CONFIGURATION_FILE_SECTION_CATALOG    = "catalog";
 
-	public static final String GUI_LOG_MSG_STYLE_CATEGORY = "LOG_MSG_STYLE_CATEGORY";
-	public static final String GUI_LOG_MSG_STYLE_SEVERITY_LOW = "LOG_MSG_STYLE_SEVERITY_LOW";
-	public static final String GUI_LOG_MSG_STYLE_SEVERITY_HIGH = "LOG_MSG_STYLE_SEVERITY_HIGH";
-	public static final String GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM = "LOG_MSG_STYLE_SEVERITY_MEDIUM";
-	public static final String GUI_LOG_MSG_STYLE_TEXT = "LOG_MSG_STYLE_TEXT";
+	public static final String GUI_LOG_MSG_STYLE_CATEGORY            = "LOG_MSG_STYLE_CATEGORY";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY_LOW        = "LOG_MSG_STYLE_SEVERITY_LOW";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY_HIGH       = "LOG_MSG_STYLE_SEVERITY_HIGH";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY_MEDIUM     = "LOG_MSG_STYLE_SEVERITY_MEDIUM";
+	public static final String GUI_LOG_MSG_STYLE_TEXT                = "LOG_MSG_STYLE_TEXT";
 
-	public static final String GUI_LOG_MSG_STYLE_SEVERITY = "LOG_MSG_STYLE_SEVERITY";
+	public static final String GUI_LOG_MSG_STYLE_SEVERITY            = "LOG_MSG_STYLE_SEVERITY";
 
 	// error/log msg descriptions
 	// public static final String ERROR_STRING_VAR_PLACEHOLDERS[] =
 	// {"$VAL1, $VAL2, $VAL3, $VAL4, $VAL5"};
-	public static final String ERROR_STRING_VAR_PLACEHOLDER = "$VAL";
-	public static final String LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL_1 = "No valid data handle found for tool \"$VAL\".";
+	public static final String ERROR_STRING_VAR_PLACEHOLDER           = "$VAL";
+	public static final String LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_BY_TOOL_1   = "No valid data handle found for tool \"$VAL\".";
 	public static final String LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG_0 = "No valid data handle found due to configuration.";
-	public static final String LOG_MSG_NO_TOOL_DEFINITION_FOUND_FOR_TOOL_1 = "Unable to find definition of tool \"$VAL\".";
-	public static final String LOG_MSG_TOOL_DEFINITION_NOT_VALID_2 = "Unable to validate tool definition \"$VAL\" against schema \"$VAL\".";
+	public static final String LOG_MSG_NO_TOOL_DEFINITION_FOUND_FOR_TOOL_1        = "Unable to find definition of tool \"$VAL\".";
+	public static final String LOG_MSG_TOOL_DEFINITION_NOT_VALID_2                = "Unable to validate tool definition \"$VAL\" against schema \"$VAL\".";
 
-	public static final String LOG_MSG_CONFIGURATION_FILE_NOT_FOUND_1 = "Could not find the specified/default configuration file \"$VAL\".";
-	public static final String LOG_MSG_METADATA_FILE_NOT_FOUND_1 = "Could not find the metadata file \"$VAL\".";
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_NOT_FOUND_1 = "Could not find the workflow template \"$VAL\".";
-	public static final String LOG_MSG_CONFIGRUATION_FILE_NOT_SPECIFIED_0 = "No configuration file specified.";
-	public static final String LOG_MSG_METADATA_FILE_NOT_SPECIFIED_0 = "No metadata file specified.";
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_NOT_SPECIFIED_0 = "No workflow template provided.";
-	public static final String LOG_MSG_TOOL_DEFINITION_NOT_SPECIFIED_0 = "No tool definition provided.";
+	public static final String LOG_MSG_CONFIGURATION_FILE_NOT_FOUND_1             = "Could not find the specified/default configuration file \"$VAL\".";
+	public static final String LOG_MSG_METADATA_FILE_NOT_FOUND_1                  = "Could not find the metadata file \"$VAL\".";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_NOT_FOUND_1              = "Could not find the workflow template \"$VAL\".";
+	public static final String LOG_MSG_CONFIGRUATION_FILE_NOT_SPECIFIED_0         = "No configuration file specified.";
+	public static final String LOG_MSG_METADATA_FILE_NOT_SPECIFIED_0              = "No metadata file specified.";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_NOT_SPECIFIED_0          = "No workflow template provided.";
+	public static final String LOG_MSG_TOOL_DEFINITION_NOT_SPECIFIED_0            = "No tool definition provided.";
 
-	public static final String LOG_MSG_CONFIGURATION_SECTION_MISSING_2 = "Section \"$VAL\" missing in configuration file \"$VAL\".";
-	public static final String LOG_MSG_CONFIGURATION_PARAM_MISSING_1 = "Configuration file does not contain parameter \"$VAL\".";
+	public static final String LOG_MSG_CONFIGURATION_SECTION_MISSING_2            = "Section \"$VAL\" missing in configuration file \"$VAL\".";
+	public static final String LOG_MSG_CONFIGURATION_PARAM_MISSING_1              = "Configuration file does not contain parameter \"$VAL\".";
 
-	public static final String LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_0 = "No valid data handle provided.";
+	public static final String LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_0           = "No valid data handle provided.";
 	// public static final String
 	// LOG_MSG_NO_VALID_DATA_HANDLE_AVAILABLE_BY_CONFIG =
 	// "Configuration does not provide a valid data handle.";
 
-	public static final String LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2 = "Failed to read workflow template \"$VAL\" with error: \"$VAL\".";
+	public static final String LOG_MSG_WORKFLOW_TEMPLATE_FAILED_TO_READ_2         = "Failed to read workflow template \"$VAL\" with error: \"$VAL\".";
 
 	public static final String LOG_MSG_GENERAL_IO_1 = "IO Error: \"$VAL\".";
 	public static final String LOG_MSG_GENERAL_IO_2 = "IO Error: \"$VAL\". Filename: \"$VAL\"";
@@ -332,12 +339,12 @@ public class GlobalConstants {
 
 	public static final String LOG_MSG_UTILITY_MERGE_TASKS_3 = "Add merge \"$VAL\" for [$VAL] and task \"$VAL\".";
 
-	public static final int UTILITY_TASK_DO_NOT_FILTER = 0x1000;
-
-	public static final int UTILITY_TASK_DO_NOT_MERGE = 0x2000;
-
 	public static final String LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_4 = "Failed to retrieve $VAL data for task \"$VAL\", tool \"$VAL\" and datalink \"$VAL\".";
 
-	public static final String LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_PARAMETER_5 = "Failed to retrieve data parameter name for task \"$VAL\", tool \"$VAL\", data port \"$VAL\", parameter \"$VAL\".";	
+	public static final String LOG_MSG_TOOL_DEPENDENCY_FAILED_TO_RETRIEVE_TOOL_DATA_PARAMETER_5 = "Failed to retrieve data parameter name for task \"$VAL\", tool \"$VAL\", data port \"$VAL\", parameter \"$VAL\".";
+
+	public static final String CONVERT_GROUPING_ANY = "any";
+
+	public static final String CONVERT_GROUPING_NONE = "none";	
 
 }

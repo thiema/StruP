@@ -67,6 +67,7 @@ public class JgraphxFactoryImpl extends EFactoryImpl implements JgraphxFactory {
 			case JgraphxPackage.EXECUTION_GRAPH: return createExecutionGraph();
 			case JgraphxPackage.SUB_GRAPH: return createSubGraph();
 			case JgraphxPackage.GRAPH: return createGraph();
+			case JgraphxPackage.UNTRANSLATED_LINK: return createUntranslatedLink();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -140,6 +141,16 @@ public class JgraphxFactoryImpl extends EFactoryImpl implements JgraphxFactory {
 	public Graph createGraph() {
 		GraphImpl graph = new GraphImpl();
 		return graph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UntranslatedLink createUntranslatedLink() {
+		UntranslatedLinkImpl untranslatedLink = new UntranslatedLinkImpl();
+		return untranslatedLink;
 	}
 
 	/**

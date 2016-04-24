@@ -2,15 +2,12 @@
  */
 package easyflow.graph.impl;
 
-import easyflow.core.CoreFactory;
 import easyflow.graph.DefaultGraph;
 import easyflow.graph.GraphPackage;
 import easyflow.util.Category;
 import easyflow.util.LogMessage;
 import easyflow.util.UtilFactory;
-
 import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -184,7 +181,7 @@ public class DefaultGraphImpl extends MinimalEObjectImpl.Container implements De
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case GraphPackage.DEFAULT_GRAPH___INIT_LOG_MESSAGE__CATEGORY:
-				initLogMessage((easyflow.util.Category)arguments.get(0));
+				initLogMessage((Category)arguments.get(0));
 				return null;
 		}
 		return super.eInvoke(operationID, arguments);

@@ -296,7 +296,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREPROCESSING_GRAPH___RESOLVE_EDGE__EMAP = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 3;
+	int PREPROCESSING_GRAPH___RESOLVE_EDGE__TASK_ELIST = GraphPackage.DEFAULT_GRAPH_OPERATION_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Preprocessing Graph</em>' class.
@@ -805,7 +805,7 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH___RESOLVE_EDGE__EMAP = 11;
+	int GRAPH___RESOLVE_EDGE__TASK_ELIST = 11;
 
 	/**
 	 * The operation id for the '<em>Apply Traversal Event</em>' operation.
@@ -896,6 +896,62 @@ public interface JgraphxPackage extends EPackage {
 	 * @ordered
 	 */
 	int GRAPH_OPERATION_COUNT = 21;
+
+
+	/**
+	 * The meta object id for the '{@link easyflow.graph.jgraphx.impl.UntranslatedLinkImpl <em>Untranslated Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.graph.jgraphx.impl.UntranslatedLinkImpl
+	 * @see easyflow.graph.jgraphx.impl.JgraphxPackageImpl#getUntranslatedLink()
+	 * @generated
+	 */
+	int UNTRANSLATED_LINK = 7;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNTRANSLATED_LINK__SOURCE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNTRANSLATED_LINK__TARGET = 1;
+
+	/**
+	 * The feature id for the '<em><b>Untranslated Links</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNTRANSLATED_LINK__UNTRANSLATED_LINKS = 2;
+
+	/**
+	 * The number of structural features of the '<em>Untranslated Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNTRANSLATED_LINK_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Untranslated Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNTRANSLATED_LINK_OPERATION_COUNT = 0;
 
 
 	/**
@@ -1042,14 +1098,14 @@ public interface JgraphxPackage extends EPackage {
 	EOperation getPreprocessingGraph__FindCellsWithUntranslatedDataLinks();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.PreprocessingGraph#resolveEdge(org.eclipse.emf.common.util.EMap) <em>Resolve Edge</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.PreprocessingGraph#resolveEdge(easyflow.core.Task, org.eclipse.emf.common.util.EList) <em>Resolve Edge</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Resolve Edge</em>' operation.
-	 * @see easyflow.graph.jgraphx.PreprocessingGraph#resolveEdge(org.eclipse.emf.common.util.EMap)
+	 * @see easyflow.graph.jgraphx.PreprocessingGraph#resolveEdge(easyflow.core.Task, org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	EOperation getPreprocessingGraph__ResolveEdge__EMap();
+	EOperation getPreprocessingGraph__ResolveEdge__Task_EList();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.graph.jgraphx.ToolDependencyGraph <em>Tool Dependency Graph</em>}'.
@@ -1483,14 +1539,14 @@ public interface JgraphxPackage extends EPackage {
 	EOperation getGraph__FindCellsWithUntranslatedDataLinks();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#resolveEdge(org.eclipse.emf.common.util.EMap) <em>Resolve Edge</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#resolveEdge(easyflow.core.Task, org.eclipse.emf.common.util.EList) <em>Resolve Edge</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Resolve Edge</em>' operation.
-	 * @see easyflow.graph.jgraphx.Graph#resolveEdge(org.eclipse.emf.common.util.EMap)
+	 * @see easyflow.graph.jgraphx.Graph#resolveEdge(easyflow.core.Task, org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	EOperation getGraph__ResolveEdge__EMap();
+	EOperation getGraph__ResolveEdge__Task_EList();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.graph.jgraphx.Graph#applyTraversalEvent(com.mxgraph.model.mxICell, easyflow.traversal.TraversalEvent, java.lang.String, easyflow.metadata.GroupingInstance) <em>Apply Traversal Event</em>}' operation.
@@ -1581,6 +1637,49 @@ public interface JgraphxPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getGraph__Init();
+
+	/**
+	 * Returns the meta object for class '{@link easyflow.graph.jgraphx.UntranslatedLink <em>Untranslated Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Untranslated Link</em>'.
+	 * @see easyflow.graph.jgraphx.UntranslatedLink
+	 * @generated
+	 */
+	EClass getUntranslatedLink();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.UntranslatedLink#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Source</em>'.
+	 * @see easyflow.graph.jgraphx.UntranslatedLink#getSource()
+	 * @see #getUntranslatedLink()
+	 * @generated
+	 */
+	EReference getUntranslatedLink_Source();
+
+	/**
+	 * Returns the meta object for the reference '{@link easyflow.graph.jgraphx.UntranslatedLink#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see easyflow.graph.jgraphx.UntranslatedLink#getTarget()
+	 * @see #getUntranslatedLink()
+	 * @generated
+	 */
+	EReference getUntranslatedLink_Target();
+
+	/**
+	 * Returns the meta object for the map '{@link easyflow.graph.jgraphx.UntranslatedLink#getUntranslatedLinks <em>Untranslated Links</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Untranslated Links</em>'.
+	 * @see easyflow.graph.jgraphx.UntranslatedLink#getUntranslatedLinks()
+	 * @see #getUntranslatedLink()
+	 * @generated
+	 */
+	EReference getUntranslatedLink_UntranslatedLinks();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1714,7 +1813,7 @@ public interface JgraphxPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation PREPROCESSING_GRAPH___RESOLVE_EDGE__EMAP = eINSTANCE.getPreprocessingGraph__ResolveEdge__EMap();
+		EOperation PREPROCESSING_GRAPH___RESOLVE_EDGE__TASK_ELIST = eINSTANCE.getPreprocessingGraph__ResolveEdge__Task_EList();
 		/**
 		 * The meta object literal for the '{@link easyflow.graph.jgraphx.impl.ToolDependencyGraphImpl <em>Tool Dependency Graph</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -2016,7 +2115,7 @@ public interface JgraphxPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation GRAPH___RESOLVE_EDGE__EMAP = eINSTANCE.getGraph__ResolveEdge__EMap();
+		EOperation GRAPH___RESOLVE_EDGE__TASK_ELIST = eINSTANCE.getGraph__ResolveEdge__Task_EList();
 		/**
 		 * The meta object literal for the '<em><b>Apply Traversal Event</b></em>' operation.
 		 * <!-- begin-user-doc -->
@@ -2080,6 +2179,36 @@ public interface JgraphxPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation GRAPH___INIT = eINSTANCE.getGraph__Init();
+		/**
+		 * The meta object literal for the '{@link easyflow.graph.jgraphx.impl.UntranslatedLinkImpl <em>Untranslated Link</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.graph.jgraphx.impl.UntranslatedLinkImpl
+		 * @see easyflow.graph.jgraphx.impl.JgraphxPackageImpl#getUntranslatedLink()
+		 * @generated
+		 */
+		EClass UNTRANSLATED_LINK = eINSTANCE.getUntranslatedLink();
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNTRANSLATED_LINK__SOURCE = eINSTANCE.getUntranslatedLink_Source();
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNTRANSLATED_LINK__TARGET = eINSTANCE.getUntranslatedLink_Target();
+		/**
+		 * The meta object literal for the '<em><b>Untranslated Links</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UNTRANSLATED_LINK__UNTRANSLATED_LINKS = eINSTANCE.getUntranslatedLink_UntranslatedLinks();
 
 	}
 

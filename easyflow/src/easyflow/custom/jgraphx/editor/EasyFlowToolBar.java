@@ -195,6 +195,7 @@ public class EasyFlowToolBar extends JToolBar
 			logger.debug("Init: ");
 			DefaultProject defaultProject = GlobalVar.getDefaultProject(); 
 			defaultProject.setFromJar(isFromJar);
+			
 			boolean rc = GlobalVar.getDefaultProject().init((EasyFlowGraph) editor.getGraphComponent().getGraph());
 			
 			defaultProject.getActiveWorkflow().setWorker(editor.getComposeWorkflowPanel().getWorker());
@@ -240,6 +241,9 @@ public class EasyFlowToolBar extends JToolBar
 			if (defaultProject .getActiveWorkflow()!=null)
 				defaultProject.resetWorkflowStep();
 			defaultProject.delete();
+
+			editor.getGraphComponent().refresh();
+			
 			GlobalVar.getTextAreaForLogMsg().setText("");
 			//btnDeleteGraph.setEnabled(false);
 			//btnInitWorkflow.setEnabled(true);
@@ -312,7 +316,6 @@ public class EasyFlowToolBar extends JToolBar
 			try {
 				if (GlobalVar.getDefaultProject().applyGroupingCriteria())
 				{
-					
 					btnResolveUtilityTasks.setEnabled(true);
 				}
 				btnApplyGroupingCrit.setEnabled(false);
@@ -378,7 +381,6 @@ public class EasyFlowToolBar extends JToolBar
 			try {
 				if (GlobalVar.getDefaultProject().resolveToolDependencies())
 				{
-
 					btnGenerateExecWorkflow.setEnabled(true);
 				}
 				btnResolveToolDeps.setEnabled(false);

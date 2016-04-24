@@ -1179,13 +1179,13 @@ public interface CorePackage extends EPackage {
 	int TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = 29;
 
 	/**
-	 * The operation id for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
+	 * The operation id for the '<em>Can Provide Multiple Instances Per Dataport For</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 30;
+	int TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = 30;
 
 	/**
 	 * The operation id for the '<em>Can Process Multiple Inputs For</em>' operation.
@@ -1206,22 +1206,22 @@ public interface CorePackage extends EPackage {
 	int TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = 32;
 
 	/**
-	 * The operation id for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
+	 * The operation id for the '<em>Can Process Multiple Instances Per Dataport For</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 33;
+	int TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = 33;
 
 	/**
-	 * The operation id for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
+	 * The operation id for the '<em>Set Process Multiple Instances Per Dataport For</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 34;
+	int TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = 34;
 
 	/**
 	 * The operation id for the '<em>Set Process Multiple Instances For</em>' operation.
@@ -1242,13 +1242,13 @@ public interface CorePackage extends EPackage {
 	int TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = 36;
 
 	/**
-	 * The operation id for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
+	 * The operation id for the '<em>Set Provide Multiple Instances Per Dataport For</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = 37;
+	int TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = 37;
 
 	/**
 	 * The operation id for the '<em>Set Provide Multiple Instances For</em>' operation.
@@ -1314,13 +1314,13 @@ public interface CorePackage extends EPackage {
 	int TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = 44;
 
 	/**
-	 * The operation id for the '<em>Can Comsume Data Port</em>' operation.
+	 * The operation id for the '<em>Can Consume Data Port</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = 45;
+	int TASK___CAN_CONSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = 45;
 
 	/**
 	 * The operation id for the '<em>Get Outputs For Data Port</em>' operation.
@@ -3589,14 +3589,14 @@ public interface CorePackage extends EPackage {
 	EOperation getTask__CanProvideMultipleInstancesFor__Tool_DataPort();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Provide Multiple Instances Per Input For</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProvideMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Provide Multiple Instances Per Dataport For</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.core.Task#canProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @return the meta object for the '<em>Can Provide Multiple Instances Per Dataport For</em>' operation.
+	 * @see easyflow.core.Task#canProvideMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort)
 	 * @generated
 	 */
-	EOperation getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort();
+	EOperation getTask__CanProvideMultipleInstancesPerDataportFor__Tool_DataPort();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Task#canProcessMultipleInputsFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Process Multiple Inputs For</em>}' operation.
@@ -3619,24 +3619,24 @@ public interface CorePackage extends EPackage {
 	EOperation getTask__CanProcessMultipleInstancesFor__Tool_DataPort();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Task#canProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Process Multiple Instances Per Input For</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.Task#canProcessMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Can Process Multiple Instances Per Dataport For</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.core.Task#canProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @return the meta object for the '<em>Can Process Multiple Instances Per Dataport For</em>' operation.
+	 * @see easyflow.core.Task#canProcessMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort)
 	 * @generated
 	 */
-	EOperation getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort();
+	EOperation getTask__CanProcessMultipleInstancesPerDataportFor__Tool_DataPort();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Task#setProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Process Multiple Instances Per Input For</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProcessMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Process Multiple Instances Per Dataport For</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.core.Task#setProcessMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @return the meta object for the '<em>Set Process Multiple Instances Per Dataport For</em>' operation.
+	 * @see easyflow.core.Task#setProcessMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort)
 	 * @generated
 	 */
-	EOperation getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort();
+	EOperation getTask__SetProcessMultipleInstancesPerDataportFor__Tool_DataPort();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Task#setProcessMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Process Multiple Instances For</em>}' operation.
@@ -3659,14 +3659,14 @@ public interface CorePackage extends EPackage {
 	EOperation getTask__SetProcessMultipleInputsFor__Tool_DataPort();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Task#setProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Provide Multiple Instances Per Input For</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.Task#setProvideMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Provide Multiple Instances Per Dataport For</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.core.Task#setProvideMultipleInstancesPerInputFor(easyflow.tool.Tool, easyflow.data.DataPort)
+	 * @return the meta object for the '<em>Set Provide Multiple Instances Per Dataport For</em>' operation.
+	 * @see easyflow.core.Task#setProvideMultipleInstancesPerDataportFor(easyflow.tool.Tool, easyflow.data.DataPort)
 	 * @generated
 	 */
-	EOperation getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort();
+	EOperation getTask__SetProvideMultipleInstancesPerDataportFor__Tool_DataPort();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Task#setProvideMultipleInstancesFor(easyflow.tool.Tool, easyflow.data.DataPort) <em>Set Provide Multiple Instances For</em>}' operation.
@@ -3739,14 +3739,14 @@ public interface CorePackage extends EPackage {
 	EOperation getTask__CanProvideDataPort__Tool_DataPort_String_EList_boolean();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.core.Task#canComsumeDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean) <em>Can Comsume Data Port</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.core.Task#canConsumeDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean) <em>Can Consume Data Port</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Can Comsume Data Port</em>' operation.
-	 * @see easyflow.core.Task#canComsumeDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean)
+	 * @return the meta object for the '<em>Can Consume Data Port</em>' operation.
+	 * @see easyflow.core.Task#canConsumeDataPort(easyflow.tool.Tool, easyflow.data.DataPort, java.lang.String, org.eclipse.emf.common.util.EList, boolean)
 	 * @generated
 	 */
-	EOperation getTask__CanComsumeDataPort__Tool_DataPort_String_EList_boolean();
+	EOperation getTask__CanConsumeDataPort__Tool_DataPort_String_EList_boolean();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.core.Task#getOutputsForDataPort(easyflow.data.DataPort) <em>Get Outputs For Data Port</em>}' operation.
@@ -5541,12 +5541,12 @@ public interface CorePackage extends EPackage {
 		EOperation TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleInstancesFor__Tool_DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Can Provide Multiple Instances Per Input For</b></em>' operation.
+		 * The meta object literal for the '<em><b>Can Provide Multiple Instances Per Dataport For</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleInstancesPerInputFor__Tool_DataPort();
+		EOperation TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProvideMultipleInstancesPerDataportFor__Tool_DataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Can Process Multiple Inputs For</b></em>' operation.
@@ -5565,20 +5565,20 @@ public interface CorePackage extends EPackage {
 		EOperation TASK___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProcessMultipleInstancesFor__Tool_DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Can Process Multiple Instances Per Input For</b></em>' operation.
+		 * The meta object literal for the '<em><b>Can Process Multiple Instances Per Dataport For</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProcessMultipleInstancesPerInputFor__Tool_DataPort();
+		EOperation TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__CanProcessMultipleInstancesPerDataportFor__Tool_DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Set Process Multiple Instances Per Input For</b></em>' operation.
+		 * The meta object literal for the '<em><b>Set Process Multiple Instances Per Dataport For</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProcessMultipleInstancesPerInputFor__Tool_DataPort();
+		EOperation TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProcessMultipleInstancesPerDataportFor__Tool_DataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Set Process Multiple Instances For</b></em>' operation.
@@ -5597,12 +5597,12 @@ public interface CorePackage extends EPackage {
 		EOperation TASK___SET_PROCESS_MULTIPLE_INPUTS_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProcessMultipleInputsFor__Tool_DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Set Provide Multiple Instances Per Input For</b></em>' operation.
+		 * The meta object literal for the '<em><b>Set Provide Multiple Instances Per Dataport For</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProvideMultipleInstancesPerInputFor__Tool_DataPort();
+		EOperation TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT = eINSTANCE.getTask__SetProvideMultipleInstancesPerDataportFor__Tool_DataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Set Provide Multiple Instances For</b></em>' operation.
@@ -5661,12 +5661,12 @@ public interface CorePackage extends EPackage {
 		EOperation TASK___CAN_PROVIDE_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = eINSTANCE.getTask__CanProvideDataPort__Tool_DataPort_String_EList_boolean();
 
 		/**
-		 * The meta object literal for the '<em><b>Can Comsume Data Port</b></em>' operation.
+		 * The meta object literal for the '<em><b>Can Consume Data Port</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = eINSTANCE.getTask__CanComsumeDataPort__Tool_DataPort_String_EList_boolean();
+		EOperation TASK___CAN_CONSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN = eINSTANCE.getTask__CanConsumeDataPort__Tool_DataPort_String_EList_boolean();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Outputs For Data Port</b></em>' operation.

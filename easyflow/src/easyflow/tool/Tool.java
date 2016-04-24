@@ -153,7 +153,7 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @model exceptions="easyflow.DataPortNotFoundException"
 	 * @generated
 	 */
-	boolean canProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
+	boolean canProvideMultipleInstancesPerDataportFor(DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -169,7 +169,7 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @model exceptions="easyflow.DataPortNotFoundException"
 	 * @generated
 	 */
-	boolean canProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
+	boolean canProcessMultipleInstancesPerDataportFor(DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,54 +178,6 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	boolean canProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	void setProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	void setProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	void setProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	void setProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	void setProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model exceptions="easyflow.DataPortNotFoundException"
-	 * @generated
-	 */
-	void setProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -266,6 +218,14 @@ public interface Tool extends IToolElement, DefaultToolElement {
 	 * @generated
 	 */
 	void initLogMessage();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model exceptions="easyflow.DataPortNotFoundException"
+	 * @generated
+	 */
+	boolean isAllowedConversion(DataPort dataPort, String groupingStrFrom, String groupingStrTo) throws DataPortNotFoundException;
 
 	/**
 	 * <!-- begin-user-doc -->

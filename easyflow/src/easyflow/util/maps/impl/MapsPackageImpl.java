@@ -274,6 +274,13 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass stringToCellListMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass stringToParameterListMapEClass = null;
 
 	/**
@@ -1247,6 +1254,33 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getStringToCellListMap() {
+		return stringToCellListMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToCellListMap_Key() {
+		return (EAttribute)stringToCellListMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringToCellListMap_Value() {
+		return (EAttribute)stringToCellListMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getStringToParameterListMap() {
 		return stringToParameterListMapEClass;
 	}
@@ -1517,6 +1551,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		stringToErrorControlMapEClass = createEClass(STRING_TO_ERROR_CONTROL_MAP);
 		createEAttribute(stringToErrorControlMapEClass, STRING_TO_ERROR_CONTROL_MAP__KEY);
 		createEReference(stringToErrorControlMapEClass, STRING_TO_ERROR_CONTROL_MAP__VALUE);
+
+		stringToCellListMapEClass = createEClass(STRING_TO_CELL_LIST_MAP);
+		createEAttribute(stringToCellListMapEClass, STRING_TO_CELL_LIST_MAP__KEY);
+		createEAttribute(stringToCellListMapEClass, STRING_TO_CELL_LIST_MAP__VALUE);
 	}
 
 	/**
@@ -1698,6 +1736,10 @@ public class MapsPackageImpl extends EPackageImpl implements MapsPackage {
 		initEClass(stringToErrorControlMapEClass, Map.Entry.class, "StringToErrorControlMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringToErrorControlMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getStringToErrorControlMap_Value(), theUtilPackage.getLogMessage(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringToCellListMapEClass, Map.Entry.class, "StringToCellListMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToCellListMap_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToCellListMap_Value(), theEasyflowPackage.getmxICell(), "value", null, 0, -1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //MapsPackageImpl

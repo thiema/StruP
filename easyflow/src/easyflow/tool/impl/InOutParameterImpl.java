@@ -6,14 +6,16 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.custom.ui.GlobalConfig;
+import easyflow.custom.util.GlobalConstants;
 import easyflow.tool.InOutParameter;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getFilenameCreation <em>Filename Creation</em>}</li>
  *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getFormats <em>Formats</em>}</li>
  *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getDataPort <em>Data Port</em>}</li>
+ *   <li>{@link easyflow.tool.impl.InOutParameterImpl#getConvertGrouping <em>Convert Grouping</em>}</li>
  * </ul>
  * </p>
  *
@@ -123,6 +126,25 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	 * @ordered
 	 */
 	protected String dataPort = DATA_PORT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getConvertGrouping() <em>Convert Grouping</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConvertGrouping()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONVERT_GROUPING_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getConvertGrouping() <em>Convert Grouping</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConvertGrouping()
+	 * @generated
+	 * @ordered
+	 */
+	protected String convertGrouping = CONVERT_GROUPING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -242,6 +264,27 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getConvertGrouping() {
+		return convertGrouping;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConvertGrouping(String newConvertGrouping) {
+		String oldConvertGrouping = convertGrouping;
+		convertGrouping = newConvertGrouping;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.IN_OUT_PARAMETER__CONVERT_GROUPING, oldConvertGrouping, convertGrouping));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean omitExtension() {
@@ -249,6 +292,41 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 			return false;
 		else
 			return !getExtension();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public boolean isAllowedConversion(String groupingStrFrom, String groupingStrTo) {
+		
+		String convertGrouping = getConvertGrouping(null); 
+		if (convertGrouping.equalsIgnoreCase(GlobalConstants.CONVERT_GROUPING_ANY))
+			return true;
+		else if (convertGrouping.equalsIgnoreCase(GlobalConstants.CONVERT_GROUPING_NONE))
+			return false;
+		else if (groupingStrFrom.equalsIgnoreCase(groupingStrTo))
+			return true;
+		else if ((groupingStrFrom+"_to_"+groupingStrTo).equalsIgnoreCase(convertGrouping))
+			return true;
+		
+		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
+	public String getConvertGrouping(String default_) {
+		if (getConvertGrouping() != null)
+			return getConvertGrouping();
+		else if (default_ != null)
+			return default_;
+		else
+			return GlobalConfig.getConvertGrouping();
+			
 	}
 
 	public boolean matches(InOutParameter templateParameter) {
@@ -285,6 +363,8 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 				return getFormats();
 			case ToolPackage.IN_OUT_PARAMETER__DATA_PORT:
 				return getDataPort();
+			case ToolPackage.IN_OUT_PARAMETER__CONVERT_GROUPING:
+				return getConvertGrouping();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -314,6 +394,9 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 			case ToolPackage.IN_OUT_PARAMETER__DATA_PORT:
 				setDataPort((String)newValue);
 				return;
+			case ToolPackage.IN_OUT_PARAMETER__CONVERT_GROUPING:
+				setConvertGrouping((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -341,6 +424,9 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 			case ToolPackage.IN_OUT_PARAMETER__DATA_PORT:
 				setDataPort(DATA_PORT_EDEFAULT);
 				return;
+			case ToolPackage.IN_OUT_PARAMETER__CONVERT_GROUPING:
+				setConvertGrouping(CONVERT_GROUPING_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -363,6 +449,8 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 				return formats != null && !formats.isEmpty();
 			case ToolPackage.IN_OUT_PARAMETER__DATA_PORT:
 				return DATA_PORT_EDEFAULT == null ? dataPort != null : !DATA_PORT_EDEFAULT.equals(dataPort);
+			case ToolPackage.IN_OUT_PARAMETER__CONVERT_GROUPING:
+				return CONVERT_GROUPING_EDEFAULT == null ? convertGrouping != null : !CONVERT_GROUPING_EDEFAULT.equals(convertGrouping);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -377,6 +465,10 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 		switch (operationID) {
 			case ToolPackage.IN_OUT_PARAMETER___OMIT_EXTENSION:
 				return omitExtension();
+			case ToolPackage.IN_OUT_PARAMETER___IS_ALLOWED_CONVERSION__STRING_STRING:
+				return isAllowedConversion((String)arguments.get(0), (String)arguments.get(1));
+			case ToolPackage.IN_OUT_PARAMETER___GET_CONVERT_GROUPING__STRING:
+				return getConvertGrouping((String)arguments.get(0));
 		}
 		return super.eInvoke(operationID, arguments);
 	}
@@ -401,6 +493,8 @@ public class InOutParameterImpl extends ParameterImpl implements InOutParameter 
 		result.append(formats);
 		result.append(", dataPort: ");
 		result.append(dataPort);
+		result.append(", convertGrouping: ");
+		result.append(convertGrouping);
 		result.append(')');
 		return result.toString();
 	}

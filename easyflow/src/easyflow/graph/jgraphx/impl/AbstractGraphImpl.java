@@ -236,6 +236,7 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 			getGraph().getGraph().traverse(root, true, visitor);			
 		
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
+		
 		JGraphXUtil.layoutGraph();
 		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, null, allTraversalEvents);
 		
@@ -444,7 +445,8 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 			getGraph().getGraph().traverseAllPaths(root, true, visitor, null);
 			//getGraph().traverse(root, true, visitor);
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
-		JGraphXUtil.layoutGraph();
+		
+		//JGraphXUtil.layoutGraph();
 		removeDeprecatedTraversalEvents(deprecatedTraversalEvents, keepTraversalEvents, allTraversalEvents);
 		
 		// traverse graph to resolve traversal events implied by conditional edges
@@ -479,10 +481,12 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 		
 		getGraph().getGraph().getModel().beginUpdate();try{
 			getGraph().getGraph().traverseAllPaths(root, true, visitor1, null);
-		JGraphXUtil.layoutGraph();
+			
 		}		finally		{			getGraph().getGraph().getModel().endUpdate();		}
 		
+		JGraphXUtil.layoutGraph();
 		//logger.debug("#traversalEvents="+getTraversalEvents().size()+" #"+getTraversalEvents(getDefaultRootCell(), true).size()+" root"+getDefaultRootCell());
+		
 		return true;
 	}
 

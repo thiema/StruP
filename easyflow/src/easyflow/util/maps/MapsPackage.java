@@ -1670,6 +1670,52 @@ public interface MapsPackage extends EPackage {
 	int STRING_TO_ERROR_CONTROL_MAP_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link easyflow.util.maps.impl.StringToCellListMapImpl <em>String To Cell List Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see easyflow.util.maps.impl.StringToCellListMapImpl
+	 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToCellListMap()
+	 * @generated
+	 */
+	int STRING_TO_CELL_LIST_MAP = 35;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CELL_LIST_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CELL_LIST_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Cell List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CELL_LIST_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>String To Cell List Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_CELL_LIST_MAP_OPERATION_COUNT = 0;
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Task Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2724,6 +2770,40 @@ public interface MapsPackage extends EPackage {
 	EReference getStringToErrorControlMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Cell List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Cell List Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="easyflow.mxICell" valueMany="true"
+	 * @generated
+	 */
+	EClass getStringToCellListMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToCellListMap()
+	 * @generated
+	 */
+	EAttribute getStringToCellListMap_Key();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToCellListMap()
+	 * @generated
+	 */
+	EAttribute getStringToCellListMap_Value();
+
+	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Parameter List Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3686,6 +3766,32 @@ public interface MapsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference STRING_TO_ERROR_CONTROL_MAP__VALUE = eINSTANCE.getStringToErrorControlMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToCellListMapImpl <em>String To Cell List Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see easyflow.util.maps.impl.StringToCellListMapImpl
+		 * @see easyflow.util.maps.impl.MapsPackageImpl#getStringToCellListMap()
+		 * @generated
+		 */
+		EClass STRING_TO_CELL_LIST_MAP = eINSTANCE.getStringToCellListMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_CELL_LIST_MAP__KEY = eINSTANCE.getStringToCellListMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_CELL_LIST_MAP__VALUE = eINSTANCE.getStringToCellListMap_Value();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.util.maps.impl.StringToParameterListMapImpl <em>String To Parameter List Map</em>}' class.

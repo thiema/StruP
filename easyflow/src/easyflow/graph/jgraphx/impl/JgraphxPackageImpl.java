@@ -32,6 +32,7 @@ import easyflow.graph.jgraphx.PreprocessingGraph;
 import easyflow.graph.jgraphx.SubGraph;
 import easyflow.graph.jgraphx.ToolDependencyGraph;
 import easyflow.graph.jgraphx.TraversalEventGraph;
+import easyflow.graph.jgraphx.UntranslatedLink;
 import easyflow.impl.EasyflowPackageImpl;
 import easyflow.metadata.MetadataPackage;
 import easyflow.metadata.impl.MetadataPackageImpl;
@@ -101,6 +102,13 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * @generated
 	 */
 	private EClass graphEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass untranslatedLinkEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -341,7 +349,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getPreprocessingGraph__ResolveEdge__EMap() {
+	public EOperation getPreprocessingGraph__ResolveEdge__Task_EList() {
 		return preprocessingGraphEClass.getEOperations().get(3);
 	}
 
@@ -719,7 +727,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getGraph__ResolveEdge__EMap() {
+	public EOperation getGraph__ResolveEdge__Task_EList() {
 		return graphEClass.getEOperations().get(11);
 	}
 
@@ -809,6 +817,42 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getUntranslatedLink() {
+		return untranslatedLinkEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUntranslatedLink_Source() {
+		return (EReference)untranslatedLinkEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUntranslatedLink_Target() {
+		return (EReference)untranslatedLinkEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUntranslatedLink_UntranslatedLinks() {
+		return (EReference)untranslatedLinkEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public JgraphxFactory getJgraphxFactory() {
 		return (JgraphxFactory)getEFactoryInstance();
 	}
@@ -848,7 +892,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL);
 		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED);
 		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS);
-		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___RESOLVE_EDGE__EMAP);
+		createEOperation(preprocessingGraphEClass, PREPROCESSING_GRAPH___RESOLVE_EDGE__TASK_ELIST);
 
 		toolDependencyGraphEClass = createEClass(TOOL_DEPENDENCY_GRAPH);
 		createEReference(toolDependencyGraphEClass, TOOL_DEPENDENCY_GRAPH__GRAPH);
@@ -894,7 +938,7 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEOperation(graphEClass, GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL);
 		createEOperation(graphEClass, GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED);
 		createEOperation(graphEClass, GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS);
-		createEOperation(graphEClass, GRAPH___RESOLVE_EDGE__EMAP);
+		createEOperation(graphEClass, GRAPH___RESOLVE_EDGE__TASK_ELIST);
 		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_GROUPINGINSTANCE);
 		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT__MXICELL_TRAVERSALEVENT_STRING_ELIST);
 		createEOperation(graphEClass, GRAPH___APPLY_TRAVERSAL_EVENT_COPY_GRAPH__MXICELL_TRAVERSALEVENT_GROUPINGINSTANCE_RETURNVALUE);
@@ -904,6 +948,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		createEOperation(graphEClass, GRAPH___RESET_FLAGS);
 		createEOperation(graphEClass, GRAPH___GET_GROUPING_INSTANCES__TRAVERSALEVENT);
 		createEOperation(graphEClass, GRAPH___INIT);
+
+		untranslatedLinkEClass = createEClass(UNTRANSLATED_LINK);
+		createEReference(untranslatedLinkEClass, UNTRANSLATED_LINK__SOURCE);
+		createEReference(untranslatedLinkEClass, UNTRANSLATED_LINK__TARGET);
+		createEReference(untranslatedLinkEClass, UNTRANSLATED_LINK__UNTRANSLATED_LINKS);
 	}
 
 	/**
@@ -1006,10 +1055,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEOperation(getPreprocessingGraph__FindCellsWherePreprocessingIsRequired(), theMapsPackage.getCellToCellListMap(), "findCellsWherePreprocessingIsRequired", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getPreprocessingGraph__FindCellsWithUntranslatedDataLinks(), theMapsPackage.getCellToCellListMap(), "findCellsWithUntranslatedDataLinks", 0, -1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getPreprocessingGraph__FindCellsWithUntranslatedDataLinks(), this.getUntranslatedLink(), "findCellsWithUntranslatedDataLinks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getPreprocessingGraph__ResolveEdge__EMap(), ecorePackage.getEBoolean(), "resolveEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getCellToCellListMap(), "entry", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getPreprocessingGraph__ResolveEdge__Task_EList(), ecorePackage.getEBoolean(), "resolveEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getTask(), "target", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getmxICell(), "edges", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
@@ -1114,10 +1164,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 
 		initEOperation(getGraph__FindCellsWherePreprocessingIsRequired(), theMapsPackage.getCellToCellListMap(), "findCellsWherePreprocessingIsRequired", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getGraph__FindCellsWithUntranslatedDataLinks(), theMapsPackage.getCellToCellListMap(), "findCellsWithUntranslatedDataLinks", 0, -1, IS_UNIQUE, IS_ORDERED);
+		initEOperation(getGraph__FindCellsWithUntranslatedDataLinks(), this.getUntranslatedLink(), "findCellsWithUntranslatedDataLinks", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getGraph__ResolveEdge__EMap(), ecorePackage.getEBoolean(), "resolveEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theMapsPackage.getCellToCellListMap(), "entry", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getGraph__ResolveEdge__Task_EList(), ecorePackage.getEBoolean(), "resolveEdge", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theCorePackage.getTask(), "target", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEasyflowPackage.getmxICell(), "edges", 0, -1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getTaskNotFoundException());
 		addEException(op, theEasyflowPackage.getDataLinkNotFoundException());
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
@@ -1171,6 +1222,11 @@ public class JgraphxPackageImpl extends EPackageImpl implements JgraphxPackage {
 		addEException(op, theEasyflowPackage.getGroupingCriterionInstanceNotFoundException());
 
 		initEOperation(getGraph__Init(), ecorePackage.getEBoolean(), "init", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(untranslatedLinkEClass, UntranslatedLink.class, "UntranslatedLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getUntranslatedLink_Source(), theCorePackage.getTask(), null, "source", null, 0, 1, UntranslatedLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUntranslatedLink_Target(), theCorePackage.getTask(), null, "target", null, 0, 1, UntranslatedLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUntranslatedLink_UntranslatedLinks(), theMapsPackage.getStringToCellListMap(), null, "untranslatedLinks", null, 0, -1, UntranslatedLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 	}
 
 } //JgraphxPackageImpl

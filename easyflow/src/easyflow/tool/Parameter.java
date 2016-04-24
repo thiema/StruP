@@ -54,7 +54,7 @@ import org.eclipse.emf.common.util.EMap;
  *   <li>{@link easyflow.tool.Parameter#isDataParam <em>Data Param</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getCmdPart <em>Cmd Part</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getMultipleInstances <em>Multiple Instances</em>}</li>
- *   <li>{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
+ *   <li>{@link easyflow.tool.Parameter#getMultipleInstancesPerDataport <em>Multiple Instances Per Dataport</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#isHidden <em>Hidden</em>}</li>
  *   <li>{@link easyflow.tool.Parameter#getOutputDefaultParam <em>Output Default Param</em>}</li>
@@ -765,30 +765,30 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	void setMultipleInstances(Boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Multiple Instances Per Input</b></em>' attribute.
+	 * Returns the value of the '<em><b>Multiple Instances Per Dataport</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Multiple Instances Per Input</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Multiple Instances Per Dataport</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Multiple Instances Per Input</em>' attribute.
-	 * @see #setMultipleInstancesPerInput(Boolean)
-	 * @see easyflow.tool.ToolPackage#getParameter_MultipleInstancesPerInput()
+	 * @return the value of the '<em>Multiple Instances Per Dataport</em>' attribute.
+	 * @see #setMultipleInstancesPerDataport(Boolean)
+	 * @see easyflow.tool.ToolPackage#getParameter_MultipleInstancesPerDataport()
 	 * @model
 	 * @generated
 	 */
-	Boolean getMultipleInstancesPerInput();
+	Boolean getMultipleInstancesPerDataport();
 
 	/**
-	 * Sets the value of the '{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}' attribute.
+	 * Sets the value of the '{@link easyflow.tool.Parameter#getMultipleInstancesPerDataport <em>Multiple Instances Per Dataport</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Multiple Instances Per Input</em>' attribute.
-	 * @see #getMultipleInstancesPerInput()
+	 * @param value the new value of the '<em>Multiple Instances Per Dataport</em>' attribute.
+	 * @see #getMultipleInstancesPerDataport()
 	 * @generated
 	 */
-	void setMultipleInstancesPerInput(Boolean value);
+	void setMultipleInstancesPerDataport(Boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute.
@@ -1148,7 +1148,7 @@ public interface Parameter extends IToolElement, DefaultToolElement {
 	 * @model
 	 * @generated
 	 */
-	boolean isMultipleInstancesPerInput(Boolean default_);
+	boolean isMultipleInstancesPerDataport(Boolean default_);
 
 	/**
 	 * <!-- begin-user-doc -->

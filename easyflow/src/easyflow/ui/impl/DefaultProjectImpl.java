@@ -17,12 +17,9 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import javax.xml.validation.Schema;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.velocity.context.Context;
@@ -41,7 +38,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import easyflow.core.Catalog;
 import easyflow.util.Category;
 import easyflow.core.CoreFactory;
@@ -1448,12 +1444,12 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				readToolConfig(toolCfg);
 			} else {
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
-						Severity.ERROR, 
+						Severity.INFO, 
 						Util.generateStringList(
 								Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
 								"Could not create buffered reader for tool configuration."
 						));
-				return false;
+				//return false;
 			}
 	
 			// try to find pkg_config.json
@@ -1475,12 +1471,12 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			else
 			{
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
-						Severity.ERROR, 
+						Severity.INFO, 
 						Util.generateStringList(
 								Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
 								"Could not create buffered reader for pkg configuration."
 						));
-				return false;
+				//return false;
 			}
 			
 			// try to find <toolname>_config.json
@@ -1721,6 +1717,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			jGraph.setGraph(graph);
 			JGraphXUtil.setGraph(jGraph);
 		}
+		else
+			JGraphXUtil.setGraph(getActiveWorkflow().getJgraph());
 		
 		if (getActiveWorkflow().getGraph() == null)
 			getActiveWorkflow().setGraph(graph);

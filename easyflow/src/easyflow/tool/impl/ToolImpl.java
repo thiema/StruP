@@ -892,7 +892,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			templateParam.merge(dfltParam);
 		else if (dfltParam != null)
 			templateParam = dfltParam;
-		
+
 		return templateParam;
 	}
 
@@ -930,7 +930,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 					match = dataParameter.matches(templateDataParameter);
 				else if (dataParameter == null && templateDataParameter == null)
 					match = parameter.matches(templateParameter);
-				// what should be done in a mixed (non-data/data) situation
+				// what should be done in a mixed (non-data/data) situation ?
 				else
 				{
 					if (dataParameter != null && templateDataParameter == null)
@@ -946,13 +946,19 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				
 				if (match) 
 				{
-					logger.trace("getMatchingParameter(): found "
+					if (templateParameter.getMultiple() != null && templateParameter.getMultiple())
+					{
+					logger.debug("getMatchingParameter(): "+getName()+": found "
 							+ (res == null ? "" : "(add) ") + "template param="
-							+ " "+ templateParameter.getName()
-							+ " "+ templateParameter.isNamed(null)
-							+ " "+ templateParameter.getPrefix()
-							+ " "+ templateParameter.getDelimiter()
-							+ " "+ templateParameter.getHandles());
+							+ " name="+ templateParameter.getName()
+							+ " named="+ templateParameter.isNamed(null)
+							+ " prefix="+ templateParameter.getPrefix()
+							+ " delim="+ templateParameter.getDelimiter()
+							+ " handles="+ templateParameter.getHandles()
+							+ " output="+ templateParameter.getOutputDefaultParam()
+							+ " multiple="+templateParameter.getMultiple()
+							);
+					}
 					if (res == null)
 						res = EcoreUtil.copy(templateParameter);
 					else
@@ -1169,6 +1175,23 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
+	public boolean isAllowedConversion(DataPort dataPort, String groupingStrFrom, String groupingStrTo) throws DataPortNotFoundException {
+		
+		Data matchingData = getDataForDataPort(dataPort);
+		if (matchingData == null || matchingData.getPort() == null)
+			throw new DataPortNotFoundException();
+		else 
+		{
+			InOutParameter p = (InOutParameter) matchingData.getParameter();
+			return p.isAllowedConversion(groupingStrFrom, groupingStrTo);
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated not
+	 */
 	public String renderToString() {
 		return getId();
 	}
@@ -1246,9 +1269,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		else 
 		{
 			if (isRoot())
-				return GlobalConfig.getMultipleInputsForRootTaskValue();
+				return GlobalConfig.getMultipleDataportsForRootTaskValue();
 			Parameter p = matchingData.getParameter();
-			return p.isMultiple(GlobalConfig.getMultipleInputsDefaultValue());
+			return p.isMultiple(GlobalConfig.getMultipleDataportsDefaultValue());
 		}
 	}
 
@@ -1275,7 +1298,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean canProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+	public boolean canProvideMultipleInstancesPerDataportFor(DataPort dataPort) throws DataPortNotFoundException {
 		Data matchingData = getDataForDataPort(dataPort);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
@@ -1284,7 +1307,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			if (isRoot())
 				return GlobalConfig.getMultipleInstancesForRootTaskValue();
 			Parameter p = matchingData.getParameter();
-			return p.isMultipleInstancesPerInput(GlobalConfig.getMultipleInstancesPerInputDefaultValue());
+			return p.isMultipleInstancesPerDataport(GlobalConfig.getMultipleInstancesPerDataportDefaultValue());
 		}
 	}
 
@@ -1300,7 +1323,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		else 
 		{
 			Parameter p = matchingData.getParameter();
-			return p.isMultiple(GlobalConfig.getMultipleInputsDefaultValue());
+			return p.isMultiple(GlobalConfig.getMultipleDataportsDefaultValue());
 		}
 	}
 
@@ -1309,14 +1332,14 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean canProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
+	public boolean canProcessMultipleInstancesPerDataportFor(DataPort dataPort) throws DataPortNotFoundException {
 		Data matchingData = getDataForDataPort(dataPort);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
 		{
 			Parameter p = matchingData.getParameter();
-			return p.isMultipleInstances(GlobalConfig.getMultipleInstancesDefaultValue());
+			return p.isMultipleInstances(GlobalConfig.getMultipleInstancesPerDataportDefaultValue());
 		}
 	}
 
@@ -1332,74 +1355,8 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		else 
 		{
 			Parameter p = matchingData.getParameter();
-			return p.isMultipleInstancesPerInput(GlobalConfig.getMultipleInstancesPerInputDefaultValue());
+			return p.isMultipleInstancesPerDataport(GlobalConfig.getMultipleInstancesPerDataportDefaultValue());
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProcessMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProvideMultipleInstancesPerInputFor(DataPort dataPort) throws DataPortNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setProvideMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1743,9 +1700,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+			case ToolPackage.TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT:
 				try {
-					return canProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+					return canProvideMultipleInstancesPerDataportFor((DataPort)arguments.get(0));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
@@ -1757,9 +1714,9 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
+			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT:
 				try {
-					return canProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
+					return canProcessMultipleInstancesPerDataportFor((DataPort)arguments.get(0));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
@@ -1767,54 +1724,6 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
 				try {
 					return canProcessMultipleInstancesFor((DataPort)arguments.get(0));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
-				try {
-					setProcessMultipleInstancesPerInputFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				try {
-					setProcessMultipleInstancesFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT:
-				try {
-					setProcessMultipleInputsFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT:
-				try {
-					setProvideMultipleInstancesPerInputFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT:
-				try {
-					setProvideMultipleInstancesFor((DataPort)arguments.get(0));
-					return null;
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case ToolPackage.TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT:
-				try {
-					setProvideMultipleInputsFor((DataPort)arguments.get(0));
-					return null;
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
@@ -1832,6 +1741,13 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 			case ToolPackage.TOOL___INIT_LOG_MESSAGE:
 				initLogMessage();
 				return null;
+			case ToolPackage.TOOL___IS_ALLOWED_CONVERSION__DATAPORT_STRING_STRING:
+				try {
+					return isAllowedConversion((DataPort)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
 			case ToolPackage.TOOL___RENDER_TO_STRING:
 				return renderToString();
 		}

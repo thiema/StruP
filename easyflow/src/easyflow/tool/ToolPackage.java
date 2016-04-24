@@ -718,13 +718,13 @@ public interface ToolPackage extends EPackage {
 	int TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 19;
 
 	/**
-	 * The operation id for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
+	 * The operation id for the '<em>Can Provide Multiple Instances Per Dataport For</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 20;
+	int TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 20;
 
 	/**
 	 * The operation id for the '<em>Can Process Multiple Inputs For</em>' operation.
@@ -736,13 +736,13 @@ public interface ToolPackage extends EPackage {
 	int TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 21;
 
 	/**
-	 * The operation id for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
+	 * The operation id for the '<em>Can Process Multiple Instances Per Dataport For</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 22;
+	int TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 22;
 
 	/**
 	 * The operation id for the '<em>Can Process Multiple Instances For</em>' operation.
@@ -754,67 +754,13 @@ public interface ToolPackage extends EPackage {
 	int TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 23;
 
 	/**
-	 * The operation id for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 24;
-
-	/**
-	 * The operation id for the '<em>Set Process Multiple Instances For</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 25;
-
-	/**
-	 * The operation id for the '<em>Set Process Multiple Inputs For</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 26;
-
-	/**
-	 * The operation id for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 27;
-
-	/**
-	 * The operation id for the '<em>Set Provide Multiple Instances For</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 28;
-
-	/**
-	 * The operation id for the '<em>Set Provide Multiple Inputs For</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT = ITOOL_ELEMENT_OPERATION_COUNT + 29;
-
-	/**
 	 * The operation id for the '<em>Resolve Path</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___RESOLVE_PATH = ITOOL_ELEMENT_OPERATION_COUNT + 30;
+	int TOOL___RESOLVE_PATH = ITOOL_ELEMENT_OPERATION_COUNT + 24;
 
 	/**
 	 * The operation id for the '<em>Assume Param Positional</em>' operation.
@@ -823,7 +769,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___ASSUME_PARAM_POSITIONAL = ITOOL_ELEMENT_OPERATION_COUNT + 31;
+	int TOOL___ASSUME_PARAM_POSITIONAL = ITOOL_ELEMENT_OPERATION_COUNT + 25;
 
 	/**
 	 * The operation id for the '<em>Create Data</em>' operation.
@@ -832,7 +778,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 32;
+	int TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 26;
 
 	/**
 	 * The operation id for the '<em>Create Data</em>' operation.
@@ -841,7 +787,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 33;
+	int TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP = ITOOL_ELEMENT_OPERATION_COUNT + 27;
 
 	/**
 	 * The operation id for the '<em>Init Log Message</em>' operation.
@@ -850,7 +796,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL___INIT_LOG_MESSAGE = ITOOL_ELEMENT_OPERATION_COUNT + 34;
+	int TOOL___INIT_LOG_MESSAGE = ITOOL_ELEMENT_OPERATION_COUNT + 28;
+
+	/**
+	 * The operation id for the '<em>Is Allowed Conversion</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL___IS_ALLOWED_CONVERSION__DATAPORT_STRING_STRING = ITOOL_ELEMENT_OPERATION_COUNT + 29;
 
 	/**
 	 * The number of operations of the '<em>Tool</em>' class.
@@ -859,7 +814,7 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TOOL_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 35;
+	int TOOL_OPERATION_COUNT = ITOOL_ELEMENT_OPERATION_COUNT + 30;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -1171,13 +1126,13 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER__MULTIPLE_INSTANCES = ITOOL_ELEMENT_FEATURE_COUNT + 30;
 
 	/**
-	 * The feature id for the '<em><b>Multiple Instances Per Input</b></em>' attribute.
+	 * The feature id for the '<em><b>Multiple Instances Per Dataport</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = ITOOL_ELEMENT_FEATURE_COUNT + 31;
+	int PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT = ITOOL_ELEMENT_FEATURE_COUNT + 31;
 
 	/**
 	 * The feature id for the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute.
@@ -1441,13 +1396,13 @@ public interface ToolPackage extends EPackage {
 	int PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 18;
 
 	/**
-	 * The operation id for the '<em>Is Multiple Instances Per Input</em>' operation.
+	 * The operation id for the '<em>Is Multiple Instances Per Dataport</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 19;
+	int PARAMETER___IS_MULTIPLE_INSTANCES_PER_DATAPORT__BOOLEAN = ITOOL_ELEMENT_OPERATION_COUNT + 19;
 
 	/**
 	 * The operation id for the '<em>Is Named</em>' operation.
@@ -1865,13 +1820,13 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__MULTIPLE_INSTANCES = PARAMETER__MULTIPLE_INSTANCES;
 
 	/**
-	 * The feature id for the '<em><b>Multiple Instances Per Input</b></em>' attribute.
+	 * The feature id for the '<em><b>Multiple Instances Per Dataport</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = PARAMETER__MULTIPLE_INSTANCES_PER_INPUT;
+	int IN_OUT_PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT = PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT;
 
 	/**
 	 * The feature id for the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute.
@@ -1991,13 +1946,22 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER__DATA_PORT = PARAMETER_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Convert Grouping</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER__CONVERT_GROUPING = PARAMETER_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>In Out Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 5;
+	int IN_OUT_PARAMETER_FEATURE_COUNT = PARAMETER_FEATURE_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Render To String</em>' operation.
@@ -2162,13 +2126,13 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN = PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN;
 
 	/**
-	 * The operation id for the '<em>Is Multiple Instances Per Input</em>' operation.
+	 * The operation id for the '<em>Is Multiple Instances Per Dataport</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN = PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN;
+	int IN_OUT_PARAMETER___IS_MULTIPLE_INSTANCES_PER_DATAPORT__BOOLEAN = PARAMETER___IS_MULTIPLE_INSTANCES_PER_DATAPORT__BOOLEAN;
 
 	/**
 	 * The operation id for the '<em>Is Named</em>' operation.
@@ -2315,13 +2279,31 @@ public interface ToolPackage extends EPackage {
 	int IN_OUT_PARAMETER___OMIT_EXTENSION = PARAMETER_OPERATION_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Is Allowed Conversion</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___IS_ALLOWED_CONVERSION__STRING_STRING = PARAMETER_OPERATION_COUNT + 4;
+
+	/**
+	 * The operation id for the '<em>Get Convert Grouping</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IN_OUT_PARAMETER___GET_CONVERT_GROUPING__STRING = PARAMETER_OPERATION_COUNT + 5;
+
+	/**
 	 * The number of operations of the '<em>In Out Parameter</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IN_OUT_PARAMETER_OPERATION_COUNT = PARAMETER_OPERATION_COUNT + 4;
+	int IN_OUT_PARAMETER_OPERATION_COUNT = PARAMETER_OPERATION_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.
@@ -4101,14 +4083,14 @@ public interface ToolPackage extends EPackage {
 	EOperation getTool__CanProvideMultipleInstancesFor__DataPort();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProvideMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Can Provide Multiple Instances Per Input For</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProvideMultipleInstancesPerDataportFor(easyflow.data.DataPort) <em>Can Provide Multiple Instances Per Dataport For</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Can Provide Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.tool.Tool#canProvideMultipleInstancesPerInputFor(easyflow.data.DataPort)
+	 * @return the meta object for the '<em>Can Provide Multiple Instances Per Dataport For</em>' operation.
+	 * @see easyflow.tool.Tool#canProvideMultipleInstancesPerDataportFor(easyflow.data.DataPort)
 	 * @generated
 	 */
-	EOperation getTool__CanProvideMultipleInstancesPerInputFor__DataPort();
+	EOperation getTool__CanProvideMultipleInstancesPerDataportFor__DataPort();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInputsFor(easyflow.data.DataPort) <em>Can Process Multiple Inputs For</em>}' operation.
@@ -4121,14 +4103,14 @@ public interface ToolPackage extends EPackage {
 	EOperation getTool__CanProcessMultipleInputsFor__DataPort();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Can Process Multiple Instances Per Input For</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInstancesPerDataportFor(easyflow.data.DataPort) <em>Can Process Multiple Instances Per Dataport For</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Can Process Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.tool.Tool#canProcessMultipleInstancesPerInputFor(easyflow.data.DataPort)
+	 * @return the meta object for the '<em>Can Process Multiple Instances Per Dataport For</em>' operation.
+	 * @see easyflow.tool.Tool#canProcessMultipleInstancesPerDataportFor(easyflow.data.DataPort)
 	 * @generated
 	 */
-	EOperation getTool__CanProcessMultipleInstancesPerInputFor__DataPort();
+	EOperation getTool__CanProcessMultipleInstancesPerDataportFor__DataPort();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.tool.Tool#canProcessMultipleInstancesFor(easyflow.data.DataPort) <em>Can Process Multiple Instances For</em>}' operation.
@@ -4139,66 +4121,6 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTool__CanProcessMultipleInstancesFor__DataPort();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProcessMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Set Process Multiple Instances Per Input For</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Process Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.tool.Tool#setProcessMultipleInstancesPerInputFor(easyflow.data.DataPort)
-	 * @generated
-	 */
-	EOperation getTool__SetProcessMultipleInstancesPerInputFor__DataPort();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProcessMultipleInstancesFor(easyflow.data.DataPort) <em>Set Process Multiple Instances For</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Process Multiple Instances For</em>' operation.
-	 * @see easyflow.tool.Tool#setProcessMultipleInstancesFor(easyflow.data.DataPort)
-	 * @generated
-	 */
-	EOperation getTool__SetProcessMultipleInstancesFor__DataPort();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProcessMultipleInputsFor(easyflow.data.DataPort) <em>Set Process Multiple Inputs For</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Process Multiple Inputs For</em>' operation.
-	 * @see easyflow.tool.Tool#setProcessMultipleInputsFor(easyflow.data.DataPort)
-	 * @generated
-	 */
-	EOperation getTool__SetProcessMultipleInputsFor__DataPort();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProvideMultipleInstancesPerInputFor(easyflow.data.DataPort) <em>Set Provide Multiple Instances Per Input For</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Provide Multiple Instances Per Input For</em>' operation.
-	 * @see easyflow.tool.Tool#setProvideMultipleInstancesPerInputFor(easyflow.data.DataPort)
-	 * @generated
-	 */
-	EOperation getTool__SetProvideMultipleInstancesPerInputFor__DataPort();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProvideMultipleInstancesFor(easyflow.data.DataPort) <em>Set Provide Multiple Instances For</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Provide Multiple Instances For</em>' operation.
-	 * @see easyflow.tool.Tool#setProvideMultipleInstancesFor(easyflow.data.DataPort)
-	 * @generated
-	 */
-	EOperation getTool__SetProvideMultipleInstancesFor__DataPort();
-
-	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Tool#setProvideMultipleInputsFor(easyflow.data.DataPort) <em>Set Provide Multiple Inputs For</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Set Provide Multiple Inputs For</em>' operation.
-	 * @see easyflow.tool.Tool#setProvideMultipleInputsFor(easyflow.data.DataPort)
-	 * @generated
-	 */
-	EOperation getTool__SetProvideMultipleInputsFor__DataPort();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.tool.Tool#resolvePath() <em>Resolve Path</em>}' operation.
@@ -4249,6 +4171,16 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getTool__InitLogMessage();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.Tool#isAllowedConversion(easyflow.data.DataPort, java.lang.String, java.lang.String) <em>Is Allowed Conversion</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Allowed Conversion</em>' operation.
+	 * @see easyflow.tool.Tool#isAllowedConversion(easyflow.data.DataPort, java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getTool__IsAllowedConversion__DataPort_String_String();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Command <em>Command</em>}'.
@@ -5129,15 +5061,15 @@ public interface ToolPackage extends EPackage {
 	EAttribute getParameter_MultipleInstances();
 
 	/**
-	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}'.
+	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getMultipleInstancesPerDataport <em>Multiple Instances Per Dataport</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Multiple Instances Per Input</em>'.
-	 * @see easyflow.tool.Parameter#getMultipleInstancesPerInput()
+	 * @return the meta object for the attribute '<em>Multiple Instances Per Dataport</em>'.
+	 * @see easyflow.tool.Parameter#getMultipleInstancesPerDataport()
 	 * @see #getParameter()
 	 * @generated
 	 */
-	EAttribute getParameter_MultipleInstancesPerInput();
+	EAttribute getParameter_MultipleInstancesPerDataport();
 
 	/**
 	 * Returns the meta object for the attribute '{@link easyflow.tool.Parameter#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}'.
@@ -5418,14 +5350,14 @@ public interface ToolPackage extends EPackage {
 	EOperation getParameter__IsMultipleInstances__Boolean();
 
 	/**
-	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMultipleInstancesPerInput(java.lang.Boolean) <em>Is Multiple Instances Per Input</em>}' operation.
+	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isMultipleInstancesPerDataport(java.lang.Boolean) <em>Is Multiple Instances Per Dataport</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Multiple Instances Per Input</em>' operation.
-	 * @see easyflow.tool.Parameter#isMultipleInstancesPerInput(java.lang.Boolean)
+	 * @return the meta object for the '<em>Is Multiple Instances Per Dataport</em>' operation.
+	 * @see easyflow.tool.Parameter#isMultipleInstancesPerDataport(java.lang.Boolean)
 	 * @generated
 	 */
-	EOperation getParameter__IsMultipleInstancesPerInput__Boolean();
+	EOperation getParameter__IsMultipleInstancesPerDataport__Boolean();
 
 	/**
 	 * Returns the meta object for the '{@link easyflow.tool.Parameter#isNamed(java.lang.Boolean) <em>Is Named</em>}' operation.
@@ -5623,6 +5555,17 @@ public interface ToolPackage extends EPackage {
 	EAttribute getInOutParameter_DataPort();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.tool.InOutParameter#getConvertGrouping <em>Convert Grouping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Convert Grouping</em>'.
+	 * @see easyflow.tool.InOutParameter#getConvertGrouping()
+	 * @see #getInOutParameter()
+	 * @generated
+	 */
+	EAttribute getInOutParameter_ConvertGrouping();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#matches(easyflow.tool.InOutParameter) <em>Matches</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5661,6 +5604,26 @@ public interface ToolPackage extends EPackage {
 	 * @generated
 	 */
 	EOperation getInOutParameter__OmitExtension();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#isAllowedConversion(java.lang.String, java.lang.String) <em>Is Allowed Conversion</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Allowed Conversion</em>' operation.
+	 * @see easyflow.tool.InOutParameter#isAllowedConversion(java.lang.String, java.lang.String)
+	 * @generated
+	 */
+	EOperation getInOutParameter__IsAllowedConversion__String_String();
+
+	/**
+	 * Returns the meta object for the '{@link easyflow.tool.InOutParameter#getConvertGrouping(java.lang.String) <em>Get Convert Grouping</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Convert Grouping</em>' operation.
+	 * @see easyflow.tool.InOutParameter#getConvertGrouping(java.lang.String)
+	 * @generated
+	 */
+	EOperation getInOutParameter__GetConvertGrouping__String();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.tool.Package <em>Package</em>}'.
@@ -6512,12 +6475,12 @@ public interface ToolPackage extends EPackage {
 		EOperation TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__CanProvideMultipleInstancesFor__DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Can Provide Multiple Instances Per Input For</b></em>' operation.
+		 * The meta object literal for the '<em><b>Can Provide Multiple Instances Per Dataport For</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__CanProvideMultipleInstancesPerInputFor__DataPort();
+		EOperation TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT = eINSTANCE.getTool__CanProvideMultipleInstancesPerDataportFor__DataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Can Process Multiple Inputs For</b></em>' operation.
@@ -6528,12 +6491,12 @@ public interface ToolPackage extends EPackage {
 		EOperation TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInputsFor__DataPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Can Process Multiple Instances Per Input For</b></em>' operation.
+		 * The meta object literal for the '<em><b>Can Process Multiple Instances Per Dataport For</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInstancesPerInputFor__DataPort();
+		EOperation TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInstancesPerDataportFor__DataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Can Process Multiple Instances For</b></em>' operation.
@@ -6542,54 +6505,6 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__CanProcessMultipleInstancesFor__DataPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Set Process Multiple Instances Per Input For</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__SetProcessMultipleInstancesPerInputFor__DataPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Set Process Multiple Instances For</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__SetProcessMultipleInstancesFor__DataPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Set Process Multiple Inputs For</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__SetProcessMultipleInputsFor__DataPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Set Provide Multiple Instances Per Input For</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT = eINSTANCE.getTool__SetProvideMultipleInstancesPerInputFor__DataPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Set Provide Multiple Instances For</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT = eINSTANCE.getTool__SetProvideMultipleInstancesFor__DataPort();
-
-		/**
-		 * The meta object literal for the '<em><b>Set Provide Multiple Inputs For</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT = eINSTANCE.getTool__SetProvideMultipleInputsFor__DataPort();
 
 		/**
 		 * The meta object literal for the '<em><b>Resolve Path</b></em>' operation.
@@ -6630,6 +6545,14 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation TOOL___INIT_LOG_MESSAGE = eINSTANCE.getTool__InitLogMessage();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Allowed Conversion</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TOOL___IS_ALLOWED_CONVERSION__DATAPORT_STRING_STRING = eINSTANCE.getTool__IsAllowedConversion__DataPort_String_String();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.CommandImpl <em>Command</em>}' class.
@@ -7298,12 +7221,12 @@ public interface ToolPackage extends EPackage {
 		EAttribute PARAMETER__MULTIPLE_INSTANCES = eINSTANCE.getParameter_MultipleInstances();
 
 		/**
-		 * The meta object literal for the '<em><b>Multiple Instances Per Input</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Multiple Instances Per Dataport</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PARAMETER__MULTIPLE_INSTANCES_PER_INPUT = eINSTANCE.getParameter_MultipleInstancesPerInput();
+		EAttribute PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT = eINSTANCE.getParameter_MultipleInstancesPerDataport();
 
 		/**
 		 * The meta object literal for the '<em><b>Output Arg Value For Boolean Param</b></em>' attribute feature.
@@ -7522,12 +7445,12 @@ public interface ToolPackage extends EPackage {
 		EOperation PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN = eINSTANCE.getParameter__IsMultipleInstances__Boolean();
 
 		/**
-		 * The meta object literal for the '<em><b>Is Multiple Instances Per Input</b></em>' operation.
+		 * The meta object literal for the '<em><b>Is Multiple Instances Per Dataport</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN = eINSTANCE.getParameter__IsMultipleInstancesPerInput__Boolean();
+		EOperation PARAMETER___IS_MULTIPLE_INSTANCES_PER_DATAPORT__BOOLEAN = eINSTANCE.getParameter__IsMultipleInstancesPerDataport__Boolean();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Named</b></em>' operation.
@@ -7684,6 +7607,14 @@ public interface ToolPackage extends EPackage {
 		EAttribute IN_OUT_PARAMETER__DATA_PORT = eINSTANCE.getInOutParameter_DataPort();
 
 		/**
+		 * The meta object literal for the '<em><b>Convert Grouping</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IN_OUT_PARAMETER__CONVERT_GROUPING = eINSTANCE.getInOutParameter_ConvertGrouping();
+
+		/**
 		 * The meta object literal for the '<em><b>Matches</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7714,6 +7645,22 @@ public interface ToolPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation IN_OUT_PARAMETER___OMIT_EXTENSION = eINSTANCE.getInOutParameter__OmitExtension();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Allowed Conversion</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IN_OUT_PARAMETER___IS_ALLOWED_CONVERSION__STRING_STRING = eINSTANCE.getInOutParameter__IsAllowedConversion__String_String();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Convert Grouping</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation IN_OUT_PARAMETER___GET_CONVERT_GROUPING__STRING = eINSTANCE.getInOutParameter__GetConvertGrouping__String();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.tool.impl.PackageImpl <em>Package</em>}' class.

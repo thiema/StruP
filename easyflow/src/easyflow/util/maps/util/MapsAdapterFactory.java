@@ -234,6 +234,10 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 				return createStringToErrorControlMapAdapter();
 			}
 			@Override
+			public Adapter caseStringToCellListMap(Map.Entry<String, EList<mxICell>> object) {
+				return createStringToCellListMapAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -726,6 +730,20 @@ public class MapsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStringToErrorControlMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Cell List Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToCellListMapAdapter() {
 		return null;
 	}
 

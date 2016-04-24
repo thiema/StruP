@@ -3471,13 +3471,12 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean canComsumeDataPort(Tool tool, DataPort dataPort,
-			String grouping, EList<TraversalChunk> traverslChunks, boolean isPartial)
-			throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canConsumeDataPort(Tool tool, DataPort dataPort, String grouping, 
+			EList<TraversalChunk> traverslChunks, boolean isPartial) throws DataPortNotFoundException, ToolNotFoundException {
 		return false;
 	}
 	
@@ -3551,12 +3550,12 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean canProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
+	public boolean canProvideMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException, ToolNotFoundException {
 		if (tool == null)
 			tool = getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
-		return tool.canProvideMultipleInstancesPerInputFor(dataPort);
+		return tool.canProvideMultipleInstancesPerDataportFor(dataPort);
 	}
 
 	/**
@@ -3590,12 +3589,12 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean canProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException {
+	public boolean canProcessMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws ToolNotFoundException, DataPortNotFoundException {
 		if (tool == null)
 			tool = getPreferredTool();
 		if (tool == null)
 			throw new ToolNotFoundException();
-		return tool.canProcessMultipleInstancesPerInputFor(dataPort);
+		return tool.canProcessMultipleInstancesPerDataportFor(dataPort);
 	}
 
 	/**
@@ -3603,7 +3602,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setProcessMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
+	public void setProcessMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -3636,7 +3635,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setProvideMultipleInstancesPerInputFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
+	public void setProvideMultipleInstancesPerDataportFor(Tool tool, DataPort dataPort) throws DataPortNotFoundException {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
@@ -4264,9 +4263,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+			case CorePackage.TASK___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT:
 				try {
-					return canProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return canProvideMultipleInstancesPerDataportFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
@@ -4285,16 +4284,16 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+			case CorePackage.TASK___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT:
 				try {
-					return canProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					return canProcessMultipleInstancesPerDataportFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+			case CorePackage.TASK___SET_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT:
 				try {
-					setProcessMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					setProcessMultipleInstancesPerDataportFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
 					return null;
 				}
 				catch (Throwable throwable) {
@@ -4316,9 +4315,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__TOOL_DATAPORT:
+			case CorePackage.TASK___SET_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__TOOL_DATAPORT:
 				try {
-					setProvideMultipleInstancesPerInputFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
+					setProvideMultipleInstancesPerDataportFor((Tool)arguments.get(0), (DataPort)arguments.get(1));
 					return null;
 				}
 				catch (Throwable throwable) {
@@ -4360,9 +4359,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);
 				}
-			case CorePackage.TASK___CAN_COMSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN:
+			case CorePackage.TASK___CAN_CONSUME_DATA_PORT__TOOL_DATAPORT_STRING_ELIST_BOOLEAN:
 				try {
-					return canComsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3), (Boolean)arguments.get(4));
+					return canConsumeDataPort((Tool)arguments.get(0), (DataPort)arguments.get(1), (String)arguments.get(2), (EList<TraversalChunk>)arguments.get(3), (Boolean)arguments.get(4));
 				}
 				catch (Throwable throwable) {
 					throw new InvocationTargetException(throwable);

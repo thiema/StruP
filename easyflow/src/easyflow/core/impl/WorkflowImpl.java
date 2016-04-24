@@ -1,8 +1,10 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
+
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
+
 import easyflow.util.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
@@ -29,6 +31,7 @@ import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.execution.IExecutionSystem;
 import easyflow.graph.jgraphx.Graph;
+import easyflow.graph.jgraphx.UntranslatedLink;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
@@ -49,12 +52,15 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.eclipse.emf.common.notify.Notification;
@@ -1017,8 +1023,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		getGraph().getModel().endUpdate();
 		GlobalConfig.getTools().clear();
 		getLastTasks().clear();
-		setFirstNode(null);
 		
+		//JGraphXUtil.layoutGraph();
+		//getGraph().getView().revalidate();
+		//getGraph().getView().reload();
+		setFirstNode(null);
 		return rc;
 	}
 
@@ -1529,7 +1538,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
                 							Util.generateStringList(tool.getPackage().getName(), tool.getName(), packageName, task.getUniqueString()));
         							
         						}
-        						else if(tool.getPackage()==null)
+        						else if(tool.getPackage() == null)
         						{
         							easyflow.tool.Package pkg = ToolFactory.eINSTANCE.createPackage();
         							pkg.setName(toolName);
@@ -2459,7 +2468,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 	 */
 	public boolean resolveTraversalEvents() {
 		
-		
 		try {
 			if (getJgraph().resolveTraversalEvents((mxICell)getFirstNode()))
 			{
@@ -2773,17 +2781,23 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_INCOMPATIBLE_GROUPINGS);
 		boolean rc = true;
 		//Iterator<Entry<mxICell, EList<mxICell>>> it = getGraphUtil().findCellsWithUntranslatedDataLinks().entrySet().iterator();
-		EMap<mxICell, EList<mxICell>> untranslatedDLs = getJgraph().findCellsWithUntranslatedDataLinks();
+		EList<UntranslatedLink> untranslatedDLs = getJgraph().findCellsWithUntranslatedDataLinks();
 		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_WORKFLOW_FOUND_NUM_INCOMPATIBLE_GROUPINGS_1, Severity.INFO,
 				Integer.toString(untranslatedDLs.size()));
-		ListIterator<Entry<mxICell, EList<mxICell>>> it = untranslatedDLs.listIterator(untranslatedDLs.size()); 
-		while (it.hasPrevious())
+		ListIterator<UntranslatedLink> itOuter = untranslatedDLs.listIterator(untranslatedDLs.size()); 
+		while (itOuter.hasPrevious())
 		//while (it.hasNext())
 		{
-			Entry<mxICell, EList<mxICell>> entry = //it.next(); 
-					it.previous();
-			try {
-				logger.debug("resolveIncompatibleGroupings(): resolve for task="+JGraphXUtil.loadTask(entry.getKey()).getUniqueString());
+		UntranslatedLink untranslatedDL = itOuter.previous();
+		int numEdges = untranslatedDL.getUntranslatedLinks().size();
+		ListIterator<Entry<String, EList<mxICell>>> it = untranslatedDL.getUntranslatedLinks().listIterator(numEdges);
+		while (it.hasPrevious())
+		{
+			Entry<String, EList<mxICell>> edgeMap = it.previous();
+			logger.debug("resolveIncompatibleGroupings(): resolve for task="+untranslatedDL.getTarget().getUniqueString());
+			
+			/*try {
+				logger.debug("resolveIncompatibleGroupings(): resolve for task="+untranslatedDL.getTarget().getUniqueString());
 			} catch (TaskNotFoundException e) {
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
@@ -2791,7 +2805,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 						Severity.ERROR, e,
 						Util.generateStringList("resolveIncompatibleGroupings"));
 				return false;
-			}
+			}*/
 			/*
 			for (mxICell cell:entry.getValue())
 			{
@@ -2809,12 +2823,12 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				logger.debug("resolveIncompatibleGroupings(): "+dataLink.getParentGroupingStr()+"->"+dataLink.getGroupingStr());
 			}*/
 			try {
-				Task task = JGraphXUtil.loadTask(entry.getKey());
+				//Task task = JGraphXUtil.loadTask(entry.getKey());
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_WORKFLOW_RESOLVE_INCOMPATIBLE_GROUPING_FOR_TASK_1,
 						Severity.INFO,
-						task.getUniqueString());
-				rc = getJgraph().resolveEdge(entry);
+						untranslatedDL.getTarget().getUniqueString());
+				rc = getJgraph().resolveEdge(untranslatedDL.getTarget(), edgeMap.getValue());
 			} catch (TaskNotFoundException e) {
 				getLogMessage().generateLogMsg(
 						GlobalConstants.LOG_MSG_TASK_NOT_FOUND_0, 
@@ -2847,6 +2861,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				return false;
 			}
 		}
+		}
 		JGraphXUtil.layoutGraph();
 		if (rc)
 		{
@@ -2872,6 +2887,7 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 		printWorkflowStepMsgOnStart(GlobalConstants.RESOLVE_PREPROCESSING_TASKS);
 		EMap<mxICell, EList<mxICell>> prepRequired = getJgraph().findCellsWherePreprocessingIsRequired();
 		logger.debug("resolvePreprocessingTasks(): found "+prepRequired.size()+" tasks with unresolved preprocessings");
+	
 		Iterator<Entry<mxICell, EList<mxICell>>> it = prepRequired.iterator(); 
 		while (it.hasNext())
 		{
@@ -2897,7 +2913,6 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 				}
 				logger.debug("resolvePreprocessingTasks(): rc="+rc);
 			}
-			//rc = getGraphUtil().resolvePreprocessingTask(entry.getKey(), null);
 		}
 		if (rc)
 			getProcessedStates().put(GlobalConstants.PREPROCESSING_TASKS_RESPOLVED, true);

@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link easyflow.tool.InOutParameter#getFilenameCreation <em>Filename Creation</em>}</li>
  *   <li>{@link easyflow.tool.InOutParameter#getFormats <em>Formats</em>}</li>
  *   <li>{@link easyflow.tool.InOutParameter#getDataPort <em>Data Port</em>}</li>
+ *   <li>{@link easyflow.tool.InOutParameter#getConvertGrouping <em>Convert Grouping</em>}</li>
  * </ul>
  * </p>
  *
@@ -150,6 +151,32 @@ public interface InOutParameter extends Parameter {
 	void setDataPort(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Convert Grouping</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Convert Grouping</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Convert Grouping</em>' attribute.
+	 * @see #setConvertGrouping(String)
+	 * @see easyflow.tool.ToolPackage#getInOutParameter_ConvertGrouping()
+	 * @model
+	 * @generated
+	 */
+	String getConvertGrouping();
+
+	/**
+	 * Sets the value of the '{@link easyflow.tool.InOutParameter#getConvertGrouping <em>Convert Grouping</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Convert Grouping</em>' attribute.
+	 * @see #getConvertGrouping()
+	 * @generated
+	 */
+	void setConvertGrouping(String value);
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -180,5 +207,21 @@ public interface InOutParameter extends Parameter {
 	 * @generated
 	 */
 	boolean omitExtension();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean isAllowedConversion(String groupingStrFrom, String groupingStrTo);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	String getConvertGrouping(String default_);
 
 } // InOutParameter

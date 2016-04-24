@@ -830,7 +830,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__CanProvideMultipleInstancesPerInputFor__DataPort() {
+	public EOperation getTool__CanProvideMultipleInstancesPerDataportFor__DataPort() {
 		return toolEClass.getEOperations().get(20);
 	}
 
@@ -848,7 +848,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__CanProcessMultipleInstancesPerInputFor__DataPort() {
+	public EOperation getTool__CanProcessMultipleInstancesPerDataportFor__DataPort() {
 		return toolEClass.getEOperations().get(22);
 	}
 
@@ -866,7 +866,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__SetProcessMultipleInstancesPerInputFor__DataPort() {
+	public EOperation getTool__ResolvePath() {
 		return toolEClass.getEOperations().get(24);
 	}
 
@@ -875,7 +875,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__SetProcessMultipleInstancesFor__DataPort() {
+	public EOperation getTool__AssumeParamPositional() {
 		return toolEClass.getEOperations().get(25);
 	}
 
@@ -884,7 +884,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__SetProcessMultipleInputsFor__DataPort() {
+	public EOperation getTool__CreateData__InOutParameter_EMap_EMap() {
 		return toolEClass.getEOperations().get(26);
 	}
 
@@ -893,7 +893,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__SetProvideMultipleInstancesPerInputFor__DataPort() {
+	public EOperation getTool__CreateData__ResolvedParam_EMap_EMap() {
 		return toolEClass.getEOperations().get(27);
 	}
 
@@ -902,7 +902,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__SetProvideMultipleInstancesFor__DataPort() {
+	public EOperation getTool__InitLogMessage() {
 		return toolEClass.getEOperations().get(28);
 	}
 
@@ -911,53 +911,8 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getTool__SetProvideMultipleInputsFor__DataPort() {
+	public EOperation getTool__IsAllowedConversion__DataPort_String_String() {
 		return toolEClass.getEOperations().get(29);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__ResolvePath() {
-		return toolEClass.getEOperations().get(30);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__AssumeParamPositional() {
-		return toolEClass.getEOperations().get(31);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__CreateData__InOutParameter_EMap_EMap() {
-		return toolEClass.getEOperations().get(32);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__CreateData__ResolvedParam_EMap_EMap() {
-		return toolEClass.getEOperations().get(33);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EOperation getTool__InitLogMessage() {
-		return toolEClass.getEOperations().get(34);
 	}
 
 	/**
@@ -1235,7 +1190,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameter_MultipleInstancesPerInput() {
+	public EAttribute getParameter_MultipleInstancesPerDataport() {
 		return (EAttribute)parameterEClass.getEStructuralFeatures().get(29);
 	}
 
@@ -1487,7 +1442,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getParameter__IsMultipleInstancesPerInput__Boolean() {
+	public EOperation getParameter__IsMultipleInstancesPerDataport__Boolean() {
 		return parameterEClass.getEOperations().get(19);
 	}
 
@@ -1667,6 +1622,15 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getInOutParameter_ConvertGrouping() {
+		return (EAttribute)inOutParameterEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getInOutParameter__Matches__InOutParameter() {
 		return inOutParameterEClass.getEOperations().get(0);
 	}
@@ -1696,6 +1660,24 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 	 */
 	public EOperation getInOutParameter__OmitExtension() {
 		return inOutParameterEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getInOutParameter__IsAllowedConversion__String_String() {
+		return inOutParameterEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getInOutParameter__GetConvertGrouping__String() {
+		return inOutParameterEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -2554,21 +2536,16 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEOperation(toolEClass, TOOL___GET_INTERPRETER);
 		createEOperation(toolEClass, TOOL___CAN_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT);
 		createEOperation(toolEClass, TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT);
+		createEOperation(toolEClass, TOOL___CAN_PROVIDE_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT);
 		createEOperation(toolEClass, TOOL___CAN_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT);
+		createEOperation(toolEClass, TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_PER_DATAPORT_FOR__DATAPORT);
 		createEOperation(toolEClass, TOOL___CAN_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___SET_PROCESS_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___SET_PROCESS_MULTIPLE_INSTANCES_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___SET_PROCESS_MULTIPLE_INPUTS_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_PER_INPUT_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___SET_PROVIDE_MULTIPLE_INSTANCES_FOR__DATAPORT);
-		createEOperation(toolEClass, TOOL___SET_PROVIDE_MULTIPLE_INPUTS_FOR__DATAPORT);
 		createEOperation(toolEClass, TOOL___RESOLVE_PATH);
 		createEOperation(toolEClass, TOOL___ASSUME_PARAM_POSITIONAL);
 		createEOperation(toolEClass, TOOL___CREATE_DATA__INOUTPARAMETER_EMAP_EMAP);
 		createEOperation(toolEClass, TOOL___CREATE_DATA__RESOLVEDPARAM_EMAP_EMAP);
 		createEOperation(toolEClass, TOOL___INIT_LOG_MESSAGE);
+		createEOperation(toolEClass, TOOL___IS_ALLOWED_CONVERSION__DATAPORT_STRING_STRING);
 
 		parameterEClass = createEClass(PARAMETER);
 		createEAttribute(parameterEClass, PARAMETER__LOGGER);
@@ -2600,7 +2577,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(parameterEClass, PARAMETER__DATA_PARAM);
 		createEAttribute(parameterEClass, PARAMETER__CMD_PART);
 		createEAttribute(parameterEClass, PARAMETER__MULTIPLE_INSTANCES);
-		createEAttribute(parameterEClass, PARAMETER__MULTIPLE_INSTANCES_PER_INPUT);
+		createEAttribute(parameterEClass, PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT);
 		createEAttribute(parameterEClass, PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM);
 		createEAttribute(parameterEClass, PARAMETER__HIDDEN);
 		createEAttribute(parameterEClass, PARAMETER__OUTPUT_DEFAULT_PARAM);
@@ -2628,7 +2605,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEOperation(parameterEClass, PARAMETER___IS_OPTIONAL__BOOLEAN);
 		createEOperation(parameterEClass, PARAMETER___IS_MULTIPLE__BOOLEAN);
 		createEOperation(parameterEClass, PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN);
-		createEOperation(parameterEClass, PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN);
+		createEOperation(parameterEClass, PARAMETER___IS_MULTIPLE_INSTANCES_PER_DATAPORT__BOOLEAN);
 		createEOperation(parameterEClass, PARAMETER___IS_NAMED__BOOLEAN);
 		createEOperation(parameterEClass, PARAMETER___IS_POSITIONAL__BOOLEAN);
 		createEOperation(parameterEClass, PARAMETER___IS_FIXED_ARG_VALUE__BOOLEAN);
@@ -2649,10 +2626,13 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__FILENAME_CREATION);
 		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__FORMATS);
 		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__DATA_PORT);
+		createEAttribute(inOutParameterEClass, IN_OUT_PARAMETER__CONVERT_GROUPING);
 		createEOperation(inOutParameterEClass, IN_OUT_PARAMETER___MATCHES__INOUTPARAMETER);
 		createEOperation(inOutParameterEClass, IN_OUT_PARAMETER___MATCHES__PARAMETER);
 		createEOperation(inOutParameterEClass, IN_OUT_PARAMETER___MERGE__PARAMETER);
 		createEOperation(inOutParameterEClass, IN_OUT_PARAMETER___OMIT_EXTENSION);
+		createEOperation(inOutParameterEClass, IN_OUT_PARAMETER___IS_ALLOWED_CONVERSION__STRING_STRING);
+		createEOperation(inOutParameterEClass, IN_OUT_PARAMETER___GET_CONVERT_GROUPING__STRING);
 
 		resolvedParamEClass = createEClass(RESOLVED_PARAM);
 		createEReference(resolvedParamEClass, RESOLVED_PARAM__PARAMETER);
@@ -2927,7 +2907,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTool__CanProvideMultipleInstancesPerInputFor__DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTool__CanProvideMultipleInstancesPerDataportFor__DataPort(), ecorePackage.getEBoolean(), "canProvideMultipleInstancesPerDataportFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
@@ -2935,35 +2915,11 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
-		op = initEOperation(getTool__CanProcessMultipleInstancesPerInputFor__DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getTool__CanProcessMultipleInstancesPerDataportFor__DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesPerDataportFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
 		op = initEOperation(getTool__CanProcessMultipleInstancesFor__DataPort(), ecorePackage.getEBoolean(), "canProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-
-		op = initEOperation(getTool__SetProcessMultipleInstancesPerInputFor__DataPort(), null, "setProcessMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-
-		op = initEOperation(getTool__SetProcessMultipleInstancesFor__DataPort(), null, "setProcessMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-
-		op = initEOperation(getTool__SetProcessMultipleInputsFor__DataPort(), null, "setProcessMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-
-		op = initEOperation(getTool__SetProvideMultipleInstancesPerInputFor__DataPort(), null, "setProvideMultipleInstancesPerInputFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-
-		op = initEOperation(getTool__SetProvideMultipleInstancesFor__DataPort(), null, "setProvideMultipleInstancesFor", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
-
-		op = initEOperation(getTool__SetProvideMultipleInputsFor__DataPort(), null, "setProvideMultipleInputsFor", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
@@ -2982,6 +2938,12 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		addEParameter(op, theMapsPackage.getStringToIntMap(), "byParamIndexMap", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getTool__InitLogMessage(), null, "initLogMessage", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getTool__IsAllowedConversion__DataPort_String_String(), ecorePackage.getEBoolean(), "isAllowedConversion", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theDataPackage.getDataPort(), "dataPort", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStrFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStrTo", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEException(op, theEasyflowPackage.getDataPortNotFoundException());
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameter_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, Parameter.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3013,7 +2975,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getParameter_DataParam(), ecorePackage.getEBoolean(), "dataParam", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_CmdPart(), ecorePackage.getEString(), "cmdPart", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_MultipleInstances(), ecorePackage.getEBooleanObject(), "multipleInstances", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameter_MultipleInstancesPerInput(), ecorePackage.getEBooleanObject(), "multipleInstancesPerInput", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_MultipleInstancesPerDataport(), ecorePackage.getEBooleanObject(), "multipleInstancesPerDataport", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_OutputArgValueForBooleanParam(), ecorePackage.getEBooleanObject(), "outputArgValueForBooleanParam", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_Hidden(), ecorePackage.getEBoolean(), "hidden", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameter_OutputDefaultParam(), ecorePackage.getEBooleanObject(), "outputDefaultParam", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3091,7 +3053,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		op = initEOperation(getParameter__IsMultipleInstances__Boolean(), ecorePackage.getEBoolean(), "isMultipleInstances", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		op = initEOperation(getParameter__IsMultipleInstancesPerInput__Boolean(), ecorePackage.getEBoolean(), "isMultipleInstancesPerInput", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = initEOperation(getParameter__IsMultipleInstancesPerDataport__Boolean(), ecorePackage.getEBoolean(), "isMultipleInstancesPerDataport", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEBooleanObject(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		op = initEOperation(getParameter__IsNamed__Boolean(), ecorePackage.getEBoolean(), "isNamed", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -3133,6 +3095,7 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		initEAttribute(getInOutParameter_FilenameCreation(), ecorePackage.getEString(), "filenameCreation", null, 0, 1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInOutParameter_Formats(), ecorePackage.getEString(), "formats", null, 0, -1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInOutParameter_DataPort(), ecorePackage.getEString(), "dataPort", null, 0, 1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getInOutParameter_ConvertGrouping(), ecorePackage.getEString(), "convertGrouping", null, 0, 1, InOutParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getInOutParameter__Matches__InOutParameter(), ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, this.getInOutParameter(), "templateParameter", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -3144,6 +3107,13 @@ public class ToolPackageImpl extends EPackageImpl implements ToolPackage {
 		addEParameter(op, this.getParameter(), "parameter", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getInOutParameter__OmitExtension(), ecorePackage.getEBoolean(), "omitExtension", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getInOutParameter__IsAllowedConversion__String_String(), ecorePackage.getEBoolean(), "isAllowedConversion", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStrFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "groupingStrTo", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = initEOperation(getInOutParameter__GetConvertGrouping__String(), ecorePackage.getEString(), "getConvertGrouping", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "default_", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(resolvedParamEClass, ResolvedParam.class, "ResolvedParam", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getResolvedParam_Parameter(), this.getParameter(), null, "parameter", null, 0, 1, ResolvedParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

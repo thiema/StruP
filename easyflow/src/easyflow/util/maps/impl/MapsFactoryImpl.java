@@ -117,6 +117,7 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 			case MapsPackage.STRING_TO_CONDITION_MAP: return (EObject)createStringToConditionMap();
 			case MapsPackage.STRING_TO_INT_MAP: return (EObject)createStringToIntMap();
 			case MapsPackage.STRING_TO_ERROR_CONTROL_MAP: return (EObject)createStringToErrorControlMap();
+			case MapsPackage.STRING_TO_CELL_LIST_MAP: return (EObject)createStringToCellListMap();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -460,6 +461,16 @@ public class MapsFactoryImpl extends EFactoryImpl implements MapsFactory {
 	public Map.Entry<String, LogMessage> createStringToErrorControlMap() {
 		StringToErrorControlMapImpl stringToErrorControlMap = new StringToErrorControlMapImpl();
 		return stringToErrorControlMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, EList<mxICell>> createStringToCellListMap() {
+		StringToCellListMapImpl stringToCellListMap = new StringToCellListMapImpl();
+		return stringToCellListMap;
 	}
 
 	/**

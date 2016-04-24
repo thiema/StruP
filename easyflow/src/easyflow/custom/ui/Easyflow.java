@@ -19,6 +19,7 @@ import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
 import easyflow.custom.jgraphx.editor.EasyFlowGraph;
+import easyflow.custom.jgraphx.graph.JGraphXUtil;
 import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.Util;
 import easyflow.example.ExampleFactory;
@@ -165,7 +166,6 @@ public class Easyflow {
 				defaultProject.generateAbstractGraph();
 				//((WorkflowImpl)defaultProject.getActiveWorkflow()).printGraph();
 				defaultProject.resolveTraversalCriteria();
-				
 				defaultProject.applyGroupingCriteria();
 				//defaultProject.applyParameterCriteria();
 				
@@ -178,7 +178,7 @@ public class Easyflow {
 				defaultProject.resolveToolDependencies();
 				
 				defaultProject.generateWorklowForExecutionSystem();
-			} 
+			}
 			catch (Exception e) 
 			{ 
 				Util.printLastErrorInfo(e, null);

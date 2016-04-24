@@ -102,6 +102,10 @@ public class JgraphxAdapterFactory extends AdapterFactoryImpl {
 				return createGraphAdapter();
 			}
 			@Override
+			public Adapter caseUntranslatedLink(UntranslatedLink object) {
+				return createUntranslatedLinkAdapter();
+			}
+			@Override
 			public Adapter caseIGraph(IGraph object) {
 				return createIGraphAdapter();
 			}
@@ -224,6 +228,20 @@ public class JgraphxAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link easyflow.graph.jgraphx.UntranslatedLink <em>Untranslated Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see easyflow.graph.jgraphx.UntranslatedLink
+	 * @generated
+	 */
+	public Adapter createUntranslatedLinkAdapter() {
 		return null;
 	}
 

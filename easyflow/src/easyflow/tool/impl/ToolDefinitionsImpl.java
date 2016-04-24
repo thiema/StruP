@@ -8,7 +8,6 @@ package easyflow.tool.impl;
 
 import easyflow.util.Category;
 import easyflow.util.UtilFactory;
-import easyflow.core.CoreFactory;
 import easyflow.util.Severity;
 import easyflow.tool.DocumentProperties;
 import easyflow.custom.util.GlobalConstants;
@@ -20,17 +19,13 @@ import easyflow.tool.ToolSchemata;
 import easyflow.util.LogMessage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToDocumentPropertiesMapImpl;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collection;
-
 import org.apache.log4j.Logger;
-
 import javax.xml.validation.Schema;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;

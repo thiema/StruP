@@ -303,6 +303,12 @@ public class MapsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case MapsPackage.STRING_TO_CELL_LIST_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EList<mxICell>> stringToCellListMap = (Map.Entry<String, EList<mxICell>>)theEObject;
+				T result = caseStringToCellListMap(stringToCellListMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -814,6 +820,21 @@ public class MapsSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseStringToErrorControlMap(Map.Entry<String, LogMessage> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Cell List Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Cell List Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToCellListMap(Map.Entry<String, EList<mxICell>> object) {
 		return null;
 	}
 

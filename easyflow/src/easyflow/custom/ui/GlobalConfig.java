@@ -120,6 +120,13 @@ public class GlobalConfig {
 	private static final String    CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_PARAM_NAME      = "pkg_param_preferred";
 	private static final boolean   CONFIG_TOOL_PKG_PARAMETER_PREFERENCE_DEFAULT_VALUE = true;
 	
+	private static final String CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_DATAPORTS_PARAM_NAME = "multiple_dataports";
+	private static final boolean CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_DATAPORTS_DEFAULT_VALUE = false;
+	private static final String CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_INSTANCES_PARAM_NAME = "multiple_instances";
+	private static final boolean CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_INSTANCES_DEFAULT_VALUE = false;
+	private static final String CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_INSTANCES_PER_DATAPORT_PARAM_NAME = "multiple_instances_per_dataport";
+	private static final boolean CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_INSTANCES_PER_DATAPORT_DEFAULT_VALUE = false;
+	
 	private static final Parameter positionalParamTemplate = ToolFactory.eINSTANCE.createParameter();
 	private static final Parameter optionalParamTemplate   = ToolFactory.eINSTANCE.createParameter();
 	private static Parameter exeParameterDefault     = null;
@@ -143,11 +150,11 @@ public class GlobalConfig {
 
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE              = false;
 	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_DEFAULT_VALUE           = false;
-	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
+	private static final Boolean CONFIG_WORKFLOW_MULTIPLE_INSTANCES_PER_DATAPORT_DEFAULT_VALUE = false;
 	
-	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INPUTS_DEFAULT_VALUE              = true;
+	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_DATAPORTS_DEFAULT_VALUE              = true;
 	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE           = true;
-	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE = false;
+	private static final Boolean CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_DATAPORT_DEFAULT_VALUE = false;
 	
 	private static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_PARAM_NAME                = "resolve_parent_task_strategy";
 	public  static final String    CONFIG_WORKFLOW_RESOLVE_PARENT_TASKS_STRATEGY_NEAREST_PARENT = "nearest_parents_first";
@@ -163,6 +170,10 @@ public class GlobalConfig {
 	private static final String  CONFIG_TOOL_ALLOW_HIDDEN_PARAM_PARAM_NAME = "param_is_hidden";
 
 	private static final String CONFIG_TOOL_DEBUG_TASKS_PARAM_NAME = "debug_tasks";
+
+	private static final String CONFIG_TOOL_CONVERT_GROUPING_DEFAULT_VALUE = GlobalConstants.CONVERT_GROUPING_NONE;
+
+	private static final Object CONFIG_TOOL_CONVERT_GROUPING_PARAM_NAME = "convert_grouping";
 	
 	private static       JSONObject           jsonConfig       = null;
 	
@@ -439,14 +450,16 @@ public class GlobalConfig {
 		return false;
 	}
 	
+	public static boolean paramIsMultipleDataports() {
+		return CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_DATAPORTS_DEFAULT_VALUE;
+	}
+
 	public static boolean paramIsMultipleInstances() {
-		// TODO Auto-generated method stub
-		return false;		
+		return CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_INSTANCES_DEFAULT_VALUE;
 	}
 
 	public static boolean paramIsMultipleInstancesPerInput() {
-		// TODO Auto-generated method stub
-		return false;
+		return CONFIG_TOOL_PKG_PARAMETER_MULTIPLE_INSTANCES_PER_DATAPORT_DEFAULT_VALUE;
 	}
 	
 	public static final void initParameter(Parameter parameter)
@@ -476,6 +489,14 @@ public class GlobalConfig {
 			positionalParamTemplate.setPositional(true);
 		}
 		return positionalParamTemplate;
+	}
+	
+	public static String getConvertGrouping()
+	{
+		if (getToolConfig().containsKey(CONFIG_TOOL_CONVERT_GROUPING_PARAM_NAME))
+			return getToolConfig().get(CONFIG_TOOL_CONVERT_GROUPING_PARAM_NAME);
+		else
+			 return CONFIG_TOOL_CONVERT_GROUPING_DEFAULT_VALUE;
 	}
 	
 	public static boolean assumePositionalDataParam()
@@ -645,7 +666,7 @@ public class GlobalConfig {
 		return GlobalConstants.METADATA_INPUT;
 	}
 
-	public static Boolean getMultipleInputsDefaultValue()
+	public static Boolean getMultipleDataportsDefaultValue()
 	{
 		return CONFIG_WORKFLOW_MULTIPLE_INPUTS_DEFAULT_VALUE;
 	}
@@ -655,14 +676,14 @@ public class GlobalConfig {
 		return CONFIG_WORKFLOW_MULTIPLE_INSTANCES_DEFAULT_VALUE;
 	}
 	
-	public static Boolean getMultipleInstancesPerInputDefaultValue()
+	public static Boolean getMultipleInstancesPerDataportDefaultValue()
 	{
-		return CONFIG_WORKFLOW_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE;
+		return CONFIG_WORKFLOW_MULTIPLE_INSTANCES_PER_DATAPORT_DEFAULT_VALUE;
 	}
 	
-	public static Boolean getMultipleInputsForRootTaskValue()
+	public static Boolean getMultipleDataportsForRootTaskValue()
 	{
-		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INPUTS_DEFAULT_VALUE;
+		return CONFIG_WORKFLOW_ROOT_MULTIPLE_DATAPORTS_DEFAULT_VALUE;
 	}
 	
 	public static Boolean getMultipleInstancesForRootTaskValue()
@@ -670,9 +691,9 @@ public class GlobalConfig {
 		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_DEFAULT_VALUE;
 	}
 	
-	public static Boolean getMultipleInstancesPerInputForRootTaskValue()
+	public static Boolean getMultipleInstancesPerDataportForRootTaskValue()
 	{
-		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_INPUT_DEFAULT_VALUE;
+		return CONFIG_WORKFLOW_ROOT_MULTIPLE_INSTANCES_PER_DATAPORT_DEFAULT_VALUE;
 	}
 	
 	public static boolean resolvePath()

@@ -18,11 +18,14 @@ import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
+
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
+
+import org.apache.commons.collections.set.CompositeSet.SetMutator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -75,7 +78,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isDataParam <em>Data Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getCmdPart <em>Cmd Part</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstances <em>Multiple Instances</em>}</li>
- *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstancesPerInput <em>Multiple Instances Per Input</em>}</li>
+ *   <li>{@link easyflow.tool.impl.ParameterImpl#getMultipleInstancesPerDataport <em>Multiple Instances Per Dataport</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOutputArgValueForBooleanParam <em>Output Arg Value For Boolean Param</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link easyflow.tool.impl.ParameterImpl#getOutputDefaultParam <em>Output Default Param</em>}</li>
@@ -641,24 +644,24 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	protected Boolean multipleInstances = MULTIPLE_INSTANCES_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getMultipleInstancesPerInput() <em>Multiple Instances Per Input</em>}' attribute.
+	 * The default value of the '{@link #getMultipleInstancesPerDataport() <em>Multiple Instances Per Dataport</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMultipleInstancesPerInput()
+	 * @see #getMultipleInstancesPerDataport()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT = null;
+	protected static final Boolean MULTIPLE_INSTANCES_PER_DATAPORT_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getMultipleInstancesPerInput() <em>Multiple Instances Per Input</em>}' attribute.
+	 * The cached value of the '{@link #getMultipleInstancesPerDataport() <em>Multiple Instances Per Dataport</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMultipleInstancesPerInput()
+	 * @see #getMultipleInstancesPerDataport()
 	 * @generated
 	 * @ordered
 	 */
-	protected Boolean multipleInstancesPerInput = MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT;
+	protected Boolean multipleInstancesPerDataport = MULTIPLE_INSTANCES_PER_DATAPORT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getOutputArgValueForBooleanParam() <em>Output Arg Value For Boolean Param</em>}' attribute.
@@ -1134,8 +1137,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Boolean getMultipleInstancesPerInput() {
-		return multipleInstancesPerInput;
+	public Boolean getMultipleInstancesPerDataport() {
+		return multipleInstancesPerDataport;
 	}
 
 	/**
@@ -1143,11 +1146,11 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setMultipleInstancesPerInput(Boolean newMultipleInstancesPerInput) {
-		Boolean oldMultipleInstancesPerInput = multipleInstancesPerInput;
-		multipleInstancesPerInput = newMultipleInstancesPerInput;
+	public void setMultipleInstancesPerDataport(Boolean newMultipleInstancesPerDataport) {
+		Boolean oldMultipleInstancesPerDataport = multipleInstancesPerDataport;
+		multipleInstancesPerDataport = newMultipleInstancesPerDataport;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT, oldMultipleInstancesPerInput, multipleInstancesPerInput));
+			eNotify(new ENotificationImpl(this, Notification.SET, ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT, oldMultipleInstancesPerDataport, multipleInstancesPerDataport));
 	}
 
 	/**
@@ -1878,9 +1881,9 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
-	public boolean isMultipleInstancesPerInput(Boolean default_) {
-		if (getMultipleInstancesPerInput() != null)
-			return getMultipleInstancesPerInput();
+	public boolean isMultipleInstancesPerDataport(Boolean default_) {
+		if (getMultipleInstancesPerDataport() != null)
+			return getMultipleInstancesPerDataport();
 		else if (default_ != null)
 			return default_;
 		else
@@ -1976,8 +1979,18 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			setOptional(parameter.getOptional());
 		if (getPositional() == null)
 			setPositional(parameter.getPositional());
+		if (getMultiple()   == null)
+			setMultiple(parameter.getMultiple());
+		if (getMultipleInstances() == null)
+			setMultipleInstances(parameter.getMultipleInstances());
+		if (getMultipleInstancesPerDataport() == null)
+			setMultipleInstancesPerDataport(parameter.getMultipleInstancesPerDataport());
+		if (getMultipleValue() == null)
+			setMultipleValue(parameter.getMultipleValue());
+		//do we need to merge more default parameters ?
 		if (parameter.getHandles() != null)
 			getHandles().addAll(parameter.getHandles());
+		
 		
 		mergeKeys(parameter.getKeys());
 	}
@@ -2502,8 +2515,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return getCmdPart();
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
 				return getMultipleInstances();
-			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
-				return getMultipleInstancesPerInput();
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT:
+				return getMultipleInstancesPerDataport();
 			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
 				return getOutputArgValueForBooleanParam();
 			case ToolPackage.PARAMETER__HIDDEN:
@@ -2629,8 +2642,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
 				setMultipleInstances((Boolean)newValue);
 				return;
-			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
-				setMultipleInstancesPerInput((Boolean)newValue);
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT:
+				setMultipleInstancesPerDataport((Boolean)newValue);
 				return;
 			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
 				setOutputArgValueForBooleanParam((Boolean)newValue);
@@ -2760,8 +2773,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
 				setMultipleInstances(MULTIPLE_INSTANCES_EDEFAULT);
 				return;
-			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
-				setMultipleInstancesPerInput(MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT);
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT:
+				setMultipleInstancesPerDataport(MULTIPLE_INSTANCES_PER_DATAPORT_EDEFAULT);
 				return;
 			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
 				setOutputArgValueForBooleanParam(OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT);
@@ -2861,8 +2874,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return CMD_PART_EDEFAULT == null ? cmdPart != null : !CMD_PART_EDEFAULT.equals(cmdPart);
 			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES:
 				return MULTIPLE_INSTANCES_EDEFAULT == null ? multipleInstances != null : !MULTIPLE_INSTANCES_EDEFAULT.equals(multipleInstances);
-			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_INPUT:
-				return MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT == null ? multipleInstancesPerInput != null : !MULTIPLE_INSTANCES_PER_INPUT_EDEFAULT.equals(multipleInstancesPerInput);
+			case ToolPackage.PARAMETER__MULTIPLE_INSTANCES_PER_DATAPORT:
+				return MULTIPLE_INSTANCES_PER_DATAPORT_EDEFAULT == null ? multipleInstancesPerDataport != null : !MULTIPLE_INSTANCES_PER_DATAPORT_EDEFAULT.equals(multipleInstancesPerDataport);
 			case ToolPackage.PARAMETER__OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM:
 				return OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT == null ? outputArgValueForBooleanParam != null : !OUTPUT_ARG_VALUE_FOR_BOOLEAN_PARAM_EDEFAULT.equals(outputArgValueForBooleanParam);
 			case ToolPackage.PARAMETER__HIDDEN:
@@ -2964,8 +2977,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 				return isMultiple((Boolean)arguments.get(0));
 			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES__BOOLEAN:
 				return isMultipleInstances((Boolean)arguments.get(0));
-			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES_PER_INPUT__BOOLEAN:
-				return isMultipleInstancesPerInput((Boolean)arguments.get(0));
+			case ToolPackage.PARAMETER___IS_MULTIPLE_INSTANCES_PER_DATAPORT__BOOLEAN:
+				return isMultipleInstancesPerDataport((Boolean)arguments.get(0));
 			case ToolPackage.PARAMETER___IS_NAMED__BOOLEAN:
 				return isNamed((Boolean)arguments.get(0));
 			case ToolPackage.PARAMETER___IS_POSITIONAL__BOOLEAN:
@@ -3063,8 +3076,8 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		result.append(cmdPart);
 		result.append(", multipleInstances: ");
 		result.append(multipleInstances);
-		result.append(", multipleInstancesPerInput: ");
-		result.append(multipleInstancesPerInput);
+		result.append(", multipleInstancesPerDataport: ");
+		result.append(multipleInstancesPerDataport);
 		result.append(", outputArgValueForBooleanParam: ");
 		result.append(outputArgValueForBooleanParam);
 		result.append(", hidden: ");

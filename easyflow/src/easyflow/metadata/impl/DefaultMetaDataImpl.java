@@ -8,7 +8,6 @@ package easyflow.metadata.impl;
 
 import easyflow.util.Category;
 import easyflow.util.UtilFactory;
-import easyflow.core.CoreFactory;
 import easyflow.metadata.DefaultMetaData;
 import easyflow.metadata.Grouping;
 import easyflow.metadata.GroupingInstance;
@@ -23,7 +22,6 @@ import easyflow.custom.util.GlobalVarMetaData;
 import easyflow.util.maps.impl.StringToGroupingInstanceListMapImpl;
 import easyflow.util.maps.impl.StringToGroupingMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -33,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;

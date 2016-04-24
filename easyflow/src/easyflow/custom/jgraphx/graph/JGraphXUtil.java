@@ -12,6 +12,8 @@ import org.w3c.dom.Element;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
 
 import easyflow.util.Category;
@@ -37,12 +39,26 @@ public class JGraphXUtil {
 	
 	private static Logger logger = Logger.getLogger(JGraphXUtil.class);
 	static         Graph  graph;
+	static         mxGraphComponent graphComponent;
+	
 	
 	public static void layoutGraph()
 	{
-    	mxHierarchicalLayout layout = new mxHierarchicalLayout(graph.getGraph());
+		final mxHierarchicalLayout layout = new mxHierarchicalLayout(graph.getGraph());
+		
+		int width = GlobalVar.getGraphComponent().getWidth();
+		double graphWidth = graph.getGraph().getGraphBounds().getWidth();
+		logger.debug("viewport="+width+" graph="+graphWidth);
+		if (width > graphWidth)
+
+			graph.getGraph().getView().setTranslate(new mxPoint((width - graphWidth)/2, 5));
+
+		else
+			graph.getGraph().getView().setTranslate(new mxPoint(5,5)); 
+		
+		graph.getGraph().getView().clear(graph.getGraph().getDefaultParent(), false, false);
+		graph.getGraph().getView().validate();
     	layout.setIntraCellSpacing(10);
-    	//layout.setOrientation(SwingConstants.NORTH);
     	layout.setFineTuning(true);
     	layout.execute(graph.getGraph().getDefaultParent());
 	}
@@ -65,12 +81,7 @@ public class JGraphXUtil {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
-		
-
-	
-	
 	
 	public static mxCell getSource(mxCell edge)
 	{
@@ -118,7 +129,6 @@ public class JGraphXUtil {
 		else
 			throw new CellNotFoundException();
 		return tasks;
-		
 	}
 
 	public static EList<Task> getSiblingTasksFor(Task task) throws CellNotFoundException, TaskNotFoundException
@@ -234,7 +244,6 @@ public class JGraphXUtil {
 			
 		else
 			throw new CellNotFoundException();
-		
 	}
 	
 	/**
@@ -262,7 +271,6 @@ public class JGraphXUtil {
 		else
 		{
 			//todo: handle wrong type exception
-			
 		}
 		return  null;
 	}
@@ -335,8 +343,6 @@ public class JGraphXUtil {
 		}
 		return tasks;
 	}
-	
-	
 
 	public static String getTaskNameForCell(Object cell)
 	{
@@ -373,7 +379,6 @@ public class JGraphXUtil {
 	
 		return cells;
 	}
-
 	
 	public static boolean isEdgeInGraph(Task parentTask, Task childTask, DataLink dataLink) throws TaskNotFoundException, DataLinkNotFoundException
 	{
@@ -415,7 +420,6 @@ public class JGraphXUtil {
 		return rc;
 	}
 	
-	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -436,6 +440,7 @@ public class JGraphXUtil {
 			
 		return parents;
 	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -458,6 +463,4 @@ public class JGraphXUtil {
 	public static void setGraph(Graph graph2) {
 		graph = graph2;
 	}
-
-
 }

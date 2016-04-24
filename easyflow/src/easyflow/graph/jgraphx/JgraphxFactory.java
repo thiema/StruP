@@ -89,6 +89,15 @@ public interface JgraphxFactory extends EFactory {
 	Graph createGraph();
 
 	/**
+	 * Returns a new object of class '<em>Untranslated Link</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Untranslated Link</em>'.
+	 * @generated
+	 */
+	UntranslatedLink createUntranslatedLink();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

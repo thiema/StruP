@@ -18,6 +18,7 @@
 	<xsl:param name="change_macro_file_name_in_import_tag" as="xs:boolean"
 		select="true()" required="no" />
 	<xsl:param name="source" />
+	<xsl:param name="set_pkg_name" as="xs:string" required="no"/>
 
 
 	<!-- identity transformation by default <xsl:template match="node()|@*"> 
@@ -84,6 +85,11 @@
 		<xsl:element name="tool">
 
 			<xsl:attribute name="xsi:schemaLocation">urn:de.thiema.easyflow/types Easyflow.xsd</xsl:attribute>
+			<xsl:if test="$set_pkg_name">
+				<xsl:attribute name="package">
+					<xsl:value-of select="$set_pkg_name"/>
+				</xsl:attribute>
+			</xsl:if>	
 			<xsl:copy-of select="@*" />
 
 

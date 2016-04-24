@@ -310,7 +310,7 @@
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="canProvideMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eOperations name="canProvideMultipleInstancesPerDataportFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
@@ -325,12 +325,12 @@
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="canProcessMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eOperations name="canProcessMultipleInstancesPerDataportFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//ToolNotFoundException #//DataPortNotFoundException">
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="setProcessMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
+      <eOperations name="setProcessMultipleInstancesPerDataportFor" eExceptions="#//DataPortNotFoundException">
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
@@ -342,7 +342,7 @@
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="setProvideMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
+      <eOperations name="setProvideMultipleInstancesPerDataportFor" eExceptions="#//DataPortNotFoundException">
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
@@ -376,7 +376,7 @@
         <eParameters name="traverslChunks" upperBound="-1" eType="#//traversal/TraversalChunk"/>
         <eParameters name="isPartial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </eOperations>
-      <eOperations name="canComsumeDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eOperations name="canConsumeDataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataPortNotFoundException #//ToolNotFoundException">
         <eParameters name="tool" eType="#//tool/Tool"/>
         <eParameters name="dataPort" eType="#//data/DataPort"/>
@@ -780,10 +780,11 @@
         </eOperations>
         <eOperations name="findCellsWherePreprocessingIsRequired" upperBound="-1"
             eType="#//util/maps/CellToCellListMap"/>
-        <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//util/maps/CellToCellListMap"/>
+        <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//graph/jgraphx/UntranslatedLink"/>
         <eOperations name="resolveEdge" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
             eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException">
-          <eParameters name="entry" eType="#//util/maps/CellToCellListMap"/>
+          <eParameters name="target" eType="#//core/Task"/>
+          <eParameters name="edges" upperBound="-1" eType="#//mxICell"/>
         </eOperations>
         <eStructuralFeatures xsi:type="ecore:EReference" name="graph" eType="#//graph/jgraphx/Graph"/>
       </eClassifiers>
@@ -859,10 +860,11 @@
         </eOperations>
         <eOperations name="findCellsWherePreprocessingIsRequired" upperBound="-1"
             eType="#//util/maps/CellToCellListMap"/>
-        <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//util/maps/CellToCellListMap"/>
+        <eOperations name="findCellsWithUntranslatedDataLinks" upperBound="-1" eType="#//graph/jgraphx/UntranslatedLink"/>
         <eOperations name="resolveEdge" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
             eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException #//DataPortNotFoundException #//ToolNotFoundException #//UtilityTaskNotFoundException">
-          <eParameters name="entry" eType="#//util/maps/CellToCellListMap"/>
+          <eParameters name="target" eType="#//core/Task"/>
+          <eParameters name="edges" upperBound="-1" eType="#//mxICell"/>
         </eOperations>
         <eOperations name="applyTraversalEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
             eExceptions="#//TaskNotFoundException #//DataLinkNotFoundException">
@@ -935,6 +937,12 @@
         <eStructuralFeatures xsi:type="ecore:EReference" name="toolDependencyGraph"
             eType="#//graph/jgraphx/ToolDependencyGraph"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="executionGraph" eType="#//graph/jgraphx/ExecutionGraph"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="UntranslatedLink">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//core/Task"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//core/Task"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="untranslatedLinks"
+            upperBound="-1" eType="#//util/maps/StringToCellListMap" containment="true"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>
@@ -1091,7 +1099,7 @@
           eExceptions="#//DataPortNotFoundException">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="canProvideMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eOperations name="canProvideMultipleInstancesPerDataportFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataPortNotFoundException">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
@@ -1099,30 +1107,12 @@
           eExceptions="#//DataPortNotFoundException">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
-      <eOperations name="canProcessMultipleInstancesPerInputFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+      <eOperations name="canProcessMultipleInstancesPerDataportFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataPortNotFoundException">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
       <eOperations name="canProcessMultipleInstancesFor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
           eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setProcessMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setProcessMultipleInstancesFor" eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setProcessMultipleInputsFor" eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setProvideMultipleInstancesPerInputFor" eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setProvideMultipleInstancesFor" eExceptions="#//DataPortNotFoundException">
-        <eParameters name="dataPort" eType="#//data/DataPort"/>
-      </eOperations>
-      <eOperations name="setProvideMultipleInputsFor" eExceptions="#//DataPortNotFoundException">
         <eParameters name="dataPort" eType="#//data/DataPort"/>
       </eOperations>
       <eOperations name="resolvePath" eType="#//URI"/>
@@ -1138,6 +1128,12 @@
         <eParameters name="byParamIndexMap" upperBound="-1" eType="#//util/maps/StringToIntMap"/>
       </eOperations>
       <eOperations name="initLogMessage"/>
+      <eOperations name="isAllowedConversion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          eExceptions="#//DataPortNotFoundException">
+        <eParameters name="dataPort" eType="#//data/DataPort"/>
+        <eParameters name="groupingStrFrom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="groupingStrTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="logger" eType="#//Logger"
           changeable="false" transient="true"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -1227,7 +1223,7 @@
       <eOperations name="isMultipleInstances" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       </eOperations>
-      <eOperations name="isMultipleInstancesPerInput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eOperations name="isMultipleInstancesPerDataport" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
         <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       </eOperations>
       <eOperations name="isNamed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1307,7 +1303,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataParam" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="cmdPart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstances" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstancesPerInput"
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleInstancesPerDataport"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputArgValueForBooleanParam"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
@@ -1332,12 +1328,20 @@
         <eParameters name="parameter" eType="#//tool/Parameter"/>
       </eOperations>
       <eOperations name="omitExtension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isAllowedConversion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="groupingStrFrom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="groupingStrTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getConvertGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="extension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="filenameCreation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="formats" upperBound="-1"
           eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="convertGrouping" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ResolvedParam" eSuperTypes="#//tool/IToolElement #//tool/DefaultToolElement">
       <eOperations name="generateCommandString" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -1993,6 +1997,11 @@
       <eClassifiers xsi:type="ecore:EClass" name="StringToErrorControlMap" instanceClassName="java.util.Map$Entry">
         <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
         <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//util/LogMessage"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="StringToCellListMap" instanceClassName="java.util.Map$Entry">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" upperBound="-1"
+            eType="#//mxICell"/>
       </eClassifiers>
     </eSubpackages>
   </eSubpackages>

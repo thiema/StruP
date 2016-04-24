@@ -2,6 +2,7 @@
 <tool xmlns="urn:de.thiema.easyflow/types"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:de.thiema.easyflow/types Easyflow.xsd"
+      package="gatk"
       id="gatk2_realigner_target_creator"
       name="Realigner Target Creator"
       version="0.0.7">

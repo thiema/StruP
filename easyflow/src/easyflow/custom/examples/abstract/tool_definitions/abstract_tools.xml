@@ -24,7 +24,12 @@
 		
 	<tool id="C" package="dummy_package">
 		<command exe="toolC"></command>
-		<param name="input" type="data" format="F1,F2"></param>
+		<!-- param name="input" type="data" format="F1,F2" ></param> -->
+		<param name="input" type="data" format="F1,F2" 
+			multiple="true" multiple_instances="true" multiple_instances_per_dataport="true"
+			convert_grouping="any">
+		</param>
+		<param type="data" abstract="true"  format="bam,sam,vcf"/>
 		<param name="input2" type="data" format="F3" optional="true"></param>
 		<param name="output" type="data" format="F1,F2,F3" output="true"></param>
 	</tool>
