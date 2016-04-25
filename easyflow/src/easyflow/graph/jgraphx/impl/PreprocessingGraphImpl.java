@@ -710,15 +710,13 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						EList<TraversalChunk> targetChunks  = task.getChunks().get(dataLink.getGroupingStr());
 						EList<TraversalChunk> sourceChunks  = sourceTask.getChunks().get(dataLink.getParentGroupingStr());
 						EList<TraversalChunk> inputs        = task.getInputs(true);
-						//EList<TraversalChunk> srcInputs  = sourceTask.getInputs(true);
+						EList<TraversalChunk> srcInputs  = sourceTask.getInputs(true);
 						EList<TraversalChunk> records       = task.getRecords(true);
-						//EList<TraversalChunk> srcRecords = sourceTask.getRecords();
+						EList<TraversalChunk> srcRecords = sourceTask.getRecords();
 						
 						if (inputs.size() > 1)
 							hasMultipleInstancesPerDataport = GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT;
 						dataportState += hasMultipleInstancesPerDataport;
-						
-						
 						
 						
 						String sourceBasicGrouping = GlobalConstants.METADATA_INPUT.equals(dataLink.getParentGroupingStr()) ? 
@@ -742,19 +740,16 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 								+" grouping crits(port)="+Util.list2String(dataPortTarget.getGroupingCriteria(), null)
 								);
 						logger.debug("findCellsWithUntranslatedDataLinks(): "
-								//+"src inputs=["+Util.list2String(srcInputs, null)
-								//+"], src records=["+Util.list2String(srcRecords, null)
-								//+"]==>> "
+								+"src inputs=["+Util.list2String(srcInputs, null)
+								+"], src records=["+Util.list2String(srcRecords, null)
+								+"]==>> "
 								+ "inputs=["+Util.list2String(inputs, null)
 								+"], records=["+Util.list2String(records, null)+"]"
 								);
 						
 						boolean found = false;
 						assert dataLink.getGroupingStr() != null;
-						
-						//int dataPortSourceState = getDataportState(dataPortSource, sourceChunks, dataLink.getParentGroupingStr(), dataLink.getParentGroupingStr(), sourceTask, task);
-						int dataPortTargetState = getDataportState(dataPortTarget, targetChunks, dataLink.getParentGroupingStr(), dataLink.getParentGroupingStr(), sourceTask, task);
-						
+												
 						if (!dataLink.getGroupingStr().equals(dataLink.getParentGroupingStr()))// && !sourceTask.isRoot())
 						{
 							if (sourceTask.canProvideDataPort(null, dataPortTarget, dataLink.getGroupingStr(), null, false))
@@ -773,15 +768,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 							{
 								found = true;
 								logger.debug("findCellsWithUntranslatedDataLinks(): direct conversion found (of grouping="+dataLink.getGroupingStr()+").");
-								
 							}
-							/*else if (GlobalConstants.METADATA_INPUT.equals(dataLink.getParentGroupingStr()) &&
-									Util.list2StringList(sourceChunks).containsAll(Util.list2StringList(inputs))
-									)
-							{
-								found = true;
-								logger.debug("findCellsWithUntranslatedDataLinks(): input file provided by parent (usually root node).");
-							}*/
 							// check if the required chunk is entirely provided by the parent, i.e.
 							// conversion: RG1 -> ID1
 							// in metadata a record is defined to be "ID1 RG1 ..." and data RG1 is the same as data ID1 
@@ -802,43 +789,44 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						
 						if (!found)
 						{
+							Parameter parameter = task.getPreferredTool().getCommand().getDataParamForDataPort(dataPortTarget, false).getParameter();
+							parameter.merge(task.getPreferredTool().getTemplateParameter(parameter));
+							
 							boolean needConversion = true;
 							if (dataportState > 0)
 							{
-								Parameter parameter = task.getPreferredTool().getCommand().getDataParamForDataPort(dataPortTarget, false).getParameter();
-								parameter.merge(task.getPreferredTool().getTemplateParameter(parameter));
 								
 								needConversion = false;
 								
-							logger.debug("findCellsWithUntranslatedDataLinks(): dataportState="+dataportState
+								logger.debug("findCellsWithUntranslatedDataLinks(): dataportState="+dataportState
 									+" multi dataports="+
 									parameter.isMultiple(null)
 									//task.canProcessMultipleInputsFor(null, dataPortTarget)
-									+"("+(dataportState & GlobalConstants.MULTIPLE_DATAPORTS)+")"
+									+"("+((dataportState & GlobalConstants.MULTIPLE_DATAPORTS) > 1)+")"
 									+" multi instances="+
 									parameter.isMultipleInstances(null)
 									//task.canProcessMultipleInstancesFor(null, dataPortTarget)
-									+"("+(dataportState & GlobalConstants.MULTIPLE_INSTANCES)+")"
+									+"("+((dataportState & GlobalConstants.MULTIPLE_INSTANCES) > 1)+")"
 									+" multi instances/dataport="+
 									parameter.isMultipleInstancesPerDataport(null)
 									//task.canProcessMultipleInstancesPerDataportFor(null, dataPortTarget)
-									+"("+(dataportState & GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT)+")");
+									+"("+((dataportState & GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT) > 1)+")");
 							
-							if ((dataportState & GlobalConstants.MULTIPLE_DATAPORTS) == GlobalConstants.MULTIPLE_DATAPORTS && 
+								if ((dataportState & GlobalConstants.MULTIPLE_DATAPORTS) == GlobalConstants.MULTIPLE_DATAPORTS && 
 									//!task.canProcessMultipleInputsFor(null, dataPortTarget)
 									!parameter.isMultiple(null)
 									)
-								needConversion = true;
-							if ((dataportState & GlobalConstants.MULTIPLE_INSTANCES) == GlobalConstants.MULTIPLE_INSTANCES && 
+									needConversion = true;
+								if ((dataportState & GlobalConstants.MULTIPLE_INSTANCES) == GlobalConstants.MULTIPLE_INSTANCES && 
 									//!task.canProcessMultipleInstancesFor(null, dataPortTarget)
 									!parameter.isMultipleInstances(null)
 									) 
-								needConversion = true;
-							if ((dataportState & GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT) == GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT &&
+									needConversion = true;
+								if ((dataportState & GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT) == GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT &&
 									//!task.canProcessMultipleInstancesPerDataportFor(null, dataPortTarget)
 									!parameter.isMultipleInstancesPerDataport(null)
 									)
-								needConversion = true;
+									needConversion = true;
 							}
 							if (needConversion)
 							{
@@ -854,29 +842,43 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 								}
 								
 								// examples:
-								// 1. task's input datalink has multiple chunks 
+								// 1. task's input datalink has multiple chunks
 								
 								// check if the parent output has to be filtered
 								// - 1) filtering not necessary (because it just outputs the equivalent of a single record/input entity)
 								// - 2) filtering not necessary (because the parent can do it itself)
-								if (((//sourceBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && 
-										(sourceTask.getRecords().size() == 1) ||
+								logger.debug("findCellsWithUntranslatedDataLinks():"
+										+ " #recs(source)="+srcRecords.size()+" "+sourceTask.getRecords().size()
+										+ " source can provide filtering="+sourceTask.canProvideDataPort(null, null, sourceBasicGrouping, null, true)
+										+ " tool isMultipleInstancesPerDataport="+parameter.isMultipleInstancesPerDataport(null));
+								if (
+										((//sourceBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && 
+										//(sourceTask.getRecords().size() == 1) ||
+										srcRecords.size() == 1 ||
 										//chunks.size() > sourceChunks.size() ||
-										sourceTask.canProvideDataPort(null, null, sourceBasicGrouping, null, true))))
+										sourceTask.canProvideDataPort(null, null, sourceBasicGrouping, null, true)) || 
+										(parameter.isMultipleInstancesPerDataport(null)) 
+										)
+									)
 								{
 									logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip filtering.");
-									task.setFlags(task.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_FILTER);
+									//task.setFlags(task.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_FILTER);
+									dataLink.setFlags(dataLink.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_FILTER);
 								}
 								
 								// check if the parent output has to be merged
 								// - 1) merging not necessary, because the task require only the equivalent of a single record)
 								// - 2) merging not necessary, because the task can do merging itself
-								else if ((targetBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && inputs.size() == 1) || 
+								else if (((targetBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && inputs.size() == 1) || 
 										  records.size() == 1 || 
-										  task.canConsumeDataPort(null, null, targetBasicGrouping, null, true))
+										  task.canConsumeDataPort(null, null, targetBasicGrouping, null, true)
+										  ) ||
+										  (parameter.isMultiple(null) || parameter.isMultipleInstances(null))
+										 )
 								{
 									logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip merging.");
 									task.setFlags(task.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_MERGE);
+									//dataLink.setFlags(dataLink.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_MERGE);
 								}
 							}
 						}
@@ -906,47 +908,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 		logger.debug("findCellsWithUntranslatedDataLinks(): "+untranslatedLinks.size()+" untranslated dataLinks found.");
 		return untranslatedLinks;
 	}
-	
-	private int getDataportState(DataPort dataPort, EList<TraversalChunk> chunks,
-			String groupingStrFrom, String groupingStrTo,
-			Task sourceTask, Task targetTask) throws DataPortNotFoundException, ToolNotFoundException
-	{
-		Tool tool = targetTask.getPreferredTool();
-		final String func = "getDataportState";
-		Parameter parameter = tool.getCommand().getDataParamForDataPort(dataPort, false).getParameter();
-		parameter = tool.getTemplateParameter(parameter); 
-		logger.debug(func+" chunks="+Util.list2String(chunks, null)+" dataPort="+dataPort.getName()
-				+" allowedConversion="+ 
-				tool.isAllowedConversion(dataPort, groupingStrFrom, groupingStrTo)
-				+" grouping: "+groupingStrFrom+"=>"+groupingStrTo
-				+" multipleIPD="+parameter.isMultipleInstancesPerDataport(null)
-				+" multipleI="+parameter.isMultipleInstances(null)
-				+" multipleD="+parameter.isMultiple(null)
-		);
-		logger.debug(func+" "
-				+" multiInputs="+targetTask.canProcessMultipleInputsFor(tool, dataPort)
-				+" multipleInstances="+targetTask.canProcessMultipleInstancesFor(tool, dataPort)
-				+" multipleInstancesForDataport="+targetTask.canProcessMultipleInstancesPerDataportFor(tool, dataPort)
-				);
-		return 0;
-	}
-	
-	private boolean incompatibilitiesCanBeResolvedByTool(Task task, EList<mxICell> edges) 
-			throws TaskNotFoundException, DataLinkNotFoundException
-	{
-		boolean rc = false;
 		
-		for (mxICell edge : edges)
-		{
-			Task sourceTask = JGraphXUtil.getSourceTask((mxCell) edge);
-			DataLink dataLink = JGraphXUtil.loadDataLink(edge);
-			//logger.debug(sourceTask.canProvideDataPort(tool, dataPort, grouping, traverslChunks, isPartial))
-			
-		}
-		
-		return rc;
-	}
-
 	/**
 	 * <!-- begin-user-doc -->
 	 	 * 1.   test if current task (entry key) and its DataPorts (entry value), which are going to be resolved
@@ -960,7 +922,6 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 		 * 2. find the utility task that fits best to the input constellation as found in step 1
 		 * 
 		 * 3. create new filter task and insert into graph (using utility task from step 2 as template)
-		 * 
 		 * 
 		 * argument entry: the cell/task and all (ingoing) edges to this cell 
 		 * 
@@ -1054,7 +1015,10 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 					}
 					Task mergeTask = null;
 					boolean existingMergeTaskFound = false;
-					if (((task.getFlags() >> 13) & 0x1) == 1)
+					//if (((task.getFlags() >> 13) & 0x1) == 1)
+					logger.debug("resolveEdge(): former condition="+((task.getFlags() >> 13) & 0x1)
+						+" new cond="+((task.getFlags() & GlobalConstants.UTILITY_TASK_DO_NOT_MERGE) > 1));
+					if ((task.getFlags() & GlobalConstants.UTILITY_TASK_DO_NOT_MERGE) > 1)
 					{
 						mergeTask=task;
 					}
@@ -1101,7 +1065,8 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 										task.getUniqueString()));
 
 					}	
-					if (((task.getFlags() >> 13) & 0x1) != 1)
+					//if (((task.getFlags() >> GlobalConstants.UTILITY_TASK_DO_NOT_MERGE_BIT_POS) & 0x1) != 1)
+					if ((task.getFlags() & GlobalConstants.UTILITY_TASK_DO_NOT_MERGE) == 0)
 					{
 						logger.debug("resolveEdge(): insert edge: (merge-task) "
 								+ mergeTask.getUniqueString() + "->"
@@ -1130,96 +1095,6 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 			}
 		}
 		return rc;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
-				if (resolve) return getGraph();
-				return basicGetGraph();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
-				setGraph((Graph)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
-				setGraph((Graph)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
-				return graph != null;
-		}
-		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case JgraphxPackage.PREPROCESSING_GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL:
-				try {
-					return resolvePreprocessingTask((mxICell)arguments.get(0), (mxICell)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-			case JgraphxPackage.PREPROCESSING_GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED:
-				return findCellsWherePreprocessingIsRequired();
-			case JgraphxPackage.PREPROCESSING_GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS:
-				return findCellsWithUntranslatedDataLinks();
-			case JgraphxPackage.PREPROCESSING_GRAPH___RESOLVE_EDGE__TASK_ELIST:
-				try {
-					return resolveEdge((Task)arguments.get(0), (EList<mxICell>)arguments.get(1));
-				}
-				catch (Throwable throwable) {
-					throw new InvocationTargetException(throwable);
-				}
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -1263,9 +1138,11 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 			Task targetTask   = JGraphXUtil.getTargetTask((mxCell) edge);
 			
 			logger.debug("createFilterTasks(): flags="+task.getFlags()
-					+" (flags>>13="+(task.getFlags() >> 13)+")"
+					+" skip? (flags>>12="+(task.getFlags() >> GlobalConstants.UTILITY_TASK_DO_NOT_FILTER_BIT_POS)+" new cond="+
+					((task.getFlags() & GlobalConstants.UTILITY_TASK_DO_NOT_FILTER) > 1)+ ")"
 					+" is root="+sourceTask.isRoot());
-			if (((task.getFlags() >> 12) & 0x1) == 1)
+			//if (((task.getFlags() >> GlobalConstants.UTILITY_TASK_DO_NOT_FILTER_BIT_POS) & 0x1) == 1)
+			if ((dataLink.getFlags() & GlobalConstants.UTILITY_TASK_DO_NOT_FILTER) > 1)
 			{
 				logger.debug("createFilterTasks(): no filtering necessary");
 				cells.put(JGraphXUtil.getSource((mxCell) edge), dataLink);
@@ -1382,6 +1259,95 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 		return cells;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
+				if (resolve) return getGraph();
+				return basicGetGraph();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
+				setGraph((Graph)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
+				setGraph((Graph)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case JgraphxPackage.PREPROCESSING_GRAPH__GRAPH:
+				return graph != null;
+		}
+		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case JgraphxPackage.PREPROCESSING_GRAPH___RESOLVE_PREPROCESSING_TASK__MXICELL_MXICELL:
+				try {
+					return resolvePreprocessingTask((mxICell)arguments.get(0), (mxICell)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+			case JgraphxPackage.PREPROCESSING_GRAPH___FIND_CELLS_WHERE_PREPROCESSING_IS_REQUIRED:
+				return findCellsWherePreprocessingIsRequired();
+			case JgraphxPackage.PREPROCESSING_GRAPH___FIND_CELLS_WITH_UNTRANSLATED_DATA_LINKS:
+				return findCellsWithUntranslatedDataLinks();
+			case JgraphxPackage.PREPROCESSING_GRAPH___RESOLVE_EDGE__TASK_ELIST:
+				try {
+					return resolveEdge((Task)arguments.get(0), (EList<mxICell>)arguments.get(1));
+				}
+				catch (Throwable throwable) {
+					throw new InvocationTargetException(throwable);
+				}
+		}
+		return super.eInvoke(operationID, arguments);
+	}
 
 	
 	/**

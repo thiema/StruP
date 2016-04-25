@@ -450,13 +450,22 @@ public interface DataPackage extends EPackage {
 	int DATA_LINK__PIPE = 17;
 
 	/**
+	 * The feature id for the '<em><b>Flags</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_LINK__FLAGS = 18;
+
+	/**
 	 * The number of structural features of the '<em>Link</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_LINK_FEATURE_COUNT = 18;
+	int DATA_LINK_FEATURE_COUNT = 19;
 
 	/**
 	 * The operation id for the '<em>Is Unconditional</em>' operation.
@@ -1265,6 +1274,17 @@ public interface DataPackage extends EPackage {
 	EAttribute getDataLink_Pipe();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.data.DataLink#getFlags <em>Flags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Flags</em>'.
+	 * @see easyflow.data.DataLink#getFlags()
+	 * @see #getDataLink()
+	 * @generated
+	 */
+	EAttribute getDataLink_Flags();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.data.DataLink#isUnconditional() <em>Is Unconditional</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2009,6 +2029,14 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_LINK__PIPE = eINSTANCE.getDataLink_Pipe();
+
+		/**
+		 * The meta object literal for the '<em><b>Flags</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_LINK__FLAGS = eINSTANCE.getDataLink_Flags();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Unconditional</b></em>' operation.

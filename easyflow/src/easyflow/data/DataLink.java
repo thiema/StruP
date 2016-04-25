@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.data.DataLink#isProcessed <em>Processed</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getDataResourceName <em>Data Resource Name</em>}</li>
  *   <li>{@link easyflow.data.DataLink#getPipe <em>Pipe</em>}</li>
+ *   <li>{@link easyflow.data.DataLink#getFlags <em>Flags</em>}</li>
  * </ul>
  * </p>
  *
@@ -422,6 +423,33 @@ public interface DataLink extends EObject {
 	 * @generated
 	 */
 	void setPipe(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Flags</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Flags</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Flags</em>' attribute.
+	 * @see #setFlags(int)
+	 * @see easyflow.data.DataPackage#getDataLink_Flags()
+	 * @model default="0"
+	 * @generated
+	 */
+	int getFlags();
+
+	/**
+	 * Sets the value of the '{@link easyflow.data.DataLink#getFlags <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Flags</em>' attribute.
+	 * @see #getFlags()
+	 * @generated
+	 */
+	void setFlags(int value);
 
 	/**
 	 * Returns the value of the '<em><b>Param Str</b></em>' attribute.

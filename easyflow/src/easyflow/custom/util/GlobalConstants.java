@@ -161,6 +161,8 @@ public class GlobalConstants {
 	
 	public static final int UTILITY_TASK_DO_NOT_FILTER            = 0x1000;
 	public static final int UTILITY_TASK_DO_NOT_MERGE             = 0x2000;
+	public static final int UTILITY_TASK_DO_NOT_FILTER_BIT_POS    = 12;
+	public static final int UTILITY_TASK_DO_NOT_MERGE_BIT_POS     = 13;
 	
 	public static final int MULTIPLE_DATAPORTS                    = 0x01;
 	public static final int MULTIPLE_INSTANCES                    = 0x02;

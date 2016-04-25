@@ -547,6 +547,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDataLink_Flags() {
+		return (EAttribute)dataLinkEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getDataLink__IsUnconditional() {
 		return dataLinkEClass.getEOperations().get(0);
 	}
@@ -972,6 +981,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEAttribute(dataLinkEClass, DATA_LINK__PROCESSED);
 		createEAttribute(dataLinkEClass, DATA_LINK__DATA_RESOURCE_NAME);
 		createEAttribute(dataLinkEClass, DATA_LINK__PIPE);
+		createEAttribute(dataLinkEClass, DATA_LINK__FLAGS);
 		createEOperation(dataLinkEClass, DATA_LINK___IS_UNCONDITIONAL);
 		createEOperation(dataLinkEClass, DATA_LINK___GET_UNIQUE_STRING__STRING_STRING_STRING);
 		createEOperation(dataLinkEClass, DATA_LINK___GET_UNIQUE_STRING);
@@ -1118,6 +1128,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEAttribute(getDataLink_Processed(), ecorePackage.getEBoolean(), "processed", "false", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_DataResourceName(), theEasyflowPackage.getURI(), "dataResourceName", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataLink_Pipe(), ecorePackage.getEBooleanObject(), "pipe", null, 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataLink_Flags(), ecorePackage.getEInt(), "flags", "0", 0, 1, DataLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getDataLink__IsUnconditional(), ecorePackage.getEBoolean(), "isUnconditional", 0, 1, IS_UNIQUE, IS_ORDERED);
 

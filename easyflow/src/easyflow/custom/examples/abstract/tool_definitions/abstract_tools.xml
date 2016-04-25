@@ -34,6 +34,13 @@
 		<param name="output" type="data" format="F1,F2,F3" output="true"></param>
 	</tool>
 	
+	<tool id="D" package="dummy_package">
+		<command exe="toolD"></command>
+		<param name="input" type="data" format="F1,F2"
+			multiple="true" multiple_instances="true" multiple_instances_per_dataport="false" ></param>
+		<param name="output" type="data" format="F1,F2" output="true"></param>
+	</tool>
+	
 <!-- utility tools -->
 	<tool id="sort" analysis_type="sort"> 
 		<param name="input" type="data" format="F1"></param>

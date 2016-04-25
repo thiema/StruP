@@ -73,7 +73,7 @@
 			<param type="text" name="classpath" prefix="-" key="cp" separator=" "/>
 		</interpreter>
 		<param type="data" abstract="true" optional="false" format="fasta"/>
-		<!--  param type="data" abstract="true" multiple="true" multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf"/-->
+		<!-- param type="data" abstract="true" multiple="true" multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf"/> -->
 		<param type="data" abstract="true" format="bam,sam,vcf"/>
 		<param type="data" abstract="true" output="true"   multiple_instances="true" multiple_instances_per_dataport="true" format="bam,sam,vcf,gatk_interval" named="true" key="o"/>
 		<param type="any"  abstract="true" name="any" named="true" separator=" " prefix="-" output_arg_value_for_boolean_param="false"/>

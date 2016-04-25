@@ -2113,6 +2113,8 @@
           defaultValueLiteral="false"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataResourceName" eType="#//URI"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="pipe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="flags" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+          defaultValueLiteral="0"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="Data">
       <eOperations name="getFormat" eType="#//data/DataFormat"/>

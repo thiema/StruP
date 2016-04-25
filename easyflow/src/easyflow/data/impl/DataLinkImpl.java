@@ -67,6 +67,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link easyflow.data.impl.DataLinkImpl#isProcessed <em>Processed</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getDataResourceName <em>Data Resource Name</em>}</li>
  *   <li>{@link easyflow.data.impl.DataLinkImpl#getPipe <em>Pipe</em>}</li>
+ *   <li>{@link easyflow.data.impl.DataLinkImpl#getFlags <em>Flags</em>}</li>
  * </ul>
  * </p>
  *
@@ -354,6 +355,25 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 	 * @ordered
 	 */
 	protected Boolean pipe = PIPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFlags() <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFlags()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int FLAGS_EDEFAULT = 0;
+	/**
+	 * The cached value of the '{@link #getFlags() <em>Flags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFlags()
+	 * @generated
+	 * @ordered
+	 */
+	protected int flags = FLAGS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -755,6 +775,27 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 		pipe = newPipe;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__PIPE, oldPipe, pipe));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getFlags() {
+		return flags;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFlags(int newFlags) {
+		int oldFlags = flags;
+		flags = newFlags;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_LINK__FLAGS, oldFlags, flags));
 	}
 
 	/**
@@ -1227,6 +1268,8 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 				return getDataResourceName();
 			case DataPackage.DATA_LINK__PIPE:
 				return getPipe();
+			case DataPackage.DATA_LINK__FLAGS:
+				return getFlags();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1295,6 +1338,9 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 			case DataPackage.DATA_LINK__PIPE:
 				setPipe((Boolean)newValue);
 				return;
+			case DataPackage.DATA_LINK__FLAGS:
+				setFlags((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1361,6 +1407,9 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 			case DataPackage.DATA_LINK__PIPE:
 				setPipe(PIPE_EDEFAULT);
 				return;
+			case DataPackage.DATA_LINK__FLAGS:
+				setFlags(FLAGS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1409,6 +1458,8 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 				return DATA_RESOURCE_NAME_EDEFAULT == null ? dataResourceName != null : !DATA_RESOURCE_NAME_EDEFAULT.equals(dataResourceName);
 			case DataPackage.DATA_LINK__PIPE:
 				return PIPE_EDEFAULT == null ? pipe != null : !PIPE_EDEFAULT.equals(pipe);
+			case DataPackage.DATA_LINK__FLAGS:
+				return flags != FLAGS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -1475,6 +1526,8 @@ public class DataLinkImpl extends MinimalEObjectImpl.Container implements DataLi
 		result.append(dataResourceName);
 		result.append(", pipe: ");
 		result.append(pipe);
+		result.append(", flags: ");
+		result.append(flags);
 		result.append(')');
 		return result.toString();
 	}

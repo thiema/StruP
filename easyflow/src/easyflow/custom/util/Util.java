@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -236,6 +237,33 @@ public class Util {
 			out += "; ";
 		}
 		return out;
+	}
+	
+	public static String traversalChunks2String(EMap<String, EList<TraversalChunk>> chunks, boolean isUri)
+	{
+		String uniq="";
+		final String sep1="-", sep2= ":", sep3= "_";
+		
+		Iterator<Entry<String, EList<TraversalChunk>>> it = chunks
+				.iterator();
+		// for (String key:getChunks().keySet())
+		while (it.hasNext()) {
+			String key = it.next().getKey();
+			// logger.debug();
+
+			if (isUri)
+				uniq += sep3+ key + sep3;
+			else
+				uniq += sep2 + key + sep3;
+			String[] tmp = new String[chunks.get(key).size()];
+			// logger.debug("getUniqueString(): "+key+" "+tmp.length+" "+getChunks().get(key));
+			for (int i = 0; i < tmp.length; i++) {
+				tmp[i] = chunks.get(key).get(i).getName();
+				// logger.debug(tmp[i]);
+			}
+			uniq += StringUtils.join(tmp, sep1);
+		}
+		return uniq;
 	}
 	
 	public static EList<String> tasksToStringList(EList<Task> tasks) {
