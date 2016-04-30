@@ -19,6 +19,7 @@ import javax.swing.text.StyledDocument;
 import org.apache.log4j.Logger;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
+import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.util.mxEvent;
@@ -187,8 +188,8 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		JFrame frame = new JFrame();
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setJMenuBar(new EditorMenuBar(this));
-//		frame.setJMenuBar(new EditorMenuBar(this));
+		if (GlobalVar.isDevloperMode())
+			frame.setJMenuBar(new EditorMenuBar(this));
 		frame.setSize(870, 640);
 		// Updates the frame title
 		updateTitle();

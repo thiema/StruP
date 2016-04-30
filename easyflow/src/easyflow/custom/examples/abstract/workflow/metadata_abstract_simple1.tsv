@@ -1,4 +1,4 @@
 Record	ReadGroup	Sample	Group	Library	InputFiles:List	Platform	Cond
 ID1	RG1	S1	G1	L1	fileA	P1
-ID2	RG2	S2	G1	L1	fileB	P1	C1
-ID3	RG3	S2	G1	L1	fileC	P2	C2
+ID2	RG2	S2	G1	L1	fileB	P1
+ID3	RG3	S2	G1	L1	fileC	P2

@@ -347,6 +347,9 @@ public class GlobalConstants {
 
 	public static final String CONVERT_GROUPING_ANY = "any";
 
-	public static final String CONVERT_GROUPING_NONE = "none";	
+	public static final String CONVERT_GROUPING_NONE = "none";
+
+	public static final String TOOL_VERTEX_STYLE = "tool_vertex_style";
+
 
 }

@@ -1180,7 +1180,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		{
 			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERIC_1, 
 					Severity.WARN, 
-					"Unable to process GroupingCriterion: \""+groupingStr+"\" for Task="+getName());	
+					"Unable to process GroupingCriterion: "
+					+ "\""+groupingStr+"\" for Task="+getName()
+					+". No in/out Dataports defined.");	
 			return false;
 		}
 
@@ -1297,9 +1299,12 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 
 			if (tmp.length > 0) {
 				for (int i = 0; i < tmp.length; i++) {
-					createGroupingCriteria(tmp[i], dataPort, defaultMode);
+					if (!createGroupingCriteria(tmp[i], dataPort, defaultMode))
+						rc = false;
 				}
 			}
+			else
+				rc = false;
 		}
 		return rc;
 	}

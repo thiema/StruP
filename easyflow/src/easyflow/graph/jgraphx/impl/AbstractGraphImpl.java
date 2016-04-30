@@ -181,7 +181,6 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 					//logger.debug("task="+task.getUniqueString());
 					for (Entry<String, TraversalEvent> entry : task.getTraversalEvents()) {
 						
-						
 						if (entry.getValue().isGrouping())
 							continue;
 						
@@ -303,6 +302,9 @@ public class AbstractGraphImpl extends DefaultGraphImpl implements AbstractGraph
 				for (String te : task.getTraversalEvents().keySet()) {
 					
 					TraversalEvent traversalEvent = task.getTraversalEvents().get(te);
+					if (!traversalEvent.isGrouping())
+						continue;
+
 					// set unique te string
 					String te_unique=task.getTraversalEvents().get(te).getTraversalCriterion().getId()+"_"+
 							task.getTraversalEvents().get(te).getTraversalCriterion().getMode();

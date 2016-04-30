@@ -31,7 +31,7 @@
 		</param>
 		<param type="data" abstract="true"  format="bam,sam,vcf"/>
 		<param name="input2" type="data" format="F3" optional="true"></param>
-		<param name="output" type="data" format="F1,F2,F3" output="true"></param>
+		<param name="output" type="data" format="F1,F2,F3" output="true" multiple_instances="true"></param>
 	</tool>
 	
 	<tool id="D" package="dummy_package">

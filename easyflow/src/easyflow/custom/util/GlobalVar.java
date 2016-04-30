@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EMap;
 
 
 
+
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxRectangle;
 
@@ -150,15 +151,6 @@ public class GlobalVar {
 		GlobalVar.defaultEdgeStyle=defaultEdgeStyle;
 	}
 	
-	public static Map<String, Object> getDefaultVertexStyle() {
-		return defaultVertexStyle;
-	}
-
-	public static void setDefaultVertexStyle(Map<String, Object> defaultVertexStyle)
-	{
-		GlobalVar.defaultVertexStyle=defaultVertexStyle;
-	}
-
 	public static Task getRootTask()
 	{
 		return getTasks().get(GlobalConstants.ROOT_TASK_NAME);
@@ -342,7 +334,4 @@ public class GlobalVar {
 	public static mxGraphComponent getGraphComponent() {
 		return graphComponent;
 	}
-	
-	
-
 }

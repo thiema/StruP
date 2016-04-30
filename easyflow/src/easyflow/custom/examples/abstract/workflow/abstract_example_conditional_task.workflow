@@ -6,8 +6,8 @@ A		A	F1	F2	InputFiles
 B		B	F2;F2.idx	F2			;index	Cond=="C1"
 #B		B	F2	F2				Cond=="C1"
 #B		B	F2	F2
-#C		C	F2	F2				Cond=="C2"
-C		C	F2	F2				Cond=="C1"
+C		C	F2	F2				Cond=="C2"
+#C		C	F2	F2				Cond=="C1"
 D		D	F2	F3	Group
 ##conditional task B not handled as conditional, because
 ##nobody provides input F3 other than B for task C

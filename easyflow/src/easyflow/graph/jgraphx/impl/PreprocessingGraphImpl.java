@@ -688,6 +688,7 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 					int hasMultipleDataports = 0;
 					int hasMultipleInstances = 0;
 					int hasMultipleInstancesPerDataport = 0;
+					boolean dontMerge = false;
 					if (edges.size() > 1)
 					{
 						 hasMultipleDataports = GlobalConstants.MULTIPLE_DATAPORTS;
@@ -695,7 +696,10 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						 //support for partial/chunked instances
 						 hasMultipleInstances = GlobalConstants.MULTIPLE_INSTANCES;
 					}
-					
+					else
+					{
+						dontMerge = true;
+					}
 					for (Object edge : edges) try {
 						
 						int dataportState = hasMultipleDataports + hasMultipleInstances;
@@ -710,9 +714,9 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						EList<TraversalChunk> targetChunks  = task.getChunks().get(dataLink.getGroupingStr());
 						EList<TraversalChunk> sourceChunks  = sourceTask.getChunks().get(dataLink.getParentGroupingStr());
 						EList<TraversalChunk> inputs        = task.getInputs(true);
-						EList<TraversalChunk> srcInputs  = sourceTask.getInputs(true);
+						EList<TraversalChunk> srcInputs     = sourceTask.getInputs(true);
 						EList<TraversalChunk> records       = task.getRecords(true);
-						EList<TraversalChunk> srcRecords = sourceTask.getRecords();
+						EList<TraversalChunk> srcRecords    = sourceTask.getRecords();
 						
 						if (inputs.size() > 1)
 							hasMultipleInstancesPerDataport = GlobalConstants.MULTIPLE_INSTANCES_PER_DATAPORT;
@@ -726,13 +730,15 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						DataPort dataPortTarget  = dataLink.getDataPort();
 						DataPort dataPortSource  = dataLink.getInDataPort();
 						
+						
 						logger.debug("findCellsWithUntranslatedDataLinks(): "
 								+"test "+task.getUniqueString()
 								+" (against:"+sourceTask.getUniqueString()+"): "
 								+ dataLink.getParentGroupingStr()+"= "
 								+Util.list2String(sourceChunks, null)
 								+" ==>> "+dataLink.getGroupingStr()+"= "
-								+Util.list2String(targetChunks, null));
+								+Util.list2String(targetChunks, null)
+								+" uncond="+dataLink.isUnconditional());
 						logger.debug("findCellsWithUntranslatedDataLinks(): "
 								+" groupings="+dataLink.getChunks().keySet()
 								+" dataport="+dataPortTarget.getName()+" "
@@ -789,13 +795,13 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 						
 						if (!found)
 						{
+							//TODO: exception handling: no parameter found
 							Parameter parameter = task.getPreferredTool().getCommand().getDataParamForDataPort(dataPortTarget, false).getParameter();
 							parameter.merge(task.getPreferredTool().getTemplateParameter(parameter));
 							
 							boolean needConversion = true;
 							if (dataportState > 0)
 							{
-								
 								needConversion = false;
 								
 								logger.debug("findCellsWithUntranslatedDataLinks(): dataportState="+dataportState
@@ -864,22 +870,28 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 									logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip filtering.");
 									//task.setFlags(task.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_FILTER);
 									dataLink.setFlags(dataLink.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_FILTER);
+									if (dontMerge)
+										task.setFlags(task.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_MERGE);
+										
 								}
 								
 								// check if the parent output has to be merged
 								// - 1) merging not necessary, because the task require only the equivalent of a single record)
 								// - 2) merging not necessary, because the task can do merging itself
-								else if (((targetBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && inputs.size() == 1) || 
+								else if (
+										((targetBasicGrouping.equals(GlobalConstants.METADATA_INPUT) && inputs.size() == 1) || 
 										  records.size() == 1 || 
 										  task.canConsumeDataPort(null, null, targetBasicGrouping, null, true)
 										  ) ||
 										  (parameter.isMultiple(null) || parameter.isMultipleInstances(null))
+										  
 										 )
 								{
 									logger.debug("findCellsWithUntranslatedDataLinks(): mark to skip merging.");
 									task.setFlags(task.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_MERGE);
 									//dataLink.setFlags(dataLink.getFlags() | GlobalConstants.UTILITY_TASK_DO_NOT_MERGE);
 								}
+								
 							}
 						}
 						

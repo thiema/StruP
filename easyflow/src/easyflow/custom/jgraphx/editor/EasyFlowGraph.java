@@ -67,7 +67,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		}
 		return GlobalConstants.EDGE_STYLE;
 	}
-	
+	/*
 	public Object getStyleFor(Object cell)
 	{
 		Map<String, Object> style = new HashMap<String, Object>();
@@ -85,6 +85,7 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		((mxICell) cell).setStyle("tmp");
 		return "tmp";
 	}
+	*/
 	
 	public Object createNewCell(Object object, mxGeometry geometry)
 	{
@@ -110,7 +111,13 @@ public class EasyFlowGraph extends EasyFlowCustomGraph
 		if (parent==null) parent=getDefaultParent();
 		//return insertVertex(parent, id, XMLUtil.getElement(task), 400, 100, defaultWidth, defaultHight);
 		//return setCellUnvisible(insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle));
-		Object cell = insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, defaultWidth, defaultHeight, vertexStyle);
+		Object cell;
+		if (task.isUtil())
+			cell = insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, 
+					defaultWidth, defaultHeight, GlobalConstants.TOOL_VERTEX_STYLE);
+		else
+			cell = insertVertex(parent, id, task.getUniqueString(), defaultXPos, defaultYPos, 
+					defaultWidth, defaultHeight, vertexStyle);
 		return updateCellSize(cell);
 	}
 	

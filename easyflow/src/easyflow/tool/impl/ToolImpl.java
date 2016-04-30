@@ -1172,12 +1172,13 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * tell if the given (input) DataPort is an allowed conversion for given grouping strings
 	 * <!-- end-user-doc -->
 	 * @generated not
 	 */
 	public boolean isAllowedConversion(DataPort dataPort, String groupingStrFrom, String groupingStrTo) throws DataPortNotFoundException {
 		
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, true);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
@@ -1236,7 +1237,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		return param;
 	}
 	
-	private Data getDataForDataPort(DataPort dataPort)
+	private Data getDataForDataPort(DataPort dataPort, boolean isOutput)
 	{
 		//EList<Data> dataList = getData().get(dataPort.getName());
 		//boolean found = false;
@@ -1244,7 +1245,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		{
 			for (Data d : data)
 			{
-				if (d.getPort().isCompatible(dataPort))
+				if (d.getPort().isCompatible(dataPort) && d.isOutput() == isOutput)
 				{
 					return d;
 				}
@@ -1263,7 +1264,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 		
 		if (dataPort == null)
 			throw new DataPortNotFoundException();
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, true);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
@@ -1281,7 +1282,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @generated not
 	 */
 	public boolean canProvideMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, true);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
@@ -1299,7 +1300,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @generated not
 	 */
 	public boolean canProvideMultipleInstancesPerDataportFor(DataPort dataPort) throws DataPortNotFoundException {
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, true);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
@@ -1317,7 +1318,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @generated not
 	 */
 	public boolean canProcessMultipleInputsFor(DataPort dataPort) throws DataPortNotFoundException {
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, false);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
@@ -1333,7 +1334,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @generated not
 	 */
 	public boolean canProcessMultipleInstancesPerDataportFor(DataPort dataPort) throws DataPortNotFoundException {
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, false);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 
@@ -1349,7 +1350,7 @@ public class ToolImpl extends MinimalEObjectImpl.Container implements Tool {
 	 * @generated not
 	 */
 	public boolean canProcessMultipleInstancesFor(DataPort dataPort) throws DataPortNotFoundException {
-		Data matchingData = getDataForDataPort(dataPort);
+		Data matchingData = getDataForDataPort(dataPort, false);
 		if (matchingData == null || matchingData.getPort() == null)
 			throw new DataPortNotFoundException();
 		else 

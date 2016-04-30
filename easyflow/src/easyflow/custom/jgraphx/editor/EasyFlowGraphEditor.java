@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
 import com.mxgraph.examples.swing.editor.EditorToolBar;
+import com.mxgraph.examples.swing.editor.SchemaEditorMenuBar;
 import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -169,7 +170,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 
 	}
 	
-	private static Map<String, Object> getDefaultVertexStyle(Color color)
+	private static Map<String, Object> getVertexStyle(Color color)
 	{
 		Map<String, Object> vertexStyle = new Hashtable<String, Object>();
 		//vertexStyle.put(mxConstants.STYLE_AUTOSIZE, "1");
@@ -179,13 +180,12 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
         //vertexStyle.put(mxConstants.STYLE_TEXT_OPACITY, 0);
 		
 		if (color != null)
-		{
-	        
+		{    
 	        //baseStyle.put(mxConstants.STYLE_STROKECOLOR, vertexFillColor);
 	        //vertexStyle.put(mxConstants.STYLE_STROKECOLOR, vertexFillColor);
 	        vertexStyle.put(mxConstants.STYLE_FILLCOLOR, getRGB(color));
-	        
 		}
+		
 		return vertexStyle;
 	}
 	
@@ -234,16 +234,13 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 	}
 	
 	private static void setStyleSheet(mxStylesheet stylesheet, Color color) {
-
 		
 		// base style
         //Map<String, Object> baseStyle   = getBaseStyle();
 
         // custom vertex style
-        //Map<String, Object> vertexStyle = getDefaultVertexStyle(color);
-        Map<String, Object> vertexStyle = getDefaultVertexStyle(null);
-        stylesheet.putCellStyle(GlobalConstants.VERTEX_STYLE, vertexStyle);
-
+        stylesheet.putCellStyle(GlobalConstants.VERTEX_STYLE, getVertexStyle(null));
+        stylesheet.putCellStyle(GlobalConstants.TOOL_VERTEX_STYLE, getVertexStyle(Color.LIGHT_GRAY));
         // custom edge style
         Map<String, Object> edgeStyle = getDefaultEdgeStyle(color);        
         stylesheet.putCellStyle(GlobalConstants.EDGE_STYLE, edgeStyle);
@@ -255,7 +252,6 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
         
         //GlobalVar.setDefaultVertexStyle(vertexStyle);
         //GlobalVar.setDefaultEdgeStyle(edgeStyle);
-        
         
         /*
         mxDefaultTextShape textShape=new mxDefaultTextShape(){
@@ -302,7 +298,6 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		}
 
 		EasyFlowGraphEditor editor = new EasyFlowGraphEditor();
-		//editor.createFrame(new SchemaEditorMenuBar(editor)).setVisible(true);
 		editor.createFrame().setVisible(true);
 	}
 
