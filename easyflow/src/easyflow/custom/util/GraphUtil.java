@@ -11,7 +11,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import sun.security.action.GetLongAction;
 import easyflow.util.Category;
 import easyflow.util.LogMessage;
 import easyflow.util.UtilFactory;

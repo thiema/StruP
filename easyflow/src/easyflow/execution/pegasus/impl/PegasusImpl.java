@@ -6,6 +6,8 @@
  */
 package easyflow.execution.pegasus.impl;
 
+import easyflow.execution.DefaultExecutionSystem;
+import easyflow.execution.ExecutionPackage;
 import easyflow.execution.impl.IExecutionSystemImpl;
 import easyflow.execution.pegasus.Pegasus;
 import easyflow.execution.pegasus.PegasusPackage;
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#isUnix <em>Unix</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getSiteCatalog <em>Site Catalog</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getReplicaCatalog <em>Replica Catalog</em>}</li>
  *   <li>{@link easyflow.execution.pegasus.impl.PegasusImpl#getTransformationCatalog <em>Transformation Catalog</em>}</li>
@@ -32,6 +35,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
+	/**
+	 * The default value of the '{@link #isUnix() <em>Unix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUnix()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean UNIX_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isUnix() <em>Unix</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isUnix()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean unix = UNIX_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getSiteCatalog() <em>Site Catalog</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -109,6 +132,27 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 	@Override
 	protected EClass eStaticClass() {
 		return PegasusPackage.Literals.PEGASUS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isUnix() {
+		return unix;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUnix(boolean newUnix) {
+		boolean oldUnix = unix;
+		unix = newUnix;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PegasusPackage.PEGASUS__UNIX, oldUnix, unix));
 	}
 
 	/**
@@ -226,6 +270,8 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case PegasusPackage.PEGASUS__UNIX:
+				return isUnix();
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				return getSiteCatalog();
 			case PegasusPackage.PEGASUS__REPLICA_CATALOG:
@@ -244,6 +290,9 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case PegasusPackage.PEGASUS__UNIX:
+				setUnix((Boolean)newValue);
+				return;
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				setSiteCatalog((URI)newValue);
 				return;
@@ -265,6 +314,9 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case PegasusPackage.PEGASUS__UNIX:
+				setUnix(UNIX_EDEFAULT);
+				return;
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				setSiteCatalog(SITE_CATALOG_EDEFAULT);
 				return;
@@ -286,6 +338,8 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case PegasusPackage.PEGASUS__UNIX:
+				return unix != UNIX_EDEFAULT;
 			case PegasusPackage.PEGASUS__SITE_CATALOG:
 				return SITE_CATALOG_EDEFAULT == null ? siteCatalog != null : !SITE_CATALOG_EDEFAULT.equals(siteCatalog);
 			case PegasusPackage.PEGASUS__REPLICA_CATALOG:
@@ -294,6 +348,38 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 				return TRANSFORMATION_CATALOG_EDEFAULT == null ? transformationCatalog != null : !TRANSFORMATION_CATALOG_EDEFAULT.equals(transformationCatalog);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == DefaultExecutionSystem.class) {
+			switch (derivedFeatureID) {
+				case PegasusPackage.PEGASUS__UNIX: return ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__UNIX;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == DefaultExecutionSystem.class) {
+			switch (baseFeatureID) {
+				case ExecutionPackage.DEFAULT_EXECUTION_SYSTEM__UNIX: return PegasusPackage.PEGASUS__UNIX;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -330,7 +416,9 @@ public class PegasusImpl extends IExecutionSystemImpl implements Pegasus {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (siteCatalog: ");
+		result.append(" (unix: ");
+		result.append(unix);
+		result.append(", siteCatalog: ");
 		result.append(siteCatalog);
 		result.append(", replicaCatalog: ");
 		result.append(replicaCatalog);

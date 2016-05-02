@@ -299,10 +299,11 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		
 		try
 		{
+			/*
 			CmdLineParser cmdLineParser = new CmdLineParser();
 			cmdLineParser.initOptions();
 			cmdLineParser.parseOptions(args);
-			boolean readFromExamples = false;
+					
 			Level level = Level.ERROR;
 			if (cmdLineParser.getLogLevel() != null)
 			{
@@ -335,15 +336,14 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 			}
 			// props.setProperty("log4j.rootLogger","DEBUG, file");
 			// props.setProperty("log4j.appender.file.File","out.log");
-			props.setProperty("log4j.rootLogger", level.toString()
-					+ ", stdout");
+			props.setProperty("log4j.rootLogger", level.toString()+ ", stdout");
 			props.setProperty("log4j.logger.easyflow", level.toString());
 			LogManager.resetConfiguration();
 			PropertyConfigurator.configure(props);
 			logger.debug("loglevel="+logger.getLevel()+" "+Logger.getRootLogger().getLevel()
 					+" logger="+logger.hashCode()+" rootLogger="+Logger.getRootLogger().hashCode());
 			
-
+			*/
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			
 		}

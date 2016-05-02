@@ -900,13 +900,22 @@ public interface CorePackage extends EPackage {
 	int TASK__LOG_MESSAGE = 31;
 
 	/**
+	 * The feature id for the '<em><b>Simple Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__SIMPLE_NAME = 32;
+
+	/**
 	 * The number of structural features of the '<em>Task</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_FEATURE_COUNT = 32;
+	int TASK_FEATURE_COUNT = 33;
 
 	/**
 	 * The operation id for the '<em>Read Task</em>' operation.
@@ -3289,6 +3298,17 @@ public interface CorePackage extends EPackage {
 	EReference getTask_LogMessage();
 
 	/**
+	 * Returns the meta object for the attribute '{@link easyflow.core.Task#getSimpleName <em>Simple Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Simple Name</em>'.
+	 * @see easyflow.core.Task#getSimpleName()
+	 * @see #getTask()
+	 * @generated
+	 */
+	EAttribute getTask_SimpleName();
+
+	/**
 	 * Returns the meta object for the '{@link easyflow.core.Task#readTask(java.lang.String, java.lang.String, org.eclipse.emf.common.util.EList) <em>Read Task</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5299,6 +5319,14 @@ public interface CorePackage extends EPackage {
 		 * @generated
 		 */
 		EReference TASK__LOG_MESSAGE = eINSTANCE.getTask_LogMessage();
+
+		/**
+		 * The meta object literal for the '<em><b>Simple Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK__SIMPLE_NAME = eINSTANCE.getTask_SimpleName();
 
 		/**
 		 * The meta object literal for the '<em><b>Read Task</b></em>' operation.

@@ -74,6 +74,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link easyflow.core.Task#getStaticParams <em>Static Params</em>}</li>
  *   <li>{@link easyflow.core.Task#getRule <em>Rule</em>}</li>
  *   <li>{@link easyflow.core.Task#getLogMessage <em>Log Message</em>}</li>
+ *   <li>{@link easyflow.core.Task#getSimpleName <em>Simple Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -708,6 +709,32 @@ public interface Task extends EObject {
 	 * @generated
 	 */
 	void setLogMessage(LogMessage value);
+
+	/**
+	 * Returns the value of the '<em><b>Simple Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Simple Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Simple Name</em>' attribute.
+	 * @see #setSimpleName(String)
+	 * @see easyflow.core.CorePackage#getTask_SimpleName()
+	 * @model
+	 * @generated
+	 */
+	String getSimpleName();
+
+	/**
+	 * Sets the value of the '{@link easyflow.core.Task#getSimpleName <em>Simple Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Simple Name</em>' attribute.
+	 * @see #getSimpleName()
+	 * @generated
+	 */
+	void setSimpleName(String value);
 
 	/**
 	 * <!-- begin-user-doc -->

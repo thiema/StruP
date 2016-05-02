@@ -87,13 +87,22 @@ public interface MakeflowPackage extends EPackage {
 	int MAKEFLOW__WRITER = ExecutionPackage.IEXECUTION_SYSTEM__WRITER;
 
 	/**
+	 * The feature id for the '<em><b>Unix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAKEFLOW__UNIX = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Makeflow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MAKEFLOW_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+	int MAKEFLOW_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
 
 
 	/**

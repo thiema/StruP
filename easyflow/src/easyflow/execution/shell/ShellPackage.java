@@ -88,13 +88,22 @@ public interface ShellPackage extends EPackage {
 	int SHELL__WRITER = ExecutionPackage.IEXECUTION_SYSTEM__WRITER;
 
 	/**
+	 * The feature id for the '<em><b>Unix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHELL__UNIX = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Shell</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHELL_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+	int SHELL_FEATURE_COUNT = ExecutionPackage.IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
 
 
 	/**

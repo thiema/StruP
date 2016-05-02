@@ -10,6 +10,7 @@ import easyflow.data.Data;
 import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.URIUtil;
+import easyflow.custom.util.Util;
 import easyflow.metadata.GroupingInstance;
 import easyflow.tool.DefaultToolElement;
 import easyflow.tool.InOutParameter;
@@ -18,11 +19,15 @@ import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
@@ -1732,7 +1737,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		else if (path instanceof String)
 			return (String) path;
 		else if (path instanceof URI)
-			return path.toString();
+			return URIUtil.resolveURIToFileName((URI)path);
 		else
 			return null;
 	}
@@ -1775,7 +1780,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		if (value instanceof String)
 			stringValue = URIUtil.createPath(path, (String) value);
 		else if (value instanceof URI)
-			stringValue = URIUtil.addPathToUri(path, (URI) value).toString();
+			stringValue = URIUtil.resolveURIToFileName(URIUtil.addPathToUri(path, (URI) value));
 		else if (value instanceof GroupingInstance)
 			stringValue = URIUtil.createPath(path, ((GroupingInstance)value).getName());
 		else if (value instanceof TraversalChunk)

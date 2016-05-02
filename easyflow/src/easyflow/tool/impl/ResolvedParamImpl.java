@@ -6,7 +6,10 @@
  */
 package easyflow.tool.impl;
 
+import easyflow.custom.ui.GlobalConfig;
 import easyflow.custom.util.GlobalConstants;
+import easyflow.custom.util.URIUtil;
+import easyflow.custom.util.Util;
 import easyflow.data.DataFormat;
 import easyflow.tool.Condition;
 import easyflow.tool.DefaultToolElement;
@@ -16,11 +19,16 @@ import easyflow.tool.ToolPackage;
 import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToConditionMapImpl;
 import easyflow.util.maps.impl.StringToResolvedParamListMapImpl;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -569,11 +577,9 @@ public class ResolvedParamImpl extends MinimalEObjectImpl.Container implements R
 			Object v=it.next();
 			String stringValue = null;
 			if (v instanceof String)
-			//logger.debug(v.getClass().getCanonicalName());
-			//if (v.getClass().getCanonicalName().endsWith("java.lang.String"))
 				stringValue = ((String) v);
 			else if (v instanceof URI)
-				stringValue = ((URI)v).getPath();
+				stringValue = URIUtil.resolveURIToFileName((URI)v);
 			
 			if (stringValue != null)
 				values.add(stringValue);

@@ -496,6 +496,7 @@
           eType="#//util/maps/StringToStringMap" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//tool/Rule"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="logMessage" eType="#//util/LogMessage"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="simpleName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="PreprocessingTask">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -962,7 +963,10 @@
   </eSubpackages>
   <eSubpackages name="execution" nsURI="http:///de/thiema/easyflow/execution/1.0.0"
       nsPrefix="easyflow">
-    <eClassifiers xsi:type="ecore:EClass" name="DefaultExecutionSystem" eSuperTypes="#//execution/IExecutionSystem"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DefaultExecutionSystem" eSuperTypes="#//execution/IExecutionSystem">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="unix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="true"/>
+    </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IExecutionSystem" abstract="true">
       <eOperations name="getJgraphxVisitor" eType="#//mxICellVisitor"/>
       <eOperations name="generateExecutionString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">

@@ -130,7 +130,6 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 					+" width="+getComponent(i).getSize().getWidth());
 		}
 		*/
-		logger.debug("width of graphcomponent="+graphComponent.getWidth());
 		
 		logMsgTextArea.setPreferredSize(new Dimension(0, 100));
 		addStylesToDocument(logMsgTextArea.getStyledDocument());

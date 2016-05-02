@@ -138,6 +138,30 @@ public class EasyFlowToolBar extends JToolBar
 			else
 				repositoryFS=null;
 		}
+		
+		if (!GlobalVar.isDevloperMode())
+		{
+			Level level = Level.ERROR;
+			Properties props = new Properties();
+			try {
+				InputStream configStream = Easyflow.class
+						.getResourceAsStream("/log4j.properties");
+				props.load(configStream);
+				configStream.close();
+				//System.out.println("INFO: logger configuration file loaded.");
+			} catch (IOException e) {
+				System.out
+						.println("INFO: Cannot laod configuration file ");
+			}
+			// props.setProperty("log4j.rootLogger","DEBUG, file");
+			// props.setProperty("log4j.appender.file.File","out.log");
+			props.setProperty("log4j.rootLogger", level.toString()+ ", stdout");
+			props.setProperty("log4j.logger.easyflow", level.toString());
+			LogManager.resetConfiguration();
+			PropertyConfigurator.configure(props);
+			logger.debug("loglevel="+logger.getLevel()+" "+Logger.getRootLogger().getLevel()
+					+" logger="+logger.hashCode()+" rootLogger="+Logger.getRootLogger().hashCode());
+		}
 		logger.debug("EasyFlowToolBar(): set editor. graph="+editor.getGraphComponent().getGraph()
 				+" fs repo="+repositoryFS+" read from jar="+isFromJar+" jar repo="+repositoryJar);
 		

@@ -23,6 +23,8 @@ import java.util.jar.JarFile;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
+import easyflow.custom.ui.GlobalConfig;
+
 public class URIUtil {
 
 	protected static final Logger logger = Logger.getLogger(URIUtil.class);
@@ -300,5 +302,22 @@ public class URIUtil {
 			return new URI(uri.getScheme(), uri.getHost(), createPath(path, uri.getPath()), uri.getFragment());
 		else
 			return uri;
+	}
+	
+	public static String resolveURIToFileName(URI uri)
+	{
+		String stringValue = null;
+		try {
+			stringValue = URLDecoder.decode(uri.getPath(), "UTF-8");
+			if (!GlobalConfig.getExecutionSystem().isUnix())
+			{
+				Util.separatorsToSystem(stringValue, "Windows");
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return stringValue;
 	}
 }

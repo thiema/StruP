@@ -454,4 +454,17 @@ public class Util {
 			
 		}
 	}
+
+	public static String separatorsToSystem(String path, String string) {
+	    if (path==null) return null;
+	    if (string.equals("Windows")) {
+	        // From Windows to Linux/Mac
+	        return path.replace('/', File.separatorChar);
+	    } else {
+	        // From Linux/Mac to Windows
+	        return path.replace('\\', File.separatorChar);
+	    }
+
+		
+	}
 }

@@ -1089,6 +1089,15 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTask_SimpleName() {
+		return (EAttribute)taskEClass.getEStructuralFeatures().get(32);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EOperation getTask__ReadTask__String_String_EList() {
 		return taskEClass.getEOperations().get(0);
 	}
@@ -2302,6 +2311,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		createEReference(taskEClass, TASK__STATIC_PARAMS);
 		createEReference(taskEClass, TASK__RULE);
 		createEReference(taskEClass, TASK__LOG_MESSAGE);
+		createEAttribute(taskEClass, TASK__SIMPLE_NAME);
 		createEOperation(taskEClass, TASK___READ_TASK__STRING_STRING_ELIST);
 		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING);
 		createEOperation(taskEClass, TASK___SHALL_PROCESS__ELIST_STRING_ELIST_BOOLEAN);
@@ -2630,6 +2640,7 @@ public class CorePackageImpl extends EPackageImpl implements CorePackage {
 		initEReference(getTask_StaticParams(), theMapsPackage.getStringToStringMap(), null, "staticParams", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_Rule(), theToolPackage.getRule(), null, "rule", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTask_LogMessage(), theUtilPackage.getLogMessage(), null, "logMessage", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_SimpleName(), ecorePackage.getEString(), "simpleName", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = initEOperation(getTask__ReadTask__String_String_EList(), ecorePackage.getEBoolean(), "readTask", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "taskString", 0, 1, IS_UNIQUE, IS_ORDERED);

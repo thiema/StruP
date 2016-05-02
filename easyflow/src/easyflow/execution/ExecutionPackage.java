@@ -152,13 +152,22 @@ public interface ExecutionPackage extends EPackage {
 	int DEFAULT_EXECUTION_SYSTEM__WRITER = IEXECUTION_SYSTEM__WRITER;
 
 	/**
+	 * The feature id for the '<em><b>Unix</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFAULT_EXECUTION_SYSTEM__UNIX = IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Default Execution System</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFAULT_EXECUTION_SYSTEM_FEATURE_COUNT = IEXECUTION_SYSTEM_FEATURE_COUNT + 0;
+	int DEFAULT_EXECUTION_SYSTEM_FEATURE_COUNT = IEXECUTION_SYSTEM_FEATURE_COUNT + 1;
 
 
 	/**
@@ -198,6 +207,17 @@ public interface ExecutionPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getDefaultExecutionSystem();
+
+	/**
+	 * Returns the meta object for the attribute '{@link easyflow.execution.DefaultExecutionSystem#isUnix <em>Unix</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Unix</em>'.
+	 * @see easyflow.execution.DefaultExecutionSystem#isUnix()
+	 * @see #getDefaultExecutionSystem()
+	 * @generated
+	 */
+	EAttribute getDefaultExecutionSystem_Unix();
 
 	/**
 	 * Returns the meta object for class '{@link easyflow.execution.IExecutionSystem <em>IExecution System</em>}'.
@@ -282,6 +302,14 @@ public interface ExecutionPackage extends EPackage {
 		 * @generated
 		 */
 		EClass DEFAULT_EXECUTION_SYSTEM = eINSTANCE.getDefaultExecutionSystem();
+
+		/**
+		 * The meta object literal for the '<em><b>Unix</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFAULT_EXECUTION_SYSTEM__UNIX = eINSTANCE.getDefaultExecutionSystem_Unix();
 
 		/**
 		 * The meta object literal for the '{@link easyflow.execution.impl.IExecutionSystemImpl <em>IExecution System</em>}' class.

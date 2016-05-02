@@ -189,6 +189,15 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDefaultExecutionSystem_Unix() {
+		return (EAttribute)defaultExecutionSystemEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getIExecutionSystem() {
 		return iExecutionSystemEClass;
 	}
@@ -258,6 +267,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 
 		// Create classes and their features
 		defaultExecutionSystemEClass = createEClass(DEFAULT_EXECUTION_SYSTEM);
+		createEAttribute(defaultExecutionSystemEClass, DEFAULT_EXECUTION_SYSTEM__UNIX);
 
 		iExecutionSystemEClass = createEClass(IEXECUTION_SYSTEM);
 		createEAttribute(iExecutionSystemEClass, IEXECUTION_SYSTEM__LOGGER);
@@ -310,6 +320,7 @@ public class ExecutionPackageImpl extends EPackageImpl implements ExecutionPacka
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(defaultExecutionSystemEClass, DefaultExecutionSystem.class, "DefaultExecutionSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDefaultExecutionSystem_Unix(), ecorePackage.getEBoolean(), "unix", "true", 0, 1, DefaultExecutionSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(iExecutionSystemEClass, IExecutionSystem.class, "IExecutionSystem", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getIExecutionSystem_Logger(), theEasyflowPackage.getLogger(), "logger", null, 0, 1, IExecutionSystem.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

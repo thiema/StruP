@@ -52,6 +52,7 @@ import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.GlobalVarMetaData;
 import easyflow.custom.util.Tuple;
+import easyflow.custom.util.URIUtil;
 import easyflow.custom.util.Util;
 import easyflow.data.Data;
 import easyflow.data.DataFactory;
@@ -126,6 +127,7 @@ import java.lang.reflect.InvocationTargetException;
  *   <li>{@link easyflow.core.impl.TaskImpl#getStaticParams <em>Static Params</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getRule <em>Rule</em>}</li>
  *   <li>{@link easyflow.core.impl.TaskImpl#getLogMessage <em>Log Message</em>}</li>
+ *   <li>{@link easyflow.core.impl.TaskImpl#getSimpleName <em>Simple Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -506,6 +508,26 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @ordered
 	 */
 	protected LogMessage logMessage;
+
+	/**
+	 * The default value of the '{@link #getSimpleName() <em>Simple Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSimpleName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SIMPLE_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getSimpleName() <em>Simple Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSimpleName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String simpleName = SIMPLE_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1019,6 +1041,27 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		logMessage = newLogMessage;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__LOG_MESSAGE, oldLogMessage, logMessage));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getSimpleName() {
+		return simpleName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSimpleName(String newSimpleName) {
+		String oldSimpleName = simpleName;
+		simpleName = newSimpleName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CorePackage.TASK__SIMPLE_NAME, oldSimpleName, simpleName));
 	}
 
 	/*
@@ -2227,7 +2270,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		{
 			Entry<String, ResolvedParam> e      = it.next();
 			ResolvedParam    resolvedParam      = e.getValue();
-			logger.debug("createCommandLinePart(): process parameter "+resolvedParam.renderToString());
+			logger.trace("createCommandLinePart(): process parameter "+resolvedParam.renderToString());
 			boolean          isConditional      = resolvedParam.getConditionalParam() != null && 
 					resolvedParam.getChildParams().containsKey(resolvedParam.getConditionalParam());
 			//Parameter        parameter          = resolvedParam.getParameter();
@@ -2247,7 +2290,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				//else 
 				//if (effectiveResolvedParam.getParameter().getType().equalsIgnoreCase("select"))
 					//continue;
-				logger.debug("createCommandLinePart():  process parameter "+effectiveResolvedParam.renderToString());
+				logger.trace("createCommandLinePart():  process parameter "+effectiveResolvedParam.renderToString());
 				
 				if (effectiveResolvedParam.getValue() == null || effectiveResolvedParam.getValue().isEmpty())
 					effectiveResolvedParam.getValue().addAll(resolvedParam.getValue());
@@ -2330,7 +2373,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 							effectiveResolvedParam.getValue().add(GlobalConstants.BOOLEAN_TRUE_VALUE);
 					}
 					
-					logger.debug("createCommandLinePart():  generate command line for parameter="+effectiveResolvedParam.resolveName()
+					logger.trace("createCommandLinePart():  generate command line for parameter="+effectiveResolvedParam.resolveName()
 							+" conditional="+isConditional
 							+" (using template: "+(effectiveTemplateParam != null ? 
 									(" name="+effectiveTemplateParam.resolveName()
@@ -2351,7 +2394,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 					{
 						if  ("".equals(res))
 						{
-							logger.debug("resolveCommandLinePart(): param "+effectiveResolvedParam.resolveName()+" resolved to empty string");
+							logger.trace("resolveCommandLinePart(): param "+effectiveResolvedParam.resolveName()+" resolved to empty string");
 						}
 						else
 						{
@@ -3850,6 +3893,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__LOG_MESSAGE:
 				if (resolve) return getLogMessage();
 				return basicGetLogMessage();
+			case CorePackage.TASK__SIMPLE_NAME:
+				return getSimpleName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -3967,6 +4012,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__LOG_MESSAGE:
 				setLogMessage((LogMessage)newValue);
 				return;
+			case CorePackage.TASK__SIMPLE_NAME:
+				setSimpleName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -4074,6 +4122,9 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			case CorePackage.TASK__LOG_MESSAGE:
 				setLogMessage((LogMessage)null);
 				return;
+			case CorePackage.TASK__SIMPLE_NAME:
+				setSimpleName(SIMPLE_NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -4149,6 +4200,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				return rule != null;
 			case CorePackage.TASK__LOG_MESSAGE:
 				return logMessage != null;
+			case CorePackage.TASK__SIMPLE_NAME:
+				return SIMPLE_NAME_EDEFAULT == null ? simpleName != null : !SIMPLE_NAME_EDEFAULT.equals(simpleName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -4462,6 +4515,8 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 		result.append(analysisTypes);
 		result.append(", circumventingParents: ");
 		result.append(circumventingParents);
+		result.append(", simpleName: ");
+		result.append(simpleName);
 		result.append(')');
 		return result.toString();
 	}
