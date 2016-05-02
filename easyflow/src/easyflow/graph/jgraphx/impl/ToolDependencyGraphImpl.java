@@ -8,6 +8,7 @@ package easyflow.graph.jgraphx.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map.Entry;
@@ -46,6 +47,7 @@ import easyflow.tool.ResolvedParam;
 import easyflow.tool.Tool;
 import easyflow.traversal.TraversalCriterion;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.log4j.Logger;
@@ -117,8 +119,14 @@ public class ToolDependencyGraphImpl extends DefaultGraphImpl implements ToolDep
 		URI uri = null;
 		try {
 			if (object instanceof String)
-			uri = new URI((String)object);
+			{
+				String path = URLEncoder.encode((String)object,  "UTF-8");
+				uri = new URI(path);
+			}
 		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -2439,7 +2439,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			Data data = isOutput ? dataLink.getInData() : dataLink.getData();
 			if (data == null)
 			{
-				logger.error("resolveDataPorts(): skip dataport. (undefined)");
+				logger.warn("resolveDataPorts(): skip dataport. (undefined)");
 				continue;
 					
 			}
@@ -2448,7 +2448,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 			
 			if (resolvedParam == null)
 			{
-				logger.error("resolveDataPorts(): could not retrieve parameter (for task="+getUniqueString()+" and datalink="+dataLink.getUniqueString()+")");
+				logger.warn("resolveDataPorts(): could not retrieve parameter (for task="+getUniqueString()+" and datalink="+dataLink.getUniqueString()+")");
 				continue;
 			}
 			else
@@ -2684,13 +2684,13 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 					}
 					else
 					{
-						logger.error("resolveConditionalStaticParam_DataFormat(): retrieve condition resolving Child failed for param="+resolvedParam.resolveName()+" and condition="+key);
+						logger.warn("resolveConditionalStaticParam_DataFormat(): retrieve condition resolving Child failed for param="+resolvedParam.resolveName()+" and condition="+key);
 					}
 					return;
 				}
 			}
 		}
-		logger.error("resolveConditionalStaticParam_DataFormat(): no key found matching condition");
+		logger.warn("resolveConditionalStaticParam_DataFormat(): no key found matching condition");
 	}
 	
 	private void resolveConditionalStaticParam_Grouping(ResolvedParam resolvedParam)
@@ -2785,10 +2785,10 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 				resolveConditionalStaticParam_DataPort(resolvedParam);
 			}
 			else
-				logger.error("resolveConditionalStaticParam(): unknown condition type="+param.getConditionType()+" for param="+param.resolveName()+" found.");
+				logger.warn("resolveConditionalStaticParam(): unknown condition type="+param.getConditionType()+" for param="+param.resolveName()+" found.");
 		}
 		else
-			logger.error("resolveConditionalStaticParam(): unknown condition type="+param.getConditionType()+" for param="+param.resolveName()+" found.");
+			logger.warn("resolveConditionalStaticParam(): unknown condition type="+param.getConditionType()+" for param="+param.resolveName()+" found.");
 			
 	}
 

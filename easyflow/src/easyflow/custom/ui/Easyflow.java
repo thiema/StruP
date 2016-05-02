@@ -42,7 +42,6 @@ public class Easyflow {
 
 		if (cmdLineParser.getLogLevel() != null)
 		{
-			
 			String loglevel = cmdLineParser.getLogLevel();
 			Level level = null;
 			if (loglevel.equalsIgnoreCase("FATAL"))

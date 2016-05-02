@@ -18,14 +18,11 @@ import easyflow.tool.OptionValue;
 import easyflow.tool.Parameter;
 import easyflow.tool.ToolPackage;
 import easyflow.traversal.TraversalChunk;
-
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.apache.commons.collections.set.CompositeSet.SetMutator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;

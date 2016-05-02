@@ -1,5 +1,6 @@
 package easyflow.custom.util;
 
+import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -322,6 +323,18 @@ public class Util {
 			return StringUtils.join(cs, sep);
 		}
 		return null;		
+	}
+	
+	public static String separatorsToSystem(String path) {
+		
+	    if (path==null) return null;
+	    if (File.separatorChar=='\\') {
+	        // From Windows to Linux/Mac
+	        return path.replace('/', File.separatorChar);
+	    } else {
+	        // From Linux/Mac to Windows
+	        return path.replace('\\', File.separatorChar);
+	    }
 	}
 	
 	public static EList<String> list2StringList(Object list)

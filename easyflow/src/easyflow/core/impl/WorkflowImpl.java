@@ -1,10 +1,8 @@
 package easyflow.core.impl;
 
 import easyflow.core.Catalog;
-
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;
-
 import easyflow.util.Category;
 import easyflow.core.CoreFactory;
 import easyflow.core.CorePackage;
@@ -52,15 +50,12 @@ import easyflow.util.maps.MapsPackage;
 import easyflow.util.maps.impl.StringToBooleanMapImpl;
 import easyflow.util.maps.impl.StringToObjectMapImpl;
 import easyflow.util.maps.impl.StringToStringMapImpl;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.eclipse.emf.common.notify.Notification;

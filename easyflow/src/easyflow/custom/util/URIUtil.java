@@ -7,10 +7,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -41,6 +43,7 @@ public class URIUtil {
 	public static InputStream getInputStream(URI uri, boolean isFromJar) throws FileNotFoundException
 	{
 		InputStream inputStream;
+		
 		logger.debug("uri="+uri.toString()+" normalized path="+FilenameUtils.normalize(uri.getPath())+" fromJar="+isFromJar);
 		if (isFromJar)
 			inputStream = URIUtil.class.getResourceAsStream(FilenameUtils.normalize(uri.getPath()));
@@ -156,10 +159,20 @@ public class URIUtil {
 	
 	public static URI createURI(String basePath, String fileName) throws URISyntaxException
 	{
-		logger.trace("create uri: "+basePath+" "+fileName);
-		return new URI(fileName == null ?
-								basePath :
-								new File(basePath + File.separator +fileName).getPath());
+		logger.debug("create uri: "+basePath+" "+fileName);
+		try {
+			
+			String path = fileName == null ?
+					URLEncoder.encode(basePath, "UTF-8") :
+					URLEncoder.encode(basePath + File.separator +fileName, "UTF-8");
+			return new URI(path);
+					
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+								
 	}
 	
 	public static String createPath(String basePath, String fileName)
@@ -176,9 +189,15 @@ public class URIUtil {
 	public static URI getDirnameUri(URI uri) throws URISyntaxException
 	{
 		//logger.trace("create dirname with uri: uri="+uri.toString()+" dirname="+getDirname(uri));
-		return new URI(uri.getScheme(), uri.getHost(), 
-				getDirname(uri), 
-				uri.getFragment());
+		try {
+			return new URI(uri.getScheme(), uri.getHost(), 
+					URLEncoder.encode(getDirname(uri), "UTF-8"), 
+					URLEncoder.encode(uri.getFragment(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static String getDirname(URI uri)

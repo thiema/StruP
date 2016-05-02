@@ -3,13 +3,19 @@ package easyflow.custom.jgraphx.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
@@ -22,6 +28,8 @@ import easyflow.custom.exception.NoValidInOutDataException;
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.exception.ToolNotFoundException;
 import easyflow.custom.exception.UtilityTaskNotFoundException;
+import easyflow.custom.ui.CmdLineParser;
+import easyflow.custom.ui.Easyflow;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 import easyflow.custom.util.Util;
@@ -38,10 +46,10 @@ public class EasyFlowToolBar extends JToolBar
 	private              Examples            examples;
 	private              String         defaultProjectType = "reseq";
 	private static final boolean		isFromJar	       = false;
-	private static final String         repositoryJar      = "/easyflow/custom/examples";
-	private static String               repositoryFS       = "easyflow/custom/examples";
-	private static final String         repositoryFS_src   = "src/easyflow/custom/examples";
-	private static final String         repositoryFS_build = "build/classes/easyflow/custom/examples/";
+	private static final String         repositoryJar      = Util.separatorsToSystem("/easyflow/custom/examples");
+	private static String               repositoryFS       = Util.separatorsToSystem("easyflow/custom/examples");
+	private static final String         repositoryFS_src   = Util.separatorsToSystem("src/easyflow/custom/examples");
+	private static final String         repositoryFS_build = Util.separatorsToSystem("build/classes/easyflow/custom/examples/");
 	// when running from ../easyflow/build folder the path is 
 	//private static final String         repositoryFS_bin   = "build/classes/easyflow/custom/examples";
 	// when running from the unzipped archive folder
@@ -101,6 +109,7 @@ public class EasyFlowToolBar extends JToolBar
 	
 	public EasyFlowToolBar(EasyFlowGraphEditor easyFlowGraphEditor,
 			int horizontal) {
+				
 		editor = easyFlowGraphEditor;
 		
 		initButtons();

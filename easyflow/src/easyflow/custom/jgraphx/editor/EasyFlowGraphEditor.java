@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -19,7 +22,10 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.mxgraph.examples.swing.GraphEditor;
 import com.mxgraph.examples.swing.editor.EditorPalette;
@@ -44,6 +50,8 @@ import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 import easyflow.core.Task;
 import easyflow.custom.jgraphx.ComposeWorkflowPanel;
+import easyflow.custom.ui.CmdLineParser;
+import easyflow.custom.ui.Easyflow;
 import easyflow.custom.util.GlobalConstants;
 import easyflow.custom.util.GlobalVar;
 
@@ -287,10 +295,57 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 	 * @param args
 	 */
 	public static void main(String[] args)
-	{
+	{	
+		
 		try
 		{
+			CmdLineParser cmdLineParser = new CmdLineParser();
+			cmdLineParser.initOptions();
+			cmdLineParser.parseOptions(args);
+			boolean readFromExamples = false;
+			Level level = Level.ERROR;
+			if (cmdLineParser.getLogLevel() != null)
+			{
+				String loglevel = cmdLineParser.getLogLevel();
+				
+				if (loglevel.equalsIgnoreCase("FATAL"))
+					level = Level.FATAL;
+				else if (loglevel.equalsIgnoreCase("ERROR"))
+					level = Level.ERROR;
+				else if (loglevel.equalsIgnoreCase("WARN"))
+					level = Level.WARN;
+				else if (loglevel.equalsIgnoreCase("INFO"))
+					level = Level.INFO;
+				else if (loglevel.equalsIgnoreCase("DEBUG"))
+					level = Level.DEBUG;
+				else if (loglevel.equalsIgnoreCase("TRACE"))
+					level = Level.TRACE;
+			}
+			
+			Properties props = new Properties();
+			try {
+				InputStream configStream = Easyflow.class
+						.getResourceAsStream("/log4j.properties");
+				props.load(configStream);
+				configStream.close();
+				//System.out.println("INFO: logger configuration file loaded.");
+			} catch (IOException e) {
+				System.out
+						.println("INFO: Cannot laod configuration file ");
+			}
+			// props.setProperty("log4j.rootLogger","DEBUG, file");
+			// props.setProperty("log4j.appender.file.File","out.log");
+			props.setProperty("log4j.rootLogger", level.toString()
+					+ ", stdout");
+			props.setProperty("log4j.logger.easyflow", level.toString());
+			LogManager.resetConfiguration();
+			PropertyConfigurator.configure(props);
+			logger.debug("loglevel="+logger.getLevel()+" "+Logger.getRootLogger().getLevel()
+					+" logger="+logger.hashCode()+" rootLogger="+Logger.getRootLogger().hashCode());
+			
+
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			
 		}
 		catch (Exception e1)
 		{

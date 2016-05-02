@@ -6,13 +6,9 @@
  */
 package easyflow.graph.jgraphx.impl;
 
-import java.util.AbstractMap;
 import java.util.Iterator;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import java.util.Map.Entry;
-
 import easyflow.core.PreprocessingTask;
 import easyflow.util.Severity;
 import easyflow.core.Task;
@@ -39,12 +35,9 @@ import easyflow.graph.jgraphx.PreprocessingGraph;
 import easyflow.graph.jgraphx.Preprocessing;
 import easyflow.graph.jgraphx.UntranslatedLink;
 import easyflow.tool.Parameter;
-import easyflow.tool.Tool;
 import easyflow.traversal.TraversalChunk;
 import easyflow.traversal.TraversalEvent;
-
 import java.lang.reflect.InvocationTargetException;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -54,7 +47,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.view.mxGraph.mxICellVisitor;

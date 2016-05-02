@@ -39,8 +39,8 @@
 	    	destdir="${classes.dir}" 
 	    	classpathref="classpath"
 	    	srcdir="${src.dir}"
-	    	target="1.6"
-	    	source="1.6"
+	    	target="1.7"
+	    	source="1.7"
 	    >
 			<exclude name="old/**"/>
 			
@@ -51,12 +51,13 @@
 	    </javac>
 	</target>
 
-	<target name="pkg" depends="jar, jar-gui" description="create zip package (easyflow.zip)">
-		<zip destfile="easyflow.zip">
-			<zipfileset dir="${build.dir}/jar" prefix="easyflow/jar"/>
-			<zipfileset dir="${build.dir}/classes/easyflow/custom/examples" prefix="easyflow/examples"/>
-			<zipfileset dir="${build.dir}/classes/easyflow/custom/tool/" includes="**/*.xsd" prefix="easyflow/tool"/>
-			<zipfileset dir="." includes="start.sh" fullpath="easyflow/start.sh"/>
+	<target name="pkg" depends="jar, jar-gui" description="create zip package (strup.zip)">
+		<zip destfile="strup.zip">
+			<zipfileset dir="${build.dir}/jar" prefix="strup/jar"/>
+			<zipfileset dir="${build.dir}/classes/easyflow/custom/examples" prefix="strup/examples"/>
+			<zipfileset dir="${build.dir}/classes/easyflow/custom/tool/" includes="**/*.xsd" prefix="strup/tool"/>
+			<zipfileset dir="." includes="start.sh" fullpath="strup/start.sh"/>
+			<zipfileset dir="." includes="start.bat" fullpath="strup/start.bat"/>
 		</zip>
   	</target>
 <!-- <echo message='Create build directory, and its subdirectories.'/>
@@ -93,22 +94,22 @@ flatten pathes
 </pathconvert>
 -->
 	
-    <target name="jar" depends="compile" description="generate main java archive. (easyflow.jar)">
-        <jar destfile="${jar.dir}/easyflow.jar" basedir="${classes.dir}">
+    <target name="jar" depends="compile" description="generate main java archive. (strup.jar)">
+        <jar destfile="${jar.dir}/strup.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
                 <!-- attribute name="Class-Path" value="../jar"/-->
             </manifest>
         </jar>
     </target>
-    <target name="jar-gui" depends="compile" description="generate main java archive with gui. (easyflow-gui.jar)">
+    <target name="jar-gui" depends="compile" description="generate main java archive with gui. (strup-gui.jar)">
     	<mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/easyflow-gui.jar" basedir="${classes.dir}">
+        <jar destfile="${jar.dir}/strup-gui.jar" basedir="${classes.dir}">
  	      	<fileset dir="${editor.resources.dir}"/>
 
         	<manifest>
                 <attribute name="Main-Class" value="${main-class.gui}"/>
-            	<!-- attribute name="Class-Path" value="lib"/-->                
+            	<!-- attribute name="Class-Path" value="lib"/-->
             </manifest>
 
 
@@ -122,7 +123,7 @@ flatten pathes
 	                <!-- path refid="classpath"/-->
 	                <pathelement path="${jar.dir}/*"> </pathelement>
 	            	<pathelement path="."> </pathelement>
-	                <path location="${jar.dir}/easyflow-gui.jar"/>
+	                <path location="${jar.dir}/strup-gui.jar"/>
 	            </classpath>
 	        </java>
 	</target>
@@ -132,7 +133,7 @@ flatten pathes
 	            <classpath>
 	                <!-- path refid="classpath"/-->
 	                <pathelement path="${jar.dir}"> </pathelement>
-	                <path location="${jar.dir}/easyflow.jar"/>
+	                <path location="${jar.dir}/strup.jar"/>
 	            </classpath>
 	        </java>
 	</target>
