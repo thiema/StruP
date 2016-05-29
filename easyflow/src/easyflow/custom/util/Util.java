@@ -18,6 +18,7 @@ import javax.swing.JButton;
 
 import org.apache.commons.jexl2.Expression;
 import org.apache.commons.jexl2.JexlContext;
+import org.apache.commons.jexl2.JexlException;
 import org.apache.commons.jexl2.MapContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -26,7 +27,11 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
+import sun.security.action.GetLongAction;
 import easyflow.util.ErrorInfo;
+import easyflow.util.LogMessage;
+import easyflow.util.Severity;
+import easyflow.util.UtilFactory;
 import easyflow.core.Task;
 import easyflow.data.DataPort;
 import easyflow.metadata.DefaultMetaData;
@@ -41,6 +46,7 @@ public class Util {
 	
 	
 	private static Logger logger = Logger.getLogger(Util.class);
+	private static LogMessage logMessage = UtilFactory.eINSTANCE.createLogMessage();
 	
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -58,6 +64,8 @@ public class Util {
 		if (metaDataMap.isEmpty())
 			return true;
 		
+		try
+		{
 		Expression e = GlobalVar.getJexlengine().createExpression(jexl);
 		JexlContext context = new MapContext(metaDataMap.map());
 		logger.trace("evaluateJexl(): "+e);
@@ -66,6 +74,14 @@ public class Util {
 			logger.debug("evaluateJexl(): Skip due to jexl condition: " + jexl + " and context: "
 					+ mapToString(metaDataMap));
 		return e.evaluate(context);
+		}
+		catch (JexlException e)
+		{
+			logMessage.generateLogMsg(GlobalConstants.LOG_MSG_UTIL_FAILED_TO_PARSE_CONDITION_DEFINITION_1, 
+					Severity.ERROR,
+					jexl);
+			return null;
+		}
 	}
 	
 	private static String mapToString(EMap<String, Object> map) {

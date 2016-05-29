@@ -209,9 +209,8 @@ public class JGraphXUtil {
 			GlobalVar.setLastErrorInfo(Category.GRAPH_UTIL, target, dataLink, err, true);
 			throw new UtilityTaskNotFoundException();
 		}
-		
-		utilityTask.setName(utilityTask.getName()+"_"+target.getUniqueURIString());
 		utilityTask.setSimpleName(utilityTask.getName());
+		utilityTask.setName(utilityTask.getName()+"_"+target.getUniqueURIString());
 		utilityTask.getChunks().clear();
 		GraphUtil.copyTask(GlobalVar.getUtilityTasks().get(utilityTaskUniqueString), utilityTask);
 		

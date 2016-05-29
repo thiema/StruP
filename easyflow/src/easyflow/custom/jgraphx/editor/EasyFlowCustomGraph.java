@@ -306,7 +306,12 @@ public class EasyFlowCustomGraph extends mxGraph
 						{
 							//logger.trace(" "+task.getUniqueString()+" autosize="+isAutoSizeCell(o)+" resize="+isCellResizable(o));
 							if (task.isUtil())
-								return task.getSimpleName()+Util.traversalChunks2String(task.getChunks(), false);
+							{
+								if (task.getSimpleName() != null && !"".equals(task.getSimpleName()))
+									return task.getSimpleName()+Util.traversalChunks2String(task.getChunks(), false);
+								else
+									return task.getName();
+							}
 							else if (task.isRoot())
 								return task.getName();
 							return task.getUniqueString();

@@ -34,10 +34,17 @@
 		<param name="output" type="data" format="F1,F2,F3" output="true" multiple_instances="true"></param>
 	</tool>
 	
-	<tool id="D" package="dummy_package">
-		<command exe="toolD"></command>
+	<tool id="C_multi" package="dummy_package">
+		<command exe="toolC_multi"></command>
 		<param name="input" type="data" format="F1,F2"
 			multiple="true" multiple_instances="true" multiple_instances_per_dataport="false" ></param>
+		<param name="output" type="data" format="F1,F2" output="true"></param>
+	</tool>
+	
+	<tool id="C_single" package="dummy_package">
+		<command exe="toolC_single"></command>
+		<param name="input" type="data" format="F1,F2"
+			multiple="false" multiple_instances="false" multiple_instances_per_dataport="false" ></param>
 		<param name="output" type="data" format="F1,F2" output="true"></param>
 	</tool>
 	

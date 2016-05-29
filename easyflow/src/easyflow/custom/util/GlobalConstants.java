@@ -324,6 +324,7 @@ public class GlobalConstants {
 	public static final String LOG_MSG_DATALINK_NOT_FOUND_0 = "Could not find Datalink.";
 
 	public static final String LOG_MSG_GROUPING_CRITERION_INSTANCE_NOT_FOUND_0 = "Could not find grouping instance.";
+	public static final String LOG_MSG_GROUPING_CRITERION_INSTANCE_NOT_FOUND_1 = "Could not find grouping instances for \"$VAL\".";
 
 	public static final String LOG_MSG_DATAPORT_NOT_FOUND_0 = "Could not find dataport.";
 
@@ -351,5 +352,7 @@ public class GlobalConstants {
 
 	public static final String TOOL_VERTEX_STYLE = "tool_vertex_style";
 
+	public static final String LOG_MSG_PREPROC_MISSING_DATAPORT_2 = "Definition of dataport missing for task \"$VAL\". Expected dataport definition at postion \"$VAL\" in workflow.";
 
+	public static final String LOG_MSG_UTIL_FAILED_TO_PARSE_CONDITION_DEFINITION_1 = "Unable to parse condition \"$VAL\".";
 }

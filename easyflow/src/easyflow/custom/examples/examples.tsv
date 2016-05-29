@@ -1,11 +1,13 @@
 Name	Config	Folder	Workflow	Utility	Metadata
 #example	config (overrides default config (main.json))	folder (overrides default folder)
 reseq
-abstract	main_abstract.json	abstract	abstract_simple1.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
 abstract_multi	main_abstract.json	abstract	abstract_simple1_multi.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
 abstract_single	main_abstract.json	abstract	abstract_simple1_single.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
+abstract_joint_multi	main_abstract.json	abstract	abstract_simple1_joint_multi.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
+abstract_joint_single	main_abstract.json	abstract	abstract_simple1_joint_single.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
 #abstract_grouping	main_abstract.json	abstract	abstract_example_grouping_2.workflow	abstract_simple1_util.workflow	metadata_abstract_example1.tsv
 abstract_condition	main_abstract.json	abstract	abstract_simple1_conditional_task.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
 abstract_preprocessing	main_abstract.json	abstract	abstract_simple1_preprocessing.workflow	abstract_simple1_util.workflow	metadata_abstract_simple1.tsv
 #example4_errors	main_abstract.json	abstract	abstract_error.workflow
-abstract1	main_abstract.json	abstract	abstract.workflow	
+abstract1	main_abstract.json	abstract	abstract.workflow
+abstract_test	main_abstract.json	abstract	abstract_test.workflow	abstract_simple1_util.workflow	metadata_abstract_test.tsv

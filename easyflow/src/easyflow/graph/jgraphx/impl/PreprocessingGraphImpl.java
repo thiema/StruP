@@ -118,6 +118,12 @@ public class PreprocessingGraphImpl extends DefaultGraphImpl implements Preproce
 							Object   inEdge   = null;
 							
 							// get the incoming edge, which matches the port associated to the preptask
+							if (prepTask.getDataPortIndex() >= task.getInDataPorts().size())
+							{
+								getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_PREPROC_MISSING_DATAPORT_2, Severity.ERROR, 
+										Util.generateStringList(task.getName(), Integer.toString(prepTask.getDataPortIndex()+1)));
+								continue;
+							}
 							DataPort requiredDataPort = task.getInDataPorts().get(prepTask.getDataPortIndex());
 							logger.debug("findCellsWherePreprocessingIsRequired(): task="+task.getUniqueString()
 									+" required dataport="+requiredDataPort.getName()

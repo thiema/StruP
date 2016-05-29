@@ -2632,10 +2632,11 @@ public class WorkflowImpl extends MinimalEObjectImpl.Container implements Workfl
 					.getGroupingInstances(traversalEvent);
 		} catch (GroupingCriterionInstanceNotFoundException e) {
 			getLogMessage().generateLogMsg(
-					GlobalConstants.LOG_MSG_GROUPING_CRITERION_INSTANCE_NOT_FOUND_0, 
+					GlobalConstants.LOG_MSG_GROUPING_CRITERION_INSTANCE_NOT_FOUND_1, 
 					Category.TRAVERSAL_EVENT_RESOLUTION,
 					Severity.ERROR, e,
-					null);
+					Util.generateStringList(
+							traversalEvent.getTraversalCriterion().getId()));
 			return false;
 		}
 		if (groupingInstances.isEmpty())

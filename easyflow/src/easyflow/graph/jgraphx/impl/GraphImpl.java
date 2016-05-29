@@ -1362,11 +1362,15 @@ public class GraphImpl extends MinimalEObjectImpl.Container implements Graph {
 		EList<GroupingInstance> groupingInstances = new BasicEList<GroupingInstance>();
 		if (traversalEvent.isGrouping())
 		{
-			logger.debug("getGroupingInstances(): "+traversalEvent.getTraversalCriterion().getId()+" "+GlobalVar.getMetaData().getGroupingInstances().keySet());
+			logger.debug("getGroupingInstances(): "+traversalEvent.getTraversalCriterion().getId()
+					+" "+GlobalVar.getMetaData().getGroupingInstances().keySet());
 			//if (traversalEvent.getType().equals("grouping"))
 				//if (traversalEvent.getTraversalCriterion().getMode().equals("batch"))
 				if (!GlobalVar.getMetaData().getGroupingInstances().containsKey(traversalEvent.getTraversalCriterion().getId()))
+				{
+					
 					throw new GroupingCriterionInstanceNotFoundException();
+				}
 				for (GroupingInstance groupingInstance :
 					GlobalVar.getMetaData().getGroupingInstances().
 					get(traversalEvent.getTraversalCriterion().getId()).getInstances())
