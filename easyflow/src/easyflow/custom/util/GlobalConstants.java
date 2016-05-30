@@ -355,4 +355,6 @@ public class GlobalConstants {
 	public static final String LOG_MSG_PREPROC_MISSING_DATAPORT_2 = "Definition of dataport missing for task \"$VAL\". Expected dataport definition at postion \"$VAL\" in workflow.";
 
 	public static final String LOG_MSG_UTIL_FAILED_TO_PARSE_CONDITION_DEFINITION_1 = "Unable to parse condition \"$VAL\".";
+
+	public static final String WINDOWS_NAME = "Windows";
 }

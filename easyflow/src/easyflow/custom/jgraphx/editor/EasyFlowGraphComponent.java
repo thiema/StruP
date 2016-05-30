@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -22,20 +23,17 @@ import org.eclipse.emf.common.util.EList;
 
 import com.mxgraph.examples.swing.editor.JTableRenderer;
 import com.mxgraph.examples.swing.editor.ShadowBorder;
+import com.mxgraph.examples.swing.editor.EditorActions.StylesheetAction;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxCellState;
 
-
 import easyflow.core.Task;
 import easyflow.custom.exception.DataLinkNotFoundException;
-
 import easyflow.custom.exception.TaskNotFoundException;
 import easyflow.custom.jgraphx.graph.JGraphXUtil;
-
-
 import easyflow.data.DataLink;
 import easyflow.data.DataPort;
 
@@ -66,6 +64,10 @@ public class EasyFlowGraphComponent extends mxGraphComponent
 		// Sets the background to white
 		getViewport().setOpaque(true);
 		//getViewport().setBackground(Color.WHITE);
+		StylesheetAction sa = new StylesheetAction(
+				"/com/mxgraph/examples/swing/resources/default-style.xml");
+		ActionEvent e = new ActionEvent(this, this.hashCode(), "");
+		sa.actionPerformed(e);
 	}
 	
 	

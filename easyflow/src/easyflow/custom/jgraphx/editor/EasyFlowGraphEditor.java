@@ -60,10 +60,8 @@ import easyflow.custom.util.GlobalVar;
 // find the comments: (in class constructor)
 //setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 //upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
-// 
-// and the comment (in class EasyFlowBasicGraphEditor.java) 
-//upperPanel.add(new EditorToolBar(this, JToolBar.HORIZONTAL), BorderLayout.NORTH);
-// 
+//
+// see: EasyFlowBasicGraphEditor, createFrame() for jmenubar 
 public class EasyFlowGraphEditor extends EasyFlowBasicGraphEditor
 {
 
@@ -175,7 +173,6 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
 		vertexFillColor+=Integer.toHexString(color.getBlue()).toUpperCase();
 		//logger.debug(vertexFillColor);
 		return vertexFillColor;
-
 	}
 	
 	private static Map<String, Object> getVertexStyle(Color color)
@@ -212,6 +209,7 @@ setComposeWorkflowPanel(insertComposeWorkflowPanel("Compostion"));
         	edgeStyle.put(mxConstants.STYLE_FILLCOLOR, getRGB(color));
         else
         	edgeStyle.put(mxConstants.STYLE_FILLCOLOR, mxUtils.getHexColorString(Color.BLACK));
+        
         return edgeStyle;
 	}
 	

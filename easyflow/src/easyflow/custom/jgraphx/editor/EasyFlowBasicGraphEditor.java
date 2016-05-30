@@ -3,7 +3,6 @@ package easyflow.custom.jgraphx.editor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -19,7 +18,6 @@ import javax.swing.text.StyledDocument;
 import org.apache.log4j.Logger;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
-import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.util.mxEvent;
@@ -188,7 +186,7 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		frame.getContentPane().add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		if (GlobalVar.isDevloperMode())
-			frame.setJMenuBar(new EditorMenuBar(this));
+			frame.setJMenuBar(new EasyFlowEditorMenuBar(this));
 		frame.setSize(870, 640);
 		// Updates the frame title
 		updateTitle();
@@ -202,8 +200,8 @@ public class EasyFlowBasicGraphEditor extends BasicGraphEditor
 		//jPanel.setBackground();
 		jPanel.setOpaque(false);
 		libraryPane.add(title, jPanel);
-		return jPanel;
 		
+		return jPanel;		
 	}
 	
 	protected void addStylesToDocument(StyledDocument doc) {
