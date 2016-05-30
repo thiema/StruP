@@ -659,13 +659,13 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			getLogMessage().generateLogMsg(
 					GlobalConstants.LOG_MSG_CONFIGURATION_FILE_NOT_FOUND_1, 
 					(isDefault ? Severity.INFO : Severity.ERROR),
-					Util.createString(source)	
+					URIUtil.createString(source, false)
 					);
 		} catch (IOException e) {
 			getLogMessage().generateLogMsg(
 					GlobalConstants.LOG_MSG_GENERAL_IO_2, 
 					(isDefault ? Severity.INFO : Severity.ERROR),
-					Util.generateStringList(e.getMessage(), Util.createString(source))	
+					Util.generateStringList(e.getMessage(), URIUtil.createString(source, false))	
 					);
 		}
 		return null;
@@ -922,14 +922,14 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				} catch (FileNotFoundException e) {
 					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERAL_IO_2, 
 							Severity.ERROR, 
-							Util.generateStringList(e.getMessage(), Util.createString(source)));
+							Util.generateStringList(e.getMessage(), URIUtil.createString(source, false)));
 				}
 				//if (schema != null)
 					//toolSchemata.getSchemata().put(source.toString(), schema);
 			} catch (URISyntaxException e) {
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
 						Severity.ERROR, 
-						Util.generateStringList(Util.createString(toolDefPath), 
+						Util.generateStringList(URIUtil.createString(toolDefPath, false), 
 								schemata.getString(i), e.getReason()));
 				e.printStackTrace();
 			}
@@ -1119,13 +1119,17 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		if (!isDefault)
 		{
 			String workflowTplFile = GlobalConfig.getWorkflowTemplateFileName();
-			workflowTplFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), workflowTplFile);
+			workflowTplFile = URIUtil.resolveURLEncodedString(
+					URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), workflowTplFile),
+					false);
 
 			String utilDefFile = null;
 			if (GlobalConfig.getProjectConfig().containsKey(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME))
 			{
 				utilDefFile = GlobalConfig.getProjectConfig().get(GlobalConstants.UTILITY_DEF_FILE_PARAM_NAME);
-				utilDefFile = URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), utilDefFile);
+				utilDefFile = URIUtil.resolveURLEncodedString(
+						URIUtil.createPath(GlobalConfig.getWorkflowTemplateDirName(), utilDefFile),
+						false);
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_READ_WORKFLOW_FILE_1, Severity.INFO, 
 						utilDefFile);
 
@@ -1153,7 +1157,8 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 			if (metadataFile == null && !"".equals(getConfigMetadataFile()))
 				metadataFile = GlobalConfig.getMetadataFileName();
 			
-			metadataFile = URIUtil.createPath(GlobalConfig.getMetadataDirName(), metadataFile);
+			metadataFile = URIUtil.resolveURLEncodedString(
+					URIUtil.createPath(GlobalConfig.getMetadataDirName(), metadataFile), false);
 			DefaultMetaData metaData = readMetadata(metadataFile);
 			if (metaData != null)
 			{
@@ -1437,7 +1442,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_FAILED_TO_CREATE_JSON_OBJECT_2, 
 							Severity.ERROR, 
 							Util.generateStringList(
-									Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+									URIUtil.createString(toolConfigPath, false)+"/"+GlobalConfig.getToolConfigFileName(),
 									"tool configuration"
 							));					
 				}
@@ -1446,7 +1451,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
 						Severity.INFO, 
 						Util.generateStringList(
-								Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+								URIUtil.createString(toolConfigPath, false)+"/"+GlobalConfig.getToolConfigFileName(),
 								"Could not create buffered reader for tool configuration."
 						));
 				//return false;
@@ -1462,7 +1467,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_FAILED_TO_CREATE_JSON_OBJECT_2, 
 							Severity.ERROR, 
 							Util.generateStringList(
-									Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+									URIUtil.createString(toolConfigPath, false)+"/"+GlobalConfig.getToolConfigFileName(),
 									"pkg configuration"
 							));					
 				}
@@ -1473,7 +1478,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_TOOL_DEFINITION_FAILED_TO_READ_2, 
 						Severity.INFO, 
 						Util.generateStringList(
-								Util.createString(toolConfigPath)+"/"+GlobalConfig.getToolConfigFileName(),
+								URIUtil.createString(toolConfigPath, false)+"/"+GlobalConfig.getToolConfigFileName(),
 								"Could not create buffered reader for pkg configuration."
 						));
 				//return false;
@@ -1628,7 +1633,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				{
 					getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_GENERAL_IO_2,
 						Severity.WARN, 
-						Util.generateStringList(e.getMessage(), Util.createString(uri)));
+						Util.generateStringList(e.getMessage(), URIUtil.createString(uri, false)));
 				
 					logger.info("getReader(): Could not read resource with uri="+uri.toString());
 				}
@@ -1640,7 +1645,7 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		} catch (URISyntaxException e1) {
 			getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CREATE_URI_3, 
 					Severity.ERROR, 
-					Util.generateStringList(Util.createString(baseUri), path, 
+					Util.generateStringList(URIUtil.createString(baseUri, false), path, 
 							e1.getReason()));
 		} 
 		return null;
@@ -1664,11 +1669,11 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 				curFileName = "<unused>";
 				setBaseURI(URIUtil.createURI(baseName, null));
 			}
-			String fileName = URIUtil.getFilename(path);
+			String fileName = URIUtil.getFilename(path, false);
 			logger.trace("setConfigAndBasePath(): Filename="+fileName+" dir="+baseName);
 			if (fileName == null)
 			{
-				curBasePath = Util.createString(getBaseURI());
+				curBasePath = URIUtil.resolveURIToString(getBaseURI(),false);
 				curFileName = DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT;
 				setConfigSource(URIUtil.addToURI(getBaseURI(), DEFAULT_CONFIG_SOURCE_STRING_EDEFAULT));
 			}
@@ -1742,9 +1747,9 @@ public class DefaultProjectImpl extends MinimalEObjectImpl.Container implements 
 		}
 
 		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_READ_CONFIG_FILE_1, Severity.INFO, 
-				getConfigSource().toString());
+				URIUtil.createString(getConfigSource(), false));
 		getLogMessage().generateLogMsg(GlobalConstants.LOG_MSG_CONFIGURATION_BASE_URI_1, Severity.INFO, 
-				getBaseURI().toString());
+				URIUtil.createString(getBaseURI(), false));
 	
 		
 		

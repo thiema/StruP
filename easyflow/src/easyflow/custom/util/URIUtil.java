@@ -45,12 +45,16 @@ public class URIUtil {
 	public static InputStream getInputStream(URI uri, boolean isFromJar) throws FileNotFoundException
 	{
 		InputStream inputStream;
+		String str = resolveURLEncodedString(uri.getPath(), false);
+		logger.trace("uri="+uri.toString()
+				+" normalized path="+FilenameUtils.normalize(uri.getPath())
+				+" decoded path="+str
+				+" fromJar="+isFromJar);
 		
-		logger.debug("uri="+uri.toString()+" normalized path="+FilenameUtils.normalize(uri.getPath())+" fromJar="+isFromJar);
 		if (isFromJar)
-			inputStream = URIUtil.class.getResourceAsStream(FilenameUtils.normalize(uri.getPath()));
+			inputStream = URIUtil.class.getResourceAsStream(FilenameUtils.normalize(str));
 		else
-			inputStream = new FileInputStream(new File(uri.getPath()));
+			inputStream = new FileInputStream(new File(str));
 		return inputStream;
 		
 	}
@@ -59,14 +63,18 @@ public class URIUtil {
 	{
 		InputStreamReader isReader;
 		
-		logger.debug("uri="+uri.toString()+" normalized path="+FilenameUtils.normalize(uri.getPath())+" fromJar="+isFromJar);
+		String str = resolveURLEncodedString(uri.getPath(), false);
+		logger.trace("uri="+uri.toString()+" normalized path="+FilenameUtils.normalize(uri.getPath())
+				+" decoded path="+str
+				+" fromJar="+isFromJar);
+		
 		if (isFromJar)
 		{			
-			isReader = new InputStreamReader(URIUtil.class.getResourceAsStream(FilenameUtils.normalize(uri.getPath())));
+			isReader = new InputStreamReader(URIUtil.class.getResourceAsStream(FilenameUtils.normalize(str)));
 		}
 		else
 		{
-			isReader = new FileReader(uri.getPath());
+			isReader = new FileReader(str);
 		}
 		return isReader;
 	}
@@ -185,7 +193,7 @@ public class URIUtil {
 		
 		return fileName == null ?
 								basePath :
-								new File(basePath + File.separator +fileName).getPath();
+								new File(basePath + File.separator + fileName).getPath();
 	}
 	
 	public static URI getDirnameUri(URI uri) throws URISyntaxException
@@ -227,8 +235,9 @@ public class URIUtil {
 		}
 	}
 	
-	public static String getFilename(String path)
+	public static String getFilename(String path, boolean isForExecutionSystem)
 	{
+		path = resolveURLEncodedString(path, isForExecutionSystem);
 		File file = new File(path);
 		if (file.isFile())
 			return file.getName();
@@ -304,12 +313,14 @@ public class URIUtil {
 			return uri;
 	}
 	
-	public static String resolveURIToFileName(URI uri)
+	public static String resolveURIToString(URI uri, boolean isForExecutionSystem)
 	{
 		String stringValue = null;
 		try {
 			stringValue = URLDecoder.decode(uri.getPath(), "UTF-8");
-			if (!GlobalConfig.getExecutionSystem().isUnix())
+			if ((isForExecutionSystem && !GlobalConfig.getExecutionSystem().isUnix()) ||
+					GlobalConfig.isWindowsOS()
+					)
 			{
 				Util.separatorsToSystem(stringValue, "Windows");
 			}
@@ -320,4 +331,32 @@ public class URIUtil {
 		}
 		return stringValue;
 	}
+	
+	public static String resolveURLEncodedString(String urlEnc, boolean isForExecutionSystem)
+	{
+		String stringValue = null;
+		
+		try {
+			stringValue = URLDecoder.decode(urlEnc, "UTF-8");
+			if ((isForExecutionSystem && !GlobalConfig.getExecutionSystem().isUnix()) ||
+					GlobalConfig.isWindowsOS()
+					)
+			{
+				Util.separatorsToSystem(stringValue, "Windows");
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return stringValue;
+	}
+	
+	public static String createString(URI uri, boolean isForExecutionSystem) {
+		if (uri != null)
+			return URIUtil.resolveURIToString(uri, isForExecutionSystem);
+		else
+			return "<null>";
+	}
+	
 }

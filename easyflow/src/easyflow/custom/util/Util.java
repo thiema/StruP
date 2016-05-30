@@ -443,13 +443,6 @@ public class Util {
 		return errorStringList;
 	}
 
-	public static String createString(URI uri) {
-		if (uri != null)
-			return uri.toString();
-		else
-			return "<null>";
-	}
-	
 	public static void printLastErrorInfo(Exception e, JButton jButton)
 	{
 		ErrorInfo errorInfo = GlobalVar.getLastErrorInfo(); 
@@ -473,14 +466,12 @@ public class Util {
 
 	public static String separatorsToSystem(String path, String string) {
 	    if (path==null) return null;
-	    if (string.equals("Windows")) {
+	    if (string.equals(GlobalConstants.WINDOWS_NAME)) {
 	        // From Windows to Linux/Mac
 	        return path.replace('/', File.separatorChar);
 	    } else {
 	        // From Linux/Mac to Windows
 	        return path.replace('\\', File.separatorChar);
-	    }
-
-		
+	    }		
 	}
 }

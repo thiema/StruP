@@ -850,4 +850,19 @@ public class GlobalConfig {
 		}
 		return debugTasks; 
 	}
+
+	static String osName = null;
+	static Boolean isWindows = null;
+	public static boolean isWindowsOS() {
+		if (osName == null)
+			osName = System.getProperty("os.name");
+		if (isWindows == null)
+		{
+			if (StringUtils.contains(osName, GlobalConstants.WINDOWS_NAME))
+				isWindows = true;
+			else
+				isWindows = false;
+		}
+		return isWindows;
+	}
 }

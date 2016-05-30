@@ -579,7 +579,7 @@ public class ResolvedParamImpl extends MinimalEObjectImpl.Container implements R
 			if (v instanceof String)
 				stringValue = ((String) v);
 			else if (v instanceof URI)
-				stringValue = URIUtil.resolveURIToFileName((URI)v);
+				stringValue = URIUtil.resolveURIToString((URI)v, false);
 			
 			if (stringValue != null)
 				values.add(stringValue);

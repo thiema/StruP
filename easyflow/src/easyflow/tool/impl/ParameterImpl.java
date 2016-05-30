@@ -1737,7 +1737,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		else if (path instanceof String)
 			return (String) path;
 		else if (path instanceof URI)
-			return URIUtil.resolveURIToFileName((URI)path);
+			return URIUtil.resolveURIToString((URI)path, true);
 		else
 			return null;
 	}
@@ -1780,7 +1780,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 		if (value instanceof String)
 			stringValue = URIUtil.createPath(path, (String) value);
 		else if (value instanceof URI)
-			stringValue = URIUtil.resolveURIToFileName(URIUtil.addPathToUri(path, (URI) value));
+			stringValue = URIUtil.resolveURIToString(URIUtil.addPathToUri(path, (URI) value), true);
 		else if (value instanceof GroupingInstance)
 			stringValue = URIUtil.createPath(path, ((GroupingInstance)value).getName());
 		else if (value instanceof TraversalChunk)
